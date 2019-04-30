@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <issue id="VectorPath" severity="ignore"/>
+    <issue id="Overdraw">
+        <ignore regexp="(fragment_select_transfer_method).xml"/>
+    </issue>
+    <issue id="Overdraw">
+        <ignore regexp="(item_transfer_method_type).xml"/>
+    </issue>
+    <issue id="RtlEnabled">
+        <ignore regexp="(AndroidManifest).xml"/>
+    </issue>
+</lint>

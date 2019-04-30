@@ -1,0 +1,30 @@
+{
+  "data": {
+    "transferMethodConfigurations": {
+      "nodes": [
+        {
+          "countries": [
+            "US"
+          ],
+          "currencies": [
+            "USD"
+          ],
+          "transferMethodType": "BANK_ACCOUNT",
+          "profile": "INDIVIDUAL",
+          "processingTime": "1-2 Business days"
+        },
+        {
+          "countries": [
+            "US"
+          ],
+          "currencies": [
+            "USD"
+          ],
+          "transferMethodType": "BANK_ACCOUNT",
+          "profile": "BUSINESS",
+          "processingTime": "1-2 Business days"
+        }
+      ]
+    }
+  }
+}

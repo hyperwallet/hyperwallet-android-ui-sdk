@@ -1,0 +1,120 @@
+{
+  "count": 4,
+  "offset" : 0,
+  "limit" : 5,
+  "data" : [ {
+    "token" : "trm-5c380689-4074-46c4-8827-0574d88b509b",
+    "type" : "BANK_CARD",
+    "status" : "ACTIVATED",
+    "createdOn" : "2019-02-26T21:45:54",
+    "transferMethodCountry" : "US",
+    "transferMethodCurrency" : "USD",
+    "cardType" : "DEBIT",
+    "cardNumber" : "************0006",
+    "cardBrand" : "VISA",
+    "dateOfExpiry" : "2020-10",
+    "links" : [ {
+      "params" : {
+        "rel" : "self"
+      },
+      "href" : "https://localhost:8181/rest/v3/users/usr-a51c7522-ccba-4bcf-a6a7-bc59dae8f9b0/bank-accounts/trm-33e6a84f-7ed1-4c96-8c1a-d4d456478fc7"
+    } ]
+  }, {
+    "token" : "trm-5b7009a1-b94e-4727-8e15-7c94d529b688",
+    "type" : "WIRE_ACCOUNT",
+    "status" : "ACTIVATED",
+    "verificationStatus" : "NOT_REQUIRED",
+    "createdOn" : "2019-02-22T12:04:51",
+    "transferMethodCountry" : "US",
+    "transferMethodCurrency" : "USD",
+    "bankId" : "021000021",
+    "branchId" : "021000021",
+    "bankAccountId" : "1488863828337",
+    "bankAccountRelationship" : "SELF",
+    "bankAccountPurpose" : "SAVINGS",
+    "profileType" : "INDIVIDUAL",
+    "firstName": "Kevin",
+    "lastName" : "Wilcox",
+    "dateOfBirth" : "1999-01-01",
+    "gender" : "MALE",
+    "phoneNumber" : "6041231234",
+    "governmentId" : "111222333",
+    "addressLine1": "950 Granville St",
+    "city": "San Jose",
+    "stateProvince" : "California",
+    "country" : "CA",
+    "postalCode" : "H0H0H0",
+    "links" : [ {
+      "params" : {
+        "rel" : "self"
+      },
+      "href" : "https://localhost:8181/rest/v3/users/usr-a51c7522-ccba-4bcf-a6a7-bc59dae8f9b0/bank-accounts/trm-5b7009a1-b94e-4727-8e15-7c94d529b688"
+    } ]
+  }, {
+    "token" : "trm-316843d4-bfde-4dec-a391-ef926e4affbb",
+    "type" : "PAPER_CHECK",
+    "status" : "ACTIVATED",
+    "verificationStatus" : "NOT_REQUIRED",
+    "createdOn" : "2019-02-26T22:03:53",
+    "transferMethodCountry" : "CA",
+    "transferMethodCurrency" : "USD",
+    "bankAccountRelationship" : "SELF",
+    "profileType" : "INDIVIDUAL",
+    "firstName" : "Gannon",
+    "lastName" : "Evan",
+    "dateOfBirth" : "1980-01-01",
+    "countryOfBirth" : "US",
+    "countryOfNationality" : "CA",
+    "gender" : "MALE",
+    "phoneNumber" : "+1 604 6666666",
+    "mobileNumber" : "604 666 6666",
+    "governmentId" : "987654321",
+    "addressLine1" : "950 Granville Street",
+    "city" : "Vancouver",
+    "stateProvince" : "BC",
+    "country" : "CA",
+    "postalCode" : "V6Z1L2",
+    "shippingMethod" : "EXPEDITED",
+    "links" : [ {
+      "params" : {
+        "rel" : "self"
+      },
+      "href" : "https://localhost:8181/rest/v3/users/usr-a51c7522-ccba-4bcf-a6a7-bc59dae8f9b0/bank-accounts/trm-92320ebd-c569-4b16-8790-6d22b477ac3c"
+    } ]
+  }, {
+    "token" : "trm-cbf0a879-c5ec-4db1-a907-9c2ec9a91f7c",
+    "type" : "PREPAID_CARD",
+    "status" : "PRE_ACTIVATED",
+    "verificationStatus" : "NOT_REQUIRED",
+    "createdOn" : "2019-02-26T22:08:18",
+    "transferMethodCountry" : "CA",
+    "transferMethodCurrency" : "USD",
+    "cardType" : "PERSONALIZED",
+    "cardPackage" : "L1",
+    "cardNumber" : "************3187",
+    "cardBrand" : "VISA",
+    "dateOfExpiry" : "2023-02",
+    "links" : [ {
+      "params" : {
+        "rel" : "self"
+      },
+      "href" : "https://localhost:8181/rest/v3/users/usr-a51c7522-ccba-4bcf-a6a7-bc59dae8f9b0/bank-accounts/trm-13141cde-56a1-4bde-ab82-534fde4d1cdb"
+    } ]
+  } ],
+  "links" : [ {
+    "params" : {
+      "rel" : "self"
+    },
+    "href" : "https://localhost:8181/rest/v3/users/usr-a51c7522-ccba-4bcf-a6a7-bc59dae8f9b0/bank-accounts?offset=0&limit=10"
+  }, {
+    "params" : {
+      "rel" : "next"
+    },
+    "href" : "https://localhost:8181/rest/v3/users/usr-a51c7522-ccba-4bcf-a6a7-bc59dae8f9b0/bank-accounts?offset=10&limit=10"
+  }, {
+    "params" : {
+      "rel" : "last"
+    },
+    "href" : "https://localhost:8181/rest/v3/users/usr-a51c7522-ccba-4bcf-a6a7-bc59dae8f9b0/bank-accounts?offset=14&limit=10"
+  } ]
+}

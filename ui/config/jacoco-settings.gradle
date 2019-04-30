@@ -1,0 +1,86 @@
+apply plugin: 'jacoco'
+
+final def jacocoVersion = "0.8.2"
+
+jacoco {
+    toolVersion = jacocoVersion
+}
+
+android {
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+            returnDefaultValues = true
+        }
+        unitTests.all {
+            jacoco {
+                includeNoLocationClasses = true
+            }
+        }
+    }
+}
+
+def fileFilter = ['**/BuildConfig.*',
+                  '**/com/hyperwallet/android/ui/HyperwalletUi.*',
+                  '**/com/hyperwallet/android/ui/**/*Activity*.*',
+                  '**/com/hyperwallet/android/ui/**/*Fragment*.*',
+                  '**/com/hyperwallet/android/ui/transfermethod/TransferMethodSelectionItem.*',
+                  '**/com/hyperwallet/android/ui/transfermethod/TransferMethodUtils.*',
+                  '**/com/hyperwallet/android/ui/view/HorizontalDividerItemDecorator.*',
+                  '**/com/hyperwallet/android/ui/view/widget/*']
+
+def debugClassPaths = [
+        '**/intermediates/javac/dev/*/classes/**'
+]
+
+final def coverageSourceDirs = ["$project.projectDir/src/main/java/*"]
+
+task jacocoTestReport(type: JacocoReport, dependsOn: 'testDevUnitTest') {
+
+    group = 'Reporting'
+    description = 'Generate Jacoco coverage reports.'
+
+    reports {
+        html {
+            enabled = true
+            destination file("$buildDir/reports/jacoco")
+        }
+    }
+
+    classDirectories = fileTree(
+            dir: "${buildDir}",
+            includes: debugClassPaths,
+            excludes: fileFilter
+    )
+
+    additionalSourceDirs = files(coverageSourceDirs)
+    sourceDirectories = files(coverageSourceDirs)
+    executionData = files("${buildDir}/jacoco/testDevUnitTest.exec")
+}
+
+task jacocoTestCoverageVerification(type: JacocoCoverageVerification, dependsOn: 'jacocoTestReport') {
+
+    group = 'Verification'
+    classDirectories = fileTree(
+            dir: "${buildDir}",
+            includes: debugClassPaths,
+            excludes: fileFilter
+    )
+    additionalSourceDirs = files(coverageSourceDirs)
+    sourceDirectories = files(coverageSourceDirs)
+    executionData = files("${buildDir}/jacoco/testDevUnitTest.exec")
+
+    violationRules {
+        setFailOnViolation(true)
+
+        rule {
+            element = 'CLASS'
+            limit {
+                value = 'COVEREDRATIO'
+                counter = 'BRANCH'
+                minimum = 0.65
+            }
+        }
+    }
+}
+

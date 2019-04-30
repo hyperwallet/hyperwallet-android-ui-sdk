@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="@dimen/grid_padding_left"
+    android:paddingTop="@dimen/grid_padding_top"
+    android:paddingEnd="@dimen/grid_padding_right">
+
+    <TextView
+        android:id="@+id/country_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        android:paddingBottom="@dimen/grid_padding_bottom"
+        android:paddingStart="@dimen/item_vertical_padding"
+        android:paddingEnd="@dimen/item_vertical_padding"
+        app:layout_constraintBottom_toTopOf="@+id/list_item_country_horizontal_divider"
+        app:layout_constraintLeft_toLeftOf="@+id/list_item_country_horizontal_divider" />
+
+    <TextView
+        android:id="@+id/country_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+        android:paddingBottom="@dimen/grid_padding_bottom"
+        android:paddingStart="@dimen/item_vertical_padding"
+        android:paddingEnd="@dimen/item_vertical_padding"
+        app:layout_constraintBottom_toTopOf="@+id/list_item_country_horizontal_divider"
+        app:layout_constraintRight_toRightOf="@+id/list_item_country_horizontal_divider" />
+
+    <ImageView
+        android:id="@+id/country_item_selected_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/grid_padding_bottom"
+        android:src="@drawable/ic_check_14dp"
+        android:visibility="gone"
+        android:paddingStart="@dimen/item_vertical_padding"
+        android:paddingEnd="@dimen/item_vertical_padding"
+        android:contentDescription="@string/selected_country_item_description"
+        app:layout_constraintBottom_toTopOf="@+id/list_item_country_horizontal_divider"
+        app:layout_constraintRight_toRightOf="@+id/list_item_country_horizontal_divider" />
+
+    <View
+        android:id="@+id/list_item_country_horizontal_divider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_height"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

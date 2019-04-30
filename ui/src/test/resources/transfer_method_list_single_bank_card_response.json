@@ -1,0 +1,35 @@
+{
+  "count": 1,
+  "offset": 0,
+  "limit": 10,
+  "data": [
+    {
+      "token": "trm-4ad08c69-fed3-48bc-a754-604610049618",
+      "type": "BANK_CARD",
+      "status": "ACTIVATED",
+      "createdOn": "2019-04-18T21:57:57",
+      "transferMethodCountry": "US",
+      "transferMethodCurrency": "USD",
+      "cardType": "DEBIT",
+      "cardNumber": "************0006",
+      "cardBrand": "VISA",
+      "dateOfExpiry": "2020-10",
+      "links": [
+        {
+          "params": {
+            "rel": "self"
+          },
+          "href": "https://localhost:8181/rest/v3/users/usr-143005bd-1fa3-4c10-9527-d7923189c9ab/transfer-methods/trm-4ad08c69-fed3-48bc-a754-604610049618"
+        }
+      ]
+    }
+  ],
+  "links": [
+    {
+      "params": {
+        "rel": "self"
+      },
+      "href": "https://localhost:8181/rest/v3/users/usr-143005bd-1fa3-4c10-9527-d7923189c9ab/transfer-methods?offset=0&limit=10&sortBy=-createdOn"
+    }
+  ]
+}
