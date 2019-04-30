@@ -1,0 +1,50 @@
+{
+  "data": {
+    "transferMethodConfigurations": {
+      "nodes": [
+        {
+          "countries": [
+            "US"
+          ],
+          "currencies": [
+            "USD"
+          ],
+          "transferMethodType": "BANK_ACCOUNT",
+          "profile": "INDIVIDUAL",
+          "fees": {
+            "nodes": [
+              {
+                "transferMethodType": "BANK_ACCOUNT",
+                "country": "US",
+                "currency": "USD",
+                "feeRateType": "FLAT",
+                "value": "2.00"
+              }
+            ]
+          }
+        },
+        {
+          "countries": [
+            "US"
+          ],
+          "currencies": [
+            "USD"
+          ],
+          "transferMethodType": "BANK_ACCOUNT",
+          "profile": "BUSINESS",
+          "fees": {
+            "nodes": [
+              {
+                "transferMethodType": "BANK_ACCOUNT",
+                "country": "US",
+                "currency": "USD",
+                "feeRateType": "FLAT",
+                "value": "2.00"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "errors": [
+    {
+      "message": "Validation error of type WrongType: argument 'country' with value 'EnumValue{name='USS'}' is not a valid 'Country' @ 'transferMethodConfigurations'",
+      "locations": [
+        {
+          "line": 4,
+          "column": 6
+        }
+      ]
+    }
+  ]
+}

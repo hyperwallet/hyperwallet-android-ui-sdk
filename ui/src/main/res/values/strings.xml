@@ -1,0 +1,96 @@
+<resources>
+    <string name="app_name">hyperwallet_ui</string>
+    <string name="title_account_add">Add Account</string>
+    <string name="not_available">Not Available</string>
+    <string name="unknown">Unknown</string>
+    <string name="not_translated_in_braces">(not translated)</string>
+
+    <string name="title_activity_select_transfer_method">Select Transfer Method</string>
+    <!-- SelectTransferMethodActivity -->
+    <string name="select_transfer_method_title">@string/title_activity_select_transfer_method</string>
+
+    <string name="select_transfer_method_country">Country</string>
+    <string name="select_transfer_method_currency">Currency</string>
+    <string name="activity_select_transfer_method_title">Add Account</string>
+    <string name="title_activity_add_transfer_method">Add Transfer Method</string>
+    <string name="title_add_bank_account">Bank Account</string>
+    <string name="title_add_bank_card">Bank Card</string>
+
+    <string name="error_exact_length_field">The length of this field is exactly %d.</string>
+    <string name="error_invalid_expiry_date">%s is invalid.</string>
+    <string name="error_min_max_length_field">The minimum length of this field is {0} and maximum
+        length is {1}.
+    </string>
+
+    <string name="button_create_transfer_method">Create Transfer Method</string>
+    <string name="default_account_label">Default Account</string>
+    <string name="default_account_sub_label">Select account as default method</string>
+    <string name="api_expiry_date_format">MM/YY</string>
+    <string name="error_dialog_title">Error</string>
+    <string name="error_dialog_connectivity_title">Connectivity Issue</string>
+    <string name="error_dialog_unexpected_title">Unexpected Error</string>
+    <string name="add_transfer_method_fee_label">Transaction Fee:</string>
+    <string name="add_transfer_method_processing_time_label">Processing Time:</string>
+
+    <string name="select_transfer_method_item_fee_information">Transaction Fee: %s</string>
+    <string name="select_transfer_method_item_processing_time_information">Processing Time: %s
+    </string>
+
+    <string name="title_activity_list_transfer_method">Accounts</string>
+    <string name="empty_list_transfer_method_information">You didn\'t add an account yet. Once
+        created, it will show up here!
+    </string>
+    <string name="transfer_method_list_item_description">Ending on %s</string>
+    <string name="transfer_method_remove_confirmation">Are you sure that you want to remove this
+        account?
+    </string>
+    <string name="transfer_method_remove_confirmation_title">Remove account</string>
+
+    <string name="remove_button_label">Remove</string>
+    <string name="cancel_button_label">Cancel</string>
+    <string name="close_button_label">Close</string>
+    <string name="try_again_button_label">Try again</string>
+
+    <!-- menu title -->
+    <string name="menu_transfer_funds">Transfer Funds</string>
+    <string name="menu_remove_account">Remove Account</string>
+
+    <!--Fee formatter-->
+    <string name="fee_flat_formatter">%1$s %2$s</string>
+    <string name="fee_percent_no_min_and_max_formatter">%1$s%%</string>
+    <string name="fee_percent_only_min_formatter">%1$s%% (Min:%2$s %3$s)</string>
+    <string name="fee_percent_only_max_formatter">%1$s%% (Max:%2$s %3$s)</string>
+    <string name="fee_percent_formatter">%1$s%% (Min:%2$s %3$s, Max:%2$s %4$s)</string>
+    <string name="fee_mix_no_min_and_max_formatter">%1$s %2$s + %3$s%%</string>
+    <string name="fee_mix_only_min_formatter">%1$s %2$s + %3$s%% (Min:%1$s %4$s)</string>
+    <string name="fee_mix_only_max_formatter">%1$s %2$s + %3$s%% (Max:%1$s %4$s)</string>
+    <string name="fee_mix_formatter">%1$s %2$s + %3$s%% (Min:%1$s %4$s, Max:%1$s %5$s)</string>
+
+    <!-- title and font icon -->
+    <string name="bank_account">Bank Account</string>
+    <string name="bank_card">Bank Card</string>
+    <string name="wire_account">Wire Account</string>
+    <string name="paper_check">Paper Check</string>
+    <string name="prepaid_card">Prepaid Card</string>
+
+    <string name="bank_account_font_icon">\uE000</string>
+    <string name="bank_card_font_icon">\uE005</string>
+    <string name="wire_account_font_icon">\uE00D</string>
+    <string name="paper_check_font_icon">\uE002</string>
+    <string name="prepaid_card_font_icon">\uE00E</string>
+
+    <string name="search_hint">Search Hint</string>
+    <string name="search_country">Search Country</string>
+    <string name="search_currency">Search Currency</string>
+
+    <string name="account_information_section_header">Account Information - %s (%s)</string>
+    <string name="transfer_method_information_header">Transfer Method Information</string>
+    <string name="select_transfer_method_currency_button_description">Select currency button
+    </string>
+    <string name="select_transfer_method_country_button_description">Select country button</string>
+    <string name="selected_country_item_description">Selected country item</string>
+    <string name="selected_currency_item_description">Selected currency item</string>
+    <string name="transfer_method_context_button_description">Context menu button</string>
+    <string name="item_select_description">Selected item</string>
+
+</resources>

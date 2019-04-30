@@ -1,0 +1,9 @@
+{
+  "errors": [
+    {
+      "message": "Routing Number [211179531] is not valid. Please modify Routing Number to a valid ACH Routing Number of the branch of your bank.",
+      "fieldName": "branchId",
+      "code": "CONSTRAINT_VIOLATIONS"
+    }
+  ]
+}

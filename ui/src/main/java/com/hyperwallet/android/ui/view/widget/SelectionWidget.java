@@ -1,0 +1,162 @@
+/*
+ * The MIT License (MIT)
+ * Copyright (c) 2018 Hyperwallet Systems Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+ * associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute,
+ * sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+ * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+package com.hyperwallet.android.ui.view.widget;
+
+import android.app.Activity;
+import android.content.Context;
+import android.text.TextUtils;
+import android.view.ContextThemeWrapper;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.RelativeLayout;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+
+import com.google.android.material.textfield.TextInputLayout;
+import com.hyperwallet.android.hyperwallet_ui.R;
+import com.hyperwallet.android.model.meta.HyperwalletField;
+import com.hyperwallet.android.model.meta.HyperwalletFieldSelectionOption;
+import com.hyperwallet.android.ui.view.WidgetSelectionDialogFragment;
+
+import java.util.Locale;
+import java.util.Set;
+import java.util.TreeMap;
+
+public class SelectionWidget extends AbstractWidget implements WidgetSelectionDialogFragment.WidgetSelectionItemType {
+
+    private ViewGroup mContainer;
+    private EditText mEditText;
+    private TreeMap<String, String> mSelectionNameValueMap;
+    private TextInputLayout mTextInputLayout;
+    private String mValue;
+
+    public SelectionWidget(@NonNull HyperwalletField field, @NonNull WidgetEventListener listener,
+            @NonNull Context context, @Nullable String defaultValue, @NonNull View defaultFocusView) {
+        super(field, listener, context, defaultValue, defaultFocusView);
+        mValue = defaultValue;
+        mSelectionNameValueMap = new TreeMap<>();
+        for (HyperwalletFieldSelectionOption option : field.getFieldSelectionOptions()) {
+            if (!TextUtils.isEmpty(option.getLabel())) {
+                String label = option.getLabel().substring(1).toLowerCase(Locale.ROOT);
+                label = option.getLabel().substring(0, 1) + label;
+                mSelectionNameValueMap.put(label, option.getValue());
+            }
+        }
+    }
+
+    @Override
+    public View getView() {
+        if (mContainer == null) {
+            mContainer = new RelativeLayout(mContext);
+            setIdFromFieldLabel(mContainer);
+            mContainer.setFocusable(true);
+            mContainer.setFocusableInTouchMode(true);
+
+            mTextInputLayout = new TextInputLayout(
+                    new ContextThemeWrapper(mContext, R.style.Widget_Hyperwallet_TextInputLayout));
+            mEditText = new EditText(
+                    new ContextThemeWrapper(mContext, R.style.Widget_Hyperwallet_TextInputEditText));
+            if (!TextUtils.isEmpty(mDefaultValue)) {
+                mEditText.setText(getKeyFromValue(mDefaultValue));
+            }
+            setIdFromFieldLabel(mTextInputLayout);
+            setIdFromFieldName(mEditText);
+
+            mEditText.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI);
+            mEditText.setKeyListener(null);
+            mEditText.setCompoundDrawablesWithIntrinsicBounds(null, null,
+                    ContextCompat.getDrawable(mContext, R.drawable.ic_keyboard_arrow_down_12dp), null);
+
+            mEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    if (hasFocus) {
+                        mListener.widgetFocused(SelectionWidget.this.getName());
+                        hideSoftKey(v);
+                        showSelectionFragmentDialog();
+                    } else {
+                        if (isValid()) {
+                            mTextInputLayout.setError(null);
+                        }
+                        String label = ((EditText) v).getText().toString();
+                        mValue = mSelectionNameValueMap.get(label);
+                        mListener.valueChanged();
+                    }
+                }
+            });
+
+            mEditText.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    hideSoftKey(v);
+                    showSelectionFragmentDialog();
+                }
+            });
+
+            mTextInputLayout.setHint(mField.getLabel());
+            mTextInputLayout.addView(mEditText);
+            appendLayout(mTextInputLayout, true);
+            mContainer.addView(mTextInputLayout);
+        }
+        return mContainer;
+    }
+
+    @Override
+    public String getValue() {
+        return mValue;
+    }
+
+    @Override
+    public void showValidationError(String errorMessage) {
+        mTextInputLayout.setError(errorMessage);
+    }
+
+    @Override
+    public void onWidgetSelectionItemClicked(@NonNull String selectedValue) {
+        mValue = selectedValue;
+        mListener.valueChanged();
+        mEditText.setText(getKeyFromValue(selectedValue));
+    }
+
+    private void hideSoftKey(@NonNull View focusedView) {
+        InputMethodManager inputMethodManager = (InputMethodManager) focusedView.getContext().getSystemService(
+                Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(focusedView.getWindowToken(), 0);
+    }
+
+    private void showSelectionFragmentDialog() {
+        String defaultSelected = TextUtils.isEmpty(mValue) ?
+                TextUtils.isEmpty(mDefaultValue) ? "" : getKeyFromValue(mDefaultValue) : getKeyFromValue(mValue);
+        mListener.openWidgetSelectionFragmentDialog(mSelectionNameValueMap, defaultSelected, mField.getLabel(),
+                mField.getName());
+    }
+
+    private String getKeyFromValue(@NonNull String value) {
+        Set<String> selections = mSelectionNameValueMap.keySet();
+        for (String key : selections) {
+            if (value.equals(mSelectionNameValueMap.get(key))) {
+                return key;
+            }
+        }
+        return "";
+    }
+}
