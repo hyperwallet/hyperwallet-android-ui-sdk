@@ -174,6 +174,7 @@ public class ExpiryDateWidget extends AbstractWidget {
                     mExpireDateUtil.convertDateFromServerFormat(mDefaultValue));
             editText.setOnKeyListener(new DefaultKeyListener(mDefaultFocusView, editText));
             editText.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI | EditorInfo.IME_ACTION_NEXT);
+            editText.setTag(mField.getName());
 
             mTextInputLayout.addView(editText);
             appendLayout(mTextInputLayout, true);
