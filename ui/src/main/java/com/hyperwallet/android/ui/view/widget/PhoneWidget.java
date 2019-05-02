@@ -91,6 +91,7 @@ public class PhoneWidget extends AbstractWidget {
             editText.setOnKeyListener(new DefaultKeyListener(mDefaultFocusView, editText));
             editText.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI | EditorInfo.IME_ACTION_NEXT);
             editText.setText(mDefaultValue);
+            editText.setTag(mField.getName());
             appendLayout(mTextInputLayout, true);
             mContainer.addView(mTextInputLayout);
         }
