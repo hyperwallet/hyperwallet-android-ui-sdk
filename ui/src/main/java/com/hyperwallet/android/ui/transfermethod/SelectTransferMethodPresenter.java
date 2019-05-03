@@ -38,15 +38,15 @@ public class SelectTransferMethodPresenter implements SelectTransferMethodContra
     private static final String TAG = SelectTransferMethodPresenter.class.getName();
 
     private final TransferMethodConfigurationRepository mTransferMethodConfigurationRepository;
-    private final UserRepository userRepository;
+    private final UserRepository mUserRepository;
     private final SelectTransferMethodContract.View mView;
 
     SelectTransferMethodPresenter(SelectTransferMethodContract.View view,
-            TransferMethodConfigurationRepository transferMethodConfigurationRepository,
-            UserRepository userRepository) {
+            @NonNull final TransferMethodConfigurationRepository transferMethodConfigurationRepository,
+            @NonNull final UserRepository userRepository) {
         this.mView = view;
         this.mTransferMethodConfigurationRepository = transferMethodConfigurationRepository;
-        this.userRepository = userRepository;
+        this.mUserRepository = userRepository;
     }
 
     @Override
@@ -292,7 +292,7 @@ public class SelectTransferMethodPresenter implements SelectTransferMethodContra
     }
 
     private void loadUser(@Nullable final UserCallback userCallback) {
-        userRepository.loadUser(new UserRepository.LoadUserCallback() {
+        mUserRepository.loadUser(new UserRepository.LoadUserCallback() {
             @Override
             public void onUserLoaded(@Nullable HyperwalletUser user) {
                 if (userCallback != null && user != null) {
