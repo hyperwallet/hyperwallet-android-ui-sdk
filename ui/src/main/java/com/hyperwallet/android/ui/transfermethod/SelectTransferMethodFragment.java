@@ -190,7 +190,9 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         RepositoryFactory factory = RepositoryFactory.getInstance();
-        mPresenter = new SelectTransferMethodPresenter(this, factory.getTransferMethodConfigurationRepository());
+        mPresenter = new SelectTransferMethodPresenter(this,
+                factory.getTransferMethodConfigurationRepository(),
+                factory.getUserRepository());
     }
 
 
