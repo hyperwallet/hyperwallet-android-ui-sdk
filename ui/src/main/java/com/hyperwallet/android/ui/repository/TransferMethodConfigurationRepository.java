@@ -36,6 +36,7 @@ import com.hyperwallet.android.model.meta.HyperwalletTransferMethodConfiguration
 
 public interface TransferMethodConfigurationRepository {
 
+    //TODO update GQL integration development feature
     void getKeys(@NonNull final LoadKeysCallback loadKeysCallback);
 
     void getFields(@NonNull final String country, @NonNull final String currency,
