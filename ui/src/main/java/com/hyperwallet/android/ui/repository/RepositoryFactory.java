@@ -31,10 +31,12 @@ public class RepositoryFactory {
     private static RepositoryFactory sInstance;
     private TransferMethodConfigurationRepository mTransferMethodConfigurationRepository;
     private TransferMethodRepository mTransferMethodRepository;
+    private UserRepository mUserRepository;
 
     private RepositoryFactory() {
         mTransferMethodConfigurationRepository = new TransferMethodConfigurationRepositoryImpl();
         mTransferMethodRepository = new TransferMethodRepositoryImpl();
+        mUserRepository = new UserRepositoryImpl();
     }
 
     public static synchronized RepositoryFactory getInstance() {
@@ -50,6 +52,10 @@ public class RepositoryFactory {
 
     public TransferMethodRepository getTransferMethodRepository() {
         return mTransferMethodRepository;
+    }
+
+    public UserRepository getUserRepository() {
+        return mUserRepository;
     }
 
     public static void clearInstance() {
