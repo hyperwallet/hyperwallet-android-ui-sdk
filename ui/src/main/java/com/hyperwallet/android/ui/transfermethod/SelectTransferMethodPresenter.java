@@ -219,9 +219,9 @@ public class SelectTransferMethodPresenter implements SelectTransferMethodContra
                 List<String> countryCodes = transferMethodConfigurationKeyResult.getCountries();
                 TreeMap<String, String> countryNameCodeMap = new TreeMap<>();
                 Locale.Builder builder = new Locale.Builder();
-                for (String countryCode1 : countryCodes) {
-                    Locale locale = builder.setRegion(countryCode1).build();
-                    countryNameCodeMap.put(locale.getDisplayName(), countryCode1);
+                for (String countryCodeItem : countryCodes) {
+                    Locale locale = builder.setRegion(countryCodeItem).build();
+                    countryNameCodeMap.put(locale.getDisplayName(), countryCodeItem);
                 }
                 Locale locale = new Locale.Builder().setRegion(countryCode).build();
                 mView.showCountrySelectionDialog(countryNameCodeMap, locale.getDisplayName());
@@ -249,9 +249,9 @@ public class SelectTransferMethodPresenter implements SelectTransferMethodContra
 
                 List<String> currencyCodes = transferMethodConfigurationKeyResult.getCurrencies(countryCode);
                 TreeMap<String, String> currencyNameCodeMap = new TreeMap<>();
-                for (String currencyCode1 : currencyCodes) {
-                    Currency currency = Currency.getInstance(currencyCode1);
-                    currencyNameCodeMap.put(currency.getDisplayName(), currencyCode1);
+                for (String currencyCodeItem : currencyCodes) {
+                    Currency currency = Currency.getInstance(currencyCodeItem);
+                    currencyNameCodeMap.put(currency.getDisplayName(), currencyCodeItem);
                 }
                 mView.showCurrencySelectionDialog(currencyNameCodeMap,
                         Currency.getInstance(currencyCode).getDisplayName());
