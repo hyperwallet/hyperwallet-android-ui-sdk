@@ -103,23 +103,23 @@ public class UserRepositoryImplTest {
         verify(mockCallback, never()).onError(any(HyperwalletErrors.class));
 
         HyperwalletUser resultUser = mUserCaptor.getValue();
-        assertThat(user.getField(TOKEN), is("usr-f9154016-94e8-4686-a840-075688ac07b5"));
-        assertThat(user.getField(STATUS), is(PRE_ACTIVATED));
-        assertThat(user.getField(VERIFICATION_STATUS), is(NOT_REQUIRED));
-        assertThat(user.getField(CREATED_ON), is("2017-10-30T22:15:45"));
-        assertThat(user.getField(CLIENT_USER_ID), is("CSK7b8Ffch"));
-        assertThat(user.getField(PROFILE_TYPE), is(INDIVIDUAL));
-        assertThat(user.getField(HyperwalletUser.UserFields.FIRST_NAME), is("Some"));
-        assertThat(user.getField(HyperwalletUser.UserFields.LAST_NAME), is("Guy"));
-        assertThat(user.getField(HyperwalletUser.UserFields.DATE_OF_BIRTH), is("1991-01-01"));
-        assertThat(user.getField(HyperwalletUser.UserFields.EMAIL), is("testUser@hyperwallet.com"));
-        assertThat(user.getField(HyperwalletUser.UserFields.ADDRESS_LINE_1), is("575 Market Street"));
-        assertThat(user.getField(HyperwalletUser.UserFields.CITY), is("San Francisco"));
-        assertThat(user.getField(HyperwalletUser.UserFields.STATE_PROVINCE), is("CA"));
-        assertThat(user.getField(HyperwalletUser.UserFields.COUNTRY), is("US"));
-        assertThat(user.getField(HyperwalletUser.UserFields.POSTAL_CODE), is("94105"));
-        assertThat(user.getField(HyperwalletUser.UserFields.LANGUAGE), is("en"));
-        assertThat(user.getField(HyperwalletUser.UserFields.PROGRAM_TOKEN),
+        assertThat(resultUser.getField(TOKEN), is("usr-f9154016-94e8-4686-a840-075688ac07b5"));
+        assertThat(resultUser.getField(STATUS), is(PRE_ACTIVATED));
+        assertThat(resultUser.getField(VERIFICATION_STATUS), is(NOT_REQUIRED));
+        assertThat(resultUser.getField(CREATED_ON), is("2017-10-30T22:15:45"));
+        assertThat(resultUser.getField(CLIENT_USER_ID), is("CSK7b8Ffch"));
+        assertThat(resultUser.getField(PROFILE_TYPE), is(INDIVIDUAL));
+        assertThat(resultUser.getField(HyperwalletUser.UserFields.FIRST_NAME), is("Some"));
+        assertThat(resultUser.getField(HyperwalletUser.UserFields.LAST_NAME), is("Guy"));
+        assertThat(resultUser.getField(HyperwalletUser.UserFields.DATE_OF_BIRTH), is("1991-01-01"));
+        assertThat(resultUser.getField(HyperwalletUser.UserFields.EMAIL), is("testUser@hyperwallet.com"));
+        assertThat(resultUser.getField(HyperwalletUser.UserFields.ADDRESS_LINE_1), is("575 Market Street"));
+        assertThat(resultUser.getField(HyperwalletUser.UserFields.CITY), is("San Francisco"));
+        assertThat(resultUser.getField(HyperwalletUser.UserFields.STATE_PROVINCE), is("CA"));
+        assertThat(resultUser.getField(HyperwalletUser.UserFields.COUNTRY), is("US"));
+        assertThat(resultUser.getField(HyperwalletUser.UserFields.POSTAL_CODE), is("94105"));
+        assertThat(resultUser.getField(HyperwalletUser.UserFields.LANGUAGE), is("en"));
+        assertThat(resultUser.getField(HyperwalletUser.UserFields.PROGRAM_TOKEN),
                 is("prg-83836cdf-2ce2-4696-8bc5-f1b86077238c"));
     }
 

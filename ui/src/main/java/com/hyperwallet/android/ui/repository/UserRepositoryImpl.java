@@ -14,6 +14,7 @@ import com.hyperwallet.android.model.HyperwalletUser;
 public class UserRepositoryImpl implements UserRepository {
 
     private Handler mHandler = new Handler();
+    private HyperwalletUser mUser;
 
     @VisibleForTesting
     Hyperwallet getHyperwallet() {
@@ -22,21 +23,26 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public void loadUser(@NonNull final LoadUserCallback callback) {
-        getHyperwallet().getUser(new HyperwalletListener<HyperwalletUser>() {
-            @Override
-            public void onSuccess(@Nullable HyperwalletUser result) {
-                callback.onUserLoaded(result);
-            }
+        if (mUser == null) {
+            getHyperwallet().getUser(new HyperwalletListener<HyperwalletUser>() {
+                @Override
+                public void onSuccess(@Nullable HyperwalletUser result) {
+                    mUser = result;
+                    callback.onUserLoaded(mUser);
+                }
 
-            @Override
-            public void onFailure(HyperwalletException exception) {
-                callback.onError(exception.getHyperwalletErrors());
-            }
+                @Override
+                public void onFailure(HyperwalletException exception) {
+                    callback.onError(exception.getHyperwalletErrors());
+                }
 
-            @Override
-            public Handler getHandler() {
-                return mHandler;
-            }
-        });
+                @Override
+                public Handler getHandler() {
+                    return mHandler;
+                }
+            });
+        } else {
+            callback.onUserLoaded(mUser);
+        }
     }
 }
