@@ -116,7 +116,7 @@ public class TransferMethodUtils {
                 title = context.getString(R.string.wire_account);
                 break;
             case PAYPAL_ACCOUNT:
-                context.getString(R.string.paypal_account);
+                title = context.getString(R.string.paypal_account);
                 break;
             default:
                 title = transferMethodType.toLowerCase(Locale.ROOT) + context.getString(
