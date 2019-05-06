@@ -222,7 +222,8 @@ public class SelectTransferMethodPresenter implements SelectTransferMethodContra
         List<TransferMethodSelectionItem> selectionItems = new ArrayList<>();
         for (HyperwalletTransferMethodType transferMethodType : transferMethodTypes) {
             TransferMethodSelectionItem data = new TransferMethodSelectionItem(country, currency, INDIVIDUAL,
-                    transferMethodType.getName(), transferMethodType.getProcessingTime(), transferMethodType.getFees());
+                    transferMethodType.getCode(), transferMethodType.getName(), transferMethodType.getProcessingTime(),
+                    transferMethodType.getFees());
             selectionItems.add(data);
         }
         return selectionItems;

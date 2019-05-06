@@ -31,13 +31,15 @@ public class TransferMethodSelectionItem {
     private final String mProcessingTime;
     private final String mProfile;
     private final String mTransferMethodType;
+    private final String mTransferMethodName;
 
     public TransferMethodSelectionItem(String country, String currency, String profile, String transferMethodType,
-            String processingTime, Set<HyperwalletFee> fees) {
+            String transferMethodName, String processingTime, Set<HyperwalletFee> fees) {
         mCountry = country;
         mCurrency = currency;
         mProfile = profile;
         mTransferMethodType = transferMethodType;
+        mTransferMethodName = transferMethodName;
         mProcessingTime = processingTime;
         mFees = new ArrayList<>(fees);
     }
@@ -52,6 +54,10 @@ public class TransferMethodSelectionItem {
 
     public String getProfile() {
         return mProfile;
+    }
+
+    public String getTransferMethodName() {
+        return mTransferMethodName;
     }
 
     public String getTransferMethodType() {

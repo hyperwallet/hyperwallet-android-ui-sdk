@@ -19,7 +19,6 @@
 package com.hyperwallet.android.ui.transfermethod;
 
 import static com.hyperwallet.android.ui.transfermethod.TransferMethodUtils.getStringFontIcon;
-import static com.hyperwallet.android.ui.transfermethod.TransferMethodUtils.getStringResourceByName;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -452,8 +451,7 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
 
             @SuppressLint("StringFormatInvalid")
             void bind(TransferMethodSelectionItem selectionItem) {
-                mTitle.setText(
-                        getStringResourceByName(mTitle.getContext(), selectionItem.getTransferMethodType()));
+                mTitle.setText(selectionItem.getTransferMethodName());
                 mIcon.setText(
                         getStringFontIcon(mIcon.getContext(), selectionItem.getTransferMethodType()));
 
