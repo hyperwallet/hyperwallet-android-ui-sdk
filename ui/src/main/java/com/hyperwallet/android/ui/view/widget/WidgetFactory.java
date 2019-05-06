@@ -23,8 +23,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.hyperwallet.android.exception.HyperwalletException;
-import com.hyperwallet.android.model.meta.EDataType;
-import com.hyperwallet.android.model.meta.HyperwalletField;
+import com.hyperwallet.android.model.meta.field.EDataType;
+import com.hyperwallet.android.model.meta.field.HyperwalletField;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;

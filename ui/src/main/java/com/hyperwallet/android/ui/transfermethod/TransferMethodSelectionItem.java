@@ -16,28 +16,30 @@
  */
 package com.hyperwallet.android.ui.transfermethod;
 
-import com.hyperwallet.android.model.meta.Fee;
+import com.hyperwallet.android.model.meta.HyperwalletFee;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 public class TransferMethodSelectionItem {
 
     private final String mCountry;
     private final String mCurrency;
-    private final List<Fee> mFees;
+    private final List<HyperwalletFee> mFees;
     private final String mProcessingTime;
     private final String mProfile;
     private final String mTransferMethodType;
 
     public TransferMethodSelectionItem(String country, String currency, String profile, String transferMethodType,
-            String processingTime, List<Fee> fees) {
+            String processingTime, Set<HyperwalletFee> fees) {
         mCountry = country;
         mCurrency = currency;
         mProfile = profile;
         mTransferMethodType = transferMethodType;
         mProcessingTime = processingTime;
-        mFees = fees;
+        mFees = new ArrayList<>(fees);
     }
 
     public String getCountry() {
@@ -60,7 +62,7 @@ public class TransferMethodSelectionItem {
         return mProcessingTime;
     }
 
-    public List<Fee> getFees() {
+    public List<HyperwalletFee> getFees() {
         return mFees;
     }
 

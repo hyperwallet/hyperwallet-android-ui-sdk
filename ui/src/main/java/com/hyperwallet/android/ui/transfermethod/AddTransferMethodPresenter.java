@@ -17,11 +17,12 @@
 package com.hyperwallet.android.ui.transfermethod;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.HyperwalletTransferMethod;
-import com.hyperwallet.android.model.meta.Fee;
-import com.hyperwallet.android.model.meta.HyperwalletTransferMethodConfigurationFieldResult;
+import com.hyperwallet.android.model.meta.HyperwalletFee;
+import com.hyperwallet.android.model.meta.HyperwalletTransferMethodConfigurationField;
 import com.hyperwallet.android.ui.repository.TransferMethodConfigurationRepository;
 import com.hyperwallet.android.ui.repository.TransferMethodRepository;
 
@@ -85,20 +86,17 @@ public class AddTransferMethodPresenter implements AddTransferMethodContract.Pre
         mTransferMethodConfigurationRepository.getFields(
                 country, currency, transferMethodType, new TransferMethodConfigurationRepository.LoadFieldsCallback() {
                     @Override
-                    public void onFieldsLoaded(
-                            HyperwalletTransferMethodConfigurationFieldResult transferMethodConfigurationFieldResult) {
+                    public void onFieldsLoaded(HyperwalletTransferMethodConfigurationField field,
+                            @Nullable final String processingType) {
                         if (!mView.isActive()) {
                             return;
                         }
 
                         mView.hideProgressBar();
-                        mView.showTransferMethodFields(transferMethodConfigurationFieldResult.getFields());
+                        mView.showTransferMethodFields(field.getFields().getFieldGroups());
                         // there can be multiple fees when we have flat fee + percentage fees
-                        List<Fee> fees = transferMethodConfigurationFieldResult
-                                .getFees(country, currency, transferMethodType, "INDIVIDUAL");
-                        mView.showTransactionInformation(fees,
-                                transferMethodConfigurationFieldResult
-                                        .getProcessingTime(country, currency, transferMethodType, "INDIVIDUAL"));
+                        List<HyperwalletFee> fees = field.getFees();
+                        mView.showTransactionInformation(fees, processingType);
                     }
 
                     @Override

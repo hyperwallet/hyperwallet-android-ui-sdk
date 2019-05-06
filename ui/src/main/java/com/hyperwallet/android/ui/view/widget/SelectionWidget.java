@@ -33,8 +33,8 @@ import androidx.core.content.ContextCompat;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.hyperwallet.android.hyperwallet_ui.R;
-import com.hyperwallet.android.model.meta.HyperwalletField;
-import com.hyperwallet.android.model.meta.HyperwalletFieldSelectionOption;
+import com.hyperwallet.android.model.meta.field.HyperwalletField;
+import com.hyperwallet.android.model.meta.field.HyperwalletFieldSelectionOption;
 import com.hyperwallet.android.ui.view.WidgetSelectionDialogFragment;
 
 import java.util.Locale;

@@ -48,8 +48,9 @@ import com.hyperwallet.android.model.HyperwalletBankAccount;
 import com.hyperwallet.android.model.HyperwalletBankCard;
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.HyperwalletTransferMethod;
-import com.hyperwallet.android.model.meta.Fee;
-import com.hyperwallet.android.model.meta.HyperwalletField;
+import com.hyperwallet.android.model.meta.HyperwalletFee;
+import com.hyperwallet.android.model.meta.field.HyperwalletField;
+import com.hyperwallet.android.model.meta.field.HyperwalletFieldGroup;
 import com.hyperwallet.android.ui.HyperwalletLocalBroadcast;
 import com.hyperwallet.android.ui.repository.RepositoryFactory;
 import com.hyperwallet.android.ui.view.WidgetSelectionDialogFragment;
@@ -287,11 +288,14 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     }
 
     @Override
-    public void showTransferMethodFields(@NonNull final List<HyperwalletField> fields) {
+    public void showTransferMethodFields(@NonNull final List<HyperwalletFieldGroup> fields) {
         mDynamicContainer.removeAllViews();
         int previousView = 0;
         try {
-            for (final HyperwalletField field : fields) {
+
+
+            //TODO adjust groupings
+            for (final HyperwalletField field : fields.get(0).getFields()) {
                 AbstractWidget widget = WidgetFactory
                         .newWidget(field, this, getContext(),
                                 mWidgetInputStateHashMap.containsKey(field.getName()) ?
@@ -318,7 +322,8 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     }
 
     @Override
-    public void showTransactionInformation(@NonNull final List<Fee> fees, @Nullable final String processingTime) {
+    public void showTransactionInformation(@NonNull final List<HyperwalletFee> fees,
+            @Nullable final String processingTime) {
         View header = getView().findViewById(R.id.add_transfer_method_static_container_header);
         View container = getView().findViewById(R.id.add_transfer_method_static_container);
         View feeLabel = getView().findViewById(R.id.add_transfer_method_fee_label);

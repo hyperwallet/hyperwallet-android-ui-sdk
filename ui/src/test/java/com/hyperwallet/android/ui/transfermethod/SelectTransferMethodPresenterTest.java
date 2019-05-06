@@ -13,7 +13,8 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.HyperwalletErrors;
-import com.hyperwallet.android.model.meta.TransferMethodConfigurationResult;
+import com.hyperwallet.android.model.meta.HyperwalletTransferMethodConfigurationKey;
+import com.hyperwallet.android.model.meta.keyed.HyperwalletTransferMethodConfigurationKeyResult;
 import com.hyperwallet.android.ui.repository.TransferMethodConfigurationRepository;
 import com.hyperwallet.android.ui.repository.TransferMethodConfigurationRepositoryImpl;
 import com.hyperwallet.android.ui.rule.HyperwalletExternalResourceManager;
@@ -46,7 +47,7 @@ public class SelectTransferMethodPresenterTest {
     @Rule
     public HyperwalletExternalResourceManager externalResourceManager = new HyperwalletExternalResourceManager();
 
-    private TransferMethodConfigurationResult result;
+    private HyperwalletTransferMethodConfigurationKey result;
     private SelectTransferMethodPresenter selectTransferMethodPresenter;
     private final HyperwalletErrors errors = createErrors();
 
@@ -55,7 +56,7 @@ public class SelectTransferMethodPresenterTest {
         initMocks(this);
         String responseBody = externalResourceManager.getResourceContent("successful_tmc_keys_response.json");
         final JSONObject jsonObject = new JSONObject(responseBody);
-        result = new TransferMethodConfigurationResult(jsonObject);
+        result = new HyperwalletTransferMethodConfigurationKeyResult(jsonObject);
         selectTransferMethodPresenter = new SelectTransferMethodPresenter(view, transferMethodConfigurationRepository);
     }
 
@@ -164,7 +165,7 @@ public class SelectTransferMethodPresenterTest {
         // Then
         selectTransferMethodPresenter.loadCurrency(false, "CA");
 
-        verify(view).showTransferMethodCurrency("USD");
+        verify(view).showTransferMethodCurrency("CAD");
         verify(view).showTransferMethodTypes(ArgumentMatchers.<TransferMethodSelectionItem>anyList());
         verify(view, never()).showErrorLoadTransferMethodConfigurationKeys(
                 ArgumentMatchers.<HyperwalletError>anyList());

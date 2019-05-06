@@ -17,9 +17,10 @@ import com.hyperwallet.android.model.HyperwalletBankAccount;
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.HyperwalletTransferMethod;
-import com.hyperwallet.android.model.meta.Fee;
-import com.hyperwallet.android.model.meta.HyperwalletField;
-import com.hyperwallet.android.model.meta.HyperwalletTransferMethodConfigurationFieldResult;
+import com.hyperwallet.android.model.meta.HyperwalletFee;
+import com.hyperwallet.android.model.meta.HyperwalletTransferMethodConfigurationField;
+import com.hyperwallet.android.model.meta.field.HyperwalletFieldGroup;
+import com.hyperwallet.android.model.meta.field.HyperwalletTransferMethodConfiguration;
 import com.hyperwallet.android.ui.repository.TransferMethodConfigurationRepository;
 import com.hyperwallet.android.ui.repository.TransferMethodRepository;
 import com.hyperwallet.android.ui.rule.HyperwalletExternalResourceManager;
@@ -63,7 +64,7 @@ public class AddTransferMethodPresenterTest {
     @Mock
     private AddTransferMethodContract.View view;
     @Captor
-    private ArgumentCaptor<List<HyperwalletField>> fieldArgumentCaptor;
+    private ArgumentCaptor<List<HyperwalletFieldGroup>> fieldArgumentCaptor;
     @Captor
     private ArgumentCaptor<List<HyperwalletError>> mErrorListArgumentCaptor;
     @Rule
@@ -131,26 +132,24 @@ public class AddTransferMethodPresenterTest {
     public void testLoadTransferMethodConfigurationFields_loadsTransferMethodFieldsIntoViewOnSuccess()
             throws Exception {
         // Given
-        final HyperwalletTransferMethodConfigurationFieldResult result = mock(
-                HyperwalletTransferMethodConfigurationFieldResult.class);
+        final HyperwalletTransferMethodConfigurationField result = mock(
+                HyperwalletTransferMethodConfigurationField.class);
 
         JSONObject jsonObject = new JSONObject(
                 externalResourceManager.getResourceContent("add_transfer_method_presenter_test.json"));
-        final HyperwalletField field = new HyperwalletField(jsonObject);
-        List<HyperwalletField> fields = new ArrayList<HyperwalletField>() {{
-            add(field);
-        }};
+        final HyperwalletTransferMethodConfiguration configuration = new HyperwalletTransferMethodConfiguration(
+                jsonObject);
 
         // When
         when(view.isActive()).thenReturn(true);
-        when(result.getFields()).thenReturn(fields);
+        when(result.getFields()).thenReturn(configuration);
 
         doAnswer(new Answer() {
             @Override
             public Object answer(InvocationOnMock invocation) {
                 TransferMethodConfigurationRepository.LoadFieldsCallback callback =
                         (TransferMethodConfigurationRepository.LoadFieldsCallback) invocation.getArguments()[3];
-                callback.onFieldsLoaded(result);
+                callback.onFieldsLoaded(result, "");
                 return callback;
             }
         }).when(tmcRepository).getFields(anyString(), anyString(), anyString(),
@@ -164,8 +163,8 @@ public class AddTransferMethodPresenterTest {
         verify(view, never()).showErrorLoadTransferMethodConfigurationFields(
                 ArgumentMatchers.<HyperwalletError>anyList());
         verify(view, never()).showErrorAddTransferMethod(ArgumentMatchers.<HyperwalletError>anyList());
-        List<HyperwalletField> responseFields = fieldArgumentCaptor.getValue();
-        assertThat(responseFields, hasItem(field));
+        List<HyperwalletFieldGroup> responseFields = fieldArgumentCaptor.getValue();
+        assertThat(responseFields, hasItem(configuration.getFieldGroups().get(0)));
     }
 
     @Test
@@ -188,7 +187,7 @@ public class AddTransferMethodPresenterTest {
         presenter.loadTransferMethodConfigurationFields(false, "CA", "CAD", "BANK_ACCOUNT");
         LATCH.await(AWAIT_TIME_MS, TimeUnit.MILLISECONDS);
 
-        verify(view, never()).showTransferMethodFields(ArgumentMatchers.<HyperwalletField>anyList());
+        verify(view, never()).showTransferMethodFields(ArgumentMatchers.<HyperwalletFieldGroup>anyList());
         verify(view, atLeastOnce()).showErrorLoadTransferMethodConfigurationFields(mErrorListArgumentCaptor.capture());
         assertThat(mErrorListArgumentCaptor.getValue(), hasItem(errors.getErrors().get(0)));
     }
@@ -200,7 +199,7 @@ public class AddTransferMethodPresenterTest {
         verify(tmcRepository, atLeastOnce()).refreshFields();
         verify(tmcRepository, atLeastOnce()).getFields(anyString(), anyString(), anyString(),
                 any(TransferMethodConfigurationRepository.LoadFieldsCallback.class));
-        verify(view, never()).showTransferMethodFields(ArgumentMatchers.<HyperwalletField>anyList());
+        verify(view, never()).showTransferMethodFields(ArgumentMatchers.<HyperwalletFieldGroup>anyList());
         verify(view, never()).showErrorLoadTransferMethodConfigurationFields(
                 ArgumentMatchers.<HyperwalletError>anyList());
         verify(view, never()).showErrorAddTransferMethod(ArgumentMatchers.<HyperwalletError>anyList());
@@ -218,8 +217,8 @@ public class AddTransferMethodPresenterTest {
         verify(tmcRepository, atLeastOnce()).getFields(anyString(), anyString(), anyString(),
                 any(TransferMethodConfigurationRepository.LoadFieldsCallback.class));
         verify(view, never()).hideProgressBar();
-        verify(view, never()).showTransferMethodFields(ArgumentMatchers.<HyperwalletField>anyList());
-        verify(view, never()).showTransactionInformation(ArgumentMatchers.<Fee>anyList(), anyString());
+        verify(view, never()).showTransferMethodFields(ArgumentMatchers.<HyperwalletFieldGroup>anyList());
+        verify(view, never()).showTransactionInformation(ArgumentMatchers.<HyperwalletFee>anyList(), anyString());
     }
 
     @Test
