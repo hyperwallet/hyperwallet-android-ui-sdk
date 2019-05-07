@@ -41,8 +41,8 @@ public class SelectTransferMethodPresenter implements SelectTransferMethodContra
     private final SelectTransferMethodContract.View mView;
 
     SelectTransferMethodPresenter(SelectTransferMethodContract.View view,
-            TransferMethodConfigurationRepository transferMethodConfigurationRepository,
-            UserRepository userRepository) {
+            @NonNull final TransferMethodConfigurationRepository transferMethodConfigurationRepository,
+            @NonNull final UserRepository userRepository) {
         this.mView = view;
         this.mTransferMethodConfigurationRepository = transferMethodConfigurationRepository;
         this.mUserRepository = userRepository;
