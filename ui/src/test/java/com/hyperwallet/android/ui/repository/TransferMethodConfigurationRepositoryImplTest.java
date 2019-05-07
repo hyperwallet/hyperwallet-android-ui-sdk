@@ -13,6 +13,8 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import static com.hyperwallet.android.model.HyperwalletUser.ProfileTypes.INDIVIDUAL;
+
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.exception.HyperwalletException;
 import com.hyperwallet.android.listener.HyperwalletListener;
@@ -168,7 +170,7 @@ public class TransferMethodConfigurationRepositoryImplTest {
                 ArgumentMatchers.<HyperwalletTransferMethodConfigurationFieldQuery>any(),
                 ArgumentMatchers.<HyperwalletListener<HyperwalletTransferMethodConfigurationFieldResult>>any());
 
-        mTransferMethodConfigurationRepositoryImplMock.getFields(COUNTRY, CURRENCY, TRANSFER_METHOD_TYPE,
+        mTransferMethodConfigurationRepositoryImplMock.getFields(COUNTRY, CURRENCY, TRANSFER_METHOD_TYPE, INDIVIDUAL,
                 loadFieldsCallback);
 
         verify(loadFieldsCallback).onFieldsLoaded(fieldResultArgumentCaptor.capture());
@@ -204,7 +206,7 @@ public class TransferMethodConfigurationRepositoryImplTest {
                 ArgumentMatchers.<HyperwalletListener<HyperwalletTransferMethodConfigurationFieldResult>>any());
 
 
-        mTransferMethodConfigurationRepositoryImplMock.getFields(COUNTRY, CURRENCY, TRANSFER_METHOD_TYPE,
+        mTransferMethodConfigurationRepositoryImplMock.getFields(COUNTRY, CURRENCY, TRANSFER_METHOD_TYPE, INDIVIDUAL,
                 loadFieldsCallback);
 
         verify(loadFieldsCallback, never()).onFieldsLoaded(
@@ -248,10 +250,11 @@ public class TransferMethodConfigurationRepositoryImplTest {
         FieldMapKey fieldMapKey = new FieldMapKey(COUNTRY, CURRENCY, TRANSFER_METHOD_TYPE);
         when(mFieldsMap.get(fieldMapKey)).thenReturn(result);
 
-        mTransferMethodConfigurationRepositoryImplMock.getFields(COUNTRY, CURRENCY, TRANSFER_METHOD_TYPE,
+        mTransferMethodConfigurationRepositoryImplMock.getFields(COUNTRY, CURRENCY, TRANSFER_METHOD_TYPE,INDIVIDUAL,
                 loadFieldsCallback);
 
         verify(mTransferMethodConfigurationRepositoryImplMock, never()).getTransferMethodConfigurationFieldResult(
+                any(String.class),
                 any(String.class),
                 any(String.class),
                 any(String.class),
