@@ -130,6 +130,17 @@ public class SelectTransferMethodPresenterTest {
         }).when(mTransferMethodConfigurationRepository).getKeys(any(
                 TransferMethodConfigurationRepository.LoadKeysCallback.class));
 
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                UserRepository.LoadUserCallback userCallback =
+                        (UserRepository.LoadUserCallback) invocation.getArguments()[0];
+                userCallback.onUserLoaded(mUser);
+                return userCallback;
+            }
+        }).when(mUserRepository).loadUser(any(
+                UserRepository.LoadUserCallback.class));
+
         // Then
         selectTransferMethodPresenter.loadTransferMethodConfigurationKeys(false, "CA", "CAD");
 
@@ -364,6 +375,18 @@ public class SelectTransferMethodPresenterTest {
         }).when(mTransferMethodConfigurationRepository).getKeys(any(
                 TransferMethodConfigurationRepository.LoadKeysCallback.class));
 
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                UserRepository.LoadUserCallback userCallback =
+                        (UserRepository.LoadUserCallback) invocation.getArguments()[0];
+                userCallback.onUserLoaded(mUser);
+                return userCallback;
+            }
+        }).when(mUserRepository).loadUser(any(
+                UserRepository.LoadUserCallback.class));
+
+
         // Then
         selectTransferMethodPresenter.loadTransferMethodTypes(false, COUNTRY, CURRENCY);
 
@@ -427,6 +450,17 @@ public class SelectTransferMethodPresenterTest {
             }
         }).when(mTransferMethodConfigurationRepository).getKeys(any(
                 TransferMethodConfigurationRepository.LoadKeysCallback.class));
+
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                UserRepository.LoadUserCallback userCallback =
+                        (UserRepository.LoadUserCallback) invocation.getArguments()[0];
+                userCallback.onUserLoaded(mUser);
+                return userCallback;
+            }
+        }).when(mUserRepository).loadUser(any(
+                UserRepository.LoadUserCallback.class));
 
         // Then
         selectTransferMethodPresenter.loadTransferMethodTypes(false, "CA", "CAD");
