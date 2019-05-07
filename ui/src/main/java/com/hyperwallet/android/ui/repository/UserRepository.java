@@ -18,6 +18,11 @@ public interface UserRepository {
     void loadUser(@NonNull final LoadUserCallback callback);
 
     /**
+     * Set user to null
+     */
+    void refreshUser();
+
+    /**
      * Callback interface that responses to action when invoked to
      * Load User information
      * <p>
