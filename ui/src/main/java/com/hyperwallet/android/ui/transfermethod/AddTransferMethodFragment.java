@@ -25,9 +25,7 @@ import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMe
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
-import android.text.InputType;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,7 +33,6 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -76,7 +73,6 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     private static final String ARGUMENT_SHOW_CREATE_PROGRESS_BAR = "ARGUMENT_SHOW_CREATE_PROGRESS_BAR";
     private static final String ARGUMENT_TRANSFER_METHOD = "ARGUMENT_TRANSFER_METHOD";
     private static final String ARGUMENT_WIDGET_STATE_MAP = "ARGUMENT_WIDGET_STATE_MAP";
-    private static final String ARGUMENT_CURRENT_FOCUS_FIELD_NAME = "ARGUMENT_CURRENT_FOCUS_FIELD_NAME";
     private static final boolean FORCE_UPDATE = false;
 
     private String mCountry;
@@ -91,7 +87,6 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     private View mProgressBar;
     private boolean mShowCreateProgressBar;
     private String mTransferMethodType;
-    private String mFocusedName;
     private HyperwalletTransferMethod mTransferMethod;
     private HashMap<String, WidgetInputState> mWidgetInputStateHashMap;
     private TextView sectionHeaderTextView;
@@ -210,14 +205,12 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
             mTransferMethodType = savedInstanceState.getString(ARGUMENT_TRANSFER_METHOD_TYPE);
             mShowCreateProgressBar = savedInstanceState.getBoolean(ARGUMENT_SHOW_CREATE_PROGRESS_BAR);
             mTransferMethod = savedInstanceState.getParcelable(ARGUMENT_TRANSFER_METHOD);
-            mFocusedName = savedInstanceState.getString(ARGUMENT_CURRENT_FOCUS_FIELD_NAME);
         } else { // same as AddTransferMethodFragment#newInstance
             mWidgetInputStateHashMap = (HashMap) getArguments().getSerializable(ARGUMENT_WIDGET_STATE_MAP);
             mCountry = getArguments().getString(ARGUMENT_TRANSFER_METHOD_COUNTRY);
             mCurrency = getArguments().getString(ARGUMENT_TRANSFER_METHOD_CURRENCY);
             mTransferMethodType = getArguments().getString(ARGUMENT_TRANSFER_METHOD_TYPE);
             mTransferMethod = getArguments().getParcelable(ARGUMENT_TRANSFER_METHOD);
-            mFocusedName = null;
         }
 
         Locale locale = new Locale.Builder().setRegion(mCountry).build();
@@ -244,25 +237,18 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
         outState.putString(ARGUMENT_TRANSFER_METHOD_TYPE, mTransferMethodType);
         outState.putBoolean(ARGUMENT_SHOW_CREATE_PROGRESS_BAR, mShowCreateProgressBar);
         outState.putParcelable(ARGUMENT_TRANSFER_METHOD, mTransferMethod);
+        super.onSaveInstanceState(outState);
+    }
 
-        View focusedView = getFocusedView();
-        outState.putString(ARGUMENT_CURRENT_FOCUS_FIELD_NAME,
-                getFocusedView() != null ? focusedView.getTag().toString() : null);
-
+    @Override
+    public void onDestroyView() {
         if (getView() != null && getView().getRootView() != null) {
             InputMethodManager inputManager = (InputMethodManager) requireContext().getSystemService(
                     Context.INPUT_METHOD_SERVICE);
             inputManager.hideSoftInputFromWindow(getView().getRootView().getWindowToken(), 0);
             getView().getRootView().clearFocus();
         }
-        super.onSaveInstanceState(outState);
-    }
-
-    private View getFocusedView() {
-        if (getView() != null && getView().findFocus() != null && getView().findFocus().getTag() != null) {
-            return getView().findFocus();
-        }
-        return null;
+        super.onDestroyView();
     }
 
     @Override
@@ -338,10 +324,6 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
             if (mShowCreateProgressBar) {
                 setVisibleAndDisableFields();
             }
-            if (mFocusedName != null && mDynamicContainer.findViewWithTag(mFocusedName) != null) {
-                mDynamicContainer.findViewWithTag(mFocusedName).requestFocus();
-            }
-
         } catch (HyperwalletException e) {
             throw new IllegalStateException("Widget initialization error: " + e.getMessage());
         }
