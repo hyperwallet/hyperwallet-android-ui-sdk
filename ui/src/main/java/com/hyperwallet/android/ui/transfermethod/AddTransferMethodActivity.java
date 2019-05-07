@@ -45,6 +45,7 @@ public class AddTransferMethodActivity extends AppCompatActivity implements
     public static final String EXTRA_TRANSFER_METHOD_COUNTRY = "TRANSFER_METHOD_COUNTRY";
     public static final String EXTRA_TRANSFER_METHOD_CURRENCY = "TRANSFER_METHOD_CURRENCY";
     public static final String EXTRA_TRANSFER_METHOD_TYPE = "TRANSFER_METHOD_TYPE";
+    public static final String EXTRA_TRANSFER_METHOD_PROFILE_TYPE = "TRANSFER_METHOD_PROFILE_TYPE";
     public static final int REQUEST_CODE = 100;
     private static final String ARGUMENT_RETRY_ACTION = "ARGUMENT_RETRY_ACTION";
     private static final short RETRY_SHOW_ERROR_ADD_TRANSFER_METHOD = 100;
@@ -75,7 +76,9 @@ public class AddTransferMethodActivity extends AppCompatActivity implements
             initFragment(AddTransferMethodFragment.newInstance(
                     getIntent().getStringExtra(EXTRA_TRANSFER_METHOD_COUNTRY),
                     getIntent().getStringExtra(EXTRA_TRANSFER_METHOD_CURRENCY),
-                    getIntent().getStringExtra(EXTRA_TRANSFER_METHOD_TYPE)));
+                    getIntent().getStringExtra(EXTRA_TRANSFER_METHOD_TYPE),
+                    getIntent().getStringExtra(EXTRA_TRANSFER_METHOD_PROFILE_TYPE)
+            ));
         } else {
             mRetryCode = savedInstanceState.getShort(ARGUMENT_RETRY_ACTION);
         }
@@ -181,7 +184,9 @@ public class AddTransferMethodActivity extends AppCompatActivity implements
             fragment = AddTransferMethodFragment.newInstance(
                     getIntent().getStringExtra(EXTRA_TRANSFER_METHOD_COUNTRY),
                     getIntent().getStringExtra(EXTRA_TRANSFER_METHOD_CURRENCY),
-                    getIntent().getStringExtra(EXTRA_TRANSFER_METHOD_TYPE));
+                    getIntent().getStringExtra(EXTRA_TRANSFER_METHOD_TYPE),
+                    getIntent().getStringExtra(EXTRA_TRANSFER_METHOD_PROFILE_TYPE)
+            );
         }
         return fragment;
     }
