@@ -45,4 +45,9 @@ public class UserRepositoryImpl implements UserRepository {
             callback.onUserLoaded(mUser);
         }
     }
+
+    @Override
+    public void refreshUser() {
+        mUser = null;
+    }
 }

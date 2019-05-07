@@ -9,6 +9,7 @@ import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import static com.hyperwallet.android.model.HyperwalletUser.ProfileTypes.INDIVIDUAL;
@@ -72,7 +73,7 @@ public class UserRepositoryImplTest {
                 .status(PRE_ACTIVATED)
                 .verificationStatus(NOT_REQUIRED)
                 .createdOn("2017-10-30T22:15:45")
-                .clientUserId("CSK7b8Ffch")
+                .clientUserId("123456")
                 .profileType(INDIVIDUAL)
                 .firstName("Some")
                 .lastName("Guy")
@@ -107,7 +108,7 @@ public class UserRepositoryImplTest {
         assertThat(resultUser.getField(STATUS), is(PRE_ACTIVATED));
         assertThat(resultUser.getField(VERIFICATION_STATUS), is(NOT_REQUIRED));
         assertThat(resultUser.getField(CREATED_ON), is("2017-10-30T22:15:45"));
-        assertThat(resultUser.getField(CLIENT_USER_ID), is("CSK7b8Ffch"));
+        assertThat(resultUser.getField(CLIENT_USER_ID), is("123456"));
         assertThat(resultUser.getField(PROFILE_TYPE), is(INDIVIDUAL));
         assertThat(resultUser.getField(HyperwalletUser.UserFields.FIRST_NAME), is("Some"));
         assertThat(resultUser.getField(HyperwalletUser.UserFields.LAST_NAME), is("Guy"));
@@ -172,4 +173,32 @@ public class UserRepositoryImplTest {
 
         assertThat(mErrorCaptor.getValue().getErrors(), hasItem(error));
     }
+
+    @Test
+    public void testRefreshUser_callsGetUserAfterRefresh() {
+        HyperwalletUser.Builder builder = new HyperwalletUser.Builder();
+        final HyperwalletUser user = builder.build();
+
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                HyperwalletListener listener = (HyperwalletListener) invocation.getArguments()[0];
+                listener.onSuccess(user);
+                return listener;
+            }
+        }).when(mHyperwallet).getUser(ArgumentMatchers.<HyperwalletListener<HyperwalletUser>>any());
+        UserRepository.LoadUserCallback mockCallback = mock(UserRepository.LoadUserCallback.class);
+
+        mUserRepository.loadUser(mockCallback);
+        verify(mHyperwallet).getUser(any(HyperwalletListener.class));
+        verify(mockCallback, never()).onError(any(HyperwalletErrors.class));
+
+        mUserRepository.loadUser(mockCallback);
+        verify(mHyperwallet).getUser(any(HyperwalletListener.class));
+
+        mUserRepository.refreshUser();
+        mUserRepository.loadUser(mockCallback);
+        verify(mHyperwallet, times(2)).getUser(any(HyperwalletListener.class));
+    }
+
 }
