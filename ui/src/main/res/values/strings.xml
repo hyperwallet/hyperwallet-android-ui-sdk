@@ -72,12 +72,14 @@
     <string name="wire_account">Wire Account</string>
     <string name="paper_check">Paper Check</string>
     <string name="prepaid_card">Prepaid Card</string>
+    <string name="paypal_account">PayPal Account</string>
 
     <string name="bank_account_font_icon">\uE000</string>
     <string name="bank_card_font_icon">\uE005</string>
     <string name="wire_account_font_icon">\uE00D</string>
     <string name="paper_check_font_icon">\uE002</string>
     <string name="prepaid_card_font_icon">\uE00E</string>
+    <string name="paypal_account_font_icon">\uE021</string>
 
     <string name="search_hint">Search Hint</string>
     <string name="search_country">Search Country</string>
