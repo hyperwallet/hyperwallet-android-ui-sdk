@@ -20,6 +20,7 @@ import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMe
 import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodFields.TYPE;
 import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodTypes.BANK_ACCOUNT;
 import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodTypes.BANK_CARD;
+import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodTypes.PAYPAL_ACCOUNT;
 
 import android.os.Handler;
 
@@ -34,6 +35,7 @@ import com.hyperwallet.android.model.HyperwalletBankAccount;
 import com.hyperwallet.android.model.HyperwalletBankCard;
 import com.hyperwallet.android.model.HyperwalletStatusTransition;
 import com.hyperwallet.android.model.HyperwalletTransferMethod;
+import com.hyperwallet.android.model.PayPalAccount;
 import com.hyperwallet.android.model.paging.HyperwalletPageList;
 
 public class TransferMethodRepositoryImpl implements TransferMethodRepository {
@@ -55,6 +57,8 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
             case BANK_CARD:
                 createBankCard(transferMethod, callback);
                 break;
+            case PAYPAL_ACCOUNT:
+                createPayPalAccount(transferMethod, callback);
             default: //no default action
         }
     }
@@ -164,6 +168,28 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
         getHyperwallet().createBankCard(bankCard, new HyperwalletListener<HyperwalletBankCard>() {
             @Override
             public void onSuccess(@Nullable HyperwalletBankCard result) {
+                callback.onTransferMethodLoaded(result);
+            }
+
+            @Override
+            public void onFailure(HyperwalletException exception) {
+                callback.onError(exception.getHyperwalletErrors());
+            }
+
+            @Override
+            public Handler getHandler() {
+                return mHandler;
+            }
+        });
+    }
+
+    private void createPayPalAccount(@NonNull final HyperwalletTransferMethod transferMethod,
+            @NonNull final LoadTransferMethodCallback callback) {
+        PayPalAccount payPalAccount = (PayPalAccount) transferMethod;
+
+        getHyperwallet().createPayPalAccount(payPalAccount, new HyperwalletListener<PayPalAccount>() {
+            @Override
+            public void onSuccess(@Nullable PayPalAccount result) {
                 callback.onTransferMethodLoaded(result);
             }
 

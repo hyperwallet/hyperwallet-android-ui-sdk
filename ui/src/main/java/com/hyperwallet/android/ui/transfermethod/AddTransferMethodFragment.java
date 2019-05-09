@@ -21,6 +21,7 @@ import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMe
 import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodFields.TYPE;
 import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodTypes.BANK_ACCOUNT;
 import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodTypes.BANK_CARD;
+import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodTypes.PAYPAL_ACCOUNT;
 
 import android.app.Activity;
 import android.content.Context;
@@ -48,6 +49,7 @@ import com.hyperwallet.android.model.HyperwalletBankAccount;
 import com.hyperwallet.android.model.HyperwalletBankCard;
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.HyperwalletTransferMethod;
+import com.hyperwallet.android.model.PayPalAccount;
 import com.hyperwallet.android.model.meta.Fee;
 import com.hyperwallet.android.model.meta.HyperwalletField;
 import com.hyperwallet.android.ui.HyperwalletLocalBroadcast;
@@ -466,6 +468,11 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                     mTransferMethod = new HyperwalletBankCard.Builder().
                             transferMethodCountry(mCountry).transferMethodCurrency(mCurrency).build();
                     break;
+                case PAYPAL_ACCOUNT:
+                    mTransferMethod = new PayPalAccount.Builder()
+                            .transferMethodCountry(mCountry)
+                            .transferMethodCurrency(mCurrency)
+                            .build();
                 default:
                     mTransferMethod = new HyperwalletTransferMethod();
                     mTransferMethod.setField(TRANSFER_METHOD_COUNTRY, mCountry);
