@@ -78,7 +78,7 @@
     <string name="bank_card_font_icon">\uE005</string>
     <string name="wire_account_font_icon">\uE00D</string>
     <string name="paper_check_font_icon">\uE002</string>
-    <string name="prepaid_card_font_icon">\uE00E</string>
+    <string name="prepaid_card_font_icon">\uE00A</string>
     <string name="paypal_account_font_icon">\uE021</string>
 
     <string name="search_hint">Search Hint</string>
