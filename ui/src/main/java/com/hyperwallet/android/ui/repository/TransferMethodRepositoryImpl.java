@@ -59,6 +59,7 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
                 break;
             case PAYPAL_ACCOUNT:
                 createPayPalAccount(transferMethod, callback);
+                break;
             default: //no default action
         }
     }

@@ -473,6 +473,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                             .transferMethodCountry(mCountry)
                             .transferMethodCurrency(mCurrency)
                             .build();
+                    break;
                 default:
                     mTransferMethod = new HyperwalletTransferMethod();
                     mTransferMethod.setField(TRANSFER_METHOD_COUNTRY, mCountry);
