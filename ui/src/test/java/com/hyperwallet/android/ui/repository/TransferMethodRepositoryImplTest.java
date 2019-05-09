@@ -489,7 +489,7 @@ public class TransferMethodRepositoryImplTest {
     }
 
     @Test
-    public void testCreateTransferMethod_createdPayPalAccountSuccessfully() {
+    public void testCreateTransferMethod_payPalAccountWithSuccess() {
         // prepare
         final PayPalAccount returnedPayPalAccount = new PayPalAccount.Builder()
                 .transferMethodCurrency("USD")
@@ -509,16 +509,14 @@ public class TransferMethodRepositoryImplTest {
         }).when(mHyperwallet).createPayPalAccount(any(PayPalAccount.class),
                 ArgumentMatchers.<HyperwalletListener<PayPalAccount>>any());
 
-        TransferMethodRepository.LoadTransferMethodCallback mockCallback = mock(
-                TransferMethodRepository.LoadTransferMethodCallback.class);
         PayPalAccount parameter = new PayPalAccount.Builder().build();
 
         // test
-        mTransferMethodRepository.createTransferMethod(parameter, mockCallback);
+        mTransferMethodRepository.createTransferMethod(parameter, mLoadTransferMethodCallback);
 
         // verify
-        verify(mockCallback).onTransferMethodLoaded(mPayPalAccountArgumentCaptor.capture());
-        verify(mockCallback, never()).onError(any(HyperwalletErrors.class));
+        verify(mLoadTransferMethodCallback).onTransferMethodLoaded(mPayPalAccountArgumentCaptor.capture());
+        verify(mLoadTransferMethodCallback, never()).onError(any(HyperwalletErrors.class));
 
         // assert
         PayPalAccount payPalAccount = mPayPalAccountArgumentCaptor.getValue();
@@ -531,7 +529,7 @@ public class TransferMethodRepositoryImplTest {
     }
 
     @Test
-    public void testCreateTransferMethod_createPayPalAccountWithFailure() {
+    public void testCreateTransferMethod_payPalAccountWithError() {
         // prepare
         final HyperwalletError returnedError = new HyperwalletError("PayPal test message", "PAYPAL_TEST_CODE");
 
@@ -548,17 +546,14 @@ public class TransferMethodRepositoryImplTest {
             }
         }).when(mHyperwallet).createPayPalAccount(any(PayPalAccount.class),
                 ArgumentMatchers.<HyperwalletListener<PayPalAccount>>any());
-
-        TransferMethodRepository.LoadTransferMethodCallback mockCallback = mock(
-                TransferMethodRepository.LoadTransferMethodCallback.class);
         PayPalAccount parameter = new PayPalAccount.Builder().build();
 
         // test
-        mTransferMethodRepository.createTransferMethod(parameter, mockCallback);
+        mTransferMethodRepository.createTransferMethod(parameter, mLoadTransferMethodCallback);
 
         // verify
-        verify(mockCallback, never()).onTransferMethodLoaded(any(HyperwalletTransferMethod.class));
-        verify(mockCallback).onError(mErrorsArgumentCaptor.capture());
+        verify(mLoadTransferMethodCallback, never()).onTransferMethodLoaded(any(HyperwalletTransferMethod.class));
+        verify(mLoadTransferMethodCallback).onError(mErrorsArgumentCaptor.capture());
 
         // assert
         assertThat(mErrorsArgumentCaptor.getValue().getErrors(), hasItem(returnedError));
