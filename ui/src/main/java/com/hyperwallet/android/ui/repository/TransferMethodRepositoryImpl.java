@@ -48,7 +48,7 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
     }
 
     @Override
-    public void createTransferMethod(final HyperwalletTransferMethod transferMethod,
+    public void createTransferMethod(@NonNull final HyperwalletTransferMethod transferMethod,
             LoadTransferMethodCallback callback) {
         switch (transferMethod.getField(TYPE)) {
             case BANK_ACCOUNT:
