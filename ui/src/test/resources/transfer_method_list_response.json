@@ -146,6 +146,23 @@
           "href": "https://localhost:8181/rest/v3/users/usr-a51c7522-ccba-4bcf-a6a7-bc59dae8f9b0/bank-accounts/trm-13141cde-56a1-4bde-ab82-534fde4d1cdb"
         }
       ]
+    },
+    {
+      "token": "trm-f3f3d205-b7fb-4292-bd40-fbe814c7efd3",
+      "type": "PAYPAL_ACCOUNT",
+      "status": "ACTIVATED",
+      "createdOn": "2019-05-08T20:28:38",
+      "transferMethodCountry": "US",
+      "transferMethodCurrency": "USD",
+      "email": "honey.thigpen@ukbuilder.com",
+      "links": [
+        {
+          "params": {
+            "rel": "self"
+          },
+          "href": "https://localhost:8181/rest/v3/users/usr-fa76a738-f43d-48b9-9a7a-7048d44a5d2d/transfer-methods/trm-f3f3d205-b7fb-4292-bd40-fbe814c7efd3"
+        }
+      ]
     }
   ],
   "links": [

@@ -94,6 +94,10 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
                 break;
             case BANK_CARD:
                 deactivateBankCardAccount(transferMethod, callback);
+                break;
+            case PAYPAL_ACCOUNT:
+                deactivatePayPalAccount(transferMethod, callback);
+                break;
             default: //no default action
         }
     }
@@ -122,6 +126,27 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
     private void deactivateBankCardAccount(@NonNull final HyperwalletTransferMethod transferMethod,
             @NonNull final DeactivateTransferMethodCallback callback) {
         getHyperwallet().deactivateBankCard(transferMethod.getField(TOKEN), null,
+                new HyperwalletListener<HyperwalletStatusTransition>() {
+                    @Override
+                    public void onSuccess(@Nullable HyperwalletStatusTransition result) {
+                        callback.onTransferMethodDeactivated(result);
+                    }
+
+                    @Override
+                    public void onFailure(HyperwalletException exception) {
+                        callback.onError(exception.getHyperwalletErrors());
+                    }
+
+                    @Override
+                    public Handler getHandler() {
+                        return mHandler;
+                    }
+                });
+    }
+
+    private void deactivatePayPalAccount(@NonNull final HyperwalletTransferMethod transferMethod,
+            @NonNull final DeactivateTransferMethodCallback callback) {
+        getHyperwallet().deactivatePayPalAccount(transferMethod.getField(TOKEN), null,
                 new HyperwalletListener<HyperwalletStatusTransition>() {
                     @Override
                     public void onSuccess(@Nullable HyperwalletStatusTransition result) {
