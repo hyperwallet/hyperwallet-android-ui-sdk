@@ -147,7 +147,7 @@ public class PayPalTest {
                 HyperwalletTransferMethod transferMethod = intent.getParcelableExtra(
                         "hyperwallet-local-broadcast-payload");
                 assertThat("Bank Account Id is incorrect", transferMethod.getField(
-                        HyperwalletTransferMethod.TransferMethodFields.EMAIL), is("sunshine.carreiro@felicity.com"));
+                        HyperwalletTransferMethod.TransferMethodFields.EMAIL), is("sunshine.carreiro@hyperwallet.com"));
             }
         };
 
@@ -155,7 +155,7 @@ public class PayPalTest {
                 .registerReceiver(br, new IntentFilter("ACTION_HYPERWALLET_TRANSFER_METHOD_ADDED"));
 
         onView(withId(R.id.email))
-                .perform(typeText("sunshine.carreiro@felicity.com"))
+                .perform(typeText("sunshine.carreiro@hyperwallet.com"))
                 .perform(closeSoftKeyboard());
 
         onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo(), click());
