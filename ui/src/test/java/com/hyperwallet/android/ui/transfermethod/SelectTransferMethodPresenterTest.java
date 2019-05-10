@@ -728,4 +728,50 @@ public class SelectTransferMethodPresenterTest {
         errors.add(error);
         return new HyperwalletErrors(errors);
     }
+
+    @Test
+    public void testLoadMethods_whenLoadUserWithError_checkShowingErrors() {
+
+        final HyperwalletError error = new HyperwalletError("test message", "TEST_CODE");
+        List<HyperwalletError> errorList = new ArrayList<>();
+        errorList.add(error);
+        final HyperwalletErrors errors = new HyperwalletErrors(errorList);
+
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                UserRepository.LoadUserCallback userCallback =
+                        (UserRepository.LoadUserCallback) invocation.getArguments()[0];
+                userCallback.onError(errors);
+                return userCallback;
+            }
+        }).when(mUserRepository).loadUser(any(
+                UserRepository.LoadUserCallback.class));
+        when(view.isActive()).thenReturn(false);
+        // Then
+        selectTransferMethodPresenter.loadTransferMethodConfigurationKeys(false, "CA", "CAD");
+
+        verify(view, never()).showErrorLoadTransferMethodConfigurationKeys(ArgumentMatchers.<HyperwalletError>anyList());
+
+        selectTransferMethodPresenter.loadCurrency(false, "CA");
+        verify(view, never()).showErrorLoadCurrency(ArgumentMatchers.<HyperwalletError>anyList());
+
+        selectTransferMethodPresenter.loadTransferMethodTypes(false, COUNTRY, CURRENCY);
+        verify(view, never()).showErrorLoadTransferMethodTypes(ArgumentMatchers.<HyperwalletError>anyList());
+
+
+        // When
+        when(view.isActive()).thenReturn(true);
+
+        // Then
+        selectTransferMethodPresenter.loadTransferMethodConfigurationKeys(false, "CA", "CAD");
+
+        verify(view).showErrorLoadTransferMethodConfigurationKeys(ArgumentMatchers.<HyperwalletError>anyList());
+
+        selectTransferMethodPresenter.loadCurrency(false, "CA");
+        verify(view).showErrorLoadCurrency(ArgumentMatchers.<HyperwalletError>anyList());
+
+        selectTransferMethodPresenter.loadTransferMethodTypes(false, COUNTRY, CURRENCY);
+        verify(view).showErrorLoadTransferMethodTypes(ArgumentMatchers.<HyperwalletError>anyList());
+    }
 }
