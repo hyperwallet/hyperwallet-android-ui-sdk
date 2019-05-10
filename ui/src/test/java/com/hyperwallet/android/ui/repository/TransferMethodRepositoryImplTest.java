@@ -13,10 +13,12 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
+import static com.hyperwallet.android.model.HyperwalletStatusTransition.StatusDefinition.ACTIVATED;
 import static com.hyperwallet.android.model.HyperwalletStatusTransition.StatusDefinition.DE_ACTIVATED;
 import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodFields.BANK_ACCOUNT_ID;
 import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodFields.BANK_NAME;
 import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodFields.STATUS;
+import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodFields.TOKEN;
 import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_COUNTRY;
 import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_CURRENCY;
 import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodFields.TYPE;
@@ -70,6 +72,8 @@ public class TransferMethodRepositoryImplTest {
     private ArgumentCaptor<HyperwalletBankAccount> mBankAccountArgumentCaptor;
     @Captor
     private ArgumentCaptor<HyperwalletBankCard> mBankCardArgumentCaptor;
+    @Captor
+    private ArgumentCaptor<PayPalAccount> mPayPalAccountArgumentCaptor;
     @Captor
     private ArgumentCaptor<HyperwalletStatusTransition> mStatusTransitionArgumentCaptor;
     @Captor
@@ -377,7 +381,6 @@ public class TransferMethodRepositoryImplTest {
                 .Builder("CA", "CAD", "1232345456784", "2019-05", "234")
                 .build();
 
-
         final HyperwalletError error = new HyperwalletError("bank card test message", "BANK_CARD_TEST_CODE");
 
         doAnswer(new Answer() {
@@ -483,5 +486,76 @@ public class TransferMethodRepositoryImplTest {
         verify(mLoadTransferMethodListCallback).onError(mErrorsArgumentCaptor.capture());
 
         assertThat(mErrorsArgumentCaptor.getValue().getErrors(), hasItem(error));
+    }
+
+    @Test
+    public void testCreateTransferMethod_payPalAccountWithSuccess() {
+        // prepare
+        final PayPalAccount returnedPayPalAccount = new PayPalAccount.Builder()
+                .transferMethodCurrency("USD")
+                .transferMethodCountry("US")
+                .email("money@mail.com")
+                .token("trm-token-1342242314")
+                .build();
+
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                HyperwalletListener listener = (HyperwalletListener) invocation.getArguments()[1];
+                returnedPayPalAccount.setField(STATUS, ACTIVATED);
+                listener.onSuccess(returnedPayPalAccount);
+                return listener;
+            }
+        }).when(mHyperwallet).createPayPalAccount(any(PayPalAccount.class),
+                ArgumentMatchers.<HyperwalletListener<PayPalAccount>>any());
+
+        PayPalAccount parameter = new PayPalAccount.Builder().build();
+
+        // test
+        mTransferMethodRepository.createTransferMethod(parameter, mLoadTransferMethodCallback);
+
+        // verify
+        verify(mLoadTransferMethodCallback).onTransferMethodLoaded(mPayPalAccountArgumentCaptor.capture());
+        verify(mLoadTransferMethodCallback, never()).onError(any(HyperwalletErrors.class));
+
+        // assert
+        PayPalAccount payPalAccount = mPayPalAccountArgumentCaptor.getValue();
+        assertThat(payPalAccount, is(notNullValue()));
+        assertThat(payPalAccount.getCountry(), is("US"));
+        assertThat(payPalAccount.getCurrency(), is("USD"));
+        assertThat(payPalAccount.getEmail(), is("money@mail.com"));
+        assertThat(payPalAccount.getField(STATUS), is(ACTIVATED));
+        assertThat(payPalAccount.getField(TOKEN), is("trm-token-1342242314"));
+    }
+
+    @Test
+    public void testCreateTransferMethod_payPalAccountWithError() {
+        // prepare
+        final HyperwalletError returnedError = new HyperwalletError("PayPal test message", "PAYPAL_TEST_CODE");
+
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                HyperwalletListener listener = (HyperwalletListener) invocation.getArguments()[1];
+
+                List<HyperwalletError> errorList = new ArrayList<>();
+                errorList.add(returnedError);
+
+                listener.onFailure(new HyperwalletException(new HyperwalletErrors(errorList)));
+                return listener;
+            }
+        }).when(mHyperwallet).createPayPalAccount(any(PayPalAccount.class),
+                ArgumentMatchers.<HyperwalletListener<PayPalAccount>>any());
+        PayPalAccount parameter = new PayPalAccount.Builder().build();
+
+        // test
+        mTransferMethodRepository.createTransferMethod(parameter, mLoadTransferMethodCallback);
+
+        // verify
+        verify(mLoadTransferMethodCallback, never()).onTransferMethodLoaded(any(HyperwalletTransferMethod.class));
+        verify(mLoadTransferMethodCallback).onError(mErrorsArgumentCaptor.capture());
+
+        // assert
+        assertThat(mErrorsArgumentCaptor.getValue().getErrors(), hasItem(returnedError));
     }
 }
