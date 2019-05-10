@@ -35,7 +35,6 @@ import java.util.Locale;
 import java.util.TreeMap;
 
 public class SelectTransferMethodPresenter implements SelectTransferMethodContract.Presenter {
-    private static final String TAG = SelectTransferMethodPresenter.class.getName();
 
     private final TransferMethodConfigurationRepository mTransferMethodConfigurationRepository;
     private final UserRepository mUserRepository;
@@ -59,9 +58,9 @@ public class SelectTransferMethodPresenter implements SelectTransferMethodContra
             mTransferMethodConfigurationRepository.refreshKeys();
         }
 
-        loadUser(new UserCallback() {
+        mUserRepository.loadUser(new UserRepository.LoadUserCallback() {
             @Override
-            public void onUserLoaded(@NonNull final HyperwalletUser user) {
+            public void onUserLoaded(@NonNull HyperwalletUser user) {
                 final String userProfileType = user.getField(HyperwalletUser.UserFields.PROFILE_TYPE);
 
                 mTransferMethodConfigurationRepository.getKeys(
@@ -85,19 +84,19 @@ public class SelectTransferMethodPresenter implements SelectTransferMethodContra
 
                             @Override
                             public void onError(@NonNull final HyperwalletErrors errors) {
-                                showErrorLoadTranferMethods(errors);
+                                showErrorLoadTransferMethods(errors);
                             }
                         });
             }
 
             @Override
-            public void onUserError(@NonNull HyperwalletErrors errors) {
-                showErrorLoadTranferMethods(errors);
+            public void onError(@NonNull HyperwalletErrors errors) {
+                showErrorLoadTransferMethods(errors);
             }
         });
     }
 
-    private void showErrorLoadTranferMethods(@NonNull HyperwalletErrors errors) {
+    private void showErrorLoadTransferMethods(@NonNull HyperwalletErrors errors) {
         if (!mView.isActive()) {
             return;
         }
@@ -112,7 +111,7 @@ public class SelectTransferMethodPresenter implements SelectTransferMethodContra
             mTransferMethodConfigurationRepository.refreshKeys();
         }
 
-        loadUser(new UserCallback() {
+        mUserRepository.loadUser(new UserRepository.LoadUserCallback() {
             @Override
             public void onUserLoaded(@NonNull final HyperwalletUser user) {
                 final String userProfileType = user.getField(HyperwalletUser.UserFields.PROFILE_TYPE);
@@ -143,10 +142,11 @@ public class SelectTransferMethodPresenter implements SelectTransferMethodContra
             }
 
             @Override
-            public void onUserError(@NonNull HyperwalletErrors errors) {
+            public void onError(@NonNull HyperwalletErrors errors) {
                 showErrorLoadCurrency(errors);
             }
         });
+
     }
 
     private void showErrorLoadCurrency(@NonNull HyperwalletErrors errors) {
@@ -163,10 +163,9 @@ public class SelectTransferMethodPresenter implements SelectTransferMethodContra
             mTransferMethodConfigurationRepository.refreshKeys();
         }
 
-        loadUser(new UserCallback() {
+        mUserRepository.loadUser(new UserRepository.LoadUserCallback() {
             @Override
             public void onUserLoaded(@NonNull final HyperwalletUser user) {
-
                 final String userProfileType = user.getField(HyperwalletUser.UserFields.PROFILE_TYPE);
                 mTransferMethodConfigurationRepository.getKeys(
                         new TransferMethodConfigurationRepository.LoadKeysCallback() {
@@ -198,14 +197,14 @@ public class SelectTransferMethodPresenter implements SelectTransferMethodContra
             }
 
             @Override
-            public void onUserError(@NonNull HyperwalletErrors errors) {
+            public void onError(@NonNull HyperwalletErrors errors) {
                 if (!mView.isActive()) {
                     return;
                 }
-                //show user error?
                 mView.showErrorLoadTransferMethodTypes(errors.getErrors());
             }
         });
+
     }
 
     @Override
@@ -291,28 +290,4 @@ public class SelectTransferMethodPresenter implements SelectTransferMethodContra
         return selectionItems;
     }
 
-    private void loadUser(@Nullable final UserCallback userCallback) {
-        mUserRepository.loadUser(new UserRepository.LoadUserCallback() {
-            @Override
-            public void onUserLoaded(@Nullable HyperwalletUser user) {
-                if (userCallback != null && user != null) {
-                    userCallback.onUserLoaded(user);
-                }
-                // raise exception?
-            }
-
-            @Override
-            public void onError(@NonNull HyperwalletErrors errors) {
-                if (userCallback != null) {
-                    userCallback.onUserError(errors);
-                }
-            }
-        });
-    }
-
-    interface UserCallback {
-        void onUserLoaded(@NonNull HyperwalletUser user);
-
-        void onUserError(@NonNull HyperwalletErrors errors);
-    }
 }
