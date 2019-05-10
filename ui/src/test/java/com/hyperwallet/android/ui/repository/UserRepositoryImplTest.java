@@ -9,15 +9,10 @@ import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import static com.hyperwallet.android.model.HyperwalletUser.ProfileTypes.INDIVIDUAL;
-import static com.hyperwallet.android.model.HyperwalletUser.UserFields.CLIENT_USER_ID;
-import static com.hyperwallet.android.model.HyperwalletUser.UserFields.CREATED_ON;
-import static com.hyperwallet.android.model.HyperwalletUser.UserFields.PROFILE_TYPE;
-import static com.hyperwallet.android.model.HyperwalletUser.UserFields.STATUS;
-import static com.hyperwallet.android.model.HyperwalletUser.UserFields.TOKEN;
-import static com.hyperwallet.android.model.HyperwalletUser.UserFields.VERIFICATION_STATUS;
 import static com.hyperwallet.android.model.HyperwalletUser.UserStatuses.PRE_ACTIVATED;
 import static com.hyperwallet.android.model.HyperwalletUser.VerificationStatuses.NOT_REQUIRED;
 
@@ -103,24 +98,23 @@ public class UserRepositoryImplTest {
         verify(mockCallback, never()).onError(any(HyperwalletErrors.class));
 
         HyperwalletUser resultUser = mUserCaptor.getValue();
-        assertThat(resultUser.getField(TOKEN), is("usr-f9154016-94e8-4686-a840-075688ac07b5"));
-        assertThat(resultUser.getField(STATUS), is(PRE_ACTIVATED));
-        assertThat(resultUser.getField(VERIFICATION_STATUS), is(NOT_REQUIRED));
-        assertThat(resultUser.getField(CREATED_ON), is("2017-10-30T22:15:45"));
-        assertThat(resultUser.getField(CLIENT_USER_ID), is("123456"));
-        assertThat(resultUser.getField(PROFILE_TYPE), is(INDIVIDUAL));
-        assertThat(resultUser.getField(HyperwalletUser.UserFields.FIRST_NAME), is("Some"));
-        assertThat(resultUser.getField(HyperwalletUser.UserFields.LAST_NAME), is("Guy"));
-        assertThat(resultUser.getField(HyperwalletUser.UserFields.DATE_OF_BIRTH), is("1991-01-01"));
-        assertThat(resultUser.getField(HyperwalletUser.UserFields.EMAIL), is("testUser@hyperwallet.com"));
-        assertThat(resultUser.getField(HyperwalletUser.UserFields.ADDRESS_LINE_1), is("575 Market Street"));
-        assertThat(resultUser.getField(HyperwalletUser.UserFields.CITY), is("San Francisco"));
-        assertThat(resultUser.getField(HyperwalletUser.UserFields.STATE_PROVINCE), is("CA"));
-        assertThat(resultUser.getField(HyperwalletUser.UserFields.COUNTRY), is("US"));
-        assertThat(resultUser.getField(HyperwalletUser.UserFields.POSTAL_CODE), is("94105"));
-        assertThat(resultUser.getField(HyperwalletUser.UserFields.LANGUAGE), is("en"));
-        assertThat(resultUser.getField(HyperwalletUser.UserFields.PROGRAM_TOKEN),
-                is("prg-83836cdf-2ce2-4696-8bc5-f1b86077238c"));
+        assertThat(resultUser.getToken(), is("usr-f9154016-94e8-4686-a840-075688ac07b5"));
+        assertThat(resultUser.getStatus(), is(PRE_ACTIVATED));
+        assertThat(resultUser.getVerificationStatus(), is(NOT_REQUIRED));
+        assertThat(resultUser.getCreatedOn(), is("2017-10-30T22:15:45"));
+        assertThat(resultUser.getClientUserId(), is("123456"));
+        assertThat(resultUser.getProfileType(), is(INDIVIDUAL));
+        assertThat(resultUser.getFirstName(), is("Some"));
+        assertThat(resultUser.getLastName(), is("Guy"));
+        assertThat(resultUser.getDateOfBirth(), is("1991-01-01"));
+        assertThat(resultUser.getEmail(), is("testUser@hyperwallet.com"));
+        assertThat(resultUser.getAddressLine1(), is("575 Market Street"));
+        assertThat(resultUser.getCity(), is("San Francisco"));
+        assertThat(resultUser.getStateProvince(), is("CA"));
+        assertThat(resultUser.getCountry(), is("US"));
+        assertThat(resultUser.getPostalCode(), is("94105"));
+        assertThat(resultUser.getLanguage(), is("en"));
+        assertThat(resultUser.getProgramToken(), is("prg-83836cdf-2ce2-4696-8bc5-f1b86077238c"));
     }
 
     @Test
@@ -171,5 +165,36 @@ public class UserRepositoryImplTest {
         verify(mockCallback).onError(mErrorCaptor.capture());
 
         assertThat(mErrorCaptor.getValue().getErrors(), hasItem(error));
+    }
+
+    @Test
+    public void testRefreshUser_checkHypervaletCallGetUser() {
+        HyperwalletUser.Builder builder = new HyperwalletUser.Builder();
+        final HyperwalletUser user = builder
+                .token("usr-f9154016-94e8-4686-a840-075688ac07b5")
+                .profileType(INDIVIDUAL)
+                .build();
+
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                HyperwalletListener listener = (HyperwalletListener) invocation.getArguments()[0];
+                listener.onSuccess(user);
+                return listener;
+            }
+        }).when(mHyperwallet).getUser(ArgumentMatchers.<HyperwalletListener<HyperwalletUser>>any());
+        UserRepository.LoadUserCallback mockCallback = mock(UserRepository.LoadUserCallback.class);
+
+        mUserRepository.loadUser(mockCallback);
+
+        verify(mHyperwallet).getUser(ArgumentMatchers.<HyperwalletListener<HyperwalletUser>>any());
+
+        mUserRepository.loadUser(mockCallback);
+        verify(mHyperwallet).getUser(ArgumentMatchers.<HyperwalletListener<HyperwalletUser>>any());
+
+        mUserRepository.refreshUser();
+        mUserRepository.loadUser(mockCallback);
+        verify(mHyperwallet, times(2)).getUser(ArgumentMatchers.<HyperwalletListener<HyperwalletUser>>any());
+
     }
 }
