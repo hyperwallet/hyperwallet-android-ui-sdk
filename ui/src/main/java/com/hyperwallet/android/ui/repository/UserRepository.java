@@ -19,7 +19,6 @@
 package com.hyperwallet.android.ui.repository;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.HyperwalletUser;
@@ -51,7 +50,7 @@ public interface UserRepository {
      */
     interface LoadUserCallback {
 
-        void onUserLoaded(@Nullable final HyperwalletUser user);
+        void onUserLoaded(@NonNull final HyperwalletUser user);
 
         void onError(@NonNull final HyperwalletErrors errors);
     }
