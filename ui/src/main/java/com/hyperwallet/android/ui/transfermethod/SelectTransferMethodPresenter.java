@@ -60,9 +60,7 @@ public class SelectTransferMethodPresenter implements SelectTransferMethodContra
 
         mUserRepository.loadUser(new UserRepository.LoadUserCallback() {
             @Override
-            public void onUserLoaded(@NonNull HyperwalletUser user) {
-                final String userProfileType = user.getField(HyperwalletUser.UserFields.PROFILE_TYPE);
-
+            public void onUserLoaded(@NonNull final HyperwalletUser user) {
                 mTransferMethodConfigurationRepository.getKeys(
                         new TransferMethodConfigurationRepository.LoadKeysCallback() {
                             @Override
@@ -74,12 +72,12 @@ public class SelectTransferMethodPresenter implements SelectTransferMethodContra
                                 mView.hideProgressBar();
                                 List<String> transferMethodTypes =
                                         transferMethodConfigurationKeyResult.getTransferMethods(countryCode,
-                                                currencyCode, userProfileType);
+                                                currencyCode, user.getProfileType());
 
                                 mView.showTransferMethodCountry(countryCode);
                                 mView.showTransferMethodCurrency(currencyCode);
                                 mView.showTransferMethodTypes(getTransferMethodSelectionItems(countryCode, currencyCode,
-                                        userProfileType, transferMethodTypes, transferMethodConfigurationKeyResult));
+                                        user.getProfileType(), transferMethodTypes, transferMethodConfigurationKeyResult));
                             }
 
                             @Override
@@ -114,8 +112,6 @@ public class SelectTransferMethodPresenter implements SelectTransferMethodContra
         mUserRepository.loadUser(new UserRepository.LoadUserCallback() {
             @Override
             public void onUserLoaded(@NonNull final HyperwalletUser user) {
-                final String userProfileType = user.getField(HyperwalletUser.UserFields.PROFILE_TYPE);
-
                 mTransferMethodConfigurationRepository.getKeys(
                         new TransferMethodConfigurationRepository.LoadKeysCallback() {
                             @Override
@@ -126,12 +122,12 @@ public class SelectTransferMethodPresenter implements SelectTransferMethodContra
                                 }
                                 List<String> transferMethodCurrencies = result.getCurrencies(countryCode);
                                 List<String> transferMethodTypes = result.getTransferMethods(
-                                        countryCode, transferMethodCurrencies.get(0), userProfileType);
+                                        countryCode, transferMethodCurrencies.get(0), user.getProfileType());
 
                                 mView.showTransferMethodCountry(countryCode);
                                 mView.showTransferMethodCurrency(transferMethodCurrencies.get(0));
                                 mView.showTransferMethodTypes(getTransferMethodSelectionItems(countryCode,
-                                        transferMethodCurrencies.get(0), userProfileType, transferMethodTypes, result));
+                                        transferMethodCurrencies.get(0), user.getProfileType(), transferMethodTypes, result));
                             }
 
                             @Override
@@ -166,7 +162,6 @@ public class SelectTransferMethodPresenter implements SelectTransferMethodContra
         mUserRepository.loadUser(new UserRepository.LoadUserCallback() {
             @Override
             public void onUserLoaded(@NonNull final HyperwalletUser user) {
-                final String userProfileType = user.getField(HyperwalletUser.UserFields.PROFILE_TYPE);
                 mTransferMethodConfigurationRepository.getKeys(
                         new TransferMethodConfigurationRepository.LoadKeysCallback() {
                             @Override
@@ -178,12 +173,12 @@ public class SelectTransferMethodPresenter implements SelectTransferMethodContra
 
                                 List<String> transferMethodTypes =
                                         transferMethodConfigurationKeyResult.getTransferMethods(
-                                                countryCode, currencyCode, userProfileType);
+                                                countryCode, currencyCode, user.getProfileType());
 
                                 mView.showTransferMethodCountry(countryCode);
                                 mView.showTransferMethodCurrency(currencyCode);
                                 mView.showTransferMethodTypes(getTransferMethodSelectionItems(countryCode, currencyCode,
-                                        userProfileType, transferMethodTypes, transferMethodConfigurationKeyResult));
+                                        user.getProfileType(), transferMethodTypes, transferMethodConfigurationKeyResult));
                             }
 
                             @Override
