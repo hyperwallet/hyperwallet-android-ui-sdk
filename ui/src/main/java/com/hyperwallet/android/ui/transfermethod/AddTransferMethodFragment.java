@@ -290,27 +290,37 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     @Override
     public void showTransferMethodFields(@NonNull final List<HyperwalletFieldGroup> fields) {
         mDynamicContainer.removeAllViews();
-        int previousView = 0;
+        int previousView;
         try {
 
+            // group
+            for (HyperwalletFieldGroup group : fields) {
+                View sectionHeader = LayoutInflater.from(mDynamicContainer.getContext())
+                        .inflate(R.layout.item_widget_section_header, mDynamicContainer, false);
+                TextView sectionTitle = sectionHeader.findViewById(R.id.section_header_title);
+                sectionTitle.setText(group.getGroupName());
+                sectionHeader.setId(View.generateViewId());
+                previousView = sectionHeader.getId();
+                mDynamicContainer.addView(sectionHeader);
 
-            //TODO adjust groupings
-            for (final HyperwalletField field : fields.get(0).getFields()) {
-                AbstractWidget widget = WidgetFactory
-                        .newWidget(field, this, getContext(),
-                                mWidgetInputStateHashMap.containsKey(field.getName()) ?
-                                        mWidgetInputStateHashMap.get(field.getName()).getValue() : "",
-                                mCreateTransferMethodButton);
-                if (mWidgetInputStateHashMap.isEmpty() || !mWidgetInputStateHashMap.containsKey(widget.getName())) {
-                    mWidgetInputStateHashMap.put(widget.getName(), widget.getWidgetInputState());
+                // group fields
+                for (final HyperwalletField field : group.getFields()) {
+                    AbstractWidget widget = WidgetFactory
+                            .newWidget(field, this, getContext(),
+                                    mWidgetInputStateHashMap.containsKey(field.getName()) ?
+                                            mWidgetInputStateHashMap.get(field.getName()).getValue() : "",
+                                    mCreateTransferMethodButton);
+                    if (mWidgetInputStateHashMap.isEmpty() || !mWidgetInputStateHashMap.containsKey(widget.getName())) {
+                        mWidgetInputStateHashMap.put(widget.getName(), widget.getWidgetInputState());
+                    }
+
+                    View widgetView = widget.getView();
+                    widgetView.setTag(widget);
+                    previousView = placeBelow(widgetView, previousView, true);
+                    final String error = mWidgetInputStateHashMap.get(widget.getName()).getErrorMessage();
+                    widget.showValidationError(error);
+                    mDynamicContainer.addView(widgetView);
                 }
-
-                View widgetView = widget.getView();
-                widgetView.setTag(widget);
-                previousView = placeBelow(widgetView, previousView, true);
-                final String error = mWidgetInputStateHashMap.get(widget.getName()).getErrorMessage();
-                widget.showValidationError(error);
-                mDynamicContainer.addView(widgetView);
             }
 
             if (mShowCreateProgressBar) {
