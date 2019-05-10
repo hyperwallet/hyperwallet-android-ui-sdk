@@ -45,6 +45,8 @@ import java.util.List;
 public class UserRepositoryImplTest {
     @Mock
     private Hyperwallet mHyperwallet;
+    @Mock
+    UserRepository.LoadUserCallback mMockCallback;
     @Captor
     private ArgumentCaptor<HyperwalletErrors> mErrorCaptor;
     @Captor
@@ -90,12 +92,11 @@ public class UserRepositoryImplTest {
                 return listener;
             }
         }).when(mHyperwallet).getUser(ArgumentMatchers.<HyperwalletListener<HyperwalletUser>>any());
-        UserRepository.LoadUserCallback mockCallback = mock(UserRepository.LoadUserCallback.class);
 
-        mUserRepository.loadUser(mockCallback);
+        mUserRepository.loadUser(mMockCallback);
 
-        verify(mockCallback).onUserLoaded(mUserCaptor.capture());
-        verify(mockCallback, never()).onError(any(HyperwalletErrors.class));
+        verify(mMockCallback).onUserLoaded(mUserCaptor.capture());
+        verify(mMockCallback, never()).onError(any(HyperwalletErrors.class));
 
         HyperwalletUser resultUser = mUserCaptor.getValue();
         assertThat(resultUser.getToken(), is("usr-f9154016-94e8-4686-a840-075688ac07b5"));
@@ -128,12 +129,11 @@ public class UserRepositoryImplTest {
                 return listener;
             }
         }).when(mHyperwallet).getUser(ArgumentMatchers.<HyperwalletListener<HyperwalletUser>>any());
-        UserRepository.LoadUserCallback mockCallback = mock(UserRepository.LoadUserCallback.class);
 
-        mUserRepository.loadUser(mockCallback);
+        mUserRepository.loadUser(mMockCallback);
 
-        verify(mockCallback).onUserLoaded(mUserCaptor.capture());
-        verify(mockCallback, never()).onError(any(HyperwalletErrors.class));
+        verify(mMockCallback).onUserLoaded(mUserCaptor.capture());
+        verify(mMockCallback, never()).onError(any(HyperwalletErrors.class));
 
         HyperwalletUser user = mUserCaptor.getValue();
         assertThat(user, is(nullValue()));
@@ -156,13 +156,11 @@ public class UserRepositoryImplTest {
                 return listener;
             }
         }).when(mHyperwallet).getUser(ArgumentMatchers.<HyperwalletListener<HyperwalletUser>>any());
-        UserRepository.LoadUserCallback mockCallback = mock(
-                UserRepository.LoadUserCallback.class);
 
-        mUserRepository.loadUser(mockCallback);
+        mUserRepository.loadUser(mMockCallback);
 
-        verify(mockCallback, never()).onUserLoaded(ArgumentMatchers.<HyperwalletUser>any());
-        verify(mockCallback).onError(mErrorCaptor.capture());
+        verify(mMockCallback, never()).onUserLoaded(ArgumentMatchers.<HyperwalletUser>any());
+        verify(mMockCallback).onError(mErrorCaptor.capture());
 
         assertThat(mErrorCaptor.getValue().getErrors(), hasItem(error));
     }
@@ -183,17 +181,16 @@ public class UserRepositoryImplTest {
                 return listener;
             }
         }).when(mHyperwallet).getUser(ArgumentMatchers.<HyperwalletListener<HyperwalletUser>>any());
-        UserRepository.LoadUserCallback mockCallback = mock(UserRepository.LoadUserCallback.class);
 
-        mUserRepository.loadUser(mockCallback);
+        mUserRepository.loadUser(mMockCallback);
 
         verify(mHyperwallet).getUser(ArgumentMatchers.<HyperwalletListener<HyperwalletUser>>any());
 
-        mUserRepository.loadUser(mockCallback);
+        mUserRepository.loadUser(mMockCallback);
         verify(mHyperwallet).getUser(ArgumentMatchers.<HyperwalletListener<HyperwalletUser>>any());
 
         mUserRepository.refreshUser();
-        mUserRepository.loadUser(mockCallback);
+        mUserRepository.loadUser(mMockCallback);
         verify(mHyperwallet, times(2)).getUser(ArgumentMatchers.<HyperwalletListener<HyperwalletUser>>any());
 
     }
