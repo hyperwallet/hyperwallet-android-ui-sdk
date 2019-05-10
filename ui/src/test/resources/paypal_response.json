@@ -1,0 +1,17 @@
+{
+  "token": "trm-6a29ddd5-6913-479e-a60c-24dc6bf14cd4",
+  "type": "PAYPAL_ACCOUNT",
+  "status": "ACTIVATED",
+  "createdOn": "2019-05-08T00:25:23",
+  "transferMethodCountry": "US",
+  "transferMethodCurrency": "USD",
+  "email": "sunshine.carreiro@felicity.com",
+  "links": [
+    {
+      "params": {
+        "rel": "self"
+      },
+      "href": "https://localhost:8181/rest/v3/users/usr-d702cfa0-7cb1-491d-8f25-9b896003e872/paypal-accounts/trm-6a29ddd5-6913-479e-a60c-24dc6bf14cd4"
+    }
+  ]
+}
