@@ -168,7 +168,7 @@ public class UserRepositoryImplTest {
     }
 
     @Test
-    public void testRefreshUser_checkHypervaletCallGetUser() {
+    public void testRefreshUser_checkHyperwalletCallGetUser() {
         HyperwalletUser.Builder builder = new HyperwalletUser.Builder();
         final HyperwalletUser user = builder
                 .token("usr-f9154016-94e8-4686-a840-075688ac07b5")
