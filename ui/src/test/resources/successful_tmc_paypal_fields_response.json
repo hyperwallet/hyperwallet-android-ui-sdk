@@ -1,0 +1,46 @@
+{
+  "data": {
+    "transferMethodConfigurations": {
+      "nodes": [
+        {
+          "countries": [
+            "US"
+          ],
+          "currencies": [
+            "USD"
+          ],
+          "transferMethodType": "PAYPAL_ACCOUNT",
+          "profile": "INDIVIDUAL",
+          "processingTime": "IMMEDIATE",
+          "fees": {
+            "nodes": [
+              {
+                "transferMethodType": "PAYPAL_ACCOUNT",
+                "country": "US",
+                "currency": "USD",
+                "feeRateType": "FLAT",
+                "value": "0.25"
+              }
+            ]
+          },
+          "fields": [
+            {
+              "category": "ACCOUNT",
+              "dataType": "TEXT",
+              "isRequired": true,
+              "label": "Email",
+              "name": "email",
+              "placeholder": "",
+              "regularExpression": "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$",
+              "validationMessage": {
+                "length": "",
+                "pattern": "accountNumber is invalid",
+                "empty": "You must provide a value for this field"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
