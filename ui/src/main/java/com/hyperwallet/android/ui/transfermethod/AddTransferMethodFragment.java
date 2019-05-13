@@ -91,7 +91,6 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     private String mTransferMethodType;
     private HyperwalletTransferMethod mTransferMethod;
     private HashMap<String, WidgetInputState> mWidgetInputStateHashMap;
-    private TextView sectionHeaderTextView;
 
     /**
      * Please do not use this to have instance of AddTransferMethodFragment this is reserved for android framework
@@ -170,8 +169,6 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
         super.onViewCreated(view, savedInstanceState);
         mDynamicContainer = view.findViewById(R.id.add_transfer_method_dynamic_container);
 
-        sectionHeaderTextView = view.findViewById(R.id.account_information_section_header);
-
         mCreateButtonProgressBar = view.findViewById(R.id.add_transfer_method_create_button_progress_bar);
         mProgressBar = view.findViewById(R.id.add_transfer_method_progress_bar_layout);
 
@@ -214,10 +211,6 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
             mTransferMethodType = getArguments().getString(ARGUMENT_TRANSFER_METHOD_TYPE);
             mTransferMethod = getArguments().getParcelable(ARGUMENT_TRANSFER_METHOD);
         }
-
-        Locale locale = new Locale.Builder().setRegion(mCountry).build();
-        sectionHeaderTextView.setText(requireContext().getResources()
-                .getString(R.string.account_information_section_header, locale.getDisplayName(), mCurrency));
     }
 
     @Override
@@ -293,14 +286,25 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     public void showTransferMethodFields(@NonNull final List<HyperwalletFieldGroup> fields) {
         mDynamicContainer.removeAllViews();
         int previousView;
-        try {
 
+        try {
+            Locale locale = new Locale.Builder().setRegion(mCountry).build();
             // group
             for (HyperwalletFieldGroup group : fields) {
+                String sectionHeaderText;
+                if (group.getGroupName().equals(HyperwalletFieldGroup.GroupTypes.ACCOUNT_INFORMATION)) {
+                    sectionHeaderText = requireContext().getResources()
+                            .getString(R.string.account_information_section_header, locale.getDisplayName(), mCurrency);
+                } else {
+                    sectionHeaderText = requireContext().getString(requireContext().getResources()
+                            .getIdentifier(group.getGroupName().toLowerCase(Locale.ROOT), "string",
+                                    requireContext().getPackageName()));
+                }
+
                 View sectionHeader = LayoutInflater.from(mDynamicContainer.getContext())
                         .inflate(R.layout.item_widget_section_header, mDynamicContainer, false);
                 TextView sectionTitle = sectionHeader.findViewById(R.id.section_header_title);
-                sectionTitle.setText(group.getGroupName());
+                sectionTitle.setText(sectionHeaderText);
                 sectionHeader.setId(View.generateViewId());
                 previousView = sectionHeader.getId();
                 mDynamicContainer.addView(sectionHeader);
