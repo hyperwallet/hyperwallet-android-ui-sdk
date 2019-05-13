@@ -91,6 +91,7 @@
     <string name="search_hint">Search Hint</string>
     <string name="search_country">Search Country</string>
     <string name="search_currency">Search Currency</string>
+    <string name="search_widget">Search</string>
 
     <string name="account_information_section_header">Account Information - %s (%s)</string>
     <string name="transfer_method_information_header">Transfer Method Information</string>
