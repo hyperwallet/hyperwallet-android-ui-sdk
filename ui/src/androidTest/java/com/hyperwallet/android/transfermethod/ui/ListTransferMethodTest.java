@@ -90,7 +90,6 @@ public class ListTransferMethodTest {
         mActivityTestRule.launchActivity(null);
 
         // assert
-        onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
         onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
                 .check(matches(withText(R.string.title_activity_list_transfer_method)));
         onView(withId(R.id.fab)).check(matches(isDisplayed()));
@@ -146,7 +145,17 @@ public class ListTransferMethodTest {
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(4, hasDescendant(withDrawable(R.drawable.ic_three_dots_16dp)))));
 
-        onView(withId(R.id.list_transfer_method_item)).check(new RecyclerViewCountAssertion(5));
+        onView(withId(R.id.list_transfer_method_item)).check(
+                matches(atPosition(5, hasDescendant(withText(R.string.paypal_account_font_icon)))));
+        onView(withId(R.id.list_transfer_method_item)).check(
+                matches(atPosition(5, hasDescendant(withText(R.string.paypal_account)))));
+        onView(withId(R.id.list_transfer_method_item)).check(
+                matches(atPosition(5, hasDescendant(withText("United States")))));
+        //TODO: Try to check for non existence of transfer_method_type_description_2
+        onView(withId(R.id.list_transfer_method_item)).check(
+                matches(atPosition(5, hasDescendant(withDrawable(R.drawable.ic_three_dots_16dp)))));
+
+        onView(withId(R.id.list_transfer_method_item)).check(new RecyclerViewCountAssertion(6));
 
     }
 
@@ -315,6 +324,70 @@ public class ListTransferMethodTest {
                 matches(atPosition(0, hasDescendant(withDrawable(R.drawable.ic_three_dots_16dp)))));
 
         onView(allOf(instanceOf(ImageButton.class), hasSibling(withText(R.string.bank_card)))).perform(click())
+                .inRoot(Matchers.<Root>instanceOf(MenuItem.class));
+        onView(withDrawable(R.drawable.ic_trash)).check(matches(isDisplayed()));
+        onView(withText(R.string.menu_remove_account)).check(matches(isDisplayed())).perform(click());
+
+        // confirmation dialog is shown before deletion
+        onView(withText(R.string.transfer_method_remove_confirmation_title)).check(matches(isDisplayed()));
+        onView(withText(R.string.transfer_method_remove_confirmation)).check(matches(isDisplayed()));
+        onView(withId(android.R.id.button1)).check(matches(withText(R.string.remove_button_label)));
+        onView(withId(android.R.id.button2)).check(matches(withText(R.string.cancel_button_label)));
+
+        onView(withId(android.R.id.button1)).perform(click());
+
+        gate.await(5, SECONDS);
+        LocalBroadcastManager.getInstance(mActivityTestRule.getActivity().getApplicationContext()).unregisterReceiver(
+                br);
+        assertThat("Action is not broadcasted", gate.getCount(), is(0L));
+
+        onView(withId(R.id.empty_transfer_method_list_layout)).check(matches(isDisplayed()));
+        onView(withText(R.string.empty_list_transfer_method_information)).check(matches(isDisplayed()));
+
+    }
+
+    @Test
+    public void testListTransferMethod_removePayPalAccount() throws InterruptedException {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_list_single_paypal_account_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_deactivate_success.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();
+
+
+        final CountDownLatch gate = new CountDownLatch(1);
+        final BroadcastReceiver br = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                gate.countDown();
+
+                HyperwalletStatusTransition statusTransition = intent.getParcelableExtra(
+                        "hyperwallet-local-broadcast-payload");
+                assertThat("Transition is not valid", statusTransition.getTransition(), is(DE_ACTIVATED));
+            }
+        };
+
+        // run test
+        mActivityTestRule.launchActivity(null);
+        LocalBroadcastManager.getInstance(mActivityTestRule.getActivity().getApplicationContext())
+                .registerReceiver(br, new IntentFilter("ACTION_HYPERWALLET_TRANSFER_METHOD_DEACTIVATED"));
+
+        // assert
+        onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
+        onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
+                .check(matches(withText(R.string.title_activity_list_transfer_method)));
+        onView(withId(R.id.fab)).check(matches(isDisplayed()));
+
+        onView(withId(R.id.list_transfer_method_item)).check(
+                matches(atPosition(0, hasDescendant(withText(R.string.paypal_account_font_icon)))));
+        onView(withId(R.id.list_transfer_method_item)).check(
+                matches(atPosition(0, hasDescendant(withText(R.string.paypal_account)))));
+        onView(withId(R.id.list_transfer_method_item)).check(
+                matches(atPosition(0, hasDescendant(withText("United States")))));
+        onView(withId(R.id.list_transfer_method_item)).check(
+                matches(atPosition(0, hasDescendant(withDrawable(R.drawable.ic_three_dots_16dp)))));
+
+        onView(allOf(instanceOf(ImageButton.class), hasSibling(withText(R.string.paypal_account)))).perform(click())
                 .inRoot(Matchers.<Root>instanceOf(MenuItem.class));
         onView(withDrawable(R.drawable.ic_trash)).check(matches(isDisplayed()));
         onView(withText(R.string.menu_remove_account)).check(matches(isDisplayed())).perform(click());

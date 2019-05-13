@@ -20,6 +20,7 @@ import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMe
 import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodTypes.BANK_ACCOUNT;
 import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodTypes.BANK_CARD;
 import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodTypes.PAPER_CHECK;
+import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodTypes.PAYPAL_ACCOUNT;
 import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodTypes.PREPAID_CARD;
 import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodTypes.WIRE_ACCOUNT;
 
@@ -113,6 +114,9 @@ public class TransferMethodUtils {
                 break;
             case WIRE_ACCOUNT:
                 title = context.getString(R.string.wire_account);
+                break;
+            case PAYPAL_ACCOUNT:
+                title = context.getString(R.string.paypal_account);
                 break;
             default:
                 title = transferMethodType.toLowerCase(Locale.ROOT) + context.getString(

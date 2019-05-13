@@ -12,4 +12,6 @@
     <item name="dateOfExpiryLabel" type="id" />
     <item name="cvv" type="id" />
     <item name="cvvLabel" type="id" />
+    <item name="email" type="id"/>
+    <item name="emailLabel" type="id"/>
 </resources>
