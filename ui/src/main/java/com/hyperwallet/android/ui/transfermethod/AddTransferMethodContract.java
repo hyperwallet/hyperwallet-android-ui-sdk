@@ -71,6 +71,7 @@ public interface AddTransferMethodContract {
         void loadTransferMethodConfigurationFields(boolean forceUpdate,
                 @NonNull String country,
                 @NonNull String currency,
-                @NonNull String transferMethodType);
+                @NonNull String transferMethodType,
+                @NonNull String transferMethodProfileType);
     }
 }

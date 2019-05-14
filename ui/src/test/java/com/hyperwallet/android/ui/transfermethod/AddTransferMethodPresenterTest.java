@@ -13,6 +13,8 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import static com.hyperwallet.android.model.HyperwalletUser.ProfileTypes.INDIVIDUAL;
+
 import com.hyperwallet.android.model.HyperwalletBankAccount;
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.HyperwalletErrors;
@@ -149,15 +151,15 @@ public class AddTransferMethodPresenterTest {
             @Override
             public Object answer(InvocationOnMock invocation) {
                 TransferMethodConfigurationRepository.LoadFieldsCallback callback =
-                        (TransferMethodConfigurationRepository.LoadFieldsCallback) invocation.getArguments()[3];
+                        (TransferMethodConfigurationRepository.LoadFieldsCallback) invocation.getArguments()[4];
                 callback.onFieldsLoaded(result);
                 return callback;
             }
-        }).when(tmcRepository).getFields(anyString(), anyString(), anyString(),
+        }).when(tmcRepository).getFields(anyString(), anyString(), anyString(), anyString(),
                 any(TransferMethodConfigurationRepository.LoadFieldsCallback.class));
 
         // Then
-        presenter.loadTransferMethodConfigurationFields(false, "CA", "CAD", "BANK_ACCOUNT");
+        presenter.loadTransferMethodConfigurationFields(false, "CA", "CAD", "BANK_ACCOUNT", INDIVIDUAL);
         LATCH.await(AWAIT_TIME_MS, TimeUnit.MILLISECONDS);
 
         verify(view).showTransferMethodFields(fieldArgumentCaptor.capture());
@@ -177,15 +179,15 @@ public class AddTransferMethodPresenterTest {
             @Override
             public Object answer(InvocationOnMock invocation) {
                 TransferMethodConfigurationRepository.LoadFieldsCallback callback =
-                        (TransferMethodConfigurationRepository.LoadFieldsCallback) invocation.getArguments()[3];
+                        (TransferMethodConfigurationRepository.LoadFieldsCallback) invocation.getArguments()[4];
                 callback.onError(errors);
                 return callback;
             }
-        }).when(tmcRepository).getFields(anyString(), anyString(), anyString(),
+        }).when(tmcRepository).getFields(anyString(), anyString(), anyString(),anyString(),
                 any(TransferMethodConfigurationRepository.LoadFieldsCallback.class));
 
         // Then
-        presenter.loadTransferMethodConfigurationFields(false, "CA", "CAD", "BANK_ACCOUNT");
+        presenter.loadTransferMethodConfigurationFields(false, "CA", "CAD", "BANK_ACCOUNT", INDIVIDUAL);
         LATCH.await(AWAIT_TIME_MS, TimeUnit.MILLISECONDS);
 
         verify(view, never()).showTransferMethodFields(ArgumentMatchers.<HyperwalletField>anyList());
@@ -195,10 +197,10 @@ public class AddTransferMethodPresenterTest {
 
     @Test
     public void testLoadTransferMethodConfigurationFields_updatesFieldsWhenForceUpdateIsTrue() {
-        presenter.loadTransferMethodConfigurationFields(true, "CA", "CAD", "BANK_ACCOUNT");
+        presenter.loadTransferMethodConfigurationFields(true, "CA", "CAD", "BANK_ACCOUNT", INDIVIDUAL);
 
         verify(tmcRepository, atLeastOnce()).refreshFields();
-        verify(tmcRepository, atLeastOnce()).getFields(anyString(), anyString(), anyString(),
+        verify(tmcRepository, atLeastOnce()).getFields(anyString(), anyString(), anyString(), anyString(),
                 any(TransferMethodConfigurationRepository.LoadFieldsCallback.class));
         verify(view, never()).showTransferMethodFields(ArgumentMatchers.<HyperwalletField>anyList());
         verify(view, never()).showErrorLoadTransferMethodConfigurationFields(
@@ -212,10 +214,10 @@ public class AddTransferMethodPresenterTest {
         when(view.isActive()).thenReturn(false);
 
         // Then
-        presenter.loadTransferMethodConfigurationFields(true, "CA", "CAD", "BANK_ACCOUNT");
+        presenter.loadTransferMethodConfigurationFields(true, "CA", "CAD", "BANK_ACCOUNT", INDIVIDUAL);
 
         verify(tmcRepository, atLeastOnce()).refreshFields();
-        verify(tmcRepository, atLeastOnce()).getFields(anyString(), anyString(), anyString(),
+        verify(tmcRepository, atLeastOnce()).getFields(anyString(), anyString(), anyString(), anyString(),
                 any(TransferMethodConfigurationRepository.LoadFieldsCallback.class));
         verify(view, never()).hideProgressBar();
         verify(view, never()).showTransferMethodFields(ArgumentMatchers.<HyperwalletField>anyList());
@@ -232,15 +234,15 @@ public class AddTransferMethodPresenterTest {
             @Override
             public Object answer(InvocationOnMock invocation) {
                 TransferMethodConfigurationRepository.LoadFieldsCallback callback =
-                        (TransferMethodConfigurationRepository.LoadFieldsCallback) invocation.getArguments()[3];
+                        (TransferMethodConfigurationRepository.LoadFieldsCallback) invocation.getArguments()[4];
                 callback.onError(errors);
                 return callback;
             }
-        }).when(tmcRepository).getFields(anyString(), anyString(), anyString(),
+        }).when(tmcRepository).getFields(anyString(), anyString(), anyString(), anyString(),
                 any(TransferMethodConfigurationRepository.LoadFieldsCallback.class));
 
         // Then
-        presenter.loadTransferMethodConfigurationFields(false, "CA", "CAD", "BANK_ACCOUNT");
+        presenter.loadTransferMethodConfigurationFields(false, "CA", "CAD", "BANK_ACCOUNT", INDIVIDUAL);
         LATCH.await(AWAIT_TIME_MS, TimeUnit.MILLISECONDS);
 
         verify(view, never()).hideProgressBar();

@@ -84,6 +84,8 @@ public class SelectTransferMethodTest {
     @Test
     public void testSelectTransferMethod_verifyCorrectLabelsDisplayed() {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("user_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("successful_tmc_keys_response.json")).mock();
 
         mActivityTestRule.launchActivity(null);
@@ -109,6 +111,8 @@ public class SelectTransferMethodTest {
     @Test
     public void testSelectTransferMethod_verifyCountrySelectionList() {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("user_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("successful_tmc_keys_response.json")).mock();
 
         mActivityTestRule.launchActivity(null);
@@ -131,6 +135,8 @@ public class SelectTransferMethodTest {
     @Test
     public void testSelectTransferMethod_verifyCountrySelectionSearch() {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("user_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("successful_tmc_keys_large_response.json")).mock();
 
         mActivityTestRule.launchActivity(null);
@@ -149,6 +155,9 @@ public class SelectTransferMethodTest {
 
     @Test
     public void testSelectTransferMethod_verifyCurrencySelectionList() {
+
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("user_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("successful_tmc_keys_response.json")).mock();
 
@@ -172,6 +181,8 @@ public class SelectTransferMethodTest {
 
     @Test
     public void testSelectTransferMethod_verifyTransferMethodsList() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("user_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("successful_tmc_keys_response.json")).mock();
 
@@ -202,6 +213,8 @@ public class SelectTransferMethodTest {
     @Test
     public void testSelectTransferMethod_verifyTransferMethodsListEmptyFee() {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("user_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("successful_tmc_keys_empty_fee_response.json")).mock();
 
         mActivityTestRule.launchActivity(null);
@@ -224,6 +237,8 @@ public class SelectTransferMethodTest {
     @Test
     public void testSelectTransferMethod_verifyTransferMethodsListEmptyProcessing() {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("user_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("successful_tmc_keys_empty_processing_response.json")).mock();
 
         mActivityTestRule.launchActivity(null);
@@ -245,6 +260,8 @@ public class SelectTransferMethodTest {
 
     @Test
     public void testSelectTransferMethod_verifyTransferMethodsListUpdatedOnSelectionChange() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("user_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("successful_tmc_keys_response.json")).mock();
 
@@ -272,6 +289,8 @@ public class SelectTransferMethodTest {
     @Test
     public void testSelectTransferMethod_clickBankAccountOpensAddTransferMethodUi() {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("user_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("successful_tmc_keys_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("successful_tmc_fields_response.json")).mock();
@@ -286,6 +305,8 @@ public class SelectTransferMethodTest {
 
     @Test
     public void testSelectTransferMethod_clickBankCardOpensAddTransferMethodUi() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("user_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("successful_tmc_keys_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager

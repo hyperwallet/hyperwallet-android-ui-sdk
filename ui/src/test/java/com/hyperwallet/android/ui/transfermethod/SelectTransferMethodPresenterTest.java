@@ -13,9 +13,13 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.HyperwalletErrors;
+import com.hyperwallet.android.model.HyperwalletTransferMethod;
+import com.hyperwallet.android.model.HyperwalletUser;
 import com.hyperwallet.android.model.meta.TransferMethodConfigurationResult;
 import com.hyperwallet.android.ui.repository.TransferMethodConfigurationRepository;
 import com.hyperwallet.android.ui.repository.TransferMethodConfigurationRepositoryImpl;
+import com.hyperwallet.android.ui.repository.UserRepository;
+import com.hyperwallet.android.ui.repository.UserRepositoryImpl;
 import com.hyperwallet.android.ui.rule.HyperwalletExternalResourceManager;
 
 import org.json.JSONObject;
@@ -35,28 +39,36 @@ import java.util.TreeMap;
 
 @RunWith(RobolectricTestRunner.class)
 public class SelectTransferMethodPresenterTest {
-    private static final String COUNTRY = "CA";
-    private static final String CURRENCY = "CAD";
-    private static final String BANK_ACCOUNT = "BANK_ACCOUNT";
+
 
     @Mock
     private SelectTransferMethodContract.View view;
     @Mock
-    private TransferMethodConfigurationRepositoryImpl transferMethodConfigurationRepository;
+    private TransferMethodConfigurationRepositoryImpl mTransferMethodConfigurationRepository;
+    @Mock
+    private UserRepositoryImpl mUserRepository;
     @Rule
     public HyperwalletExternalResourceManager externalResourceManager = new HyperwalletExternalResourceManager();
 
-    private TransferMethodConfigurationResult result;
+    private TransferMethodConfigurationResult mResult;
+    private HyperwalletUser mUser;
     private SelectTransferMethodPresenter selectTransferMethodPresenter;
     private final HyperwalletErrors errors = createErrors();
 
     @Before
     public void initialize() throws Exception {
         initMocks(this);
-        String responseBody = externalResourceManager.getResourceContent("successful_tmc_keys_response.json");
-        final JSONObject jsonObject = new JSONObject(responseBody);
-        result = new TransferMethodConfigurationResult(jsonObject);
-        selectTransferMethodPresenter = new SelectTransferMethodPresenter(view, transferMethodConfigurationRepository);
+
+        String methodsResponseBody = externalResourceManager.getResourceContent("successful_tmc_keys_response.json");
+        final JSONObject methodsJsonObject = new JSONObject(methodsResponseBody);
+        mResult = new TransferMethodConfigurationResult(methodsJsonObject);
+
+        String userResponseBody = externalResourceManager.getResourceContent("user_response.json");
+        final JSONObject userJsonObject = new JSONObject(userResponseBody);
+        mUser = new HyperwalletUser(userJsonObject);
+
+        selectTransferMethodPresenter = new SelectTransferMethodPresenter(view, mTransferMethodConfigurationRepository,
+                mUserRepository);
     }
 
     @Test
@@ -69,11 +81,22 @@ public class SelectTransferMethodPresenterTest {
             public Object answer(InvocationOnMock invocation) {
                 TransferMethodConfigurationRepository.LoadKeysCallback callback =
                         (TransferMethodConfigurationRepository.LoadKeysCallback) invocation.getArguments()[0];
-                callback.onKeysLoaded(result);
+                callback.onKeysLoaded(mResult);
                 return callback;
             }
-        }).when(transferMethodConfigurationRepository).getKeys(any(
+        }).when(mTransferMethodConfigurationRepository).getKeys(any(
                 TransferMethodConfigurationRepository.LoadKeysCallback.class));
+
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                UserRepository.LoadUserCallback userCallback =
+                        (UserRepository.LoadUserCallback) invocation.getArguments()[0];
+                userCallback.onUserLoaded(mUser);
+                return userCallback;
+            }
+        }).when(mUserRepository).loadUser(any(
+                UserRepository.LoadUserCallback.class));
 
         // Then
         selectTransferMethodPresenter.loadTransferMethodConfigurationKeys(false, "CA", "CAD");
@@ -87,7 +110,7 @@ public class SelectTransferMethodPresenterTest {
         verify(view, never()).showErrorLoadTransferMethodTypes(ArgumentMatchers.<HyperwalletError>anyList());
         verify(view, never()).showErrorLoadCountrySelection(ArgumentMatchers.<HyperwalletError>anyList());
         verify(view, never()).showErrorLoadCurrencySelection(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showAddTransferMethod(anyString(), anyString(), anyString());
+        verify(view, never()).showAddTransferMethod(anyString(), anyString(), anyString(), anyString());
     }
 
     @Test
@@ -100,11 +123,22 @@ public class SelectTransferMethodPresenterTest {
             public Object answer(InvocationOnMock invocation) {
                 TransferMethodConfigurationRepository.LoadKeysCallback callback =
                         (TransferMethodConfigurationRepository.LoadKeysCallback) invocation.getArguments()[0];
-                callback.onKeysLoaded(result);
+                callback.onKeysLoaded(mResult);
                 return callback;
             }
-        }).when(transferMethodConfigurationRepository).getKeys(any(
+        }).when(mTransferMethodConfigurationRepository).getKeys(any(
                 TransferMethodConfigurationRepository.LoadKeysCallback.class));
+
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                UserRepository.LoadUserCallback userCallback =
+                        (UserRepository.LoadUserCallback) invocation.getArguments()[0];
+                userCallback.onUserLoaded(mUser);
+                return userCallback;
+            }
+        }).when(mUserRepository).loadUser(any(
+                UserRepository.LoadUserCallback.class));
 
         // Then
         selectTransferMethodPresenter.loadTransferMethodConfigurationKeys(false, "CA", "CAD");
@@ -117,7 +151,7 @@ public class SelectTransferMethodPresenterTest {
         verify(view, never()).showErrorLoadTransferMethodTypes(ArgumentMatchers.<HyperwalletError>anyList());
         verify(view, never()).showErrorLoadCountrySelection(ArgumentMatchers.<HyperwalletError>anyList());
         verify(view, never()).showErrorLoadCurrencySelection(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showAddTransferMethod(anyString(), anyString(), anyString());
+        verify(view, never()).showAddTransferMethod(anyString(), anyString(), anyString(), anyString());
     }
 
     @Test
@@ -133,15 +167,26 @@ public class SelectTransferMethodPresenterTest {
                 callback.onError(errors);
                 return callback;
             }
-        }).when(transferMethodConfigurationRepository).getKeys(any(
+        }).when(mTransferMethodConfigurationRepository).getKeys(any(
                 TransferMethodConfigurationRepository.LoadKeysCallback.class));
+
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                UserRepository.LoadUserCallback userCallback =
+                        (UserRepository.LoadUserCallback) invocation.getArguments()[0];
+                userCallback.onUserLoaded(mUser);
+                return userCallback;
+            }
+        }).when(mUserRepository).loadUser(any(
+                UserRepository.LoadUserCallback.class));
 
         // Then
         selectTransferMethodPresenter.loadTransferMethodConfigurationKeys(false, "CA", "CAD");
 
         verify(view, never()).showTransferMethodTypes(ArgumentMatchers.<TransferMethodSelectionItem>anyList());
         verify(view).showErrorLoadTransferMethodConfigurationKeys(eq(errors.getErrors()));
-        verify(view, never()).showAddTransferMethod(anyString(), anyString(), anyString());
+        verify(view, never()).showAddTransferMethod(anyString(), anyString(), anyString(), anyString());
     }
 
     @Test
@@ -155,11 +200,22 @@ public class SelectTransferMethodPresenterTest {
                 TransferMethodConfigurationRepository.LoadKeysCallback callback =
                         (TransferMethodConfigurationRepository.LoadKeysCallback) invocation.getArguments()[0];
 
-                callback.onKeysLoaded(result);
+                callback.onKeysLoaded(mResult);
                 return callback;
             }
-        }).when(transferMethodConfigurationRepository).getKeys(any(
+        }).when(mTransferMethodConfigurationRepository).getKeys(any(
                 TransferMethodConfigurationRepository.LoadKeysCallback.class));
+
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                UserRepository.LoadUserCallback userCallback =
+                        (UserRepository.LoadUserCallback) invocation.getArguments()[0];
+                userCallback.onUserLoaded(mUser);
+                return userCallback;
+            }
+        }).when(mUserRepository).loadUser(any(
+                UserRepository.LoadUserCallback.class));
 
         // Then
         selectTransferMethodPresenter.loadCurrency(false, "CA");
@@ -172,7 +228,7 @@ public class SelectTransferMethodPresenterTest {
         verify(view, never()).showErrorLoadTransferMethodTypes(ArgumentMatchers.<HyperwalletError>anyList());
         verify(view, never()).showErrorLoadCountrySelection(ArgumentMatchers.<HyperwalletError>anyList());
         verify(view, never()).showErrorLoadCurrencySelection(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showAddTransferMethod(anyString(), anyString(), anyString());
+        verify(view, never()).showAddTransferMethod(anyString(), anyString(), anyString(), anyString());
         verify(view, atLeastOnce()).showTransferMethodCountry(anyString());
     }
 
@@ -187,11 +243,21 @@ public class SelectTransferMethodPresenterTest {
                 TransferMethodConfigurationRepository.LoadKeysCallback callback =
                         (TransferMethodConfigurationRepository.LoadKeysCallback) invocation.getArguments()[0];
 
-                callback.onKeysLoaded(result);
+                callback.onKeysLoaded(mResult);
                 return callback;
             }
-        }).when(transferMethodConfigurationRepository).getKeys(any(
+        }).when(mTransferMethodConfigurationRepository).getKeys(any(
                 TransferMethodConfigurationRepository.LoadKeysCallback.class));
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                UserRepository.LoadUserCallback userCallback =
+                        (UserRepository.LoadUserCallback) invocation.getArguments()[0];
+                userCallback.onUserLoaded(mUser);
+                return userCallback;
+            }
+        }).when(mUserRepository).loadUser(any(
+                UserRepository.LoadUserCallback.class));
 
         // Then
         selectTransferMethodPresenter.loadCurrency(false, "CA");
@@ -203,13 +269,13 @@ public class SelectTransferMethodPresenterTest {
         verify(view, never()).showErrorLoadTransferMethodTypes(ArgumentMatchers.<HyperwalletError>anyList());
         verify(view, never()).showErrorLoadCountrySelection(ArgumentMatchers.<HyperwalletError>anyList());
         verify(view, never()).showErrorLoadCurrencySelection(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showAddTransferMethod(anyString(), anyString(), anyString());
+        verify(view, never()).showAddTransferMethod(anyString(), anyString(), anyString(), anyString());
     }
 
     @Test
     public void testLoadCurrency_loadsCurrenciesWhenRefreshingKeys() {
         selectTransferMethodPresenter.loadCurrency(true, "CA");
-        verify(transferMethodConfigurationRepository, times(1)).refreshKeys();
+        verify(mTransferMethodConfigurationRepository, times(1)).refreshKeys();
     }
 
 
@@ -227,15 +293,26 @@ public class SelectTransferMethodPresenterTest {
                 callback.onError(errors);
                 return callback;
             }
-        }).when(transferMethodConfigurationRepository).getKeys(any(
+        }).when(mTransferMethodConfigurationRepository).getKeys(any(
                 TransferMethodConfigurationRepository.LoadKeysCallback.class));
+
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                UserRepository.LoadUserCallback userCallback =
+                        (UserRepository.LoadUserCallback) invocation.getArguments()[0];
+                userCallback.onUserLoaded(mUser);
+                return userCallback;
+            }
+        }).when(mUserRepository).loadUser(any(
+                UserRepository.LoadUserCallback.class));
 
         // Then
         selectTransferMethodPresenter.loadCurrency(false, "CA");
 
         verify(view, never()).showTransferMethodTypes(ArgumentMatchers.<TransferMethodSelectionItem>anyList());
         verify(view).showErrorLoadCurrency(eq(errors.getErrors()));
-        verify(view, never()).showAddTransferMethod(anyString(), anyString(), anyString());
+        verify(view, never()).showAddTransferMethod(anyString(), anyString(), anyString(), anyString());
     }
 
     @Test
@@ -249,14 +326,26 @@ public class SelectTransferMethodPresenterTest {
                 TransferMethodConfigurationRepository.LoadKeysCallback callback =
                         (TransferMethodConfigurationRepository.LoadKeysCallback) invocation.getArguments()[0];
 
-                callback.onKeysLoaded(result);
+                callback.onKeysLoaded(mResult);
                 return callback;
             }
-        }).when(transferMethodConfigurationRepository).getKeys(any(
+        }).when(mTransferMethodConfigurationRepository).getKeys(any(
                 TransferMethodConfigurationRepository.LoadKeysCallback.class));
 
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                UserRepository.LoadUserCallback userCallback =
+                        (UserRepository.LoadUserCallback) invocation.getArguments()[0];
+                userCallback.onUserLoaded(mUser);
+                return userCallback;
+            }
+        }).when(mUserRepository).loadUser(any(
+                UserRepository.LoadUserCallback.class));
+
+
         // Then
-        selectTransferMethodPresenter.loadTransferMethodTypes(false, COUNTRY, CURRENCY);
+        selectTransferMethodPresenter.loadTransferMethodTypes(false, "CA", "CAD");
 
         verify(view).showTransferMethodTypes(ArgumentMatchers.<TransferMethodSelectionItem>anyList());
         verify(view, never()).showErrorLoadTransferMethodConfigurationKeys(
@@ -265,7 +354,7 @@ public class SelectTransferMethodPresenterTest {
         verify(view, never()).showErrorLoadTransferMethodTypes(ArgumentMatchers.<HyperwalletError>anyList());
         verify(view, never()).showErrorLoadCountrySelection(ArgumentMatchers.<HyperwalletError>anyList());
         verify(view, never()).showErrorLoadCurrencySelection(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showAddTransferMethod(anyString(), anyString(), anyString());
+        verify(view, never()).showAddTransferMethod(anyString(), anyString(), anyString(), anyString());
         verify(view, atLeastOnce()).showTransferMethodCountry(anyString());
         verify(view, atLeastOnce()).showTransferMethodCurrency(anyString());
     }
@@ -279,14 +368,26 @@ public class SelectTransferMethodPresenterTest {
                 TransferMethodConfigurationRepository.LoadKeysCallback callback =
                         (TransferMethodConfigurationRepository.LoadKeysCallback) invocation.getArguments()[0];
 
-                callback.onKeysLoaded(result);
+                callback.onKeysLoaded(mResult);
                 return callback;
             }
-        }).when(transferMethodConfigurationRepository).getKeys(any(
+        }).when(mTransferMethodConfigurationRepository).getKeys(any(
                 TransferMethodConfigurationRepository.LoadKeysCallback.class));
 
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                UserRepository.LoadUserCallback userCallback =
+                        (UserRepository.LoadUserCallback) invocation.getArguments()[0];
+                userCallback.onUserLoaded(mUser);
+                return userCallback;
+            }
+        }).when(mUserRepository).loadUser(any(
+                UserRepository.LoadUserCallback.class));
+
+
         // Then
-        selectTransferMethodPresenter.loadTransferMethodTypes(false, COUNTRY, CURRENCY);
+        selectTransferMethodPresenter.loadTransferMethodTypes(false, "CA", "CAD");
 
         verify(view, never()).showTransferMethodTypes(ArgumentMatchers.<TransferMethodSelectionItem>anyList());
         verify(view, never()).showErrorLoadTransferMethodConfigurationKeys(
@@ -295,7 +396,7 @@ public class SelectTransferMethodPresenterTest {
         verify(view, never()).showErrorLoadTransferMethodTypes(ArgumentMatchers.<HyperwalletError>anyList());
         verify(view, never()).showErrorLoadCountrySelection(ArgumentMatchers.<HyperwalletError>anyList());
         verify(view, never()).showErrorLoadCurrencySelection(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showAddTransferMethod(anyString(), anyString(), anyString());
+        verify(view, never()).showAddTransferMethod(anyString(), anyString(), anyString(), anyString());
     }
 
     @Test
@@ -312,15 +413,26 @@ public class SelectTransferMethodPresenterTest {
                 callback.onError(errors);
                 return callback;
             }
-        }).when(transferMethodConfigurationRepository).getKeys(any(
+        }).when(mTransferMethodConfigurationRepository).getKeys(any(
                 TransferMethodConfigurationRepository.LoadKeysCallback.class));
+
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                UserRepository.LoadUserCallback userCallback =
+                        (UserRepository.LoadUserCallback) invocation.getArguments()[0];
+                userCallback.onUserLoaded(mUser);
+                return userCallback;
+            }
+        }).when(mUserRepository).loadUser(any(
+                UserRepository.LoadUserCallback.class));
 
         // Then
         selectTransferMethodPresenter.loadTransferMethodTypes(false, "CA", "CAD");
 
         verify(view, never()).showTransferMethodTypes(ArgumentMatchers.<TransferMethodSelectionItem>anyList());
         verify(view).showErrorLoadTransferMethodTypes(eq(errors.getErrors()));
-        verify(view, never()).showAddTransferMethod(anyString(), anyString(), anyString());
+        verify(view, never()).showAddTransferMethod(anyString(), anyString(), anyString(), anyString());
     }
 
     @Test
@@ -335,15 +447,26 @@ public class SelectTransferMethodPresenterTest {
                 callback.onError(errors);
                 return callback;
             }
-        }).when(transferMethodConfigurationRepository).getKeys(any(
+        }).when(mTransferMethodConfigurationRepository).getKeys(any(
                 TransferMethodConfigurationRepository.LoadKeysCallback.class));
+
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                UserRepository.LoadUserCallback userCallback =
+                        (UserRepository.LoadUserCallback) invocation.getArguments()[0];
+                userCallback.onUserLoaded(mUser);
+                return userCallback;
+            }
+        }).when(mUserRepository).loadUser(any(
+                UserRepository.LoadUserCallback.class));
 
         // Then
         selectTransferMethodPresenter.loadTransferMethodTypes(false, "CA", "CAD");
 
         verify(view, never()).showTransferMethodTypes(ArgumentMatchers.<TransferMethodSelectionItem>anyList());
         verify(view, never()).showErrorLoadTransferMethodTypes(eq(errors.getErrors()));
-        verify(view, never()).showAddTransferMethod(anyString(), anyString(), anyString());
+        verify(view, never()).showAddTransferMethod(anyString(), anyString(), anyString(), anyString());
     }
 
     @Test
@@ -355,16 +478,18 @@ public class SelectTransferMethodPresenterTest {
                 TransferMethodConfigurationRepository.LoadKeysCallback callback =
                         (TransferMethodConfigurationRepository.LoadKeysCallback) invocation.getArguments()[0];
 
-                callback.onKeysLoaded(result);
+                callback.onKeysLoaded(mResult);
                 return callback;
             }
-        }).when(transferMethodConfigurationRepository).getKeys(any(TransferMethodConfigurationRepository.
+        }).when(mTransferMethodConfigurationRepository).getKeys(any(TransferMethodConfigurationRepository.
                 LoadKeysCallback.class));
 
         // Then
-        selectTransferMethodPresenter.openAddTransferMethod(COUNTRY, CURRENCY, BANK_ACCOUNT);
+        selectTransferMethodPresenter.openAddTransferMethod("CA", "CAD", HyperwalletTransferMethod.TransferMethodTypes.BANK_ACCOUNT,
+                HyperwalletUser.ProfileTypes.INDIVIDUAL);
 
-        verify(view).showAddTransferMethod(COUNTRY, CURRENCY, BANK_ACCOUNT);
+        verify(view).showAddTransferMethod("CA", "CAD", HyperwalletTransferMethod.TransferMethodTypes.BANK_ACCOUNT,
+                HyperwalletUser.ProfileTypes.INDIVIDUAL);
         verify(view, never()).showErrorLoadTransferMethodConfigurationKeys(
                 ArgumentMatchers.<HyperwalletError>anyList());
         verify(view, never()).showErrorLoadCurrency(ArgumentMatchers.<HyperwalletError>anyList());
@@ -387,14 +512,14 @@ public class SelectTransferMethodPresenterTest {
                 TransferMethodConfigurationRepository.LoadKeysCallback callback =
                         (TransferMethodConfigurationRepository.LoadKeysCallback) invocation.getArguments()[0];
 
-                callback.onKeysLoaded(result);
+                callback.onKeysLoaded(mResult);
                 return callback;
             }
-        }).when(transferMethodConfigurationRepository).getKeys(any(
+        }).when(mTransferMethodConfigurationRepository).getKeys(any(
                 TransferMethodConfigurationRepository.LoadKeysCallback.class));
 
         // Then
-        selectTransferMethodPresenter.loadCountrySelection(COUNTRY);
+        selectTransferMethodPresenter.loadCountrySelection("CA");
 
         verify(view).showCountrySelectionDialog(any(TreeMap.class), anyString());
         verify(view, never()).showErrorLoadTransferMethodConfigurationKeys(
@@ -403,7 +528,7 @@ public class SelectTransferMethodPresenterTest {
         verify(view, never()).showErrorLoadTransferMethodTypes(ArgumentMatchers.<HyperwalletError>anyList());
         verify(view, never()).showErrorLoadCountrySelection(ArgumentMatchers.<HyperwalletError>anyList());
         verify(view, never()).showErrorLoadCurrencySelection(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showAddTransferMethod(anyString(), anyString(), anyString());
+        verify(view, never()).showAddTransferMethod(anyString(), anyString(), anyString(), anyString());
     }
 
     @Test
@@ -415,14 +540,14 @@ public class SelectTransferMethodPresenterTest {
                 TransferMethodConfigurationRepository.LoadKeysCallback callback =
                         (TransferMethodConfigurationRepository.LoadKeysCallback) invocation.getArguments()[0];
 
-                callback.onKeysLoaded(result);
+                callback.onKeysLoaded(mResult);
                 return callback;
             }
-        }).when(transferMethodConfigurationRepository).getKeys(any(
+        }).when(mTransferMethodConfigurationRepository).getKeys(any(
                 TransferMethodConfigurationRepository.LoadKeysCallback.class));
 
         // Then
-        selectTransferMethodPresenter.loadCountrySelection(COUNTRY);
+        selectTransferMethodPresenter.loadCountrySelection("CA");
 
         verify(view, never()).showCountrySelectionDialog(any(TreeMap.class), anyString());
         verify(view, never()).showErrorLoadTransferMethodConfigurationKeys(
@@ -431,7 +556,7 @@ public class SelectTransferMethodPresenterTest {
         verify(view, never()).showErrorLoadTransferMethodTypes(ArgumentMatchers.<HyperwalletError>anyList());
         verify(view, never()).showErrorLoadCountrySelection(ArgumentMatchers.<HyperwalletError>anyList());
         verify(view, never()).showErrorLoadCurrencySelection(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showAddTransferMethod(anyString(), anyString(), anyString());
+        verify(view, never()).showAddTransferMethod(anyString(), anyString(), anyString(), anyString());
     }
 
     @Test
@@ -448,15 +573,15 @@ public class SelectTransferMethodPresenterTest {
                 callback.onError(errors);
                 return callback;
             }
-        }).when(transferMethodConfigurationRepository).getKeys(any(
+        }).when(mTransferMethodConfigurationRepository).getKeys(any(
                 TransferMethodConfigurationRepository.LoadKeysCallback.class));
 
         // Then
-        selectTransferMethodPresenter.loadCountrySelection(COUNTRY);
+        selectTransferMethodPresenter.loadCountrySelection("CA");
 
         verify(view, never()).showCountrySelectionDialog(any(TreeMap.class), anyString());
         verify(view).showErrorLoadCountrySelection(eq(errors.getErrors()));
-        verify(view, never()).showAddTransferMethod(anyString(), anyString(), anyString());
+        verify(view, never()).showAddTransferMethod(anyString(), anyString(), anyString(), anyString());
     }
 
     @Test
@@ -471,11 +596,11 @@ public class SelectTransferMethodPresenterTest {
                 callback.onError(errors);
                 return callback;
             }
-        }).when(transferMethodConfigurationRepository).getKeys(any(
+        }).when(mTransferMethodConfigurationRepository).getKeys(any(
                 TransferMethodConfigurationRepository.LoadKeysCallback.class));
 
         // Then
-        selectTransferMethodPresenter.loadCountrySelection(COUNTRY);
+        selectTransferMethodPresenter.loadCountrySelection("CA");
 
         verify(view, never()).showCountrySelectionDialog(any(TreeMap.class), anyString());
         verify(view, never()).showErrorLoadTransferMethodConfigurationKeys(
@@ -484,7 +609,7 @@ public class SelectTransferMethodPresenterTest {
         verify(view, never()).showErrorLoadTransferMethodTypes(ArgumentMatchers.<HyperwalletError>anyList());
         verify(view, never()).showErrorLoadCountrySelection(ArgumentMatchers.<HyperwalletError>anyList());
         verify(view, never()).showErrorLoadCurrencySelection(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showAddTransferMethod(anyString(), anyString(), anyString());
+        verify(view, never()).showAddTransferMethod(anyString(), anyString(), anyString(), anyString());
     }
 
     @Test
@@ -498,14 +623,14 @@ public class SelectTransferMethodPresenterTest {
                 TransferMethodConfigurationRepository.LoadKeysCallback callback =
                         (TransferMethodConfigurationRepository.LoadKeysCallback) invocation.getArguments()[0];
 
-                callback.onKeysLoaded(result);
+                callback.onKeysLoaded(mResult);
                 return callback;
             }
-        }).when(transferMethodConfigurationRepository).getKeys(any(
+        }).when(mTransferMethodConfigurationRepository).getKeys(any(
                 TransferMethodConfigurationRepository.LoadKeysCallback.class));
 
         // Then
-        selectTransferMethodPresenter.loadCurrencySelection(COUNTRY, CURRENCY);
+        selectTransferMethodPresenter.loadCurrencySelection("CA", "CAD");
 
         verify(view).showCurrencySelectionDialog(any(TreeMap.class), anyString());
         verify(view, never()).showErrorLoadTransferMethodConfigurationKeys(
@@ -514,7 +639,7 @@ public class SelectTransferMethodPresenterTest {
         verify(view, never()).showErrorLoadTransferMethodTypes(ArgumentMatchers.<HyperwalletError>anyList());
         verify(view, never()).showErrorLoadCountrySelection(ArgumentMatchers.<HyperwalletError>anyList());
         verify(view, never()).showErrorLoadCurrencySelection(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showAddTransferMethod(anyString(), anyString(), anyString());
+        verify(view, never()).showAddTransferMethod(anyString(), anyString(), anyString(), anyString());
     }
 
     @Test
@@ -526,14 +651,14 @@ public class SelectTransferMethodPresenterTest {
                 TransferMethodConfigurationRepository.LoadKeysCallback callback =
                         (TransferMethodConfigurationRepository.LoadKeysCallback) invocation.getArguments()[0];
 
-                callback.onKeysLoaded(result);
+                callback.onKeysLoaded(mResult);
                 return callback;
             }
-        }).when(transferMethodConfigurationRepository).getKeys(any(
+        }).when(mTransferMethodConfigurationRepository).getKeys(any(
                 TransferMethodConfigurationRepository.LoadKeysCallback.class));
 
         // Then
-        selectTransferMethodPresenter.loadCurrencySelection(COUNTRY, CURRENCY);
+        selectTransferMethodPresenter.loadCurrencySelection("CA", "CAD");
 
         verify(view, never()).showCurrencySelectionDialog(any(TreeMap.class), anyString());
         verify(view, never()).showErrorLoadTransferMethodConfigurationKeys(
@@ -542,7 +667,7 @@ public class SelectTransferMethodPresenterTest {
         verify(view, never()).showErrorLoadTransferMethodTypes(ArgumentMatchers.<HyperwalletError>anyList());
         verify(view, never()).showErrorLoadCountrySelection(ArgumentMatchers.<HyperwalletError>anyList());
         verify(view, never()).showErrorLoadCurrencySelection(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showAddTransferMethod(anyString(), anyString(), anyString());
+        verify(view, never()).showAddTransferMethod(anyString(), anyString(), anyString(), anyString());
     }
 
     @Test
@@ -559,15 +684,15 @@ public class SelectTransferMethodPresenterTest {
                 callback.onError(errors);
                 return callback;
             }
-        }).when(transferMethodConfigurationRepository).getKeys(any(
+        }).when(mTransferMethodConfigurationRepository).getKeys(any(
                 TransferMethodConfigurationRepository.LoadKeysCallback.class));
 
         // Then
-        selectTransferMethodPresenter.loadCurrencySelection(COUNTRY, CURRENCY);
+        selectTransferMethodPresenter.loadCurrencySelection("CA", "CAD");
 
         verify(view, never()).showCurrencySelectionDialog(any(TreeMap.class), anyString());
         verify(view).showErrorLoadCurrencySelection(eq(errors.getErrors()));
-        verify(view, never()).showAddTransferMethod(anyString(), anyString(), anyString());
+        verify(view, never()).showAddTransferMethod(anyString(), anyString(), anyString(), anyString());
     }
 
     @Test
@@ -582,11 +707,11 @@ public class SelectTransferMethodPresenterTest {
                 callback.onError(errors);
                 return callback;
             }
-        }).when(transferMethodConfigurationRepository).getKeys(any(
+        }).when(mTransferMethodConfigurationRepository).getKeys(any(
                 TransferMethodConfigurationRepository.LoadKeysCallback.class));
 
         // Then
-        selectTransferMethodPresenter.loadCurrencySelection(COUNTRY, CURRENCY);
+        selectTransferMethodPresenter.loadCurrencySelection("CA", "CAD");
 
         verify(view, never()).showCurrencySelectionDialog(any(TreeMap.class), anyString());
         verify(view, never()).showErrorLoadTransferMethodConfigurationKeys(
@@ -595,7 +720,7 @@ public class SelectTransferMethodPresenterTest {
         verify(view, never()).showErrorLoadTransferMethodTypes(ArgumentMatchers.<HyperwalletError>anyList());
         verify(view, never()).showErrorLoadCountrySelection(ArgumentMatchers.<HyperwalletError>anyList());
         verify(view, never()).showErrorLoadCurrencySelection(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showAddTransferMethod(anyString(), anyString(), anyString());
+        verify(view, never()).showAddTransferMethod(anyString(), anyString(), anyString(), anyString());
     }
 
     private HyperwalletErrors createErrors() {
@@ -603,5 +728,51 @@ public class SelectTransferMethodPresenterTest {
         HyperwalletError error = new HyperwalletError("test message", "TEST_CODE");
         errors.add(error);
         return new HyperwalletErrors(errors);
+    }
+
+    @Test
+    public void testLoadMethods_whenLoadUserWithError_checkShowingErrors() {
+
+        final HyperwalletError error = new HyperwalletError("test message", "TEST_CODE");
+        List<HyperwalletError> errorList = new ArrayList<>();
+        errorList.add(error);
+        final HyperwalletErrors errors = new HyperwalletErrors(errorList);
+
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                UserRepository.LoadUserCallback userCallback =
+                        (UserRepository.LoadUserCallback) invocation.getArguments()[0];
+                userCallback.onError(errors);
+                return userCallback;
+            }
+        }).when(mUserRepository).loadUser(any(
+                UserRepository.LoadUserCallback.class));
+        when(view.isActive()).thenReturn(false);
+        // Then
+        selectTransferMethodPresenter.loadTransferMethodConfigurationKeys(false, "CA", "CAD");
+
+        verify(view, never()).showErrorLoadTransferMethodConfigurationKeys(ArgumentMatchers.<HyperwalletError>anyList());
+
+        selectTransferMethodPresenter.loadCurrency(false, "CA");
+        verify(view, never()).showErrorLoadCurrency(ArgumentMatchers.<HyperwalletError>anyList());
+
+        selectTransferMethodPresenter.loadTransferMethodTypes(false, "CA", "CAD");
+        verify(view, never()).showErrorLoadTransferMethodTypes(ArgumentMatchers.<HyperwalletError>anyList());
+
+
+        // When
+        when(view.isActive()).thenReturn(true);
+
+        // Then
+        selectTransferMethodPresenter.loadTransferMethodConfigurationKeys(false, "CA", "CAD");
+
+        verify(view).showErrorLoadTransferMethodConfigurationKeys(ArgumentMatchers.<HyperwalletError>anyList());
+
+        selectTransferMethodPresenter.loadCurrency(false, "CA");
+        verify(view).showErrorLoadCurrency(ArgumentMatchers.<HyperwalletError>anyList());
+
+        selectTransferMethodPresenter.loadTransferMethodTypes(false, "CA", "CAD");
+        verify(view).showErrorLoadTransferMethodTypes(ArgumentMatchers.<HyperwalletError>anyList());
     }
 }
