@@ -204,8 +204,8 @@ public class SelectTransferMethodPresenter implements SelectTransferMethodContra
 
     @Override
     public void openAddTransferMethod(@NonNull final String country, @NonNull final String currency,
-            @NonNull final String transferMethodType) {
-        mView.showAddTransferMethod(country, currency, transferMethodType);
+            @NonNull final String transferMethodType, @NonNull final String profileType) {
+        mView.showAddTransferMethod(country, currency, transferMethodType, profileType);
     }
 
     @Override

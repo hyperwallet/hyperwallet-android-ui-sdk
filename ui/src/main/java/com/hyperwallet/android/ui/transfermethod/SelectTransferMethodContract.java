@@ -38,7 +38,8 @@ public interface SelectTransferMethodContract {
 
     interface View {
 
-        void showAddTransferMethod(String country, String currency, String transferMethodType);
+        void showAddTransferMethod(@NonNull final String country, @NonNull final String currency,
+                @NonNull final String transferMethodType, @NonNull final String profileType);
 
         void showErrorLoadTransferMethodConfigurationKeys(@NonNull final List<HyperwalletError> errors);
 
@@ -95,7 +96,7 @@ public interface SelectTransferMethodContract {
                 @NonNull final String currencyCode);
 
         void openAddTransferMethod(@NonNull final String country, @NonNull final String currency,
-                @NonNull final String transferMethodType);
+                @NonNull final String transferMethodType, @NonNull final String profileType);
 
         void loadCountrySelection(@NonNull final String countryCode);
 

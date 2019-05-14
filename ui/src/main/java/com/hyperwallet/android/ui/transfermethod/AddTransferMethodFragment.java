@@ -121,9 +121,9 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
         addTransferMethodFragment.mCountry = transferMethodCountry;
         addTransferMethodFragment.mTransferMethodType = transferMethodType;
         addTransferMethodFragment.mCurrency = transferMethodCurrency;
+        addTransferMethodFragment.mTransferMethodProfileType = transferMethodProfileType;
         addTransferMethodFragment.mWidgetInputStateHashMap = new HashMap<>(1);
         addTransferMethodFragment.mTransferMethod = null;
-        addTransferMethodFragment.mTransferMethodProfileType = transferMethodProfileType;
 
         arguments.putString(ARGUMENT_TRANSFER_METHOD_COUNTRY, addTransferMethodFragment.mCountry);
         arguments.putString(ARGUMENT_TRANSFER_METHOD_CURRENCY, addTransferMethodFragment.mCurrency);
