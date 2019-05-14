@@ -21,6 +21,7 @@ package com.hyperwallet.android.ui;
 
 import static com.hyperwallet.android.ui.transfermethod.AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_COUNTRY;
 import static com.hyperwallet.android.ui.transfermethod.AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_CURRENCY;
+import static com.hyperwallet.android.ui.transfermethod.AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_PROFILE_TYPE;
 import static com.hyperwallet.android.ui.transfermethod.AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_TYPE;
 
 import android.content.Context;
@@ -87,11 +88,12 @@ public final class HyperwalletUi {
      * @return an Intent with the data necessary to launch the {@link AddTransferMethodActivity}
      */
     public Intent getIntentAddTransferMethodActivity(@NonNull final Context context, @NonNull final String country,
-            @NonNull final String currency, @NonNull final String transferMethodType) {
+            @NonNull final String currency, @NonNull final String transferMethodType, @NonNull final String profileType) {
         Intent intent = new Intent(context, AddTransferMethodActivity.class);
         intent.putExtra(EXTRA_TRANSFER_METHOD_COUNTRY, country);
         intent.putExtra(EXTRA_TRANSFER_METHOD_CURRENCY, currency);
         intent.putExtra(EXTRA_TRANSFER_METHOD_TYPE, transferMethodType);
+        intent.putExtra(EXTRA_TRANSFER_METHOD_PROFILE_TYPE, profileType);
         return intent;
     }
 
