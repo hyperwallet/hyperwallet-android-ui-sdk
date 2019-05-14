@@ -49,11 +49,16 @@ public class PhoneWidget extends AbstractWidget {
     public View getView() {
         if (mContainer == null) {
             mContainer = new RelativeLayout(mContext);
-            mTextInputLayout = new TextInputLayout(
-                    new ContextThemeWrapper(mContext, R.style.Widget_Hyperwallet_TextInputLayout));
+            mTextInputLayout = mField.isEditable() ? new TextInputLayout(new ContextThemeWrapper(mContext,
+                    R.style.Widget_Hyperwallet_TextInputLayout))
+                    : new TextInputLayout(new ContextThemeWrapper(mContext,
+                            R.style.Widget_Hyperwallet_TextInputLayout_Disabled));
+
             // input control
             final EditText editText = new EditText(
                     new ContextThemeWrapper(mContext, R.style.Widget_Hyperwallet_TextInputEditText));
+            editText.setEnabled(mField.isEditable());
+
             mTextInputLayout.addView(editText);
             mTextInputLayout.setHint(mField.getLabel());
             setIdFromFieldName(editText);

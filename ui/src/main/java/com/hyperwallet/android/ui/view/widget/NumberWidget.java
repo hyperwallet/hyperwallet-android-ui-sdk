@@ -37,7 +37,7 @@ import com.hyperwallet.android.model.meta.field.HyperwalletField;
 public class NumberWidget extends AbstractWidget {
     private ViewGroup mContainer;
     private TextInputLayout mTextInputLayout;
-    private String mValue = "";
+    private String mValue;
 
     public NumberWidget(@NonNull HyperwalletField field, @NonNull WidgetEventListener listener,
             @NonNull Context context, @Nullable String defaultValue, @NonNull View defaultFocusView) {
@@ -50,11 +50,15 @@ public class NumberWidget extends AbstractWidget {
         if (mContainer == null) {
             mContainer = new RelativeLayout(mContext);
             // number input text
-            mTextInputLayout = new TextInputLayout(
-                    new ContextThemeWrapper(mContext, R.style.Widget_Hyperwallet_TextInputLayout));
+            mTextInputLayout = mField.isEditable() ? new TextInputLayout(new ContextThemeWrapper(mContext,
+                    R.style.Widget_Hyperwallet_TextInputLayout))
+                    : new TextInputLayout(new ContextThemeWrapper(mContext,
+                            R.style.Widget_Hyperwallet_TextInputLayout_Disabled));
             mTextInputLayout.setHint(mField.getLabel());
+
             final EditText editText = new EditText(
                     new ContextThemeWrapper(mContext, R.style.Widget_Hyperwallet_TextInputEditText));
+            editText.setEnabled(mField.isEditable());
             setIdFromFieldLabel(mTextInputLayout);
             setIdFromFieldName(editText);
 

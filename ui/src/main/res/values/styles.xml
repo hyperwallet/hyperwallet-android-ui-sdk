@@ -118,6 +118,17 @@
         <item name="colorControlActivated">@color/colorPrimary</item>
     </style>
 
+    <style name="HintTextDisabled" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textColor">@color/colorSecondary</item>
+    </style>
+
+    <style name="Widget.Hyperwallet.TextInputLayout.Disabled"
+           parent="Widget.Hyperwallet.TextInputLayout">
+        <item name="android:textColor">@color/colorSecondary</item>
+        <item name="android:textColorHint">@color/colorSecondary</item>
+        <item name="hintTextAppearance">@style/HintTextDisabled</item>
+    </style>
+
     <style name="Widget.Hyperwallet.TextInputEditText"
            parent="Base.Widget.MaterialComponents.TextInputEditText">
         <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Subtitle1

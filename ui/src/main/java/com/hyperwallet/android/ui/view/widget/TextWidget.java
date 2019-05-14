@@ -50,12 +50,16 @@ public class TextWidget extends AbstractWidget {
         if (mContainer == null) {
             mContainer = new RelativeLayout(mContext);
             mContainer.setTag(mField.getName());
-            mTextInputLayout = new TextInputLayout(
-                    new ContextThemeWrapper(mContext, R.style.Widget_Hyperwallet_TextInputLayout));
+            mTextInputLayout = mField.isEditable() ? new TextInputLayout(new ContextThemeWrapper(mContext,
+                    R.style.Widget_Hyperwallet_TextInputLayout))
+                    : new TextInputLayout(new ContextThemeWrapper(mContext,
+                            R.style.Widget_Hyperwallet_TextInputLayout_Disabled));
+
             final EditText editText = new EditText(
                     new ContextThemeWrapper(mContext, R.style.Widget_Hyperwallet_TextInputEditText));
-            mTextInputLayout.setHint(mField.getLabel());
+            editText.setEnabled(mField.isEditable());
 
+            mTextInputLayout.setHint(mField.getLabel());
             setIdFromFieldLabel(mTextInputLayout);
             setIdFromFieldName(editText);
             editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {

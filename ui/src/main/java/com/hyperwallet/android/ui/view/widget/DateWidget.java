@@ -37,7 +37,7 @@ import com.hyperwallet.android.model.meta.field.HyperwalletField;
 public class DateWidget extends AbstractWidget {
 
     private ViewGroup mContainer;
-    private String mValue = "";
+    private String mValue;
     private TextInputLayout mTextInputLayout;
 
     public DateWidget(@NonNull HyperwalletField field, @NonNull WidgetEventListener listener, @NonNull Context context,
@@ -50,11 +50,15 @@ public class DateWidget extends AbstractWidget {
     public View getView() {
         if (mContainer == null) {
             mContainer = new RelativeLayout(mContext);
-            mTextInputLayout = new TextInputLayout(
-                    new ContextThemeWrapper(mContext, R.style.Widget_Hyperwallet_TextInputLayout));
+            mTextInputLayout = mField.isEditable() ? new TextInputLayout(new ContextThemeWrapper(mContext,
+                    R.style.Widget_Hyperwallet_TextInputLayout))
+                    : new TextInputLayout(new ContextThemeWrapper(mContext,
+                            R.style.Widget_Hyperwallet_TextInputLayout_Disabled));
             // input control
             final EditText editText = new EditText(
                     new ContextThemeWrapper(mContext, R.style.Widget_Hyperwallet_TextInputEditText));
+
+            editText.setEnabled(mField.isEditable());
             setIdFromFieldName(editText);
             mTextInputLayout.setHint(mField.getLabel());
             mTextInputLayout.addView(editText);

@@ -71,8 +71,10 @@ public class SelectionWidget extends AbstractWidget implements WidgetSelectionDi
             mContainer.setFocusable(true);
             mContainer.setFocusableInTouchMode(true);
 
-            mTextInputLayout = new TextInputLayout(
-                    new ContextThemeWrapper(mContext, R.style.Widget_Hyperwallet_TextInputLayout));
+            mTextInputLayout = mField.isEditable() ? new TextInputLayout(new ContextThemeWrapper(mContext,
+                    R.style.Widget_Hyperwallet_TextInputLayout))
+                    : new TextInputLayout(new ContextThemeWrapper(mContext,
+                            R.style.Widget_Hyperwallet_TextInputLayout_Disabled));
             mEditText = new EditText(
                     new ContextThemeWrapper(mContext, R.style.Widget_Hyperwallet_TextInputEditText));
             if (!TextUtils.isEmpty(mDefaultValue)) {
@@ -104,13 +106,15 @@ public class SelectionWidget extends AbstractWidget implements WidgetSelectionDi
                 }
             });
 
-            mEditText.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    hideSoftKey(v);
-                    showSelectionFragmentDialog();
-                }
-            });
+            if (mField.isEditable()) {
+                mEditText.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        hideSoftKey(v);
+                        showSelectionFragmentDialog();
+                    }
+                });
+            }
 
             mTextInputLayout.setHint(mField.getLabel());
             mTextInputLayout.addView(mEditText);

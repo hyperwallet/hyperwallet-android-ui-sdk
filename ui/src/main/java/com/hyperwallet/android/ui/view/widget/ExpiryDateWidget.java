@@ -60,10 +60,14 @@ public class ExpiryDateWidget extends AbstractWidget {
             mContainer = new RelativeLayout(mContext);
 
             // input control
-            mTextInputLayout = new TextInputLayout(
-                    new ContextThemeWrapper(mContext, R.style.Widget_Hyperwallet_TextInputLayout));
+            mTextInputLayout = mField.isEditable() ? new TextInputLayout(new ContextThemeWrapper(mContext,
+                    R.style.Widget_Hyperwallet_TextInputLayout))
+                    : new TextInputLayout(new ContextThemeWrapper(mContext,
+                            R.style.Widget_Hyperwallet_TextInputLayout_Disabled));
+
             final EditText editText = new EditText(
                     new ContextThemeWrapper(mContext, R.style.Widget_Hyperwallet_TextInputEditText));
+            editText.setEnabled(mField.isEditable());
             setIdFromFieldLabel(mTextInputLayout);
             setIdFromFieldName(editText);
             editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
