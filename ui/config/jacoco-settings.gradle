@@ -35,7 +35,7 @@ def debugClassPaths = [
 
 final def coverageSourceDirs = ["$project.projectDir/src/main/java/*"]
 
-task jacocoTestReport(type: JacocoReport, dependsOn: 'testDevUnitTest') {
+task jacocoTestReport(type: JacocoReport, dependsOn: 'testDebugUnitTest') {
 
     group = 'Reporting'
     description = 'Generate Jacoco coverage reports.'
@@ -68,7 +68,7 @@ task jacocoTestCoverageVerification(type: JacocoCoverageVerification, dependsOn:
     )
     additionalSourceDirs = files(coverageSourceDirs)
     sourceDirectories = files(coverageSourceDirs)
-    executionData = files("${buildDir}/jacoco/testDevUnitTest.exec")
+    executionData = files("${buildDir}/jacoco/testDebugUnitTest.exec")
 
     violationRules {
         setFailOnViolation(true)
