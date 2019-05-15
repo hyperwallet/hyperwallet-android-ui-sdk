@@ -84,6 +84,7 @@ public class BankAccountTest {
                     intent.putExtra("TRANSFER_METHOD_TYPE", "BANK_ACCOUNT");
                     intent.putExtra("TRANSFER_METHOD_COUNTRY", "US");
                     intent.putExtra("TRANSFER_METHOD_CURRENCY", "USD");
+                    intent.putExtra("TRANSFER_METHOD_PROFILE_TYPE", "INDIVIDUAL");
                     return intent;
                 }
             };
