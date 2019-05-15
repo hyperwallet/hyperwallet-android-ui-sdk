@@ -21,6 +21,7 @@ import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMe
 import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodFields.TYPE;
 import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodTypes.BANK_ACCOUNT;
 import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodTypes.BANK_CARD;
+import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodTypes.PAYPAL_ACCOUNT;
 
 import android.app.Activity;
 import android.content.Context;
@@ -48,6 +49,7 @@ import com.hyperwallet.android.model.HyperwalletBankAccount;
 import com.hyperwallet.android.model.HyperwalletBankCard;
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.HyperwalletTransferMethod;
+import com.hyperwallet.android.model.PayPalAccount;
 import com.hyperwallet.android.model.meta.Fee;
 import com.hyperwallet.android.model.meta.HyperwalletField;
 import com.hyperwallet.android.ui.HyperwalletLocalBroadcast;
@@ -69,6 +71,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     private static final String ARGUMENT_TRANSFER_METHOD_COUNTRY = "ARGUMENT_TRANSFER_METHOD_COUNTRY";
     private static final String ARGUMENT_TRANSFER_METHOD_CURRENCY = "ARGUMENT_TRANSFER_METHOD_CURRENCY";
     private static final String ARGUMENT_TRANSFER_METHOD_TYPE = "ARGUMENT_TRANSFER_METHOD_TYPE";
+    private static final String ARGUMENT_TRANSFER_METHOD_PROFILE_TYPE = "ARGUMENT_TRANSFER_METHOD_PROFILE_TYPE";
     private static final String ARGUMENT_SHOW_CREATE_PROGRESS_BAR = "ARGUMENT_SHOW_CREATE_PROGRESS_BAR";
     private static final String ARGUMENT_TRANSFER_METHOD = "ARGUMENT_TRANSFER_METHOD";
     private static final String ARGUMENT_WIDGET_STATE_MAP = "ARGUMENT_WIDGET_STATE_MAP";
@@ -87,6 +90,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     private boolean mShowCreateProgressBar;
     private String mTransferMethodType;
     private HyperwalletTransferMethod mTransferMethod;
+    private String mTransferMethodProfileType;
     private HashMap<String, WidgetInputState> mWidgetInputStateHashMap;
     private TextView sectionHeaderTextView;
 
@@ -99,28 +103,33 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     /**
      * Creates new instance of AddTransferMethodFragment this is the proper initialization of this class
      * since the default constructor is reserved for android framework when lifecycle is triggered.
-     * The parameters in {@link AddTransferMethodFragment#newInstance(String, String, String)} is mandatory
+     * The parameters in {@link AddTransferMethodFragment#newInstance(String, String, String, String)} is mandatory
      * and should be supplied with correct data or this fragment will not initialize properly.
      *
-     * @param transferMethodCountry  the country selected when creating transfer method
-     * @param transferMethodCurrency the currency selected when creating transfer method
-     * @param transferMethodType     the type of transfer method needed to create transfer method
+     * @param transferMethodCountry     the country selected when creating transfer method
+     * @param transferMethodCurrency    the currency selected when creating transfer method
+     * @param transferMethodType        the type of transfer method needed to create transfer method
+     * @param transferMethodProfileType the type of transfer method profile needed to create transfer method
      */
     public static AddTransferMethodFragment newInstance(@NonNull String transferMethodCountry,
             @NonNull String transferMethodCurrency,
-            @NonNull String transferMethodType) {
+            @NonNull String transferMethodType,
+            @NonNull String transferMethodProfileType) {
         AddTransferMethodFragment addTransferMethodFragment = new AddTransferMethodFragment();
         Bundle arguments = new Bundle();
 
         addTransferMethodFragment.mCountry = transferMethodCountry;
         addTransferMethodFragment.mTransferMethodType = transferMethodType;
         addTransferMethodFragment.mCurrency = transferMethodCurrency;
+        addTransferMethodFragment.mTransferMethodProfileType = transferMethodProfileType;
         addTransferMethodFragment.mWidgetInputStateHashMap = new HashMap<>(1);
         addTransferMethodFragment.mTransferMethod = null;
 
         arguments.putString(ARGUMENT_TRANSFER_METHOD_COUNTRY, addTransferMethodFragment.mCountry);
         arguments.putString(ARGUMENT_TRANSFER_METHOD_CURRENCY, addTransferMethodFragment.mCurrency);
         arguments.putString(ARGUMENT_TRANSFER_METHOD_TYPE, addTransferMethodFragment.mTransferMethodType);
+        arguments.putString(ARGUMENT_TRANSFER_METHOD_PROFILE_TYPE,
+                addTransferMethodFragment.mTransferMethodProfileType);
         arguments.putParcelable(ARGUMENT_TRANSFER_METHOD, addTransferMethodFragment.mTransferMethod);
         arguments.putSerializable(ARGUMENT_WIDGET_STATE_MAP, addTransferMethodFragment.mWidgetInputStateHashMap);
         addTransferMethodFragment.setArguments(arguments);
@@ -220,7 +229,8 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     @Override
     public void onResume() {
         super.onResume();
-        mPresenter.loadTransferMethodConfigurationFields(FORCE_UPDATE, mCountry, mCurrency, mTransferMethodType);
+        mPresenter.loadTransferMethodConfigurationFields(FORCE_UPDATE, mCountry, mCurrency, mTransferMethodType,
+                mTransferMethodProfileType);
     }
 
     @Override
@@ -252,7 +262,8 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
 
     @Override
     public void reloadTransferMethodConfigurationFields() {
-        mPresenter.loadTransferMethodConfigurationFields(FORCE_UPDATE, mCountry, mCurrency, mTransferMethodType);
+        mPresenter.loadTransferMethodConfigurationFields(FORCE_UPDATE, mCountry, mCurrency, mTransferMethodType,
+                mTransferMethodProfileType);
     }
 
     @Override
@@ -465,6 +476,12 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                 case BANK_CARD:
                     mTransferMethod = new HyperwalletBankCard.Builder().
                             transferMethodCountry(mCountry).transferMethodCurrency(mCurrency).build();
+                    break;
+                case PAYPAL_ACCOUNT:
+                    mTransferMethod = new PayPalAccount.Builder()
+                            .transferMethodCountry(mCountry)
+                            .transferMethodCurrency(mCurrency)
+                            .build();
                     break;
                 default:
                     mTransferMethod = new HyperwalletTransferMethod();

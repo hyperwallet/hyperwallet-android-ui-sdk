@@ -47,7 +47,6 @@ import java.util.Map;
 import java.util.Objects;
 
 public class TransferMethodConfigurationRepositoryImpl implements TransferMethodConfigurationRepository {
-    private static final String INDIVIDUAL = "INDIVIDUAL";
     private HyperwalletTransferMethodConfigurationKeyResult mTransferMethodConfigurationKeyResult;
     private final Handler mHandler;
     private final Map<FieldMapKey, HyperwalletTransferMethodConfigurationFieldResult> mFieldMap;
@@ -104,9 +103,11 @@ public class TransferMethodConfigurationRepositoryImpl implements TransferMethod
     void getTransferMethodConfigurationFieldResult(@NonNull final String country,
             @NonNull final String currency,
             @NonNull final String transferMethodType,
+            @NonNull final String transferMethodProfileType,
             @NonNull final LoadFieldsCallback loadFieldsCallback) {
         HyperwalletTransferMethodConfigurationFieldQuery query =
-                new HyperwalletTransferMethodConfigurationFieldQuery(country, currency, transferMethodType, INDIVIDUAL);
+                new HyperwalletTransferMethodConfigurationFieldQuery(country, currency, transferMethodType,
+                        transferMethodProfileType);
         EspressoIdlingResource.increment();
 
         getHyperwallet().retrieveTransferMethodConfigurationFields(
@@ -146,6 +147,7 @@ public class TransferMethodConfigurationRepositoryImpl implements TransferMethod
     @Override
     public synchronized void getFields(@NonNull final String country, @NonNull final String currency,
             @NonNull final String transferMethodType,
+            @NonNull final String transferMethodProfileType,
             @NonNull final LoadFieldsCallback loadFieldsCallback) {
         FieldMapKey fieldMapKey = new FieldMapKey(country, currency, transferMethodType);
         HyperwalletTransferMethodConfigurationFieldResult transferMethodConfigurationFieldResult = mFieldMap.get(
@@ -153,7 +155,7 @@ public class TransferMethodConfigurationRepositoryImpl implements TransferMethod
         // if there is no value for country-currency-type combination,
         // it means api call was never made or this combination or it was refreshed
         if (transferMethodConfigurationFieldResult == null) {
-            getTransferMethodConfigurationFieldResult(country, currency, transferMethodType, loadFieldsCallback);
+            getTransferMethodConfigurationFieldResult(country, currency, transferMethodType, transferMethodProfileType, loadFieldsCallback);
         } else {
             loadFieldsCallback.onFieldsLoaded(transferMethodConfigurationFieldResult);
         }

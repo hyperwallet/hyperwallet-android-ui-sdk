@@ -1,0 +1,8 @@
+{
+  "errors": [
+    {
+      "message": "PayPal transfer method email address should be same as profile email address.",
+      "code": "CONSTRAINT_VIOLATIONS"
+    }
+  ]
+}
