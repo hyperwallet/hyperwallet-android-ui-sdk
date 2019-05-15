@@ -5,6 +5,8 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.intent.Intents.intended;
+import static androidx.test.espresso.intent.matcher.IntentMatchers.hasExtra;
 import static androidx.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static androidx.test.espresso.matcher.ViewMatchers.hasSibling;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -19,6 +21,14 @@ import static org.hamcrest.Matchers.instanceOf;
 
 import static java.net.HttpURLConnection.HTTP_OK;
 
+import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodTypes.BANK_ACCOUNT;
+import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodTypes.BANK_CARD;
+import static com.hyperwallet.android.model.HyperwalletUser.ProfileTypes.BUSINESS;
+import static com.hyperwallet.android.model.HyperwalletUser.ProfileTypes.INDIVIDUAL;
+import static com.hyperwallet.android.ui.transfermethod.AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_COUNTRY;
+import static com.hyperwallet.android.ui.transfermethod.AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_CURRENCY;
+import static com.hyperwallet.android.ui.transfermethod.AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_PROFILE_TYPE;
+import static com.hyperwallet.android.ui.transfermethod.AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_TYPE;
 import static com.hyperwallet.android.util.EspressoUtils.atPosition;
 import static com.hyperwallet.android.util.EspressoUtils.withDrawable;
 
@@ -26,6 +36,7 @@ import android.widget.TextView;
 
 import androidx.test.espresso.IdlingRegistry;
 import androidx.test.espresso.contrib.RecyclerViewActions;
+import androidx.test.espresso.intent.rule.IntentsTestRule;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
@@ -57,6 +68,9 @@ public class SelectTransferMethodTest {
     @Rule
     public ActivityTestRule<SelectTransferMethodActivity> mActivityTestRule =
             new ActivityTestRule<>(SelectTransferMethodActivity.class, true, false);
+    @Rule
+    public IntentsTestRule<SelectTransferMethodActivity> mIntentsTestRule =
+            new IntentsTestRule<>(SelectTransferMethodActivity.class, true, false);
 
     @Before
     public void setup() {
@@ -284,6 +298,44 @@ public class SelectTransferMethodTest {
         onView(withId(R.id.select_transfer_method_types_list)).check(
                 matches(atPosition(0, hasDescendant(withText("Processing Time: 1-3 Business days")))));
 
+    }
+
+    @Test
+    public void testSelectTransferMethod_verifyIntentIndividualUser() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("user_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_keys_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_fields_response.json")).mock();
+
+        mIntentsTestRule.launchActivity(null);
+
+        onView(withId(R.id.select_transfer_method_types_list))
+                .perform(RecyclerViewActions.actionOnItem(withChild(withText(R.string.bank_account)), click()));
+        intended(hasExtra(EXTRA_TRANSFER_METHOD_PROFILE_TYPE, INDIVIDUAL));
+        intended(hasExtra(EXTRA_TRANSFER_METHOD_COUNTRY, "US"));
+        intended(hasExtra(EXTRA_TRANSFER_METHOD_CURRENCY, "USD"));
+        intended(hasExtra(EXTRA_TRANSFER_METHOD_TYPE, BANK_ACCOUNT));
+    }
+
+    @Test
+    public void testSelectTransferMethod_verifyIntentBusinessUser() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("user_business_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_keys_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_fields_response.json")).mock();
+
+        mIntentsTestRule.launchActivity(null);
+
+        onView(withId(R.id.select_transfer_method_types_list))
+                .perform(RecyclerViewActions.actionOnItem(withChild(withText(R.string.bank_card)), click()));
+        intended(hasExtra(EXTRA_TRANSFER_METHOD_PROFILE_TYPE, BUSINESS));
+        intended(hasExtra(EXTRA_TRANSFER_METHOD_COUNTRY, "US"));
+        intended(hasExtra(EXTRA_TRANSFER_METHOD_CURRENCY, "USD"));
+        intended(hasExtra(EXTRA_TRANSFER_METHOD_TYPE, BANK_CARD));
     }
 
     @Test
