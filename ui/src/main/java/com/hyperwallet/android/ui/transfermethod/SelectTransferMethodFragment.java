@@ -464,6 +464,7 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
                     String formattedFee = FeeFormatter.getFormattedFee(mTitle.getContext(), selectionItem.getFees());
                     mDescriptionFees.setText(mDescriptionFees.getContext()
                             .getString(R.string.select_transfer_method_item_fee_information, formattedFee));
+                    mDescriptionFees.setVisibility(View.VISIBLE);
                 } else {
                     mDescriptionFees.setVisibility(View.GONE);
                 }
@@ -472,6 +473,7 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
                     mDescriptionProcessingTime.setText(mDescriptionProcessingTime.getContext()
                             .getString(R.string.select_transfer_method_item_processing_time_information,
                                     selectionItem.getProcessingTime()));
+                    mDescriptionProcessingTime.setVisibility(View.VISIBLE);
                 } else {
                     mDescriptionProcessingTime.setVisibility(View.INVISIBLE);
                 }
