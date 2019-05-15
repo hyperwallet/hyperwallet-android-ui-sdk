@@ -21,10 +21,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.hyperwallet.android.model.HyperwalletErrors;
+import com.hyperwallet.android.model.HyperwalletUser;
 import com.hyperwallet.android.model.meta.HyperwalletTransferMethodConfigurationKey;
 import com.hyperwallet.android.model.meta.keyed.Country;
 import com.hyperwallet.android.model.meta.keyed.HyperwalletTransferMethodType;
 import com.hyperwallet.android.ui.repository.TransferMethodConfigurationRepository;
+import com.hyperwallet.android.ui.repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.Currency;
@@ -35,14 +37,16 @@ import java.util.TreeMap;
 
 public class SelectTransferMethodPresenter implements SelectTransferMethodContract.Presenter {
 
-    private static final String INDIVIDUAL = "INDIVIDUAL";
     private final TransferMethodConfigurationRepository mTransferMethodConfigurationRepository;
+    private final UserRepository mUserRepository;
     private final SelectTransferMethodContract.View mView;
 
     SelectTransferMethodPresenter(SelectTransferMethodContract.View view,
-            TransferMethodConfigurationRepository transferMethodConfigurationRepository) {
+            @NonNull final TransferMethodConfigurationRepository transferMethodConfigurationRepository,
+            @NonNull final UserRepository userRepository) {
         this.mView = view;
         this.mTransferMethodConfigurationRepository = transferMethodConfigurationRepository;
+        this.mUserRepository = userRepository;
     }
 
     @Override
@@ -55,33 +59,46 @@ public class SelectTransferMethodPresenter implements SelectTransferMethodContra
             mTransferMethodConfigurationRepository.refreshKeys();
         }
 
-        mTransferMethodConfigurationRepository.getKeys(new TransferMethodConfigurationRepository.LoadKeysCallback() {
+        mUserRepository.loadUser(new UserRepository.LoadUserCallback() {
             @Override
-            public void onKeysLoaded(
-                    @Nullable final HyperwalletTransferMethodConfigurationKey key) {
-                if (!mView.isActive()) {
-                    return;
-                }
+            public void onUserLoaded(@NonNull final HyperwalletUser user) {
+                mTransferMethodConfigurationRepository.getKeys(
+                        new TransferMethodConfigurationRepository.LoadKeysCallback() {
+                            @Override
+                            public void onKeysLoaded(@Nullable final HyperwalletTransferMethodConfigurationKey key) {
+                                if (!mView.isActive()) {
+                                    return;
+                                }
+                                mView.hideProgressBar();
+                                Set<HyperwalletTransferMethodType> transferMethodTypes =
+                                        key.getTransferMethodType(countryCode, currencyCode);
+                                mView.showTransferMethodCountry(countryCode);
+                                mView.showTransferMethodCurrency(currencyCode);
+                                mView.showTransferMethodTypes(
+                                        getTransferMethodSelectionItems(countryCode, currencyCode,
+                                                user.getProfileType(), transferMethodTypes));
+                            }
 
-                mView.hideProgressBar();
-                Set<HyperwalletTransferMethodType> transferMethodTypes =
-                        key.getTransferMethodType(countryCode, currencyCode);
-
-                mView.showTransferMethodCountry(countryCode);
-                mView.showTransferMethodCurrency(currencyCode);
-                mView.showTransferMethodTypes(getTransferMethodSelectionItems(countryCode, currencyCode,
-                        transferMethodTypes));
+                            @Override
+                            public void onError(@NonNull final HyperwalletErrors errors) {
+                                showErrorLoadTransferMethods(errors);
+                            }
+                        });
             }
 
             @Override
-            public void onError(@NonNull final HyperwalletErrors errors) {
-                if (!mView.isActive()) {
-                    return;
-                }
-                mView.hideProgressBar();
-                mView.showErrorLoadTransferMethodConfigurationKeys(errors.getErrors());
+            public void onError(@NonNull HyperwalletErrors errors) {
+                showErrorLoadTransferMethods(errors);
             }
         });
+    }
+
+    private void showErrorLoadTransferMethods(@NonNull HyperwalletErrors errors) {
+        if (!mView.isActive()) {
+            return;
+        }
+        mView.hideProgressBar();
+        mView.showErrorLoadTransferMethodConfigurationKeys(errors.getErrors());
     }
 
     @Override
@@ -91,31 +108,46 @@ public class SelectTransferMethodPresenter implements SelectTransferMethodContra
             mTransferMethodConfigurationRepository.refreshKeys();
         }
 
-        mTransferMethodConfigurationRepository.getKeys(new TransferMethodConfigurationRepository.LoadKeysCallback() {
-            @Override
-            public void onKeysLoaded(@Nullable final HyperwalletTransferMethodConfigurationKey key) {
-                if (!mView.isActive()) {
-                    return;
-                }
-                List<com.hyperwallet.android.model.meta.keyed.Currency> transferMethodCurrencies =
-                        new ArrayList<>(key.getCurrencies(countryCode));
-                Set<HyperwalletTransferMethodType> transferMethodTypes = key
-                        .getTransferMethodType(countryCode, transferMethodCurrencies.get(0).getCode());
+        mUserRepository.loadUser(new UserRepository.LoadUserCallback() {
+            public void onUserLoaded(@NonNull final HyperwalletUser user) {
+                mTransferMethodConfigurationRepository.getKeys(
+                        new TransferMethodConfigurationRepository.LoadKeysCallback() {
+                            @Override
+                            public void onKeysLoaded(@Nullable final HyperwalletTransferMethodConfigurationKey key) {
+                                if (!mView.isActive()) {
+                                    return;
+                                }
+                                List<com.hyperwallet.android.model.meta.keyed.Currency> transferMethodCurrencies =
+                                        new ArrayList<>(key.getCurrencies(countryCode));
+                                Set<HyperwalletTransferMethodType> transferMethodTypes = key
+                                        .getTransferMethodType(countryCode, transferMethodCurrencies.get(0).getCode());
 
-                mView.showTransferMethodCountry(countryCode);
-                mView.showTransferMethodCurrency(transferMethodCurrencies.get(0).getCode());
-                mView.showTransferMethodTypes(getTransferMethodSelectionItems(countryCode,
-                        transferMethodCurrencies.get(0).getCode(), transferMethodTypes));
+                                mView.showTransferMethodCountry(countryCode);
+                                mView.showTransferMethodCurrency(transferMethodCurrencies.get(0).getCode());
+                                mView.showTransferMethodTypes(getTransferMethodSelectionItems(countryCode,
+                                        transferMethodCurrencies.get(0).getCode(),
+                                        user.getProfileType(), transferMethodTypes));
+                            }
+
+                            @Override
+                            public void onError(@NonNull final HyperwalletErrors errors) {
+                                showErrorLoadCurrency(errors);
+                            }
+                        });
             }
 
             @Override
-            public void onError(@NonNull final HyperwalletErrors errors) {
-                if (!mView.isActive()) {
-                    return;
-                }
-                mView.showErrorLoadCurrency(errors.getErrors());
+            public void onError(@NonNull HyperwalletErrors errors) {
+                showErrorLoadCurrency(errors);
             }
         });
+    }
+
+    private void showErrorLoadCurrency(@NonNull HyperwalletErrors errors) {
+        if (!mView.isActive()) {
+            return;
+        }
+        mView.showErrorLoadCurrency(errors.getErrors());
     }
 
     @Override
@@ -125,24 +157,39 @@ public class SelectTransferMethodPresenter implements SelectTransferMethodContra
             mTransferMethodConfigurationRepository.refreshKeys();
         }
 
-        mTransferMethodConfigurationRepository.getKeys(new TransferMethodConfigurationRepository.LoadKeysCallback() {
+        mUserRepository.loadUser(new UserRepository.LoadUserCallback() {
             @Override
-            public void onKeysLoaded(@Nullable final HyperwalletTransferMethodConfigurationKey key) {
-                if (!mView.isActive()) {
-                    return;
-                }
+            public void onUserLoaded(@NonNull final HyperwalletUser user) {
+                mTransferMethodConfigurationRepository.getKeys(
+                        new TransferMethodConfigurationRepository.LoadKeysCallback() {
+                            @Override
+                            public void onKeysLoaded(@Nullable final HyperwalletTransferMethodConfigurationKey key) {
+                                if (!mView.isActive()) {
+                                    return;
+                                }
 
-                Set<HyperwalletTransferMethodType> transferMethodTypes = key
-                        .getTransferMethodType(countryCode, currencyCode);
+                                Set<HyperwalletTransferMethodType> transferMethodTypes = key
+                                        .getTransferMethodType(countryCode, currencyCode);
 
-                mView.showTransferMethodCountry(countryCode);
-                mView.showTransferMethodCurrency(currencyCode);
-                mView.showTransferMethodTypes(getTransferMethodSelectionItems(countryCode, currencyCode,
-                        transferMethodTypes));
+                                mView.showTransferMethodCountry(countryCode);
+                                mView.showTransferMethodCurrency(currencyCode);
+                                mView.showTransferMethodTypes(
+                                        getTransferMethodSelectionItems(countryCode, currencyCode,
+                                                user.getProfileType(), transferMethodTypes));
+                            }
+
+                            @Override
+                            public void onError(@NonNull final HyperwalletErrors errors) {
+                                if (!mView.isActive()) {
+                                    return;
+                                }
+                                mView.showErrorLoadTransferMethodTypes(errors.getErrors());
+                            }
+                        });
             }
 
             @Override
-            public void onError(@NonNull final HyperwalletErrors errors) {
+            public void onError(@NonNull HyperwalletErrors errors) {
                 if (!mView.isActive()) {
                     return;
                 }
@@ -153,8 +200,8 @@ public class SelectTransferMethodPresenter implements SelectTransferMethodContra
 
     @Override
     public void openAddTransferMethod(@NonNull final String country, @NonNull final String currency,
-            @NonNull final String transferMethodType) {
-        mView.showAddTransferMethod(country, currency, transferMethodType);
+            @NonNull final String transferMethodType, @NonNull final String profileType) {
+        mView.showAddTransferMethod(country, currency, transferMethodType, profileType);
     }
 
     @Override
@@ -217,11 +264,12 @@ public class SelectTransferMethodPresenter implements SelectTransferMethodContra
 
     private List<TransferMethodSelectionItem> getTransferMethodSelectionItems(
             @NonNull final String country, @NonNull final String currency,
+            @NonNull final String userProfileType,
             @NonNull final Set<HyperwalletTransferMethodType> transferMethodTypes) {
 
         List<TransferMethodSelectionItem> selectionItems = new ArrayList<>();
         for (HyperwalletTransferMethodType transferMethodType : transferMethodTypes) {
-            TransferMethodSelectionItem data = new TransferMethodSelectionItem(country, currency, INDIVIDUAL,
+            TransferMethodSelectionItem data = new TransferMethodSelectionItem(country, currency, userProfileType,
                     transferMethodType.getCode(), transferMethodType.getName(), transferMethodType.getProcessingTime(),
                     transferMethodType.getFees());
             selectionItems.add(data);

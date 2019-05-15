@@ -16,6 +16,8 @@
  */
 package com.hyperwallet.android.ui.transfermethod;
 
+import androidx.annotation.NonNull;
+
 import com.hyperwallet.android.model.meta.HyperwalletFee;
 
 import java.util.ArrayList;
@@ -29,15 +31,17 @@ public class TransferMethodSelectionItem {
     private final String mCurrency;
     private final List<HyperwalletFee> mFees;
     private final String mProcessingTime;
-    private final String mProfile;
+    private final String mProfileType;
     private final String mTransferMethodType;
     private final String mTransferMethodName;
 
-    public TransferMethodSelectionItem(String country, String currency, String profile, String transferMethodType,
-            String transferMethodName, String processingTime, Set<HyperwalletFee> fees) {
+    public TransferMethodSelectionItem(@NonNull final String country, @NonNull final String currency,
+            @NonNull final String profileType, @NonNull final String transferMethodType,
+            @NonNull final String transferMethodName, @NonNull final String processingTime,
+            @NonNull final Set<HyperwalletFee> fees) {
         mCountry = country;
         mCurrency = currency;
-        mProfile = profile;
+        mProfileType = profileType;
         mTransferMethodType = transferMethodType;
         mTransferMethodName = transferMethodName;
         mProcessingTime = processingTime;
@@ -52,8 +56,8 @@ public class TransferMethodSelectionItem {
         return mCurrency;
     }
 
-    public String getProfile() {
-        return mProfile;
+    public String getProfileType() {
+        return mProfileType;
     }
 
     public String getTransferMethodName() {
@@ -79,12 +83,12 @@ public class TransferMethodSelectionItem {
         TransferMethodSelectionItem that = (TransferMethodSelectionItem) o;
         return Objects.equals(mCountry, that.mCountry) &&
                 Objects.equals(mCurrency, that.mCurrency) &&
-                Objects.equals(mProfile, that.mProfile) &&
+                Objects.equals(mProfileType, that.mProfileType) &&
                 Objects.equals(mTransferMethodType, that.mTransferMethodType);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(mCountry, mCurrency, mProfile, mTransferMethodType);
+        return Objects.hash(mCountry, mCurrency, mProfileType, mTransferMethodType);
     }
 }

@@ -38,7 +38,8 @@ public interface TransferMethodConfigurationRepository {
     void getKeys(@NonNull final LoadKeysCallback loadKeysCallback);
 
     void getFields(@NonNull final String country, @NonNull final String currency,
-            @NonNull final String transferMethodType, @NonNull final LoadFieldsCallback loadFieldsCallback);
+            @NonNull final String transferMethodType, @NonNull final String transferMethodProfileType,
+            @NonNull final LoadFieldsCallback loadFieldsCallback);
 
     void refreshKeys();
 

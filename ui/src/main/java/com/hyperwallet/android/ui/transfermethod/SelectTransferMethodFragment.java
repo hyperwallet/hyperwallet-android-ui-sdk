@@ -173,8 +173,9 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
                 new TransferMethodSelectionItemListener() {
                     @Override
                     public void onTransferMethodSelected(TransferMethodSelectionItem transferMethodType) {
-                        mPresenter.openAddTransferMethod(mSelectedCountryCode, mSelectedCurrencyCode,
-                                transferMethodType.getTransferMethodType());
+                        mPresenter.openAddTransferMethod(transferMethodType.getCountry(),
+                                transferMethodType.getCurrency(),
+                                transferMethodType.getTransferMethodType(), transferMethodType.getProfileType());
                     }
                 });
 
@@ -189,7 +190,9 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         RepositoryFactory factory = RepositoryFactory.getInstance();
-        mPresenter = new SelectTransferMethodPresenter(this, factory.getTransferMethodConfigurationRepository());
+        mPresenter = new SelectTransferMethodPresenter(this,
+                factory.getTransferMethodConfigurationRepository(),
+                factory.getUserRepository());
     }
 
 
@@ -285,11 +288,13 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
     }
 
     @Override
-    public void showAddTransferMethod(String country, String currency, String transferMethodType) {
+    public void showAddTransferMethod(@NonNull final String country, @NonNull final String currency,
+            @NonNull final String transferMethodType, @NonNull final String profileType) {
         Intent intent = new Intent(getActivity(), AddTransferMethodActivity.class);
         intent.putExtra(AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_COUNTRY, country);
         intent.putExtra(AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_CURRENCY, currency);
         intent.putExtra(AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_TYPE, transferMethodType);
+        intent.putExtra(AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_PROFILE_TYPE, profileType);
         getActivity().startActivityForResult(intent, AddTransferMethodActivity.REQUEST_CODE);
     }
 
@@ -459,6 +464,7 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
                     String formattedFee = FeeFormatter.getFormattedFee(mTitle.getContext(), selectionItem.getFees());
                     mDescriptionFees.setText(mDescriptionFees.getContext()
                             .getString(R.string.select_transfer_method_item_fee_information, formattedFee));
+                    mDescriptionFees.setVisibility(View.VISIBLE);
                 } else {
                     mDescriptionFees.setVisibility(View.GONE);
                 }
@@ -467,6 +473,7 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
                     mDescriptionProcessingTime.setText(mDescriptionProcessingTime.getContext()
                             .getString(R.string.select_transfer_method_item_processing_time_information,
                                     selectionItem.getProcessingTime()));
+                    mDescriptionProcessingTime.setVisibility(View.VISIBLE);
                 } else {
                     mDescriptionProcessingTime.setVisibility(View.INVISIBLE);
                 }

@@ -76,7 +76,8 @@ public class AddTransferMethodPresenter implements AddTransferMethodContract.Pre
 
     @Override
     public void loadTransferMethodConfigurationFields(final boolean forceUpdate, @NonNull final String country,
-            @NonNull final String currency, @NonNull final String transferMethodType) {
+            @NonNull final String currency, @NonNull final String transferMethodType,
+            @NonNull final String transferMethodProfileType) {
         mView.showProgressBar();
 
         if (forceUpdate) {
@@ -84,7 +85,8 @@ public class AddTransferMethodPresenter implements AddTransferMethodContract.Pre
         }
 
         mTransferMethodConfigurationRepository.getFields(
-                country, currency, transferMethodType, new TransferMethodConfigurationRepository.LoadFieldsCallback() {
+                country, currency, transferMethodType, transferMethodProfileType,
+                new TransferMethodConfigurationRepository.LoadFieldsCallback() {
                     @Override
                     public void onFieldsLoaded(HyperwalletTransferMethodConfigurationField field,
                             @Nullable final String processingType) {
