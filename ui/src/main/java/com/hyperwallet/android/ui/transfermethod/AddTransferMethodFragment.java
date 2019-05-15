@@ -296,9 +296,12 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                     sectionHeaderText = requireContext().getResources()
                             .getString(R.string.account_information_section_header, locale.getDisplayName(), mCurrency);
                 } else {
-                    sectionHeaderText = requireContext().getString(requireContext().getResources()
-                            .getIdentifier(group.getGroupName().toLowerCase(Locale.ROOT), "string",
-                                    requireContext().getPackageName()));
+                    final int stringIdentifier = requireContext().getResources().getIdentifier(
+                            group.getGroupName().toLowerCase(Locale.ROOT), "string", requireContext().getPackageName());
+                    sectionHeaderText = stringIdentifier == 0 ? group.getGroupName() : requireContext().getString(
+                            requireContext().getResources()
+                                    .getIdentifier(group.getGroupName().toLowerCase(Locale.ROOT), "string",
+                                            requireContext().getPackageName()));
                 }
 
                 View sectionHeader = LayoutInflater.from(mDynamicContainer.getContext())
@@ -310,22 +313,25 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                 mDynamicContainer.addView(sectionHeader);
 
                 // group fields
-                for (final HyperwalletField field : group.getFields()) {
-                    AbstractWidget widget = WidgetFactory
-                            .newWidget(field, this, getContext(),
-                                    mWidgetInputStateHashMap.containsKey(field.getName()) ?
-                                            mWidgetInputStateHashMap.get(field.getName()).getValue() : "",
-                                    mCreateTransferMethodButton);
-                    if (mWidgetInputStateHashMap.isEmpty() || !mWidgetInputStateHashMap.containsKey(widget.getName())) {
-                        mWidgetInputStateHashMap.put(widget.getName(), widget.getWidgetInputState());
-                    }
+                if (group.getFields() != null) {
+                    for (final HyperwalletField field : group.getFields()) {
+                        AbstractWidget widget = WidgetFactory
+                                .newWidget(field, this, getContext(),
+                                        mWidgetInputStateHashMap.containsKey(field.getName()) ?
+                                                mWidgetInputStateHashMap.get(field.getName()).getValue() : "",
+                                        mCreateTransferMethodButton);
+                        if (mWidgetInputStateHashMap.isEmpty() || !mWidgetInputStateHashMap.containsKey(
+                                widget.getName())) {
+                            mWidgetInputStateHashMap.put(widget.getName(), widget.getWidgetInputState());
+                        }
 
-                    View widgetView = widget.getView();
-                    widgetView.setTag(widget);
-                    previousView = placeBelow(widgetView, previousView, true);
-                    final String error = mWidgetInputStateHashMap.get(widget.getName()).getErrorMessage();
-                    widget.showValidationError(error);
-                    mDynamicContainer.addView(widgetView);
+                        View widgetView = widget.getView();
+                        widgetView.setTag(widget);
+                        previousView = placeBelow(widgetView, previousView, true);
+                        final String error = mWidgetInputStateHashMap.get(widget.getName()).getErrorMessage();
+                        widget.showValidationError(error);
+                        mDynamicContainer.addView(widgetView);
+                    }
                 }
             }
 

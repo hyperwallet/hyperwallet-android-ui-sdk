@@ -2,7 +2,6 @@ package com.hyperwallet.android.transfermethod.ui;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.hasDescendant;
@@ -128,24 +127,6 @@ public class SelectTransferMethodTest {
         onView(withId(R.id.select_transfer_method_country_value)).check(matches(withText("Canada")));
     }
 
-    @Test
-    public void testSelectTransferMethod_verifyCountrySelectionSearch() {
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("successful_tmc_keys_large_response.json")).mock();
-
-        mActivityTestRule.launchActivity(null);
-
-        onView(withId(R.id.select_transfer_method_country_value)).perform(click());
-
-        onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.country_selection_toolbar)))).check(
-                matches(withText(R.string.select_transfer_method_country)));
-        onView(withId(R.id.search_button)).perform(click());
-        onView(withId(R.id.search_src_text)).perform(typeText("United States"));
-        onView(withId(R.id.country_selection_list)).check(new RecyclerViewCountAssertion(1));
-        onView(allOf(withId(R.id.country_name), withText("United States"))).check(matches(isDisplayed()));
-        onView(allOf(withId(R.id.country_name), withText("United States"))).perform(click());
-        onView(withId(R.id.select_transfer_method_country_value)).check(matches(withText("United States")));
-    }
 
     @Test
     public void testSelectTransferMethod_verifyCurrencySelectionList() {
@@ -179,7 +160,7 @@ public class SelectTransferMethodTest {
 
         onView(withId(R.id.select_transfer_method_country_value)).check(matches(withText("United States")));
         onView(withId(R.id.select_transfer_method_currency_value)).check(matches(withText("USD")));
-        onView(withId(R.id.select_transfer_method_types_list)).check(new RecyclerViewCountAssertion(2));
+        onView(withId(R.id.select_transfer_method_types_list)).check(new RecyclerViewCountAssertion(3));
 
         onView(withId(R.id.select_transfer_method_types_list)).check(
                 matches(atPosition(0, hasDescendant(withText(R.string.bank_account_font_icon)))));
@@ -197,6 +178,14 @@ public class SelectTransferMethodTest {
         onView(withId(R.id.select_transfer_method_types_list)).check(
                 matches(atPosition(1, hasDescendant(withText("Transaction Fee: USD 1.75")))));
 
+        onView(withId(R.id.select_transfer_method_types_list)).check(
+                matches(atPosition(2, hasDescendant(withText(R.string.paypal_account_font_icon)))));
+        onView(withId(R.id.select_transfer_method_types_list)).check(
+                matches(atPosition(2, hasDescendant(withText(R.string.paypal_account)))));
+        onView(withId(R.id.select_transfer_method_types_list)).check(
+                matches(atPosition(2, hasDescendant(withText("Transaction Fee: USD 0.25")))));
+        onView(withId(R.id.select_transfer_method_types_list)).check(
+                matches(atPosition(2, hasDescendant(withText("Processing Time: Immediately")))));
     }
 
     @Test
@@ -252,21 +241,27 @@ public class SelectTransferMethodTest {
 
         onView(withId(R.id.select_transfer_method_country_value)).check(matches(withText("United States")));
         onView(withId(R.id.select_transfer_method_currency_value)).check(matches(withText("USD")));
-        onView(withId(R.id.select_transfer_method_types_list)).check(new RecyclerViewCountAssertion(2));
+        onView(withId(R.id.select_transfer_method_types_list)).check(new RecyclerViewCountAssertion(3));
 
         onView(withId(R.id.select_transfer_method_country_value)).perform(click());
         onView(allOf(withId(R.id.country_name), withText("Canada"))).perform(click());
 
-        onView(withId(R.id.select_transfer_method_types_list)).check(new RecyclerViewCountAssertion(1));
+        onView(withId(R.id.select_transfer_method_types_list)).check(new RecyclerViewCountAssertion(2));
         onView(withId(R.id.select_transfer_method_types_list)).check(
                 matches(atPosition(0, hasDescendant(withText(R.string.bank_account_font_icon)))));
         onView(withId(R.id.select_transfer_method_types_list)).check(
                 matches(atPosition(0, hasDescendant(withText(R.string.bank_account)))));
         onView(withId(R.id.select_transfer_method_types_list)).check(
-                matches(atPosition(0, hasDescendant(withText("Transaction Fee: USD 2.00")))));
+                matches(atPosition(0, hasDescendant(withText("Transaction Fee: CAD 2.20")))));
         onView(withId(R.id.select_transfer_method_types_list)).check(
-                matches(atPosition(0, hasDescendant(withText("Processing Time: 1-3 Business days")))));
+                matches(atPosition(0, hasDescendant(withText("Processing Time: 2-3 Business days")))));
 
+        onView(withId(R.id.select_transfer_method_types_list)).check(
+                matches(atPosition(1, hasDescendant(withText(R.string.paypal_account_font_icon)))));
+        onView(withId(R.id.select_transfer_method_types_list)).check(
+                matches(atPosition(1, hasDescendant(withText(R.string.paypal_account)))));
+        onView(withId(R.id.select_transfer_method_types_list)).check(
+                matches(atPosition(1, hasDescendant(withText("Transaction Fee: CAD 0.35")))));
     }
 
     @Test
@@ -289,7 +284,7 @@ public class SelectTransferMethodTest {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("successful_tmc_keys_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("successful_tmc_bank_card_fields_response.json")).mock();
+                .getResourceContent("bank_card_fields_response.json")).mock();
 
         mActivityTestRule.launchActivity(null);
 

@@ -1,45 +1,34 @@
 {
   "data": {
-    "transferMethodConfigurations": {
+    "countries": {
       "nodes": [
         {
-          "countries": [
-            "US"
-          ],
-          "currencies": [
-            "USD"
-          ],
-          "transferMethodType": "BANK_ACCOUNT",
-          "profile": "INDIVIDUAL",
-          "fees": {
+          "code": "US",
+          "name": "UNITED STATES",
+          "currencies": {
             "nodes": [
               {
-                "transferMethodType": "BANK_ACCOUNT",
-                "country": "US",
-                "currency": "USD",
-                "feeRateType": "FLAT",
-                "value": "2.00"
-              }
-            ]
-          }
-        },
-        {
-          "countries": [
-            "US"
-          ],
-          "currencies": [
-            "USD"
-          ],
-          "transferMethodType": "BANK_ACCOUNT",
-          "profile": "BUSINESS",
-          "fees": {
-            "nodes": [
-              {
-                "transferMethodType": "BANK_ACCOUNT",
-                "country": "US",
-                "currency": "USD",
-                "feeRateType": "FLAT",
-                "value": "2.00"
+                "code": "USD",
+                "name": "USD",
+                "transferMethodTypes": {
+                  "nodes": [
+                    {
+                      "code": "BANK_ACCOUNT",
+                      "name": "Bank Account",
+                      "fees": {
+                        "nodes": [
+                          {
+                            "country": "US",
+                            "currency": "USD",
+                            "transferMethodType": "BANK_ACCOUNT",
+                            "value": "2.00",
+                            "feeRateType": "FLAT"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
               }
             ]
           }

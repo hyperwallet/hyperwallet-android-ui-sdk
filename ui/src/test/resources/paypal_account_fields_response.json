@@ -1,0 +1,46 @@
+{
+  "data": {
+    "transferMethodUIConfigurations": {
+      "nodes": [
+        {
+          "country": "US",
+          "currency": "USD",
+          "transferMethodType": "PAYPAL_ACCOUNT",
+          "profile": "INDIVIDUAL",
+          "fieldGroups": {
+            "nodes": [
+              {
+                "group": "PERSONAL_INFORMATION",
+                "fields": [
+                  {
+                    "category": "ACCOUNT",
+                    "dataType": "TEXT",
+                    "isEditable": true,
+                    "label": "Email",
+                    "name": "email",
+                    "placeholder": "",
+                    "regularExpression": "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$",
+                    "isRequired": true,
+                    "validationMessage": {
+                      "length": "",
+                      "pattern": "is invalid length or format.",
+                      "empty": "You must provide a value for this field"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "fees": {
+      "nodes": [
+        {
+          "value": "0.25",
+          "feeRateType": "FLAT"
+        }
+      ]
+    }
+  }
+}
