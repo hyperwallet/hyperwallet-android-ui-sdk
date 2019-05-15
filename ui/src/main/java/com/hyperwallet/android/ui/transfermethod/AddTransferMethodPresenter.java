@@ -75,7 +75,8 @@ public class AddTransferMethodPresenter implements AddTransferMethodContract.Pre
 
     @Override
     public void loadTransferMethodConfigurationFields(final boolean forceUpdate, @NonNull final String country,
-            @NonNull final String currency, @NonNull final String transferMethodType) {
+            @NonNull final String currency, @NonNull final String transferMethodType,
+            @NonNull final String transferMethodProfileType) {
         mView.showProgressBar();
 
         if (forceUpdate) {
@@ -83,7 +84,8 @@ public class AddTransferMethodPresenter implements AddTransferMethodContract.Pre
         }
 
         mTransferMethodConfigurationRepository.getFields(
-                country, currency, transferMethodType, new TransferMethodConfigurationRepository.LoadFieldsCallback() {
+                country, currency, transferMethodType, transferMethodProfileType,
+                new TransferMethodConfigurationRepository.LoadFieldsCallback() {
                     @Override
                     public void onFieldsLoaded(
                             HyperwalletTransferMethodConfigurationFieldResult transferMethodConfigurationFieldResult) {
@@ -95,10 +97,11 @@ public class AddTransferMethodPresenter implements AddTransferMethodContract.Pre
                         mView.showTransferMethodFields(transferMethodConfigurationFieldResult.getFields());
                         // there can be multiple fees when we have flat fee + percentage fees
                         List<Fee> fees = transferMethodConfigurationFieldResult
-                                .getFees(country, currency, transferMethodType, "INDIVIDUAL");
+                                .getFees(country, currency, transferMethodType, transferMethodProfileType);
                         mView.showTransactionInformation(fees,
                                 transferMethodConfigurationFieldResult
-                                        .getProcessingTime(country, currency, transferMethodType, "INDIVIDUAL"));
+                                        .getProcessingTime(country, currency, transferMethodType,
+                                                transferMethodProfileType));
                     }
 
                     @Override
