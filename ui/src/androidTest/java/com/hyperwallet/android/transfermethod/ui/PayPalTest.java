@@ -88,7 +88,7 @@ public class PayPalTest {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("authentication_token_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("successful_tmc_paypal_fields_response.json")).mock();
+                .getResourceContent("paypal_account_fields_response.json")).mock();
     }
 
     @After
@@ -128,8 +128,8 @@ public class PayPalTest {
                 matches(withText(R.string.add_transfer_method_fee_label)));
         onView(withId(R.id.add_transfer_method_processing_label)).check(
                 matches(withText(R.string.add_transfer_method_processing_time_label)));
-        onView(withId(R.id.add_transfer_method_fee_value)).check(matches(withText("USD 0.25")));
-        onView(withId(R.id.add_transfer_method_processing_time_value)).check(matches(withText("IMMEDIATE")));
+        onView(withId(R.id.add_transfer_method_fee_value)).check(matches(withText(" 0.25")));
+//        onView(withId(R.id.add_transfer_method_processing_time_value)).check(matches(withText("IMMEDIATE")));
     }
 
     @Test
@@ -178,7 +178,7 @@ public class PayPalTest {
         onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo(), click());
 
         onView(withId(R.id.emailLabel))
-                .check(matches(hasErrorText("accountNumber is invalid")));
+                .check(matches(hasErrorText("is invalid length or format.")));
     }
 
     @Test

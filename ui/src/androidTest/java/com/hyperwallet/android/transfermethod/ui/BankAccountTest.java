@@ -96,7 +96,7 @@ public class BankAccountTest {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("authentication_token_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("successful_tmc_fields_response.json")).mock();
+                .getResourceContent("bank_account_fields_response.json")).mock();
     }
 
     @After
@@ -141,8 +141,8 @@ public class BankAccountTest {
                 matches(withText(R.string.add_transfer_method_fee_label)));
         onView(withId(R.id.add_transfer_method_processing_label)).check(
                 matches(withText(R.string.add_transfer_method_processing_time_label)));
-        onView(withId(R.id.add_transfer_method_fee_value)).check(matches(withText("USD 2.00")));
-        onView(withId(R.id.add_transfer_method_processing_time_value)).check(matches(withText("1-2 Business days")));
+        onView(withId(R.id.add_transfer_method_fee_value)).check(matches(withText(" 5.00")));
+        onView(withId(R.id.add_transfer_method_processing_time_value)).check(matches(withText("")));
     }
 
     @Test
@@ -217,11 +217,11 @@ public class BankAccountTest {
         onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo(), click());
 
         onView(withId(R.id.branchIdLabel))
-                .check(matches(hasErrorText("You must provide a value for this field.")));
+                .check(matches(hasErrorText("You must provide a value for this field")));
         onView(withId(R.id.bankAccountIdLabel))
-                .check(matches(hasErrorText("You must provide a value for this field.")));
+                .check(matches(hasErrorText("You must provide a value for this field")));
         onView(withId(R.id.bankAccountPurposeLabel))
-                .check(matches(hasErrorText("You must provide a value for this field.")));
+                .check(matches(hasErrorText("You must provide a value for this field")));
     }
 
     @Test
