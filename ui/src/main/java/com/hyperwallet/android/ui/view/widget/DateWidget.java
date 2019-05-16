@@ -50,11 +50,11 @@ public class DateWidget extends AbstractWidget {
     public View getView() {
         if (mContainer == null) {
             mContainer = new RelativeLayout(mContext);
-            mTextInputLayout = mField.isEditable() ? new TextInputLayout(new ContextThemeWrapper(mContext,
-                    R.style.Widget_Hyperwallet_TextInputLayout))
-                    : new TextInputLayout(new ContextThemeWrapper(mContext,
-                            R.style.Widget_Hyperwallet_TextInputLayout_Disabled));
+
             // input control
+            mTextInputLayout = new TextInputLayout(new ContextThemeWrapper(mContext,
+                    mField.isEditable() ? R.style.Widget_Hyperwallet_TextInputLayout
+                            : R.style.Widget_Hyperwallet_TextInputLayout_Disabled));
             final EditText editText = new EditText(
                     new ContextThemeWrapper(mContext, R.style.Widget_Hyperwallet_TextInputEditText));
 

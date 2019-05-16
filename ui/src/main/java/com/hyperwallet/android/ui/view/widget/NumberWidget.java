@@ -50,10 +50,9 @@ public class NumberWidget extends AbstractWidget {
         if (mContainer == null) {
             mContainer = new RelativeLayout(mContext);
             // number input text
-            mTextInputLayout = mField.isEditable() ? new TextInputLayout(new ContextThemeWrapper(mContext,
-                    R.style.Widget_Hyperwallet_TextInputLayout))
-                    : new TextInputLayout(new ContextThemeWrapper(mContext,
-                            R.style.Widget_Hyperwallet_TextInputLayout_Disabled));
+            mTextInputLayout = new TextInputLayout(new ContextThemeWrapper(mContext,
+                    mField.isEditable() ? R.style.Widget_Hyperwallet_TextInputLayout
+                            : R.style.Widget_Hyperwallet_TextInputLayout_Disabled));
             mTextInputLayout.setHint(mField.getLabel());
 
             final EditText editText = new EditText(

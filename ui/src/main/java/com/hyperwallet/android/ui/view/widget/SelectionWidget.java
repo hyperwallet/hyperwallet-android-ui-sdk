@@ -71,10 +71,9 @@ public class SelectionWidget extends AbstractWidget implements WidgetSelectionDi
             mContainer.setFocusable(true);
             mContainer.setFocusableInTouchMode(true);
 
-            mTextInputLayout = mField.isEditable() ? new TextInputLayout(new ContextThemeWrapper(mContext,
-                    R.style.Widget_Hyperwallet_TextInputLayout))
-                    : new TextInputLayout(new ContextThemeWrapper(mContext,
-                            R.style.Widget_Hyperwallet_TextInputLayout_Disabled));
+            mTextInputLayout = new TextInputLayout(new ContextThemeWrapper(mContext,
+                    mField.isEditable() ? R.style.Widget_Hyperwallet_TextInputLayout
+                            : R.style.Widget_Hyperwallet_TextInputLayout_Disabled));
             mEditText = new EditText(
                     new ContextThemeWrapper(mContext, R.style.Widget_Hyperwallet_TextInputEditText));
             if (!TextUtils.isEmpty(mDefaultValue)) {
