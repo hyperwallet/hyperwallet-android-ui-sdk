@@ -31,6 +31,7 @@ import androidx.annotation.NonNull;
 
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.HyperwalletAuthenticationTokenProvider;
+import com.hyperwallet.android.transaction_history.view.ListTransactionHistoryActivity;
 import com.hyperwallet.android.ui.transfermethod.AddTransferMethodActivity;
 import com.hyperwallet.android.ui.transfermethod.ListTransferMethodActivity;
 import com.hyperwallet.android.ui.transfermethod.SelectTransferMethodActivity;
@@ -98,6 +99,15 @@ public final class HyperwalletUi {
         intent.putExtra(EXTRA_TRANSFER_METHOD_TYPE, transferMethodType);
         intent.putExtra(EXTRA_TRANSFER_METHOD_PROFILE_TYPE, profileType);
         return intent;
+    }
+
+
+    /**
+     * @param context A Context of the application consuming this Intent.
+     * @return an Intent with the data necessary to launch the {@link ListTransferMethodActivity}
+     */
+    public Intent getIntentListTransactionHistoryActivity(@NonNull final Context context) {
+        return new Intent(context, ListTransactionHistoryActivity.class);
     }
 
 

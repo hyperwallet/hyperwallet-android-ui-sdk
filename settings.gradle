@@ -1,1 +1,1 @@
-include ':ui'
+include ':ui', ':transaction_history'

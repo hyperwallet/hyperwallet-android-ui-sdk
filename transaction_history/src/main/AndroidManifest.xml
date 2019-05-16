@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.hyperwallet.android.hyperwallet_transactionhistory">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <application android:networkSecurityConfig="@xml/network_security_config" tools:targetApi="n">
+        <activity
+            android:name="com.hyperwallet.android.transaction_history.view.ListTransactionHistoryActivity"
+            android:windowSoftInputMode="adjustResize"/>
+    </application>
+
+</manifest>
