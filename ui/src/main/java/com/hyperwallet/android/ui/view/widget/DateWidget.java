@@ -19,6 +19,7 @@ package com.hyperwallet.android.ui.view.widget;
 import android.content.Context;
 import android.text.Editable;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.ContextThemeWrapper;
 import android.view.View;
@@ -92,10 +93,10 @@ public class DateWidget extends AbstractWidget {
                 }
             });
 
+            editText.setText(TextUtils.isEmpty(mDefaultValue) ? mField.getValue() : mDefaultValue);
             editText.setInputType(InputType.TYPE_CLASS_DATETIME);
             editText.setOnKeyListener(new DefaultKeyListener(mDefaultFocusView, editText));
             editText.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI | EditorInfo.IME_ACTION_NEXT);
-            editText.setText(mDefaultValue);
             appendLayout(mTextInputLayout, true);
             mContainer.addView(mTextInputLayout);
         }
