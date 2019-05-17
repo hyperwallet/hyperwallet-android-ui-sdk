@@ -54,11 +54,13 @@ public class SelectionWidget extends AbstractWidget implements WidgetSelectionDi
         super(field, listener, context, defaultValue, defaultFocusView);
         mValue = defaultValue;
         mSelectionNameValueMap = new TreeMap<>();
-        for (HyperwalletFieldSelectionOption option : field.getFieldSelectionOptions()) {
-            if (!TextUtils.isEmpty(option.getLabel())) {
-                String label = option.getLabel().substring(1).toLowerCase(Locale.ROOT);
-                label = option.getLabel().substring(0, 1) + label;
-                mSelectionNameValueMap.put(label, option.getValue());
+        if (field.getFieldSelectionOptions() != null) {
+            for (HyperwalletFieldSelectionOption option : field.getFieldSelectionOptions()) {
+                if (!TextUtils.isEmpty(option.getLabel())) {
+                    String label = option.getLabel().substring(1).toLowerCase(Locale.ROOT);
+                    label = option.getLabel().substring(0, 1) + label;
+                    mSelectionNameValueMap.put(label, option.getValue());
+                }
             }
         }
     }
@@ -113,6 +115,8 @@ public class SelectionWidget extends AbstractWidget implements WidgetSelectionDi
                         showSelectionFragmentDialog();
                     }
                 });
+            } else {
+                mEditText.setEnabled(false);
             }
 
             mTextInputLayout.setHint(mField.getLabel());
