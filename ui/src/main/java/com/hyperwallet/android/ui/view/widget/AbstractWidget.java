@@ -16,8 +16,6 @@
  */
 package com.hyperwallet.android.ui.view.widget;
 
-import android.content.Context;
-import android.os.Build;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,14 +24,12 @@ import android.widget.RelativeLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.hyperwallet.android.hyperwallet_ui.R;
 import com.hyperwallet.android.model.meta.field.HyperwalletField;
 
 public abstract class AbstractWidget {
 
     private static final String LABEL_SUFFIX = "Label";
 
-    protected final Context mContext;
     protected final View mDefaultFocusView;
     protected final String mDefaultValue;
     protected final HyperwalletField mField;
@@ -42,16 +38,15 @@ public abstract class AbstractWidget {
     protected WidgetInputState mWidgetInputState;
 
     public AbstractWidget(@Nullable HyperwalletField field, @NonNull WidgetEventListener listener,
-            @NonNull Context context, @Nullable String defaultValue, @NonNull View defaultFocusView) {
+            @Nullable String defaultValue, @NonNull View defaultFocusView) {
         mField = field;
         mListener = listener;
-        mContext = context;
         mDefaultValue = defaultValue;
         mDefaultFocusView = defaultFocusView;
         mWidgetInputState = new WidgetInputState(getName());
     }
 
-    public abstract View getView();
+    public abstract View getView(@NonNull final ViewGroup viewGroup);
 
     public String getName() {
         return mField == null ? "" : mField.getName();
@@ -128,17 +123,6 @@ public abstract class AbstractWidget {
             params.addRule(RelativeLayout.BELOW, mBottomViewId);
         }
 
-        int default_margin = (int) (mContext.getResources().getDimension(R.dimen.default_margin)
-                / mContext.getResources().getDisplayMetrics().density);
-        int widget_margin_offset = (int) (mContext.getResources().getDimension(R.dimen.widget_left_margin_offset)
-                / mContext.getResources().getDisplayMetrics().density);
-
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
-            params.setMargins(default_margin, default_margin, default_margin, default_margin);
-        } else {
-            params.setMargins(widget_margin_offset, default_margin, default_margin, default_margin);
-        }
-
         v.setLayoutParams(params);
         mBottomViewId = v.getId();
     }
@@ -148,7 +132,7 @@ public abstract class AbstractWidget {
         if (fieldName.isEmpty()) {
             view.setId(View.generateViewId());
         } else {
-            view.setId(getIdByResourceName(fieldName));
+            view.setId(getIdByResourceName(fieldName, view));
         }
     }
 
@@ -157,14 +141,14 @@ public abstract class AbstractWidget {
         if (fieldName.isEmpty()) {
             view.setId(View.generateViewId());
         } else {
-            view.setId(getIdByResourceName(fieldName + LABEL_SUFFIX));
+            view.setId(getIdByResourceName(fieldName + LABEL_SUFFIX, view));
         }
     }
 
-    private int getIdByResourceName(@NonNull final String fieldName) {
+    private int getIdByResourceName(@NonNull final String fieldName, @NonNull final View view) {
         int id;
-        final int idFromResource = mContext.getResources().getIdentifier(fieldName, "id",
-                mContext.getPackageName());
+        final int idFromResource = view.getContext().getResources().getIdentifier(fieldName, "id",
+                view.getContext().getPackageName());
         // Returns 0 if no such resource was found.
         id = idFromResource == 0 ? View.generateViewId() : idFromResource;
         return id;
