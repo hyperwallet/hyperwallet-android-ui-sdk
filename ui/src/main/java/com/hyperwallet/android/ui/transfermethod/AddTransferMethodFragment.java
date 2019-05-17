@@ -16,6 +16,7 @@
  */
 package com.hyperwallet.android.ui.transfermethod;
 
+import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodFields.PROFILE_TYPE;
 import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_COUNTRY;
 import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_CURRENCY;
 import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodFields.TYPE;
@@ -209,6 +210,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
             mCountry = savedInstanceState.getString(ARGUMENT_TRANSFER_METHOD_COUNTRY);
             mCurrency = savedInstanceState.getString(ARGUMENT_TRANSFER_METHOD_CURRENCY);
             mTransferMethodType = savedInstanceState.getString(ARGUMENT_TRANSFER_METHOD_TYPE);
+            mTransferMethodProfileType = savedInstanceState.getString(ARGUMENT_TRANSFER_METHOD_PROFILE_TYPE);
             mShowCreateProgressBar = savedInstanceState.getBoolean(ARGUMENT_SHOW_CREATE_PROGRESS_BAR);
             mTransferMethod = savedInstanceState.getParcelable(ARGUMENT_TRANSFER_METHOD);
         } else { // same as AddTransferMethodFragment#newInstance
@@ -216,6 +218,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
             mCountry = getArguments().getString(ARGUMENT_TRANSFER_METHOD_COUNTRY);
             mCurrency = getArguments().getString(ARGUMENT_TRANSFER_METHOD_CURRENCY);
             mTransferMethodType = getArguments().getString(ARGUMENT_TRANSFER_METHOD_TYPE);
+            mTransferMethodProfileType = getArguments().getString(ARGUMENT_TRANSFER_METHOD_PROFILE_TYPE);
             mTransferMethod = getArguments().getParcelable(ARGUMENT_TRANSFER_METHOD);
         }
     }
@@ -238,6 +241,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
         outState.putString(ARGUMENT_TRANSFER_METHOD_COUNTRY, mCountry);
         outState.putString(ARGUMENT_TRANSFER_METHOD_CURRENCY, mCurrency);
         outState.putString(ARGUMENT_TRANSFER_METHOD_TYPE, mTransferMethodType);
+        outState.putString(ARGUMENT_TRANSFER_METHOD_PROFILE_TYPE, mTransferMethodProfileType);
         outState.putBoolean(ARGUMENT_SHOW_CREATE_PROGRESS_BAR, mShowCreateProgressBar);
         outState.putParcelable(ARGUMENT_TRANSFER_METHOD, mTransferMethod);
         super.onSaveInstanceState(outState);
@@ -517,6 +521,8 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                     mTransferMethod.setField(widget.getName(), widget.getValue());
                 }
             }
+
+            mTransferMethod.setField(PROFILE_TYPE, mTransferMethodProfileType);
             mPresenter.createTransferMethod(mTransferMethod);
         }
     }
@@ -589,16 +595,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                 }
             }
         }
-        return valid && hasWidget && haveAllWidgetsReceivedFocus();
-    }
-
-    private boolean haveAllWidgetsReceivedFocus() {
-        for (String key : mWidgetInputStateHashMap.keySet()) {
-            if (!mWidgetInputStateHashMap.get(key).hasFocused()) {
-                return false;
-            }
-        }
-        return true;
+        return valid && hasWidget;
     }
 
     @Override
