@@ -36,7 +36,6 @@ import com.hyperwallet.android.model.meta.field.HyperwalletField;
 import com.hyperwallet.android.model.meta.field.HyperwalletFieldSelectionOption;
 import com.hyperwallet.android.ui.view.WidgetSelectionDialogFragment;
 
-import java.util.Locale;
 import java.util.Set;
 import java.util.TreeMap;
 
@@ -56,9 +55,7 @@ public class SelectionWidget extends AbstractWidget implements WidgetSelectionDi
         if (field.getFieldSelectionOptions() != null) {
             for (HyperwalletFieldSelectionOption option : field.getFieldSelectionOptions()) {
                 if (!TextUtils.isEmpty(option.getLabel())) {
-                    String label = option.getLabel().substring(1).toLowerCase(Locale.ROOT);
-                    label = option.getLabel().substring(0, 1) + label;
-                    mSelectionNameValueMap.put(label, option.getValue());
+                    mSelectionNameValueMap.put(option.getLabel(), option.getValue());
                 }
             }
         }
