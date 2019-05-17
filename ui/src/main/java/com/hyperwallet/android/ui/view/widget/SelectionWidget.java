@@ -76,7 +76,8 @@ public class SelectionWidget extends AbstractWidget implements WidgetSelectionDi
                             : R.style.Widget_Hyperwallet_TextInputLayout_Disabled));
             mEditText = new EditText(
                     new ContextThemeWrapper(viewGroup.getContext(), R.style.Widget_Hyperwallet_TextInputEditText));
-            mEditText.setText(getKeyFromValue(TextUtils.isEmpty(mDefaultValue) ? mField.getValue() : mDefaultValue));
+            mEditText.setText(
+                    getKeyFromValue(TextUtils.isEmpty(mDefaultValue) ? mValue = mField.getValue() : mDefaultValue));
             setIdFromFieldLabel(mTextInputLayout);
             setIdFromFieldName(mEditText);
 
