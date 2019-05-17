@@ -16,6 +16,7 @@
  */
 package com.hyperwallet.android.ui.transfermethod;
 
+import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodFields.PROFILE_TYPE;
 import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_COUNTRY;
 import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_CURRENCY;
 import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodFields.TYPE;
@@ -209,6 +210,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
             mCountry = savedInstanceState.getString(ARGUMENT_TRANSFER_METHOD_COUNTRY);
             mCurrency = savedInstanceState.getString(ARGUMENT_TRANSFER_METHOD_CURRENCY);
             mTransferMethodType = savedInstanceState.getString(ARGUMENT_TRANSFER_METHOD_TYPE);
+            mTransferMethodProfileType = savedInstanceState.getString(ARGUMENT_TRANSFER_METHOD_PROFILE_TYPE);
             mShowCreateProgressBar = savedInstanceState.getBoolean(ARGUMENT_SHOW_CREATE_PROGRESS_BAR);
             mTransferMethod = savedInstanceState.getParcelable(ARGUMENT_TRANSFER_METHOD);
         } else { // same as AddTransferMethodFragment#newInstance
@@ -216,6 +218,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
             mCountry = getArguments().getString(ARGUMENT_TRANSFER_METHOD_COUNTRY);
             mCurrency = getArguments().getString(ARGUMENT_TRANSFER_METHOD_CURRENCY);
             mTransferMethodType = getArguments().getString(ARGUMENT_TRANSFER_METHOD_TYPE);
+            mTransferMethodProfileType = getArguments().getString(ARGUMENT_TRANSFER_METHOD_PROFILE_TYPE);
             mTransferMethod = getArguments().getParcelable(ARGUMENT_TRANSFER_METHOD);
         }
     }
@@ -238,6 +241,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
         outState.putString(ARGUMENT_TRANSFER_METHOD_COUNTRY, mCountry);
         outState.putString(ARGUMENT_TRANSFER_METHOD_CURRENCY, mCurrency);
         outState.putString(ARGUMENT_TRANSFER_METHOD_TYPE, mTransferMethodType);
+        outState.putString(ARGUMENT_TRANSFER_METHOD_PROFILE_TYPE, mTransferMethodProfileType);
         outState.putBoolean(ARGUMENT_SHOW_CREATE_PROGRESS_BAR, mShowCreateProgressBar);
         outState.putParcelable(ARGUMENT_TRANSFER_METHOD, mTransferMethod);
         super.onSaveInstanceState(outState);
@@ -299,20 +303,10 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
             Locale locale = new Locale.Builder().setRegion(mCountry).build();
             // group
             for (HyperwalletFieldGroup group : fields) {
-                String sectionHeaderText;
-                if (group.getGroupName().equals(HyperwalletFieldGroup.GroupTypes.ACCOUNT_INFORMATION)) {
-                    sectionHeaderText = requireContext().getResources()
-                            .getString(R.string.account_information_section_header, locale.getDisplayName(), mCurrency);
-                } else {
-                    sectionHeaderText = requireContext().getString(requireContext().getResources()
-                            .getIdentifier(group.getGroupName().toLowerCase(Locale.ROOT), "string",
-                                    requireContext().getPackageName()));
-                }
-
                 View sectionHeader = LayoutInflater.from(mDynamicContainer.getContext())
                         .inflate(R.layout.item_widget_section_header, mDynamicContainer, false);
                 TextView sectionTitle = sectionHeader.findViewById(R.id.section_header_title);
-                sectionTitle.setText(sectionHeaderText);
+                sectionTitle.setText(getSectionHeaderText(group, locale));
                 sectionHeader.setId(View.generateViewId());
                 mDynamicContainer.addView(sectionHeader);
 
@@ -341,6 +335,17 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
         } catch (HyperwalletException e) {
             throw new IllegalStateException("Widget initialization error: " + e.getMessage());
         }
+    }
+
+    private String getSectionHeaderText(@NonNull final HyperwalletFieldGroup group, @NonNull final Locale locale) {
+        if (group.getGroupName().equals(HyperwalletFieldGroup.GroupTypes.ACCOUNT_INFORMATION)) {
+            return requireContext().getResources()
+                    .getString(R.string.account_information_section_header, locale.getDisplayName(), mCurrency);
+        }
+
+        return requireContext().getString(requireContext().getResources()
+                .getIdentifier(group.getGroupName().toLowerCase(Locale.ROOT), "string",
+                        requireContext().getPackageName()));
     }
 
     @Override
@@ -513,6 +518,8 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                     mTransferMethod.setField(widget.getName(), widget.getValue());
                 }
             }
+
+            mTransferMethod.setField(PROFILE_TYPE, mTransferMethodProfileType);
             mPresenter.createTransferMethod(mTransferMethod);
         }
     }
