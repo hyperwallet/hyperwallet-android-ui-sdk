@@ -16,7 +16,6 @@
  */
 package com.hyperwallet.android.ui.view.widget;
 
-import android.content.Context;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -31,7 +30,6 @@ import java.util.HashMap;
 
 public class WidgetFactory {
 
-    private static final String TAG = AbstractWidget.class.getName();
     private static final HashMap<EDataType, Class> WIDGET_MAP_DEFINITION = new HashMap<EDataType, Class>() {{
         put(EDataType.TEXT, TextWidget.class);
         put(EDataType.SELECTION, SelectionWidget.class);
@@ -43,18 +41,17 @@ public class WidgetFactory {
 
     @SuppressWarnings("unchecked")
     public static AbstractWidget newWidget(@NonNull HyperwalletField field, @NonNull WidgetEventListener listener,
-            @NonNull Context context, @Nullable String defaultValue, @NonNull View view) throws HyperwalletException {
+            @Nullable String defaultValue, @NonNull View view) throws HyperwalletException {
         try {
             if (WIDGET_MAP_DEFINITION.containsKey(field.getDataType())) {
                 return (AbstractWidget) WIDGET_MAP_DEFINITION.get(field.getDataType())
-                        .getConstructor(HyperwalletField.class, WidgetEventListener.class,
-                                Context.class, String.class, View.class)
-                        .newInstance(field, listener, context, defaultValue, view);
+                        .getConstructor(HyperwalletField.class, WidgetEventListener.class, String.class, View.class)
+                        .newInstance(field, listener, defaultValue, view);
             }
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException e) {
             throw new HyperwalletException(e);
         }
 
-        return new TextWidget(field, listener, context, defaultValue, view);
+        return new TextWidget(field, listener, defaultValue, view);
     }
 }

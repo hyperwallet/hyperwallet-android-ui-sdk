@@ -47,6 +47,10 @@
     <dimen name="button_margin">32dp</dimen>
     <dimen name="create_button_max_width">330dp</dimen>
 
+    <!-- widget -->
+    <dimen name="widget_default_margin">8dp</dimen>
+    <dimen name="widget_start_margin">12dp</dimen>
+
     <!-- specificity -->
     <dimen name="collapsing_header_size">136dp</dimen>
     <dimen name="divider_height">1dp</dimen>

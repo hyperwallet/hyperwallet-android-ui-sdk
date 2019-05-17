@@ -16,16 +16,16 @@
  */
 package com.hyperwallet.android.ui.view.widget;
 
-import android.content.Context;
 import android.text.Editable;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.ContextThemeWrapper;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -39,23 +39,25 @@ public class PhoneWidget extends AbstractWidget {
     private String mValue = "";
     private TextInputLayout mTextInputLayout;
 
-    public PhoneWidget(@NonNull HyperwalletField field, @NonNull WidgetEventListener listener, @NonNull Context context,
+    public PhoneWidget(@NonNull HyperwalletField field, @NonNull WidgetEventListener listener,
             @Nullable String defaultValue, @NonNull View defaultFocusView) {
-        super(field, listener, context, defaultValue, defaultFocusView);
+        super(field, listener, defaultValue, defaultFocusView);
         mValue = defaultValue;
     }
 
     @Override
-    public View getView() {
+    public View getView(@NonNull final ViewGroup viewGroup) {
         if (mContainer == null) {
-            mContainer = new RelativeLayout(mContext);
-            mTextInputLayout = new TextInputLayout(new ContextThemeWrapper(mContext,
+            mContainer = (ViewGroup) LayoutInflater.from(viewGroup.getContext())
+                    .inflate(R.layout.item_widget_layout, viewGroup, false);
+
+            mTextInputLayout = new TextInputLayout(new ContextThemeWrapper(viewGroup.getContext(),
                     mField.isEditable() ? R.style.Widget_Hyperwallet_TextInputLayout
                             : R.style.Widget_Hyperwallet_TextInputLayout_Disabled));
 
             // input control
             final EditText editText = new EditText(
-                    new ContextThemeWrapper(mContext, R.style.Widget_Hyperwallet_TextInputEditText));
+                    new ContextThemeWrapper(viewGroup.getContext(), R.style.Widget_Hyperwallet_TextInputEditText));
             editText.setEnabled(mField.isEditable());
 
             mTextInputLayout.addView(editText);
@@ -91,10 +93,10 @@ public class PhoneWidget extends AbstractWidget {
                 }
             });
 
+            editText.setText(TextUtils.isEmpty(mDefaultValue) ? mField.getValue() : mDefaultValue);
             editText.setInputType(InputType.TYPE_CLASS_PHONE);
             editText.setOnKeyListener(new DefaultKeyListener(mDefaultFocusView, editText));
             editText.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI | EditorInfo.IME_ACTION_NEXT);
-            editText.setText(mDefaultValue);
             appendLayout(mTextInputLayout, true);
             mContainer.addView(mTextInputLayout);
         }

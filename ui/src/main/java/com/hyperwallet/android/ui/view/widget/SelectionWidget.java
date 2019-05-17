@@ -17,15 +17,14 @@
 package com.hyperwallet.android.ui.view.widget;
 
 import android.app.Activity;
-import android.content.Context;
 import android.text.TextUtils;
 import android.view.ContextThemeWrapper;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -50,8 +49,8 @@ public class SelectionWidget extends AbstractWidget implements WidgetSelectionDi
     private String mValue;
 
     public SelectionWidget(@NonNull HyperwalletField field, @NonNull WidgetEventListener listener,
-            @NonNull Context context, @Nullable String defaultValue, @NonNull View defaultFocusView) {
-        super(field, listener, context, defaultValue, defaultFocusView);
+            @Nullable String defaultValue, @NonNull View defaultFocusView) {
+        super(field, listener, defaultValue, defaultFocusView);
         mValue = defaultValue;
         mSelectionNameValueMap = new TreeMap<>();
         if (field.getFieldSelectionOptions() != null) {
@@ -66,28 +65,28 @@ public class SelectionWidget extends AbstractWidget implements WidgetSelectionDi
     }
 
     @Override
-    public View getView() {
+    public View getView(@NonNull final ViewGroup viewGroup) {
         if (mContainer == null) {
-            mContainer = new RelativeLayout(mContext);
+            mContainer = (ViewGroup) LayoutInflater.from(viewGroup.getContext())
+                    .inflate(R.layout.item_widget_layout, viewGroup, false);
+
             setIdFromFieldLabel(mContainer);
             mContainer.setFocusable(true);
             mContainer.setFocusableInTouchMode(true);
 
-            mTextInputLayout = new TextInputLayout(new ContextThemeWrapper(mContext,
+            mTextInputLayout = new TextInputLayout(new ContextThemeWrapper(viewGroup.getContext(),
                     mField.isEditable() ? R.style.Widget_Hyperwallet_TextInputLayout
                             : R.style.Widget_Hyperwallet_TextInputLayout_Disabled));
             mEditText = new EditText(
-                    new ContextThemeWrapper(mContext, R.style.Widget_Hyperwallet_TextInputEditText));
-            if (!TextUtils.isEmpty(mDefaultValue)) {
-                mEditText.setText(getKeyFromValue(mDefaultValue));
-            }
+                    new ContextThemeWrapper(viewGroup.getContext(), R.style.Widget_Hyperwallet_TextInputEditText));
+            mEditText.setText(getKeyFromValue(TextUtils.isEmpty(mDefaultValue) ? mField.getValue() : mDefaultValue));
             setIdFromFieldLabel(mTextInputLayout);
             setIdFromFieldName(mEditText);
 
             mEditText.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI);
             mEditText.setKeyListener(null);
             mEditText.setCompoundDrawablesWithIntrinsicBounds(null, null,
-                    ContextCompat.getDrawable(mContext, R.drawable.ic_keyboard_arrow_down_12dp), null);
+                    ContextCompat.getDrawable(viewGroup.getContext(), R.drawable.ic_keyboard_arrow_down_12dp), null);
 
             mEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
