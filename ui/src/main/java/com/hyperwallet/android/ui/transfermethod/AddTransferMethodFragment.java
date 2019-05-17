@@ -300,20 +300,10 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
             Locale locale = new Locale.Builder().setRegion(mCountry).build();
             // group
             for (HyperwalletFieldGroup group : fields) {
-                String sectionHeaderText;
-                if (group.getGroupName().equals(HyperwalletFieldGroup.GroupTypes.ACCOUNT_INFORMATION)) {
-                    sectionHeaderText = requireContext().getResources()
-                            .getString(R.string.account_information_section_header, locale.getDisplayName(), mCurrency);
-                } else {
-                    sectionHeaderText = requireContext().getString(requireContext().getResources()
-                            .getIdentifier(group.getGroupName().toLowerCase(Locale.ROOT), "string",
-                                    requireContext().getPackageName()));
-                }
-
                 View sectionHeader = LayoutInflater.from(mDynamicContainer.getContext())
                         .inflate(R.layout.item_widget_section_header, mDynamicContainer, false);
                 TextView sectionTitle = sectionHeader.findViewById(R.id.section_header_title);
-                sectionTitle.setText(sectionHeaderText);
+                sectionTitle.setText(getSectionHeaderText(group, locale));
                 sectionHeader.setId(View.generateViewId());
                 previousView = sectionHeader.getId();
                 mDynamicContainer.addView(sectionHeader);
@@ -343,6 +333,17 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
             }
         } catch (HyperwalletException e) {
             throw new IllegalStateException("Widget initialization error: " + e.getMessage());
+        }
+    }
+
+    private String getSectionHeaderText(@NonNull final HyperwalletFieldGroup group, @NonNull final Locale locale) {
+        if (group.getGroupName().equals(HyperwalletFieldGroup.GroupTypes.ACCOUNT_INFORMATION)) {
+            return requireContext().getResources()
+                    .getString(R.string.account_information_section_header, locale.getDisplayName(), mCurrency);
+        } else {
+            return requireContext().getString(requireContext().getResources()
+                    .getIdentifier(group.getGroupName().toLowerCase(Locale.ROOT), "string",
+                            requireContext().getPackageName()));
         }
     }
 

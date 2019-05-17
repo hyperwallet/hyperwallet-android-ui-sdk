@@ -55,7 +55,7 @@ public interface TransferMethodConfigurationRepository {
     interface LoadFieldsCallback {
 
         void onFieldsLoaded(@Nullable final HyperwalletTransferMethodConfigurationField field,
-                @Nullable final String processingType);
+                @Nullable final String processingTime);
 
         void onError(@NonNull final HyperwalletErrors errors);
     }

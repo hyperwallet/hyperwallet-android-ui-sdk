@@ -174,6 +174,8 @@ public class TransferMethodConfigurationRepositoryImpl implements TransferMethod
         mFieldMap.clear();
     }
 
+    //TODO this method is just temporary, placed to get the processing time
+    //Next iteration from API will have ProcessingTime as a separate node
     @Nullable
     private String getProcessingTime(String country, String currency, String transferMethodType) {
         if (mTransferMethodConfigurationKey != null) {
