@@ -38,7 +38,8 @@
       "nodes": [
         {
           "value": "0.25",
-          "feeRateType": "FLAT"
+          "feeRateType": "FLAT",
+          "currency": "USD"
         }
       ]
     }

@@ -80,8 +80,9 @@
     "fees": {
       "nodes": [
         {
-          "value": "5.00",
-          "feeRateType": "FLAT"
+          "value": "2.00",
+          "feeRateType": "FLAT",
+          "currency": "USD"
         }
       ]
     }

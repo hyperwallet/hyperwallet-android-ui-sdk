@@ -2,6 +2,7 @@ package com.hyperwallet.android.transfermethod.ui;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.intent.Intents.intended;
@@ -143,6 +144,27 @@ public class SelectTransferMethodTest {
 
         onView(allOf(withId(R.id.country_name), withText("Canada"))).perform(click());
         onView(withId(R.id.select_transfer_method_country_value)).check(matches(withText("Canada")));
+    }
+
+    @Test
+    public void testSelectTransferMethod_verifyCountrySelectionSearch() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("user_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_keys_large_response.json")).mock();
+
+        mActivityTestRule.launchActivity(null);
+
+        onView(withId(R.id.select_transfer_method_country_value)).perform(click());
+
+        onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.country_selection_toolbar)))).check(
+                matches(withText(R.string.select_transfer_method_country)));
+        onView(withId(R.id.search_button)).perform(click());
+        onView(withId(R.id.search_src_text)).perform(typeText("United States"));
+        onView(withId(R.id.country_selection_list)).check(new RecyclerViewCountAssertion(1));
+        onView(allOf(withId(R.id.country_name), withText("United States"))).check(matches(isDisplayed()));
+        onView(allOf(withId(R.id.country_name), withText("United States"))).perform(click());
+        onView(withId(R.id.select_transfer_method_country_value)).check(matches(withText("United States")));
     }
 
     @Test

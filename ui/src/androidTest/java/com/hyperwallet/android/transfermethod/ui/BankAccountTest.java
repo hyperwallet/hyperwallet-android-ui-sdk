@@ -141,8 +141,8 @@ public class BankAccountTest {
                 matches(withText(R.string.add_transfer_method_fee_label)));
         onView(withId(R.id.add_transfer_method_processing_label)).check(
                 matches(withText(R.string.add_transfer_method_processing_time_label)));
-        onView(withId(R.id.add_transfer_method_fee_value)).check(matches(withText(" 5.00")));
-        onView(withId(R.id.add_transfer_method_processing_time_value)).check(matches(withText("")));
+        onView(withId(R.id.add_transfer_method_processing_time_value)).check(matches(withText("1-2 Business days")));
+        onView(withId(R.id.add_transfer_method_fee_value)).check(matches(withText("USD 2.00")));
     }
 
     @Test
