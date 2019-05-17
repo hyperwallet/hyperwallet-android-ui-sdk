@@ -340,11 +340,11 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
         if (group.getGroupName().equals(HyperwalletFieldGroup.GroupTypes.ACCOUNT_INFORMATION)) {
             return requireContext().getResources()
                     .getString(R.string.account_information_section_header, locale.getDisplayName(), mCurrency);
-        } else {
-            return requireContext().getString(requireContext().getResources()
-                    .getIdentifier(group.getGroupName().toLowerCase(Locale.ROOT), "string",
-                            requireContext().getPackageName()));
         }
+
+        return requireContext().getString(requireContext().getResources()
+                .getIdentifier(group.getGroupName().toLowerCase(Locale.ROOT), "string",
+                        requireContext().getPackageName()));
     }
 
     @Override
