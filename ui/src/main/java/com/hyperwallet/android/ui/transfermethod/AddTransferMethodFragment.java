@@ -594,16 +594,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                 }
             }
         }
-        return valid && hasWidget && haveAllWidgetsReceivedFocus();
-    }
-
-    private boolean haveAllWidgetsReceivedFocus() {
-        for (String key : mWidgetInputStateHashMap.keySet()) {
-            if (!mWidgetInputStateHashMap.get(key).hasFocused()) {
-                return false;
-            }
-        }
-        return true;
+        return valid && hasWidget;
     }
 
     @Override
