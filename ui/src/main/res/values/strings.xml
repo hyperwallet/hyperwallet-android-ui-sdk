@@ -26,9 +26,6 @@
     <string name="default_account_label">Default Account</string>
     <string name="default_account_sub_label">Select account as default method</string>
     <string name="api_expiry_date_format">MM/YY</string>
-    <string name="error_dialog_title">Error</string>
-    <string name="error_dialog_connectivity_title">Connectivity Issue</string>
-    <string name="error_dialog_unexpected_title">Unexpected Error</string>
     <string name="add_transfer_method_fee_label">Transaction Fee:</string>
     <string name="add_transfer_method_processing_time_label">Processing Time:</string>
 
@@ -45,11 +42,6 @@
         account?
     </string>
     <string name="transfer_method_remove_confirmation_title">Remove account</string>
-
-    <string name="remove_button_label">Remove</string>
-    <string name="cancel_button_label">Cancel</string>
-    <string name="close_button_label">Close</string>
-    <string name="try_again_button_label">Try again</string>
 
     <!-- menu title -->
     <string name="menu_transfer_funds">Transfer Funds</string>

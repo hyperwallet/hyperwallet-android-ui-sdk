@@ -31,12 +31,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.hyperwallet.android.common.view.error.DefaultErrorDialogFragment;
+import com.hyperwallet.android.common.view.error.OnNetworkErrorCallback;
 import com.hyperwallet.android.hyperwallet_ui.R;
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.ui.view.CountrySelectionDialogFragment;
 import com.hyperwallet.android.ui.view.CurrencySelectionDialogFragment;
-import com.hyperwallet.android.ui.view.error.DefaultErrorDialogFragment;
-import com.hyperwallet.android.ui.view.error.OnNetworkErrorCallback;
+
 
 import java.util.List;
 

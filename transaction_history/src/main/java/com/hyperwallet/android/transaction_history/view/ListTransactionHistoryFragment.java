@@ -1,5 +1,6 @@
 package com.hyperwallet.android.transaction_history.view;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,10 +12,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hyperwallet.android.hyperwallet_transactionhistory.R;
+import com.hyperwallet.android.model.HyperwalletError;
+import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.HyperwalletTransferMethod;
 import com.hyperwallet.android.transaction_history.viewmodel.ListTransactionHistoryViewModel;
 
@@ -26,6 +30,7 @@ public class ListTransactionHistoryFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private ListTransactionHistoryAdapter mListTransactionHistoryAdapter;
     private ListTransactionHistoryViewModel mListTransactionHistoryViewModel;
+    private OnLoadTransactionHistoryNetworkErrorCallback mOnLoadTransactionHistoryNetworkErrorCallback;
 
     public static ListTransactionHistoryFragment newInstance() {
         return new ListTransactionHistoryFragment();
@@ -44,6 +49,24 @@ public class ListTransactionHistoryFragment extends Fragment {
                 mListTransactionHistoryAdapter.replaceData(hyperwalletTransferMethods);
             }
         });
+
+        mListTransactionHistoryViewModel.getTransactionHistoryError().observe(this, new Observer<HyperwalletErrors>() {
+            @Override
+            public void onChanged(HyperwalletErrors hyperwalletErrors) {
+                if (hyperwalletErrors != null) {
+                    mOnLoadTransactionHistoryNetworkErrorCallback.showErrorsLoadTransactionHistory(hyperwalletErrors.getErrors());
+                }
+            }
+        });
+
+
+    }
+
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mOnLoadTransactionHistoryNetworkErrorCallback = (OnLoadTransactionHistoryNetworkErrorCallback) getActivity();
     }
 
     @Nullable
@@ -60,7 +83,49 @@ public class ListTransactionHistoryFragment extends Fragment {
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mListTransactionHistoryAdapter);
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+        setupScrollListener();
     }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mListTransactionHistoryViewModel.removeObservers(this);
+    }
+
+    private void setupScrollListener() {
+        final LinearLayoutManager layoutManager = (LinearLayoutManager) mRecyclerView.getLayoutManager();
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+
+                if (dy > 0) {
+                    int totalItemCount = layoutManager.getItemCount();
+                    int visibleItemCount = layoutManager.getChildCount();
+                    int lastVisibleItem = layoutManager.findLastVisibleItemPosition();
+                    if ( (visibleItemCount + lastVisibleItem) >= totalItemCount) {
+
+                        mListTransactionHistoryViewModel.loadTransferMethods(visibleItemCount, lastVisibleItem, totalItemCount);
+                    }
+                }
+            }
+
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                System.out.println("");
+            }
+        });
+    }
+
+
+
+    interface OnLoadTransactionHistoryNetworkErrorCallback {
+
+        void showErrorsLoadTransactionHistory(@NonNull final List<HyperwalletError> errors);
+    }
+
 
     private static class ListTransactionHistoryAdapter extends RecyclerView.Adapter<ListTransactionHistoryAdapter.ViewHolder> {
         private List<HyperwalletTransferMethod> mTransferMethodList;

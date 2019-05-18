@@ -21,12 +21,13 @@ package com.hyperwallet.android.ui.transfermethod;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.hyperwallet.android.common.repository.TransferMethodConfigurationRepository;
+import com.hyperwallet.android.common.repository.UserRepository;
 import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.HyperwalletUser;
 import com.hyperwallet.android.model.meta.Fee;
 import com.hyperwallet.android.model.meta.HyperwalletTransferMethodConfigurationKeyResult;
-import com.hyperwallet.android.ui.repository.TransferMethodConfigurationRepository;
-import com.hyperwallet.android.ui.repository.UserRepository;
+
 
 import java.util.ArrayList;
 import java.util.Currency;

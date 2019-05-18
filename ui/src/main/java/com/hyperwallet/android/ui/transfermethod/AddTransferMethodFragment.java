@@ -43,6 +43,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.hyperwallet.android.common.repository.RepositoryFactory;
 import com.hyperwallet.android.exception.HyperwalletException;
 import com.hyperwallet.android.hyperwallet_ui.R;
 import com.hyperwallet.android.model.HyperwalletBankAccount;
@@ -53,7 +54,6 @@ import com.hyperwallet.android.model.PayPalAccount;
 import com.hyperwallet.android.model.meta.Fee;
 import com.hyperwallet.android.model.meta.HyperwalletField;
 import com.hyperwallet.android.ui.HyperwalletLocalBroadcast;
-import com.hyperwallet.android.ui.repository.RepositoryFactory;
 import com.hyperwallet.android.ui.view.WidgetSelectionDialogFragment;
 import com.hyperwallet.android.ui.view.widget.AbstractWidget;
 import com.hyperwallet.android.ui.view.widget.WidgetEventListener;

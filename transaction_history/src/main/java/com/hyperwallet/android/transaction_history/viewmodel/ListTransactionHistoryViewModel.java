@@ -1,20 +1,16 @@
 package com.hyperwallet.android.transaction_history.viewmodel;
 
-import android.os.Handler;
-
-import androidx.annotation.Nullable;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.hyperwallet.android.Hyperwallet;
-import com.hyperwallet.android.exception.HyperwalletException;
-import com.hyperwallet.android.listener.HyperwalletListener;
-import com.hyperwallet.android.model.HyperwalletError;
+import com.hyperwallet.android.common.repository.RepositoryFactory;
+import com.hyperwallet.android.common.repository.TransactionHistoryRepository;
 import com.hyperwallet.android.model.HyperwalletErrors;
+import com.hyperwallet.android.model.HyperwalletStatusTransition;
 import com.hyperwallet.android.model.HyperwalletTransferMethod;
 import com.hyperwallet.android.model.HyperwalletTransferMethodPagination;
-import com.hyperwallet.android.model.paging.HyperwalletPageList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,10 +20,14 @@ public class ListTransactionHistoryViewModel extends ViewModel {
     private HyperwalletTransferMethodPagination mHyperwalletTransferMethodPagination;
     private MutableLiveData<List<HyperwalletTransferMethod>> mTransferMethods;
     private MutableLiveData<HyperwalletErrors> mTransferMethodErrors;
+    private TransactionHistoryRepository mTransactionHistoryRepository;
+
+    private List<HyperwalletTransferMethod> mBackingTransferMethodList = new ArrayList<>();
 
     public ListTransactionHistoryViewModel() {
-
+        mTransactionHistoryRepository = RepositoryFactory.getInstance().getTransactionHistoryRepository();
         mHyperwalletTransferMethodPagination = new HyperwalletTransferMethodPagination();
+        mHyperwalletTransferMethodPagination.setStatus(HyperwalletStatusTransition.StatusDefinition.DE_ACTIVATED);
         mTransferMethodErrors = new MutableLiveData<>();
     }
 
@@ -43,35 +43,51 @@ public class ListTransactionHistoryViewModel extends ViewModel {
         return mTransferMethodErrors;
     }
 
+
+    public void loadTransferMethods(int visibleItemCount, int lastVisibleItem, int totalItemCount) {
+        System.out.println(visibleItemCount);
+        System.out.println(lastVisibleItem);
+        System.out.println(totalItemCount);
+        loadTransferMethods();
+    }
+
+
+    public void removeObservers(LifecycleOwner lifecycleOwner) {
+        mTransferMethods.removeObservers(lifecycleOwner);
+        mTransferMethodErrors.removeObservers(lifecycleOwner);
+    }
+
     private void loadTransferMethods() {
 
-        //todo use repository instead
-        Hyperwallet.getDefault().listTransferMethods(mHyperwalletTransferMethodPagination,
-                new HyperwalletListener<HyperwalletPageList<HyperwalletTransferMethod>>() {
+        mTransactionHistoryRepository.loadTransactionList(
+                new TransactionHistoryRepository.LoadTransactionListCallback() {
                     @Override
-                    public void onSuccess(@Nullable HyperwalletPageList<HyperwalletTransferMethod> result) {
-                        if (result != null) {
-//                            int limit = result.getNextPageLink().getLimit();
-//                            int offset = result.getNextPageLink().getOffset();
-//                            mHyperwalletTransferMethodPagination.setLimit(limit);
-//                            mHyperwalletTransferMethodPagination.setOffset(offset);
-                            mTransferMethods.postValue(result.getDataList());
+                    public void onTransferMethodListLoaded(List<HyperwalletTransferMethod> transferMethods) {
+                        if (transferMethods != null) {
+                            mBackingTransferMethodList.addAll(transferMethods);
+                            mTransferMethods.postValue(mBackingTransferMethodList);
                             mTransferMethodErrors.postValue(null);
                         } else {
                             mTransferMethods.postValue(new ArrayList<HyperwalletTransferMethod>());
                         }
-
                     }
 
                     @Override
-                    public void onFailure(HyperwalletException exception) {
-                        mTransferMethodErrors.postValue(exception.getHyperwalletErrors());
-                    }
-
-                    @Override
-                    public Handler getHandler() {
-                        return null;
+                    public void onError(HyperwalletErrors errors) {
+                        mTransferMethodErrors.postValue(errors);
                     }
                 });
+
     }
+
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        mTransactionHistoryRepository.dispose();
+        mTransactionHistoryRepository = null;
+    }
+
+
+
 }

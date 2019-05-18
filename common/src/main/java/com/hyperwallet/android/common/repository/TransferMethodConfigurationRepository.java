@@ -25,7 +25,7 @@
  * IN THE SOFTWARE.
  */
 
-package com.hyperwallet.android.ui.repository;
+package com.hyperwallet.android.common.repository;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

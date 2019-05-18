@@ -26,23 +26,12 @@ android {
 
 dependencies {
 
-    implementation "com.google.android.material:material:1.0.0"
-    implementation "androidx.constraintlayout:constraintlayout:1.1.3"
     implementation "androidx.test.espresso:espresso-idling-resource:3.1.1"
-    implementation "androidx.legacy:legacy-support-v4:1.0.0"
-    implementation "androidx.recyclerview:recyclerview:1.0.0"
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
-    implementation 'androidx.paging:paging-runtime:2.1.0'
-
-    api 'com.hyperwallet.android:core-sdk:1.0.0-beta03-SNAPSHOT'
-    api 'com.hyperwallet.android:common:1.0.0-beta03-SNAPSHOT'
-
-    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'com.hyperwallet.android:core-sdk:1.0.0-beta03-SNAPSHOT'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 }
-
 
 task javadocs(type: Javadoc) {
     source = android.sourceSets.main.java.srcDirs
@@ -60,7 +49,7 @@ task sourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
 }
 
-def aarFile = file("$buildDir/outputs/aar/transaction_history-$version"+".aar")
+def aarFile = file("$buildDir/outputs/aar/common-$version"+".aar")
 def aarArtifact = artifacts.add('archives', aarFile) {
     type 'aar'
 }
@@ -84,7 +73,7 @@ publishing {
     publications {
         hyperwalletUi(MavenPublication) {
             groupId = 'com.hyperwallet.android'
-            artifactId = 'transaction-history-ui-sdk'
+            artifactId = 'common'
             version = version
 
             artifact(sourcesJar)

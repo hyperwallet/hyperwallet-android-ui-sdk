@@ -25,7 +25,7 @@
  * IN THE SOFTWARE.
  */
 
-package com.hyperwallet.android.ui.repository;
+package com.hyperwallet.android.common.repository;
 
 import android.os.Handler;
 
@@ -34,13 +34,14 @@ import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 
 import com.hyperwallet.android.Hyperwallet;
+import com.hyperwallet.android.common.util.EspressoIdlingResource;
 import com.hyperwallet.android.exception.HyperwalletException;
 import com.hyperwallet.android.listener.HyperwalletListener;
 import com.hyperwallet.android.model.meta.HyperwalletTransferMethodConfigurationFieldResult;
 import com.hyperwallet.android.model.meta.HyperwalletTransferMethodConfigurationKeyResult;
 import com.hyperwallet.android.model.meta.query.HyperwalletTransferMethodConfigurationFieldQuery;
 import com.hyperwallet.android.model.meta.query.HyperwalletTransferMethodConfigurationKeysQuery;
-import com.hyperwallet.android.ui.util.EspressoIdlingResource;
+
 
 import java.util.HashMap;
 import java.util.Map;

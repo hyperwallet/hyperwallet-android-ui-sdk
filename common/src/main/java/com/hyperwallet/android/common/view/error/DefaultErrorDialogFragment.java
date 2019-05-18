@@ -14,7 +14,7 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.hyperwallet.android.ui.view.error;
+package com.hyperwallet.android.common.view.error;
 
 import static com.hyperwallet.android.ExceptionMapper.EC_AUTHENTICATION_TOKEN_PROVIDER_EXCEPTION;
 import static com.hyperwallet.android.ExceptionMapper.EC_IO_EXCEPTION;
@@ -29,11 +29,10 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.hyperwallet.android.hyperwallet_ui.R;
+import com.hyperwallet.android.common.R;
 import com.hyperwallet.android.model.HyperwalletError;
 
 import java.util.ArrayList;
@@ -117,8 +116,7 @@ public class DefaultErrorDialogFragment extends DialogFragment {
     }
 
     private AlertDialog buildDialog(@NonNull String errorCode, @NonNull String message) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(
-                new ContextThemeWrapper(requireContext(), R.style.Theme_Hyperwallet_Alert));
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         builder.setMessage(message);
         switch (errorCode) {
             case EC_UNEXPECTED_EXCEPTION:

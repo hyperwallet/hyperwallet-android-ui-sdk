@@ -47,7 +47,7 @@ import com.hyperwallet.android.rule.HyperwalletExternalResourceManager;
 import com.hyperwallet.android.rule.HyperwalletMockWebServer;
 import com.hyperwallet.android.ui.repository.RepositoryFactory;
 import com.hyperwallet.android.ui.transfermethod.AddTransferMethodActivity;
-import com.hyperwallet.android.ui.util.EspressoIdlingResource;
+import com.hyperwallet.android.common.util.EspressoIdlingResource;
 import com.hyperwallet.android.util.TestAuthenticationProvider;
 
 import org.junit.After;

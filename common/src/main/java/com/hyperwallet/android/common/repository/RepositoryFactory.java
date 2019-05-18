@@ -25,18 +25,20 @@
  * IN THE SOFTWARE.
  */
 
-package com.hyperwallet.android.ui.repository;
+package com.hyperwallet.android.common.repository;
 
 public class RepositoryFactory {
     private static RepositoryFactory sInstance;
     private TransferMethodConfigurationRepository mTransferMethodConfigurationRepository;
     private TransferMethodRepository mTransferMethodRepository;
     private UserRepository mUserRepository;
+    private TransactionHistoryRepository mTransactionHistoryRepository;
 
     private RepositoryFactory() {
         mTransferMethodConfigurationRepository = new TransferMethodConfigurationRepositoryImpl();
         mTransferMethodRepository = new TransferMethodRepositoryImpl();
         mUserRepository = new UserRepositoryImpl();
+        mTransactionHistoryRepository = new TransactionHistoryRepositoryImpl();
     }
 
     public static synchronized RepositoryFactory getInstance() {
@@ -56,6 +58,10 @@ public class RepositoryFactory {
 
     public UserRepository getUserRepository() {
         return mUserRepository;
+    }
+
+    public TransactionHistoryRepository getTransactionHistoryRepository() {
+        return mTransactionHistoryRepository;
     }
 
     public static void clearInstance() {

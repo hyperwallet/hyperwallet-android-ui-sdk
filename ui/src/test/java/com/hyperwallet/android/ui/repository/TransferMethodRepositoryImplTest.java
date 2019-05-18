@@ -24,6 +24,7 @@ import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMe
 import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodFields.TYPE;
 
 import com.hyperwallet.android.Hyperwallet;
+import com.hyperwallet.android.common.repository.TransferMethodRepositoryImpl;
 import com.hyperwallet.android.exception.HyperwalletException;
 import com.hyperwallet.android.listener.HyperwalletListener;
 import com.hyperwallet.android.model.HyperwalletBankAccount;

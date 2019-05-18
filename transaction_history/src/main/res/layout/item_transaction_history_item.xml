@@ -9,6 +9,7 @@
         android:id="@+id/transaction_history_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="24dp"
         android:gravity="center"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintStart_toStartOf="parent"
