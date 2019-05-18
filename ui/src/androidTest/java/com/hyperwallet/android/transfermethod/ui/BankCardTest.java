@@ -98,7 +98,7 @@ public class BankCardTest {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("authentication_token_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("successful_tmc_bank_card_fields_response.json")).mock();
+                .getResourceContent("successful_tmc_fields_bank_card_response.json")).mock();
     }
 
     @After
@@ -211,11 +211,11 @@ public class BankCardTest {
         onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo(), click());
 
         onView(withId(R.id.cardNumberLabel))
-                .check(matches(hasErrorText("You must provide a value for this field.")));
+                .check(matches(hasErrorText("You must provide a value for this field")));
         onView(withId(R.id.dateOfExpiryLabel))
-                .check(matches(hasErrorText("You must provide a value for this field.")));
+                .check(matches(hasErrorText("You must provide a value for this field")));
         onView(withId(R.id.cvvLabel))
-                .check(matches(hasErrorText("You must provide a value for this field.")));
+                .check(matches(hasErrorText("You must provide a value for this field")));
     }
 
     @Test
