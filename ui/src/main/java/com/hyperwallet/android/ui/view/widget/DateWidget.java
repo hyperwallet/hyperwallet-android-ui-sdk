@@ -89,7 +89,6 @@ public class DateWidget extends AbstractWidget implements DatePickerDialog.OnDat
             }
 
             appendLayout(mTextInputLayout, true);
-            mTextInputLayout.addView(mEditText);
             mContainer.addView(mTextInputLayout);
         }
         return mContainer;
@@ -107,10 +106,11 @@ public class DateWidget extends AbstractWidget implements DatePickerDialog.OnDat
 
     private void showDateSelectDialog() {
         Calendar calendar = mDateUtil.convertDateFromServerFormatToCalendar(mValue);
-        DatePickerDialog datePickerDialog = new DatePickerDialog(mContext, this,
+        DatePickerDialog datePickerDialog = new DatePickerDialog(mEditText.getRootView().getContext(), this,
                 calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
 
-        datePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE, mContext.getString(R.string.cancel_button_label),
+        datePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE,
+                mEditText.getContext().getString(R.string.cancel_button_label),
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
