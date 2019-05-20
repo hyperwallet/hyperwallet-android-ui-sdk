@@ -311,21 +311,24 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                 mDynamicContainer.addView(sectionHeader);
 
                 // group fields
-                for (final HyperwalletField field : group.getFields()) {
-                    AbstractWidget widget = WidgetFactory
-                            .newWidget(field, this, mWidgetInputStateHashMap.containsKey(field.getName()) ?
-                                            mWidgetInputStateHashMap.get(field.getName()).getValue() : "",
-                                    mCreateTransferMethodButton);
-                    if (mWidgetInputStateHashMap.isEmpty() || !mWidgetInputStateHashMap.containsKey(widget.getName())) {
-                        mWidgetInputStateHashMap.put(widget.getName(), widget.getWidgetInputState());
-                    }
+                if (group.getFields() != null) {
+                    for (final HyperwalletField field : group.getFields()) {
+                        AbstractWidget widget = WidgetFactory
+                                .newWidget(field, this, mWidgetInputStateHashMap.containsKey(field.getName()) ?
+                                                mWidgetInputStateHashMap.get(field.getName()).getValue() : "",
+                                        mCreateTransferMethodButton);
+                        if (mWidgetInputStateHashMap.isEmpty() || !mWidgetInputStateHashMap.containsKey(
+                                widget.getName())) {
+                            mWidgetInputStateHashMap.put(widget.getName(), widget.getWidgetInputState());
+                        }
 
-                    View widgetView = widget.getView(mDynamicContainer);
-                    widgetView.setTag(widget);
-                    widgetView.setId(View.generateViewId());
-                    final String error = mWidgetInputStateHashMap.get(widget.getName()).getErrorMessage();
-                    widget.showValidationError(error);
-                    mDynamicContainer.addView(widgetView);
+                        View widgetView = widget.getView(mDynamicContainer);
+                        widgetView.setTag(widget);
+                        widgetView.setId(View.generateViewId());
+                        final String error = mWidgetInputStateHashMap.get(widget.getName()).getErrorMessage();
+                        widget.showValidationError(error);
+                        mDynamicContainer.addView(widgetView);
+                    }
                 }
             }
 

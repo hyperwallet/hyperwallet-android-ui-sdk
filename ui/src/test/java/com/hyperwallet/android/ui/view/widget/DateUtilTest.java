@@ -59,8 +59,7 @@ public class DateUtilTest {
                 {"2190-01-00", ""},
                 {"2190-01-0", ""},
                 {"2190-01-32", ""},
-                {"2005-05-23", "23-May-2005"},
-                {"1999-10-01", "01-Oct-1999"}
+                {"2005-05-23", "23 May 2005"}
         });
     }
 
@@ -86,8 +85,8 @@ public class DateUtilTest {
 
     private Collection<Object[]> parametersToTestConvertDateFromDialogToWidgetFormat() {
         return Arrays.asList(new Object[][]{
-                {1900, 0, 1, "01-Jan-1900"},
-                {2001, 10, 13, "13-Nov-2001"}
+                {1900, 0, 1, "01 January 1900"},
+                {2001, 10, 13, "13 November 2001"}
         });
     }
 

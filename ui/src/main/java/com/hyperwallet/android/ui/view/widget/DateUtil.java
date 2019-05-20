@@ -17,6 +17,7 @@
 
 package com.hyperwallet.android.ui.view.widget;
 
+import android.text.format.DateFormat;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -36,14 +37,17 @@ class DateUtil {
 
     private static final String TAG = DateUtil.class.getName();
     private static final String SERVER_DATE_PATTERN = "yyyy-MM-dd";
-    private static final String WIDGET_DATE_PATTERN = "dd-MMM-yyyy";
+    private static final String WIDGET_DATE_PATTERN = "dd MMMM yyyy";
     private static final String DATE_PATTERN =
             "(\\d{4})-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])";
 
     private final SimpleDateFormat mServerDateFormat = new SimpleDateFormat(SERVER_DATE_PATTERN, Locale.getDefault());
-    private final SimpleDateFormat mWidgetDateFormat = new SimpleDateFormat(WIDGET_DATE_PATTERN, Locale.getDefault());
+    private final SimpleDateFormat mWidgetDateFormat;
 
     DateUtil() {
+        String widgetDatePattern = DateFormat.getBestDateTimePattern(Locale.getDefault(), WIDGET_DATE_PATTERN);
+        mWidgetDateFormat = new SimpleDateFormat(widgetDatePattern != null ? widgetDatePattern : WIDGET_DATE_PATTERN,
+                Locale.getDefault());
     }
 
     /**

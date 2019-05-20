@@ -64,10 +64,11 @@ public class DateWidget extends AbstractWidget implements DatePickerDialog.OnDat
             mTextInputLayout = new TextInputLayout(new ContextThemeWrapper(viewGroup.getContext(),
                     mField.isEditable() ? R.style.Widget_Hyperwallet_TextInputLayout
                             : R.style.Widget_Hyperwallet_TextInputLayout_Disabled));
-            final EditText editText = new EditText(
+
+            mEditText = new EditText(
                     new ContextThemeWrapper(viewGroup.getContext(), R.style.Widget_Hyperwallet_TextInputEditText));
-            if (!TextUtils.isEmpty(mDefaultValue)) {
-                mEditText.setText(mDateUtil.convertDateFromServerToWidgetFormat(mDefaultValue));
+            if (!TextUtils.isEmpty(mField.getValue())) {
+                mEditText.setText(mDateUtil.convertDateFromServerToWidgetFormat(mField.getValue()));
             }
             setIdFromFieldLabel(mTextInputLayout);
 
@@ -79,6 +80,7 @@ public class DateWidget extends AbstractWidget implements DatePickerDialog.OnDat
             mTextInputLayout.setHint(mField.getLabel());
             mTextInputLayout.addView(mEditText);
 
+            mEditText.setEnabled(mField.isEditable());
             if (mField.isEditable()) {
                 mEditText.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -126,10 +128,6 @@ public class DateWidget extends AbstractWidget implements DatePickerDialog.OnDat
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        if (isValid()) {
-            mTextInputLayout.setError(null);
-        }
-
         mValue = mDateUtil.buildDateFromDateDialogToServerFormat(year, month, dayOfMonth);
         mEditText.setText(mDateUtil.buildDateFromDateDialogToWidgetFormat(year, month, dayOfMonth));
         if (isValid()) {
