@@ -298,7 +298,6 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     @Override
     public void showTransferMethodFields(@NonNull final List<HyperwalletFieldGroup> fields) {
         mDynamicContainer.removeAllViews();
-        int previousView;
 
         try {
             Locale locale = new Locale.Builder().setRegion(mCountry).build();
@@ -309,23 +308,21 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                 TextView sectionTitle = sectionHeader.findViewById(R.id.section_header_title);
                 sectionTitle.setText(getSectionHeaderText(group, locale));
                 sectionHeader.setId(View.generateViewId());
-                previousView = sectionHeader.getId();
                 mDynamicContainer.addView(sectionHeader);
 
                 // group fields
                 for (final HyperwalletField field : group.getFields()) {
                     AbstractWidget widget = WidgetFactory
-                            .newWidget(field, this, getContext(),
-                                    mWidgetInputStateHashMap.containsKey(field.getName()) ?
+                            .newWidget(field, this, mWidgetInputStateHashMap.containsKey(field.getName()) ?
                                             mWidgetInputStateHashMap.get(field.getName()).getValue() : "",
                                     mCreateTransferMethodButton);
                     if (mWidgetInputStateHashMap.isEmpty() || !mWidgetInputStateHashMap.containsKey(widget.getName())) {
                         mWidgetInputStateHashMap.put(widget.getName(), widget.getWidgetInputState());
                     }
 
-                    View widgetView = widget.getView();
+                    View widgetView = widget.getView(mDynamicContainer);
                     widgetView.setTag(widget);
-                    previousView = placeBelow(widgetView, previousView, true);
+                    widgetView.setId(View.generateViewId());
                     final String error = mWidgetInputStateHashMap.get(widget.getName()).getErrorMessage();
                     widget.showValidationError(error);
                     mDynamicContainer.addView(widgetView);
@@ -444,7 +441,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                     AbstractWidget widget = (AbstractWidget) view.getTag();
                     if (widget.getName().equals(error.getFieldName())) {
                         if (!focusSet) {
-                            widget.getView().requestFocus();
+                            widget.getView(mDynamicContainer).requestFocus();
                             focusSet = true;
                         }
                         widget.showValidationError(error.getMessage());
@@ -548,25 +545,6 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE);
         mCreateButtonProgressBar.setVisibility(View.VISIBLE);
         mCreateTransferMethodButton.setBackgroundColor(getResources().getColor(R.color.colorSecondaryDark));
-    }
-
-    private int placeBelow(View v, int previousId, boolean matchParentWidth) {
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                matchParentWidth ? ViewGroup.LayoutParams.MATCH_PARENT : ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
-
-        if (previousId != 0) {
-            params.addRule(RelativeLayout.BELOW, previousId);
-        }
-
-        int margin = (int) (getContext().getResources().getDimension(R.dimen.default_margin)
-                / getContext().getResources().getDisplayMetrics().density);
-
-        params.setMargins(margin, margin, margin, margin);
-        v.setId(View.generateViewId());
-        v.setLayoutParams(params);
-
-        return v.getId();
     }
 
     private boolean performValidation(boolean bypassFocusCheck) {

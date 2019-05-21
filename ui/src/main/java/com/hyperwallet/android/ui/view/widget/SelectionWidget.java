@@ -17,15 +17,14 @@
 package com.hyperwallet.android.ui.view.widget;
 
 import android.app.Activity;
-import android.content.Context;
 import android.text.TextUtils;
 import android.view.ContextThemeWrapper;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -37,7 +36,6 @@ import com.hyperwallet.android.model.meta.field.HyperwalletField;
 import com.hyperwallet.android.model.meta.field.HyperwalletFieldSelectionOption;
 import com.hyperwallet.android.ui.view.WidgetSelectionDialogFragment;
 
-import java.util.Locale;
 import java.util.Set;
 import java.util.TreeMap;
 
@@ -50,41 +48,43 @@ public class SelectionWidget extends AbstractWidget implements WidgetSelectionDi
     private String mValue;
 
     public SelectionWidget(@NonNull HyperwalletField field, @NonNull WidgetEventListener listener,
-            @NonNull Context context, @Nullable String defaultValue, @NonNull View defaultFocusView) {
-        super(field, listener, context, defaultValue, defaultFocusView);
+            @Nullable String defaultValue, @NonNull View defaultFocusView) {
+        super(field, listener, defaultValue, defaultFocusView);
         mValue = defaultValue;
         mSelectionNameValueMap = new TreeMap<>();
-        for (HyperwalletFieldSelectionOption option : field.getFieldSelectionOptions()) {
-            if (!TextUtils.isEmpty(option.getLabel())) {
-                String label = option.getLabel().substring(1).toLowerCase(Locale.ROOT);
-                label = option.getLabel().substring(0, 1) + label;
-                mSelectionNameValueMap.put(label, option.getValue());
+        if (field.getFieldSelectionOptions() != null) {
+            for (HyperwalletFieldSelectionOption option : field.getFieldSelectionOptions()) {
+                if (!TextUtils.isEmpty(option.getLabel())) {
+                    mSelectionNameValueMap.put(option.getLabel(), option.getValue());
+                }
             }
         }
     }
 
     @Override
-    public View getView() {
+    public View getView(@NonNull final ViewGroup viewGroup) {
         if (mContainer == null) {
-            mContainer = new RelativeLayout(mContext);
+            mContainer = (ViewGroup) LayoutInflater.from(viewGroup.getContext())
+                    .inflate(R.layout.item_widget_layout, viewGroup, false);
+
             setIdFromFieldLabel(mContainer);
             mContainer.setFocusable(true);
             mContainer.setFocusableInTouchMode(true);
 
-            mTextInputLayout = new TextInputLayout(
-                    new ContextThemeWrapper(mContext, R.style.Widget_Hyperwallet_TextInputLayout));
+            mTextInputLayout = new TextInputLayout(new ContextThemeWrapper(viewGroup.getContext(),
+                    mField.isEditable() ? R.style.Widget_Hyperwallet_TextInputLayout
+                            : R.style.Widget_Hyperwallet_TextInputLayout_Disabled));
             mEditText = new EditText(
-                    new ContextThemeWrapper(mContext, R.style.Widget_Hyperwallet_TextInputEditText));
-            if (!TextUtils.isEmpty(mDefaultValue)) {
-                mEditText.setText(getKeyFromValue(mDefaultValue));
-            }
+                    new ContextThemeWrapper(viewGroup.getContext(), R.style.Widget_Hyperwallet_TextInputEditText));
+            mEditText.setText(
+                    getKeyFromValue(TextUtils.isEmpty(mDefaultValue) ? mValue = mField.getValue() : mDefaultValue));
             setIdFromFieldLabel(mTextInputLayout);
             setIdFromFieldName(mEditText);
 
             mEditText.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI);
             mEditText.setKeyListener(null);
             mEditText.setCompoundDrawablesWithIntrinsicBounds(null, null,
-                    ContextCompat.getDrawable(mContext, R.drawable.ic_keyboard_arrow_down_12dp), null);
+                    ContextCompat.getDrawable(viewGroup.getContext(), R.drawable.ic_keyboard_arrow_down_12dp), null);
 
             mEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
@@ -104,13 +104,17 @@ public class SelectionWidget extends AbstractWidget implements WidgetSelectionDi
                 }
             });
 
-            mEditText.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    hideSoftKey(v);
-                    showSelectionFragmentDialog();
-                }
-            });
+            if (mField.isEditable()) {
+                mEditText.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        hideSoftKey(v);
+                        showSelectionFragmentDialog();
+                    }
+                });
+            } else {
+                mEditText.setEnabled(false);
+            }
 
             mTextInputLayout.setHint(mField.getLabel());
             mTextInputLayout.addView(mEditText);
@@ -145,7 +149,8 @@ public class SelectionWidget extends AbstractWidget implements WidgetSelectionDi
 
     private void showSelectionFragmentDialog() {
         String defaultSelected = TextUtils.isEmpty(mValue) ?
-                TextUtils.isEmpty(mDefaultValue) ? "" : getKeyFromValue(mDefaultValue) : getKeyFromValue(mValue);
+                TextUtils.isEmpty(mDefaultValue) ? getKeyFromValue(mField.getValue()) :
+                        getKeyFromValue(mDefaultValue) : getKeyFromValue(mValue);
         mListener.openWidgetSelectionFragmentDialog(mSelectionNameValueMap, defaultSelected, mField.getLabel(),
                 mField.getName());
     }

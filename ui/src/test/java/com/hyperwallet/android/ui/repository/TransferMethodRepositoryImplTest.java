@@ -427,7 +427,7 @@ public class TransferMethodRepositoryImplTest {
                 ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<HyperwalletTransferMethod>>>any());
 
         // test
-        mTransferMethodRepository.loadTransferMethod(mLoadTransferMethodListCallback);
+        mTransferMethodRepository.loadTransferMethods(mLoadTransferMethodListCallback);
 
         verify(mLoadTransferMethodListCallback).onTransferMethodListLoaded(mListTransferMethodCaptor.capture());
         verify(mLoadTransferMethodListCallback, never()).onError(any(HyperwalletErrors.class));
@@ -452,7 +452,7 @@ public class TransferMethodRepositoryImplTest {
                 ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<HyperwalletTransferMethod>>>any());
 
         // test
-        mTransferMethodRepository.loadTransferMethod(mLoadTransferMethodListCallback);
+        mTransferMethodRepository.loadTransferMethods(mLoadTransferMethodListCallback);
 
         verify(mLoadTransferMethodListCallback).onTransferMethodListLoaded(mListTransferMethodCaptor.capture());
         verify(mLoadTransferMethodListCallback, never()).onError(any(HyperwalletErrors.class));
@@ -479,7 +479,7 @@ public class TransferMethodRepositoryImplTest {
                 ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<HyperwalletTransferMethod>>>any());
 
         // test
-        mTransferMethodRepository.loadTransferMethod(mLoadTransferMethodListCallback);
+        mTransferMethodRepository.loadTransferMethods(mLoadTransferMethodListCallback);
 
         verify(mLoadTransferMethodListCallback, never()).onTransferMethodListLoaded(
                 ArgumentMatchers.<HyperwalletTransferMethod>anyList());

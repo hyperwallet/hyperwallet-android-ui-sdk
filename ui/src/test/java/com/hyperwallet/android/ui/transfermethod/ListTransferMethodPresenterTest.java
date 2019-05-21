@@ -96,13 +96,13 @@ public class ListTransferMethodPresenterTest {
                 callback.onTransferMethodListLoaded(list);
                 return callback;
             }
-        }).when(mTransferMethodRepository).loadTransferMethod(any(
+        }).when(mTransferMethodRepository).loadTransferMethods(any(
                 TransferMethodRepository.LoadTransferMethodListCallback.class));
 
         // Then
         presenter.loadTransferMethods();
 
-        verify(mTransferMethodRepository, atLeastOnce()).loadTransferMethod(
+        verify(mTransferMethodRepository, atLeastOnce()).loadTransferMethods(
                 any(TransferMethodRepository.LoadTransferMethodListCallback.class));
         verify(mTransferMethodRepository, never()).deactivateTransferMethod(any(HyperwalletTransferMethod.class),
                 any(TransferMethodRepository.DeactivateTransferMethodCallback.class));
@@ -134,7 +134,7 @@ public class ListTransferMethodPresenterTest {
                 callback.onTransferMethodListLoaded(bankAccounts);
                 return callback;
             }
-        }).when(mTransferMethodRepository).loadTransferMethod(any(
+        }).when(mTransferMethodRepository).loadTransferMethods(any(
                 TransferMethodRepository.LoadTransferMethodListCallback.class));
 
         // test
@@ -162,13 +162,13 @@ public class ListTransferMethodPresenterTest {
                 callback.onTransferMethodListLoaded(null);
                 return callback;
             }
-        }).when(mTransferMethodRepository).loadTransferMethod(any(
+        }).when(mTransferMethodRepository).loadTransferMethods(any(
                 TransferMethodRepository.LoadTransferMethodListCallback.class));
 
         // Then
         presenter.loadTransferMethods();
 
-        verify(mTransferMethodRepository, atLeastOnce()).loadTransferMethod(
+        verify(mTransferMethodRepository, atLeastOnce()).loadTransferMethods(
                 any(TransferMethodRepository.LoadTransferMethodListCallback.class));
         verify(mTransferMethodRepository, never()).deactivateTransferMethod(any(HyperwalletTransferMethod.class),
                 any(TransferMethodRepository.DeactivateTransferMethodCallback.class));
@@ -198,13 +198,13 @@ public class ListTransferMethodPresenterTest {
                 callback.onError(errors);
                 return callback;
             }
-        }).when(mTransferMethodRepository).loadTransferMethod(any(
+        }).when(mTransferMethodRepository).loadTransferMethods(any(
                 TransferMethodRepository.LoadTransferMethodListCallback.class));
 
         // Then
         presenter.loadTransferMethods();
 
-        verify(mTransferMethodRepository, atLeastOnce()).loadTransferMethod(
+        verify(mTransferMethodRepository, atLeastOnce()).loadTransferMethods(
                 any(TransferMethodRepository.LoadTransferMethodListCallback.class));
         verify(mTransferMethodRepository, never()).deactivateTransferMethod(any(HyperwalletTransferMethod.class),
                 any(TransferMethodRepository.DeactivateTransferMethodCallback.class));
@@ -235,7 +235,7 @@ public class ListTransferMethodPresenterTest {
                 callback.onError(hyperwalletErrors);
                 return callback;
             }
-        }).when(mTransferMethodRepository).loadTransferMethod(any(
+        }).when(mTransferMethodRepository).loadTransferMethods(any(
                 TransferMethodRepository.LoadTransferMethodListCallback.class));
 
         // Then
@@ -266,7 +266,7 @@ public class ListTransferMethodPresenterTest {
 
         verify(mTransferMethodRepository, atLeastOnce()).deactivateTransferMethod(any(HyperwalletTransferMethod.class),
                 any(TransferMethodRepository.DeactivateTransferMethodCallback.class));
-        verify(mTransferMethodRepository, never()).loadTransferMethod(
+        verify(mTransferMethodRepository, never()).loadTransferMethods(
                 any(TransferMethodRepository.LoadTransferMethodListCallback.class));
         verify(mTransferMethodRepository, never()).createTransferMethod(any(HyperwalletTransferMethod.class),
                 any(TransferMethodRepository.LoadTransferMethodCallback.class));
@@ -326,7 +326,7 @@ public class ListTransferMethodPresenterTest {
 
         verify(mTransferMethodRepository, atLeastOnce()).deactivateTransferMethod((HyperwalletTransferMethod) any(),
                 any(TransferMethodRepository.DeactivateTransferMethodCallback.class));
-        verify(mTransferMethodRepository, never()).loadTransferMethod(
+        verify(mTransferMethodRepository, never()).loadTransferMethods(
                 any(TransferMethodRepository.LoadTransferMethodListCallback.class));
         verify(mTransferMethodRepository, never()).createTransferMethod(any(HyperwalletTransferMethod.class),
                 any(TransferMethodRepository.LoadTransferMethodCallback.class));
