@@ -39,11 +39,11 @@ public interface TransferMethodRepository {
             @NonNull LoadTransferMethodCallback callback);
 
     /**
-     * Load transfe methods available associated with current context
+     * Load transfer methods available associated with current context
      *
      * @param callback @see {@link LoadTransferMethodListCallback}
      */
-    void loadTransferMethod(@NonNull LoadTransferMethodListCallback callback);
+    void loadTransferMethods(@NonNull LoadTransferMethodListCallback callback);
 
     /**
      * Deactivate transfer method specified.
