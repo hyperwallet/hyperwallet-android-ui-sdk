@@ -191,6 +191,8 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                 triggerSubmit();
             }
         });
+
+        hideSoftKeyboard(view);
     }
 
     @Override
@@ -248,17 +250,6 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
         outState.putBoolean(ARGUMENT_SHOW_CREATE_PROGRESS_BAR, mShowCreateProgressBar);
         outState.putParcelable(ARGUMENT_TRANSFER_METHOD, mTransferMethod);
         super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    public void onDestroyView() {
-        if (getView() != null && getView().getRootView() != null) {
-            InputMethodManager inputManager = (InputMethodManager) requireContext().getSystemService(
-                    Context.INPUT_METHOD_SERVICE);
-            inputManager.hideSoftInputFromWindow(getView().getRootView().getWindowToken(), 0);
-            getView().getRootView().clearFocus();
-        }
-        super.onDestroyView();
     }
 
     @Override
@@ -596,5 +587,12 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     @Override
     public boolean isActive() {
         return isAdded();
+    }
+
+    private void hideSoftKeyboard(@NonNull View view) {
+        requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        final InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(
+                Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }
