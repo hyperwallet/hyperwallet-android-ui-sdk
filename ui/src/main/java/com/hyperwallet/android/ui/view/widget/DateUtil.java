@@ -45,16 +45,18 @@ class DateUtil {
     private final SimpleDateFormat mWidgetDateFormat;
 
     DateUtil() {
-        String widgetDatePattern = DateFormat.getBestDateTimePattern(Locale.getDefault(), WIDGET_DATE_PATTERN);
-        mWidgetDateFormat = new SimpleDateFormat(widgetDatePattern != null ? widgetDatePattern : WIDGET_DATE_PATTERN,
-                Locale.getDefault());
+        mWidgetDateFormat = new SimpleDateFormat(
+                DateFormat.getBestDateTimePattern(Locale.getDefault(), WIDGET_DATE_PATTERN), Locale.getDefault());
     }
 
     /**
-     * Convert Date from server format (yyyy-MM-dd) to DateWidget format (dd-MMM-yyyy)
+     * Convert Date from server format (yyyy-MM-dd) to DateWidget format build by BestDateTimePattern @see {@link
+     * DateFormat}
+     * or
+     * (dd MMM yyyy)
      *
      * @param serverDate Date from server
-     * @return String date in the format (dd-MMM-yyyy)
+     * @return String date in the format by BestDateTimePattern or dd MMM yyyy otherwise
      */
     @NonNull
     String convertDateFromServerToWidgetFormat(@Nullable final String serverDate) {
@@ -86,12 +88,12 @@ class DateUtil {
     }
 
     /**
-     * Build Date in the DateWidget format (dd-MMM-yyyy)
+     * Build Date in the DateWidget format build by BestDateTimePattern @see{@link DateFormat} or (dd MMMM yyyy)
      *
      * @param year       the selected year
      * @param month      the selected month (0-11 for compatibility with {@link Calendar#MONTH})
      * @param dayOfMonth th selected day of the month (1-31, depending on month)
-     * @return String date in the format (yyyy-MM-dd)
+     * @return String date in the format @see{@link DateFormat} or (dd MMMM yyyy)
      */
     @NonNull
     String buildDateFromDateDialogToWidgetFormat(final int year, final int month, final int dayOfMonth) {

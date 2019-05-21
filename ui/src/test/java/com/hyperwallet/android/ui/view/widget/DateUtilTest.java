@@ -5,47 +5,75 @@ import static org.hamcrest.Matchers.is;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
 
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
 
-import junitparams.JUnitParamsRunner;
-import junitparams.Parameters;
-
-@RunWith(JUnitParamsRunner.class)
+@RunWith(RobolectricTestRunner.class)
 public class DateUtilTest {
-    private final DateUtil helper = new DateUtil();
+    private final DateUtil mDateUtil = new DateUtil();
 
     @Test
-    @Parameters(method = "parametersToTestConvertDateFromServerFormatToWidgetFormat")
-    public void testParseDateFromServerToWidget(String serverDate, String widgetDate) {
-        assertThat(helper.convertDateFromServerToWidgetFormat(serverDate), is(widgetDate));
+    public void testParseDateFromServerToWidget() {
+        String serverDate;
+        String widgetDate;
+        Collection<Object[]> inputParamList = buildParamsDateFromServerToWidget();
+        for (Object[] item : inputParamList) {
+            serverDate = (String) item[0];
+            widgetDate = (String) item[1];
+            assertThat(mDateUtil.convertDateFromServerToWidgetFormat(serverDate), is(widgetDate));
+        }
     }
 
     @Test
-    @Parameters(method = "parametersToTestConvertDateFromServerToCalendar")
-    public void testParseDateFromServerToCalendar(String serverDate, Calendar widgetDate) {
-        assertThat(helper.convertDateFromServerFormatToCalendar(serverDate).getTime().toString(),
-                is(widgetDate.getTime().toString()));
+    public void testParseDateFromServerToCalendar() {
+        String serverDate;
+        Calendar widgetDate;
+        Collection<Object[]> inputParamList = buildParamsDateFromServerToCalendar();
+        for (Object[] item : inputParamList) {
+            serverDate = (String) item[0];
+            widgetDate = (Calendar) item[1];
+            assertThat(mDateUtil.convertDateFromServerFormatToCalendar(serverDate).getTime().toString(),
+                    is(widgetDate.getTime().toString()));
+        }
+    }
+
+
+    @Test
+    public void testParseDateFromDialogToWidgetFormat() {
+        String widgetDate;
+        int year;
+        int month;
+        int dayOfMonth;
+        Collection<Object[]> inputParamList = buildParamsFromDialogToWidget();
+        for (Object[] item : inputParamList) {
+            year = (int) item[0];
+            month = (int) item[1];
+            dayOfMonth = (int) item[2];
+            widgetDate = (String) item[3];
+            assertThat(mDateUtil.buildDateFromDateDialogToWidgetFormat(year, month, dayOfMonth), is(widgetDate));
+        }
     }
 
     @Test
-    @Parameters(method = "parametersToTestConvertDateFromDialogToWidgetFormat")
-    public void testParseDateFromDialogToWidgetFormat(final int year, final int month, final int dayOfMonth,
-            String widgetDate) {
-        assertThat(helper.buildDateFromDateDialogToWidgetFormat(year, month, dayOfMonth), is(widgetDate));
+    public void testParseDateFromDialogToServerFormat() {
+        String widgetDate;
+        int year;
+        int month;
+        int dayOfMonth;
+        Collection<Object[]> inputParamList = buildParamsFromDialogToServer();
+        for (Object[] item : inputParamList) {
+            year = (int) item[0];
+            month = (int) item[1];
+            dayOfMonth = (int) item[2];
+            widgetDate = (String) item[3];
+            assertThat(mDateUtil.buildDateFromDateDialogToServerFormat(year, month, dayOfMonth), is(widgetDate));
+        }
     }
 
-
-    @Test
-    @Parameters(method = "parametersToTestConvertDateFromDialogToServerFormat")
-    public void testParseDateFromDialogToServerFormat(final int year, final int month, final int dayOfMonth,
-            String widgetDate) {
-        assertThat(helper.buildDateFromDateDialogToServerFormat(year, month, dayOfMonth), is(widgetDate));
-    }
-
-    private Collection<Object[]> parametersToTestConvertDateFromServerFormatToWidgetFormat() {
+    private Collection<Object[]> buildParamsDateFromServerToWidget() {
         return Arrays.asList(new Object[][]{
                 {null, ""},
                 {"", ""},
@@ -63,7 +91,7 @@ public class DateUtilTest {
         });
     }
 
-    private Collection<Object[]> parametersToTestConvertDateFromServerToCalendar() {
+    private Collection<Object[]> buildParamsDateFromServerToCalendar() {
         final Calendar mayCalendar = Calendar.getInstance();
         mayCalendar.set(2005, 4, 23, 0, 0, 0);
         return Arrays.asList(new Object[][]{
@@ -83,14 +111,15 @@ public class DateUtilTest {
         });
     }
 
-    private Collection<Object[]> parametersToTestConvertDateFromDialogToWidgetFormat() {
+
+    private Collection<Object[]> buildParamsFromDialogToWidget() {
         return Arrays.asList(new Object[][]{
                 {1900, 0, 1, "01 January 1900"},
                 {2001, 10, 13, "13 November 2001"}
         });
     }
 
-    private Collection<Object[]> parametersToTestConvertDateFromDialogToServerFormat() {
+    private Collection<Object[]> buildParamsFromDialogToServer() {
         return Arrays.asList(new Object[][]{
                 {1900, 0, 1, "1900-01-01"},
                 {2000, 11, 31, "2000-12-31"},
