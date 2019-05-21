@@ -18,6 +18,8 @@ package com.hyperwallet.android.ui.view.widget;
 
 import androidx.annotation.NonNull;
 
+import com.hyperwallet.android.ui.transfermethod.DateChangedListener;
+
 import java.util.TreeMap;
 
 public interface WidgetEventListener {
@@ -30,4 +32,8 @@ public interface WidgetEventListener {
     void widgetFocused(@NonNull final String fieldName);
 
     void saveTextChanged(@NonNull final String fieldName, @NonNull final String value);
+
+    void openWidgetDateDialog(final int year, final int month, final int dayOfMonth,
+            @NonNull final DateChangedListener dateChangedListener);
+
 }

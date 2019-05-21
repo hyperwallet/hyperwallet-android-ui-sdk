@@ -16,15 +16,12 @@
  */
 package com.hyperwallet.android.ui.view.widget;
 
-import android.app.DatePickerDialog;
-import android.content.DialogInterface;
 import android.text.TextUtils;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.DatePicker;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
@@ -33,10 +30,11 @@ import androidx.annotation.Nullable;
 import com.google.android.material.textfield.TextInputLayout;
 import com.hyperwallet.android.hyperwallet_ui.R;
 import com.hyperwallet.android.model.meta.field.HyperwalletField;
+import com.hyperwallet.android.ui.transfermethod.DateChangedListener;
 
 import java.util.Calendar;
 
-public class DateWidget extends AbstractWidget implements DatePickerDialog.OnDateSetListener {
+public class DateWidget extends AbstractWidget implements DateChangedListener {
 
     private final DateUtil mDateUtil;
     private ViewGroup mContainer;
@@ -108,31 +106,26 @@ public class DateWidget extends AbstractWidget implements DatePickerDialog.OnDat
 
     private void showDateSelectDialog() {
         Calendar calendar = mDateUtil.convertDateFromServerFormatToCalendar(mValue);
-        DatePickerDialog datePickerDialog = new DatePickerDialog(mEditText.getRootView().getContext(), this,
-                calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-
-        datePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE,
-                mEditText.getContext().getString(R.string.cancel_button_label),
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (which == DialogInterface.BUTTON_NEGATIVE) {
-                            if (isValid()) {
-                                mTextInputLayout.setError(null);
-                            }
-                        }
-                    }
-                });
-        datePickerDialog.show();
+        mListener.openWidgetDateDialog(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH), this);
     }
 
     @Override
-    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+    public void onUpdate(int year, int month, int dayOfMonth) {
         mValue = mDateUtil.buildDateFromDateDialogToServerFormat(year, month, dayOfMonth);
         mEditText.setText(mDateUtil.buildDateFromDateDialogToWidgetFormat(year, month, dayOfMonth));
         if (isValid()) {
             mTextInputLayout.setError(null);
         }
         mListener.valueChanged();
+
+    }
+
+    @Override
+    public void onCancel() {
+        if (isValid()) {
+            mTextInputLayout.setError(null);
+        }
+
     }
 }
