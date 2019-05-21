@@ -66,8 +66,8 @@ public class TransactionHistoryRepositoryImpl implements TransactionHistoryRepos
         if (result.getNextPageLink() == null) {
             return;
         }
-        int limit = result.getNextPageLink().getLimit();
-        int offset = result.getNextPageLink().getOffset();
+        int limit = result.getLimit();
+        int offset = mHyperwalletTransferMethodPagination.getOffset() +  mHyperwalletTransferMethodPagination.getLimit();
         mHyperwalletTransferMethodPagination.setLimit(limit);
         mHyperwalletTransferMethodPagination.setOffset(offset);
     }
