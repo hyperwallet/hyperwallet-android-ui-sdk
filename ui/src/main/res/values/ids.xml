@@ -6,6 +6,12 @@
     <item name="bankAccountIdLabel" type="id" />
     <item name="bankAccountPurpose" type="id" />
     <item name="bankAccountPurposeLabel" type="id" />
+    <item name="wireInstructions" type="id"/>
+    <item name="wireInstructionsLabel" type="id"/>
+    <item name="intermediaryBankId" type="id"/>
+    <item name="intermediaryBankIdLabel" type="id"/>
+    <item name="intermediaryBankAccountId" type="id"/>
+    <item name="intermediaryBankAccountIdLabel" type="id"/>
     <item name="cardNumber" type="id" />
     <item name="cardNumberLabel" type="id" />
     <item name="dateOfExpiry" type="id" />
@@ -26,10 +32,6 @@
     <item name="branchCountry" type="id"/>
     <item name="branchPostalCode" type="id"/>
     <item name="branchStateProvince" type="id"/>
-    <item name="wireInstructions" type="id"/>
-    <item name="wireInstructionsLabel" type="id"/>
-    <item name="intermediaryBankId" type="id"/>
-    <item name="intermediaryBankAccountId" type="id"/>
     <item name="cardBrand" type="id"/>
     <item name="cardType" type="id"/>
     <item name="profileType" type="id"/>
