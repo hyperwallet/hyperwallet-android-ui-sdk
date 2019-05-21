@@ -61,6 +61,7 @@ public class DateWidget extends AbstractWidget {
 
             editText.setEnabled(mField.isEditable());
             setIdFromFieldName(editText);
+            setIdFromFieldLabel(mTextInputLayout);
             mTextInputLayout.setHint(mField.getLabel());
             mTextInputLayout.addView(editText);
 

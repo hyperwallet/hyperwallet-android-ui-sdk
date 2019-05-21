@@ -104,7 +104,7 @@
                   {
                     "category": "PROFILE",
                     "dataType": "TEXT",
-                    "isEditable": true,
+                    "isEditable": false,
                     "label": "First Name",
                     "name": "firstName",
                     "placeholder": "",
@@ -208,7 +208,7 @@
                   {
                     "category": "ADDRESS",
                     "dataType": "SELECTION",
-                    "isEditable": true,
+                    "isEditable": false,
                     "fieldSelectionOptions": [
                       {
                         "label": "Afghanistan",

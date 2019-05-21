@@ -15,7 +15,9 @@
     <item name="email" type="id"/>
     <item name="emailLabel" type="id"/>
     <item name="bankAccountRelationship" type="id"/>
+    <item name="bankAccountRelationshipLabel" type="id"/>
     <item name="bankId" type="id"/>
+    <item name="bankIdLabel" type="id"/>
     <item name="bankName" type="id"/>
     <item name="branchName" type="id"/>
     <item name="branchAddressLine1" type="id"/>
@@ -24,6 +26,10 @@
     <item name="branchCountry" type="id"/>
     <item name="branchPostalCode" type="id"/>
     <item name="branchStateProvince" type="id"/>
+    <item name="wireInstructions" type="id"/>
+    <item name="wireInstructionsLabel" type="id"/>
+    <item name="intermediaryBankId" type="id"/>
+    <item name="intermediaryBankAccountId" type="id"/>
     <item name="cardBrand" type="id"/>
     <item name="cardType" type="id"/>
     <item name="profileType" type="id"/>
@@ -34,23 +40,35 @@
     <item name="businessRegistrationCountry" type="id"/>
     <item name="businessOperatingName" type="id"/>
     <item name="firstName" type="id"/>
+    <item name="firstNameLabel" type="id"/>
     <item name="middleName" type="id"/>
+    <item name="middleNameLabel" type="id"/>
     <item name="lastName" type="id"/>
+    <item name="lastNameLabel" type="id"/>
     <item name="dateOfBirth" type="id"/>
+    <item name="dateOfBirthLabel" type="id"/>
     <item name="countryOfBirth" type="id"/>
     <item name="countryOfNationality" type="id"/>
     <item name="gender" type="id"/>
     <item name="phoneNumber" type="id"/>
+    <item name="phoneNumberLabel" type="id"/>
     <item name="mobileNumber" type="id"/>
+    <item name="mobileNumberLabel" type="id"/>
     <item name="governmentId" type="id"/>
     <item name="governmentIdType" type="id"/>
     <item name="passportId" type="id"/>
     <item name="driversLicenseId" type="id"/>
     <item name="employerId" type="id"/>
     <item name="addressLine1" type="id"/>
+    <item name="addressLine1Label" type="id"/>
     <item name="addressLine2" type="id"/>
+    <item name="addressLine2Label" type="id"/>
     <item name="city" type="id"/>
+    <item name="cityLabel" type="id"/>
     <item name="stateProvince" type="id"/>
+    <item name="stateProvinceLabel" type="id"/>
     <item name="country" type="id"/>
+    <item name="countryLabel" type="id"/>
     <item name="postalCode" type="id"/>
+    <item name="postalCodeLabel" type="id"/>
 </resources>
