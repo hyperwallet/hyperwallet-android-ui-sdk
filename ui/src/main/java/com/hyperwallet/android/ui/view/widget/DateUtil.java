@@ -76,7 +76,8 @@ final class DateUtil {
      */
     @NonNull
     String buildDateFromDateDialogToServerFormat(final int year, final int month, final int dayOfMonth) {
-        final Calendar calendar = getCalendar(year, month, dayOfMonth);
+        final Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, dayOfMonth);
         return mServerDateFormat.format(calendar.getTime());
     }
 
@@ -90,7 +91,8 @@ final class DateUtil {
      */
     @NonNull
     String buildDateFromDateDialogToWidgetFormat(final int year, final int month, final int dayOfMonth) {
-        final Calendar calendar = getCalendar(year, month, dayOfMonth);
+        final Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, dayOfMonth);
         return mWidgetDateFormat.format(calendar.getTime());
     }
 
@@ -113,13 +115,6 @@ final class DateUtil {
         } catch (ParseException e) {
             return calendar;
         }
-    }
-
-    @NonNull
-    private Calendar getCalendar(final int year, final int month, final int dayOfMonth) {
-        final Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month, dayOfMonth, 0, 0, 0);
-        return calendar;
     }
 
     private boolean isServerDateNotValid(@Nullable final String serverDate) {
