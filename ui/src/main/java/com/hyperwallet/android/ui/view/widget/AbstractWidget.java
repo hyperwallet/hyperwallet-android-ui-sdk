@@ -146,12 +146,10 @@ public abstract class AbstractWidget {
     }
 
     private int getIdByResourceName(@NonNull final String fieldName, @NonNull final View view) {
-        int id;
         final int idFromResource = view.getContext().getResources().getIdentifier(fieldName, "id",
                 view.getContext().getPackageName());
-        // Returns 0 if no such resource was found.
-        id = idFromResource == 0 ? View.generateViewId() : idFromResource;
-        return id;
+
+        return idFromResource == 0 ? View.generateViewId() : idFromResource;
     }
 
     protected class DefaultKeyListener implements View.OnKeyListener {

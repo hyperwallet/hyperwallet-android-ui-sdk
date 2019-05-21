@@ -65,7 +65,7 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
     }
 
     @Override
-    public void loadTransferMethod(@NonNull final LoadTransferMethodListCallback callback) {
+    public void loadTransferMethods(@NonNull final LoadTransferMethodListCallback callback) {
         getHyperwallet().listTransferMethods(null,
                 new HyperwalletListener<HyperwalletPageList<HyperwalletTransferMethod>>() {
                     @Override

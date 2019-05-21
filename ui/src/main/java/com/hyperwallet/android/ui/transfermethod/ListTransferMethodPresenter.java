@@ -38,7 +38,7 @@ public class ListTransferMethodPresenter implements ListTransferMethodContract.P
     @Override
     public void loadTransferMethods() {
         mView.showProgressBar();
-        mTransferMethodRepository.loadTransferMethod(new TransferMethodRepository.LoadTransferMethodListCallback() {
+        mTransferMethodRepository.loadTransferMethods(new TransferMethodRepository.LoadTransferMethodListCallback() {
             @Override
             public void onTransferMethodListLoaded(List<HyperwalletTransferMethod> transferMethods) {
                 if (!mView.isActive()) {
