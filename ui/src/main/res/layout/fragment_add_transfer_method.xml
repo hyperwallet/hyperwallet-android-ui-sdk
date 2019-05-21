@@ -37,21 +37,6 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/section_header_height"
-                android:background="@drawable/view_border_top_bottom"
-                android:paddingTop="@dimen/grid_padding_top">
-
-                <TextView
-                    android:id="@+id/account_information_section_header"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="@dimen/grid_margin_left"
-                    android:layout_marginTop="@dimen/grid_margin_top"
-                    android:textAppearance="@style/TextAppearance.Hyperwallet.Body2" />
-            </LinearLayout>
-
-            <LinearLayout
                 android:id="@+id/add_transfer_method_dynamic_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

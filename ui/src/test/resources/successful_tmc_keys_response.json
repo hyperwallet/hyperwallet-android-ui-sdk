@@ -1,177 +1,151 @@
 {
   "data": {
-    "transferMethodConfigurations": {
+    "countries": {
       "nodes": [
         {
-          "countries": [
-            "CA"
-          ],
-          "currencies": [
-            "USD"
-          ],
-          "transferMethodType": "BANK_ACCOUNT",
-          "profile": "INDIVIDUAL",
-          "processingTime": "1-3 Business days",
-          "fees": {
+          "code": "CA",
+          "name": "CANADA",
+          "currencies": {
             "nodes": [
               {
-                "transferMethodType": "BANK_ACCOUNT",
-                "country": "CA",
-                "currency": "USD",
-                "feeRateType": "FLAT",
-                "value": "2.00"
+                "code": "CAD",
+                "name": "CAD",
+                "transferMethodTypes": {
+                  "nodes": [
+                    {
+                      "code": "BANK_ACCOUNT",
+                      "name": "Bank Account",
+                      "fees": {
+                        "nodes": [
+                          {
+                            "transferMethodType": "BANK_ACCOUNT",
+                            "value": "5.00",
+                            "feeRateType": "FLAT"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "code": "USD",
+                "name": "USD",
+                "transferMethodTypes": {
+                  "nodes": [
+                    {
+                      "code": "BANK_ACCOUNT",
+                      "name": "Bank Account",
+                      "fees": {
+                        "nodes": [
+                          {
+                            "transferMethodType": "BANK_CARD",
+                            "value": "2.00",
+                            "feeRateType": "FLAT"
+                          },
+                          {
+                            "transferMethodType": "BANK_ACCOUNT",
+                            "value": "5.00",
+                            "feeRateType": "FLAT"
+                          },
+                          {
+                            "transferMethodType": "BANK_ACCOUNT",
+                            "value": "5.00",
+                            "feeRateType": "FLAT"
+                          },
+                          {
+                            "transferMethodType": "PAYPAL_ACCOUNT",
+                            "value": "0.25",
+                            "feeRateType": "FLAT"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "code": "BANK_CARD",
+                      "name": "Debit Card",
+                      "fees": {
+                        "nodes": [
+                          {
+                            "transferMethodType": "BANK_ACCOUNT",
+                            "value": "5.00",
+                            "feeRateType": "FLAT"
+                          },
+                          {
+                            "transferMethodType": "BANK_ACCOUNT",
+                            "value": "5.00",
+                            "feeRateType": "FLAT"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "code": "PAYPAL_ACCOUNT",
+                      "name": "PayPal Account",
+                      "fees": {
+                        "nodes": [
+                          {
+                            "transferMethodType": "BANK_CARD",
+                            "value": "2.00",
+                            "feeRateType": "FLAT"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
               }
             ]
           }
         },
         {
-          "countries": [
-            "CA"
-          ],
-          "currencies": [
-            "USD"
-          ],
-          "transferMethodType": "BANK_ACCOUNT",
-          "profile": "BUSINESS",
-          "processingTime": "1-3 Business days",
-          "fees": {
+          "code": "US",
+          "name": "UNITED STATES",
+          "currencies": {
             "nodes": [
               {
-                "transferMethodType": "BANK_ACCOUNT",
-                "country": "CA",
-                "currency": "USD",
-                "feeRateType": "FLAT",
-                "value": "2.00"
-              }
-            ]
-          }
-        },
-        {
-          "countries": [
-            "CA"
-          ],
-          "currencies": [
-            "CAD"
-          ],
-          "transferMethodType": "BANK_ACCOUNT",
-          "profile": "INDIVIDUAL",
-          "processingTime": "1-3 Business days",
-          "fees": {
-            "nodes": [
+                "code": "CAD",
+                "name": "CAD",
+                "transferMethodTypes": {
+                  "nodes": [
+                    {
+                      "code": "BANK_ACCOUNT",
+                      "name": "Bank Account",
+                      "processingTime": "1-3",
+                      "fees": {
+                        "nodes": [
+                          {
+                            "transferMethodType": "BANK_ACCOUNT",
+                            "value": "5.00",
+                            "feeRateType": "FLAT"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
               {
-                "transferMethodType": "BANK_ACCOUNT",
-                "country": "CA",
-                "currency": "CAD",
-                "feeRateType": "FLAT",
-                "value": "2.20"
-              }
-            ]
-          }
-        },
-        {
-          "countries": [
-            "CA"
-          ],
-          "currencies": [
-            "CAD"
-          ],
-          "transferMethodType": "BANK_ACCOUNT",
-          "profile": "BUSINESS",
-          "processingTime": "1-3 Business days",
-          "fees": {
-            "nodes": [
-              {
-                "transferMethodType": "BANK_ACCOUNT",
-                "country": "CA",
-                "currency": "CAD",
-                "feeRateType": "FLAT",
-                "value": "2.20"
-              }
-            ]
-          }
-        },
-        {
-          "countries": [
-            "US"
-          ],
-          "currencies": [
-            "USD"
-          ],
-          "transferMethodType": "BANK_ACCOUNT",
-          "profile": "INDIVIDUAL",
-          "processingTime": "1-2 Business days",
-          "fees": {
-            "nodes": [
-              {
-                "transferMethodType": "BANK_ACCOUNT",
-                "country": "US",
-                "currency": "USD",
-                "feeRateType": "FLAT",
-                "value": "2.00"
-              }
-            ]
-          }
-        },
-        {
-          "countries": [
-            "US"
-          ],
-          "currencies": [
-            "USD"
-          ],
-          "transferMethodType": "BANK_ACCOUNT",
-          "profile": "BUSINESS",
-          "processingTime": "1-2 Business days",
-          "fees": {
-            "nodes": [
-              {
-                "transferMethodType": "BANK_ACCOUNT",
-                "country": "US",
-                "currency": "USD",
-                "feeRateType": "FLAT",
-                "value": "2.00"
-              }
-            ]
-          }
-        },
-        {
-          "countries": [
-            "US"
-          ],
-          "currencies": [
-            "USD"
-          ],
-          "transferMethodType": "BANK_CARD",
-          "profile": "INDIVIDUAL",
-          "fees": {
-            "nodes": [
-              {
-                "transferMethodType": "BANK_CARD",
-                "country": "US",
-                "currency": "USD",
-                "feeRateType": "FLAT",
-                "value": "1.75"
-              }
-            ]
-          }
-        },
-        {
-          "countries": [
-            "US"
-          ],
-          "currencies": [
-            "USD"
-          ],
-          "transferMethodType": "BANK_CARD",
-          "profile": "BUSINESS",
-          "fees": {
-            "nodes": [
-              {
-                "transferMethodType": "BANK_CARD",
-                "country": "US",
-                "currency": "USD",
-                "feeRateType": "FLAT",
-                "value": "1.75"
+                "code": "USD",
+                "name": "USD",
+                "transferMethodTypes": {
+                  "nodes": [
+                    {
+                      "code": "BANK_ACCOUNT",
+                      "name": "Bank Account",
+                      "processingTime": "1-3",
+                      "fees": {
+                        "nodes": [
+                          {
+                            "transferMethodType": "BANK_ACCOUNT",
+                            "value": "5.00",
+                            "feeRateType": "FLAT"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
               }
             ]
           }
