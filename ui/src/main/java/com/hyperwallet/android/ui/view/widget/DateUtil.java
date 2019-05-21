@@ -17,8 +17,8 @@
 
 package com.hyperwallet.android.ui.view.widget;
 
+import android.text.TextUtils;
 import android.text.format.DateFormat;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,20 +26,16 @@ import androidx.annotation.Nullable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Class is used for manage and convert date {@link DateWidget}
  */
-class DateUtil {
+final class DateUtil {
 
-    private static final String TAG = DateUtil.class.getName();
     private static final String SERVER_DATE_PATTERN = "yyyy-MM-dd";
     private static final String WIDGET_DATE_PATTERN = "dd MMMM yyyy";
-    private static final String DATE_PATTERN =
-            "(\\d{4})-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])";
 
     private final SimpleDateFormat mServerDateFormat = new SimpleDateFormat(SERVER_DATE_PATTERN, Locale.getDefault());
     private final SimpleDateFormat mWidgetDateFormat;
@@ -51,16 +47,14 @@ class DateUtil {
 
     /**
      * Convert Date from server format (yyyy-MM-dd) to DateWidget format build by BestDateTimePattern @see {@link
-     * DateFormat}
-     * or
-     * (dd MMM yyyy)
+     * DateFormat}  or (dd MMMM yyyy)
      *
      * @param serverDate Date from server
-     * @return String date in the format by BestDateTimePattern or dd MMM yyyy otherwise
+     * @return String date in the format by BestDateTimePattern or dd MMMM yyyy otherwise
      */
     @NonNull
     String convertDateFromServerToWidgetFormat(@Nullable final String serverDate) {
-        if (isServerDateNotMatched(serverDate)) {
+        if (isServerDateNotValid(serverDate)) {
             return "";
         }
         try {
@@ -68,7 +62,6 @@ class DateUtil {
             calendar.setTime(mServerDateFormat.parse(serverDate));
             return mWidgetDateFormat.format(calendar.getTime());
         } catch (NumberFormatException | ParseException | IndexOutOfBoundsException e) {
-            Log.e(TAG, e.getMessage());
             return "";
         }
     }
@@ -110,16 +103,16 @@ class DateUtil {
     @NonNull
     Calendar convertDateFromServerFormatToCalendar(@Nullable final String serverDate) {
         final Calendar calendar = Calendar.getInstance();
-        if (isServerDateNotMatched(serverDate)) {
+        if (isServerDateNotValid(serverDate)) {
             return calendar;
         }
 
         try {
             calendar.setTime(mServerDateFormat.parse(serverDate));
+            return calendar;
         } catch (ParseException e) {
-            Log.e(TAG, e.getMessage());
+            return calendar;
         }
-        return calendar;
     }
 
     @NonNull
@@ -129,11 +122,18 @@ class DateUtil {
         return calendar;
     }
 
-    private boolean isServerDateNotMatched(@Nullable final String serverDate) {
-        if (serverDate == null) {
-            return true;
+    private boolean isServerDateNotValid(@Nullable final String serverDate) {
+        Date date = null;
+        if (!TextUtils.isEmpty(serverDate)) {
+            SimpleDateFormat formatter = new SimpleDateFormat(SERVER_DATE_PATTERN, Locale.getDefault());
+            formatter.setLenient(Boolean.FALSE); // make it strict
+            try {
+                date = formatter.parse(serverDate);
+            } catch (ParseException e) {
+                date = null;
+            }
         }
-        final Matcher matcher = Pattern.compile(DATE_PATTERN).matcher(serverDate);
-        return !matcher.matches();
+
+        return date == null;
     }
 }

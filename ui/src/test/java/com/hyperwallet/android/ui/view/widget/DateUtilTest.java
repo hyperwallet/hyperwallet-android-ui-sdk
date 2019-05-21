@@ -81,7 +81,6 @@ public class DateUtilTest {
                 {"1990-01", ""},
                 {"1990-03-111", ""},
                 {"10-20-1", ""},
-                {"190-02-1", ""},
                 {"2190-13-1", ""},
                 {"2190-00-1", ""},
                 {"2190-01-00", ""},
@@ -101,12 +100,11 @@ public class DateUtilTest {
                 {"1990-01", Calendar.getInstance()},
                 {"1990-03-111", Calendar.getInstance()},
                 {"10-20-1", Calendar.getInstance()},
-                {"190-02-1", Calendar.getInstance()},
+                {"19-1102-1", Calendar.getInstance()},
                 {"2190-13-1", Calendar.getInstance()},
                 {"2190-00-1", Calendar.getInstance()},
                 {"2190-01-00", Calendar.getInstance()},
                 {"2190-01-0", Calendar.getInstance()},
-                {"2190-01-32", Calendar.getInstance()},
                 {"2005-05-23", mayCalendar}
         });
     }
