@@ -16,10 +16,7 @@
  */
 package com.hyperwallet.android.ui.view.widget;
 
-import android.text.Editable;
-import android.text.InputType;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,15 +31,20 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.hyperwallet.android.hyperwallet_ui.R;
 import com.hyperwallet.android.model.meta.field.HyperwalletField;
 
-public class DateWidget extends AbstractWidget {
+import java.util.Calendar;
 
+public class DateWidget extends AbstractWidget implements DateChangedListener {
+
+    private final DateUtil mDateUtil;
     private ViewGroup mContainer;
     private String mValue;
     private TextInputLayout mTextInputLayout;
+    private EditText mEditText;
 
     public DateWidget(@NonNull HyperwalletField field, @NonNull WidgetEventListener listener,
             @Nullable String defaultValue, @NonNull View defaultFocusView) {
         super(field, listener, defaultValue, defaultFocusView);
+        mDateUtil = new DateUtil();
         mValue = defaultValue;
     }
 
@@ -51,52 +53,41 @@ public class DateWidget extends AbstractWidget {
         if (mContainer == null) {
             mContainer = (ViewGroup) LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.item_widget_layout, viewGroup, false);
+            setIdFromFieldLabel(mContainer);
+            mContainer.setFocusable(true);
+            mContainer.setFocusableInTouchMode(false);
 
             // input control
             mTextInputLayout = new TextInputLayout(new ContextThemeWrapper(viewGroup.getContext(),
                     mField.isEditable() ? R.style.Widget_Hyperwallet_TextInputLayout
                             : R.style.Widget_Hyperwallet_TextInputLayout_Disabled));
-            final EditText editText = new EditText(
+
+            mEditText = new EditText(
                     new ContextThemeWrapper(viewGroup.getContext(), R.style.Widget_Hyperwallet_TextInputEditText));
+            if (!TextUtils.isEmpty(mField.getValue())) {
+                mEditText.setText(mDateUtil.convertDateFromServerToWidgetFormat(mField.getValue()));
+                mValue = mField.getValue();
+            }
+            setIdFromFieldLabel(mTextInputLayout);
 
-            editText.setEnabled(mField.isEditable());
-            setIdFromFieldName(editText);
+            mEditText.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI);
+            mEditText.setKeyListener(null);
+            mEditText.setFocusableInTouchMode(false);
+            mEditText.setFocusable(false);
+            setIdFromFieldName(mEditText);
             mTextInputLayout.setHint(mField.getLabel());
-            mTextInputLayout.addView(editText);
+            mTextInputLayout.addView(mEditText);
 
-            editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View v, boolean hasFocus) {
-                    if (!hasFocus) {
-                        mValue = ((EditText) v).getText().toString();
-                        mListener.valueChanged();
-                    } else {
-                        mListener.widgetFocused(DateWidget.this.getName());
+            mEditText.setEnabled(mField.isEditable());
+            if (mField.isEditable()) {
+                mEditText.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showDateSelectDialog();
                     }
-                }
-            });
-            editText.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                }
+                });
+            }
 
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    if (before != count) {
-                        mValue = s.toString();
-                        mListener.saveTextChanged(getName(), getValue());
-                    }
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-                }
-            });
-
-            editText.setText(TextUtils.isEmpty(mDefaultValue) ? mField.getValue() : mDefaultValue);
-            editText.setInputType(InputType.TYPE_CLASS_DATETIME);
-            editText.setOnKeyListener(new DefaultKeyListener(mDefaultFocusView, editText));
-            editText.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI | EditorInfo.IME_ACTION_NEXT);
             appendLayout(mTextInputLayout, true);
             mContainer.addView(mTextInputLayout);
         }
@@ -111,5 +102,28 @@ public class DateWidget extends AbstractWidget {
     @Override
     public void showValidationError(String errorMessage) {
         mTextInputLayout.setError(errorMessage);
+    }
+
+    private void showDateSelectDialog() {
+        Calendar calendar = mDateUtil.convertDateFromServerFormatToCalendar(mValue);
+        mListener.openWidgetDateDialog(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH), this);
+    }
+
+    @Override
+    public void onUpdate(int year, int month, int dayOfMonth) {
+        mValue = mDateUtil.buildDateFromDateDialogToServerFormat(year, month, dayOfMonth);
+        mEditText.setText(mDateUtil.buildDateFromDateDialogToWidgetFormat(year, month, dayOfMonth));
+        if (isValid()) {
+            mTextInputLayout.setError(null);
+        }
+        mListener.valueChanged();
+    }
+
+    @Override
+    public void onCancel() {
+        if (isValid()) {
+            mTextInputLayout.setError(null);
+        }
     }
 }

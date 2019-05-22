@@ -25,7 +25,9 @@ import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMe
 import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodTypes.PAYPAL_ACCOUNT;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -34,6 +36,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -58,6 +61,7 @@ import com.hyperwallet.android.ui.HyperwalletLocalBroadcast;
 import com.hyperwallet.android.ui.repository.RepositoryFactory;
 import com.hyperwallet.android.ui.view.WidgetSelectionDialogFragment;
 import com.hyperwallet.android.ui.view.widget.AbstractWidget;
+import com.hyperwallet.android.ui.view.widget.DateChangedListener;
 import com.hyperwallet.android.ui.view.widget.WidgetEventListener;
 import com.hyperwallet.android.ui.view.widget.WidgetFactory;
 import com.hyperwallet.android.ui.view.widget.WidgetInputState;
@@ -579,5 +583,31 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     @Override
     public boolean isActive() {
         return isAdded();
+    }
+
+    @Override
+    public void openWidgetDateDialog(final int year, final int month, final int dayOfMonth,
+            @NonNull final DateChangedListener dateChangedListener) {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(requireContext(),
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int resultYear, int resultMonth, int resultDayOfMonth) {
+                        dateChangedListener.onUpdate(resultYear, resultMonth, resultDayOfMonth);
+                    }
+                },
+                year, month, dayOfMonth);
+
+        datePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE,
+                getString(R.string.cancel_button_label),
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (which == DialogInterface.BUTTON_NEGATIVE) {
+                            dateChangedListener.onCancel();
+                        }
+                    }
+                });
+
+        datePickerDialog.show();
     }
 }
