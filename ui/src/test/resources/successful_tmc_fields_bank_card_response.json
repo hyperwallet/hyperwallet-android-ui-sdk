@@ -1,12 +1,11 @@
 {
   "data": {
     "transferMethodUIConfigurations": {
-      "count": 1,
       "nodes": [
         {
           "country": "US",
           "currency": "USD",
-          "transferMethodType": "BANK_ACCOUNT",
+          "transferMethodType": "BANK_CARD",
           "profile": "INDIVIDUAL",
           "fieldGroups": {
             "nodes": [
@@ -16,14 +15,33 @@
                   {
                     "category": "ACCOUNT",
                     "dataType": "NUMBER",
-                    "isRequired": true,
                     "isEditable": true,
-                    "name": "branchId",
-                    "label": "Routing Number",
+                    "label": "Card Number",
+                    "maxLength": 19,
+                    "minLength": 13,
+                    "name": "cardNumber",
                     "placeholder": "",
-                    "regularExpression": "^[0-9]{9}$",
+                    "regularExpression": "^[0-9]{13,19}$",
+                    "isRequired": true,
                     "validationMessage": {
-                      "length": "The exact length of this field is 9.",
+                      "length": "The minimum length of this field is 13 and maximum length is 19.",
+                      "pattern": "is invalid length or format.",
+                      "empty": "You must provide a value for this field"
+                    }
+                  },
+                  {
+                    "category": "ACCOUNT",
+                    "dataType": "EXPIRY_DATE",
+                    "isEditable": true,
+                    "label": "Expiry Date",
+                    "maxLength": 7,
+                    "minLength": 7,
+                    "name": "dateOfExpiry",
+                    "placeholder": "",
+                    "regularExpression": "^[0-9]{4}-(1[0-2]|0[1-9])$",
+                    "isRequired": true,
+                    "validationMessage": {
+                      "length": "The exact length of this field is 7.",
                       "pattern": "is invalid length or format.",
                       "empty": "You must provide a value for this field"
                     }
@@ -31,38 +49,16 @@
                   {
                     "category": "ACCOUNT",
                     "dataType": "NUMBER",
-                    "isRequired": true,
                     "isEditable": true,
-                    "name": "bankAccountId",
-                    "label": "Account Number",
+                    "label": "CVV (Card Security Code)",
+                    "maxLength": 4,
+                    "minLength": 3,
+                    "name": "cvv",
                     "placeholder": "",
-                    "regularExpression": "^(?![0-]+$)[0-9-]{4,17}$",
-                    "validationMessage": {
-                      "length": "The minimum length of this field is 4 and maximum length is 17.",
-                      "pattern": "is invalid length or format.",
-                      "empty": "You must provide a value for this field"
-                    }
-                  },
-                  {
-                    "category": "ACCOUNT",
-                    "dataType": "SELECTION",
+                    "regularExpression": "^[0-9]{3,4}$",
                     "isRequired": true,
-                    "isEditable": true,
-                    "name": "bankAccountPurpose",
-                    "label": "Account Type",
-                    "placeholder": "",
-                    "fieldSelectionOptions": [
-                      {
-                        "label": "Checking",
-                        "value": "CHECKING"
-                      },
-                      {
-                        "label": "Savings",
-                        "value": "SAVINGS"
-                      }
-                    ],
                     "validationMessage": {
-                      "length": "",
+                      "length": "The minimum length of this field is 3 and maximum length is 4.",
                       "pattern": "is invalid length or format.",
                       "empty": "You must provide a value for this field"
                     }
@@ -75,122 +71,18 @@
                   {
                     "category": "ACCOUNT",
                     "dataType": "SELECTION",
-                    "isRequired": true,
-                    "value": "SELF",
                     "isEditable": true,
-                    "name": "bankAccountRelationship",
-                    "label": "Relationship",
-                    "placeholder": "",
                     "fieldSelectionOptions": [
                       {
                         "label": "Self",
                         "value": "SELF"
                       }
                     ],
-                    "validationMessage": {
-                      "length": "",
-                      "pattern": "is invalid length or format.",
-                      "empty": "You must provide a value for this field"
-                    }
-                  }
-                ]
-              },
-              {
-                "group": "ACCOUNT_HOLDER",
-                "fields": [
-                  {
-                    "category": "PROFILE",
-                    "dataType": "TEXT",
+                    "label": "Relationship",
+                    "name": "bankAccountRelationship",
+                    "placeholder": "",
                     "isRequired": true,
-                    "isEditable": true,
-                    "name": "firstName",
-                    "label": "First Name",
-                    "placeholder": "",
-                    "value": "Owen",
-                    "regularExpression": "^[\\sa-zA-Z0-9\\-.,'\\u00C0-\\u00FF\\u0100-\\u017F\\u0180-\\u024F]{1,50}$",
-                    "validationMessage": {
-                      "length": "",
-                      "pattern": "is invalid length or format.",
-                      "empty": "You must provide a value for this field"
-                    }
-                  },
-                  {
-                    "category": "PROFILE",
-                    "dataType": "TEXT",
-                    "isRequired": false,
-                    "isEditable": true,
-                    "name": "middleName",
-                    "label": "Middle Name",
-                    "placeholder": "",
-                    "regularExpression": "^[\\sa-zA-Z0-9\\-.,'\\u00C0-\\u00FF\\u0100-\\u017F\\u0180-\\u024F]{1,50}$",
-                    "validationMessage": {
-                      "length": "",
-                      "pattern": "is invalid length or format.",
-                      "empty": "You must provide a value for this field"
-                    }
-                  },
-                  {
-                    "category": "PROFILE",
-                    "dataType": "TEXT",
-                    "isRequired": true,
-                    "isEditable": true,
-                    "name": "lastName",
-                    "label": "Last Name",
-                    "placeholder": "",
-                    "value": "Dolan",
-                    "regularExpression": "^[\\sa-zA-Z0-9\\-.,'\\u00C0-\\u00FF\\u0100-\\u017F\\u0180-\\u024F]{1,50}$",
-                    "validationMessage": {
-                      "length": "",
-                      "pattern": "is invalid length or format.",
-                      "empty": "You must provide a value for this field"
-                    }
-                  },
-                  {
-                    "category": "PROFILE",
-                    "dataType": "DATE",
-                    "isRequired": false,
-                    "isEditable": true,
-                    "name": "dateOfBirth",
-                    "label": "Date of Birth",
-                    "placeholder": "",
-                    "value": "1980-01-01",
-                    "validationMessage": {
-                      "length": "",
-                      "pattern": "is invalid length or format.",
-                      "empty": "You must provide a value for this field"
-                    }
-                  }
-                ]
-              },
-              {
-                "group": "CONTACT_INFORMATION",
-                "fields": [
-                  {
-                    "category": "PROFILE",
-                    "dataType": "PHONE",
-                    "isRequired": false,
-                    "isEditable": true,
-                    "name": "phoneNumber",
-                    "label": "Phone Number",
-                    "placeholder": "",
-                    "value": "+1 604 6666666",
-                    "regularExpression": "^(?=.{7,17}$)[\\+]{0,1}[0-9\\(\\)\\ \\.\\-]{1,}$",
-                    "validationMessage": {
-                      "length": "",
-                      "pattern": "is invalid length or format.",
-                      "empty": "You must provide a value for this field"
-                    }
-                  },
-                  {
-                    "category": "PROFILE",
-                    "dataType": "PHONE",
-                    "isRequired": false,
-                    "isEditable": true,
-                    "name": "mobileNumber",
-                    "label": "Mobile Number",
-                    "placeholder": "",
-                    "value": "604 666 6666",
-                    "regularExpression": "^(?=.{7,17}$)[\\+]{0,1}[0-9\\(\\)\\ \\.\\-]{1,}$",
+                    "value": "SELF",
                     "validationMessage": {
                       "length": "",
                       "pattern": "is invalid length or format.",
@@ -205,12 +97,7 @@
                   {
                     "category": "ADDRESS",
                     "dataType": "SELECTION",
-                    "isRequired": true,
                     "isEditable": true,
-                    "name": "country",
-                    "label": "Country",
-                    "placeholder": "",
-                    "value": "CA",
                     "fieldSelectionOptions": [
                       {
                         "label": "Afghanistan",
@@ -317,6 +204,10 @@
                         "value": "BO"
                       },
                       {
+                        "label": "Caribbean Netherlands",
+                        "value": "BQ"
+                      },
+                      {
                         "label": "Bosnia and Herzegovina",
                         "value": "BA"
                       },
@@ -335,10 +226,6 @@
                       {
                         "label": "British Indian Ocean Territory",
                         "value": "IO"
-                      },
-                      {
-                        "label": "British Virgin Islands",
-                        "value": "VG"
                       },
                       {
                         "label": "Brunei",
@@ -371,10 +258,6 @@
                       {
                         "label": "Cape Verde",
                         "value": "CV"
-                      },
-                      {
-                        "label": "Caribbean Netherlands",
-                        "value": "BQ"
                       },
                       {
                         "label": "Cayman Islands",
@@ -455,6 +338,10 @@
                       {
                         "label": "Dominican Republic",
                         "value": "DO"
+                      },
+                      {
+                        "label": "Timor-Leste",
+                        "value": "TL"
                       },
                       {
                         "label": "Ecuador",
@@ -647,6 +534,10 @@
                       {
                         "label": "Kiribati",
                         "value": "KI"
+                      },
+                      {
+                        "label": "South Korea",
+                        "value": "KR"
                       },
                       {
                         "label": "Kosovo",
@@ -901,14 +792,6 @@
                         "value": "RW"
                       },
                       {
-                        "label": "Saint Barth\u00e9lemy",
-                        "value": "BL"
-                      },
-                      {
-                        "label": "Saint Helena",
-                        "value": "SH"
-                      },
-                      {
                         "label": "Saint Kitts and Nevis",
                         "value": "KN"
                       },
@@ -919,10 +802,6 @@
                       {
                         "label": "Saint Martin",
                         "value": "MF"
-                      },
-                      {
-                        "label": "Saint Pierre and Miquelon",
-                        "value": "PM"
                       },
                       {
                         "label": "Saint Vincent and the Grenadines",
@@ -989,10 +868,6 @@
                         "value": "GS"
                       },
                       {
-                        "label": "South Korea",
-                        "value": "KR"
-                      },
-                      {
                         "label": "South Sudan",
                         "value": "SS"
                       },
@@ -1003,6 +878,18 @@
                       {
                         "label": "Sri Lanka",
                         "value": "LK"
+                      },
+                      {
+                        "label": "Saint Barth\u00e9lemy",
+                        "value": "BL"
+                      },
+                      {
+                        "label": "Saint Helena",
+                        "value": "SH"
+                      },
+                      {
+                        "label": "Saint Pierre and Miquelon",
+                        "value": "PM"
                       },
                       {
                         "label": "Suriname",
@@ -1041,10 +928,6 @@
                         "value": "TH"
                       },
                       {
-                        "label": "Timor-Leste",
-                        "value": "TL"
-                      },
-                      {
                         "label": "Togo",
                         "value": "TG"
                       },
@@ -1081,14 +964,6 @@
                         "value": "TV"
                       },
                       {
-                        "label": "U.S. Outlying Islands",
-                        "value": "UM"
-                      },
-                      {
-                        "label": "U.S. Virgin Islands",
-                        "value": "VI"
-                      },
-                      {
                         "label": "Uganda",
                         "value": "UG"
                       },
@@ -1107,6 +982,10 @@
                       {
                         "label": "United States",
                         "value": "US"
+                      },
+                      {
+                        "label": "U.S. Outlying Islands",
+                        "value": "UM"
                       },
                       {
                         "label": "Uruguay",
@@ -1133,6 +1012,14 @@
                         "value": "VN"
                       },
                       {
+                        "label": "British Virgin Islands",
+                        "value": "VG"
+                      },
+                      {
+                        "label": "U.S. Virgin Islands",
+                        "value": "VI"
+                      },
+                      {
                         "label": "Wallis and Futuna",
                         "value": "WF"
                       },
@@ -1145,6 +1032,11 @@
                         "value": "ZM"
                       }
                     ],
+                    "label": "Country",
+                    "name": "country",
+                    "placeholder": "",
+                    "isRequired": true,
+                    "value": "CA",
                     "validationMessage": {
                       "length": "",
                       "pattern": "is invalid length or format.",
@@ -1154,13 +1046,12 @@
                   {
                     "category": "ADDRESS",
                     "dataType": "TEXT",
-                    "isRequired": true,
                     "isEditable": true,
-                    "name": "stateProvince",
                     "label": "State\/Province",
+                    "name": "stateProvince",
                     "placeholder": "",
+                    "isRequired": true,
                     "value": "BC",
-                    "regularExpression": "^[\\sa-zA-Z0-9\\-().,'\\u00C0-\\u00FF\\u0100-\\u017F\\u0180-\\u024F]{2,50}$",
                     "validationMessage": {
                       "length": "",
                       "pattern": "is invalid length or format.",
@@ -1170,13 +1061,12 @@
                   {
                     "category": "ADDRESS",
                     "dataType": "TEXT",
-                    "isRequired": true,
                     "isEditable": true,
-                    "name": "addressLine1",
                     "label": "Street",
+                    "name": "addressLine1",
                     "placeholder": "",
+                    "isRequired": true,
                     "value": "950 Granville Street",
-                    "regularExpression": "^[\\sa-zA-Z0-9\\\/\\-:().,#;'\u00b0&\\u00C0-\\u00FF\\u0100-\\u017F\\u0180-\\u024F]{2,100}$",
                     "validationMessage": {
                       "length": "",
                       "pattern": "is invalid length or format.",
@@ -1186,13 +1076,12 @@
                   {
                     "category": "ADDRESS",
                     "dataType": "TEXT",
-                    "isRequired": true,
                     "isEditable": true,
-                    "name": "city",
                     "label": "City",
+                    "name": "city",
                     "placeholder": "",
+                    "isRequired": true,
                     "value": "Vancouver",
-                    "regularExpression": "^[\\sa-zA-Z0-9\\-().,'\\u00C0-\\u00FF\\u0100-\\u017F\\u0180-\\u024F]{2,50}$",
                     "validationMessage": {
                       "length": "",
                       "pattern": "is invalid length or format.",
@@ -1202,13 +1091,12 @@
                   {
                     "category": "ADDRESS",
                     "dataType": "TEXT",
-                    "isRequired": true,
                     "isEditable": true,
-                    "name": "postalCode",
                     "label": "Zip\/Postal Code",
+                    "name": "postalCode",
                     "placeholder": "",
+                    "isRequired": true,
                     "value": "V6Z1L2",
-                    "regularExpression": "^(?![\\-]+$)[\\sa-zA-Z0-9\\-]{2,16}$",
                     "validationMessage": {
                       "length": "",
                       "pattern": "is invalid length or format.",
@@ -1219,6 +1107,16 @@
               }
             ]
           }
+        }
+      ]
+    },
+    "fees": {
+      "nodes": [
+        {
+          "country": "US",
+          "currency": "USD",
+          "value": "1.75",
+          "feeRateType": "FLAT"
         }
       ]
     }

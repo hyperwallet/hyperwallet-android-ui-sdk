@@ -20,8 +20,8 @@ import androidx.annotation.NonNull;
 
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.HyperwalletTransferMethod;
-import com.hyperwallet.android.model.meta.Fee;
-import com.hyperwallet.android.model.meta.HyperwalletField;
+import com.hyperwallet.android.model.meta.HyperwalletFee;
+import com.hyperwallet.android.model.meta.field.HyperwalletFieldGroup;
 
 import java.util.List;
 
@@ -38,9 +38,9 @@ public interface AddTransferMethodContract {
 
         void showErrorLoadTransferMethodConfigurationFields(@NonNull final List<HyperwalletError> errors);
 
-        void showTransferMethodFields(@NonNull final List<HyperwalletField> fields);
+        void showTransferMethodFields(@NonNull final List<HyperwalletFieldGroup> fields);
 
-        void showTransactionInformation(List<Fee> fees, String processingTime);
+        void showTransactionInformation(List<HyperwalletFee> fees, String processingTime);
 
         void showCreateButtonProgressBar();
 

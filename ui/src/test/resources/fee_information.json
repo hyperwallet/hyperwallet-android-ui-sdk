@@ -1,0 +1,77 @@
+{
+  "FEE_ONE": {
+    "nodes": [
+      {
+        "currency": "USD",
+        "value": "3.00",
+        "feeRateType": "FLAT"
+      }
+    ]
+  },
+  "FEE_TWO": {
+    "nodes": [
+      {
+        "currency": "USD",
+        "value": "3.00",
+        "feeRateType": "PERCENT",
+        "minimum": "4.00",
+        "maximum": "10.00"
+      }
+    ]
+  },
+  "FEE_THREE": {
+    "nodes": [
+      {
+        "currency": "USD",
+        "feeRateType": "PERCENT",
+        "value": "3",
+        "minimum": "4.00",
+        "maximum": ""
+      }
+    ]
+  },
+  "FEE_FOUR": {
+    "nodes": [
+      {
+        "currency": "USD",
+        "feeRateType": "PERCENT",
+        "value": "3",
+        "minimum": "",
+        "maximum": "10.00"
+      }
+    ]
+  },
+  "FEE_FIVE": {
+    "nodes": [
+      {
+        "currency": "USD",
+        "feeRateType": "PERCENT",
+        "value": "3",
+        "minimum": "",
+        "maximum": ""
+      }
+    ]
+  },
+  "FEE_SIX": {
+    "nodes": [
+      {
+        "currency": "USD",
+        "feeRateType": "PERCENT",
+        "value": "3",
+        "minimum": "4.00",
+        "maximum": "10.00"
+      }
+    ]
+  },
+  "FEE_SEVEN": {
+    "nodes": [
+      {
+        "currency": "USD",
+        "feeRateType": "PERCENT",
+        "value": "3.00",
+        "minimum": "10.00",
+        "maximum": ""
+      }
+    ]
+  }
+}

@@ -14,7 +14,7 @@
     <string name="activity_select_transfer_method_title">Add Account</string>
     <string name="title_activity_add_transfer_method">Add Transfer Method</string>
     <string name="title_add_bank_account">Bank Account</string>
-    <string name="title_add_bank_card">Bank Card</string>
+    <string name="title_add_bank_card">Debit Card</string>
 
     <string name="error_exact_length_field">The length of this field is exactly %d.</string>
     <string name="error_invalid_expiry_date">%s is invalid.</string>
@@ -68,11 +68,11 @@
 
     <!-- title and font icon -->
     <string name="bank_account">Bank Account</string>
-    <string name="bank_card">Bank Card</string>
-    <string name="wire_account">Wire Account</string>
+    <string name="bank_card">Debit Card</string>
+    <string name="wire_account">Wire Transfer</string>
     <string name="paper_check">Paper Check</string>
     <string name="prepaid_card">Prepaid Card</string>
-    <string name="paypal_account">PayPal</string>
+    <string name="paypal_account">PayPal Account</string>
 
     <string name="bank_account_font_icon">\uE000</string>
     <string name="bank_card_font_icon">\uE005</string>
@@ -81,9 +81,17 @@
     <string name="prepaid_card_font_icon">\uE00A</string>
     <string name="paypal_account_font_icon">\uE021</string>
 
+    <string name="account_holder">Account Holder</string>
+    <string name="account_information">Account Information</string>
+    <string name="address">Address</string>
+    <string name="contact_information">Contact Information</string>
+    <string name="identification">Identification</string>
+    <string name="intermediary_account">Intermediary Account</string>
+
     <string name="search_hint">Search Hint</string>
     <string name="search_country">Search Country</string>
     <string name="search_currency">Search Currency</string>
+    <string name="search_widget">Search</string>
 
     <string name="account_information_section_header">Account Information - %s (%s)</string>
     <string name="transfer_method_information_header">Transfer Method Information</string>

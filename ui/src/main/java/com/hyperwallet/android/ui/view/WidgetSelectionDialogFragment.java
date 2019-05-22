@@ -16,19 +16,27 @@
  */
 package com.hyperwallet.android.ui.view;
 
+import android.app.SearchManager;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
@@ -41,19 +49,23 @@ import com.hyperwallet.android.hyperwallet_ui.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.TreeMap;
 
 public class WidgetSelectionDialogFragment extends DialogFragment implements ToolbarEventListener {
 
     public static final String TAG = WidgetSelectionDialogFragment.class.getName();
     private static final String ARGUMENT_NAME_VALUE_MAP = "ARGUMENT_NAME_VALUE_MAP";
+    private static final String ARGUMENT_SEARCH_SELECTED_NAME_QUERY = "ARGUMENT_SEARCH_SELECTED_NAME_QUERY";
     private static final String ARGUMENT_SELECTED_NAME = "ARGUMENT_SELECTED_NAME";
     private static final String ARGUMENT_SELECTION_LABEL = "ARGUMENT_SELECTION_LABEL";
     private static final String ARGUMENT_SELECTION_FIELD_NAME = "ARGUMENT_SELECTION_FIELD_NAME";
+    private static final int MAX_NO_SEARCH_COUNT = 20;
 
     private Adapter mAdapter;
     private String mFieldName;
     private TreeMap<String, String> mNameValueMap;
+    private String mSearchNameQuery;
     private String mSelectedName;
     private String mSelectionLabel;
     private WidgetSelectionItemListener mWidgetSelectionItemListener;
@@ -66,12 +78,14 @@ public class WidgetSelectionDialogFragment extends DialogFragment implements Too
         widgetSelectionDialogFragment.mSelectedName = selectedName;
         widgetSelectionDialogFragment.mSelectionLabel = selectionLabel;
         widgetSelectionDialogFragment.mFieldName = fieldName;
+        widgetSelectionDialogFragment.mSearchNameQuery = "";
 
         Bundle bundle = new Bundle();
         bundle.putSerializable(ARGUMENT_NAME_VALUE_MAP, widgetSelectionDialogFragment.mNameValueMap);
         bundle.putString(ARGUMENT_SELECTED_NAME, widgetSelectionDialogFragment.mSelectedName);
         bundle.putString(ARGUMENT_SELECTION_LABEL, widgetSelectionDialogFragment.mSelectionLabel);
         bundle.putString(ARGUMENT_SELECTION_FIELD_NAME, widgetSelectionDialogFragment.mFieldName);
+        bundle.putString(ARGUMENT_SEARCH_SELECTED_NAME_QUERY, widgetSelectionDialogFragment.mSearchNameQuery);
         widgetSelectionDialogFragment.setArguments(bundle);
 
         return widgetSelectionDialogFragment;
@@ -83,6 +97,7 @@ public class WidgetSelectionDialogFragment extends DialogFragment implements Too
         outState.putString(ARGUMENT_SELECTED_NAME, mSelectedName);
         outState.putString(ARGUMENT_SELECTION_LABEL, mSelectionLabel);
         outState.putString(ARGUMENT_SELECTION_FIELD_NAME, mFieldName);
+        outState.putString(ARGUMENT_SEARCH_SELECTED_NAME_QUERY, mSearchNameQuery);
         super.onSaveInstanceState(outState);
     }
 
@@ -94,6 +109,42 @@ public class WidgetSelectionDialogFragment extends DialogFragment implements Too
             mSelectedName = savedInstanceState.getString(ARGUMENT_SELECTED_NAME);
             mSelectionLabel = savedInstanceState.getString(ARGUMENT_SELECTION_LABEL);
             mFieldName = savedInstanceState.getString(ARGUMENT_SELECTION_FIELD_NAME);
+            mSearchNameQuery = savedInstanceState.getString(ARGUMENT_SEARCH_SELECTED_NAME_QUERY);
+        }
+        setHasOptionsMenu(mNameValueMap.size() > MAX_NO_SEARCH_COUNT);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.menu_widget_selection, menu);
+
+        SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
+        MenuItem searchItem = menu.findItem(R.id.widget_selection_search_item);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
+        searchView.setMaxWidth(Integer.MAX_VALUE);
+        searchView.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                mSearchNameQuery = query;
+                mAdapter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                mSearchNameQuery = newText;
+                mAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+
+        if (!mSearchNameQuery.isEmpty()) {
+            searchView.clearFocus();
+            searchItem.expandActionView();
+            searchView.setQuery(mSearchNameQuery, true);
         }
     }
 
@@ -181,15 +232,16 @@ public class WidgetSelectionDialogFragment extends DialogFragment implements Too
         void onWidgetSelectionItemClicked(@NonNull final String selectedValue, @NonNull final String fieldName);
     }
 
-    private static class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
+    private static class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements Filterable {
 
-        private final TreeMap<String, String> mNameValueMap;
-        private final String mSelectedName;
-        private final List<String> mSelectionList;
-        private final ToolbarEventListener mToolbarEventListener;
         private final Fragment mFragment;
         private final String mFieldName;
+        private final TreeMap<String, String> mNameValueMap;
+        private final String mSelectedName;
+        private final ToolbarEventListener mToolbarEventListener;
         private final WidgetSelectionItemListener mWidgetSelectionItemListener;
+        private TreeMap<String, String> mNameValueFilteredMap;
+        private List<String> mSelectionList;
 
         Adapter(@NonNull final TreeMap<String, String> nameValueMap, @NonNull final String selectedName,
                 @NonNull final Fragment fragment, @NonNull final ToolbarEventListener toolbarEventListener,
@@ -198,6 +250,7 @@ public class WidgetSelectionDialogFragment extends DialogFragment implements Too
             mSelectionList = new ArrayList<>(nameValueMap.keySet());
             mSelectedName = selectedName;
             mNameValueMap = nameValueMap;
+            mNameValueFilteredMap = nameValueMap;
             mToolbarEventListener = toolbarEventListener;
             mFragment = fragment;
             mFieldName = fieldName;
@@ -241,6 +294,37 @@ public class WidgetSelectionDialogFragment extends DialogFragment implements Too
 
         String getItemValue(int position) {
             return mNameValueMap.get(mSelectionList.get(position));
+        }
+
+        @Override
+        public Filter getFilter() {
+            return new Filter() {
+                @Override
+                protected FilterResults performFiltering(CharSequence constraint) {
+                    if (constraint.length() == 0) {
+                        mSelectionList = new ArrayList<>(mNameValueMap.keySet());
+                        mNameValueFilteredMap = mNameValueMap;
+                    } else {
+                        mNameValueFilteredMap = new TreeMap<>();
+                        for (String selection : mNameValueMap.keySet()) {
+                            if (selection.toLowerCase(Locale.ROOT)
+                                    .contains(constraint.toString().toLowerCase(Locale.ROOT))) {
+                                mNameValueFilteredMap.put(selection, mNameValueMap.get(selection));
+                            }
+                        }
+                        mSelectionList = new ArrayList<>(mNameValueFilteredMap.keySet());
+                    }
+                    FilterResults filterResults = new FilterResults();
+                    filterResults.values = mNameValueFilteredMap;
+                    return filterResults;
+                }
+
+                @Override
+                protected void publishResults(CharSequence constraint, FilterResults results) {
+                    mNameValueFilteredMap = (TreeMap<String, String>) results.values;
+                    notifyDataSetChanged();
+                }
+            };
         }
 
         class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

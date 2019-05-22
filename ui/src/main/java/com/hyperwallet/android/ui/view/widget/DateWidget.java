@@ -16,46 +16,52 @@
  */
 package com.hyperwallet.android.ui.view.widget;
 
-import android.content.Context;
 import android.text.Editable;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.ContextThemeWrapper;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.hyperwallet.android.hyperwallet_ui.R;
-import com.hyperwallet.android.model.meta.HyperwalletField;
+import com.hyperwallet.android.model.meta.field.HyperwalletField;
 
 public class DateWidget extends AbstractWidget {
 
     private ViewGroup mContainer;
-    private String mValue = "";
+    private String mValue;
     private TextInputLayout mTextInputLayout;
 
-    public DateWidget(@NonNull HyperwalletField field, @NonNull WidgetEventListener listener, @NonNull Context context,
+    public DateWidget(@NonNull HyperwalletField field, @NonNull WidgetEventListener listener,
             @Nullable String defaultValue, @NonNull View defaultFocusView) {
-        super(field, listener, context, defaultValue, defaultFocusView);
+        super(field, listener, defaultValue, defaultFocusView);
         mValue = defaultValue;
     }
 
     @Override
-    public View getView() {
+    public View getView(@NonNull final ViewGroup viewGroup) {
         if (mContainer == null) {
-            mContainer = new RelativeLayout(mContext);
-            mTextInputLayout = new TextInputLayout(
-                    new ContextThemeWrapper(mContext, R.style.Widget_Hyperwallet_TextInputLayout));
+            mContainer = (ViewGroup) LayoutInflater.from(viewGroup.getContext())
+                    .inflate(R.layout.item_widget_layout, viewGroup, false);
+
             // input control
+            mTextInputLayout = new TextInputLayout(new ContextThemeWrapper(viewGroup.getContext(),
+                    mField.isEditable() ? R.style.Widget_Hyperwallet_TextInputLayout
+                            : R.style.Widget_Hyperwallet_TextInputLayout_Disabled));
             final EditText editText = new EditText(
-                    new ContextThemeWrapper(mContext, R.style.Widget_Hyperwallet_TextInputEditText));
+                    new ContextThemeWrapper(viewGroup.getContext(), R.style.Widget_Hyperwallet_TextInputEditText));
+
+            editText.setEnabled(mField.isEditable());
             setIdFromFieldName(editText);
+            setIdFromFieldLabel(mTextInputLayout);
             mTextInputLayout.setHint(mField.getLabel());
             mTextInputLayout.addView(editText);
 
@@ -88,10 +94,10 @@ public class DateWidget extends AbstractWidget {
                 }
             });
 
+            editText.setText(TextUtils.isEmpty(mDefaultValue) ? mField.getValue() : mDefaultValue);
             editText.setInputType(InputType.TYPE_CLASS_DATETIME);
             editText.setOnKeyListener(new DefaultKeyListener(mDefaultFocusView, editText));
             editText.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI | EditorInfo.IME_ACTION_NEXT);
-            editText.setText(mDefaultValue);
             appendLayout(mTextInputLayout, true);
             mContainer.addView(mTextInputLayout);
         }

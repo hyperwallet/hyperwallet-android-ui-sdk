@@ -24,15 +24,14 @@
  * USE OR OTHER DEALINGS
  * IN THE SOFTWARE.
  */
-
 package com.hyperwallet.android.ui.repository;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.hyperwallet.android.model.HyperwalletErrors;
-import com.hyperwallet.android.model.meta.HyperwalletTransferMethodConfigurationFieldResult;
-import com.hyperwallet.android.model.meta.HyperwalletTransferMethodConfigurationKeyResult;
+import com.hyperwallet.android.model.meta.HyperwalletTransferMethodConfigurationField;
+import com.hyperwallet.android.model.meta.HyperwalletTransferMethodConfigurationKey;
 
 public interface TransferMethodConfigurationRepository {
 
@@ -47,15 +46,16 @@ public interface TransferMethodConfigurationRepository {
     void refreshFields();
 
     interface LoadKeysCallback {
-        void onKeysLoaded(
-                @Nullable final HyperwalletTransferMethodConfigurationKeyResult transferMethodConfigurationKeyResult);
+
+        void onKeysLoaded(@Nullable final HyperwalletTransferMethodConfigurationKey transferMethodConfigurationKey);
 
         void onError(@NonNull final HyperwalletErrors errors);
     }
 
     interface LoadFieldsCallback {
-        void onFieldsLoaded(@Nullable final HyperwalletTransferMethodConfigurationFieldResult
-                transferMethodConfigurationFieldResult);
+
+        void onFieldsLoaded(@Nullable final HyperwalletTransferMethodConfigurationField field,
+                @Nullable final String processingTime);
 
         void onError(@NonNull final HyperwalletErrors errors);
     }
