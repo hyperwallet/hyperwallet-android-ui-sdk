@@ -120,8 +120,8 @@ public class BankAccountTest {
     public void testAddTransferMethod_displaysElementsOnTmcResponse() {
         mActivityTestRule.launchActivity(null);
 
-        onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar)))).check(
-                matches(withText(R.string.title_add_bank_account)));
+        onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
+                .check(matches(withText(R.string.title_add_bank_account)));
 
         onView(allOf(withId(R.id.section_header_title), withText("Account Information - United States (USD)"))).check(
                 matches(isDisplayed()));
@@ -178,19 +178,19 @@ public class BankAccountTest {
         onView(withId(R.id.postalCodeLabel)).check(matches(isDisplayed()));
         onView(withId(R.id.postalCodeLabel)).check(matches(withHint("Zip/Postal Code")));
 
-        onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo()).check(
-                matches(withText(R.string.button_create_transfer_method)));
+        onView(withId(R.id.add_transfer_method_button))
+                .perform(nestedScrollTo()).check(matches(withText(R.string.button_create_transfer_method)));
     }
 
     @Test
     public void testAddTransferMethod_displaysFeeElementsOnTmcResponse() {
         mActivityTestRule.launchActivity(null);
 
-        onView(withId(R.id.add_transfer_method_static_container)).check(
-                matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withId(R.id.add_transfer_method_static_container))
+                .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
 
-        onView(withId(R.id.add_transfer_method_fee_label)).check(
-                matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withId(R.id.add_transfer_method_fee_label))
+                .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
         onView(withId(R.id.add_transfer_method_fee_label)).check(
                 matches(withText(R.string.add_transfer_method_fee_label)));
         onView(withId(R.id.add_transfer_method_fee_value)).check(matches(withText("USD 2.00")));
@@ -299,11 +299,9 @@ public class BankAccountTest {
                 .registerReceiver(br, new IntentFilter("ACTION_HYPERWALLET_TRANSFER_METHOD_ADDED"));
 
         onView(withId(R.id.branchId))
-                .perform(typeText(ROUTING_NUMBER))
-                .perform(closeSoftKeyboard());
+                .perform(typeText(ROUTING_NUMBER)).perform(closeSoftKeyboard());
         onView(withId(R.id.bankAccountId))
-                .perform(typeText(ACCOUNT_NUMBER))
-                .perform(closeSoftKeyboard());
+                .perform(typeText(ACCOUNT_NUMBER)).perform(closeSoftKeyboard());
         onView(withId(R.id.bankAccountPurpose)).perform(click());
         onView(withId(R.id.search_button)).check(doesNotExist());
         onView(withId(R.id.input_selection_list)).check(new RecyclerViewCountAssertion(2));
@@ -337,8 +335,7 @@ public class BankAccountTest {
         onView(withId(R.id.bankAccountPurpose)).perform(click());
 
         onView(allOf(withContentDescription(R.string.abc_action_bar_up_description),
-                withParent(withId(R.id.input_selection_toolbar)))).perform(
-                click());
+                withParent(withId(R.id.input_selection_toolbar)))).perform(click());
 
         onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo(), click());
 
@@ -355,11 +352,9 @@ public class BankAccountTest {
         mActivityTestRule.launchActivity(null);
 
         onView(withId(R.id.branchId))
-                .perform(typeText("2111795311"))
-                .perform(closeSoftKeyboard());
+                .perform(typeText("2111795311")).perform(closeSoftKeyboard());
         onView(withId(R.id.bankAccountId))
-                .perform(typeText("1"))
-                .perform(closeSoftKeyboard());
+                .perform(typeText("1")).perform(closeSoftKeyboard());
 
         onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo(), click());
 
