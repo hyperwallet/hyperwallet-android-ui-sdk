@@ -7,6 +7,7 @@ import static androidx.test.espresso.action.ViewActions.pressImeActionButton;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
@@ -35,6 +36,7 @@ import android.widget.TextView;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.IdlingRegistry;
+import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
@@ -124,12 +126,14 @@ public class BankCardTest {
                 matches(withText(R.string.title_add_bank_card)));
 
         onView(withId(R.id.cardNumber)).check(matches(isDisplayed()));
+        onView(withId(R.id.cardNumberLabel)).check(matches(isDisplayed()));
         onView(withId(R.id.cardNumberLabel)).check(matches(withHint(CARD_NUMBER_LABEL)));
         onView(withId(R.id.dateOfExpiry)).check(matches(isDisplayed()));
+        onView(withId(R.id.dateOfExpiryLabel)).check(matches(isDisplayed()));
         onView(withId(R.id.dateOfExpiryLabel)).check(matches(withHint(EXPIRY_DATE_LABEL)));
         onView(withId(R.id.cvv)).check(matches(isDisplayed()));
-        onView(withId(R.id.cvvLabel)).check(
-                matches(withHint(CVV_LABEL)));
+        onView(withId(R.id.cvvLabel)).check(matches(isDisplayed()));
+        onView(withId(R.id.cvvLabel)).check(matches(withHint(CVV_LABEL)));
 
         onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo()).check(
                 matches(withText(R.string.button_create_transfer_method)));
@@ -139,11 +143,21 @@ public class BankCardTest {
     public void testAddTransferMethod_displaysFeeElementsOnTmcResponse() {
         mActivityTestRule.launchActivity(null);
 
+        onView(withId(R.id.add_transfer_method_static_container)).check(
+                matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+
+        onView(withId(R.id.add_transfer_method_fee_label)).check(
+                matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
         onView(withId(R.id.add_transfer_method_fee_label)).check(
                 matches(withText(R.string.add_transfer_method_fee_label)));
-        onView(withId(R.id.add_transfer_method_processing_label)).check(
-                matches(withText(R.string.add_transfer_method_processing_time_label)));
         onView(withId(R.id.add_transfer_method_fee_value)).check(matches(withText("USD 1.75")));
+
+        //TODO: Uncomment when processing time node is implemented
+//        onView(withId(R.id.add_transfer_method_processing_label)).check(
+//                matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+//        onView(withId(R.id.add_transfer_method_processing_label)).check(
+//                matches(withText(R.string.add_transfer_method_processing_time_label)));
+//        onView(withId(R.id.add_transfer_method_fee_value)).check(matches(withText("1 - 2 Business Days")));
     }
 
     @Test

@@ -9,6 +9,7 @@ import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.isEnabled;
 import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
+import static androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
@@ -40,6 +41,7 @@ import android.widget.TextView;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.IdlingRegistry;
+import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
@@ -124,43 +126,57 @@ public class BankAccountTest {
         onView(allOf(withId(R.id.section_header_title), withText("Account Information - United States (USD)"))).check(
                 matches(isDisplayed()));
         onView(withId(R.id.branchId)).perform(nestedScrollTo()).check(matches(isDisplayed()));
-        onView(withId(R.id.branchIdLabel)).perform(nestedScrollTo()).check(matches(withHint("Routing Number")));
+        onView(withId(R.id.branchIdLabel)).check(matches(isDisplayed()));
+        onView(withId(R.id.branchIdLabel)).check(matches(withHint("Routing Number")));
         onView(withId(R.id.bankAccountId)).perform(nestedScrollTo()).check(matches(isDisplayed()));
-        onView(withId(R.id.bankAccountIdLabel)).perform(nestedScrollTo()).check(matches(withHint("Account Number")));
+        onView(withId(R.id.bankAccountIdLabel)).check(matches(isDisplayed()));
+        onView(withId(R.id.bankAccountIdLabel)).check(matches(withHint("Account Number")));
         onView(withId(R.id.bankAccountPurpose)).perform(nestedScrollTo()).check(matches(isDisplayed()));
-        onView(withId(R.id.bankAccountPurposeLabel)).perform(nestedScrollTo()).check(
+        onView(withId(R.id.bankAccountPurposeLabel)).check(matches(isDisplayed()));
+        onView(withId(R.id.bankAccountPurposeLabel)).check(
                 matches(withHint("Account Type")));
 
         onView(allOf(withId(R.id.section_header_title), withText("Account Holder"))).perform(nestedScrollTo()).check(
                 matches(isDisplayed()));
         onView(withId(R.id.firstName)).perform(nestedScrollTo()).check(matches(isDisplayed()));
-        onView(withId(R.id.firstNameLabel)).perform(nestedScrollTo()).check(matches(withHint("First Name")));
+        onView(withId(R.id.firstNameLabel)).check(matches(isDisplayed()));
+        onView(withId(R.id.firstNameLabel)).check(matches(withHint("First Name")));
         onView(withId(R.id.middleName)).perform(nestedScrollTo()).check(matches(isDisplayed()));
-        onView(withId(R.id.middleNameLabel)).perform(nestedScrollTo()).check(matches(withHint("Middle Name")));
+        onView(withId(R.id.middleNameLabel)).check(matches(isDisplayed()));
+        onView(withId(R.id.middleNameLabel)).check(matches(withHint("Middle Name")));
         onView(withId(R.id.lastName)).perform(nestedScrollTo()).check(matches(isDisplayed()));
-        onView(withId(R.id.lastNameLabel)).perform(nestedScrollTo()).check(matches(withHint("Last Name")));
+        onView(withId(R.id.lastNameLabel)).check(matches(isDisplayed()));
+        onView(withId(R.id.lastNameLabel)).check(matches(withHint("Last Name")));
         onView(withId(R.id.dateOfBirth)).perform(nestedScrollTo()).check(matches(isDisplayed()));
-        onView(withId(R.id.dateOfBirthLabel)).perform(nestedScrollTo()).check(matches(withHint("Date of Birth")));
+        onView(withId(R.id.dateOfBirthLabel)).check(matches(isDisplayed()));
+        onView(withId(R.id.dateOfBirthLabel)).check(matches(withHint("Date of Birth")));
 
         onView(allOf(withId(R.id.section_header_title), withText("Contact Information"))).perform(
                 nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.phoneNumber)).perform(nestedScrollTo()).check(matches(isDisplayed()));
-        onView(withId(R.id.phoneNumberLabel)).perform(nestedScrollTo()).check(matches(withHint("Phone Number")));
+        onView(withId(R.id.phoneNumberLabel)).check(matches(isDisplayed()));
+        onView(withId(R.id.phoneNumberLabel)).check(matches(withHint("Phone Number")));
         onView(withId(R.id.mobileNumber)).perform(nestedScrollTo()).check(matches(isDisplayed()));
-        onView(withId(R.id.mobileNumberLabel)).perform(nestedScrollTo()).check(matches(withHint("Mobile Number")));
+        onView(withId(R.id.mobileNumberLabel)).check(matches(isDisplayed()));
+        onView(withId(R.id.mobileNumberLabel)).check(matches(withHint("Mobile Number")));
 
         onView(allOf(withId(R.id.section_header_title), withText("Address"))).perform(nestedScrollTo()).check(
                 matches(isDisplayed()));
         onView(withId(R.id.country)).perform(nestedScrollTo()).check(matches(isDisplayed()));
-        onView(withId(R.id.countryLabel)).perform(nestedScrollTo()).check(matches(withHint("Country")));
+        onView(withId(R.id.countryLabel)).check(matches(isDisplayed()));
+        onView(withId(R.id.countryLabel)).check(matches(withHint("Country")));
         onView(withId(R.id.stateProvince)).perform(nestedScrollTo()).check(matches(isDisplayed()));
-        onView(withId(R.id.stateProvinceLabel)).perform(nestedScrollTo()).check(matches(withHint("State/Province")));
+        onView(withId(R.id.stateProvinceLabel)).check(matches(isDisplayed()));
+        onView(withId(R.id.stateProvinceLabel)).check(matches(withHint("State/Province")));
         onView(withId(R.id.addressLine1)).perform(nestedScrollTo()).check(matches(isDisplayed()));
-        onView(withId(R.id.addressLine1Label)).perform(nestedScrollTo()).check(matches(withHint("Street")));
+        onView(withId(R.id.addressLine1Label)).check(matches(isDisplayed()));
+        onView(withId(R.id.addressLine1Label)).check(matches(withHint("Street")));
         onView(withId(R.id.city)).perform(nestedScrollTo()).check(matches(isDisplayed()));
-        onView(withId(R.id.cityLabel)).perform(nestedScrollTo()).check(matches(withHint("City")));
+        onView(withId(R.id.cityLabel)).check(matches(isDisplayed()));
+        onView(withId(R.id.cityLabel)).check(matches(withHint("City")));
         onView(withId(R.id.postalCode)).perform(nestedScrollTo()).check(matches(isDisplayed()));
-        onView(withId(R.id.postalCodeLabel)).perform(nestedScrollTo()).check(matches(withHint("Zip/Postal Code")));
+        onView(withId(R.id.postalCodeLabel)).check(matches(isDisplayed()));
+        onView(withId(R.id.postalCodeLabel)).check(matches(withHint("Zip/Postal Code")));
 
         onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo()).check(
                 matches(withText(R.string.button_create_transfer_method)));
@@ -170,59 +186,67 @@ public class BankAccountTest {
     public void testAddTransferMethod_displaysFeeElementsOnTmcResponse() {
         mActivityTestRule.launchActivity(null);
 
+        onView(withId(R.id.add_transfer_method_static_container)).check(
+                matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+
+        onView(withId(R.id.add_transfer_method_fee_label)).check(
+                matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
         onView(withId(R.id.add_transfer_method_fee_label)).check(
                 matches(withText(R.string.add_transfer_method_fee_label)));
+        onView(withId(R.id.add_transfer_method_fee_value)).check(matches(withText("USD 2.00")));
+
         //TODO: Uncomment when processing time node is implemented
 //        onView(withId(R.id.add_transfer_method_processing_label)).check(
+//                matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+//        onView(withId(R.id.add_transfer_method_processing_label)).check(
 //                matches(withText(R.string.add_transfer_method_processing_time_label)));
-        onView(withId(R.id.add_transfer_method_fee_value)).check(matches(withText("USD 2.00")));
-//        onView(withId(R.id.add_transfer_method_processing_time_value)).check(matches(withText("1-2 Business days")));
+//        onView(withId(R.id.add_transfer_method_fee_value)).check(matches(withText("1 - 2 Business Days")));
     }
 
     @Test
     public void testAddTransferMethod_verifyDefaultValues() {
         mActivityTestRule.launchActivity(null);
 
-        onView(withId(R.id.branchId)).perform(nestedScrollTo()).check(matches(hasEmptyText()));
-        onView(withId(R.id.bankAccountId)).perform(nestedScrollTo()).check(matches(hasEmptyText()));
-        onView(withId(R.id.bankAccountPurpose)).perform(nestedScrollTo()).check(matches(hasEmptyText()));
+        onView(withId(R.id.branchId)).check(matches(hasEmptyText()));
+        onView(withId(R.id.bankAccountId)).check(matches(hasEmptyText()));
+        onView(withId(R.id.bankAccountPurpose)).check(matches(hasEmptyText()));
 
-        onView(withId(R.id.firstName)).perform(nestedScrollTo()).check(matches(withText("Brody")));
-        onView(withId(R.id.middleName)).perform(nestedScrollTo()).check(matches(hasEmptyText()));
-        onView(withId(R.id.lastName)).perform(nestedScrollTo()).check(matches(withText("Nehru")));
-        onView(withId(R.id.dateOfBirth)).perform(nestedScrollTo()).check(matches(withText("2000-01-01")));
+        onView(withId(R.id.firstName)).check(matches(withText("Brody")));
+        onView(withId(R.id.middleName)).check(matches(hasEmptyText()));
+        onView(withId(R.id.lastName)).check(matches(withText("Nehru")));
+        onView(withId(R.id.dateOfBirth)).check(matches(withText("2000-01-01")));
 
-        onView(withId(R.id.phoneNumber)).perform(nestedScrollTo()).check(matches(withText("+1 604 6666666")));
-        onView(withId(R.id.mobileNumber)).perform(nestedScrollTo()).check(matches(withText("604 666 6666")));
+        onView(withId(R.id.phoneNumber)).check(matches(withText("+1 604 6666666")));
+        onView(withId(R.id.mobileNumber)).check(matches(withText("604 666 6666")));
 
-        onView(withId(R.id.country)).perform(nestedScrollTo()).check(matches(withText("Canada")));
-        onView(withId(R.id.stateProvince)).perform(nestedScrollTo()).check(matches(withText("BC")));
-        onView(withId(R.id.addressLine1)).perform(nestedScrollTo()).check(matches(withText("950 Granville Street")));
-        onView(withId(R.id.city)).perform(nestedScrollTo()).check(matches(withText("Vancouver")));
-        onView(withId(R.id.postalCode)).perform(nestedScrollTo()).check(matches(withText("V6Z1L2")));
+        onView(withId(R.id.country)).check(matches(withText("Canada")));
+        onView(withId(R.id.stateProvince)).check(matches(withText("BC")));
+        onView(withId(R.id.addressLine1)).check(matches(withText("950 Granville Street")));
+        onView(withId(R.id.city)).check(matches(withText("Vancouver")));
+        onView(withId(R.id.postalCode)).check(matches(withText("V6Z1L2")));
     }
 
     @Test
     public void testAddTransferMethod_verifyEditableFields() {
         mActivityTestRule.launchActivity(null);
 
-        onView(withId(R.id.branchId)).perform(nestedScrollTo()).check(matches(isEnabled()));
-        onView(withId(R.id.bankAccountId)).perform(nestedScrollTo()).check(matches(isEnabled()));
-        onView(withId(R.id.bankAccountPurpose)).perform(nestedScrollTo()).check(matches(isEnabled()));
+        onView(withId(R.id.branchId)).check(matches(isEnabled()));
+        onView(withId(R.id.bankAccountId)).check(matches(isEnabled()));
+        onView(withId(R.id.bankAccountPurpose)).check(matches(isEnabled()));
 
-        onView(withId(R.id.firstName)).perform(nestedScrollTo()).check(matches(not(isEnabled())));
-        onView(withId(R.id.middleName)).perform(nestedScrollTo()).check(matches(isEnabled()));
-        onView(withId(R.id.lastName)).perform(nestedScrollTo()).check(matches(isEnabled()));
-        onView(withId(R.id.dateOfBirth)).perform(nestedScrollTo()).check(matches(isEnabled()));
+        onView(withId(R.id.firstName)).check(matches(not(isEnabled())));
+        onView(withId(R.id.middleName)).check(matches(isEnabled()));
+        onView(withId(R.id.lastName)).check(matches(isEnabled()));
+        onView(withId(R.id.dateOfBirth)).check(matches(isEnabled()));
 
-        onView(withId(R.id.phoneNumber)).perform(nestedScrollTo()).check(matches(isEnabled()));
-        onView(withId(R.id.mobileNumber)).perform(nestedScrollTo()).check(matches(isEnabled()));
+        onView(withId(R.id.phoneNumber)).check(matches(isEnabled()));
+        onView(withId(R.id.mobileNumber)).check(matches(isEnabled()));
 
-        onView(withId(R.id.country)).perform(nestedScrollTo()).check(matches(not(isEnabled())));
-        onView(withId(R.id.stateProvince)).perform(nestedScrollTo()).check(matches(isEnabled()));
-        onView(withId(R.id.addressLine1)).perform(nestedScrollTo()).check(matches(isEnabled()));
-        onView(withId(R.id.city)).perform(nestedScrollTo()).check(matches(isEnabled()));
-        onView(withId(R.id.postalCode)).perform(nestedScrollTo()).check(matches(isEnabled()));
+        onView(withId(R.id.country)).check(matches(not(isEnabled())));
+        onView(withId(R.id.stateProvince)).check(matches(isEnabled()));
+        onView(withId(R.id.addressLine1)).check(matches(isEnabled()));
+        onView(withId(R.id.city)).check(matches(isEnabled()));
+        onView(withId(R.id.postalCode)).check(matches(isEnabled()));
     }
 
     @Test
