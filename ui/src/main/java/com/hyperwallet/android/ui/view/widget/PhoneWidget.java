@@ -63,7 +63,7 @@ public class PhoneWidget extends AbstractWidget {
             mTextInputLayout.addView(editText);
             mTextInputLayout.setHint(mField.getLabel());
             setIdFromFieldName(editText);
-
+            setIdFromFieldLabel(mTextInputLayout);
             editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
