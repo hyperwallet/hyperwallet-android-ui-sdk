@@ -62,6 +62,8 @@ import com.hyperwallet.android.ui.repository.RepositoryFactory;
 import com.hyperwallet.android.ui.view.WidgetSelectionDialogFragment;
 import com.hyperwallet.android.ui.view.widget.AbstractWidget;
 import com.hyperwallet.android.ui.view.widget.DateChangedListener;
+import com.hyperwallet.android.ui.view.widget.DateUtil;
+import com.hyperwallet.android.ui.view.widget.DateWidget;
 import com.hyperwallet.android.ui.view.widget.WidgetEventListener;
 import com.hyperwallet.android.ui.view.widget.WidgetFactory;
 import com.hyperwallet.android.ui.view.widget.WidgetInputState;
@@ -91,6 +93,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     private OnAddTransferMethodNetworkErrorCallback mOnAddTransferMethodNetworkErrorCallback;
     private OnLoadTransferMethodConfigurationFieldsNetworkErrorCallback
             mOnLoadTransferMethodConfigurationFieldsNetworkErrorCallback;
+    private OnSelectedDateCallback mOnSelectedDateCallback;
     private AddTransferMethodContract.Presenter mPresenter;
     private View mProgressBar;
     private boolean mShowCreateProgressBar;
@@ -98,6 +101,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     private HyperwalletTransferMethod mTransferMethod;
     private String mTransferMethodProfileType;
     private HashMap<String, WidgetInputState> mWidgetInputStateHashMap;
+    private final DateUtil mDateUtil = new DateUtil();
 
     /**
      * Please do not use this to have instance of AddTransferMethodFragment this is reserved for android framework
@@ -159,6 +163,14 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
         } catch (ClassCastException e) {
             throw new ClassCastException(getActivity().toString() + " must implement "
                     + OnLoadTransferMethodConfigurationFieldsNetworkErrorCallback.class.getCanonicalName());
+        }
+
+        try {
+            mOnSelectedDateCallback =
+                    (OnSelectedDateCallback) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(getActivity().toString() + " must implement "
+                    + OnSelectedDateCallback.class.getCanonicalName());
         }
     }
 
@@ -489,6 +501,10 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
         void showErrorsAddTransferMethod(@NonNull final List<HyperwalletError> errors);
     }
 
+    interface OnSelectedDateCallback {
+        void setSelectedDateField(@NonNull final String fieldName, final String selectedValue);
+    }
+
     private void triggerSubmit() {
         if (performValidation(true)) {
             switch (mTransferMethodType) {
@@ -587,12 +603,15 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
 
     @Override
     public void openWidgetDateDialog(final int year, final int month, final int dayOfMonth,
-            @NonNull final DateChangedListener dateChangedListener) {
+            @NonNull final String fieldName) {
         DatePickerDialog datePickerDialog = new DatePickerDialog(requireContext(),
+                R.style.Widget_Hyperwallet_DatePicker,
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int resultYear, int resultMonth, int resultDayOfMonth) {
-                        dateChangedListener.onUpdate(resultYear, resultMonth, resultDayOfMonth);
+                        final String selectedDate = mDateUtil
+                                .buildDateFromDateDialogToServerFormat(resultYear, resultMonth, resultDayOfMonth);
+                        mOnSelectedDateCallback.setSelectedDateField(fieldName, selectedDate);
                     }
                 },
                 year, month, dayOfMonth);
@@ -603,11 +622,24 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if (which == DialogInterface.BUTTON_NEGATIVE) {
-                            dateChangedListener.onCancel();
+                            mOnSelectedDateCallback.setSelectedDateField(fieldName, null);
                         }
                     }
                 });
 
         datePickerDialog.show();
+    }
+
+    protected void onDateSelected(@NonNull final String selectedValue, @NonNull final String fieldName) {
+        for (int i = 0; i < mDynamicContainer.getChildCount(); i++) {
+            View view = mDynamicContainer.getChildAt(i);
+            if (view.getTag() instanceof DateWidget) {
+                AbstractWidget widget = (AbstractWidget) view.getTag();
+                if (fieldName.equals(widget.getName()) && widget instanceof DateChangedListener) {
+                    ((DateChangedListener) view.getTag()).onUpdate(selectedValue);
+                    return;
+                }
+            }
+        }
     }
 }

@@ -40,7 +40,7 @@ public class AddTransferMethodActivity extends AppCompatActivity implements
         WidgetSelectionDialogFragment.WidgetSelectionItemListener,
         AddTransferMethodFragment.OnAddTransferMethodNetworkErrorCallback,
         AddTransferMethodFragment.OnLoadTransferMethodConfigurationFieldsNetworkErrorCallback,
-        OnNetworkErrorCallback {
+        OnNetworkErrorCallback, AddTransferMethodFragment.OnSelectedDateCallback {
 
     public static final String EXTRA_TRANSFER_METHOD_COUNTRY = "TRANSFER_METHOD_COUNTRY";
     public static final String EXTRA_TRANSFER_METHOD_CURRENCY = "TRANSFER_METHOD_CURRENCY";
@@ -189,5 +189,15 @@ public class AddTransferMethodActivity extends AppCompatActivity implements
             );
         }
         return fragment;
+    }
+
+    @Override
+    public void setSelectedDateField(@NonNull String fieldName, final String selectedValue) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        AddTransferMethodFragment addTransferMethodFragment =
+                (AddTransferMethodFragment) fragmentManager.findFragmentById(R.id.add_transfer_method_fragment);
+        if (addTransferMethodFragment != null) {
+            addTransferMethodFragment.onDateSelected(selectedValue, fieldName);
+        }
     }
 }

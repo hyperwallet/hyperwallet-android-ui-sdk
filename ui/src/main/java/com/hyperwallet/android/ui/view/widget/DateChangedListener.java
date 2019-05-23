@@ -16,8 +16,8 @@
  */
 package com.hyperwallet.android.ui.view.widget;
 
-public interface DateChangedListener {
-    void onUpdate(int resultYear, int resultMonth, int resultDayOfMonth);
+import androidx.annotation.Nullable;
 
-    void onCancel();
+public interface DateChangedListener {
+    void onUpdate(@Nullable final String selectedDate);
 }

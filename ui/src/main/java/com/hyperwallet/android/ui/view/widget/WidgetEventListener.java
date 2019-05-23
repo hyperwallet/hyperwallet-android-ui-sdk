@@ -32,5 +32,5 @@ public interface WidgetEventListener {
     void saveTextChanged(@NonNull final String fieldName, @NonNull final String value);
 
     void openWidgetDateDialog(final int year, final int month, final int dayOfMonth,
-            @NonNull final DateChangedListener dateChangedListener);
+            @NonNull final String fieldName);
 }

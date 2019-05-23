@@ -224,4 +224,10 @@
         <item name="android:textColor">@color/colorSecondaryDark</item>
         <item name="android:textStyle">normal</item>
     </style>
+
+    <style name="Widget.Hyperwallet.DatePicker" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
 </resources>

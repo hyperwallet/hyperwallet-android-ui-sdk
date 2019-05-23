@@ -64,9 +64,11 @@ public class DateWidget extends AbstractWidget implements DateChangedListener {
 
             mEditText = new EditText(
                     new ContextThemeWrapper(viewGroup.getContext(), R.style.Widget_Hyperwallet_TextInputEditText));
-            if (!TextUtils.isEmpty(mField.getValue())) {
-                mEditText.setText(mDateUtil.convertDateFromServerToWidgetFormat(mField.getValue()));
-                mValue = mField.getValue();
+            try {
+                mEditText.setText(mDateUtil.convertDateFromServerToWidgetFormat(
+                        TextUtils.isEmpty(mDefaultValue) ? mValue = mField.getValue() : mDefaultValue));
+            } catch (DateParseException e) {
+                mEditText.setText("");
             }
             setIdFromFieldLabel(mTextInputLayout);
 
@@ -105,23 +107,29 @@ public class DateWidget extends AbstractWidget implements DateChangedListener {
     }
 
     private void showDateSelectDialog() {
-        Calendar calendar = mDateUtil.convertDateFromServerFormatToCalendar(mValue);
-        mListener.openWidgetDateDialog(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
-                calendar.get(Calendar.DAY_OF_MONTH), this);
-    }
 
-    @Override
-    public void onUpdate(int year, int month, int dayOfMonth) {
-        mValue = mDateUtil.buildDateFromDateDialogToServerFormat(year, month, dayOfMonth);
-        mEditText.setText(mDateUtil.buildDateFromDateDialogToWidgetFormat(year, month, dayOfMonth));
-        if (isValid()) {
-            mTextInputLayout.setError(null);
+        Calendar calendar = null;
+        try {
+            calendar = mDateUtil.convertDateFromServerFormatToCalendar(mValue);
+        } catch (DateParseException e) {
+            calendar = Calendar.getInstance();
         }
-        mListener.valueChanged();
+        mListener.openWidgetDateDialog(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH), mField.getName());
     }
 
     @Override
-    public void onCancel() {
+    public void onUpdate(@Nullable final String selectedDate) {
+        if (!TextUtils.isEmpty(selectedDate)) {
+            mValue = selectedDate;
+            try {
+                mEditText.setText(mDateUtil.convertDateFromServerToWidgetFormat(selectedDate));
+                mListener.saveTextChanged(getName(), getValue());
+                mListener.valueChanged();
+            } catch (DateParseException e) {
+                mEditText.setText(selectedDate);
+            }
+        }
         if (isValid()) {
             mTextInputLayout.setError(null);
         }
