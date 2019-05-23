@@ -56,6 +56,7 @@ import com.hyperwallet.android.model.meta.field.HyperwalletField;
 import com.hyperwallet.android.model.meta.field.HyperwalletFieldGroup;
 import com.hyperwallet.android.ui.HyperwalletLocalBroadcast;
 import com.hyperwallet.android.ui.repository.RepositoryFactory;
+import com.hyperwallet.android.ui.view.WidgetDateDialogFragment;
 import com.hyperwallet.android.ui.view.WidgetSelectionDialogFragment;
 import com.hyperwallet.android.ui.view.widget.AbstractWidget;
 import com.hyperwallet.android.ui.view.widget.DateChangedListener;
@@ -90,7 +91,6 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     private OnAddTransferMethodNetworkErrorCallback mOnAddTransferMethodNetworkErrorCallback;
     private OnLoadTransferMethodConfigurationFieldsNetworkErrorCallback
             mOnLoadTransferMethodConfigurationFieldsNetworkErrorCallback;
-    private OnShowDateDialogCallback mOnShowDateDialogCallback;
     private AddTransferMethodContract.Presenter mPresenter;
     private View mProgressBar;
     private boolean mShowCreateProgressBar;
@@ -160,13 +160,6 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
         } catch (ClassCastException e) {
             throw new ClassCastException(getActivity().toString() + " must implement "
                     + OnLoadTransferMethodConfigurationFieldsNetworkErrorCallback.class.getCanonicalName());
-        }
-
-        try {
-            mOnShowDateDialogCallback = (OnShowDateDialogCallback) context;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(getActivity().toString() + " must implement "
-                    + OnShowDateDialogCallback.class.getCanonicalName());
         }
     }
 
@@ -497,10 +490,6 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
         void showErrorsAddTransferMethod(@NonNull final List<HyperwalletError> errors);
     }
 
-    interface OnShowDateDialogCallback {
-        void showDateDialog(@Nullable final String date, @NonNull final String fieldName);
-    }
-
     private void triggerSubmit() {
         if (performValidation(true)) {
             switch (mTransferMethodType) {
@@ -599,7 +588,18 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
 
     @Override
     public void openWidgetDateDialog(@Nullable final String date, @NonNull final String fieldName) {
-        mOnShowDateDialogCallback.showDateDialog(date, fieldName);
+        if (getFragmentManager() != null) {
+            WidgetDateDialogFragment dateDialogFragment = (WidgetDateDialogFragment)
+                    getFragmentManager().findFragmentByTag(WidgetDateDialogFragment.TAG);
+
+            if (dateDialogFragment == null) {
+                dateDialogFragment = WidgetDateDialogFragment.newInstance(date, fieldName);
+            }
+
+            if (!dateDialogFragment.isAdded()) {
+                dateDialogFragment.show(getFragmentManager());
+            }
+        }
     }
 
     void onDateSelected(@NonNull final String selectedValue, @NonNull final String fieldName) {

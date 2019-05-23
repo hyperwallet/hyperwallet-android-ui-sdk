@@ -1,6 +1,6 @@
 package com.hyperwallet.android.ui.view.widget;
 
-public class DateParseException extends Exception {
+class DateParseException extends Exception {
 
     public DateParseException(String message) {
         super(message);

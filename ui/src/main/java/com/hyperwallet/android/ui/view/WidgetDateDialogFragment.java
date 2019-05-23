@@ -13,7 +13,6 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.hyperwallet.android.hyperwallet_ui.R;
-import com.hyperwallet.android.ui.view.widget.DateParseException;
 import com.hyperwallet.android.ui.view.widget.DateUtil;
 
 import java.util.Calendar;
@@ -24,7 +23,7 @@ public class WidgetDateDialogFragment extends DialogFragment {
     private static final String ARGUMENT_DATE = "ARGUMENT_DATE";
     private static final String ARGUMENT_FIELD_NAME = "ARGUMENT_FIELD_NAME";
     private OnSelectedDateCallback mOnSelectedDateCallback;
-    private DateUtil mDateUtil;
+    private final DateUtil mDateUtil = new DateUtil();
 
     /**
      * Please do not use this to have instance of DateDialogFragment this is reserved for android framework
@@ -76,8 +75,8 @@ public class WidgetDateDialogFragment extends DialogFragment {
         final String fieldName = getArguments().getString(ARGUMENT_FIELD_NAME);
         Calendar calendar;
         try {
-            calendar = getDateUtil().convertDateFromServerFormatToCalendar(storedDate);
-        } catch (DateParseException e) {
+            calendar = mDateUtil.convertDateFromServerFormatToCalendar(storedDate);
+        } catch (Exception e) {
             calendar = Calendar.getInstance();
         }
 
@@ -86,7 +85,7 @@ public class WidgetDateDialogFragment extends DialogFragment {
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int resultYear, int resultMonth, int resultDayOfMonth) {
-                        final String selectedDate = getDateUtil()
+                        final String selectedDate = mDateUtil
                                 .buildDateFromDateDialogToServerFormat(resultYear, resultMonth, resultDayOfMonth);
                         mOnSelectedDateCallback.setSelectedDateField(fieldName, selectedDate);
                     }
@@ -104,14 +103,8 @@ public class WidgetDateDialogFragment extends DialogFragment {
                     }
                 });
 
+        datePickerDialog.setCanceledOnTouchOutside(false);
         return datePickerDialog;
-    }
-
-    private DateUtil getDateUtil() {
-        if (mDateUtil == null) {
-            mDateUtil = new DateUtil();
-        }
-        return mDateUtil;
     }
 
     public interface OnSelectedDateCallback {

@@ -21,7 +21,6 @@ import android.view.View;
 import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
@@ -42,8 +41,7 @@ public class AddTransferMethodActivity extends AppCompatActivity implements
         WidgetSelectionDialogFragment.WidgetSelectionItemListener,
         AddTransferMethodFragment.OnAddTransferMethodNetworkErrorCallback,
         AddTransferMethodFragment.OnLoadTransferMethodConfigurationFieldsNetworkErrorCallback,
-        OnNetworkErrorCallback, AddTransferMethodFragment.OnShowDateDialogCallback,
-        WidgetDateDialogFragment.OnSelectedDateCallback {
+        OnNetworkErrorCallback, WidgetDateDialogFragment.OnSelectedDateCallback {
 
     public static final String EXTRA_TRANSFER_METHOD_COUNTRY = "TRANSFER_METHOD_COUNTRY";
     public static final String EXTRA_TRANSFER_METHOD_CURRENCY = "TRANSFER_METHOD_CURRENCY";
@@ -192,21 +190,6 @@ public class AddTransferMethodActivity extends AppCompatActivity implements
             );
         }
         return fragment;
-    }
-
-    @Override
-    public void showDateDialog(@Nullable final String date, @NonNull final String fieldName) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        WidgetDateDialogFragment fragment = (WidgetDateDialogFragment)
-                fragmentManager.findFragmentByTag(WidgetDateDialogFragment.TAG);
-
-        if (fragment == null) {
-            fragment = WidgetDateDialogFragment.newInstance(date, fieldName);
-        }
-
-        if (!fragment.isAdded()) {
-            fragment.show(fragmentManager);
-        }
     }
 
     @Override
