@@ -376,7 +376,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
 
         int defaultMargin = (int) requireContext().getResources().getDimension(R.dimen.default_margin);
 
-        if (!fees.isEmpty()) {
+        if (fees != null && !fees.isEmpty()) {
             String formattedFee = FeeFormatter.getFormattedFee(requireContext(), fees);
             feeValue.setText(formattedFee);
             feeLabel.setVisibility(View.VISIBLE);

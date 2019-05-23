@@ -162,7 +162,8 @@ public class TransferMethodConfigurationRepositoryImplTest {
     public void testGetFields_callsListenerWithFieldResultOnSuccess()
             throws NoSuchMethodException, InstantiationException, IllegalAccessException, JSONException,
             InvocationTargetException {
-        String responseBody = externalResourceManager.getResourceContent("successful_tmc_fields_response.json");
+        String responseBody = externalResourceManager.getResourceContent(
+                "successful_tmc_fields_bank_account_response.json");
         final HyperwalletTransferMethodConfigurationFieldResult result = JsonUtils.fromJsonString(responseBody,
                 new TypeReference<HyperwalletTransferMethodConfigurationFieldResult>() {
                 });
@@ -251,7 +252,8 @@ public class TransferMethodConfigurationRepositoryImplTest {
 
     @Test
     public void testGetFields_callsListenerWithFieldResultFromCacheWhenNotNull() throws Exception {
-        String responseBody = externalResourceManager.getResourceContent("successful_tmc_fields_response.json");
+        String responseBody = externalResourceManager.getResourceContent(
+                "successful_tmc_fields_bank_account_response.json");
         final HyperwalletTransferMethodConfigurationFieldResult result = JsonUtils.fromJsonString(responseBody,
                 new TypeReference<HyperwalletTransferMethodConfigurationFieldResult>() {
                 });
@@ -274,7 +276,8 @@ public class TransferMethodConfigurationRepositoryImplTest {
 
     @Test
     public void testRefreshFields_clearsFieldMapWhenNotEmpty() throws Exception {
-        String responseBody = externalResourceManager.getResourceContent("successful_tmc_fields_response.json");
+        String responseBody = externalResourceManager.getResourceContent(
+                "successful_tmc_fields_bank_account_response.json");
         JSONObject jsonObject = new JSONObject(responseBody);
         FieldMapKey fieldMapKey = new FieldMapKey(COUNTRY, CURRENCY, TRANSFER_METHOD_TYPE);
         HashMap<FieldMapKey, HyperwalletTransferMethodConfigurationField> fieldMap = new HashMap<>();
