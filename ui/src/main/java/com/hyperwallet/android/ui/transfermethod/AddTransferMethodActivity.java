@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
@@ -33,6 +34,7 @@ import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.ui.view.WidgetSelectionDialogFragment;
 import com.hyperwallet.android.ui.view.error.DefaultErrorDialogFragment;
 import com.hyperwallet.android.ui.view.error.OnNetworkErrorCallback;
+import com.hyperwallet.android.ui.view.widget.DateDialogFragment;
 
 import java.util.List;
 
@@ -40,7 +42,8 @@ public class AddTransferMethodActivity extends AppCompatActivity implements
         WidgetSelectionDialogFragment.WidgetSelectionItemListener,
         AddTransferMethodFragment.OnAddTransferMethodNetworkErrorCallback,
         AddTransferMethodFragment.OnLoadTransferMethodConfigurationFieldsNetworkErrorCallback,
-        OnNetworkErrorCallback, AddTransferMethodFragment.OnSelectedDateCallback {
+        OnNetworkErrorCallback, AddTransferMethodFragment.OnShowDateDialogCallback,
+        DateDialogFragment.OnSelectedDateCallback {
 
     public static final String EXTRA_TRANSFER_METHOD_COUNTRY = "TRANSFER_METHOD_COUNTRY";
     public static final String EXTRA_TRANSFER_METHOD_CURRENCY = "TRANSFER_METHOD_CURRENCY";
@@ -189,6 +192,21 @@ public class AddTransferMethodActivity extends AppCompatActivity implements
             );
         }
         return fragment;
+    }
+
+    @Override
+    public void showDateDialog(@Nullable final String date, @NonNull final String fieldName) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        DateDialogFragment fragment = (DateDialogFragment)
+                fragmentManager.findFragmentByTag(DateDialogFragment.TAG);
+
+        if (fragment == null) {
+            fragment = DateDialogFragment.newInstance(date, fieldName);
+        }
+
+        if (!fragment.isAdded()) {
+            fragment.show(fragmentManager);
+        }
     }
 
     @Override

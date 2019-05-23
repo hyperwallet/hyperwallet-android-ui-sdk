@@ -25,9 +25,7 @@ import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMe
 import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodTypes.PAYPAL_ACCOUNT;
 
 import android.app.Activity;
-import android.app.DatePickerDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -36,7 +34,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -93,7 +90,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     private OnAddTransferMethodNetworkErrorCallback mOnAddTransferMethodNetworkErrorCallback;
     private OnLoadTransferMethodConfigurationFieldsNetworkErrorCallback
             mOnLoadTransferMethodConfigurationFieldsNetworkErrorCallback;
-    private OnSelectedDateCallback mOnSelectedDateCallback;
+    private OnShowDateDialogCallback mOnShowDateDialogCallback;
     private AddTransferMethodContract.Presenter mPresenter;
     private View mProgressBar;
     private boolean mShowCreateProgressBar;
@@ -166,11 +163,10 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
         }
 
         try {
-            mOnSelectedDateCallback =
-                    (OnSelectedDateCallback) context;
+            mOnShowDateDialogCallback = (OnShowDateDialogCallback) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(getActivity().toString() + " must implement "
-                    + OnSelectedDateCallback.class.getCanonicalName());
+                    + OnShowDateDialogCallback.class.getCanonicalName());
         }
     }
 
@@ -501,8 +497,8 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
         void showErrorsAddTransferMethod(@NonNull final List<HyperwalletError> errors);
     }
 
-    interface OnSelectedDateCallback {
-        void setSelectedDateField(@NonNull final String fieldName, final String selectedValue);
+    interface OnShowDateDialogCallback {
+        void showDateDialog(@Nullable final String date, @NonNull final String fieldName);
     }
 
     private void triggerSubmit() {
@@ -602,35 +598,11 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     }
 
     @Override
-    public void openWidgetDateDialog(final int year, final int month, final int dayOfMonth,
-            @NonNull final String fieldName) {
-        DatePickerDialog datePickerDialog = new DatePickerDialog(requireContext(),
-                R.style.Widget_Hyperwallet_DatePicker,
-                new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int resultYear, int resultMonth, int resultDayOfMonth) {
-                        final String selectedDate = mDateUtil
-                                .buildDateFromDateDialogToServerFormat(resultYear, resultMonth, resultDayOfMonth);
-                        mOnSelectedDateCallback.setSelectedDateField(fieldName, selectedDate);
-                    }
-                },
-                year, month, dayOfMonth);
-
-        datePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE,
-                getString(R.string.cancel_button_label),
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (which == DialogInterface.BUTTON_NEGATIVE) {
-                            mOnSelectedDateCallback.setSelectedDateField(fieldName, null);
-                        }
-                    }
-                });
-
-        datePickerDialog.show();
+    public void openWidgetDateDialog(@Nullable final String date, @NonNull final String fieldName) {
+        mOnShowDateDialogCallback.showDateDialog(date, fieldName);
     }
 
-    protected void onDateSelected(@NonNull final String selectedValue, @NonNull final String fieldName) {
+    void onDateSelected(@NonNull final String selectedValue, @NonNull final String fieldName) {
         for (int i = 0; i < mDynamicContainer.getChildCount(); i++) {
             View view = mDynamicContainer.getChildAt(i);
             if (view.getTag() instanceof DateWidget) {

@@ -16,12 +16,14 @@
  */
 package com.hyperwallet.android.ui.view.widget;
 
+import android.app.Activity;
 import android.text.TextUtils;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
@@ -30,8 +32,6 @@ import androidx.annotation.Nullable;
 import com.google.android.material.textfield.TextInputLayout;
 import com.hyperwallet.android.hyperwallet_ui.R;
 import com.hyperwallet.android.model.meta.field.HyperwalletField;
-
-import java.util.Calendar;
 
 public class DateWidget extends AbstractWidget implements DateChangedListener {
 
@@ -85,7 +85,8 @@ public class DateWidget extends AbstractWidget implements DateChangedListener {
                 mEditText.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        showDateSelectDialog();
+                        hideSoftKey(v);
+                        mListener.openWidgetDateDialog(mValue, mField.getName());
                     }
                 });
             }
@@ -106,18 +107,6 @@ public class DateWidget extends AbstractWidget implements DateChangedListener {
         mTextInputLayout.setError(errorMessage);
     }
 
-    private void showDateSelectDialog() {
-
-        Calendar calendar = null;
-        try {
-            calendar = mDateUtil.convertDateFromServerFormatToCalendar(mValue);
-        } catch (DateParseException e) {
-            calendar = Calendar.getInstance();
-        }
-        mListener.openWidgetDateDialog(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
-                calendar.get(Calendar.DAY_OF_MONTH), mField.getName());
-    }
-
     @Override
     public void onUpdate(@Nullable final String selectedDate) {
         if (!TextUtils.isEmpty(selectedDate)) {
@@ -134,4 +123,11 @@ public class DateWidget extends AbstractWidget implements DateChangedListener {
             mTextInputLayout.setError(null);
         }
     }
+
+    private void hideSoftKey(@NonNull View focusedView) {
+        InputMethodManager inputMethodManager = (InputMethodManager) focusedView.getContext().getSystemService(
+                Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(focusedView.getWindowToken(), 0);
+    }
+
 }
