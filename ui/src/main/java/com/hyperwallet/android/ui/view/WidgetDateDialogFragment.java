@@ -1,4 +1,4 @@
-package com.hyperwallet.android.ui.view.widget;
+package com.hyperwallet.android.ui.view;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -13,12 +13,14 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.hyperwallet.android.hyperwallet_ui.R;
+import com.hyperwallet.android.ui.view.widget.DateParseException;
+import com.hyperwallet.android.ui.view.widget.DateUtil;
 
 import java.util.Calendar;
 
-public class DateDialogFragment extends DialogFragment {
+public class WidgetDateDialogFragment extends DialogFragment {
 
-    public static final String TAG = DateDialogFragment.class.getName();
+    public static final String TAG = WidgetDateDialogFragment.class.getName();
     private static final String ARGUMENT_DATE = "ARGUMENT_DATE";
     private static final String ARGUMENT_FIELD_NAME = "ARGUMENT_FIELD_NAME";
     private OnSelectedDateCallback mOnSelectedDateCallback;
@@ -27,18 +29,18 @@ public class DateDialogFragment extends DialogFragment {
     /**
      * Please do not use this to have instance of DateDialogFragment this is reserved for android framework
      */
-    public DateDialogFragment() {
+    public WidgetDateDialogFragment() {
         setRetainInstance(true);
     }
 
-    public static DateDialogFragment newInstance(final String date, @NonNull final String fieldName) {
-        DateDialogFragment dateDialogFragment = new DateDialogFragment();
+    public static WidgetDateDialogFragment newInstance(final String date, @NonNull final String fieldName) {
+        WidgetDateDialogFragment widgetDateDialogFragment = new WidgetDateDialogFragment();
         Bundle bundle = new Bundle();
         bundle.putString(ARGUMENT_DATE, date);
         bundle.putString(ARGUMENT_FIELD_NAME, fieldName);
-        dateDialogFragment.setArguments(bundle);
+        widgetDateDialogFragment.setArguments(bundle);
 
-        return dateDialogFragment;
+        return widgetDateDialogFragment;
     }
 
     @Override

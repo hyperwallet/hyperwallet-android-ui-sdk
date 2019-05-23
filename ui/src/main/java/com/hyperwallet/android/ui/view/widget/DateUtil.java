@@ -90,7 +90,7 @@ public final class DateUtil {
      * @throws DateParseException unable to convert server date to calendar format
      */
     @NonNull
-    Calendar convertDateFromServerFormatToCalendar(@Nullable final String serverDate) throws DateParseException {
+    public Calendar convertDateFromServerFormatToCalendar(@Nullable final String serverDate) throws DateParseException {
         final Calendar calendar = Calendar.getInstance();
         try {
             if (isServerDateValid(serverDate)) {

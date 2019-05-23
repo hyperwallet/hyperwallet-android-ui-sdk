@@ -31,10 +31,10 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.hyperwallet.android.hyperwallet_ui.R;
 import com.hyperwallet.android.model.HyperwalletError;
+import com.hyperwallet.android.ui.view.WidgetDateDialogFragment;
 import com.hyperwallet.android.ui.view.WidgetSelectionDialogFragment;
 import com.hyperwallet.android.ui.view.error.DefaultErrorDialogFragment;
 import com.hyperwallet.android.ui.view.error.OnNetworkErrorCallback;
-import com.hyperwallet.android.ui.view.widget.DateDialogFragment;
 
 import java.util.List;
 
@@ -43,7 +43,7 @@ public class AddTransferMethodActivity extends AppCompatActivity implements
         AddTransferMethodFragment.OnAddTransferMethodNetworkErrorCallback,
         AddTransferMethodFragment.OnLoadTransferMethodConfigurationFieldsNetworkErrorCallback,
         OnNetworkErrorCallback, AddTransferMethodFragment.OnShowDateDialogCallback,
-        DateDialogFragment.OnSelectedDateCallback {
+        WidgetDateDialogFragment.OnSelectedDateCallback {
 
     public static final String EXTRA_TRANSFER_METHOD_COUNTRY = "TRANSFER_METHOD_COUNTRY";
     public static final String EXTRA_TRANSFER_METHOD_CURRENCY = "TRANSFER_METHOD_CURRENCY";
@@ -197,11 +197,11 @@ public class AddTransferMethodActivity extends AppCompatActivity implements
     @Override
     public void showDateDialog(@Nullable final String date, @NonNull final String fieldName) {
         FragmentManager fragmentManager = getSupportFragmentManager();
-        DateDialogFragment fragment = (DateDialogFragment)
-                fragmentManager.findFragmentByTag(DateDialogFragment.TAG);
+        WidgetDateDialogFragment fragment = (WidgetDateDialogFragment)
+                fragmentManager.findFragmentByTag(WidgetDateDialogFragment.TAG);
 
         if (fragment == null) {
-            fragment = DateDialogFragment.newInstance(date, fieldName);
+            fragment = WidgetDateDialogFragment.newInstance(date, fieldName);
         }
 
         if (!fragment.isAdded()) {
