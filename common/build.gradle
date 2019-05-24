@@ -27,6 +27,8 @@ android {
 dependencies {
 
     implementation "androidx.test.espresso:espresso-idling-resource:3.1.1"
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
+    implementation 'androidx.paging:paging-runtime:2.1.0'
     implementation 'com.hyperwallet.android:core-sdk:1.0.0-beta03-SNAPSHOT'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'

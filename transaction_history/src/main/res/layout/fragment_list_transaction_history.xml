@@ -7,22 +7,17 @@
     android:orientation="vertical"
     tools:context="com.hyperwallet.android.transaction_history.view.ListTransactionHistoryFragment">
 
-    <FrameLayout
-        android:id="@+id/list_transfer_method_progress_bar_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone">
-        <ProgressBar
-            android:id="@+id/list_transfer_method_progress_bar"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:indeterminate="true" />
-    </FrameLayout>
+    <ProgressBar
+        android:id="@+id/list_transfer_method_progress_bar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:indeterminate="true" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_transaction_history_item"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+
 </LinearLayout>

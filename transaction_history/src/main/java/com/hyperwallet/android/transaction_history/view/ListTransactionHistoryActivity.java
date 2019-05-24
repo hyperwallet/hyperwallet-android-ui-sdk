@@ -10,23 +10,27 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.hyperwallet.android.common.repository.RepositoryFactory;
 import com.hyperwallet.android.common.view.error.DefaultErrorDialogFragment;
+import com.hyperwallet.android.common.view.error.OnNetworkErrorCallback;
 import com.hyperwallet.android.hyperwallet_transactionhistory.R;
 import com.hyperwallet.android.model.HyperwalletError;
-import com.hyperwallet.android.transaction_history.viewmodel.ListTransactionHistoryViewModel;
+import com.hyperwallet.android.transaction_history.viewmodel.ListReceiptViewModel;
 
 import java.util.List;
 
 
 public class ListTransactionHistoryActivity extends AppCompatActivity implements
-        ListTransactionHistoryFragment.OnLoadTransactionHistoryNetworkErrorCallback {
+        ListTransactionHistoryFragment.OnLoadTransactionHistoryNetworkErrorCallback, OnNetworkErrorCallback {
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_transaction_history);
-        ViewModelProviders.of(this).get(ListTransactionHistoryViewModel.class);
+        RepositoryFactory repositoryFactory = RepositoryFactory.getInstance();
+        ViewModelProviders.of(this, new ListReceiptViewModel.ListReceiptViewModelFactory(
+                repositoryFactory.getReceiptRepository())).get(ListReceiptViewModel.class);
         if (savedInstanceState == null) {
             initFragment(ListTransactionHistoryFragment.newInstance());
         }
@@ -54,5 +58,17 @@ public class ListTransactionHistoryActivity extends AppCompatActivity implements
         if (!fragment.isAdded()) {
             fragment.show(fragmentManager);
         }
+    }
+
+    @Override
+    public void retry() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        ListTransactionHistoryFragment fragment = (ListTransactionHistoryFragment)
+                fragmentManager.findFragmentById(R.id.list_transfer_method_fragment);
+
+        if (fragment == null) {
+            fragment = ListTransactionHistoryFragment.newInstance();
+        }
+        fragment.retry();
     }
 }
