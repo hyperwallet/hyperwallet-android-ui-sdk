@@ -1,5 +1,8 @@
 apply plugin: 'com.android.library'
 apply plugin: 'maven-publish'
+apply plugin: 'signing'
+apply plugin: 'org.sonarqube'
+apply from: "$projectDir/config/jacoco-settings.gradle"
 
 android {
     compileSdkVersion 28
@@ -120,5 +123,25 @@ publishing {
                 }
             }
         }
+    }
+}
+
+tasks.withType(Sign) {
+    onlyIf {
+        isReleaseVersion && sonatypeUsername?.trim() && sonatypePassword?.trim()
+    }
+}
+
+signing {
+    sign publishing.publications.hyperwalletUi
+}
+
+sonarqube {
+    properties {
+        def libraries = project.android.sdkDirectory.getPath() + "/platforms/android-28/android.jar"
+        property "sonar.sources", "src/main/java"
+        property "sonar.binaries", "build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/hyperwallet/android"
+        property "sonar.libraries", libraries
+        property "sonar.projectName", "android-ui-sdk-common"
     }
 }
