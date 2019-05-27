@@ -46,6 +46,8 @@
     <item name="cardTypeLabel" type="id"/>
     <item name="profileType" type="id"/>
     <item name="profileTypeLabel" type="id"/>
+    <item name="buildingSocietyAccount" type="id"/>
+    <item name="buildingSocietyAccountLabel" type="id"/>
     <item name="businessType" type="id"/>
     <item name="businessTypeLabel" type="id"/>
     <item name="businessName" type="id"/>
