@@ -24,7 +24,7 @@ import android.widget.RelativeLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.hyperwallet.android.model.meta.field.HyperwalletField;
+import com.hyperwallet.android.model.graphql.field.HyperwalletField;
 
 public abstract class AbstractWidget {
 

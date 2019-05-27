@@ -27,7 +27,7 @@ import androidx.annotation.VisibleForTesting;
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.exception.HyperwalletException;
 import com.hyperwallet.android.listener.HyperwalletListener;
-import com.hyperwallet.android.model.HyperwalletUser;
+import com.hyperwallet.android.model.user.HyperwalletUser;
 
 public class UserRepositoryImpl implements UserRepository {
 

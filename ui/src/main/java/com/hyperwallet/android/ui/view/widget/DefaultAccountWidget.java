@@ -1,6 +1,6 @@
 package com.hyperwallet.android.ui.view.widget;
 
-import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodFields.IS_DEFAULT_TRANSFER_METHOD;
+import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.IS_DEFAULT_TRANSFER_METHOD;
 
 import android.graphics.Typeface;
 import android.view.View;

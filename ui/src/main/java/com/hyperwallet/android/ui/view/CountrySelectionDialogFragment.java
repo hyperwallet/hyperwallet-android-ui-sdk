@@ -134,8 +134,8 @@ public class CountrySelectionDialogFragment extends DialogFragment implements To
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
         if (savedInstanceState != null) {
-            mCountryNameCodeMap =  new TreeMap<>(
-                    (Map<String, String>)savedInstanceState.getSerializable(ARGUMENT_COUNTRY_NAME_CODE_MAP));
+            mCountryNameCodeMap = new TreeMap<>(
+                    (Map<String, String>) savedInstanceState.getSerializable(ARGUMENT_COUNTRY_NAME_CODE_MAP));
             mSelectedCountryName = savedInstanceState.getString(ARGUMENT_SELECTED_COUNTRY_NAME);
             mSearchCountryNameQuery = savedInstanceState.getString(ARGUMENT_SEARCH_COUNTRY_NAME_QUERY);
         } else {
