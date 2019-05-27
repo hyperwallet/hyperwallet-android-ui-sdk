@@ -179,39 +179,39 @@
         <item name="android:letterSpacing">0.12</item>
     </style>
 
-    <style name="Theme.Hyperwallet.Alert" parent="Base.Theme.MaterialComponents.Light">
-        <item name="alertDialogTheme">@style/Widget.Hyperwallet.Dialog.Alert</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
-    </style>
+    <!--<style name="Theme.Hyperwallet.Alert" parent="Base.Theme.MaterialComponents.Light">-->
+        <!--<item name="alertDialogTheme">@style/Widget.Hyperwallet.Dialog.Alert</item>-->
+        <!--<item name="android:windowBackground">@android:color/transparent</item>-->
+    <!--</style>-->
 
-    <style name="Widget.Hyperwallet.Dialog.Alert"
-           parent="Base.Theme.MaterialComponents.Light.Dialog">
-        <item name="android:textColorPrimary">@color/colorSecondaryDark</item>
-        <item name="buttonBarNegativeButtonStyle">
-            @style/Widget.Hyperwallet.Button.Negative
-        </item>
-        <item name="buttonBarPositiveButtonStyle">
-            @style/Widget.Hyperwallet.Button.Positive
-        </item>
-        <item name="android:windowTitleStyle">@style/TextAppearance.Hyperwallet.Dialog.Alert.Title
-        </item>
-        <item name="windowMinWidthMajor">@android:dimen/dialog_min_width_major</item>
-        <item name="windowMinWidthMinor">@android:dimen/dialog_min_width_minor</item>
-        <item name="android:windowMinWidthMajor">@android:dimen/dialog_min_width_major</item>
-        <item name="android:windowMinWidthMinor">@android:dimen/dialog_min_width_minor</item>
-    </style>
+    <!--<style name="Widget.Hyperwallet.Dialog.Alert"-->
+           <!--parent="Base.Theme.MaterialComponents.Light.Dialog">-->
+        <!--<item name="android:textColorPrimary">@color/colorSecondaryDark</item>-->
+        <!--<item name="buttonBarNegativeButtonStyle">-->
+            <!--@style/Widget.Hyperwallet.Button.Negative-->
+        <!--</item>-->
+        <!--<item name="buttonBarPositiveButtonStyle">-->
+            <!--@style/Widget.Hyperwallet.Button.Positive-->
+        <!--</item>-->
+        <!--<item name="android:windowTitleStyle">@style/TextAppearance.Hyperwallet.Dialog.Alert.Title-->
+        <!--</item>-->
+        <!--<item name="windowMinWidthMajor">@android:dimen/dialog_min_width_major</item>-->
+        <!--<item name="windowMinWidthMinor">@android:dimen/dialog_min_width_minor</item>-->
+        <!--<item name="android:windowMinWidthMajor">@android:dimen/dialog_min_width_major</item>-->
+        <!--<item name="android:windowMinWidthMinor">@android:dimen/dialog_min_width_minor</item>-->
+    <!--</style>-->
 
-    <style name="Widget.Hyperwallet.Button.Negative"
-           parent="Widget.MaterialComponents.Button.TextButton.Dialog">
-        <item name="android:textColor">@color/colorSecondaryDark</item>
-        <item name="android:letterSpacing">0.12</item>
-    </style>
+    <!--<style name="Widget.Hyperwallet.Button.Negative"-->
+           <!--parent="Widget.MaterialComponents.Button.TextButton.Dialog">-->
+        <!--<item name="android:textColor">@color/colorSecondaryDark</item>-->
+        <!--<item name="android:letterSpacing">0.12</item>-->
+    <!--</style>-->
 
-    <style name="Widget.Hyperwallet.Button.Positive"
-           parent="Widget.MaterialComponents.Button.TextButton.Dialog">
-        <item name="android:textColor">@color/colorPrimary</item>
-        <item name="android:letterSpacing">0.12</item>
-    </style>
+    <!--<style name="Widget.Hyperwallet.Button.Positive"-->
+           <!--parent="Widget.MaterialComponents.Button.TextButton.Dialog">-->
+        <!--<item name="android:textColor">@color/colorPrimary</item>-->
+        <!--<item name="android:letterSpacing">0.12</item>-->
+    <!--</style>-->
 
     <style name="TextAppearance.Hyperwallet.Dialog.Alert.Title"
            parent="TextAppearance.MaterialComponents.Headline6">
@@ -219,9 +219,9 @@
         <item name="android:textStyle">normal</item>
     </style>
 
-    <style name="TextAppearance.Hyperwallet.Dialog.Alert.Body"
-           parent="TextAppearance.MaterialComponents.Body1">
-        <item name="android:textColor">@color/colorSecondaryDark</item>
-        <item name="android:textStyle">normal</item>
-    </style>
+    <!--<style name="TextAppearance.Hyperwallet.Dialog.Alert.Body"-->
+           <!--parent="TextAppearance.MaterialComponents.Body1">-->
+        <!--<item name="android:textColor">@color/colorSecondaryDark</item>-->
+        <!--<item name="android:textStyle">normal</item>-->
+    <!--</style>-->
 </resources>

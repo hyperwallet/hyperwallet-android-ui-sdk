@@ -43,13 +43,13 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
 import com.hyperwallet.android.Hyperwallet;
+import com.hyperwallet.android.common.util.EspressoIdlingResource;
 import com.hyperwallet.android.hyperwallet_ui.R;
 import com.hyperwallet.android.model.HyperwalletTransferMethod;
 import com.hyperwallet.android.rule.HyperwalletExternalResourceManager;
 import com.hyperwallet.android.rule.HyperwalletMockWebServer;
 import com.hyperwallet.android.ui.repository.RepositoryFactory;
 import com.hyperwallet.android.ui.transfermethod.AddTransferMethodActivity;
-import com.hyperwallet.android.ui.util.EspressoIdlingResource;
 import com.hyperwallet.android.util.TestAuthenticationProvider;
 
 import org.junit.After;
@@ -115,9 +115,9 @@ public class PayPalTest {
         onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar)))).check(
                 matches(withText(R.string.paypal_account)));
 
-        onView(withId(R.id.email)).check(matches(isDisplayed()));
-        onView(withId(R.id.emailLabel)).check(matches(isDisplayed()));
+        onView(withId(R.id.emailLabel)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.emailLabel)).check(matches(withHint("Email")));
+        onView(withId(R.id.email)).perform(nestedScrollTo()).check(matches(isDisplayed()));
 
         onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo()).check(
                 matches(withText(R.string.button_create_transfer_method)));
@@ -169,7 +169,7 @@ public class PayPalTest {
                 .registerReceiver(br, new IntentFilter("ACTION_HYPERWALLET_TRANSFER_METHOD_ADDED"));
 
         onView(withId(R.id.email))
-                .perform(typeText("sunshine.carreiro@hyperwallet.com"))
+                .perform(nestedScrollTo(), typeText("sunshine.carreiro@hyperwallet.com"))
                 .perform(closeSoftKeyboard());
 
         onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo(), click());
@@ -187,7 +187,7 @@ public class PayPalTest {
     public void testAddTransferMethod_returnsErrorOnInvalidPattern() {
         mActivityTestRule.launchActivity(null);
         // Number input should not allow non numeric values
-        onView(withId(R.id.email)).perform(typeText("abc1test"));
+        onView(withId(R.id.email)).perform(nestedScrollTo(), typeText("abc1test"));
         onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo(), click());
 
         onView(withId(R.id.emailLabel))
@@ -212,7 +212,8 @@ public class PayPalTest {
         mActivityTestRule.launchActivity(null);
 
         onView(withId(R.id.email))
-                .perform(typeText("invalidEmail@gmail.com")).perform(closeSoftKeyboard());
+                .perform(nestedScrollTo(), typeText("invalidEmail@gmail.com"))
+                .perform(closeSoftKeyboard());
         onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo(), click());
 
         // check dialog content

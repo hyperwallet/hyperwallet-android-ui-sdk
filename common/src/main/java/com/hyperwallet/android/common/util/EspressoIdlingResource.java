@@ -1,4 +1,4 @@
-package com.hyperwallet.android.ui.util;
+package com.hyperwallet.android.common.util;
 
 import androidx.test.espresso.IdlingResource;
 import androidx.test.espresso.idling.CountingIdlingResource;
