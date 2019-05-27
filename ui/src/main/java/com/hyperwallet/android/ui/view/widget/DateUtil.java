@@ -26,7 +26,6 @@ import androidx.annotation.Nullable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -51,18 +50,13 @@ public final class DateUtil {
      *
      * @param serverDate Date from server
      * @return String date in the format by BestDateTimePattern or dd MMMM yyyy otherwise
-     * @throws DateParseException unable to convert server date to widget format
      */
     @NonNull
-    String convertDateFromServerToWidgetFormat(@Nullable final String serverDate) throws DateParseException {
-        try {
-            if (isServerDateValid(serverDate)) {
-                final Calendar calendar = Calendar.getInstance();
-                calendar.setTime(mServerDateFormat.parse(serverDate));
-                return mWidgetDateFormat.format(calendar.getTime());
-            }
-        } catch (NumberFormatException | ParseException | IndexOutOfBoundsException e) {
-            throw new DateParseException("Unable to convert date from server to widget format", e.getCause());
+    String convertDateFromServerToWidgetFormat(@Nullable final String serverDate) throws ParseException {
+        if (!TextUtils.isEmpty(serverDate)) {
+            final Calendar calendar = Calendar.getInstance();
+            calendar.setTime(mServerDateFormat.parse(serverDate));
+            return mWidgetDateFormat.format(calendar.getTime());
         }
         return "";
     }
@@ -87,32 +81,14 @@ public final class DateUtil {
      *
      * @param serverDate Date from server
      * @return Calendar with date from server
-     * @throws DateParseException unable to convert server date to calendar format
      */
     @NonNull
-    public Calendar convertDateFromServerFormatToCalendar(@Nullable final String serverDate) throws DateParseException {
+    public Calendar convertDateFromServerFormatToCalendar(@Nullable final String serverDate) throws ParseException {
         final Calendar calendar = Calendar.getInstance();
-        try {
-            if (isServerDateValid(serverDate)) {
-                calendar.setTime(mServerDateFormat.parse(serverDate));
-            }
-        } catch (ParseException e) {
-            throw new DateParseException("Unable to convert server date to calendar format", e.getCause());
+        if (!TextUtils.isEmpty(serverDate)) {
+            calendar.setTime(mServerDateFormat.parse(serverDate));
         }
         return calendar;
     }
 
-    private boolean isServerDateValid(@Nullable final String serverDate) throws DateParseException {
-        Date date = null;
-        if (!TextUtils.isEmpty(serverDate)) {
-            SimpleDateFormat formatter = new SimpleDateFormat(SERVER_DATE_PATTERN, Locale.getDefault());
-            formatter.setLenient(Boolean.FALSE); // make it strict
-            try {
-                date = formatter.parse(serverDate);
-            } catch (ParseException e) {
-                throw new DateParseException("Unable to parse server date to date format", e.getCause());
-            }
-        }
-        return date != null;
-    }
 }

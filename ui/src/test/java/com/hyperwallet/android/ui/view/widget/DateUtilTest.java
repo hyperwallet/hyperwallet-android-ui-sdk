@@ -3,63 +3,59 @@ package com.hyperwallet.android.ui.view.widget;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
+import java.text.ParseException;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.List;
 
 @RunWith(RobolectricTestRunner.class)
 public class DateUtilTest {
     private final DateUtil mDateUtil = new DateUtil();
 
+    @Rule
+    public final ExpectedException mThrown = ExpectedException.none();
 
     @Test
-    public void testParseIncorrectDateFromServerToWidget() throws Exception {
-        final List<String> inputParamList = buildParamsDateFromServerToWidget();
-        for (String serverDate : inputParamList) {
-            boolean isIncorrect = false;
-            try {
-                mDateUtil.convertDateFromServerToWidgetFormat(serverDate);
-            } catch (DateParseException e) {
-                isIncorrect = true;
-            }
-            assertThat(isIncorrect, is(true));
-        }
-    }
-
-    @Test
-    public void testParseCorrectDateFromServerToWidget() throws Exception {
+    public void testConvertDateFromServerToWidgetFormat() throws Exception {
         String serverDate = "2005-05-23";
         String widgetDate = "23 May 2005";
         assertThat(mDateUtil.convertDateFromServerToWidgetFormat(serverDate), is(widgetDate));
+    }
+
+    @Test
+    public void testBuildParamsDateFromServerToWidget_whenIncorrectDate() throws Exception {
+        mThrown.expect(ParseException.class);
+        mDateUtil.convertDateFromServerToWidgetFormat("1990-01");
+    }
+
+    @Test
+    public void testConvertDateFromServerToWidgetFormat_whenDateIsNullOrEmpty() throws Exception {
         assertThat(mDateUtil.convertDateFromServerToWidgetFormat(""), is(""));
         assertThat(mDateUtil.convertDateFromServerToWidgetFormat(null), is(""));
     }
 
     @Test
-    public void testParseIncorrectDateFromServerToCalendar() throws Exception {
-        List<String> inputParamList = buildParamsDateFromServerToCalendar();
-        for (String serverDate : inputParamList) {
-            boolean isIncorrect = false;
-            try {
-                mDateUtil.convertDateFromServerFormatToCalendar(serverDate).getTime();
-            } catch (DateParseException e) {
-                isIncorrect = true;
-            }
-            assertThat(isIncorrect, is(true));
-        }
+    public void testBuildParamsDateFromServerToCalendar_whenIncorrectDate() throws Exception {
+        mThrown.expect(ParseException.class);
+        mDateUtil.convertDateFromServerFormatToCalendar("123-32").getTime();
     }
 
     @Test
-    public void testParseCorrectDateFromServerToCalendar() throws DateParseException {
+    public void testConvertDateFromServerFormatToCalendar_whenDateIsNullOrEmpty() throws ParseException {
         assertThat(mDateUtil.convertDateFromServerFormatToCalendar(null).getTime().toString(),
                 is(Calendar.getInstance().getTime().toString()));
         assertThat(mDateUtil.convertDateFromServerFormatToCalendar("").getTime().toString(),
                 is(Calendar.getInstance().getTime().toString()));
+    }
+
+    @Test
+    public void testConvertDateFromServerFormatToCalendar() throws ParseException {
         String serverDate = "2005-05-23";
         final Calendar mayCalendar = Calendar.getInstance();
         mayCalendar.set(2005, 4, 23, 0, 0, 0);
@@ -68,7 +64,7 @@ public class DateUtilTest {
     }
 
     @Test
-    public void testParseDateFromDialogToServerFormat() {
+    public void testBuildDateFromDateDialogToServerFormat() {
         String widgetDate;
         int year;
         int month;
@@ -81,34 +77,6 @@ public class DateUtilTest {
             widgetDate = (String) item[3];
             assertThat(mDateUtil.buildDateFromDateDialogToServerFormat(year, month, dayOfMonth), is(widgetDate));
         }
-    }
-
-    private List<String> buildParamsDateFromServerToWidget() {
-        return Arrays.asList(
-                "0",
-                "1990-01",
-                "1990-03-111",
-                "10-20-1",
-                "2190-13-1",
-                "2190-00-1",
-                "2190-01-00",
-                "2190-01-0",
-                "2190-01-32"
-        );
-    }
-
-    private List<String> buildParamsDateFromServerToCalendar() {
-        return Arrays.asList(
-                "0",
-                "1990-01",
-                "1990-03-111",
-                "10-20-1",
-                "19-1102-1",
-                "2190-13-1",
-                "2190-00-1",
-                "2190-01-00",
-                "2190-01-0"
-        );
     }
 
     private Collection<Object[]> buildParamsFromDialogToServer() {
