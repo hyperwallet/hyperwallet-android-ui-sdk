@@ -73,7 +73,7 @@ public class DefaultErrorDialogFragment extends DialogFragment {
     /**
      * Builds Hyperwallet Error Dialogue
      *
-     * @param errors   List of Errors @see {@link Error}
+     * @param errors List of Errors @see {@link Error}
      */
     public static DefaultErrorDialogFragment newInstance(@NonNull List<HyperwalletError> errors) {
         Bundle bundle = new Bundle();
