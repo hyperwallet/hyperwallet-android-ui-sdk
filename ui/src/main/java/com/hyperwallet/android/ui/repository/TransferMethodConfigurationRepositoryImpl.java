@@ -35,11 +35,11 @@ import androidx.annotation.VisibleForTesting;
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.exception.HyperwalletException;
 import com.hyperwallet.android.listener.HyperwalletListener;
-import com.hyperwallet.android.model.meta.HyperwalletTransferMethodConfigurationField;
-import com.hyperwallet.android.model.meta.HyperwalletTransferMethodConfigurationKey;
-import com.hyperwallet.android.model.meta.keyed.HyperwalletTransferMethodType;
-import com.hyperwallet.android.model.meta.query.HyperwalletTransferMethodConfigurationFieldQuery;
-import com.hyperwallet.android.model.meta.query.HyperwalletTransferMethodConfigurationKeysQuery;
+import com.hyperwallet.android.model.graphql.HyperwalletTransferMethodConfigurationField;
+import com.hyperwallet.android.model.graphql.HyperwalletTransferMethodConfigurationKey;
+import com.hyperwallet.android.model.graphql.keyed.HyperwalletTransferMethodType;
+import com.hyperwallet.android.model.graphql.query.HyperwalletTransferMethodConfigurationFieldQuery;
+import com.hyperwallet.android.model.graphql.query.HyperwalletTransferMethodConfigurationKeysQuery;
 import com.hyperwallet.android.ui.util.EspressoIdlingResource;
 
 import java.util.HashMap;

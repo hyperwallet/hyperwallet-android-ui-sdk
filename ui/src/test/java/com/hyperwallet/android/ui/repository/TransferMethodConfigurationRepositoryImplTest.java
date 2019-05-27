@@ -15,7 +15,7 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import static com.hyperwallet.android.model.HyperwalletUser.ProfileTypes.INDIVIDUAL;
+import static com.hyperwallet.android.model.user.HyperwalletUser.ProfileTypes.INDIVIDUAL;
 
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.exception.HyperwalletException;
@@ -23,16 +23,16 @@ import com.hyperwallet.android.listener.HyperwalletListener;
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.TypeReference;
-import com.hyperwallet.android.model.meta.HyperwalletTransferMethodConfigurationField;
-import com.hyperwallet.android.model.meta.HyperwalletTransferMethodConfigurationKey;
-import com.hyperwallet.android.model.meta.field.HyperwalletFieldGroup;
-import com.hyperwallet.android.model.meta.field.HyperwalletTransferMethodConfiguration;
-import com.hyperwallet.android.model.meta.field.HyperwalletTransferMethodConfigurationFieldResult;
-import com.hyperwallet.android.model.meta.keyed.Country;
-import com.hyperwallet.android.model.meta.keyed.Currency;
-import com.hyperwallet.android.model.meta.keyed.HyperwalletTransferMethodConfigurationKeyResult;
-import com.hyperwallet.android.model.meta.query.HyperwalletTransferMethodConfigurationFieldQuery;
-import com.hyperwallet.android.model.meta.query.HyperwalletTransferMethodConfigurationKeysQuery;
+import com.hyperwallet.android.model.graphql.HyperwalletTransferMethodConfigurationField;
+import com.hyperwallet.android.model.graphql.HyperwalletTransferMethodConfigurationKey;
+import com.hyperwallet.android.model.graphql.field.HyperwalletFieldGroup;
+import com.hyperwallet.android.model.graphql.field.HyperwalletTransferMethodConfiguration;
+import com.hyperwallet.android.model.graphql.field.HyperwalletTransferMethodConfigurationFieldResult;
+import com.hyperwallet.android.model.graphql.keyed.Country;
+import com.hyperwallet.android.model.graphql.keyed.Currency;
+import com.hyperwallet.android.model.graphql.keyed.HyperwalletTransferMethodConfigurationKeyResult;
+import com.hyperwallet.android.model.graphql.query.HyperwalletTransferMethodConfigurationFieldQuery;
+import com.hyperwallet.android.model.graphql.query.HyperwalletTransferMethodConfigurationKeysQuery;
 import com.hyperwallet.android.ui.rule.HyperwalletExternalResourceManager;
 import com.hyperwallet.android.util.JsonUtils;
 

@@ -19,9 +19,9 @@ package com.hyperwallet.android.ui.transfermethod;
 import androidx.annotation.NonNull;
 
 import com.hyperwallet.android.model.HyperwalletError;
-import com.hyperwallet.android.model.HyperwalletTransferMethod;
-import com.hyperwallet.android.model.meta.HyperwalletFee;
-import com.hyperwallet.android.model.meta.field.HyperwalletFieldGroup;
+import com.hyperwallet.android.model.graphql.HyperwalletFee;
+import com.hyperwallet.android.model.graphql.field.HyperwalletFieldGroup;
+import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 
 import java.util.List;
 
