@@ -56,8 +56,12 @@ import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.model.transfermethod.PayPalAccount;
 import com.hyperwallet.android.ui.HyperwalletLocalBroadcast;
 import com.hyperwallet.android.ui.repository.RepositoryFactory;
+import com.hyperwallet.android.ui.view.WidgetDateDialogFragment;
 import com.hyperwallet.android.ui.view.WidgetSelectionDialogFragment;
 import com.hyperwallet.android.ui.view.widget.AbstractWidget;
+import com.hyperwallet.android.ui.view.widget.DateChangedListener;
+import com.hyperwallet.android.ui.view.widget.DateUtil;
+import com.hyperwallet.android.ui.view.widget.DateWidget;
 import com.hyperwallet.android.ui.view.widget.WidgetEventListener;
 import com.hyperwallet.android.ui.view.widget.WidgetFactory;
 import com.hyperwallet.android.ui.view.widget.WidgetInputState;
@@ -94,6 +98,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     private HyperwalletTransferMethod mTransferMethod;
     private String mTransferMethodProfileType;
     private HashMap<String, WidgetInputState> mWidgetInputStateHashMap;
+    private final DateUtil mDateUtil = new DateUtil();
 
     /**
      * Please do not use this to have instance of AddTransferMethodFragment this is reserved for android framework
@@ -579,5 +584,34 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     @Override
     public boolean isActive() {
         return isAdded();
+    }
+
+    @Override
+    public void openWidgetDateDialog(@Nullable final String date, @NonNull final String fieldName) {
+        if (getFragmentManager() != null) {
+            WidgetDateDialogFragment dateDialogFragment = (WidgetDateDialogFragment)
+                    getFragmentManager().findFragmentByTag(WidgetDateDialogFragment.TAG);
+
+            if (dateDialogFragment == null) {
+                dateDialogFragment = WidgetDateDialogFragment.newInstance(date, fieldName);
+            }
+
+            if (!dateDialogFragment.isAdded()) {
+                dateDialogFragment.show(getFragmentManager());
+            }
+        }
+    }
+
+    void onDateSelected(@NonNull final String selectedValue, @NonNull final String fieldName) {
+        for (int i = 0; i < mDynamicContainer.getChildCount(); i++) {
+            View view = mDynamicContainer.getChildAt(i);
+            if (view.getTag() instanceof DateWidget) {
+                AbstractWidget widget = (AbstractWidget) view.getTag();
+                if (fieldName.equals(widget.getName()) && widget instanceof DateChangedListener) {
+                    ((DateChangedListener) view.getTag()).onUpdate(selectedValue);
+                    return;
+                }
+            }
+        }
     }
 }
