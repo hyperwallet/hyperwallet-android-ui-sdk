@@ -46,6 +46,10 @@ public class RepositoryFactory {
         return sInstance;
     }
 
+    public static void clearInstance() {
+        sInstance = null;
+    }
+
     public TransferMethodConfigurationRepository getTransferMethodConfigurationRepository() {
         return mTransferMethodConfigurationRepository;
     }
@@ -56,9 +60,5 @@ public class RepositoryFactory {
 
     public UserRepository getUserRepository() {
         return mUserRepository;
-    }
-
-    public static void clearInstance() {
-        sInstance = null;
     }
 }

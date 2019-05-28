@@ -20,8 +20,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.hyperwallet.android.model.HyperwalletErrors;
-import com.hyperwallet.android.model.HyperwalletTransferMethod;
-import com.hyperwallet.android.model.meta.HyperwalletTransferMethodConfigurationField;
+import com.hyperwallet.android.model.graphql.HyperwalletTransferMethodConfigurationField;
+import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.ui.repository.TransferMethodConfigurationRepository;
 import com.hyperwallet.android.ui.repository.TransferMethodRepository;
 

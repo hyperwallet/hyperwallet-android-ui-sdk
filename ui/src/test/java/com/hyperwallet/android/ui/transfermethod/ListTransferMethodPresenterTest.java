@@ -29,15 +29,15 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodFields.BANK_ACCOUNT_ID;
-import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_COUNTRY;
-import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_CURRENCY;
+import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.BANK_ACCOUNT_ID;
+import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_COUNTRY;
+import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_CURRENCY;
 
-import com.hyperwallet.android.model.HyperwalletBankAccount;
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.HyperwalletStatusTransition;
-import com.hyperwallet.android.model.HyperwalletTransferMethod;
+import com.hyperwallet.android.model.transfermethod.HyperwalletBankAccount;
+import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.ui.repository.TransferMethodRepository;
 
 import org.junit.Before;
@@ -57,6 +57,14 @@ import java.util.List;
 
 public class ListTransferMethodPresenterTest {
 
+    private final HyperwalletErrors errors = createErrors();
+    private final HyperwalletBankAccount bankAccount = new HyperwalletBankAccount
+            .Builder("CA", "CAD", "3423423432")
+            .build();
+    private final HyperwalletStatusTransition statusTransition =
+            new HyperwalletStatusTransition(HyperwalletStatusTransition.StatusDefinition.DE_ACTIVATED);
+    @Rule
+    public MockitoRule mMockito = MockitoJUnit.rule();
     @Mock
     private TransferMethodRepository mTransferMethodRepository;
     @Mock
@@ -65,15 +73,6 @@ public class ListTransferMethodPresenterTest {
     private ArgumentCaptor<List<HyperwalletError>> mListArgumentErrorCaptor;
     @Captor
     private ArgumentCaptor<List<HyperwalletTransferMethod>> mListArgumentTransferMethodCaptor;
-    @Rule
-    public MockitoRule mMockito = MockitoJUnit.rule();
-
-    private final HyperwalletErrors errors = createErrors();
-    private final HyperwalletBankAccount bankAccount = new HyperwalletBankAccount
-            .Builder("CA", "CAD", "3423423432")
-            .build();
-    private final HyperwalletStatusTransition statusTransition =
-            new HyperwalletStatusTransition(HyperwalletStatusTransition.StatusDefinition.DE_ACTIVATED);
     private ListTransferMethodPresenter presenter;
 
     @Before

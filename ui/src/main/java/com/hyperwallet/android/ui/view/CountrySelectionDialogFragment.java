@@ -134,8 +134,8 @@ public class CountrySelectionDialogFragment extends DialogFragment implements To
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
         if (savedInstanceState != null) {
-            mCountryNameCodeMap =  new TreeMap<>(
-                    (Map<String, String>)savedInstanceState.getSerializable(ARGUMENT_COUNTRY_NAME_CODE_MAP));
+            mCountryNameCodeMap = new TreeMap<>(
+                    (Map<String, String>) savedInstanceState.getSerializable(ARGUMENT_COUNTRY_NAME_CODE_MAP));
             mSelectedCountryName = savedInstanceState.getString(ARGUMENT_SELECTED_COUNTRY_NAME);
             mSearchCountryNameQuery = savedInstanceState.getString(ARGUMENT_SEARCH_COUNTRY_NAME_QUERY);
         } else {
@@ -215,6 +215,10 @@ public class CountrySelectionDialogFragment extends DialogFragment implements To
                     ContextCompat.getColor(getContext(), R.color.regularColorPrimary));
             getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         }
+    }
+
+    public interface CountrySelectionItemClickListener {
+        void onCountryItemClicked(String countryCode);
     }
 
     private static class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements Filterable {
@@ -349,9 +353,5 @@ public class CountrySelectionDialogFragment extends DialogFragment implements To
                 itemView.setOnClickListener(null);
             }
         }
-    }
-
-    public interface CountrySelectionItemClickListener {
-        void onCountryItemClicked(String countryCode);
     }
 }

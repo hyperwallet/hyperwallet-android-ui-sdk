@@ -20,7 +20,7 @@ import androidx.annotation.NonNull;
 
 import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.HyperwalletStatusTransition;
-import com.hyperwallet.android.model.HyperwalletTransferMethod;
+import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 
 import java.util.List;
 

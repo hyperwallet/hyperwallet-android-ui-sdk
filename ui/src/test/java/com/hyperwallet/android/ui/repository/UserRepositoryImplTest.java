@@ -11,16 +11,16 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import static com.hyperwallet.android.model.HyperwalletUser.ProfileTypes.INDIVIDUAL;
-import static com.hyperwallet.android.model.HyperwalletUser.UserStatuses.PRE_ACTIVATED;
-import static com.hyperwallet.android.model.HyperwalletUser.VerificationStatuses.NOT_REQUIRED;
+import static com.hyperwallet.android.model.user.HyperwalletUser.ProfileTypes.INDIVIDUAL;
+import static com.hyperwallet.android.model.user.HyperwalletUser.UserStatuses.PRE_ACTIVATED;
+import static com.hyperwallet.android.model.user.HyperwalletUser.VerificationStatuses.NOT_REQUIRED;
 
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.exception.HyperwalletException;
 import com.hyperwallet.android.listener.HyperwalletListener;
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.HyperwalletErrors;
-import com.hyperwallet.android.model.HyperwalletUser;
+import com.hyperwallet.android.model.user.HyperwalletUser;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -42,18 +42,18 @@ import java.util.List;
 
 @RunWith(RobolectricTestRunner.class)
 public class UserRepositoryImplTest {
-    @Mock
-    private Hyperwallet mHyperwallet;
+    @Rule
+    public MockitoRule mMockito = MockitoJUnit.rule();
     @Mock
     UserRepository.LoadUserCallback mMockCallback;
+    @Spy
+    UserRepositoryImpl mUserRepository;
+    @Mock
+    private Hyperwallet mHyperwallet;
     @Captor
     private ArgumentCaptor<HyperwalletErrors> mErrorCaptor;
     @Captor
     private ArgumentCaptor<HyperwalletUser> mUserCaptor;
-    @Rule
-    public MockitoRule mMockito = MockitoJUnit.rule();
-    @Spy
-    UserRepositoryImpl mUserRepository;
 
     @Before
     public void setup() {

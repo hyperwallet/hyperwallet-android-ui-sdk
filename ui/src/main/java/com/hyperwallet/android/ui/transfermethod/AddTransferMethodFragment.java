@@ -16,13 +16,13 @@
  */
 package com.hyperwallet.android.ui.transfermethod;
 
-import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodFields.PROFILE_TYPE;
-import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_COUNTRY;
-import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_CURRENCY;
-import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodFields.TYPE;
-import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodTypes.BANK_ACCOUNT;
-import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodTypes.BANK_CARD;
-import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodTypes.PAYPAL_ACCOUNT;
+import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.PROFILE_TYPE;
+import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_COUNTRY;
+import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_CURRENCY;
+import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TYPE;
+import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.BANK_ACCOUNT;
+import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.BANK_CARD;
+import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.PAYPAL_ACCOUNT;
 
 import android.app.Activity;
 import android.content.Context;
@@ -46,14 +46,14 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.hyperwallet.android.exception.HyperwalletException;
 import com.hyperwallet.android.hyperwallet_ui.R;
-import com.hyperwallet.android.model.HyperwalletBankAccount;
-import com.hyperwallet.android.model.HyperwalletBankCard;
 import com.hyperwallet.android.model.HyperwalletError;
-import com.hyperwallet.android.model.HyperwalletTransferMethod;
-import com.hyperwallet.android.model.PayPalAccount;
-import com.hyperwallet.android.model.meta.HyperwalletFee;
-import com.hyperwallet.android.model.meta.field.HyperwalletField;
-import com.hyperwallet.android.model.meta.field.HyperwalletFieldGroup;
+import com.hyperwallet.android.model.graphql.HyperwalletFee;
+import com.hyperwallet.android.model.graphql.field.HyperwalletField;
+import com.hyperwallet.android.model.graphql.field.HyperwalletFieldGroup;
+import com.hyperwallet.android.model.transfermethod.HyperwalletBankAccount;
+import com.hyperwallet.android.model.transfermethod.HyperwalletBankCard;
+import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
+import com.hyperwallet.android.model.transfermethod.PayPalAccount;
 import com.hyperwallet.android.ui.HyperwalletLocalBroadcast;
 import com.hyperwallet.android.ui.repository.RepositoryFactory;
 import com.hyperwallet.android.ui.view.WidgetSelectionDialogFragment;
@@ -477,14 +477,6 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
         fragmentTransaction.commit();
     }
 
-    interface OnLoadTransferMethodConfigurationFieldsNetworkErrorCallback {
-        void showErrorsLoadTransferMethodConfigurationFields(@NonNull final List<HyperwalletError> errors);
-    }
-
-    interface OnAddTransferMethodNetworkErrorCallback {
-        void showErrorsAddTransferMethod(@NonNull final List<HyperwalletError> errors);
-    }
-
     private void triggerSubmit() {
         if (performValidation(true)) {
             switch (mTransferMethodType) {
@@ -579,5 +571,13 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     @Override
     public boolean isActive() {
         return isAdded();
+    }
+
+    interface OnLoadTransferMethodConfigurationFieldsNetworkErrorCallback {
+        void showErrorsLoadTransferMethodConfigurationFields(@NonNull final List<HyperwalletError> errors);
+    }
+
+    interface OnAddTransferMethodNetworkErrorCallback {
+        void showErrorsAddTransferMethod(@NonNull final List<HyperwalletError> errors);
     }
 }

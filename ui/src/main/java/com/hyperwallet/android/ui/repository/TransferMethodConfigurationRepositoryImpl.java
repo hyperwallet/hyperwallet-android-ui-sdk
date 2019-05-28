@@ -36,11 +36,11 @@ import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.common.util.EspressoIdlingResource;
 import com.hyperwallet.android.exception.HyperwalletException;
 import com.hyperwallet.android.listener.HyperwalletListener;
-import com.hyperwallet.android.model.meta.HyperwalletTransferMethodConfigurationField;
-import com.hyperwallet.android.model.meta.HyperwalletTransferMethodConfigurationKey;
-import com.hyperwallet.android.model.meta.keyed.HyperwalletTransferMethodType;
-import com.hyperwallet.android.model.meta.query.HyperwalletTransferMethodConfigurationFieldQuery;
-import com.hyperwallet.android.model.meta.query.HyperwalletTransferMethodConfigurationKeysQuery;
+import com.hyperwallet.android.model.graphql.HyperwalletTransferMethodConfigurationField;
+import com.hyperwallet.android.model.graphql.HyperwalletTransferMethodConfigurationKey;
+import com.hyperwallet.android.model.graphql.keyed.HyperwalletTransferMethodType;
+import com.hyperwallet.android.model.graphql.query.HyperwalletTransferMethodConfigurationFieldQuery;
+import com.hyperwallet.android.model.graphql.query.HyperwalletTransferMethodConfigurationKeysQuery;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -48,18 +48,13 @@ import java.util.Objects;
 import java.util.Set;
 
 public class TransferMethodConfigurationRepositoryImpl implements TransferMethodConfigurationRepository {
-    private HyperwalletTransferMethodConfigurationKey mTransferMethodConfigurationKey;
     private final Handler mHandler;
     private final Map<FieldMapKey, HyperwalletTransferMethodConfigurationField> mFieldMap;
+    private HyperwalletTransferMethodConfigurationKey mTransferMethodConfigurationKey;
 
     TransferMethodConfigurationRepositoryImpl() {
         mHandler = new Handler();
         mFieldMap = new HashMap<>();
-    }
-
-    @VisibleForTesting
-    Hyperwallet getHyperwallet() {
-        return Hyperwallet.getDefault();
     }
 
     @VisibleForTesting()
@@ -69,6 +64,11 @@ public class TransferMethodConfigurationRepositoryImpl implements TransferMethod
         mHandler = handler;
         mTransferMethodConfigurationKey = transferMethodConfigurationKey;
         mFieldMap = fieldMap;
+    }
+
+    @VisibleForTesting
+    Hyperwallet getHyperwallet() {
+        return Hyperwallet.getDefault();
     }
 
     @VisibleForTesting

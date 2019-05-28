@@ -26,7 +26,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.StringDef;
 
 import com.hyperwallet.android.model.HyperwalletStatusTransition;
-import com.hyperwallet.android.model.HyperwalletTransferMethod;
+import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

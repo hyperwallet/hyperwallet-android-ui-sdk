@@ -13,10 +13,10 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.HyperwalletErrors;
-import com.hyperwallet.android.model.HyperwalletTransferMethod;
-import com.hyperwallet.android.model.HyperwalletUser;
-import com.hyperwallet.android.model.meta.HyperwalletTransferMethodConfigurationKey;
-import com.hyperwallet.android.model.meta.keyed.HyperwalletTransferMethodConfigurationKeyResult;
+import com.hyperwallet.android.model.graphql.HyperwalletTransferMethodConfigurationKey;
+import com.hyperwallet.android.model.graphql.keyed.HyperwalletTransferMethodConfigurationKeyResult;
+import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
+import com.hyperwallet.android.model.user.HyperwalletUser;
 import com.hyperwallet.android.ui.repository.TransferMethodConfigurationRepository;
 import com.hyperwallet.android.ui.repository.TransferMethodConfigurationRepositoryImpl;
 import com.hyperwallet.android.ui.repository.UserRepository;
@@ -41,19 +41,18 @@ import java.util.TreeMap;
 @RunWith(RobolectricTestRunner.class)
 public class SelectTransferMethodPresenterTest {
 
+    private final HyperwalletErrors errors = createErrors();
+    @Rule
+    public HyperwalletExternalResourceManager externalResourceManager = new HyperwalletExternalResourceManager();
     @Mock
     private SelectTransferMethodContract.View view;
     @Mock
     private TransferMethodConfigurationRepositoryImpl mTransferMethodConfigurationRepository;
     @Mock
     private UserRepositoryImpl mUserRepository;
-    @Rule
-    public HyperwalletExternalResourceManager externalResourceManager = new HyperwalletExternalResourceManager();
-
     private HyperwalletTransferMethodConfigurationKey mResult;
     private HyperwalletUser mUser;
     private SelectTransferMethodPresenter selectTransferMethodPresenter;
-    private final HyperwalletErrors errors = createErrors();
 
     @Before
     public void initialize() throws Exception {

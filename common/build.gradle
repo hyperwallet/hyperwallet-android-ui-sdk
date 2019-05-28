@@ -4,63 +4,32 @@ apply plugin: 'signing'
 apply plugin: 'org.sonarqube'
 apply from: "$projectDir/config/jacoco-settings.gradle"
 
-android {
-    compileSdkVersion 28
-
-
-    defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 28
-        versionCode 1
-        versionName version
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-        debug {
-            testCoverageEnabled true
-        }
-    }
-
-}
 
 dependencies {
     implementation "com.google.android.material:material:1.0.0"
     implementation "androidx.test.espresso:espresso-idling-resource:3.1.1"
-
     implementation "com.hyperwallet.android:core-sdk:1.0.0-beta03-SNAPSHOT"
-
     androidTestImplementation "androidx.test.ext:junit:1.1.0"
     androidTestImplementation "androidx.test:runner:1.1.1"
     androidTestImplementation "androidx.test.espresso:espresso-core:3.1.1"
-
     testImplementation group: 'org.mockito', name: 'mockito-core', version: "2.25.0"
     testImplementation group: 'pl.pragmatists', name: 'JUnitParams', version: "1.1.1"
 }
 
-task javadocs(type: Javadoc) {
-    source = android.sourceSets.main.java.srcDirs
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-    failOnError false
+
+sonarqube {
+    properties {
+        def libraries = project.android.sdkDirectory.getPath() + "/platforms/android-28/android.jar"
+        property "sonar.sources", "src/main/java"
+        property "sonar.binaries", "build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/hyperwallet/android"
+        property "sonar.libraries", libraries
+        property "sonar.projectName", "android-ui-sdk-common"
+    }
 }
 
-task javadocsJar(type: Jar, dependsOn: javadocs) {
-    classifier = 'javadoc'
-    from javadocs.destinationDir
-}
 
-task sourcesJar(type: Jar) {
-    classifier = 'sources'
-    from android.sourceSets.main.java.srcDirs
-}
 
-def aarFile = file("$buildDir/outputs/aar/ui-$version" + ".aar")
+def aarFile = file("$buildDir/outputs/aar/common-$version"+".aar")
 def aarArtifact = artifacts.add('archives', aarFile) {
     type 'aar'
 }
@@ -82,8 +51,8 @@ publishing {
     }
 
     publications {
-        hyperwalletUi(MavenPublication) {
-            groupId = 'com.hyperwallet.android'
+        hyperwalletCommonUi(MavenPublication) {
+            groupId = hyperwalletGroupId
             artifactId = 'common'
             version = version
 
@@ -92,8 +61,8 @@ publishing {
             artifact(aarArtifact)
 
             pom {
-                name = 'Hyperwallet Android UI SDK (common)'
-                description = 'Hyperwallet UI SDK for Android to integrate with Hyperwallet Platform'
+                name = 'Hyperwallet Android Common UI SDK'
+                description = 'Hyperwallet Common UI SDK for Android to integrate with Hyperwallet Platform'
                 url = 'https://github.com/hyperwallet/hyperwallet-android-ui-sdk'
                 pom.withXml {
                     def dependenciesNode = asNode().appendNode('dependencies')
@@ -133,15 +102,5 @@ tasks.withType(Sign) {
 }
 
 signing {
-    sign publishing.publications.hyperwalletUi
-}
-
-sonarqube {
-    properties {
-        def libraries = project.android.sdkDirectory.getPath() + "/platforms/android-28/android.jar"
-        property "sonar.sources", "src/main/java"
-        property "sonar.binaries", "build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/hyperwallet/android"
-        property "sonar.libraries", libraries
-        property "sonar.projectName", "android-ui-sdk-common"
-    }
+    sign publishing.publications.hyperwalletCommonUi
 }

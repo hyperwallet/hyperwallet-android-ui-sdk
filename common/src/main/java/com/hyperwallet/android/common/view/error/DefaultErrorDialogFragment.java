@@ -55,6 +55,20 @@ public class DefaultErrorDialogFragment extends DialogFragment {
         setRetainInstance(true);
     }
 
+    /**
+     * Builds Hyperwallet Error Dialogue
+     *
+     * @param errors List of Errors @see {@link Error}
+     */
+    public static DefaultErrorDialogFragment newInstance(@NonNull List<HyperwalletError> errors) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList(ARGUMENT_ERROR_KEY, new ArrayList<>(errors));
+
+        DefaultErrorDialogFragment errorDialogFragment = new DefaultErrorDialogFragment();
+        errorDialogFragment.setArguments(bundle);
+        return errorDialogFragment;
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,20 +82,6 @@ public class DefaultErrorDialogFragment extends DialogFragment {
 
         requireActivity().setResult(RESULT_ERROR);
         requireActivity().finish();
-    }
-
-    /**
-     * Builds Hyperwallet Error Dialogue
-     *
-     * @param errors List of Errors @see {@link Error}
-     */
-    public static DefaultErrorDialogFragment newInstance(@NonNull List<HyperwalletError> errors) {
-        Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList(ARGUMENT_ERROR_KEY, new ArrayList<>(errors));
-
-        DefaultErrorDialogFragment errorDialogFragment = new DefaultErrorDialogFragment();
-        errorDialogFragment.setArguments(bundle);
-        return errorDialogFragment;
     }
 
     public void show(@NonNull FragmentManager manager) {

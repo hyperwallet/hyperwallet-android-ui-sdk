@@ -9,7 +9,7 @@ import android.content.Context;
 import android.content.res.Resources;
 
 import com.hyperwallet.android.hyperwallet_ui.R;
-import com.hyperwallet.android.model.meta.HyperwalletFee;
+import com.hyperwallet.android.model.graphql.HyperwalletFee;
 import com.hyperwallet.android.ui.rule.HyperwalletExternalResourceManager;
 
 import org.json.JSONException;
@@ -33,6 +33,8 @@ public class FeeFormatterTest {
 
     @Rule
     public MockitoRule mockito = MockitoJUnit.rule();
+    @Rule
+    public HyperwalletExternalResourceManager externalResourceManager = new HyperwalletExternalResourceManager();
     @Captor
     private ArgumentCaptor<Integer> resourceIdCaptor;
     @Captor
@@ -41,9 +43,6 @@ public class FeeFormatterTest {
     private Context context;
     @Mock
     private Resources resources;
-    @Rule
-    public HyperwalletExternalResourceManager externalResourceManager = new HyperwalletExternalResourceManager();
-
     private HyperwalletFee mFlatFee;
     private JSONObject mJSONObject;
 

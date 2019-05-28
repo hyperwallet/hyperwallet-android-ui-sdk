@@ -16,11 +16,11 @@
  */
 package com.hyperwallet.android.ui.repository;
 
-import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodFields.TOKEN;
-import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodFields.TYPE;
-import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodTypes.BANK_ACCOUNT;
-import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodTypes.BANK_CARD;
-import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodTypes.PAYPAL_ACCOUNT;
+import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TOKEN;
+import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TYPE;
+import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.BANK_ACCOUNT;
+import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.BANK_CARD;
+import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.PAYPAL_ACCOUNT;
 
 import android.os.Handler;
 
@@ -31,12 +31,12 @@ import androidx.annotation.VisibleForTesting;
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.exception.HyperwalletException;
 import com.hyperwallet.android.listener.HyperwalletListener;
-import com.hyperwallet.android.model.HyperwalletBankAccount;
-import com.hyperwallet.android.model.HyperwalletBankCard;
 import com.hyperwallet.android.model.HyperwalletStatusTransition;
-import com.hyperwallet.android.model.HyperwalletTransferMethod;
-import com.hyperwallet.android.model.PayPalAccount;
 import com.hyperwallet.android.model.paging.HyperwalletPageList;
+import com.hyperwallet.android.model.transfermethod.HyperwalletBankAccount;
+import com.hyperwallet.android.model.transfermethod.HyperwalletBankCard;
+import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
+import com.hyperwallet.android.model.transfermethod.PayPalAccount;
 
 public class TransferMethodRepositoryImpl implements TransferMethodRepository {
 

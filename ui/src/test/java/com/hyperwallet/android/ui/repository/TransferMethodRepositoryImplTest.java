@@ -15,26 +15,26 @@ import static org.mockito.Mockito.verify;
 
 import static com.hyperwallet.android.model.HyperwalletStatusTransition.StatusDefinition.ACTIVATED;
 import static com.hyperwallet.android.model.HyperwalletStatusTransition.StatusDefinition.DE_ACTIVATED;
-import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodFields.BANK_ACCOUNT_ID;
-import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodFields.BANK_NAME;
-import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodFields.STATUS;
-import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodFields.TOKEN;
-import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_COUNTRY;
-import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_CURRENCY;
-import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodFields.TYPE;
+import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.BANK_ACCOUNT_ID;
+import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.BANK_NAME;
+import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.STATUS;
+import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TOKEN;
+import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_COUNTRY;
+import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_CURRENCY;
+import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TYPE;
 
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.exception.HyperwalletException;
 import com.hyperwallet.android.listener.HyperwalletListener;
-import com.hyperwallet.android.model.HyperwalletBankAccount;
-import com.hyperwallet.android.model.HyperwalletBankCard;
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.HyperwalletStatusTransition;
-import com.hyperwallet.android.model.HyperwalletTransferMethod;
-import com.hyperwallet.android.model.HyperwalletTransferMethodPagination;
-import com.hyperwallet.android.model.PayPalAccount;
 import com.hyperwallet.android.model.paging.HyperwalletPageList;
+import com.hyperwallet.android.model.transfermethod.HyperwalletBankAccount;
+import com.hyperwallet.android.model.transfermethod.HyperwalletBankCard;
+import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
+import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethodPagination;
+import com.hyperwallet.android.model.transfermethod.PayPalAccount;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -58,6 +58,12 @@ import java.util.List;
 @RunWith(RobolectricTestRunner.class)
 public class TransferMethodRepositoryImplTest {
 
+    @Rule
+    public ExpectedException mThrown = ExpectedException.none();
+    @Rule
+    public MockitoRule mMockito = MockitoJUnit.rule();
+    @Spy
+    TransferMethodRepositoryImpl mTransferMethodRepository;
     @Mock
     private Hyperwallet mHyperwallet;
     @Mock
@@ -78,12 +84,6 @@ public class TransferMethodRepositoryImplTest {
     private ArgumentCaptor<HyperwalletStatusTransition> mStatusTransitionArgumentCaptor;
     @Captor
     private ArgumentCaptor<List<HyperwalletTransferMethod>> mListTransferMethodCaptor;
-    @Rule
-    public ExpectedException mThrown = ExpectedException.none();
-    @Rule
-    public MockitoRule mMockito = MockitoJUnit.rule();
-    @Spy
-    TransferMethodRepositoryImpl mTransferMethodRepository;
 
     @Before
     public void setup() {

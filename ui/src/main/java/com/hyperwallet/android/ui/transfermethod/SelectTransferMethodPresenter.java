@@ -21,11 +21,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.hyperwallet.android.model.HyperwalletErrors;
-import com.hyperwallet.android.model.HyperwalletUser;
-import com.hyperwallet.android.model.meta.HyperwalletTransferMethodConfigurationKey;
-import com.hyperwallet.android.model.meta.keyed.Country;
-import com.hyperwallet.android.model.meta.keyed.Currency;
-import com.hyperwallet.android.model.meta.keyed.HyperwalletTransferMethodType;
+import com.hyperwallet.android.model.graphql.HyperwalletTransferMethodConfigurationKey;
+import com.hyperwallet.android.model.graphql.keyed.Country;
+import com.hyperwallet.android.model.graphql.keyed.Currency;
+import com.hyperwallet.android.model.graphql.keyed.HyperwalletTransferMethodType;
+import com.hyperwallet.android.model.user.HyperwalletUser;
 import com.hyperwallet.android.ui.repository.TransferMethodConfigurationRepository;
 import com.hyperwallet.android.ui.repository.UserRepository;
 

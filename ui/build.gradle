@@ -4,42 +4,6 @@ apply plugin: 'signing'
 apply plugin: 'org.sonarqube'
 apply from: "$projectDir/config/jacoco-settings.gradle"
 
-android {
-    compileSdkVersion 28
-    defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 28
-        versionCode 1
-        versionName version
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        testInstrumentationRunnerArgument "listener", "com.squareup.leakcanary.FailTestOnLeakRunListener"
-    }
-
-    sourceSets {
-        androidTest {
-            resources.srcDirs += ['src/test/resources']
-        }
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-        debug {
-            testCoverageEnabled true
-        }
-    }
-
-    lintOptions {
-        abortOnError true
-        warningsAsErrors true
-        lintConfig file("config/lint.xml")
-    }
-
-}
-
-
 dependencies {
 
     implementation "androidx.appcompat:appcompat:1.0.2"
@@ -49,7 +13,8 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:1.0.0"
 
     api "com.hyperwallet.android:core-sdk:1.0.0-beta03-SNAPSHOT"
-    api "com.hyperwallet.android:common:1.0.0-beta03-SNAPSHOT"
+    api project(":common")
+    api project(":receipt")
 
     androidTestImplementation "androidx.test.ext:junit:1.1.0"
     androidTestImplementation "androidx.test:runner:1.1.1"
@@ -68,21 +33,6 @@ dependencies {
 
 }
 
-task javadocs(type: Javadoc) {
-    source = android.sourceSets.main.java.srcDirs
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-    failOnError false
-}
-
-task javadocsJar(type: Jar, dependsOn: javadocs) {
-    classifier = 'javadoc'
-    from javadocs.destinationDir
-}
-
-task sourcesJar(type: Jar) {
-    classifier = 'sources'
-    from android.sourceSets.main.java.srcDirs
-}
 
 def aarFile = file("$buildDir/outputs/aar/ui-$version"+".aar")
 def aarArtifact = artifacts.add('archives', aarFile) {
@@ -107,7 +57,7 @@ publishing {
 
     publications {
         hyperwalletUi(MavenPublication) {
-            groupId = 'com.hyperwallet.android'
+            groupId = hyperwalletGroupId
             artifactId = 'ui-sdk'
             version = version
 
@@ -116,7 +66,7 @@ publishing {
             artifact(aarArtifact)
 
             pom {
-                name = 'Hyperwallet Android UI SDK (ui)'
+                name = 'Hyperwallet Android UI SDK'
                 description = 'Hyperwallet UI SDK for Android to integrate with Hyperwallet Platform'
                 url = 'https://github.com/hyperwallet/hyperwallet-android-ui-sdk'
                 pom.withXml {
