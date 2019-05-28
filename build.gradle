@@ -5,12 +5,12 @@ buildscript {
         google()
         jcenter()
         mavenLocal()
-        
+
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.3.2'
         classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.7"
-        
+
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -21,7 +21,7 @@ allprojects {
         google()
         jcenter()
         mavenLocal()
-        
+
     }
     project.version = "1.0.0-beta03-SNAPSHOT"
 
@@ -31,57 +31,30 @@ subprojects {
 
     ext {
         hyperwalletGroupId = 'com.hyperwallet.android'
-    }
 
-    apply plugin: 'com.android.library'
-    android {
-        compileSdkVersion 28
-        defaultConfig {
-            minSdkVersion 21
-            targetSdkVersion 28
-            versionCode 1
-            versionName version
-            testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-            testInstrumentationRunnerArgument "listener", "com.squareup.leakcanary.FailTestOnLeakRunListener"
-        }
+        compileVersion = 28
+        minVersion = 21
+        targetVersion = 28
+        codeVersion = 1
 
-        sourceSets {
-            androidTest {
-                resources.srcDirs += ['src/test/resources']
-            }
-        }
-
-        buildTypes {
-            release {
-                minifyEnabled false
-                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            }
-            debug {
-                testCoverageEnabled true
-            }
-        }
-
-        lintOptions {
-            abortOnError true
-            warningsAsErrors true
-            lintConfig file("config/lint.xml")
-        }
-    }
-
-    task javadocs(type: Javadoc) {
-        source = android.sourceSets.main.java.srcDirs
-        classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-        failOnError false
-    }
-
-    task javadocsJar(type: Jar, dependsOn: javadocs) {
-        classifier = 'javadoc'
-        from javadocs.destinationDir
-    }
-
-    task sourcesJar(type: Jar) {
-        classifier = 'sources'
-        from android.sourceSets.main.java.srcDirs
+        hyperwalletCoreVersion = '1.0.0-beta03-SNAPSHOT'
+        //
+        androidMaterialVersion = '1.0.0'
+        appcompatVersion = '1.0.2'
+        constraintlayoutVersion = '1.1.3'
+        legacySupportV4Version = '1.0.0'
+        recycleViewVersion = '1.0.0'
+        //Testing
+        extJunitVerson = '1.1.0'
+        testRunnerVersion = '1.1.1'
+        testRulesVersion = '1.1.1'
+        espressoVersion = '3.1.1'
+        mockServerVersion = '3.11.0'
+        leakcanaryVersion = '1.6.3'
+        mockitoVersion = '2.25.0'
+        junitParamsVersion = '1.1.1'
+        robolectricVersion = '4.1'
+        mockWebServerVersion = '3.11.0'
     }
 
 }

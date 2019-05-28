@@ -25,7 +25,7 @@ import static java.net.HttpURLConnection.HTTP_CREATED;
 import static java.net.HttpURLConnection.HTTP_OK;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
-import static com.hyperwallet.android.model.HyperwalletBankAccount.Purpose.SAVINGS;
+import static com.hyperwallet.android.model.transfermethod.HyperwalletBankAccount.Purpose.SAVINGS;
 import static com.hyperwallet.android.util.EspressoUtils.hasEmptyText;
 import static com.hyperwallet.android.util.EspressoUtils.hasErrorText;
 import static com.hyperwallet.android.util.EspressoUtils.nestedScrollTo;
@@ -48,7 +48,7 @@ import androidx.test.rule.ActivityTestRule;
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.common.util.EspressoIdlingResource;
 import com.hyperwallet.android.hyperwallet_ui.R;
-import com.hyperwallet.android.model.HyperwalletTransferMethod;
+import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.rule.HyperwalletExternalResourceManager;
 import com.hyperwallet.android.rule.HyperwalletMockWebServer;
 import com.hyperwallet.android.ui.repository.RepositoryFactory;
