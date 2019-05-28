@@ -1,15 +1,5 @@
 apply from: "$rootProject.projectDir/android-library.gradle"
 
-sonarqube {
-    properties {
-        def libraries = project.android.sdkDirectory.getPath() + "/platforms/android-28/android.jar"
-        property "sonar.sources", "src/main/java"
-        property "sonar.binaries", "build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/hyperwallet/android"
-        property "sonar.libraries", libraries
-        property "sonar.projectName", "android-ui-sdk-common"
-    }
-}
-
 
 def aarFile = file("$buildDir/outputs/aar/common-$version" + ".aar")
 def aarArtifact = artifacts.add('archives', aarFile) {
@@ -85,4 +75,14 @@ tasks.withType(Sign) {
 
 signing {
     sign publishing.publications.hyperwalletCommonUi
+}
+
+sonarqube {
+    properties {
+        def libraries = project.android.sdkDirectory.getPath() + "/platforms/android-28/android.jar"
+        property "sonar.sources", "src/main/java"
+        property "sonar.binaries", "build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/hyperwallet/android"
+        property "sonar.libraries", libraries
+        property "sonar.projectName", "android-ui-sdk-common"
+    }
 }
