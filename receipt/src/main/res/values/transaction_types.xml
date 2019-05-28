@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Generic fee types-->
+    <string name="annual_fee">Annual Fee</string>
+    <string name="annual_fee_refund">Annual Fee Refund</string>
+    <string name="customer_service_fee">Customer Service Fee</string>
+    <string name="customer_service_fee_refund">Customer Service Fee Refund</string>
+    <string name="expedited_shipping_fee">Expedited Shipping Fee</string>
+    <string name="generic_fee_refund">Generic Fee Refund</string>
+    <string name="monthly_fee">Monthly Fee</string>
+    <string name="monthly_fee_refund">Monthly Fee Refund</string>
+    <string name="payment_expiry_fee">Payment Expiry Fee</string>
+    <string name="payment_fee">Payment Fee</string>
+    <string name="processing_fee">Processing Fee</string>
+    <string name="standard_shipping_fee">Standard Shipping Fee</string>
+    <string name="transfer_fee">Transfer Fee</string>
+
+    <!--Generic payment types-->
+    <string name="adjustment">Balance Adjustment</string>
+    <string name="foreign_exchange">Foreign Exchange</string>
+    <string name="deposit">Funds Deposit</string>
+    <string name="manual_adjustment">Adjustment</string>
+    <string name="payment_expiration">Payment Expired</string>
+
+    <!--Bank account-specific types-->
+    <string name="bank_account_transfer_fee">Bank Account Return Fee</string>
+    <string name="bank_account_transfer_return">Bank Account Return</string>
+    <string name="bank_account_transfer_return_fee">Bank Account Return Fee</string>
+    <string name="transfer_to_bank_account">Bank Account</string>
+
+    <!--Card-specific types-->
+    <string name="card_activation_fee">Card Activation Fee</string>
+    <string name="card_activation_fee_waiver">Card Activation Fee Waiver</string>
+    <string name="card_fee">Card Fee</string>
+    <string name="manual_transfer_to_prepaid_card">Card Load</string>
+    <string name="prepaid_card_balance_inquiry_fee">Balance Inquiry Fee</string>
+    <string name="prepaid_card_cash_advance">Cash Advance</string>
+    <string name="prepaid_card_disputed_charge_refund">Disputed Charge Refund</string>
+    <string name="prepaid_card_dispute_deposit">Disputed Card Deposit</string>
+    <string name="prepaid_card_domestic_cash_withdrawal_fee">ATM Withdrawal</string>
+    <string name="PREPAID_CARD_EXCHANGE_RATE_DIFFERENCE"></string>
+    <string name="prepaid_card_manual_unload">Card Unload</string>
+    <string name="prepaid_card_overseas_cash_withdrawal_fee">ATM Withdrawal</string>
+    <string name="prepaid_card_pin_change_fee">PIN Change Fee</string>
+    <string name="prepaid_card_refund">Refund</string>
+    <string name="prepaid_card_replacement_fee">Card Replacement Fee</string>
+    <string name="prepaid_card_sale">Transaction</string>
+    <string name="prepaid_card_sale_reversal">Reversed Transaction</string>
+    <string name="prepaid_card_unload">Card Unload</string>
+    <string name="transfer_to_prepaid_card">Card Load</string>
+    <!---->
+    <!--Donation types-->
+    <string name="donation">Donation</string>
+    <string name="donation_fee">Donation Fee</string>
+    <string name="donation_return">Donation Return</string>
+    <!---->
+    <!--Merchant payment types-->
+    <string name="merchant_payment">Merchant Payment</string>
+    <string name="merchant_payment_fee">Merchant Payment Fee</string>
+    <string name="merchant_payment_refund">Merchant Payment Refund</string>
+    <string name="merchant_payment_return">Merchant Payment Return</string>
+    <!---->
+    <!--MoneyGram types-->
+    <string name="moneygram_transfer_return">MoneyGram Return</string>
+    <string name="transfer_to_moneygram">MoneyGram</string>
+    <!---->
+    <!--Paper check types-->
+    <string name="paper_check_fee">Paper Check Fee</string>
+    <string name="paper_check_refund">Paper Check Refund</string>
+    <string name="transfer_to_paper_check">Paper Check</string>
+    <!---->
+    <!--User and program account types-->
+    <string name="account_closure">Account Closure</string>
+    <string name="account_closure_fee">Account Closure Fee</string>
+    <string name="account_unload">Funds Unloaded</string>
+    <string name="dormant_user_fee">Domant User Account Fee</string>
+    <string name="dormant_user_fee_refund">Domant User Account Fee Refund</string>
+    <string name="payment">Payment</string>
+    <string name="payment_cancellation">Payment Cancellation</string>
+    <string name="payment_reversal">Payment Reversal</string>
+    <string name="payment_reversal_fee">Payment Reversal Fee</string>
+    <string name="payment_return">Payment Return</string>
+    <string name="transfer_to_program_account">Transfer to Program</string>
+    <string name="transfer_to_user">Transfer to User</string>
+    <!---->
+    <!--Virtual incentive types-->
+    <string name="virtual_incentive_cancellation">Promo Cancellation</string>
+    <string name="virtual_incentive_issuance">Issued Promo</string>
+    <string name="virtual_incentive_purchase">Promo Purchase</string>
+    <string name="virtual_incentive_refund">Promo Refund</string>
+    <!---->
+    <!--Western Union and WUBS types-->
+    <string name="transfer_to_western_union">Western Union</string>
+    <string name="transfer_to_wubs_wire">Wire Transfer</string>
+    <string name="western_union_transfer_return">Western Union Withdrawal</string>
+    <string name="wubs_wire_transfer_return">Wire Transfer Return</string>
+    <!---->
+    <!--Wire transfer types-->
+    <string name="transfer_to_wire">Wire Transfer</string>
+    <string name="wire_transfer_fee">Wire Transfer Fee</string>
+    <string name="wire_transfer_return">Wire Transfer Return</string>
+
+</resources>
