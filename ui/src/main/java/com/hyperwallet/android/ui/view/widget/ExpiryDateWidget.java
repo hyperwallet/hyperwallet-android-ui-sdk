@@ -27,43 +27,55 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.ContextThemeWrapper;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.hyperwallet.android.hyperwallet_ui.R;
-import com.hyperwallet.android.model.meta.HyperwalletField;
+import com.hyperwallet.android.model.graphql.field.HyperwalletField;
 
 public class ExpiryDateWidget extends AbstractWidget {
     private ViewGroup mContainer;
     private final ExpireDateUtil mExpireDateUtil;
     private TextInputLayout mTextInputLayout;
     private String mValue;
+    private String mMessageInvalidDateLength;
+    private String mMessageInvalidDate;
 
     public ExpiryDateWidget(@NonNull HyperwalletField field, @NonNull WidgetEventListener listener,
-            @NonNull Context context, @Nullable String defaultValue, @NonNull View defaultFocusView) {
-        super(field, listener, context, defaultValue, defaultFocusView);
+            @Nullable String defaultValue, @NonNull View defaultFocusView) {
+        super(field, listener, defaultValue, defaultFocusView);
         mValue = defaultValue;
         mExpireDateUtil = new ExpireDateUtil();
     }
 
     @Override
-    public View getView() {
+    public View getView(@NonNull final ViewGroup viewGroup) {
         if (mContainer == null) {
-            mContainer = new RelativeLayout(mContext);
+            mContainer = (ViewGroup) LayoutInflater.from(viewGroup.getContext())
+                    .inflate(R.layout.item_widget_layout, viewGroup, false);
+
+            // initialize messaging
+            mMessageInvalidDateLength = viewGroup.getContext().getResources()
+                    .getString(R.string.error_exact_length_field, MAX_INPUT_LENGTH);
+            mMessageInvalidDate = viewGroup.getContext().getResources()
+                    .getString(R.string.error_invalid_expiry_date, mField.getLabel());
 
             // input control
-            mTextInputLayout = new TextInputLayout(
-                    new ContextThemeWrapper(mContext, R.style.Widget_Hyperwallet_TextInputLayout));
+            mTextInputLayout = new TextInputLayout(new ContextThemeWrapper(viewGroup.getContext(),
+                    mField.isEditable() ? R.style.Widget_Hyperwallet_TextInputLayout
+                            : R.style.Widget_Hyperwallet_TextInputLayout_Disabled));
             final EditText editText = new EditText(
-                    new ContextThemeWrapper(mContext, R.style.Widget_Hyperwallet_TextInputEditText));
+                    new ContextThemeWrapper(viewGroup.getContext(), R.style.Widget_Hyperwallet_TextInputEditText));
+
+            editText.setEnabled(mField.isEditable());
             setIdFromFieldLabel(mTextInputLayout);
             setIdFromFieldName(editText);
             editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -75,10 +87,10 @@ public class ExpiryDateWidget extends AbstractWidget {
                     } else {
                         mListener.widgetFocused(ExpiryDateWidget.this.getName());
                         editText.setHint(editText.getText().toString().trim().isEmpty() ?
-                                mContext.getResources().getString(R.string.api_expiry_date_format) : "");
+                                viewGroup.getContext().getResources().getString(R.string.api_expiry_date_format) : "");
 
                         InputMethodManager imm = (InputMethodManager)
-                                mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+                                viewGroup.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                         imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
                     }
                 }
@@ -170,8 +182,9 @@ public class ExpiryDateWidget extends AbstractWidget {
 
             editText.setInputType(InputType.TYPE_CLASS_DATETIME);
             editText.setHint(mField.getLabel());
-            editText.setText(TextUtils.isEmpty(mDefaultValue) ? "" :
-                    mExpireDateUtil.convertDateFromServerFormat(mDefaultValue));
+            editText.setText(mExpireDateUtil.convertDateFromServerFormat(
+                    TextUtils.isEmpty(mDefaultValue) ? mField.getValue() : mDefaultValue));
+
             editText.setOnKeyListener(new DefaultKeyListener(mDefaultFocusView, editText));
             editText.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI | EditorInfo.IME_ACTION_NEXT);
 
@@ -203,11 +216,11 @@ public class ExpiryDateWidget extends AbstractWidget {
         }
 
         if (isInvalidLength()) {
-            return mContext.getResources().getString(R.string.error_exact_length_field, MAX_INPUT_LENGTH);
+            return mMessageInvalidDateLength;
         }
 
         if (mExpireDateUtil.isInvalidDate(mValue)) {
-            return mContext.getResources().getString(R.string.error_invalid_expiry_date, mField.getLabel());
+            return mMessageInvalidDate;
         }
 
         return null;

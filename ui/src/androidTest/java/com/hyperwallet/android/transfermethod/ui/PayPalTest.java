@@ -8,6 +8,7 @@ import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.RootMatchers.isDialog;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
@@ -37,12 +38,13 @@ import android.widget.TextView;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.IdlingRegistry;
+import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.hyperwallet_ui.R;
-import com.hyperwallet.android.model.HyperwalletTransferMethod;
+import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.rule.HyperwalletExternalResourceManager;
 import com.hyperwallet.android.rule.HyperwalletMockWebServer;
 import com.hyperwallet.android.ui.repository.RepositoryFactory;
@@ -88,7 +90,7 @@ public class PayPalTest {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("authentication_token_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("successful_tmc_paypal_fields_response.json")).mock();
+                .getResourceContent("successful_tmc_fields_paypal_response.json")).mock();
     }
 
     @After
@@ -114,6 +116,7 @@ public class PayPalTest {
                 matches(withText(R.string.paypal_account)));
 
         onView(withId(R.id.email)).check(matches(isDisplayed()));
+        onView(withId(R.id.emailLabel)).check(matches(isDisplayed()));
         onView(withId(R.id.emailLabel)).check(matches(withHint("Email")));
 
         onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo()).check(
@@ -124,12 +127,22 @@ public class PayPalTest {
     public void testAddTransferMethod_displaysFeeElementsOnTmcResponse() {
         mActivityTestRule.launchActivity(null);
 
+        onView(withId(R.id.add_transfer_method_static_container)).check(
+                matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+
+        onView(withId(R.id.add_transfer_method_fee_label)).check(
+                matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
         onView(withId(R.id.add_transfer_method_fee_label)).check(
                 matches(withText(R.string.add_transfer_method_fee_label)));
-        onView(withId(R.id.add_transfer_method_processing_label)).check(
-                matches(withText(R.string.add_transfer_method_processing_time_label)));
         onView(withId(R.id.add_transfer_method_fee_value)).check(matches(withText("USD 0.25")));
-        onView(withId(R.id.add_transfer_method_processing_time_value)).check(matches(withText("IMMEDIATE")));
+
+        //TODO: Uncomment when processing time node is implemented
+//        onView(withId(R.id.add_transfer_method_processing_label)).check(
+//                matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+//        onView(withId(R.id.add_transfer_method_processing_label)).check(
+//                matches(withText(R.string.add_transfer_method_processing_time_label)));
+//        onView(withId(R.id.add_transfer_method_fee_value)).check(matches(withText("IMMEDIATE")));
+
     }
 
     @Test
@@ -178,7 +191,7 @@ public class PayPalTest {
         onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo(), click());
 
         onView(withId(R.id.emailLabel))
-                .check(matches(hasErrorText("accountNumber is invalid")));
+                .check(matches(hasErrorText("is invalid length or format.")));
     }
 
     @Test

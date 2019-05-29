@@ -1,12 +1,11 @@
 package com.hyperwallet.android.common.repository;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
 import com.hyperwallet.android.model.HyperwalletErrors;
-import com.hyperwallet.android.model.HyperwalletTransferMethod;
+import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 
 public class ReceiptRepositoryImpl implements ReceiptRepository {
 

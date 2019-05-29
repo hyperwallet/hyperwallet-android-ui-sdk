@@ -1,5 +1,6 @@
 package com.hyperwallet.android.transaction_history.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,18 +11,22 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.hyperwallet.android.common.repository.RepositoryFactory;
+import com.hyperwallet.android.common.repository.*;
 import com.hyperwallet.android.common.view.error.DefaultErrorDialogFragment;
 import com.hyperwallet.android.common.view.error.OnNetworkErrorCallback;
 import com.hyperwallet.android.hyperwallet_transactionhistory.R;
 import com.hyperwallet.android.model.HyperwalletError;
+import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.transaction_history.viewmodel.ListReceiptViewModel;
+import com.hyperwallet.android.transaction_history.viewmodel.ReceiptDetailViewModel;
 
 import java.util.List;
 
 
 public class ListTransactionHistoryActivity extends AppCompatActivity implements
-        ListTransactionHistoryFragment.OnLoadTransactionHistoryNetworkErrorCallback, OnNetworkErrorCallback {
+        ListTransactionHistoryFragment.OnLoadTransactionHistoryNetworkErrorCallback,
+        ListTransactionHistoryFragment.OnReceiptSelectedCallback,
+        OnNetworkErrorCallback {
 
 
     @Override
@@ -70,5 +75,12 @@ public class ListTransactionHistoryActivity extends AppCompatActivity implements
             fragment = ListTransactionHistoryFragment.newInstance();
         }
         fragment.retry();
+    }
+
+    @Override
+    public void showReceiptDetails(@NonNull HyperwalletTransferMethod transferMethod) {
+        Intent it = new Intent(this, ReceiptDetailActivity.class);
+        it.putExtra(ReceiptDetailActivity.EXTRA_RECEIPT, transferMethod);
+        startActivity(it);
     }
 }

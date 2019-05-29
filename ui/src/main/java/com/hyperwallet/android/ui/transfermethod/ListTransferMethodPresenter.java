@@ -21,7 +21,7 @@ import androidx.annotation.NonNull;
 import com.hyperwallet.android.common.repository.TransferMethodRepository;
 import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.HyperwalletStatusTransition;
-import com.hyperwallet.android.model.HyperwalletTransferMethod;
+import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 
 
 import java.util.List;
@@ -39,7 +39,7 @@ public class ListTransferMethodPresenter implements ListTransferMethodContract.P
     @Override
     public void loadTransferMethods() {
         mView.showProgressBar();
-        mTransferMethodRepository.loadTransferMethod(new TransferMethodRepository.LoadTransferMethodListCallback() {
+        mTransferMethodRepository.loadTransferMethods(new TransferMethodRepository.LoadTransferMethodListCallback() {
             @Override
             public void onTransferMethodListLoaded(List<HyperwalletTransferMethod> transferMethods) {
                 if (!mView.isActive()) {

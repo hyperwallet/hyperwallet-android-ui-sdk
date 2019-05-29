@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
@@ -127,6 +128,25 @@ public class EspressoUtils {
             public void describeTo(Description description) {
                 description.appendText("has item at position " + position + ": ");
                 matcher.describeTo(description);
+            }
+        };
+    }
+
+    public static Matcher<View> hasEmptyText() {
+        return new TypeSafeMatcher<View>() {
+
+            @Override
+            public boolean matchesSafely(View view) {
+                if (!(view instanceof EditText)) {
+                    return false;
+                }
+                String text = ((EditText) view).getText().toString();
+
+                return text.isEmpty();
+            }
+
+            @Override
+            public void describeTo(Description description) {
             }
         };
     }

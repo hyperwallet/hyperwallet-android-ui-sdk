@@ -13,8 +13,8 @@ import com.hyperwallet.android.exception.HyperwalletException;
 import com.hyperwallet.android.listener.HyperwalletListener;
 import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.HyperwalletStatusTransition;
-import com.hyperwallet.android.model.HyperwalletTransferMethod;
-import com.hyperwallet.android.model.HyperwalletTransferMethodPagination;
+import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
+import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethodPagination;
 import com.hyperwallet.android.model.paging.HyperwalletPageList;
 
 public class ReceiptDataSource extends PageKeyedDataSource<Integer, HyperwalletTransferMethod> {

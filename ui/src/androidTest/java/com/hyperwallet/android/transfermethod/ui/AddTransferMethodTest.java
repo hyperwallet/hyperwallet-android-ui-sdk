@@ -124,7 +124,7 @@ public class AddTransferMethodTest {
     @Test
     public void testAddTransferMethod_displaysErrorDialogOnDuplicateAccountFailure() {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("successful_tmc_fields_response.json")).mock();
+                .getResourceContent("successful_tmc_fields_bank_account_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_BAD_REQUEST).withBody(sResourceManager
                 .getResourceContent("bank_account_duplicate_routing_response.json")).mock();
 
@@ -159,7 +159,7 @@ public class AddTransferMethodTest {
     @Test
     public void testAddTransferMethod_displaysUnexpectedErrorDialogOnException() {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("successful_tmc_fields_response.json")).mock();
+                .getResourceContent("successful_tmc_fields_bank_account_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_BAD_REQUEST).withBody(sResourceManager
                 .getResourceContent("invalid_json_response.json")).mock();
 
@@ -189,7 +189,7 @@ public class AddTransferMethodTest {
     @Test
     public void testAddTransferMethod_displaysNetworkErrorDialogOnConnectionTimeout() throws IOException {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("successful_tmc_fields_response.json")).mock();
+                .getResourceContent("successful_tmc_fields_bank_account_response.json")).mock();
 
         mActivityTestRule.launchActivity(null);
 

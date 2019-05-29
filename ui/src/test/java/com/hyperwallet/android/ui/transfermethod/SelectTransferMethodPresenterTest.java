@@ -13,9 +13,10 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.HyperwalletErrors;
-import com.hyperwallet.android.model.HyperwalletTransferMethod;
-import com.hyperwallet.android.model.HyperwalletUser;
-import com.hyperwallet.android.model.meta.TransferMethodConfigurationResult;
+import com.hyperwallet.android.model.graphql.HyperwalletTransferMethodConfigurationKey;
+import com.hyperwallet.android.model.graphql.keyed.HyperwalletTransferMethodConfigurationKeyResult;
+import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
+import com.hyperwallet.android.model.user.HyperwalletUser;
 import com.hyperwallet.android.ui.repository.TransferMethodConfigurationRepository;
 import com.hyperwallet.android.ui.repository.TransferMethodConfigurationRepositoryImpl;
 import com.hyperwallet.android.ui.repository.UserRepository;
@@ -40,7 +41,6 @@ import java.util.TreeMap;
 @RunWith(RobolectricTestRunner.class)
 public class SelectTransferMethodPresenterTest {
 
-
     @Mock
     private SelectTransferMethodContract.View view;
     @Mock
@@ -50,7 +50,7 @@ public class SelectTransferMethodPresenterTest {
     @Rule
     public HyperwalletExternalResourceManager externalResourceManager = new HyperwalletExternalResourceManager();
 
-    private TransferMethodConfigurationResult mResult;
+    private HyperwalletTransferMethodConfigurationKey mResult;
     private HyperwalletUser mUser;
     private SelectTransferMethodPresenter selectTransferMethodPresenter;
     private final HyperwalletErrors errors = createErrors();
@@ -58,10 +58,9 @@ public class SelectTransferMethodPresenterTest {
     @Before
     public void initialize() throws Exception {
         initMocks(this);
-
-        String methodsResponseBody = externalResourceManager.getResourceContent("successful_tmc_keys_response.json");
-        final JSONObject methodsJsonObject = new JSONObject(methodsResponseBody);
-        mResult = new TransferMethodConfigurationResult(methodsJsonObject);
+        String responseBody = externalResourceManager.getResourceContent("successful_tmc_keys_response.json");
+        final JSONObject jsonObject = new JSONObject(responseBody);
+        mResult = new HyperwalletTransferMethodConfigurationKeyResult(jsonObject);
 
         String userResponseBody = externalResourceManager.getResourceContent("user_response.json");
         final JSONObject userJsonObject = new JSONObject(userResponseBody);
@@ -220,7 +219,7 @@ public class SelectTransferMethodPresenterTest {
         // Then
         selectTransferMethodPresenter.loadCurrency(false, "CA");
 
-        verify(view).showTransferMethodCurrency("USD");
+        verify(view).showTransferMethodCurrency("CAD");
         verify(view).showTransferMethodTypes(ArgumentMatchers.<TransferMethodSelectionItem>anyList());
         verify(view, never()).showErrorLoadTransferMethodConfigurationKeys(
                 ArgumentMatchers.<HyperwalletError>anyList());
@@ -485,7 +484,8 @@ public class SelectTransferMethodPresenterTest {
                 LoadKeysCallback.class));
 
         // Then
-        selectTransferMethodPresenter.openAddTransferMethod("CA", "CAD", HyperwalletTransferMethod.TransferMethodTypes.BANK_ACCOUNT,
+        selectTransferMethodPresenter.openAddTransferMethod("CA", "CAD",
+                HyperwalletTransferMethod.TransferMethodTypes.BANK_ACCOUNT,
                 HyperwalletUser.ProfileTypes.INDIVIDUAL);
 
         verify(view).showAddTransferMethod("CA", "CAD", HyperwalletTransferMethod.TransferMethodTypes.BANK_ACCOUNT,
@@ -752,7 +752,8 @@ public class SelectTransferMethodPresenterTest {
         // Then
         selectTransferMethodPresenter.loadTransferMethodConfigurationKeys(false, "CA", "CAD");
 
-        verify(view, never()).showErrorLoadTransferMethodConfigurationKeys(ArgumentMatchers.<HyperwalletError>anyList());
+        verify(view, never()).showErrorLoadTransferMethodConfigurationKeys(
+                ArgumentMatchers.<HyperwalletError>anyList());
 
         selectTransferMethodPresenter.loadCurrency(false, "CA");
         verify(view, never()).showErrorLoadCurrency(ArgumentMatchers.<HyperwalletError>anyList());

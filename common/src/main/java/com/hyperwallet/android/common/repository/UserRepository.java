@@ -21,7 +21,7 @@ package com.hyperwallet.android.common.repository;
 import androidx.annotation.NonNull;
 
 import com.hyperwallet.android.model.HyperwalletErrors;
-import com.hyperwallet.android.model.HyperwalletUser;
+import com.hyperwallet.android.model.user.HyperwalletUser;
 
 /**
  * User Repository Contract

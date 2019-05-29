@@ -9,7 +9,7 @@ import androidx.paging.PagedList;
 
 import com.hyperwallet.android.common.repository.ReceiptRepository;
 import com.hyperwallet.android.model.HyperwalletErrors;
-import com.hyperwallet.android.model.HyperwalletTransferMethod;
+import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 
 public class ListReceiptViewModel extends ViewModel {
 

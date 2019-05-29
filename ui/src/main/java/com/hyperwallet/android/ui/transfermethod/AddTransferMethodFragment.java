@@ -16,12 +16,13 @@
  */
 package com.hyperwallet.android.ui.transfermethod;
 
-import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_COUNTRY;
-import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_CURRENCY;
-import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodFields.TYPE;
-import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodTypes.BANK_ACCOUNT;
-import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodTypes.BANK_CARD;
-import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodTypes.PAYPAL_ACCOUNT;
+import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.PROFILE_TYPE;
+import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_COUNTRY;
+import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_CURRENCY;
+import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TYPE;
+import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.BANK_ACCOUNT;
+import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.BANK_CARD;
+import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.PAYPAL_ACCOUNT;
 
 import android.app.Activity;
 import android.content.Context;
@@ -43,19 +44,25 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+
 import com.hyperwallet.android.common.repository.RepositoryFactory;
 import com.hyperwallet.android.exception.HyperwalletException;
 import com.hyperwallet.android.hyperwallet_ui.R;
-import com.hyperwallet.android.model.HyperwalletBankAccount;
-import com.hyperwallet.android.model.HyperwalletBankCard;
 import com.hyperwallet.android.model.HyperwalletError;
-import com.hyperwallet.android.model.HyperwalletTransferMethod;
-import com.hyperwallet.android.model.PayPalAccount;
-import com.hyperwallet.android.model.meta.Fee;
-import com.hyperwallet.android.model.meta.HyperwalletField;
+import com.hyperwallet.android.model.graphql.HyperwalletFee;
+import com.hyperwallet.android.model.graphql.field.HyperwalletField;
+import com.hyperwallet.android.model.graphql.field.HyperwalletFieldGroup;
+import com.hyperwallet.android.model.transfermethod.HyperwalletBankAccount;
+import com.hyperwallet.android.model.transfermethod.HyperwalletBankCard;
+import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
+import com.hyperwallet.android.model.transfermethod.PayPalAccount;
 import com.hyperwallet.android.ui.HyperwalletLocalBroadcast;
+import com.hyperwallet.android.ui.view.WidgetDateDialogFragment;
 import com.hyperwallet.android.ui.view.WidgetSelectionDialogFragment;
 import com.hyperwallet.android.ui.view.widget.AbstractWidget;
+import com.hyperwallet.android.ui.view.widget.DateChangedListener;
+import com.hyperwallet.android.ui.view.widget.DateUtil;
+import com.hyperwallet.android.ui.view.widget.DateWidget;
 import com.hyperwallet.android.ui.view.widget.WidgetEventListener;
 import com.hyperwallet.android.ui.view.widget.WidgetFactory;
 import com.hyperwallet.android.ui.view.widget.WidgetInputState;
@@ -92,7 +99,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     private HyperwalletTransferMethod mTransferMethod;
     private String mTransferMethodProfileType;
     private HashMap<String, WidgetInputState> mWidgetInputStateHashMap;
-    private TextView sectionHeaderTextView;
+    private final DateUtil mDateUtil = new DateUtil();
 
     /**
      * Please do not use this to have instance of AddTransferMethodFragment this is reserved for android framework
@@ -176,8 +183,6 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
         super.onViewCreated(view, savedInstanceState);
         mDynamicContainer = view.findViewById(R.id.add_transfer_method_dynamic_container);
 
-        sectionHeaderTextView = view.findViewById(R.id.account_information_section_header);
-
         mCreateButtonProgressBar = view.findViewById(R.id.add_transfer_method_create_button_progress_bar);
         mProgressBar = view.findViewById(R.id.add_transfer_method_progress_bar_layout);
 
@@ -211,6 +216,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
             mCountry = savedInstanceState.getString(ARGUMENT_TRANSFER_METHOD_COUNTRY);
             mCurrency = savedInstanceState.getString(ARGUMENT_TRANSFER_METHOD_CURRENCY);
             mTransferMethodType = savedInstanceState.getString(ARGUMENT_TRANSFER_METHOD_TYPE);
+            mTransferMethodProfileType = savedInstanceState.getString(ARGUMENT_TRANSFER_METHOD_PROFILE_TYPE);
             mShowCreateProgressBar = savedInstanceState.getBoolean(ARGUMENT_SHOW_CREATE_PROGRESS_BAR);
             mTransferMethod = savedInstanceState.getParcelable(ARGUMENT_TRANSFER_METHOD);
         } else { // same as AddTransferMethodFragment#newInstance
@@ -218,12 +224,9 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
             mCountry = getArguments().getString(ARGUMENT_TRANSFER_METHOD_COUNTRY);
             mCurrency = getArguments().getString(ARGUMENT_TRANSFER_METHOD_CURRENCY);
             mTransferMethodType = getArguments().getString(ARGUMENT_TRANSFER_METHOD_TYPE);
+            mTransferMethodProfileType = getArguments().getString(ARGUMENT_TRANSFER_METHOD_PROFILE_TYPE);
             mTransferMethod = getArguments().getParcelable(ARGUMENT_TRANSFER_METHOD);
         }
-
-        Locale locale = new Locale.Builder().setRegion(mCountry).build();
-        sectionHeaderTextView.setText(requireContext().getResources()
-                .getString(R.string.account_information_section_header, locale.getDisplayName(), mCurrency));
     }
 
     @Override
@@ -244,6 +247,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
         outState.putString(ARGUMENT_TRANSFER_METHOD_COUNTRY, mCountry);
         outState.putString(ARGUMENT_TRANSFER_METHOD_CURRENCY, mCurrency);
         outState.putString(ARGUMENT_TRANSFER_METHOD_TYPE, mTransferMethodType);
+        outState.putString(ARGUMENT_TRANSFER_METHOD_PROFILE_TYPE, mTransferMethodProfileType);
         outState.putBoolean(ARGUMENT_SHOW_CREATE_PROGRESS_BAR, mShowCreateProgressBar);
         outState.putParcelable(ARGUMENT_TRANSFER_METHOD, mTransferMethod);
         super.onSaveInstanceState(outState);
@@ -298,26 +302,37 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     }
 
     @Override
-    public void showTransferMethodFields(@NonNull final List<HyperwalletField> fields) {
+    public void showTransferMethodFields(@NonNull final List<HyperwalletFieldGroup> fields) {
         mDynamicContainer.removeAllViews();
-        int previousView = 0;
-        try {
-            for (final HyperwalletField field : fields) {
-                AbstractWidget widget = WidgetFactory
-                        .newWidget(field, this, getContext(),
-                                mWidgetInputStateHashMap.containsKey(field.getName()) ?
-                                        mWidgetInputStateHashMap.get(field.getName()).getValue() : "",
-                                mCreateTransferMethodButton);
-                if (mWidgetInputStateHashMap.isEmpty() || !mWidgetInputStateHashMap.containsKey(widget.getName())) {
-                    mWidgetInputStateHashMap.put(widget.getName(), widget.getWidgetInputState());
-                }
 
-                View widgetView = widget.getView();
-                widgetView.setTag(widget);
-                previousView = placeBelow(widgetView, previousView, true);
-                final String error = mWidgetInputStateHashMap.get(widget.getName()).getErrorMessage();
-                widget.showValidationError(error);
-                mDynamicContainer.addView(widgetView);
+        try {
+            Locale locale = new Locale.Builder().setRegion(mCountry).build();
+            // group
+            for (HyperwalletFieldGroup group : fields) {
+                View sectionHeader = LayoutInflater.from(mDynamicContainer.getContext())
+                        .inflate(R.layout.item_widget_section_header, mDynamicContainer, false);
+                TextView sectionTitle = sectionHeader.findViewById(R.id.section_header_title);
+                sectionTitle.setText(getSectionHeaderText(group, locale));
+                sectionHeader.setId(View.generateViewId());
+                mDynamicContainer.addView(sectionHeader);
+
+                // group fields
+                for (final HyperwalletField field : group.getFields()) {
+                    AbstractWidget widget = WidgetFactory
+                            .newWidget(field, this, mWidgetInputStateHashMap.containsKey(field.getName()) ?
+                                            mWidgetInputStateHashMap.get(field.getName()).getValue() : "",
+                                    mCreateTransferMethodButton);
+                    if (mWidgetInputStateHashMap.isEmpty() || !mWidgetInputStateHashMap.containsKey(widget.getName())) {
+                        mWidgetInputStateHashMap.put(widget.getName(), widget.getWidgetInputState());
+                    }
+
+                    View widgetView = widget.getView(mDynamicContainer);
+                    widgetView.setTag(widget);
+                    widgetView.setId(View.generateViewId());
+                    final String error = mWidgetInputStateHashMap.get(widget.getName()).getErrorMessage();
+                    widget.showValidationError(error);
+                    mDynamicContainer.addView(widgetView);
+                }
             }
 
             if (mShowCreateProgressBar) {
@@ -328,8 +343,20 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
         }
     }
 
+    private String getSectionHeaderText(@NonNull final HyperwalletFieldGroup group, @NonNull final Locale locale) {
+        if (group.getGroupName().equals(HyperwalletFieldGroup.GroupTypes.ACCOUNT_INFORMATION)) {
+            return requireContext().getResources()
+                    .getString(R.string.account_information_section_header, locale.getDisplayName(), mCurrency);
+        }
+
+        return requireContext().getString(requireContext().getResources()
+                .getIdentifier(group.getGroupName().toLowerCase(Locale.ROOT), "string",
+                        requireContext().getPackageName()));
+    }
+
     @Override
-    public void showTransactionInformation(@NonNull final List<Fee> fees, @Nullable final String processingTime) {
+    public void showTransactionInformation(@NonNull final List<HyperwalletFee> fees,
+            @Nullable final String processingTime) {
         View header = getView().findViewById(R.id.add_transfer_method_static_container_header);
         View container = getView().findViewById(R.id.add_transfer_method_static_container);
         View feeLabel = getView().findViewById(R.id.add_transfer_method_fee_label);
@@ -339,7 +366,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
 
         int defaultMargin = (int) requireContext().getResources().getDimension(R.dimen.default_margin);
 
-        if (!fees.isEmpty()) {
+        if (fees != null && !fees.isEmpty()) {
             String formattedFee = FeeFormatter.getFormattedFee(requireContext(), fees);
             feeValue.setText(formattedFee);
             feeLabel.setVisibility(View.VISIBLE);
@@ -420,7 +447,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                     AbstractWidget widget = (AbstractWidget) view.getTag();
                     if (widget.getName().equals(error.getFieldName())) {
                         if (!focusSet) {
-                            widget.getView().requestFocus();
+                            widget.getView(mDynamicContainer).requestFocus();
                             focusSet = true;
                         }
                         widget.showValidationError(error.getMessage());
@@ -497,6 +524,8 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                     mTransferMethod.setField(widget.getName(), widget.getValue());
                 }
             }
+
+            mTransferMethod.setField(PROFILE_TYPE, mTransferMethodProfileType);
             mPresenter.createTransferMethod(mTransferMethod);
         }
     }
@@ -522,25 +551,6 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE);
         mCreateButtonProgressBar.setVisibility(View.VISIBLE);
         mCreateTransferMethodButton.setBackgroundColor(getResources().getColor(R.color.colorSecondaryDark));
-    }
-
-    private int placeBelow(View v, int previousId, boolean matchParentWidth) {
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                matchParentWidth ? ViewGroup.LayoutParams.MATCH_PARENT : ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
-
-        if (previousId != 0) {
-            params.addRule(RelativeLayout.BELOW, previousId);
-        }
-
-        int margin = (int) (getContext().getResources().getDimension(R.dimen.default_margin)
-                / getContext().getResources().getDisplayMetrics().density);
-
-        params.setMargins(margin, margin, margin, margin);
-        v.setId(View.generateViewId());
-        v.setLayoutParams(params);
-
-        return v.getId();
     }
 
     private boolean performValidation(boolean bypassFocusCheck) {
@@ -569,20 +579,40 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                 }
             }
         }
-        return valid && hasWidget && haveAllWidgetsReceivedFocus();
-    }
-
-    private boolean haveAllWidgetsReceivedFocus() {
-        for (String key : mWidgetInputStateHashMap.keySet()) {
-            if (!mWidgetInputStateHashMap.get(key).hasFocused()) {
-                return false;
-            }
-        }
-        return true;
+        return valid && hasWidget;
     }
 
     @Override
     public boolean isActive() {
         return isAdded();
+    }
+
+    @Override
+    public void openWidgetDateDialog(@Nullable final String date, @NonNull final String fieldName) {
+        if (getFragmentManager() != null) {
+            WidgetDateDialogFragment dateDialogFragment = (WidgetDateDialogFragment)
+                    getFragmentManager().findFragmentByTag(WidgetDateDialogFragment.TAG);
+
+            if (dateDialogFragment == null) {
+                dateDialogFragment = WidgetDateDialogFragment.newInstance(date, fieldName);
+            }
+
+            if (!dateDialogFragment.isAdded()) {
+                dateDialogFragment.show(getFragmentManager());
+            }
+        }
+    }
+
+    void onDateSelected(@NonNull final String selectedValue, @NonNull final String fieldName) {
+        for (int i = 0; i < mDynamicContainer.getChildCount(); i++) {
+            View view = mDynamicContainer.getChildAt(i);
+            if (view.getTag() instanceof DateWidget) {
+                AbstractWidget widget = (AbstractWidget) view.getTag();
+                if (fieldName.equals(widget.getName()) && widget instanceof DateChangedListener) {
+                    ((DateChangedListener) view.getTag()).onUpdate(selectedValue);
+                    return;
+                }
+            }
+        }
     }
 }

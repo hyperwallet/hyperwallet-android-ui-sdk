@@ -17,6 +17,7 @@
 package com.hyperwallet.android.ui.view.widget;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import java.util.TreeMap;
 
@@ -30,4 +31,6 @@ public interface WidgetEventListener {
     void widgetFocused(@NonNull final String fieldName);
 
     void saveTextChanged(@NonNull final String fieldName, @NonNull final String value);
+
+    void openWidgetDateDialog(@Nullable final String date, @NonNull final String fieldName);
 }

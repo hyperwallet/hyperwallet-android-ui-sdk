@@ -1,8 +1,7 @@
 package com.hyperwallet.android.ui.view.widget;
 
-import static com.hyperwallet.android.model.HyperwalletTransferMethod.TransferMethodFields.IS_DEFAULT_TRANSFER_METHOD;
+import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.IS_DEFAULT_TRANSFER_METHOD;
 
-import android.content.Context;
 import android.graphics.Typeface;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,9 +20,9 @@ public class DefaultAccountWidget extends AbstractWidget {
     private ViewGroup mContainer;
     private String mValue;
 
-    public DefaultAccountWidget(@NonNull WidgetEventListener listener, @NonNull Context context,
+    public DefaultAccountWidget(@NonNull WidgetEventListener listener,
             @Nullable String defaultValue, @NonNull View defaultFocusView) {
-        super(null, listener, context, defaultValue, defaultFocusView);
+        super(null, listener, defaultValue, defaultFocusView);
     }
 
     @Override
@@ -32,26 +31,26 @@ public class DefaultAccountWidget extends AbstractWidget {
     }
 
     @Override
-    public View getView() {
+    public View getView(@NonNull final ViewGroup viewGroup) {
         if (mContainer == null) {
-            mContainer = new RelativeLayout(mContext);
+            mContainer = new RelativeLayout(viewGroup.getContext());
             // label
-            TextView label = new TextView(mContext);
-            label.setText(mContext.getResources().getText(R.string.default_account_label));
+            TextView label = new TextView(viewGroup.getContext());
+            label.setText(viewGroup.getContext().getResources().getText(R.string.default_account_label));
 
-            label.setTextSize(mContext.getResources().getDimension(R.dimen.font_subtitle2));
+            label.setTextSize(viewGroup.getContext().getResources().getDimension(R.dimen.font_subtitle2));
             setIdFromFieldLabel(label);
             label.setTypeface(null, Typeface.BOLD);
-            label.setTextColor(mContext.getResources().getColor(R.color.colorPrimary));
+            label.setTextColor(viewGroup.getContext().getResources().getColor(R.color.colorPrimary));
 
             appendLayout(label, true);
             mContainer.addView(label);
 
             // switch control
-            Switch toggle = new Switch(mContext);
+            Switch toggle = new Switch(viewGroup.getContext());
             setIdFromFieldName(toggle);
-            toggle.setText(mContext.getResources().getText(R.string.default_account_sub_label));
-            toggle.setTextSize(mContext.getResources().getDimension(R.dimen.font_subtitle2));
+            toggle.setText(viewGroup.getContext().getResources().getText(R.string.default_account_sub_label));
+            toggle.setTextSize(viewGroup.getContext().getResources().getDimension(R.dimen.font_subtitle2));
             if (mDefaultValue == null) {
                 toggle.setChecked(true); // initial state
                 mValue = Boolean.TRUE.toString();

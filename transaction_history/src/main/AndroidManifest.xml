@@ -9,6 +9,7 @@
         <activity
             android:name="com.hyperwallet.android.transaction_history.view.ListTransactionHistoryActivity"
             android:windowSoftInputMode="adjustResize"/>
+        <activity android:name="com.hyperwallet.android.transaction_history.view.ReceiptDetailActivity"/>
     </application>
 
 </manifest>

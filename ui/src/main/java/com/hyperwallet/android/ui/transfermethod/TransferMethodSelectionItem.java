@@ -18,29 +18,34 @@ package com.hyperwallet.android.ui.transfermethod;
 
 import androidx.annotation.NonNull;
 
-import com.hyperwallet.android.model.meta.Fee;
+import com.hyperwallet.android.model.graphql.HyperwalletFee;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 public class TransferMethodSelectionItem {
 
     private final String mCountry;
     private final String mCurrency;
-    private final List<Fee> mFees;
+    private final List<HyperwalletFee> mFees;
     private final String mProcessingTime;
     private final String mProfileType;
     private final String mTransferMethodType;
+    private final String mTransferMethodName;
 
     public TransferMethodSelectionItem(@NonNull final String country, @NonNull final String currency,
             @NonNull final String profileType, @NonNull final String transferMethodType,
-            @NonNull final String processingTime, @NonNull final List<Fee> fees) {
+            @NonNull final String transferMethodName, @NonNull final String processingTime,
+            @NonNull final Set<HyperwalletFee> fees) {
         mCountry = country;
         mCurrency = currency;
         mProfileType = profileType;
         mTransferMethodType = transferMethodType;
+        mTransferMethodName = transferMethodName;
         mProcessingTime = processingTime;
-        mFees = fees;
+        mFees = new ArrayList<>(fees);
     }
 
     public String getCountry() {
@@ -55,6 +60,10 @@ public class TransferMethodSelectionItem {
         return mProfileType;
     }
 
+    public String getTransferMethodName() {
+        return mTransferMethodName;
+    }
+
     public String getTransferMethodType() {
         return mTransferMethodType;
     }
@@ -63,7 +72,7 @@ public class TransferMethodSelectionItem {
         return mProcessingTime;
     }
 
-    public List<Fee> getFees() {
+    public List<HyperwalletFee> getFees() {
         return mFees;
     }
 

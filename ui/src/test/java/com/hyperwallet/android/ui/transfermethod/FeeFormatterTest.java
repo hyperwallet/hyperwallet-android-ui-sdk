@@ -9,8 +9,11 @@ import android.content.Context;
 import android.content.res.Resources;
 
 import com.hyperwallet.android.hyperwallet_ui.R;
-import com.hyperwallet.android.model.meta.Fee;
+import com.hyperwallet.android.model.graphql.HyperwalletFee;
+import com.hyperwallet.android.ui.rule.HyperwalletExternalResourceManager;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -33,104 +36,115 @@ public class FeeFormatterTest {
     @Captor
     private ArgumentCaptor<Integer> resourceIdCaptor;
     @Captor
-    private ArgumentCaptor<Object> formatterArugmentCapture;
+    private ArgumentCaptor<Object> formatterArgumentCapture;
     @Mock
     private Context context;
     @Mock
     private Resources resources;
+    @Rule
+    public HyperwalletExternalResourceManager externalResourceManager = new HyperwalletExternalResourceManager();
 
-    private final Fee flatFee = new Fee("", null, "USD", "FLAT", "3.00", null, null);
+    private HyperwalletFee mFlatFee;
+    private JSONObject mJSONObject;
 
     @Before
-    public void setUp() {
+    public void setUp() throws JSONException {
+        mJSONObject = new JSONObject(externalResourceManager.getResourceContent("fee_information.json"));
+        mFlatFee = new HyperwalletFee(mJSONObject.getJSONObject("FEE_ONE").getJSONArray("nodes")
+                .getJSONObject(0));
         when(context.getResources()).thenReturn(resources);
     }
 
     @Test
     public void testGetFormattedFee_returnsFlatFormattedFee() {
-        FeeFormatter.getFormattedFee(context, Arrays.asList(flatFee));
+        FeeFormatter.getFormattedFee(context, Arrays.asList(mFlatFee));
 
-        verify(resources).getString(resourceIdCaptor.capture(), formatterArugmentCapture.capture());
+        verify(resources).getString(resourceIdCaptor.capture(), formatterArgumentCapture.capture());
         int resourceIdCaptorValue = resourceIdCaptor.getValue();
-        List<Object> argumentList = formatterArugmentCapture.getAllValues();
+        List<Object> argumentList = formatterArgumentCapture.getAllValues();
         assertThat(resourceIdCaptorValue, is(R.string.fee_flat_formatter));
         assertThat(argumentList.size(), is(2));
     }
 
     @Test
     public void testGetFormattedFee_returnsPercentFormattedFeeWithMinAndMax() {
-        Fee fee = new Fee("", null, "USD", "PERCENT", "3", "4.00", "10.00");
+        HyperwalletFee fee = new HyperwalletFee(mJSONObject.optJSONObject("FEE_TWO").optJSONArray("nodes")
+                .optJSONObject(0));
 
         FeeFormatter.getFormattedFee(context, Arrays.asList(fee));
 
-        verify(resources).getString(resourceIdCaptor.capture(), formatterArugmentCapture.capture());
+        verify(resources).getString(resourceIdCaptor.capture(), formatterArgumentCapture.capture());
         int resourceIdCaptorValue = resourceIdCaptor.getValue();
-        List<Object> argumentList = formatterArugmentCapture.getAllValues();
+        List<Object> argumentList = formatterArgumentCapture.getAllValues();
         assertThat(resourceIdCaptorValue, is(R.string.fee_percent_formatter));
         assertThat(argumentList.size(), is(4));
     }
 
     @Test
     public void testGetFormattedFee_returnsPercentFormattedFeeWithMinOnly() {
-        Fee fee = new Fee("", null, "USD", "PERCENT", "3", "4.00", "");
+        HyperwalletFee fee = new HyperwalletFee(mJSONObject.optJSONObject("FEE_THREE").optJSONArray("nodes")
+                .optJSONObject(0));
 
         FeeFormatter.getFormattedFee(context, Arrays.asList(fee));
 
-        verify(resources).getString(resourceIdCaptor.capture(), formatterArugmentCapture.capture());
+        verify(resources).getString(resourceIdCaptor.capture(), formatterArgumentCapture.capture());
         int resourceIdCaptorValue = resourceIdCaptor.getValue();
-        List<Object> argumentList = formatterArugmentCapture.getAllValues();
+        List<Object> argumentList = formatterArgumentCapture.getAllValues();
         assertThat(resourceIdCaptorValue, is(R.string.fee_percent_only_min_formatter));
         assertThat(argumentList.size(), is(3));
     }
 
     @Test
     public void testGetFormattedFee_returnsPercentFormattedFeeWithMaxOnly() {
-        Fee fee = new Fee("", null, "USD", "PERCENT", "3", "", "10.00");
-
+        HyperwalletFee fee = new HyperwalletFee(mJSONObject.optJSONObject("FEE_FOUR").optJSONArray("nodes")
+                .optJSONObject(0));
         FeeFormatter.getFormattedFee(context, Arrays.asList(fee));
 
-        verify(resources).getString(resourceIdCaptor.capture(), formatterArugmentCapture.capture());
+        verify(resources).getString(resourceIdCaptor.capture(), formatterArgumentCapture.capture());
         int resourceIdCaptorValue = resourceIdCaptor.getValue();
-        List<Object> argumentList = formatterArugmentCapture.getAllValues();
+        List<Object> argumentList = formatterArgumentCapture.getAllValues();
         assertThat(resourceIdCaptorValue, is(R.string.fee_percent_only_max_formatter));
         assertThat(argumentList.size(), is(3));
     }
 
     @Test
     public void testGetFormattedFee_returnsPercentFormattedFeeWithoutMinAndMax() {
-        Fee fee = new Fee("", null, "USD", "PERCENT", "3", "", "");
+        HyperwalletFee fee = new HyperwalletFee(mJSONObject.optJSONObject("FEE_FIVE").optJSONArray("nodes")
+                .optJSONObject(0));
 
         FeeFormatter.getFormattedFee(context, Arrays.asList(fee));
 
-        verify(resources).getString(resourceIdCaptor.capture(), formatterArugmentCapture.capture());
+        verify(resources).getString(resourceIdCaptor.capture(), formatterArgumentCapture.capture());
         int resourceIdCaptorValue = resourceIdCaptor.getValue();
-        List<Object> argumentList = formatterArugmentCapture.getAllValues();
+        List<Object> argumentList = formatterArgumentCapture.getAllValues();
         assertThat(resourceIdCaptorValue, is(R.string.fee_percent_no_min_and_max_formatter));
         assertThat(argumentList.size(), is(1));
     }
 
     @Test
     public void testGetFormattedFee_returnsPercentAndFlatFormattedFeeWithMinAndMax() {
-        Fee percentFee = new Fee("", null, "USD", "PERCENT", "3", "4.00", "10.00");
+        HyperwalletFee percentFee = new HyperwalletFee(mJSONObject.optJSONObject("FEE_SIX").optJSONArray("nodes")
+                .optJSONObject(0));
 
-        FeeFormatter.getFormattedFee(context, Arrays.asList(flatFee, percentFee));
+        FeeFormatter.getFormattedFee(context, Arrays.asList(mFlatFee, percentFee));
 
-        verify(resources).getString(resourceIdCaptor.capture(), formatterArugmentCapture.capture());
+        verify(resources).getString(resourceIdCaptor.capture(), formatterArgumentCapture.capture());
         int resourceIdCaptorValue = resourceIdCaptor.getValue();
-        List<Object> argumentList = formatterArugmentCapture.getAllValues();
+        List<Object> argumentList = formatterArgumentCapture.getAllValues();
         assertThat(resourceIdCaptorValue, is(R.string.fee_mix_formatter));
         assertThat(argumentList.size(), is(5));
     }
 
     @Test
     public void testGetFormattedFee_returnsPercentAndFlatFormattedFeeWithMinOnly() {
-        Fee percentFee = new Fee("", null, "USD", "PERCENT", "3.00", "10.00", "");
+        HyperwalletFee percentFee = new HyperwalletFee(mJSONObject.optJSONObject("FEE_SEVEN").optJSONArray("nodes")
+                .optJSONObject(0));
 
-        FeeFormatter.getFormattedFee(context, Arrays.asList(flatFee, percentFee));
+        FeeFormatter.getFormattedFee(context, Arrays.asList(mFlatFee, percentFee));
 
-        verify(resources).getString(resourceIdCaptor.capture(), formatterArugmentCapture.capture());
+        verify(resources).getString(resourceIdCaptor.capture(), formatterArgumentCapture.capture());
         int resourceIdCaptorValue = resourceIdCaptor.getValue();
-        List<Object> argumentList = formatterArugmentCapture.getAllValues();
+        List<Object> argumentList = formatterArgumentCapture.getAllValues();
         assertThat(resourceIdCaptorValue, is(R.string.fee_mix_only_min_formatter));
         assertThat(argumentList.size(), is(4));
     }

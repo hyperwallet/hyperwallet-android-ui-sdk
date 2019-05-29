@@ -20,8 +20,8 @@ import androidx.annotation.NonNull;
 
 import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.HyperwalletStatusTransition;
-import com.hyperwallet.android.model.HyperwalletTransferMethod;
-import com.hyperwallet.android.model.HyperwalletTransferMethodPagination;
+import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
+import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethodPagination;
 
 import java.util.List;
 
@@ -40,11 +40,11 @@ public interface TransferMethodRepository {
             @NonNull LoadTransferMethodCallback callback);
 
     /**
-     * Load transfe methods available associated with current context
+     * Load transfer methods available associated with current context
      *
      * @param callback @see {@link LoadTransferMethodListCallback}
      */
-    void loadTransferMethod(@NonNull LoadTransferMethodListCallback callback);
+    void loadTransferMethods(@NonNull LoadTransferMethodListCallback callback);
 
     /**
      * Deactivate transfer method specified.

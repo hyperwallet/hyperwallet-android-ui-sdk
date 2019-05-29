@@ -106,6 +106,10 @@
         <item name="android:textColor">@color/colorSecondaryDark</item>
     </style>
 
+    <style name="HintTextDisabled" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textColor">@color/colorSecondary</item>
+    </style>
+
     <style name="Widget.Hyperwallet.TextInputLayout"
            parent="Base.Widget.MaterialComponents.TextInputLayout">
         <item name="helperTextTextAppearance">@style/TextAppearance.Design.HelperText</item>
@@ -116,6 +120,13 @@
         <item name="colorControlNormal">@color/colorSecondaryLight</item>
         <item name="android:background">@null</item>
         <item name="colorControlActivated">@color/colorPrimary</item>
+    </style>
+
+    <style name="Widget.Hyperwallet.TextInputLayout.Disabled"
+           parent="Widget.Hyperwallet.TextInputLayout">
+        <item name="hintTextAppearance">@style/HintTextDisabled</item>
+        <item name="android:textColor">@color/colorSecondary</item>
+        <item name="android:textColorHint">@color/colorSecondary</item>
     </style>
 
     <style name="Widget.Hyperwallet.TextInputEditText"
@@ -212,5 +223,11 @@
            parent="TextAppearance.MaterialComponents.Body1">
         <item name="android:textColor">@color/colorSecondaryDark</item>
         <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="Widget.Hyperwallet.DatePicker" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorPrimary</item>
     </style>
 </resources>

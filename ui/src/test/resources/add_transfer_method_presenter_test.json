@@ -1,11 +1,30 @@
 {
-  "category": "ACCOUNT",
-  "dataType": "NUMBER",
-  "isRequired": true,
-  "label": "Account Number",
-  "maxLength": 17,
-  "minLength": 4,
-  "name": "bankAccountId",
-  "placeholder": "",
-  "regularExpression": "^(?![0-]+$)[0-9-]{4,17}$"
+  "country": "US",
+  "currency": "USD",
+  "transferMethodType": "BANK_ACCOUNT",
+  "profile": "INDIVIDUAL",
+  "fieldGroups": {
+    "nodes": [
+      {
+        "group": "BUSINESS_INFORMATION",
+        "fields": [
+          {
+            "category": "ACCOUNT",
+            "dataType": "NUMBER",
+            "isRequired": true,
+            "isEditable": true,
+            "name": "branchId",
+            "label": "Routing Number",
+            "placeholder": "",
+            "regularExpression": "^[0-9]{9}$",
+            "validationMessage": {
+              "length": "The exact length of this field is 9.",
+              "pattern": "is invalid length or format.",
+              "empty": "You must provide a value for this field"
+            }
+          }
+        ]
+      }
+    ]
+  }
 }

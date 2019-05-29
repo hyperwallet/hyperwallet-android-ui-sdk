@@ -23,7 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.hyperwallet.android.hyperwallet_transactionhistory.R;
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.HyperwalletErrors;
-import com.hyperwallet.android.model.HyperwalletTransferMethod;
+import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.transaction_history.viewmodel.ListReceiptViewModel;
 
 import java.util.List;
@@ -35,6 +35,8 @@ public class ListTransactionHistoryFragment extends Fragment {
     private ListTransactionHistoryAdapter mListTransactionHistoryAdapter;
     private ListReceiptViewModel mListReceiptViewModel;
     private OnLoadTransactionHistoryNetworkErrorCallback mOnLoadTransactionHistoryNetworkErrorCallback;
+    private OnReceiptSelectedCallback mOnReceiptSelectedCallback;
+
 
     public static ListTransactionHistoryFragment newInstance() {
         return new ListTransactionHistoryFragment();
@@ -57,6 +59,7 @@ public class ListTransactionHistoryFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         mOnLoadTransactionHistoryNetworkErrorCallback = (OnLoadTransactionHistoryNetworkErrorCallback) getActivity();
+        mOnReceiptSelectedCallback = (OnReceiptSelectedCallback) getActivity();
     }
 
     @Nullable
@@ -69,7 +72,7 @@ public class ListTransactionHistoryFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mListTransactionHistoryAdapter = new ListTransactionHistoryAdapter(new HyperwalletTransferMethodDiffCallBack());
+        mListTransactionHistoryAdapter = new ListTransactionHistoryAdapter(mOnReceiptSelectedCallback, new HyperwalletTransferMethodDiffCallBack());
         mProgressBar = view.findViewById(R.id.list_transfer_method_progress_bar);
         mRecyclerView = view.findViewById(R.id.list_transaction_history_item);
         mRecyclerView.setHasFixedSize(true);
@@ -135,12 +138,20 @@ public class ListTransactionHistoryFragment extends Fragment {
     }
 
 
+    interface OnReceiptSelectedCallback {
+
+        void showReceiptDetails(@NonNull final HyperwalletTransferMethod transferMethod);
+    }
+
+
     private static class ListTransactionHistoryAdapter extends
             PagedListAdapter<HyperwalletTransferMethod, ListTransactionHistoryAdapter.ViewHolder> {
 
-        ListTransactionHistoryAdapter(
+        private final OnReceiptSelectedCallback mOnReceiptSelectedCallback;
+        ListTransactionHistoryAdapter(OnReceiptSelectedCallback receiptSelectedCallback,
                 @NonNull DiffUtil.ItemCallback<HyperwalletTransferMethod> diffCallback) {
             super(diffCallback);
+            mOnReceiptSelectedCallback = receiptSelectedCallback;
         }
 
         @NonNull
@@ -157,6 +168,11 @@ public class ListTransactionHistoryFragment extends Fragment {
             viewHolder.bind(transferMethod);
         }
 
+        @Override
+        public void onViewRecycled(@NonNull ViewHolder holder) {
+            super.onViewRecycled(holder);
+            holder.mTitle.setOnClickListener(null);
+        }
 
         class ViewHolder extends RecyclerView.ViewHolder {
             private final TextView mTitle;
@@ -168,7 +184,14 @@ public class ListTransactionHistoryFragment extends Fragment {
 
             void bind(@NonNull final HyperwalletTransferMethod transferMethod) {
                 mTitle.setText(transferMethod.getField(HyperwalletTransferMethod.TransferMethodFields.TOKEN));
+                mTitle.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mOnReceiptSelectedCallback.showReceiptDetails(transferMethod);
+                    }
+                });
             }
+
 
         }
     }
