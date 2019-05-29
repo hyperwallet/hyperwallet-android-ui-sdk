@@ -54,41 +54,6 @@ task sourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
 }
 
-
-//android {
-//    compileSdkVersion compileVersion
-//    defaultConfig {
-//        minSdkVersion minVersion
-//        targetSdkVersion targetVersion
-//        versionCode codeVersion
-//        versionName version
-//        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-//        testInstrumentationRunnerArgument "listener", "com.squareup.leakcanary.FailTestOnLeakRunListener"
-//    }
-//
-//    sourceSets {
-//        androidTest {
-//            resources.srcDirs += ['src/test/resources']
-//        }
-//    }
-//
-//    buildTypes {
-//        release {
-//            minifyEnabled false
-//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-//        }
-//        debug {
-//            testCoverageEnabled true
-//        }
-//    }
-//
-//    lintOptions {
-//        abortOnError true
-//        warningsAsErrors true
-//        lintConfig file("config/lint.xml")
-//    }
-//}
-
 dependencies {
     implementation "com.google.android.material:material:$androidMaterialVersion"
     api "com.hyperwallet.android:core-sdk:$hyperwalletCoreVersion"

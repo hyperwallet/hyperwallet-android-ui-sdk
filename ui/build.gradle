@@ -1,7 +1,4 @@
 apply from: "$rootProject.projectDir/android-library.gradle"
-apply plugin: 'maven-publish'
-apply plugin: 'signing'
-apply plugin: 'org.sonarqube'
 
 dependencies {
 
