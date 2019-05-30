@@ -52,7 +52,7 @@ subprojects {
         espressoVersion = '3.1.1'
         mockServerVersion = '3.11.0'
         leakcanaryVersion = '1.6.3'
-        mockitoVersion = '2.25.0'
+        mockitoVersion = '2.27.0'
         junitParamsVersion = '1.1.1'
         robolectricVersion = '4.1'
         mockWebServerVersion = '3.11.0'
