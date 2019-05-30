@@ -11,6 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.paging.PagedList;
@@ -19,23 +21,30 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import com.hyperwallet.android.hyperwallet_transactionhistory.R;
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.transaction_history.viewmodel.ListReceiptViewModel;
+import com.hyperwallet.android.util.DateUtil;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class ListTransactionHistoryFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
     private ProgressBar mProgressBar;
+    private ViewPager mViewPager;
     private ListTransactionHistoryAdapter mListTransactionHistoryAdapter;
     private ListReceiptViewModel mListReceiptViewModel;
     private OnLoadTransactionHistoryNetworkErrorCallback mOnLoadTransactionHistoryNetworkErrorCallback;
     private OnReceiptSelectedCallback mOnReceiptSelectedCallback;
+    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy MM");
 
 
     public static ListTransactionHistoryFragment newInstance() {
@@ -72,6 +81,8 @@ public class ListTransactionHistoryFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        //mViewPager = view.findViewById(R.id.pager);
+
         mListTransactionHistoryAdapter = new ListTransactionHistoryAdapter(mOnReceiptSelectedCallback, new HyperwalletTransferMethodDiffCallBack());
         mProgressBar = view.findViewById(R.id.list_transfer_method_progress_bar);
         mRecyclerView = view.findViewById(R.id.list_transaction_history_item);
@@ -82,25 +93,7 @@ public class ListTransactionHistoryFragment extends Fragment {
         registerObservers();
     }
 
-    private static class HyperwalletTransferMethodDiffCallBack extends
-            DiffUtil.ItemCallback<HyperwalletTransferMethod> {
 
-        @Override
-        public boolean areItemsTheSame(@NonNull HyperwalletTransferMethod oldItem,
-                @NonNull HyperwalletTransferMethod newItem) {
-
-            return oldItem.getField(HyperwalletTransferMethod.TransferMethodFields.TOKEN).equals(newItem.getField(
-                    HyperwalletTransferMethod.TransferMethodFields.TOKEN));
-
-        }
-
-        @Override
-        public boolean areContentsTheSame(@NonNull HyperwalletTransferMethod oldItem,
-                @NonNull HyperwalletTransferMethod newItem) {
-            return oldItem.getField(HyperwalletTransferMethod.TransferMethodFields.TOKEN).equals(newItem.getField(
-                    HyperwalletTransferMethod.TransferMethodFields.TOKEN));
-        }
-    }
 
     private void registerObservers() {
         mListReceiptViewModel.getRecipeList().observe(this, new Observer<PagedList<HyperwalletTransferMethod>>() {
@@ -143,6 +136,43 @@ public class ListTransactionHistoryFragment extends Fragment {
         void showReceiptDetails(@NonNull final HyperwalletTransferMethod transferMethod);
     }
 
+    private static class HyperwalletTransferMethodDiffCallBack extends
+            DiffUtil.ItemCallback<HyperwalletTransferMethod> {
+
+        @Override
+        public boolean areItemsTheSame(@NonNull HyperwalletTransferMethod oldItem,
+                @NonNull HyperwalletTransferMethod newItem) {
+
+            return oldItem.getField(HyperwalletTransferMethod.TransferMethodFields.TOKEN).equals(newItem.getField(
+                    HyperwalletTransferMethod.TransferMethodFields.TOKEN));
+
+        }
+
+        @Override
+        public boolean areContentsTheSame(@NonNull HyperwalletTransferMethod oldItem,
+                @NonNull HyperwalletTransferMethod newItem) {
+            return oldItem.getField(HyperwalletTransferMethod.TransferMethodFields.TOKEN).equals(newItem.getField(
+                    HyperwalletTransferMethod.TransferMethodFields.TOKEN));
+        }
+    }
+
+
+    static class ReceiptPageAdapter extends FragmentStatePagerAdapter {
+
+        public ReceiptPageAdapter(FragmentManager fragmentManager) {
+            super(fragmentManager);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public int getCount() {
+            return 0;
+        }
+    }
 
     private static class ListTransactionHistoryAdapter extends
             PagedListAdapter<HyperwalletTransferMethod, ListTransactionHistoryAdapter.ViewHolder> {
@@ -158,8 +188,27 @@ public class ListTransactionHistoryFragment extends Fragment {
         @Override
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
             LayoutInflater layout = LayoutInflater.from(viewGroup.getContext());
-            View itemViewLayout = layout.inflate(R.layout.item_transaction_history_item, viewGroup, false);
-            return new ViewHolder(itemViewLayout);
+            if (i == 0) {
+                View itemViewLayout = layout.inflate(R.layout.item_transaction_history_item, viewGroup, false);
+                return new ViewHolder(itemViewLayout);
+            } else {
+                View itemViewLayout = layout.inflate(R.layout.item_transaction_history_item_header, viewGroup, false);
+                return new ViewHolderHeader(itemViewLayout);
+            }
+        }
+
+        @Override
+        public int getItemViewType(int position) {
+
+            if (position != 0) {
+                HyperwalletTransferMethod previous = getItem(position-1);
+                HyperwalletTransferMethod current = getItem(position);
+                if (shouldGroup(previous, current)) {
+                    return 1;
+                }
+            }
+            return 0;
+
         }
 
         @Override
@@ -174,15 +223,21 @@ public class ListTransactionHistoryFragment extends Fragment {
             holder.mTitle.setOnClickListener(null);
         }
 
+        boolean shouldGroup(HyperwalletTransferMethod previous, HyperwalletTransferMethod current) {
+            Date previousDate = DateUtil.fromDateTimeString(previous.getField(HyperwalletTransferMethod.TransferMethodFields.CREATED_ON));
+            Date currentDate = DateUtil.fromDateTimeString(current.getField(HyperwalletTransferMethod.TransferMethodFields.CREATED_ON));
+            return previousDate.getMonth() != currentDate.getMonth() || previousDate.getYear() !=  currentDate.getYear();
+        }
+
         class ViewHolder extends RecyclerView.ViewHolder {
-            private final TextView mTitle;
+            private TextView mTitle;
 
             ViewHolder(@NonNull final View itemView) {
                 super(itemView);
-                mTitle = itemView.findViewById(R.id.transaction_history_id);
             }
 
             void bind(@NonNull final HyperwalletTransferMethod transferMethod) {
+                mTitle = itemView.findViewById(R.id.transaction_history_id);
                 mTitle.setText(transferMethod.getField(HyperwalletTransferMethod.TransferMethodFields.TOKEN));
                 mTitle.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -191,8 +246,32 @@ public class ListTransactionHistoryFragment extends Fragment {
                     }
                 });
             }
+        }
 
+        class ViewHolderHeader extends ViewHolder {
+            private final TextView mTitle;
+            private final TextView mHeader;
 
+            ViewHolderHeader(@NonNull final View itemView) {
+                super(itemView);
+                mTitle = itemView.findViewById(R.id.transaction_history_id2);
+                mHeader = itemView.findViewById(R.id.header);
+            }
+
+            void bind(@NonNull final HyperwalletTransferMethod transferMethod) {
+                mTitle.setText(transferMethod.getField(HyperwalletTransferMethod.TransferMethodFields.TOKEN));
+                Date date = DateUtil.fromDateTimeString(transferMethod.getField(HyperwalletTransferMethod.TransferMethodFields.CREATED_ON));
+                mHeader.setText(DATE_FORMAT.format(date));
+                mTitle.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mOnReceiptSelectedCallback.showReceiptDetails(transferMethod);
+                    }
+                });
+            }
         }
     }
+
+
+
 }

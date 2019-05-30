@@ -18,7 +18,6 @@ import com.hyperwallet.android.hyperwallet_transactionhistory.R;
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.transaction_history.viewmodel.ListReceiptViewModel;
-import com.hyperwallet.android.transaction_history.viewmodel.ReceiptDetailViewModel;
 
 import java.util.List;
 
