@@ -31,6 +31,7 @@ import androidx.annotation.NonNull;
 
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.HyperwalletAuthenticationTokenProvider;
+import com.hyperwallet.android.receipt.view.ListReceiptActivity;
 import com.hyperwallet.android.ui.transfermethod.AddTransferMethodActivity;
 import com.hyperwallet.android.ui.transfermethod.ListTransferMethodActivity;
 import com.hyperwallet.android.ui.transfermethod.SelectTransferMethodActivity;
@@ -78,6 +79,13 @@ public final class HyperwalletUi {
         return new Intent(context, SelectTransferMethodActivity.class);
     }
 
+    /**
+     * @param context A Context of the application consuming this Intent.
+     * @return an Intent with the data necessary to launch the {@link ListReceiptActivity}
+     */
+    public Intent getIntentListReceiptActivity(@NonNull final Context context) {
+        return new Intent(context, ListReceiptActivity.class);
+    }
 
     /**
      * @param context            A Context of the application consuming this Intent.

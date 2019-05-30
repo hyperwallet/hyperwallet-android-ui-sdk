@@ -1,0 +1,99 @@
+{
+  "count": 30,
+  "offset": 0,
+  "limit": 10,
+  "data": [
+    {
+      "token": "trm-one-one",
+      "createdOn": "2019-05-27T15:49:56",
+      "transferMethodCountry": "US",
+      "transferMethodCurrency": "USD",
+      "bankId": "021000021",
+      "branchId": "021000021"
+    },
+    {
+      "token": "trm-one-two",
+      "createdOn": "2019-05-27T15:30:56",
+      "transferMethodCountry": "US",
+      "transferMethodCurrency": "USD",
+      "bankId": "021000021",
+      "branchId": "021000021"
+    },
+    {
+      "token": "trm-one-three",
+      "createdOn": "2019-05-27T13:49:56",
+      "transferMethodCountry": "US",
+      "transferMethodCurrency": "USD",
+      "bankId": "021000021",
+      "branchId": "021000021"
+    },
+    {
+      "token": "trm-two-one",
+      "createdOn": "2019-02-27T15:49:56",
+      "transferMethodCountry": "US",
+      "transferMethodCurrency": "USD",
+      "bankId": "021000021",
+      "branchId": "021000021"
+    },
+    {
+      "token": "trm-two-two",
+      "createdOn": "2019-02-27T15:30:56",
+      "transferMethodCountry": "US",
+      "transferMethodCurrency": "USD",
+      "bankId": "021000021",
+      "branchId": "021000021"
+    },
+    {
+      "token": "trm-two-three",
+      "createdOn": "2019-02-27T13:49:56",
+      "transferMethodCountry": "US",
+      "transferMethodCurrency": "USD",
+      "bankId": "021000021",
+      "branchId": "021000021"
+    },
+    {
+      "token": "trm-three-one",
+      "createdOn": "2018-12-27T15:49:56",
+      "transferMethodCountry": "US",
+      "transferMethodCurrency": "USD",
+      "bankId": "021000021",
+      "branchId": "021000021"
+    },
+    {
+      "token": "trm-three-two",
+      "createdOn": "2018-12-27T15:30:56",
+      "transferMethodCountry": "US",
+      "transferMethodCurrency": "USD",
+      "bankId": "021000021",
+      "branchId": "021000021"
+    },
+    {
+      "token": "trm-three-three",
+      "createdOn": "2018-12-27T13:49:56",
+      "transferMethodCountry": "US",
+      "transferMethodCurrency": "USD",
+      "bankId": "021000021",
+      "branchId": "021000021"
+    }
+  ],
+  "links": [
+    {
+      "params": {
+        "rel": "self"
+      },
+      "href": "https://localhost:8181/rest/internal/v1/users/usr-b4e8ec34-52d8-4a81-9566-bdde1bd745b6/transfer-methods?offset=0&limit=10&sortBy=-createdOn&status=ACTIVATED"
+    },
+    {
+      "params": {
+        "rel": "next"
+      },
+      "href": "https://localhost:8181/rest/internal/v1/users/usr-b4e8ec34-52d8-4a81-9566-bdde1bd745b6/transfer-methods?offset=10&limit=10&sortBy=-createdOn&status=ACTIVATED"
+    },
+    {
+      "params": {
+        "rel": "last"
+      },
+      "href": "https://localhost:8181/rest/internal/v1/users/usr-b4e8ec34-52d8-4a81-9566-bdde1bd745b6/transfer-methods?offset=20&limit=10&sortBy=-createdOn&status=ACTIVATED"
+    }
+  ]
+}

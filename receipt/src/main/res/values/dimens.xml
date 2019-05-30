@@ -1,0 +1,5 @@
+<resources>
+    <dimen name="text_height_spacing">3dp</dimen>
+    <dimen name="item_text_top_bottom_margin">8dp</dimen>
+    <dimen name="item_receipt_information_height">88dp</dimen>
+</resources>

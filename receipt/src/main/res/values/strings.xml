@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">receipt</string>
+    <string name="title_activity_receipt_list">Transactions</string>
+    <string name="empty_transaction_information">Seems like, you don\'t have any Transactions,
+        yet.
+    </string>
+    <string name="title_transfer_funds">Transfer Funds</string>
+    <string name="font_icon_placeholder">\uE02C</string>
+    <string name="text_placeholder">Placeholder</string>
+
+    <string name="debit">\uE02C</string>
+    <string name="credit">\uE02A</string>
 </resources>
