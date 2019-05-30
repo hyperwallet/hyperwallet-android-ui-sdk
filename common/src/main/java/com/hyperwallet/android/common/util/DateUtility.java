@@ -75,4 +75,18 @@ public final class DateUtility {
                     "the date " + dateString, e);
         }
     }
+
+
+    /**
+     * date format: yyyy-MM-dd'T'HH:mm:ss
+     */
+    public static Date fromDateTimeString(@NonNull final String dateString, @NonNull final String format) {
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat(format, Locale.getDefault());
+            return dateFormat.parse(dateString);
+        } catch (ParseException e) {
+            throw new IllegalArgumentException("An exception occurred when attempting to parse " +
+                    "the date " + dateString, e);
+        }
+    }
 }
