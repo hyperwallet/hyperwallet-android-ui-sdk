@@ -5,12 +5,9 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
 
 import java.util.Date;
 
-@RunWith(JUnit4.class)
 public class DateUtilityTest {
 
     @Test
