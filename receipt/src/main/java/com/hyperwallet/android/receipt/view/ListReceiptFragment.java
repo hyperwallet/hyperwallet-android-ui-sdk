@@ -47,7 +47,6 @@ import com.hyperwallet.android.receipt.R;
 import com.hyperwallet.android.receipt.viewmodel.ListReceiptViewModel;
 
 import java.util.Calendar;
-import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
@@ -251,12 +250,10 @@ public class ListReceiptFragment extends Fragment {
             void bind(@NonNull final HyperwalletTransferMethod transferMethod) {
                 int nextAmount = amount.nextInt();
                 Locale locale = Locale.getDefault();
-                Currency currency = Currency.getInstance(transferMethod.getField(TRANSFER_METHOD_CURRENCY));
                 if (nextAmount < 0) {//TODO replace this with debit or credit
                     mTransactionAmount.setTextColor(mTransactionAmount.getContext()
                             .getResources().getColor(R.color.colorAccent));
-                    mTransactionAmount.setText(String.format(locale, "- %d.00 %s",
-                            Math.abs(nextAmount), currency.getSymbol(locale)));
+                    mTransactionAmount.setText(String.format(locale, "- %d.00", Math.abs(nextAmount)));
 
                     mTransactionTypeIcon.setTextColor(mTransactionTypeIcon.getContext()
                             .getResources().getColor(R.color.colorAccent));
@@ -266,8 +263,7 @@ public class ListReceiptFragment extends Fragment {
                 } else {
                     mTransactionAmount.setTextColor(mTransactionAmount.getContext()
                             .getResources().getColor(R.color.positiveColor));
-                    mTransactionAmount.setText(String.format(locale, "+ %d.00 %s",
-                            nextAmount, currency.getSymbol(locale)));
+                    mTransactionAmount.setText(String.format(locale, "+ %d.00", nextAmount));
 
                     mTransactionTypeIcon.setTextColor(mTransactionTypeIcon.getContext()
                             .getResources().getColor(R.color.positiveColor));
