@@ -19,7 +19,6 @@ package com.hyperwallet.android.receipt.view;
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.CREATED_ON;
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TOKEN;
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_CURRENCY;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TYPE;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -227,8 +226,10 @@ public class ListReceiptFragment extends Fragment {
 
         class ReceiptViewHolder extends RecyclerView.ViewHolder {
 
+            private static final int MAX_CHARACTERS_FIRSTLINE = 38;
+            private static final String ELLIPSIS = "...";
+            private static final String SPACER = " ";
             private final TextView mTransactionAmount;
-            private final TextView mTransactionCaption;
             private final TextView mTransactionCurrency;
             private final TextView mTransactionDate;
             private final TextView mTransactionTitle;
@@ -240,7 +241,6 @@ public class ListReceiptFragment extends Fragment {
             ReceiptViewHolder(@NonNull final View item) {
                 super(item);
                 mTransactionAmount = item.findViewById(R.id.transaction_amount);
-                mTransactionCaption = item.findViewById(R.id.transaction_caption);
                 mTransactionCurrency = item.findViewById(R.id.transaction_currency);
                 mTransactionDate = item.findViewById(R.id.transaction_date);
                 mTransactionTitle = item.findViewById(R.id.transaction_title);
@@ -273,10 +273,24 @@ public class ListReceiptFragment extends Fragment {
                 }
 
                 mTransactionCurrency.setText(transferMethod.getField(TRANSFER_METHOD_CURRENCY));
-                mTransactionCaption.setText(transferMethod.getField(TOKEN));
-                mTransactionTitle.setText(transferMethod.getField(TYPE));
+                mTransactionTitle.setText(getTransactionTitle(transferMethod.getField(TOKEN),
+                        mTransactionAmount.getText().length(), mTransactionTitle.getContext()));
                 mTransactionDate.setText(DateUtility.toDateFormat(
                         DateUtility.fromDateTimeString(transferMethod.getField(CREATED_ON)), CAPTION_DATE_FORMAT));
+            }
+
+            CharSequence getTransactionTitle(@NonNull final CharSequence title, final int numberOfCharsAlreadyUsed,
+                    @NonNull final Context context) {
+
+                if (!context.getResources().getBoolean(R.bool.isLandscape)
+                        && (title.length() + numberOfCharsAlreadyUsed) >= MAX_CHARACTERS_FIRSTLINE) {
+                    int allowedCharsLength = MAX_CHARACTERS_FIRSTLINE -
+                            numberOfCharsAlreadyUsed - ELLIPSIS.length() - SPACER.length();
+                    StringBuilder builder = new StringBuilder(title.subSequence(0, allowedCharsLength));
+                    builder.append(ELLIPSIS);
+                    return builder.toString();
+                }
+                return title;
             }
         }
 

@@ -2,9 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/item_view_border"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/item_receipt_information_height">
+    android:layout_height="@dimen/item_receipt_information_height"
+    android:background="@drawable/item_view_border">
 
     <TextView android:id="@+id/transaction_type_icon"
               android:layout_width="wrap_content"
@@ -23,16 +23,6 @@
               app:layout_constraintStart_toStartOf="parent"
               app:layout_constraintTop_toTopOf="parent"/>
 
-    <TextView android:id="@+id/transaction_caption"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_marginStart="@dimen/grid_margin_left"
-              android:layout_marginTop="@dimen/item_text_top_bottom_margin"
-              android:text="@string/text_placeholder"
-              android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-              app:layout_constraintStart_toEndOf="@+id/transaction_type_icon"
-              app:layout_constraintTop_toTopOf="parent"/>
-
     <TextView android:id="@+id/transaction_title"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
@@ -41,12 +31,13 @@
               android:text="@string/text_placeholder"
               android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
               app:layout_constraintStart_toEndOf="@+id/transaction_type_icon"
-              app:layout_constraintTop_toBottomOf="@+id/transaction_caption"/>
+              app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView android:id="@+id/transaction_date"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_marginStart="@dimen/grid_margin_left"
+              android:layout_marginTop="@dimen/item_text_top_bottom_margin"
               android:layout_marginBottom="@dimen/item_text_top_bottom_margin"
               android:text="@string/text_placeholder"
               android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
@@ -62,11 +53,12 @@
               android:text="@string/text_placeholder"
               android:textAppearance="@style/TextAppearance.Hyperwallet.Positive"
               app:layout_constraintEnd_toEndOf="parent"
-              app:layout_constraintTop_toBottomOf="@+id/transaction_caption"/>
+              app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView android:id="@+id/transaction_currency"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/item_text_top_bottom_margin"
               android:layout_marginEnd="@dimen/grid_margin_right"
               android:layout_marginBottom="@dimen/item_text_top_bottom_margin"
               android:text="@string/text_placeholder"
