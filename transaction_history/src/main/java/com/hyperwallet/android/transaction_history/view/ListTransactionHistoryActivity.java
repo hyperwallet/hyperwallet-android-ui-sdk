@@ -52,8 +52,8 @@ public class ListTransactionHistoryActivity extends AppCompatActivity implements
         mListReceiptViewModel.getErrors().observe(this, new Observer<Event<List<HyperwalletError>>>() {
             @Override
             public void onChanged(Event<List<HyperwalletError>> listEvent) {
-                if (listEvent.getContentIfNotHandled() != null) {
-                    showErrorsLoadTransactionHistory(listEvent.peekContent());
+                if (!listEvent.hasBeenHandled()) {
+                    showErrorsLoadTransactionHistory(listEvent.getContentIfNotHandled());
                 }
 
             }
@@ -99,7 +99,7 @@ public class ListTransactionHistoryActivity extends AppCompatActivity implements
 
     @Override
     public void navigate(Event<HyperwalletTransferMethod> event) {
-        if (event.getContentIfNotHandled() != null) {
+        if (!event.hasBeenHandled()) {
             Intent it = new Intent(this, ReceiptDetailActivity.class);
             it.putExtra(ReceiptDetailActivity.EXTRA_RECEIPT, event.peekContent());
             startActivity(it);
