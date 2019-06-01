@@ -11,8 +11,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.paging.PagedList;
@@ -21,11 +19,8 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
 
 import com.hyperwallet.android.hyperwallet_transactionhistory.R;
-import com.hyperwallet.android.model.HyperwalletError;
-import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.transaction_history.viewmodel.ListReceiptViewModel;
 import com.hyperwallet.android.util.DateUtil;
@@ -33,17 +28,13 @@ import com.hyperwallet.android.util.DateUtil;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 public class ListTransactionHistoryFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
     private ProgressBar mProgressBar;
-    private ViewPager mViewPager;
     private ListTransactionHistoryAdapter mListTransactionHistoryAdapter;
     private ListReceiptViewModel mListReceiptViewModel;
-    private OnLoadTransactionHistoryNetworkErrorCallback mOnLoadTransactionHistoryNetworkErrorCallback;
-    private OnReceiptSelectedCallback mOnReceiptSelectedCallback;
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy MM");
 
 
@@ -67,8 +58,6 @@ public class ListTransactionHistoryFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mOnLoadTransactionHistoryNetworkErrorCallback = (OnLoadTransactionHistoryNetworkErrorCallback) getActivity();
-        mOnReceiptSelectedCallback = (OnReceiptSelectedCallback) getActivity();
     }
 
     @Nullable
@@ -81,9 +70,8 @@ public class ListTransactionHistoryFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //mViewPager = view.findViewById(R.id.pager);
 
-        mListTransactionHistoryAdapter = new ListTransactionHistoryAdapter(mOnReceiptSelectedCallback, new HyperwalletTransferMethodDiffCallBack());
+        mListTransactionHistoryAdapter = new ListTransactionHistoryAdapter(mListReceiptViewModel, new HyperwalletTransferMethodDiffCallBack());
         mProgressBar = view.findViewById(R.id.list_transfer_method_progress_bar);
         mRecyclerView = view.findViewById(R.id.list_transaction_history_item);
         mRecyclerView.setHasFixedSize(true);
@@ -102,17 +90,6 @@ public class ListTransactionHistoryFragment extends Fragment {
                 mListTransactionHistoryAdapter.submitList(hyperwalletTransferMethods);
             }
         });
-
-        mListReceiptViewModel.getReceiptListError().observe(this,
-                new Observer<HyperwalletErrors>() {
-                    @Override
-                    public void onChanged(HyperwalletErrors hyperwalletErrors) {
-                        if (hyperwalletErrors != null) {
-                            mOnLoadTransactionHistoryNetworkErrorCallback.showErrorsLoadTransactionHistory(
-                                    hyperwalletErrors.getErrors());
-                        }
-                    }
-                });
         mListReceiptViewModel.isLoadingData().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isLoading) {
@@ -125,16 +102,6 @@ public class ListTransactionHistoryFragment extends Fragment {
         });
     }
 
-    interface OnLoadTransactionHistoryNetworkErrorCallback {
-
-        void showErrorsLoadTransactionHistory(@NonNull final List<HyperwalletError> errors);
-    }
-
-
-    interface OnReceiptSelectedCallback {
-
-        void showReceiptDetails(@NonNull final HyperwalletTransferMethod transferMethod);
-    }
 
     private static class HyperwalletTransferMethodDiffCallBack extends
             DiffUtil.ItemCallback<HyperwalletTransferMethod> {
@@ -157,31 +124,15 @@ public class ListTransactionHistoryFragment extends Fragment {
     }
 
 
-    static class ReceiptPageAdapter extends FragmentStatePagerAdapter {
-
-        public ReceiptPageAdapter(FragmentManager fragmentManager) {
-            super(fragmentManager);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return null;
-        }
-
-        @Override
-        public int getCount() {
-            return 0;
-        }
-    }
-
     private static class ListTransactionHistoryAdapter extends
             PagedListAdapter<HyperwalletTransferMethod, ListTransactionHistoryAdapter.ViewHolder> {
 
-        private final OnReceiptSelectedCallback mOnReceiptSelectedCallback;
-        ListTransactionHistoryAdapter(OnReceiptSelectedCallback receiptSelectedCallback,
+        private ListReceiptViewModel mListReceiptViewModel;
+
+        ListTransactionHistoryAdapter(ListReceiptViewModel listReceiptViewModel,
                 @NonNull DiffUtil.ItemCallback<HyperwalletTransferMethod> diffCallback) {
             super(diffCallback);
-            mOnReceiptSelectedCallback = receiptSelectedCallback;
+            mListReceiptViewModel = listReceiptViewModel;
         }
 
         @NonNull
@@ -242,7 +193,7 @@ public class ListTransactionHistoryFragment extends Fragment {
                 mTitle.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mOnReceiptSelectedCallback.showReceiptDetails(transferMethod);
+                        mListReceiptViewModel.navigateToDetail(transferMethod);
                     }
                 });
             }
@@ -265,7 +216,7 @@ public class ListTransactionHistoryFragment extends Fragment {
                 mTitle.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mOnReceiptSelectedCallback.showReceiptDetails(transferMethod);
+                        mListReceiptViewModel.navigateToDetail(transferMethod);
                     }
                 });
             }

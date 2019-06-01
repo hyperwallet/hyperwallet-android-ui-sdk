@@ -32,13 +32,12 @@ public class RepositoryFactory {
     private TransferMethodConfigurationRepository mTransferMethodConfigurationRepository;
     private TransferMethodRepository mTransferMethodRepository;
     private UserRepository mUserRepository;
-    private ReceiptRepository mReceiptRepository;
+
 
     private RepositoryFactory() {
         mTransferMethodConfigurationRepository = new TransferMethodConfigurationRepositoryImpl();
         mTransferMethodRepository = new TransferMethodRepositoryImpl();
         mUserRepository = new UserRepositoryImpl();
-        mReceiptRepository = new ReceiptRepositoryImpl();
     }
 
     public static synchronized RepositoryFactory getInstance() {
@@ -60,9 +59,7 @@ public class RepositoryFactory {
         return mUserRepository;
     }
 
-    public ReceiptRepository getReceiptRepository() {
-        return mReceiptRepository;
-    }
+
 
     public static void clearInstance() {
         sInstance = null;
