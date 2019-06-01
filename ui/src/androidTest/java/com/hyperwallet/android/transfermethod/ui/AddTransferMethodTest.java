@@ -2,7 +2,7 @@ package com.hyperwallet.android.transfermethod.ui;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
@@ -130,12 +130,9 @@ public class AddTransferMethodTest {
 
         mActivityTestRule.launchActivity(null);
 
-        onView(withId(R.id.branchId))
-                .perform(typeText(ROUTING_NUMBER)).perform(closeSoftKeyboard());
-        onView(withId(R.id.bankAccountId))
-                .perform(typeText(String.valueOf(ACCOUNT_NUMBER)))
-                .perform(closeSoftKeyboard());
-        onView(withId(R.id.bankAccountPurpose)).perform(click());
+        onView(withId(R.id.branchId)).perform(nestedScrollTo(), replaceText(ROUTING_NUMBER));
+        onView(withId(R.id.bankAccountId)).perform(nestedScrollTo(), replaceText(ACCOUNT_NUMBER));
+        onView(withId(R.id.bankAccountPurpose)).perform(nestedScrollTo(), click());
         onView(allOf(withId(R.id.select_name), withText("Savings"))).perform(click());
         onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo(), click());
 
@@ -165,12 +162,9 @@ public class AddTransferMethodTest {
 
         mActivityTestRule.launchActivity(null);
 
-        onView(withId(R.id.branchId)).perform(typeText(ROUTING_NUMBER)).perform(
-                closeSoftKeyboard());
-        onView(withId(R.id.bankAccountId))
-                .perform(typeText(ACCOUNT_NUMBER))
-                .perform(closeSoftKeyboard());
-        onView(withId(R.id.bankAccountPurpose)).perform(click());
+        onView(withId(R.id.branchId)).perform(nestedScrollTo(), typeText(ROUTING_NUMBER));
+        onView(withId(R.id.bankAccountId)).perform(nestedScrollTo(), typeText(ACCOUNT_NUMBER));
+        onView(withId(R.id.bankAccountPurpose)).perform(nestedScrollTo(), click());
         onView(allOf(withId(R.id.select_name), withText("Savings"))).perform(click());
 
         onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo(), click());
@@ -193,14 +187,9 @@ public class AddTransferMethodTest {
 
         mActivityTestRule.launchActivity(null);
 
-        onView(withId(R.id.branchId))
-                .perform(typeText(ROUTING_NUMBER))
-                .perform(closeSoftKeyboard());
-        onView(withId(R.id.bankAccountId))
-                .perform(typeText(ACCOUNT_NUMBER))
-                .perform(closeSoftKeyboard());
-
-        onView(withId(R.id.bankAccountPurpose)).perform(click());
+        onView(withId(R.id.branchId)).perform(nestedScrollTo(), typeText(ROUTING_NUMBER));
+        onView(withId(R.id.bankAccountId)).perform(nestedScrollTo(), typeText(ACCOUNT_NUMBER));
+        onView(withId(R.id.bankAccountPurpose)).perform(nestedScrollTo(), click());
         onView(allOf(withId(R.id.select_name), withText("Savings"))).perform(click());
 
         // initiate test
