@@ -226,7 +226,7 @@ public class ListReceiptFragment extends Fragment {
 
         class ReceiptViewHolder extends RecyclerView.ViewHolder {
 
-            private static final int MAX_CHARACTERS_FIRSTLINE = 38;
+            private static final int MAX_CHARACTERS_FIRST_LINE = 38;
             private static final String ELLIPSIS = "...";
             private static final String SPACER = " ";
             private final TextView mTransactionAmount;
@@ -283,8 +283,8 @@ public class ListReceiptFragment extends Fragment {
                     @NonNull final Context context) {
 
                 if (!context.getResources().getBoolean(R.bool.isLandscape)
-                        && (title.length() + numberOfCharsAlreadyUsed) >= MAX_CHARACTERS_FIRSTLINE) {
-                    int allowedCharsLength = MAX_CHARACTERS_FIRSTLINE -
+                        && (title.length() + numberOfCharsAlreadyUsed) >= MAX_CHARACTERS_FIRST_LINE) {
+                    int allowedCharsLength = MAX_CHARACTERS_FIRST_LINE -
                             numberOfCharsAlreadyUsed - ELLIPSIS.length() - SPACER.length();
                     StringBuilder builder = new StringBuilder(title.subSequence(0, allowedCharsLength));
                     builder.append(ELLIPSIS);

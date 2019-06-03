@@ -8,6 +8,6 @@
     <string name="font_icon_placeholder">\uE02C</string>
     <string name="text_placeholder">Placeholder</string>
 
-    <string name="debit">\uE02C</string>
-    <string name="credit">\uE02A</string>
+    <string name="debit">\uE900</string>
+    <string name="credit">\uE902</string>
 </resources>
