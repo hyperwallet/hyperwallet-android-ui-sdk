@@ -286,9 +286,7 @@ public class ListReceiptFragment extends Fragment {
                         && (title.length() + numberOfCharsAlreadyUsed) >= MAX_CHARACTERS_FIRST_LINE) {
                     int allowedCharsLength = MAX_CHARACTERS_FIRST_LINE -
                             numberOfCharsAlreadyUsed - ELLIPSIS.length() - SPACER.length();
-                    StringBuilder builder = new StringBuilder(title.subSequence(0, allowedCharsLength));
-                    builder.append(ELLIPSIS);
-                    return builder.toString();
+                    return title.subSequence(0, allowedCharsLength) + ELLIPSIS;
                 }
                 return title;
             }
