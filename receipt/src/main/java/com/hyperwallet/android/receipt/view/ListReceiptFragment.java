@@ -39,8 +39,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hyperwallet.android.common.util.DateUtility;
+import com.hyperwallet.android.common.viewmodel.Event;
 import com.hyperwallet.android.model.HyperwalletError;
-import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.receipt.R;
 import com.hyperwallet.android.receipt.viewmodel.ListReceiptViewModel;
@@ -120,11 +120,11 @@ public class ListReceiptFragment extends Fragment {
             }
         });
 
-        mListReceiptViewModel.getReceiptErrors().observe(this, new Observer<HyperwalletErrors>() {
+        mListReceiptViewModel.getReceiptErrors().observe(this, new Observer<Event<List<HyperwalletError>>>() {
             @Override
-            public void onChanged(HyperwalletErrors hyperwalletErrors) {
-                if (hyperwalletErrors != null) { // we need to check this since we are posting null
-                    mOnLoadReceiptErrorCallback.showErrorOnLoadReceipt(hyperwalletErrors.getErrors());
+            public void onChanged(Event<List<HyperwalletError>> listEvent) {
+                if (!listEvent.isContentConsumed()) {
+                    mOnLoadReceiptErrorCallback.showErrorOnLoadReceipt(listEvent.getContent());
                 }
             }
         });

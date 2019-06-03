@@ -18,30 +18,49 @@ package com.hyperwallet.android.receipt.viewmodel;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.paging.PagedList;
 
+import com.hyperwallet.android.common.viewmodel.Event;
+import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.receipt.repository.ReceiptRepository;
 
+import java.util.List;
+
 public class ListReceiptViewModel extends ViewModel {
 
-    private final ReceiptRepository mReceiptRepository;
+    private ReceiptRepository mReceiptRepository;
+    private MutableLiveData<Event<List<HyperwalletError>>> mErrorEvent = new MutableLiveData<>();
+    private Observer<HyperwalletErrors> mErrorEventObserver;
 
     public ListReceiptViewModel(@NonNull final ReceiptRepository receiptRepository) {
         mReceiptRepository = receiptRepository;
         // load initial receipts
         mReceiptRepository.loadReceipts();
+
+        // register one time error event observer
+        mErrorEventObserver = new Observer<HyperwalletErrors>() {
+            @Override
+            public void onChanged(HyperwalletErrors errors) {
+                if (errors != null && !errors.getErrors().isEmpty()) {
+                    mErrorEvent.setValue(new Event<>(errors.getErrors()));
+                }
+            }
+        };
+        mReceiptRepository.getErrors().observeForever(mErrorEventObserver);
     }
 
     public LiveData<Boolean> isLoadingData() {
         return mReceiptRepository.isLoading();
     }
 
-    public LiveData<HyperwalletErrors> getReceiptErrors() {
-        return mReceiptRepository.getErrors();
+    public LiveData<Event<List<HyperwalletError>>> getReceiptErrors() {
+        return mErrorEvent;
     }
 
     public LiveData<PagedList<HyperwalletTransferMethod>> getReceiptList() {
@@ -50,6 +69,13 @@ public class ListReceiptViewModel extends ViewModel {
 
     public void retryLoadReceipts() {
         mReceiptRepository.retryLoadReceipt();
+    }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        mReceiptRepository.getErrors().removeObserver(mErrorEventObserver);
+        mReceiptRepository = null;
     }
 
     public static class ListReceiptViewModelFactory implements ViewModelProvider.Factory {
