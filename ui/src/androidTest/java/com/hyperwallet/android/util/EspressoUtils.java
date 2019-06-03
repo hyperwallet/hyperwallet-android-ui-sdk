@@ -19,6 +19,8 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
+import java.util.Objects;
+
 public class EspressoUtils {
 
     public static Matcher<View> withHint(final String expectedHint) {
@@ -30,8 +32,7 @@ public class EspressoUtils {
                     return false;
                 }
 
-                String hint = ((TextInputLayout) view).getHint().toString();
-
+                String hint = Objects.toString(((TextInputLayout) view).getHint());
                 return expectedHint.equals(hint);
             }
 
@@ -51,8 +52,7 @@ public class EspressoUtils {
                     return false;
                 }
 
-                String errorMessage = ((TextInputLayout) view).getError().toString();
-
+                String errorMessage = Objects.toString(((TextInputLayout) view).getError());
                 return expectedErrorMessage.equals(errorMessage);
             }
 
@@ -72,7 +72,7 @@ public class EspressoUtils {
                     return false;
                 }
                 String expectedErrorMessage = view.getResources().getString(resourceId);
-                String errorMessage = ((TextInputLayout) view).getError().toString();
+                String errorMessage = Objects.toString(((TextInputLayout) view).getError());
 
                 return expectedErrorMessage.equals(errorMessage);
             }
@@ -132,6 +132,39 @@ public class EspressoUtils {
         };
     }
 
+    public static ViewAction nestedScrollTo() {
+        return ViewActions.actionWithAssertions(new NestedScrollToAction());
+    }
+
+    private static Bitmap getBitmap(Drawable drawable) {
+        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(),
+                drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        drawable.draw(canvas);
+
+        return bitmap;
+    }
+
+    public static Matcher<View> hasNoErrorText() {
+        return new TypeSafeMatcher<View>() {
+
+            @Override
+            public boolean matchesSafely(View view) {
+                if (!(view instanceof TextInputLayout)) {
+                    return false;
+                }
+                return ((TextInputLayout) view).getError() == null;
+            }
+
+            @Override
+            public void describeTo(Description description) {
+                description.appendText("has no error text: ");
+            }
+        };
+    }
+
     public static Matcher<View> hasEmptyText() {
         return new TypeSafeMatcher<View>() {
 
@@ -150,19 +183,5 @@ public class EspressoUtils {
             }
         };
     }
-
-    public static ViewAction nestedScrollTo() {
-        return ViewActions.actionWithAssertions(new NestedScrollToAction());
-    }
-
-    private static Bitmap getBitmap(Drawable drawable) {
-        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(),
-                drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-
-        Canvas canvas = new Canvas(bitmap);
-        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-        drawable.draw(canvas);
-
-        return bitmap;
-    }
 }
+
