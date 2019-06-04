@@ -2,13 +2,11 @@ package com.hyperwallet.android.transfermethod.ui;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
-import static androidx.test.espresso.action.ViewActions.typeText;
+import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.isEnabled;
-import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withParent;
@@ -28,6 +26,7 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 import static com.hyperwallet.android.model.transfermethod.HyperwalletBankAccount.Purpose.SAVINGS;
 import static com.hyperwallet.android.util.EspressoUtils.hasEmptyText;
 import static com.hyperwallet.android.util.EspressoUtils.hasErrorText;
+import static com.hyperwallet.android.util.EspressoUtils.hasNoErrorText;
 import static com.hyperwallet.android.util.EspressoUtils.nestedScrollTo;
 import static com.hyperwallet.android.util.EspressoUtils.withHint;
 
@@ -123,8 +122,9 @@ public class BankAccountTest {
         onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
                 .check(matches(withText(R.string.title_add_bank_account)));
 
-        onView(allOf(withId(R.id.section_header_title), withText("Account Information - United States (USD)"))).check(
-                matches(isDisplayed()));
+        onView(allOf(withId(R.id.section_header_title), withText("Account Information - United States (USD)")))
+                .perform(nestedScrollTo())
+                .check(matches(isDisplayed()));
         onView(withId(R.id.branchId)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.branchIdLabel)).check(matches(isDisplayed()));
         onView(withId(R.id.branchIdLabel)).check(matches(withHint("Routing Number")));
@@ -133,11 +133,11 @@ public class BankAccountTest {
         onView(withId(R.id.bankAccountIdLabel)).check(matches(withHint("Account Number")));
         onView(withId(R.id.bankAccountPurpose)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.bankAccountPurposeLabel)).check(matches(isDisplayed()));
-        onView(withId(R.id.bankAccountPurposeLabel)).check(
-                matches(withHint("Account Type")));
+        onView(withId(R.id.bankAccountPurposeLabel)).check(matches(withHint("Account Type")));
 
-        onView(allOf(withId(R.id.section_header_title), withText("Account Holder"))).perform(nestedScrollTo()).check(
-                matches(isDisplayed()));
+        onView(allOf(withId(R.id.section_header_title), withText("Account Holder")))
+                .perform(nestedScrollTo())
+                .check(matches(isDisplayed()));
         onView(withId(R.id.firstName)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.firstNameLabel)).check(matches(isDisplayed()));
         onView(withId(R.id.firstNameLabel)).check(matches(withHint("First Name")));
@@ -151,8 +151,9 @@ public class BankAccountTest {
         onView(withId(R.id.dateOfBirthLabel)).check(matches(isDisplayed()));
         onView(withId(R.id.dateOfBirthLabel)).check(matches(withHint("Date of Birth")));
 
-        onView(allOf(withId(R.id.section_header_title), withText("Contact Information"))).perform(
-                nestedScrollTo()).check(matches(isDisplayed()));
+        onView(allOf(withId(R.id.section_header_title), withText("Contact Information")))
+                .perform(nestedScrollTo())
+                .check(matches(isDisplayed()));
         onView(withId(R.id.phoneNumber)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.phoneNumberLabel)).check(matches(isDisplayed()));
         onView(withId(R.id.phoneNumberLabel)).check(matches(withHint("Phone Number")));
@@ -160,8 +161,9 @@ public class BankAccountTest {
         onView(withId(R.id.mobileNumberLabel)).check(matches(isDisplayed()));
         onView(withId(R.id.mobileNumberLabel)).check(matches(withHint("Mobile Number")));
 
-        onView(allOf(withId(R.id.section_header_title), withText("Address"))).perform(nestedScrollTo()).check(
-                matches(isDisplayed()));
+        onView(allOf(withId(R.id.section_header_title), withText("Address")))
+                .perform(nestedScrollTo())
+                .check(matches(isDisplayed()));
         onView(withId(R.id.country)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.countryLabel)).check(matches(isDisplayed()));
         onView(withId(R.id.countryLabel)).check(matches(withHint("Country")));
@@ -214,7 +216,7 @@ public class BankAccountTest {
         onView(withId(R.id.firstName)).check(matches(withText("Brody")));
         onView(withId(R.id.middleName)).check(matches(hasEmptyText()));
         onView(withId(R.id.lastName)).check(matches(withText("Nehru")));
-        onView(withId(R.id.dateOfBirth)).check(matches(withText("2000-01-01")));
+        onView(withId(R.id.dateOfBirth)).check(matches(withText("January 01, 2000")));
 
         onView(withId(R.id.phoneNumber)).check(matches(withText("+1 604 6666666")));
         onView(withId(R.id.mobileNumber)).check(matches(withText("604 666 6666")));
@@ -298,11 +300,9 @@ public class BankAccountTest {
         LocalBroadcastManager.getInstance(mActivityTestRule.getActivity().getApplicationContext())
                 .registerReceiver(br, new IntentFilter("ACTION_HYPERWALLET_TRANSFER_METHOD_ADDED"));
 
-        onView(withId(R.id.branchId))
-                .perform(typeText(ROUTING_NUMBER)).perform(closeSoftKeyboard());
-        onView(withId(R.id.bankAccountId))
-                .perform(typeText(ACCOUNT_NUMBER)).perform(closeSoftKeyboard());
-        onView(withId(R.id.bankAccountPurpose)).perform(click());
+        onView(withId(R.id.branchId)).perform(nestedScrollTo(), replaceText(ROUTING_NUMBER));
+        onView(withId(R.id.bankAccountId)).perform(nestedScrollTo(), replaceText(ACCOUNT_NUMBER));
+        onView(withId(R.id.bankAccountPurpose)).perform(nestedScrollTo(), click());
         onView(withId(R.id.search_button)).check(doesNotExist());
         onView(withId(R.id.input_selection_list)).check(new RecyclerViewCountAssertion(2));
         onView(allOf(withId(R.id.select_name), withText("Savings"))).perform(click());
@@ -321,21 +321,53 @@ public class BankAccountTest {
     @Test
     public void testAddTransferMethod_returnsErrorOnInvalidPattern() {
         mActivityTestRule.launchActivity(null);
-        // Number input should not allow non numeric values
-        onView(withId(R.id.branchId)).perform(typeText("a12-345"));
-        onView(withId(R.id.branchId)).check(matches(withText("12345")));
+
+        onView(withId(R.id.bankAccountId)).perform(nestedScrollTo(), replaceText("ewrd{123"));
+        onView(withId(R.id.branchId)).perform(nestedScrollTo(), replaceText("{dfghfgh}"));
+        onView(withId(R.id.firstName)).perform(nestedScrollTo(), replaceText("ewrd{1{2"));
+        onView(withId(R.id.lastName)).perform(nestedScrollTo(), replaceText("ewrd{1{2345"));
+        onView(withId(R.id.addressLine1)).perform(nestedScrollTo(), replaceText("950 {G}ranville Street"));
+        onView(withId(R.id.city)).perform(nestedScrollTo(), replaceText("Vancouve{r}"));
+        onView(withId(R.id.stateProvince)).perform(nestedScrollTo(), replaceText("df{r}"));
+        onView(withId(R.id.postalCode)).perform(nestedScrollTo(), replaceText("df{r}"));
+
+        onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo(), click());
+
+        onView(withId(R.id.branchIdLabel))
+                .check(matches(hasErrorText("is invalid length or format.")));
+        onView(withId(R.id.bankAccountIdLabel))
+                .check(matches(hasErrorText("is invalid length or format.")));
+        onView(withId(R.id.firstNameLabel))
+                .check(matches(hasErrorText("is invalid length or format.")));
+        onView(withId(R.id.lastNameLabel))
+                .check(matches(hasErrorText("is invalid length or format.")));
+        onView(withId(R.id.addressLine1Label))
+                .check(matches(hasErrorText("is invalid length or format.")));
+        onView(withId(R.id.cityLabel))
+                .check(matches(hasErrorText("is invalid length or format.")));
+        onView(withId(R.id.stateProvinceLabel))
+                .check(matches(hasErrorText("is invalid length or format.")));
+        onView(withId(R.id.postalCodeLabel))
+                .check(matches(hasErrorText("is invalid length or format.")));
     }
 
     @Test
     public void testAddTransferMethod_returnsErrorOnInvalidPresence() {
         mActivityTestRule.launchActivity(null);
 
-        onView(withId(R.id.branchId)).perform(click()).perform(closeSoftKeyboard());
-        onView(withId(R.id.bankAccountId)).perform(click()).perform(closeSoftKeyboard());
-        onView(withId(R.id.bankAccountPurpose)).perform(click());
-
-        onView(allOf(withContentDescription(R.string.abc_action_bar_up_description),
-                withParent(withId(R.id.input_selection_toolbar)))).perform(click());
+        onView(withId(R.id.branchId)).perform(nestedScrollTo(), replaceText(""));
+        onView(withId(R.id.bankAccountId)).perform(nestedScrollTo(), replaceText(""));
+        onView(withId(R.id.bankAccountPurpose)).perform(nestedScrollTo(), replaceText(""));
+        onView(withId(R.id.firstName)).perform(nestedScrollTo(), replaceText(""));
+        onView(withId(R.id.middleName)).perform(nestedScrollTo(), replaceText(""));
+        onView(withId(R.id.lastName)).perform(nestedScrollTo(), replaceText(""));
+        onView(withId(R.id.dateOfBirth)).perform(nestedScrollTo(), replaceText(""));
+        onView(withId(R.id.phoneNumber)).perform(nestedScrollTo(), replaceText(""));
+        onView(withId(R.id.mobileNumber)).perform(nestedScrollTo(), replaceText(""));
+        onView(withId(R.id.addressLine1)).perform(nestedScrollTo(), replaceText(""));
+        onView(withId(R.id.city)).perform(nestedScrollTo(), replaceText(""));
+        onView(withId(R.id.stateProvince)).perform(nestedScrollTo(), replaceText(""));
+        onView(withId(R.id.postalCode)).perform(nestedScrollTo(), replaceText(""));
 
         onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo(), click());
 
@@ -345,16 +377,31 @@ public class BankAccountTest {
                 .check(matches(hasErrorText("You must provide a value for this field")));
         onView(withId(R.id.bankAccountPurposeLabel))
                 .check(matches(hasErrorText("You must provide a value for this field")));
+        onView(withId(R.id.firstNameLabel))
+                .check(matches(hasErrorText("You must provide a value for this field")));
+        onView(withId(R.id.lastNameLabel))
+                .check(matches(hasErrorText("You must provide a value for this field")));
+        onView(withId(R.id.addressLine1Label))
+                .check(matches(hasErrorText("You must provide a value for this field")));
+        onView(withId(R.id.cityLabel))
+                .check(matches(hasErrorText("You must provide a value for this field")));
+        onView(withId(R.id.stateProvinceLabel))
+                .check(matches(hasErrorText("You must provide a value for this field")));
+        onView(withId(R.id.postalCodeLabel))
+                .check(matches(hasErrorText("You must provide a value for this field")));
+
+        onView(withId(R.id.middleNameLabel)).check(matches(hasNoErrorText()));
+        onView(withId(R.id.dateOfBirthLabel)).check(matches(hasNoErrorText()));
+        onView(withId(R.id.phoneNumberLabel)).check(matches(hasNoErrorText()));
+        onView(withId(R.id.mobileNumberLabel)).check(matches(hasNoErrorText()));
     }
 
     @Test
     public void testAddTransferMethod_returnsErrorOnInvalidLength() {
         mActivityTestRule.launchActivity(null);
 
-        onView(withId(R.id.branchId))
-                .perform(typeText("2111795311")).perform(closeSoftKeyboard());
-        onView(withId(R.id.bankAccountId))
-                .perform(typeText("1")).perform(closeSoftKeyboard());
+        onView(withId(R.id.branchId)).perform(nestedScrollTo(), replaceText("2111795311"));
+        onView(withId(R.id.bankAccountId)).perform(nestedScrollTo(), replaceText("1"));
 
         onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo(), click());
 
@@ -371,12 +418,9 @@ public class BankAccountTest {
 
         mActivityTestRule.launchActivity(null);
 
-        onView(withId(R.id.branchId))
-                .perform(typeText(INVALID_ROUTING_NUMBER)).perform(closeSoftKeyboard());
-        onView(withId(R.id.bankAccountId))
-                .perform(typeText(ACCOUNT_NUMBER))
-                .perform(closeSoftKeyboard());
-        onView(withId(R.id.bankAccountPurpose)).perform(click());
+        onView(withId(R.id.branchId)).perform(nestedScrollTo(), replaceText(INVALID_ROUTING_NUMBER));
+        onView(withId(R.id.bankAccountId)).perform(nestedScrollTo(), replaceText(ACCOUNT_NUMBER));
+        onView(withId(R.id.bankAccountPurpose)).perform(nestedScrollTo(), click());
         onView(allOf(withId(R.id.select_name), withText("Checking"))).perform(click());
 
         onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo(), click());
