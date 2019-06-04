@@ -27,7 +27,7 @@ import androidx.paging.PagedList;
 import com.hyperwallet.android.common.viewmodel.Event;
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.HyperwalletErrors;
-import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
+import com.hyperwallet.android.model.receipt.Receipt;
 import com.hyperwallet.android.receipt.repository.ReceiptRepository;
 
 import java.util.List;
@@ -38,7 +38,7 @@ public class ListReceiptViewModel extends ViewModel {
     private MutableLiveData<Event<List<HyperwalletError>>> mErrorEvent = new MutableLiveData<>();
     private Observer<HyperwalletErrors> mErrorEventObserver;
 
-    public ListReceiptViewModel(@NonNull final ReceiptRepository receiptRepository) {
+    private ListReceiptViewModel(@NonNull final ReceiptRepository receiptRepository) {
         mReceiptRepository = receiptRepository;
         // load initial receipts
         mReceiptRepository.loadReceipts();
@@ -63,7 +63,7 @@ public class ListReceiptViewModel extends ViewModel {
         return mErrorEvent;
     }
 
-    public LiveData<PagedList<HyperwalletTransferMethod>> getReceiptList() {
+    public LiveData<PagedList<Receipt>> getReceiptList() {
         return mReceiptRepository.loadReceipts();
     }
 

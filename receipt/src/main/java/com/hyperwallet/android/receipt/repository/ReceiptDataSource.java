@@ -16,9 +16,6 @@
  */
 package com.hyperwallet.android.receipt.repository;
 
-import static com.hyperwallet.android.model.HyperwalletStatusTransition.StatusDefinition.ACTIVATED;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethodPagination.TransferMethodSortable.DESCENDANT_CREATE_ON;
-
 import android.os.Handler;
 
 import androidx.annotation.NonNull;
@@ -32,40 +29,44 @@ import com.hyperwallet.android.exception.HyperwalletException;
 import com.hyperwallet.android.listener.HyperwalletListener;
 import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.paging.HyperwalletPageList;
-import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
-import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethodPagination;
+import com.hyperwallet.android.model.receipt.Receipt;
+import com.hyperwallet.android.model.receipt.ReceiptQueryParam;
 
-public class ReceiptDataSource extends PageKeyedDataSource<Integer, HyperwalletTransferMethod> {
+import java.util.Calendar;
 
-    private final HyperwalletTransferMethodPagination mReceiptPagination;
-    private final MutableLiveData<Boolean> mIsFetchingData = new MutableLiveData<>();
+public class ReceiptDataSource extends PageKeyedDataSource<Integer, Receipt> {
+
+    private static final int YEAR_BEFORE_NOW = -1;
     private final MutableLiveData<HyperwalletErrors> mErrors = new MutableLiveData<>();
-    private final Handler mHandler = new Handler();
-
-    private LoadInitialCallback<Integer, HyperwalletTransferMethod> mLoadInitialCallback;
+    private final MutableLiveData<Boolean> mIsFetchingData = new MutableLiveData<>();
+    private LoadInitialCallback<Integer, Receipt> mLoadInitialCallback;
     private LoadInitialParams<Integer> mLoadInitialParams;
-    private LoadCallback<Integer, HyperwalletTransferMethod> mLoadAfterCallback;
+    private LoadCallback<Integer, Receipt> mLoadAfterCallback;
     private LoadParams<Integer> mLoadAfterParams;
+    private final Calendar mCalendarYearBeforeNow;
 
     ReceiptDataSource() {
         super();
-        mReceiptPagination = new HyperwalletTransferMethodPagination();
-        mReceiptPagination.setStatus(ACTIVATED);
-        mReceiptPagination.setSortBy(DESCENDANT_CREATE_ON);
+        mCalendarYearBeforeNow = Calendar.getInstance();
+        mCalendarYearBeforeNow.add(Calendar.YEAR, YEAR_BEFORE_NOW);
     }
 
     @Override
     public void loadInitial(@NonNull final LoadInitialParams<Integer> params,
-            @NonNull final LoadInitialCallback<Integer, HyperwalletTransferMethod> callback) {
+            @NonNull final LoadInitialCallback<Integer, Receipt> callback) {
         mLoadInitialCallback = callback;
         mLoadInitialParams = params;
         mIsFetchingData.postValue(Boolean.TRUE);
 
-        mReceiptPagination.setLimit(params.requestedLoadSize);
-        getHyperwallet().listTransferMethods(mReceiptPagination,
-                new HyperwalletListener<HyperwalletPageList<HyperwalletTransferMethod>>() {
+        ReceiptQueryParam queryParam = new ReceiptQueryParam.Builder()
+                .createdAfter(mCalendarYearBeforeNow.getTime())
+                .limit(params.requestedLoadSize)
+                .sortByCreatedOnDesc().build();
+
+        getHyperwallet().listReceipts(queryParam,
+                new HyperwalletListener<HyperwalletPageList<Receipt>>() {
                     @Override
-                    public void onSuccess(@Nullable HyperwalletPageList<HyperwalletTransferMethod> result) {
+                    public void onSuccess(@Nullable HyperwalletPageList<Receipt> result) {
                         mIsFetchingData.postValue(Boolean.FALSE);
                         mErrors.postValue(null);
 
@@ -74,7 +75,6 @@ public class ReceiptDataSource extends PageKeyedDataSource<Integer, HyperwalletT
                             int previous = 0;
                             callback.onResult(result.getDataList(), previous, next);
                         }
-
                         // reset
                         mLoadInitialCallback = null;
                         mLoadInitialParams = null;
@@ -88,30 +88,33 @@ public class ReceiptDataSource extends PageKeyedDataSource<Integer, HyperwalletT
 
                     @Override
                     public Handler getHandler() {
-                        return mHandler;
+                        return null;
                     }
                 });
     }
 
     @Override
     public void loadBefore(@NonNull LoadParams<Integer> params,
-            @NonNull LoadCallback<Integer, HyperwalletTransferMethod> callback) {
+            @NonNull LoadCallback<Integer, Receipt> callback) {
     }
 
     @Override
     public void loadAfter(@NonNull LoadParams<Integer> params,
-            final @NonNull LoadCallback<Integer, HyperwalletTransferMethod> callback) {
+            final @NonNull LoadCallback<Integer, Receipt> callback) {
         mLoadAfterCallback = callback;
         mLoadAfterParams = params;
-
         mIsFetchingData.postValue(Boolean.TRUE);
 
-        mReceiptPagination.setLimit(params.requestedLoadSize);
-        mReceiptPagination.setOffset(params.key);
-        getHyperwallet().listTransferMethods(mReceiptPagination,
-                new HyperwalletListener<HyperwalletPageList<HyperwalletTransferMethod>>() {
+        ReceiptQueryParam queryParam = new ReceiptQueryParam.Builder()
+                .createdAfter(mCalendarYearBeforeNow.getTime())
+                .limit(params.requestedLoadSize)
+                .offset(params.key)
+                .sortByCreatedOnDesc().build();
+
+        getHyperwallet().listReceipts(queryParam,
+                new HyperwalletListener<HyperwalletPageList<Receipt>>() {
                     @Override
-                    public void onSuccess(@Nullable HyperwalletPageList<HyperwalletTransferMethod> result) {
+                    public void onSuccess(@Nullable HyperwalletPageList<Receipt> result) {
                         mIsFetchingData.postValue(Boolean.FALSE);
                         mErrors.postValue(null);
 
@@ -133,7 +136,7 @@ public class ReceiptDataSource extends PageKeyedDataSource<Integer, HyperwalletT
 
                     @Override
                     public Handler getHandler() {
-                        return mHandler;
+                        return null;
                     }
                 });
     }

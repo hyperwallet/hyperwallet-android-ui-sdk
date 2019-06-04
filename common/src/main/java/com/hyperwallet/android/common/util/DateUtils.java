@@ -23,11 +23,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public final class DateUtility {
+public final class DateUtils {
 
     private static final String DATE_FORMAT = "yyyy-MM-dd";
     private static final String DATE_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
     private static final String DATE_TIME_FORMAT_MILLISECONDS = "yyyy-MM-dd'T'HH:mm:ss.SSS";
+
+    private DateUtils() {
+    }
 
     /**
      * date format: yyyy-MM-dd

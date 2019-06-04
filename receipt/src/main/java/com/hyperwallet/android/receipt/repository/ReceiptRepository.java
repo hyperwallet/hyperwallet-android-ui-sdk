@@ -20,7 +20,7 @@ import androidx.lifecycle.LiveData;
 import androidx.paging.PagedList;
 
 import com.hyperwallet.android.model.HyperwalletErrors;
-import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
+import com.hyperwallet.android.model.receipt.Receipt;
 
 /**
  * Receipt Repository Contract
@@ -32,7 +32,7 @@ public interface ReceiptRepository {
      *
      * @return live data paged receipts
      */
-    LiveData<PagedList<HyperwalletTransferMethod>> loadReceipts();
+    LiveData<PagedList<Receipt>> loadReceipts();
 
     /**
      * Loading indicator consumer can subscribe to loading of data events
@@ -40,7 +40,6 @@ public interface ReceiptRepository {
      * @return live data <code>true</code> if load receipt is in loading state; <code>false</code> otherwise
      */
     LiveData<Boolean> isLoading();
-
 
     /**
      * Error information, consumer can subscribe of errors occur during data retrieval

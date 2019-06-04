@@ -21,7 +21,7 @@ import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
 import com.hyperwallet.android.model.HyperwalletErrors;
-import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
+import com.hyperwallet.android.model.receipt.Receipt;
 
 public class ReceiptRepositoryImpl implements ReceiptRepository {
 
@@ -29,7 +29,7 @@ public class ReceiptRepositoryImpl implements ReceiptRepository {
     private final LiveData<ReceiptDataSource> mReceiptDataSourceLiveData;
     private LiveData<Boolean> mIsFetchingData;
     private LiveData<HyperwalletErrors> mErrorsLiveData;
-    private LiveData<PagedList<HyperwalletTransferMethod>> mReceiptsLiveData;
+    private LiveData<PagedList<Receipt>> mReceiptsLiveData;
 
     ReceiptRepositoryImpl() {
         mDataSourceFactory = new ReceiptDataSourceFactory();
@@ -37,7 +37,7 @@ public class ReceiptRepositoryImpl implements ReceiptRepository {
     }
 
     @Override
-    public LiveData<PagedList<HyperwalletTransferMethod>> loadReceipts() {
+    public LiveData<PagedList<Receipt>> loadReceipts() {
         if (mReceiptsLiveData == null) {
             PagedList.Config config = new PagedList.Config.Builder()
                     .setPageSize(10)

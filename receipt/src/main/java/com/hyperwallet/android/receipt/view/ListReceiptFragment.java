@@ -16,9 +16,8 @@
  */
 package com.hyperwallet.android.receipt.view;
 
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.CREATED_ON;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TOKEN;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_CURRENCY;
+import static com.hyperwallet.android.model.receipt.Receipt.Entries.CREDIT;
+import static com.hyperwallet.android.model.receipt.Receipt.Entries.DEBIT;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -38,19 +37,16 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.hyperwallet.android.common.util.DateUtility;
+import com.hyperwallet.android.common.util.DateUtils;
 import com.hyperwallet.android.common.viewmodel.Event;
 import com.hyperwallet.android.model.HyperwalletError;
-import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
+import com.hyperwallet.android.model.receipt.Receipt;
 import com.hyperwallet.android.receipt.R;
 import com.hyperwallet.android.receipt.viewmodel.ListReceiptViewModel;
 
 import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
-import java.util.Random;
 
-//TODO change HyperwalletTransferMethod to HyperwalletReceipts whenever core is available
 public class ListReceiptFragment extends Fragment {
 
     private static final String HEADER_DATE_FORMAT = "MMMM yyyy";
@@ -113,9 +109,9 @@ public class ListReceiptFragment extends Fragment {
     }
 
     private void registerObservers() {
-        mListReceiptViewModel.getReceiptList().observe(this, new Observer<PagedList<HyperwalletTransferMethod>>() {
+        mListReceiptViewModel.getReceiptList().observe(this, new Observer<PagedList<Receipt>>() {
             @Override
-            public void onChanged(PagedList<HyperwalletTransferMethod> transferMethods) {
+            public void onChanged(PagedList<Receipt> transferMethods) {
                 mListReceiptAdapter.submitList(transferMethods);
             }
         });
@@ -150,39 +146,38 @@ public class ListReceiptFragment extends Fragment {
         void showErrorOnLoadReceipt(@NonNull final List<HyperwalletError> errors);
     }
 
-    private static class ListReceiptItemDiffCallback extends DiffUtil.ItemCallback<HyperwalletTransferMethod> {
+    private static class ListReceiptItemDiffCallback extends DiffUtil.ItemCallback<Receipt> {
 
         @Override
-        public boolean areItemsTheSame(@NonNull HyperwalletTransferMethod oldItem,
-                @NonNull HyperwalletTransferMethod newItem) {
-            //TODO Receipts: {journalId, type, entry}
-            return oldItem.getField(TOKEN).equals(newItem.getField(TOKEN));
+        public boolean areItemsTheSame(@NonNull Receipt oldItem, @NonNull Receipt newItem) {
+            return oldItem.getJournalId().equals(newItem.getJournalId())
+                    && oldItem.getType().equals(newItem.getType())
+                    && oldItem.getEntry().equals(newItem.getEntry());
         }
 
         @Override
-        public boolean areContentsTheSame(@NonNull HyperwalletTransferMethod oldItem,
-                @NonNull HyperwalletTransferMethod newItem) {
-            //TODO check if contents are the same in this case check each receipt fields against each other
-            // Receipts: {journalId, type, entry}
-            return oldItem.getField(TOKEN).equals(newItem.getField(TOKEN));
+        public boolean areContentsTheSame(@NonNull Receipt oldItem, @NonNull Receipt newItem) {
+            return oldItem.getJournalId().equals(newItem.getJournalId())
+                    && oldItem.getType().equals(newItem.getType())
+                    && oldItem.getEntry().equals(newItem.getEntry());
         }
     }
 
     private static class ListReceiptAdapter
-            extends PagedListAdapter<HyperwalletTransferMethod, ListReceiptAdapter.ReceiptViewHolder> {
+            extends PagedListAdapter<Receipt, ListReceiptAdapter.ReceiptViewHolder> {
 
         static final int HEADER_VIEW_TYPE = 1;
         static final int DATA_VIEW_TYPE = 0;
 
-        ListReceiptAdapter(@NonNull final DiffUtil.ItemCallback<HyperwalletTransferMethod> diffCallback) {
+        ListReceiptAdapter(@NonNull final DiffUtil.ItemCallback<Receipt> diffCallback) {
             super(diffCallback);
         }
 
         @Override
         public int getItemViewType(int position) {
             if (position != 0) {
-                HyperwalletTransferMethod previous = getItem(position - 1);
-                HyperwalletTransferMethod current = getItem(position);
+                Receipt previous = getItem(position - 1);
+                Receipt current = getItem(position);
                 if (isDataViewType(previous, current)) {
                     return DATA_VIEW_TYPE;
                 }
@@ -190,13 +185,11 @@ public class ListReceiptFragment extends Fragment {
             return HEADER_VIEW_TYPE;
         }
 
-        boolean isDataViewType(@NonNull final HyperwalletTransferMethod previous,
-                @NonNull final HyperwalletTransferMethod current) {
-
+        boolean isDataViewType(@NonNull final Receipt previous, @NonNull final Receipt current) {
             Calendar prev = Calendar.getInstance();
-            prev.setTime(DateUtility.fromDateTimeString(previous.getField(CREATED_ON)));
+            prev.setTime(DateUtils.fromDateTimeString(previous.getCreatedOn()));
             Calendar curr = Calendar.getInstance();
-            curr.setTime(DateUtility.fromDateTimeString(current.getField(CREATED_ON)));
+            curr.setTime(DateUtils.fromDateTimeString(current.getCreatedOn()));
 
             return prev.get(Calendar.MONTH) == curr.get(Calendar.MONTH)
                     && prev.get(Calendar.YEAR) == curr.get(Calendar.YEAR);
@@ -218,9 +211,9 @@ public class ListReceiptFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull ReceiptViewHolder holder, int position) {
-            final HyperwalletTransferMethod transferMethod = getItem(position);
-            if (transferMethod != null) {
-                holder.bind(transferMethod);
+            final Receipt receipt = getItem(position);
+            if (receipt != null) {
+                holder.bind(receipt);
             }
         }
 
@@ -235,9 +228,6 @@ public class ListReceiptFragment extends Fragment {
             private final TextView mTransactionTitle;
             private final TextView mTransactionTypeIcon;
 
-            //TODO remove this after converting to Receipts model
-            private final Random amount = new Random(100);
-
             ReceiptViewHolder(@NonNull final View item) {
                 super(item);
                 mTransactionAmount = item.findViewById(R.id.transaction_amount);
@@ -247,48 +237,47 @@ public class ListReceiptFragment extends Fragment {
                 mTransactionTypeIcon = item.findViewById(R.id.transaction_type_icon);
             }
 
-            void bind(@NonNull final HyperwalletTransferMethod transferMethod) {
-                int nextAmount = amount.nextInt();
-                Locale locale = Locale.getDefault();
-                if (nextAmount < 0) {//TODO replace this with debit or credit
-                    mTransactionAmount.setTextColor(mTransactionAmount.getContext()
-                            .getResources().getColor(R.color.colorAccent));
-                    mTransactionAmount.setText(String.format(locale, "- %d.00", Math.abs(nextAmount)));
-
-                    mTransactionTypeIcon.setTextColor(mTransactionTypeIcon.getContext()
-                            .getResources().getColor(R.color.colorAccent));
-                    mTransactionTypeIcon.setBackground(mTransactionTypeIcon.getContext()
-                            .getDrawable(R.drawable.circle_negative));
-                    mTransactionTypeIcon.setText(mTransactionTypeIcon.getContext().getText(R.string.debit));
-                } else {
+            void bind(@NonNull final Receipt receipt) {
+                if (CREDIT.equals(receipt.getEntry())) {
                     mTransactionAmount.setTextColor(mTransactionAmount.getContext()
                             .getResources().getColor(R.color.positiveColor));
-                    mTransactionAmount.setText(String.format(locale, "+ %d.00", nextAmount));
-
+                    mTransactionAmount.setText(mTransactionAmount.getContext()
+                            .getString(R.string.credit_sign, receipt.getAmount()));
                     mTransactionTypeIcon.setTextColor(mTransactionTypeIcon.getContext()
                             .getResources().getColor(R.color.positiveColor));
                     mTransactionTypeIcon.setBackground(mTransactionTypeIcon.getContext()
                             .getDrawable(R.drawable.circle_positive));
                     mTransactionTypeIcon.setText(mTransactionTypeIcon.getContext().getText(R.string.credit));
+                } else if (DEBIT.equals(receipt.getEntry())) {
+                    mTransactionAmount.setTextColor(mTransactionAmount.getContext()
+                            .getResources().getColor(R.color.colorAccent));
+                    mTransactionAmount.setText(mTransactionAmount.getContext()
+                            .getString(R.string.debit_sign, receipt.getAmount()));
+                    mTransactionTypeIcon.setTextColor(mTransactionTypeIcon.getContext()
+                            .getResources().getColor(R.color.colorAccent));
+                    mTransactionTypeIcon.setBackground(mTransactionTypeIcon.getContext()
+                            .getDrawable(R.drawable.circle_negative));
+                    mTransactionTypeIcon.setText(mTransactionTypeIcon.getContext().getText(R.string.debit));
                 }
 
-                mTransactionCurrency.setText(transferMethod.getField(TRANSFER_METHOD_CURRENCY));
-                mTransactionTitle.setText(getTransactionTitle(transferMethod.getField(TOKEN),
+                mTransactionCurrency.setText(receipt.getCurrency());
+                mTransactionTitle.setText(getTransactionTitle(receipt.getType(),
                         mTransactionAmount.getText().length(), mTransactionTitle.getContext()));
-                mTransactionDate.setText(DateUtility.toDateFormat(
-                        DateUtility.fromDateTimeString(transferMethod.getField(CREATED_ON)), CAPTION_DATE_FORMAT));
+                mTransactionDate.setText(DateUtils.toDateFormat(DateUtils.
+                        fromDateTimeString(receipt.getCreatedOn()), CAPTION_DATE_FORMAT));
             }
 
-            CharSequence getTransactionTitle(@NonNull final CharSequence title, final int numberOfCharsAlreadyUsed,
+            String getTransactionTitle(@NonNull final String receiptType, final int numberOfCharsAlreadyUsed,
                     @NonNull final Context context) {
+                String showTitle = receiptType; //TODO get receipt type translations before processing
 
                 if (!context.getResources().getBoolean(R.bool.isLandscape)
-                        && (title.length() + numberOfCharsAlreadyUsed) >= MAX_CHARACTERS_FIRST_LINE) {
+                        && (receiptType.length() + numberOfCharsAlreadyUsed) >= MAX_CHARACTERS_FIRST_LINE) {
                     int allowedCharsLength = MAX_CHARACTERS_FIRST_LINE -
                             numberOfCharsAlreadyUsed - ELLIPSIS.length() - SPACER.length();
-                    return title.subSequence(0, allowedCharsLength) + ELLIPSIS;
+                    return showTitle.substring(0, allowedCharsLength) + ELLIPSIS;
                 }
-                return title;
+                return showTitle;
             }
         }
 
@@ -302,10 +291,10 @@ public class ListReceiptFragment extends Fragment {
             }
 
             @Override
-            void bind(@NonNull final HyperwalletTransferMethod transferMethod) {
-                super.bind(transferMethod);
-                mTransactionHeaderText.setText(DateUtility.toDateFormat(
-                        DateUtility.fromDateTimeString(transferMethod.getField(CREATED_ON)), HEADER_DATE_FORMAT));
+            void bind(@NonNull final Receipt receipt) {
+                super.bind(receipt);
+                mTransactionHeaderText.setText(DateUtils.toDateFormat(
+                        DateUtils.fromDateTimeString(receipt.getCreatedOn()), HEADER_DATE_FORMAT));
             }
         }
     }

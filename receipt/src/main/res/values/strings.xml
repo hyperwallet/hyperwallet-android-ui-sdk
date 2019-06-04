@@ -10,4 +10,6 @@
 
     <string name="debit">\uE900</string>
     <string name="credit">\uE902</string>
+    <string name="debit_sign">- %s</string>
+    <string name="credit_sign">+ %s</string>
 </resources>

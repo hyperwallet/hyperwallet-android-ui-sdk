@@ -8,15 +8,15 @@ import org.junit.Test;
 
 import java.util.Date;
 
-public class DateUtilityTest {
+public class DateUtilsTest {
 
     @Test
     public void testToDateFormat_returnExpectedStringFormat() {
         String dateString = "2019-05-27";
-        Date dateTarget = DateUtility.fromDateTimeString("2019-05-27T15:57:49");
+        Date dateTarget = DateUtils.fromDateTimeString("2019-05-27T15:57:49");
 
         // test
-        String targetDate = DateUtility.toDateFormat(dateTarget);
+        String targetDate = DateUtils.toDateFormat(dateTarget);
         assertThat(targetDate, is(notNullValue()));
         assertThat(targetDate, is(dateString));
     }
@@ -24,10 +24,10 @@ public class DateUtilityTest {
     @Test
     public void testToDateFormat_returnExpectedStringFormatFromParameter() {
         String dateString = "November 2019";
-        Date dateTarget = DateUtility.fromDateTimeString("2019-11-27T15:57:49");
+        Date dateTarget = DateUtils.fromDateTimeString("2019-11-27T15:57:49");
 
         // test
-        String targetDate = DateUtility.toDateFormat(dateTarget, "MMMM yyyy");
+        String targetDate = DateUtils.toDateFormat(dateTarget, "MMMM yyyy");
         assertThat(targetDate, is(notNullValue()));
         assertThat(targetDate, is(dateString));
     }
@@ -35,10 +35,10 @@ public class DateUtilityTest {
     @Test
     public void testToDateTimeFormat_returnExpectedStringFormat() {
         String dateString = "2019-11-27T15:57:49";
-        Date dateTarget = DateUtility.fromDateTimeString("2019-11-27T15:57:49");
+        Date dateTarget = DateUtils.fromDateTimeString("2019-11-27T15:57:49");
 
         // test
-        String targetDate = DateUtility.toDateTimeFormat(dateTarget);
+        String targetDate = DateUtils.toDateTimeFormat(dateTarget);
         assertThat(targetDate, is(notNullValue()));
         assertThat(targetDate, is(dateString));
     }
@@ -46,10 +46,10 @@ public class DateUtilityTest {
     @Test
     public void testToDateTimeMillisFormat_returnExpectedStringFormat() {
         String dateString = "2019-11-27T15:57:09.450";
-        Date dateTarget = DateUtility.fromDateTimeString("2019-11-27T15:57:09.450", "yyyy-MM-dd'T'HH:mm:ss.SSS");
+        Date dateTarget = DateUtils.fromDateTimeString("2019-11-27T15:57:09.450", "yyyy-MM-dd'T'HH:mm:ss.SSS");
 
         // test
-        String targetDate = DateUtility.toDateTimeMillisFormat(dateTarget);
+        String targetDate = DateUtils.toDateTimeMillisFormat(dateTarget);
         assertThat(targetDate, is(notNullValue()));
         assertThat(targetDate, is(dateString));
     }
