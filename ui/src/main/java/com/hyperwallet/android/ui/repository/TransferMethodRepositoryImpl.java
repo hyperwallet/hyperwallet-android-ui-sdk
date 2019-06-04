@@ -38,7 +38,6 @@ import com.hyperwallet.android.model.transfermethod.HyperwalletBankCard;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.model.transfermethod.PayPalAccount;
 
-
 public class TransferMethodRepositoryImpl implements TransferMethodRepository {
 
     private Handler mHandler = new Handler();

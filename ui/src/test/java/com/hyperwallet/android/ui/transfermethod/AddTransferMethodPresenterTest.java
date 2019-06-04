@@ -57,8 +57,11 @@ public class AddTransferMethodPresenterTest {
     private final HyperwalletBankAccount bankAccount = new HyperwalletBankAccount
             .Builder("CA", "CAD", "3423423432")
             .build();
+    @Rule
+    public MockitoRule mockito = MockitoJUnit.rule();
+    @Rule
+    public HyperwalletExternalResourceManager externalResourceManager = new HyperwalletExternalResourceManager();
     private AddTransferMethodPresenter presenter;
-
     @Mock
     private TransferMethodConfigurationRepository tmcRepository;
     @Mock
@@ -69,10 +72,6 @@ public class AddTransferMethodPresenterTest {
     private ArgumentCaptor<List<HyperwalletFieldGroup>> fieldArgumentCaptor;
     @Captor
     private ArgumentCaptor<List<HyperwalletError>> mErrorListArgumentCaptor;
-    @Rule
-    public MockitoRule mockito = MockitoJUnit.rule();
-    @Rule
-    public HyperwalletExternalResourceManager externalResourceManager = new HyperwalletExternalResourceManager();
 
     @Before
     public void setUp() {

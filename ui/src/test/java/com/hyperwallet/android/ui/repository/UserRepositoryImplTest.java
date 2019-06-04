@@ -42,18 +42,18 @@ import java.util.List;
 
 @RunWith(RobolectricTestRunner.class)
 public class UserRepositoryImplTest {
-    @Mock
-    private Hyperwallet mHyperwallet;
+    @Rule
+    public MockitoRule mMockito = MockitoJUnit.rule();
     @Mock
     UserRepository.LoadUserCallback mMockCallback;
+    @Spy
+    UserRepositoryImpl mUserRepository;
+    @Mock
+    private Hyperwallet mHyperwallet;
     @Captor
     private ArgumentCaptor<HyperwalletErrors> mErrorCaptor;
     @Captor
     private ArgumentCaptor<HyperwalletUser> mUserCaptor;
-    @Rule
-    public MockitoRule mMockito = MockitoJUnit.rule();
-    @Spy
-    UserRepositoryImpl mUserRepository;
 
     @Before
     public void setup() {

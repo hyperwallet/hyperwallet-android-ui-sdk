@@ -354,6 +354,11 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
         mPresenter.loadCurrencySelection(mSelectedCountryCode, mSelectedCurrencyCode);
     }
 
+    private String getCountryDisplay(@NonNull final String countryCode) {
+        Locale locale = new Locale.Builder().setRegion(countryCode).build();
+        return locale.getDisplayName();
+    }
+
     public interface TransferMethodSelectionItemListener {
 
         void onTransferMethodSelected(TransferMethodSelectionItem transferMethodType);
@@ -382,11 +387,6 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
     interface OnLoadCurrencySelectionNetworkErrorCallback {
 
         void showErrorsLoadCurrencySelection(@NonNull final List<HyperwalletError> errors);
-    }
-
-    private String getCountryDisplay(@NonNull final String countryCode) {
-        Locale locale = new Locale.Builder().setRegion(countryCode).build();
-        return locale.getDisplayName();
     }
 
     private static class TransferMethodTypesAdapter extends

@@ -217,6 +217,10 @@ public class CountrySelectionDialogFragment extends DialogFragment implements To
         }
     }
 
+    public interface CountrySelectionItemClickListener {
+        void onCountryItemClicked(String countryCode);
+    }
+
     private static class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements Filterable {
 
         private TreeMap<String, String> mCountryNameCodeFilteredMap;
@@ -349,9 +353,5 @@ public class CountrySelectionDialogFragment extends DialogFragment implements To
                 itemView.setOnClickListener(null);
             }
         }
-    }
-
-    public interface CountrySelectionItemClickListener {
-        void onCountryItemClicked(String countryCode);
     }
 }

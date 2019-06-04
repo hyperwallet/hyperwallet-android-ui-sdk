@@ -233,6 +233,10 @@ public class CurrencySelectionDialogFragment extends DialogFragment implements T
         inputMethodManager.hideSoftInputFromWindow(focusedView.getWindowToken(), 0);
     }
 
+    public interface CurrencySelectionItemClickListener {
+        void onCurrencyItemClicked(String currencyCode);
+    }
+
     private static class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements Filterable {
 
         private TreeMap<String, String> mCurrencyNameCodeFilteredMap;
@@ -366,9 +370,5 @@ public class CurrencySelectionDialogFragment extends DialogFragment implements T
                 itemView.setOnClickListener(null);
             }
         }
-    }
-
-    public interface CurrencySelectionItemClickListener {
-        void onCurrencyItemClicked(String currencyCode);
     }
 }

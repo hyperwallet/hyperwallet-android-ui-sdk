@@ -14,7 +14,7 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.hyperwallet.android.ui.view.error;
+package com.hyperwallet.android.common.view.error;
 
 import static com.hyperwallet.android.ExceptionMapper.EC_AUTHENTICATION_TOKEN_PROVIDER_EXCEPTION;
 import static com.hyperwallet.android.ExceptionMapper.EC_IO_EXCEPTION;
@@ -33,7 +33,7 @@ import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.hyperwallet.android.hyperwallet_ui.R;
+import com.hyperwallet.android.common.R;
 import com.hyperwallet.android.model.HyperwalletError;
 
 import java.util.ArrayList;
@@ -55,6 +55,20 @@ public class DefaultErrorDialogFragment extends DialogFragment {
         setRetainInstance(true);
     }
 
+    /**
+     * Builds Hyperwallet Error Dialogue
+     *
+     * @param errors List of Errors @see {@link Error}
+     */
+    public static DefaultErrorDialogFragment newInstance(@NonNull List<HyperwalletError> errors) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList(ARGUMENT_ERROR_KEY, new ArrayList<>(errors));
+
+        DefaultErrorDialogFragment errorDialogFragment = new DefaultErrorDialogFragment();
+        errorDialogFragment.setArguments(bundle);
+        return errorDialogFragment;
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,20 +82,6 @@ public class DefaultErrorDialogFragment extends DialogFragment {
 
         requireActivity().setResult(RESULT_ERROR);
         requireActivity().finish();
-    }
-
-    /**
-     * Builds Hyperwallet Error Dialogue
-     *
-     * @param errors List of Errors @see {@link Error}
-     */
-    public static DefaultErrorDialogFragment newInstance(@NonNull List<HyperwalletError> errors) {
-        Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList(ARGUMENT_ERROR_KEY, new ArrayList<>(errors));
-
-        DefaultErrorDialogFragment errorDialogFragment = new DefaultErrorDialogFragment();
-        errorDialogFragment.setArguments(bundle);
-        return errorDialogFragment;
     }
 
     public void show(@NonNull FragmentManager manager) {

@@ -57,6 +57,14 @@ import java.util.List;
 
 public class ListTransferMethodPresenterTest {
 
+    private final HyperwalletErrors errors = createErrors();
+    private final HyperwalletBankAccount bankAccount = new HyperwalletBankAccount
+            .Builder("CA", "CAD", "3423423432")
+            .build();
+    private final HyperwalletStatusTransition statusTransition =
+            new HyperwalletStatusTransition(HyperwalletStatusTransition.StatusDefinition.DE_ACTIVATED);
+    @Rule
+    public MockitoRule mMockito = MockitoJUnit.rule();
     @Mock
     private TransferMethodRepository mTransferMethodRepository;
     @Mock
@@ -65,15 +73,6 @@ public class ListTransferMethodPresenterTest {
     private ArgumentCaptor<List<HyperwalletError>> mListArgumentErrorCaptor;
     @Captor
     private ArgumentCaptor<List<HyperwalletTransferMethod>> mListArgumentTransferMethodCaptor;
-    @Rule
-    public MockitoRule mMockito = MockitoJUnit.rule();
-
-    private final HyperwalletErrors errors = createErrors();
-    private final HyperwalletBankAccount bankAccount = new HyperwalletBankAccount
-            .Builder("CA", "CAD", "3423423432")
-            .build();
-    private final HyperwalletStatusTransition statusTransition =
-            new HyperwalletStatusTransition(HyperwalletStatusTransition.StatusDefinition.DE_ACTIVATED);
     private ListTransferMethodPresenter presenter;
 
     @Before

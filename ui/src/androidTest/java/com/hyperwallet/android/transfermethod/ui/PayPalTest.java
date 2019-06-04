@@ -44,13 +44,13 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
 import com.hyperwallet.android.Hyperwallet;
+import com.hyperwallet.android.common.util.EspressoIdlingResource;
 import com.hyperwallet.android.hyperwallet_ui.R;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.rule.HyperwalletExternalResourceManager;
 import com.hyperwallet.android.rule.HyperwalletMockWebServer;
 import com.hyperwallet.android.ui.repository.RepositoryFactory;
 import com.hyperwallet.android.ui.transfermethod.AddTransferMethodActivity;
-import com.hyperwallet.android.ui.util.EspressoIdlingResource;
 import com.hyperwallet.android.util.TestAuthenticationProvider;
 
 import org.junit.After;

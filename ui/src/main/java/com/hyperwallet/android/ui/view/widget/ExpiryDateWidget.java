@@ -42,8 +42,8 @@ import com.hyperwallet.android.hyperwallet_ui.R;
 import com.hyperwallet.android.model.graphql.field.HyperwalletField;
 
 public class ExpiryDateWidget extends AbstractWidget {
-    private ViewGroup mContainer;
     private final ExpireDateUtil mExpireDateUtil;
+    private ViewGroup mContainer;
     private TextInputLayout mTextInputLayout;
     private String mValue;
     private String mMessageInvalidDateLength;

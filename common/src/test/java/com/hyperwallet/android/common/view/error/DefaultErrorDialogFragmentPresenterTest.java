@@ -1,8 +1,7 @@
-package com.hyperwallet.android.ui.view.error;
+package com.hyperwallet.android.common.view.error;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -16,11 +15,12 @@ import static com.hyperwallet.android.ExceptionMapper.EC_UNEXPECTED_EXCEPTION;
 
 import android.content.res.Resources;
 
-import com.hyperwallet.android.hyperwallet_ui.R;
+import com.hyperwallet.android.common.R;
 import com.hyperwallet.android.model.HyperwalletError;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentMatchers;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -65,7 +65,7 @@ public class DefaultErrorDialogFragmentPresenterTest {
         errors.add(new HyperwalletError("My default message", "my error code"));
         String message = presenter.buildDialogMessage(errors, resources);
 
-        verify(resources, never()).getString(anyInt());
+        verify(resources, never()).getString(ArgumentMatchers.anyInt());
         assertThat(message, is("My default message"));
     }
 

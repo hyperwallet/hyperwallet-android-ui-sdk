@@ -41,19 +41,18 @@ import java.util.TreeMap;
 @RunWith(RobolectricTestRunner.class)
 public class SelectTransferMethodPresenterTest {
 
+    private final HyperwalletErrors errors = createErrors();
+    @Rule
+    public HyperwalletExternalResourceManager externalResourceManager = new HyperwalletExternalResourceManager();
     @Mock
     private SelectTransferMethodContract.View view;
     @Mock
     private TransferMethodConfigurationRepositoryImpl mTransferMethodConfigurationRepository;
     @Mock
     private UserRepositoryImpl mUserRepository;
-    @Rule
-    public HyperwalletExternalResourceManager externalResourceManager = new HyperwalletExternalResourceManager();
-
     private HyperwalletTransferMethodConfigurationKey mResult;
     private HyperwalletUser mUser;
     private SelectTransferMethodPresenter selectTransferMethodPresenter;
-    private final HyperwalletErrors errors = createErrors();
 
     @Before
     public void initialize() throws Exception {

@@ -58,6 +58,12 @@ import java.util.List;
 @RunWith(RobolectricTestRunner.class)
 public class TransferMethodRepositoryImplTest {
 
+    @Rule
+    public ExpectedException mThrown = ExpectedException.none();
+    @Rule
+    public MockitoRule mMockito = MockitoJUnit.rule();
+    @Spy
+    TransferMethodRepositoryImpl mTransferMethodRepository;
     @Mock
     private Hyperwallet mHyperwallet;
     @Mock
@@ -78,12 +84,6 @@ public class TransferMethodRepositoryImplTest {
     private ArgumentCaptor<HyperwalletStatusTransition> mStatusTransitionArgumentCaptor;
     @Captor
     private ArgumentCaptor<List<HyperwalletTransferMethod>> mListTransferMethodCaptor;
-    @Rule
-    public ExpectedException mThrown = ExpectedException.none();
-    @Rule
-    public MockitoRule mMockito = MockitoJUnit.rule();
-    @Spy
-    TransferMethodRepositoryImpl mTransferMethodRepository;
 
     @Before
     public void setup() {

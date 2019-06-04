@@ -6,6 +6,8 @@
     </issue>
     <issue id="Overdraw">
         <ignore regexp="(item_transfer_method_type).xml"/>
+        <ignore regexp="(fragment_select_transfer_method).xml"/>
+        <ignore regexp="(item_widget_section_header).xml"/>
     </issue>
     <issue id="RtlEnabled">
         <ignore regexp="(AndroidManifest).xml"/>

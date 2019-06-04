@@ -232,6 +232,10 @@ public class WidgetSelectionDialogFragment extends DialogFragment implements Too
         void onWidgetSelectionItemClicked(@NonNull final String selectedValue, @NonNull final String fieldName);
     }
 
+    public interface WidgetSelectionItemType {
+        void onWidgetSelectionItemClicked(@NonNull String selectedValue);
+    }
+
     private static class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements Filterable {
 
         private final Fragment mFragment;
@@ -369,9 +373,5 @@ public class WidgetSelectionDialogFragment extends DialogFragment implements Too
                 itemView.setOnClickListener(null);
             }
         }
-    }
-
-    public interface WidgetSelectionItemType {
-        void onWidgetSelectionItemClicked(@NonNull String selectedValue);
     }
 }
