@@ -11,7 +11,7 @@ import java.util.Date;
 public class DateUtilsTest {
 
     @Test
-    public void testToDateFormat_returnExpectedStringFormat() {
+    public void testToDateFormat_returnsExpectedStringFormat() {
         String dateString = "2019-05-27";
         Date dateTarget = DateUtils.fromDateTimeString("2019-05-27T15:57:49");
 
@@ -22,7 +22,7 @@ public class DateUtilsTest {
     }
 
     @Test
-    public void testToDateFormat_returnExpectedStringFormatFromParameter() {
+    public void testToDateFormat_returnsExpectedStringFormatFromParameter() {
         String dateString = "November 2019";
         Date dateTarget = DateUtils.fromDateTimeString("2019-11-27T15:57:49");
 
@@ -33,7 +33,7 @@ public class DateUtilsTest {
     }
 
     @Test
-    public void testToDateTimeFormat_returnExpectedStringFormat() {
+    public void testToDateTimeFormat_returnsExpectedStringFormat() {
         String dateString = "2019-11-27T15:57:49";
         Date dateTarget = DateUtils.fromDateTimeString("2019-11-27T15:57:49");
 
@@ -44,7 +44,7 @@ public class DateUtilsTest {
     }
 
     @Test
-    public void testToDateTimeMillisFormat_returnExpectedStringFormat() {
+    public void testToDateTimeMillisFormat_returnsExpectedStringFormat() {
         String dateString = "2019-11-27T15:57:09.450";
         Date dateTarget = DateUtils.fromDateTimeString("2019-11-27T15:57:09.450", "yyyy-MM-dd'T'HH:mm:ss.SSS");
 

@@ -110,14 +110,15 @@ public class ListReceiptFragment extends Fragment {
     }
 
     private void registerObservers() {
-        mListReceiptViewModel.getReceiptList().observe(this, new Observer<PagedList<Receipt>>() {
+        mListReceiptViewModel.getReceiptList().observe(getViewLifecycleOwner(), new Observer<PagedList<Receipt>>() {
             @Override
             public void onChanged(PagedList<Receipt> transferMethods) {
                 mListReceiptAdapter.submitList(transferMethods);
             }
         });
 
-        mListReceiptViewModel.getReceiptErrors().observe(this, new Observer<Event<List<HyperwalletError>>>() {
+        mListReceiptViewModel.getReceiptErrors().observe(getViewLifecycleOwner(),
+                new Observer<Event<List<HyperwalletError>>>() {
             @Override
             public void onChanged(Event<List<HyperwalletError>> listEvent) {
                 if (!listEvent.isContentConsumed()) {
@@ -126,7 +127,7 @@ public class ListReceiptFragment extends Fragment {
             }
         });
 
-        mListReceiptViewModel.isLoadingData().observe(this, new Observer<Boolean>() {
+        mListReceiptViewModel.isLoadingData().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean loading) {
                 if (loading) {
