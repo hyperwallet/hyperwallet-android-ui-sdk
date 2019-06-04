@@ -37,13 +37,13 @@ import java.util.Calendar;
 public class ReceiptDataSource extends PageKeyedDataSource<Integer, Receipt> {
 
     private static final int YEAR_BEFORE_NOW = -1;
+    private final Calendar mCalendarYearBeforeNow;
     private final MutableLiveData<HyperwalletErrors> mErrors = new MutableLiveData<>();
     private final MutableLiveData<Boolean> mIsFetchingData = new MutableLiveData<>();
     private LoadInitialCallback<Integer, Receipt> mLoadInitialCallback;
     private LoadInitialParams<Integer> mLoadInitialParams;
     private LoadCallback<Integer, Receipt> mLoadAfterCallback;
     private LoadParams<Integer> mLoadAfterParams;
-    private final Calendar mCalendarYearBeforeNow;
 
     ReceiptDataSource() {
         super();

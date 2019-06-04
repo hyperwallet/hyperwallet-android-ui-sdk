@@ -47,16 +47,17 @@ import com.hyperwallet.android.receipt.viewmodel.ListReceiptViewModel;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public class ListReceiptFragment extends Fragment {
 
     private static final String HEADER_DATE_FORMAT = "MMMM yyyy";
     private static final String CAPTION_DATE_FORMAT = "MMMM dd, yyyy";
-    private View mProgressBar;
+    private ListReceiptAdapter mListReceiptAdapter;
     private RecyclerView mListReceiptsView;
     private ListReceiptViewModel mListReceiptViewModel;
-    private ListReceiptAdapter mListReceiptAdapter;
     private OnLoadReceiptErrorCallback mOnLoadReceiptErrorCallback;
+    private View mProgressBar;
 
     /**
      * Please don't use this constructor this is reserved for Android Core Framework
@@ -152,16 +153,20 @@ public class ListReceiptFragment extends Fragment {
 
         @Override
         public boolean areItemsTheSame(@NonNull Receipt oldItem, @NonNull Receipt newItem) {
-            return oldItem.getJournalId().equals(newItem.getJournalId())
-                    && oldItem.getType().equals(newItem.getType())
-                    && oldItem.getEntry().equals(newItem.getEntry());
+            //TODO I think its better to have equals in core? since core knows which objects are equal or not?
+            // because I think integer comparison is faster than reference comparison of fields
+            return Objects.equals(oldItem.getJournalId(), newItem.getJournalId())
+                    && Objects.equals(oldItem.getType(), newItem.getType())
+                    && Objects.equals(oldItem.getEntry(), newItem.getEntry());
         }
 
         @Override
         public boolean areContentsTheSame(@NonNull Receipt oldItem, @NonNull Receipt newItem) {
-            return oldItem.getJournalId().equals(newItem.getJournalId())
-                    && oldItem.getType().equals(newItem.getType())
-                    && oldItem.getEntry().equals(newItem.getEntry());
+            //TODO I think its better to have equals in core? since core knows which objects are equal or not?
+            // because I think integer comparison is faster than reference comparison of fields
+            return Objects.equals(oldItem.getJournalId(), newItem.getJournalId())
+                    && Objects.equals(oldItem.getType(), newItem.getType())
+                    && Objects.equals(oldItem.getEntry(), newItem.getEntry());
         }
     }
 

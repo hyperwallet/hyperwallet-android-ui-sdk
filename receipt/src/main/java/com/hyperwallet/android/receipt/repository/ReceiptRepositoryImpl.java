@@ -27,8 +27,8 @@ public class ReceiptRepositoryImpl implements ReceiptRepository {
 
     private final ReceiptDataSourceFactory mDataSourceFactory;
     private final LiveData<ReceiptDataSource> mReceiptDataSourceLiveData;
-    private LiveData<Boolean> mIsFetchingData;
     private LiveData<HyperwalletErrors> mErrorsLiveData;
+    private LiveData<Boolean> mIsFetchingData;
     private LiveData<PagedList<Receipt>> mReceiptsLiveData;
 
     ReceiptRepositoryImpl() {

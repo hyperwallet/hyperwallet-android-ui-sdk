@@ -23,8 +23,8 @@ import androidx.paging.DataSource;
 
 public class ReceiptDataSourceFactory extends DataSource.Factory {
 
-    private final ReceiptDataSource mReceiptDataSource;
     private final MutableLiveData<ReceiptDataSource> mDataSourceMutableLiveData;
+    private final ReceiptDataSource mReceiptDataSource;
 
     ReceiptDataSourceFactory() {
         super();

@@ -34,9 +34,9 @@ import java.util.List;
 
 public class ListReceiptViewModel extends ViewModel {
 
-    private ReceiptRepository mReceiptRepository;
     private MutableLiveData<Event<List<HyperwalletError>>> mErrorEvent = new MutableLiveData<>();
     private Observer<HyperwalletErrors> mErrorEventObserver;
+    private ReceiptRepository mReceiptRepository;
 
     private ListReceiptViewModel(@NonNull final ReceiptRepository receiptRepository) {
         mReceiptRepository = receiptRepository;
