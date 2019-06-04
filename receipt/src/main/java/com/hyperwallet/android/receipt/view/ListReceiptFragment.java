@@ -46,6 +46,7 @@ import com.hyperwallet.android.receipt.viewmodel.ListReceiptViewModel;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 public class ListReceiptFragment extends Fragment {
 
@@ -269,10 +270,15 @@ public class ListReceiptFragment extends Fragment {
 
             String getTransactionTitle(@NonNull final String receiptType, final int numberOfCharsAlreadyUsed,
                     @NonNull final Context context) {
-                String showTitle = receiptType; //TODO get receipt type translations before processing
+                String showTitle = context.getResources().getString(R.string.unknown_type);
+                int resourceId = context.getResources().getIdentifier(receiptType.toLowerCase(Locale.ROOT), "string",
+                        context.getPackageName());
+                if (resourceId != 0) {
+                    showTitle = context.getResources().getString(resourceId);
+                }
 
                 if (!context.getResources().getBoolean(R.bool.isLandscape)
-                        && (receiptType.length() + numberOfCharsAlreadyUsed) >= MAX_CHARACTERS_FIRST_LINE) {
+                        && (showTitle.length() + numberOfCharsAlreadyUsed) >= MAX_CHARACTERS_FIRST_LINE) {
                     int allowedCharsLength = MAX_CHARACTERS_FIRST_LINE -
                             numberOfCharsAlreadyUsed - ELLIPSIS.length() - SPACER.length();
                     return showTitle.substring(0, allowedCharsLength) + ELLIPSIS;

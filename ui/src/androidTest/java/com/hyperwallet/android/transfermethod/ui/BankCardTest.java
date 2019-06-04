@@ -2,11 +2,11 @@ package com.hyperwallet.android.transfermethod.ui;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
-import static androidx.test.espresso.action.ViewActions.pressImeActionButton;
+import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.isEnabled;
 import static androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withParent;
@@ -22,6 +22,7 @@ import static java.net.HttpURLConnection.HTTP_CREATED;
 import static java.net.HttpURLConnection.HTTP_OK;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
+import static com.hyperwallet.android.util.EspressoUtils.hasEmptyText;
 import static com.hyperwallet.android.util.EspressoUtils.hasErrorText;
 import static com.hyperwallet.android.util.EspressoUtils.nestedScrollTo;
 import static com.hyperwallet.android.util.EspressoUtils.withHint;
@@ -122,16 +123,19 @@ public class BankCardTest {
     public void testAddTransferMethod_displaysElementsOnTmcResponse() {
         mActivityTestRule.launchActivity(null);
 
-        onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar)))).check(
-                matches(withText(R.string.title_add_bank_card)));
+        onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
+                .check(matches(withText(R.string.title_add_bank_card)));
 
-        onView(withId(R.id.cardNumber)).check(matches(isDisplayed()));
+        onView(allOf(withId(R.id.section_header_title), withText("Account Information - United States (USD)")))
+                .perform(nestedScrollTo())
+                .check(matches(isDisplayed()));
+        onView(withId(R.id.cardNumber)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.cardNumberLabel)).check(matches(isDisplayed()));
         onView(withId(R.id.cardNumberLabel)).check(matches(withHint(CARD_NUMBER_LABEL)));
-        onView(withId(R.id.dateOfExpiry)).check(matches(isDisplayed()));
+        onView(withId(R.id.dateOfExpiry)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.dateOfExpiryLabel)).check(matches(isDisplayed()));
         onView(withId(R.id.dateOfExpiryLabel)).check(matches(withHint(EXPIRY_DATE_LABEL)));
-        onView(withId(R.id.cvv)).check(matches(isDisplayed()));
+        onView(withId(R.id.cvv)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.cvvLabel)).check(matches(isDisplayed()));
         onView(withId(R.id.cvvLabel)).check(matches(withHint(CVV_LABEL)));
 
@@ -161,6 +165,24 @@ public class BankCardTest {
     }
 
     @Test
+    public void testAddTransferMethod_verifyDefaultValues() {
+        mActivityTestRule.launchActivity(null);
+
+        onView(withId(R.id.cardNumber)).check(matches(hasEmptyText()));
+        onView(withId(R.id.dateOfExpiry)).check(matches(hasEmptyText()));
+        onView(withId(R.id.cvv)).check(matches(hasEmptyText()));
+    }
+
+    @Test
+    public void testAddTransferMethod_verifyEditableFields() {
+        mActivityTestRule.launchActivity(null);
+
+        onView(withId(R.id.cardNumber)).check(matches(isEnabled()));
+        onView(withId(R.id.dateOfExpiry)).check(matches(isEnabled()));
+        onView(withId(R.id.cvv)).check(matches(isEnabled()));
+    }
+
+    @Test
     public void testAddTransferMethod_returnsTokenOnBankCardCreation() throws InterruptedException {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_CREATED).withBody(sResourceManager
                 .getResourceContent("bank_card_response.json")).mock();
@@ -185,12 +207,11 @@ public class BankCardTest {
         LocalBroadcastManager.getInstance(mActivityTestRule.getActivity().getApplicationContext())
                 .registerReceiver(br, new IntentFilter("ACTION_HYPERWALLET_TRANSFER_METHOD_ADDED"));
 
-        onView(withId(R.id.cardNumber)).perform(typeText(VALID_CARD_NUMBER)).perform(closeSoftKeyboard());
-        onView(withId(R.id.dateOfExpiry)).perform(typeText(VALID_EXPIRATION_DATE)).perform(closeSoftKeyboard());
-
+        onView(withId(R.id.cardNumber)).perform(nestedScrollTo(), replaceText(VALID_CARD_NUMBER));
+        // Type text here instead to trigger auto-formatting
+        onView(withId(R.id.dateOfExpiry)).perform(nestedScrollTo(), typeText(VALID_EXPIRATION_DATE));
         onView(withId(R.id.dateOfExpiry)).check(matches(withText(VALID_EXPIRATION_DATE_FORMATTED)));
-
-        onView(withId(R.id.cvv)).perform(typeText(VALID_CVV)).perform(closeSoftKeyboard());
+        onView(withId(R.id.cvv)).perform(nestedScrollTo(), replaceText(VALID_CVV));
         onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo(), click());
 
         gate.await(5, SECONDS);
@@ -198,8 +219,8 @@ public class BankCardTest {
         assertThat("Result code is incorrect", mActivityTestRule.getActivityResult().getResultCode(),
                 is(Activity.RESULT_OK));
 
-        LocalBroadcastManager.getInstance(mActivityTestRule.getActivity().getApplicationContext()).unregisterReceiver(
-                br);
+        LocalBroadcastManager.getInstance(
+                mActivityTestRule.getActivity().getApplicationContext()).unregisterReceiver(br);
         assertThat("Action is not broadcasted", gate.getCount(), is(0L));
     }
 
@@ -207,20 +228,24 @@ public class BankCardTest {
     public void testAddTransferMethod_returnsErrorOnInvalidPattern() {
         mActivityTestRule.launchActivity(null);
 
-        onView(withId(R.id.dateOfExpiry))
-                .perform(typeText(INVALID_PATTERN_EXPIRATION_DATE))
-                .perform(closeSoftKeyboard(), pressImeActionButton());
+        onView(withId(R.id.cardNumber)).perform(nestedScrollTo(), replaceText("abc12341234cb"));
+        onView(withId(R.id.dateOfExpiry)).perform(nestedScrollTo(), replaceText(INVALID_PATTERN_EXPIRATION_DATE));
+        onView(withId(R.id.cvv)).perform(nestedScrollTo(), replaceText("9-09"));
 
+        onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo(), click());
+
+        onView(withId(R.id.cardNumberLabel)).check(matches(hasErrorText("is invalid length or format.")));
         onView(withId(R.id.dateOfExpiryLabel)).check(matches(hasErrorText("Expiry Date is invalid.")));
+        onView(withId(R.id.cvvLabel)).check(matches(hasErrorText("is invalid length or format.")));
     }
 
     @Test
     public void testAddTransferMethod_returnsErrorOnInvalidPresence() {
         mActivityTestRule.launchActivity(null);
 
-        onView(withId(R.id.cardNumber)).perform(click()).perform(closeSoftKeyboard());
-        onView(withId(R.id.dateOfExpiry)).perform(click()).perform(closeSoftKeyboard());
-        onView(withId(R.id.cvv)).perform(click()).perform(closeSoftKeyboard());
+        onView(withId(R.id.cardNumber)).perform(nestedScrollTo(), replaceText(""));
+        onView(withId(R.id.dateOfExpiry)).perform(nestedScrollTo(), replaceText(""));
+        onView(withId(R.id.cvv)).perform(nestedScrollTo(), replaceText(""));
 
         onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo(), click());
 
@@ -236,11 +261,18 @@ public class BankCardTest {
     public void testAddTransferMethod_returnsErrorOnInvalidLength() {
         mActivityTestRule.launchActivity(null);
 
-        onView(withId(R.id.cardNumber)).perform(typeText(WRONG_LENGTH_CARD_NUMBER)).perform(closeSoftKeyboard());
+        onView(withId(R.id.cardNumber)).perform(nestedScrollTo(), replaceText(WRONG_LENGTH_CARD_NUMBER));
+        onView(withId(R.id.dateOfExpiry)).perform(nestedScrollTo(), replaceText("1"));
+        onView(withId(R.id.cvv)).perform(nestedScrollTo(), replaceText("1"));
+
         onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo(), click());
 
         onView(withId(R.id.cardNumberLabel)).check(
                 matches(hasErrorText("The minimum length of this field is 13 and maximum length is 19.")));
+        onView(withId(R.id.dateOfExpiryLabel)).check(
+                matches(hasErrorText("The length of this field is exactly 5.")));
+        onView(withId(R.id.cvvLabel)).check(
+                matches(hasErrorText("The minimum length of this field is 3 and maximum length is 4.")));
     }
 
     @Test
@@ -250,9 +282,9 @@ public class BankCardTest {
 
         mActivityTestRule.launchActivity(null);
 
-        onView(withId(R.id.cardNumber)).perform(typeText(NOT_VALID_CARD_NUMBER)).perform(closeSoftKeyboard());
-        onView(withId(R.id.dateOfExpiry)).perform(typeText(VALID_EXPIRATION_DATE)).perform(closeSoftKeyboard());
-        onView(withId(R.id.cvv)).perform(typeText(VALID_CVV)).perform(closeSoftKeyboard());
+        onView(withId(R.id.cardNumber)).perform(nestedScrollTo(), replaceText(NOT_VALID_CARD_NUMBER));
+        onView(withId(R.id.dateOfExpiry)).perform(nestedScrollTo(), replaceText(VALID_EXPIRATION_DATE));
+        onView(withId(R.id.cvv)).perform(nestedScrollTo(), replaceText(VALID_CVV));
         onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo(), click());
 
         onView(withId(R.id.cardNumberLabel)).check(matches(hasErrorText(
