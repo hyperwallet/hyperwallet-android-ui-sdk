@@ -38,7 +38,8 @@
     <string name="prepaid_card_disputed_charge_refund">Disputed Charge Refund</string>
     <string name="prepaid_card_dispute_deposit">Disputed Card Deposit</string>
     <string name="prepaid_card_domestic_cash_withdrawal_fee">ATM Withdrawal</string>
-    <string name="PREPAID_CARD_EXCHANGE_RATE_DIFFERENCE"></string>
+    <string name="prepaid_card_exchange_rate_difference">PREPAID_CARD_EXCHANGE_RATE_DIFFERENCE
+    </string>
     <string name="prepaid_card_manual_unload">Card Unload</string>
     <string name="prepaid_card_overseas_cash_withdrawal_fee">ATM Withdrawal</string>
     <string name="prepaid_card_pin_change_fee">PIN Change Fee</string>
@@ -73,8 +74,8 @@
     <string name="account_closure">Account Closure</string>
     <string name="account_closure_fee">Account Closure Fee</string>
     <string name="account_unload">Funds Unloaded</string>
-    <string name="dormant_user_fee">Domant User Account Fee</string>
-    <string name="dormant_user_fee_refund">Domant User Account Fee Refund</string>
+    <string name="dormant_user_fee">Dormant User Account Fee</string>
+    <string name="dormant_user_fee_refund">Dormant User Account Fee Refund</string>
     <string name="payment">Payment</string>
     <string name="payment_cancellation">Payment Cancellation</string>
     <string name="payment_reversal">Payment Reversal</string>
