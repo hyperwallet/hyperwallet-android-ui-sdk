@@ -29,6 +29,7 @@ public class ListTransactionHistoryActivity extends AppCompatActivity implements
         ListDetailNavigator<Event<HyperwalletTransferMethod>>,
         OnNetworkErrorCallback {
 
+    public static final String EXTRA_RECEIPT_SOURCE_TOKEN = "EXTRA_RECEIPT_SOURCE_TOKEN";
 
     private ListReceiptViewModel mListReceiptViewModel;
 
@@ -37,10 +38,20 @@ public class ListTransactionHistoryActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_transaction_history);
         ReceiptRepositoryFactory repositoryFactory = ReceiptRepositoryFactory.getInstance();
-        mListReceiptViewModel = ViewModelProviders.of(this, new ListReceiptViewModel.ListReceiptViewModelFactory(
-                repositoryFactory.getReceiptRepository())).get(ListReceiptViewModel.class);
+
+        String receiptSourceToken = getIntent().getStringExtra(EXTRA_RECEIPT_SOURCE_TOKEN);
+
+        /*
+            the idea is to provide the token as key of the view model map so we don't need to set the token in the
+            view model using setters, we keep it as part of the factory constructor
+         */
+        mListReceiptViewModel = ViewModelProviders.of(this,
+                new ListReceiptViewModel.ListReceiptViewModelFactory(receiptSourceToken,
+                        repositoryFactory.getReceiptRepository(receiptSourceToken)))
+                .get(receiptSourceToken, ListReceiptViewModel.class);
+
         if (savedInstanceState == null) {
-            initFragment(ListTransactionHistoryFragment.newInstance());
+            initFragment(ListTransactionHistoryFragment.newInstance(receiptSourceToken));
         }
 
         mListReceiptViewModel.getDetailNavigation().observe(this, new Observer<Event<HyperwalletTransferMethod>>() {
@@ -91,7 +102,7 @@ public class ListTransactionHistoryActivity extends AppCompatActivity implements
                 fragmentManager.findFragmentById(R.id.list_transfer_method_fragment);
 
         if (fragment == null) {
-            fragment = ListTransactionHistoryFragment.newInstance();
+            fragment = ListTransactionHistoryFragment.newInstance(mListReceiptViewModel.getToken());
         }
         fragment.retry();
     }

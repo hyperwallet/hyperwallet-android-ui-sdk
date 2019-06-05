@@ -22,6 +22,7 @@ public class ReceiptDataSource extends PageKeyedDataSource<Integer, HyperwalletT
     private HyperwalletTransferMethodPagination mHyperwalletTransferMethodPagination;
     private MutableLiveData<Boolean> mIsFetchingData = new MutableLiveData<>();
     private MutableLiveData<HyperwalletErrors> mErrors = new MutableLiveData<>();
+    private ReceiptProvider mReceiptProvider;
 
 
     //todo the call backs and their parameters will not be necessary when using kotlin. we can store the function in a variable
@@ -32,10 +33,11 @@ public class ReceiptDataSource extends PageKeyedDataSource<Integer, HyperwalletT
 
 
 
-    public ReceiptDataSource() {
+    public ReceiptDataSource(@NonNull final ReceiptProvider receiptProvider) {
         super();
         mHyperwalletTransferMethodPagination = new HyperwalletTransferMethodPagination();
         mHyperwalletTransferMethodPagination.setStatus(HyperwalletStatusTransition.StatusDefinition.DE_ACTIVATED);
+        mReceiptProvider = receiptProvider;
     }
 
     @Override
@@ -47,7 +49,7 @@ public class ReceiptDataSource extends PageKeyedDataSource<Integer, HyperwalletT
 
         mIsFetchingData.postValue(Boolean.TRUE);
         mHyperwalletTransferMethodPagination.setLimit(params.requestedLoadSize);
-        getHyperwallet().listTransferMethods(mHyperwalletTransferMethodPagination,
+        mReceiptProvider.loadReceipts(mHyperwalletTransferMethodPagination,
                 new HyperwalletListener<HyperwalletPageList<HyperwalletTransferMethod>>() {
                     @Override
                     public void onSuccess(@Nullable HyperwalletPageList<HyperwalletTransferMethod> result) {

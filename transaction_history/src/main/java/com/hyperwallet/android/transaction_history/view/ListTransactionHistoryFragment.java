@@ -36,18 +36,20 @@ public class ListTransactionHistoryFragment extends Fragment {
     private ListTransactionHistoryAdapter mListTransactionHistoryAdapter;
     private ListReceiptViewModel mListReceiptViewModel;
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy MM");
+    private String mReceiptSourceToken; //todo save this parameter
 
 
-    public static ListTransactionHistoryFragment newInstance() {
-        return new ListTransactionHistoryFragment();
+    public static ListTransactionHistoryFragment newInstance(@NonNull final String receiptSourceToken) {
+        ListTransactionHistoryFragment fragment = new ListTransactionHistoryFragment();
+        fragment.mReceiptSourceToken = receiptSourceToken;
+        return fragment;
     }
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mListReceiptViewModel = ViewModelProviders.of(getActivity()).get(
-                ListReceiptViewModel.class);
+        mListReceiptViewModel = ViewModelProviders.of(getActivity()).get(mReceiptSourceToken, ListReceiptViewModel.class);
     }
 
     public void retry() {

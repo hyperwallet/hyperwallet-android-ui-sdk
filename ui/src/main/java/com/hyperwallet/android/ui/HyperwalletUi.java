@@ -102,13 +102,17 @@ public final class HyperwalletUi {
     }
 
 
-    /**
-     * @param context A Context of the application consuming this Intent.
-     * @return an Intent with the data necessary to launch the {@link ListTransferMethodActivity}
-     */
-    public Intent getIntentListTransactionHistoryActivity(@NonNull final Context context) {
-        return new Intent(context, ListTransactionHistoryActivity.class);
+    public Intent getIntentUserReceiptsActivity(@NonNull final Context context) {
+        Intent intent = new Intent(context, ListTransactionHistoryActivity.class);
+        intent.putExtra(ListTransactionHistoryActivity.EXTRA_RECEIPT_SOURCE_TOKEN, "usr-");
+        return intent;
     }
 
+    public Intent getIntentPrepaidCardReceiptsActivity(@NonNull final Context context,
+            @NonNull final String prepaidCardToken) {
+        Intent intent = new Intent(context, ListTransactionHistoryActivity.class);
+        intent.putExtra(ListTransactionHistoryActivity.EXTRA_RECEIPT_SOURCE_TOKEN, prepaidCardToken);
+        return intent;
+    }
 
 }

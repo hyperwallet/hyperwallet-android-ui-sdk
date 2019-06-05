@@ -20,6 +20,7 @@ public class ListReceiptViewModel extends ViewModel {
     private LiveData<PagedList<HyperwalletTransferMethod>> mTransferMethods;
     private LiveData<Boolean> mDisplayLoading;
     private ReceiptRepository mReceiptRepository;
+    private String mToken;
 
     private MutableLiveData<Event<HyperwalletTransferMethod>> mDetailNavigation = new MutableLiveData<>();
     private MutableLiveData<Event<List<HyperwalletError>>> mErrors = new MutableLiveData<>();
@@ -63,7 +64,6 @@ public class ListReceiptViewModel extends ViewModel {
         mDetailNavigation.setValue(new Event<>(transferMethod));
     }
 
-
     public LiveData<Event<List<HyperwalletError>>> getErrors() {
         return mErrors;
     }
@@ -73,6 +73,10 @@ public class ListReceiptViewModel extends ViewModel {
         return mDetailNavigation;
     }
 
+    public String getToken() {
+        return mToken;
+    }
+
     @Override
     protected void onCleared() {
         super.onCleared();
@@ -80,19 +84,27 @@ public class ListReceiptViewModel extends ViewModel {
         mReceiptRepository = null;
     }
 
+    private void setToken(@NonNull final String token) {
+        mToken = token;
+    }
+
     public static class ListReceiptViewModelFactory implements ViewModelProvider.Factory {
 
         private final ReceiptRepository mRepository;
+        private final String mToken;
 
-        public ListReceiptViewModelFactory(@NonNull final ReceiptRepository repository) {
+        public ListReceiptViewModelFactory(@NonNull final String token, @NonNull final ReceiptRepository repository) {
             mRepository = repository;
+            mToken = token;
         }
 
         @NonNull
         @Override
         public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
             if (modelClass.isAssignableFrom(ListReceiptViewModel.class)) {
-                return (T) new ListReceiptViewModel(mRepository);
+                ListReceiptViewModel listReceiptViewModel = new ListReceiptViewModel(mRepository);
+                listReceiptViewModel.setToken(mToken);
+                return (T)listReceiptViewModel;
             }
             throw new IllegalArgumentException("Unknown ViewModel class");
 
