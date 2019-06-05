@@ -153,20 +153,14 @@ public class ListReceiptFragment extends Fragment {
 
         @Override
         public boolean areItemsTheSame(@NonNull Receipt oldItem, @NonNull Receipt newItem) {
-            //TODO I think its better to have equals in core? since core knows which objects are equal or not?
-            // because I think integer comparison is faster than reference comparison of fields
-            return Objects.equals(oldItem.getJournalId(), newItem.getJournalId())
-                    && Objects.equals(oldItem.getType(), newItem.getType())
-                    && Objects.equals(oldItem.getEntry(), newItem.getEntry());
+            return oldItem.hashCode() == newItem.hashCode()
+                    && Objects.equals(oldItem, newItem);
         }
 
         @Override
         public boolean areContentsTheSame(@NonNull Receipt oldItem, @NonNull Receipt newItem) {
-            //TODO I think its better to have equals in core? since core knows which objects are equal or not?
-            // because I think integer comparison is faster than reference comparison of fields
-            return Objects.equals(oldItem.getJournalId(), newItem.getJournalId())
-                    && Objects.equals(oldItem.getType(), newItem.getType())
-                    && Objects.equals(oldItem.getEntry(), newItem.getEntry());
+            return oldItem.hashCode() == newItem.hashCode()
+                    && Objects.equals(oldItem, newItem);
         }
     }
 
