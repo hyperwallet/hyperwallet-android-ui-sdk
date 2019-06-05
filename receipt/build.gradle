@@ -3,7 +3,7 @@ apply from: "$rootProject.projectDir/android-library.gradle"
 dependencies {
     api project(":common")
 
-    implementation "com.google.android.material:material:$materialVersion"
+    implementation "com.google.android.material:material:$androidMaterialVersion"
     implementation "androidx.constraintlayout:constraintlayout:$constraintlayoutVersion"
     implementation "androidx.legacy:legacy-support-v4:$legacySupportV4Version"
     implementation "androidx.recyclerview:recyclerview:$recycleViewVersion"

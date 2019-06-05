@@ -47,7 +47,6 @@ subprojects {
         recycleViewVersion = '1.0.0'
         lifecycleExtensionsVersion = '2.0.0'
         pagingRuntimeVersion = '2.1.0'
-        materialVersion = '1.0.0'
         //Testing
         extJunitVerson = '1.1.1'
         testRunnerVersion = '1.2.0'
