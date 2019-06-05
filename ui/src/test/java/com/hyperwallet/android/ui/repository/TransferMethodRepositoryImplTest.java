@@ -29,11 +29,11 @@ import com.hyperwallet.android.listener.HyperwalletListener;
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.HyperwalletStatusTransition;
+import com.hyperwallet.android.model.QueryParam;
 import com.hyperwallet.android.model.paging.HyperwalletPageList;
 import com.hyperwallet.android.model.transfermethod.HyperwalletBankAccount;
 import com.hyperwallet.android.model.transfermethod.HyperwalletBankCard;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
-import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethodQueryParam;
 import com.hyperwallet.android.model.transfermethod.PayPalAccount;
 
 import org.junit.Before;
@@ -423,7 +423,7 @@ public class TransferMethodRepositoryImplTest {
                 listener.onSuccess(pageList);
                 return listener;
             }
-        }).when(mHyperwallet).listTransferMethods((HyperwalletTransferMethodQueryParam) any(),
+        }).when(mHyperwallet).listTransferMethods((QueryParam) any(),
                 ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<HyperwalletTransferMethod>>>any());
 
         // test
@@ -448,7 +448,7 @@ public class TransferMethodRepositoryImplTest {
                 listener.onSuccess(null);
                 return listener;
             }
-        }).when(mHyperwallet).listTransferMethods((HyperwalletTransferMethodQueryParam) any(),
+        }).when(mHyperwallet).listTransferMethods((QueryParam) any(),
                 ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<HyperwalletTransferMethod>>>any());
 
         // test
@@ -475,7 +475,7 @@ public class TransferMethodRepositoryImplTest {
                 listener.onFailure(new HyperwalletException(errors));
                 return listener;
             }
-        }).when(mHyperwallet).listTransferMethods((HyperwalletTransferMethodQueryParam) any(),
+        }).when(mHyperwallet).listTransferMethods((QueryParam) any(),
                 ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<HyperwalletTransferMethod>>>any());
 
         // test

@@ -101,6 +101,8 @@ public class ReceiptDataSource extends PageKeyedDataSource<Integer, Receipt> {
     @Override
     public void loadAfter(@NonNull LoadParams<Integer> params,
             final @NonNull LoadCallback<Integer, Receipt> callback) {
+        mLoadInitialCallback = null;
+        mLoadInitialParams = null;
         mLoadAfterCallback = callback;
         mLoadAfterParams = params;
         mIsFetchingData.postValue(Boolean.TRUE);
@@ -124,8 +126,8 @@ public class ReceiptDataSource extends PageKeyedDataSource<Integer, Receipt> {
                         }
 
                         // reset
-                        mLoadInitialCallback = null;
-                        mLoadInitialParams = null;
+                        mLoadAfterCallback = null;
+                        mLoadAfterParams = null;
                     }
 
                     @Override

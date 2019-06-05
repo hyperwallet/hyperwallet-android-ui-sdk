@@ -1,79 +1,82 @@
 {
-  "count": 30,
+  "count": 5,
   "offset": 0,
   "limit": 10,
   "data": [
     {
-      "token": "trm-one-one",
-      "createdOn": "2019-05-27T15:49:56",
-      "transferMethodCountry": "US",
-      "transferMethodCurrency": "USD",
-      "bankId": "021000021",
-      "branchId": "021000021"
+      "journalId": "51660665",
+      "type": "PAYMENT",
+      "createdOn": "2019-05-27T15:42:07",
+      "entry": "CREDIT",
+      "sourceToken": "act-b1f6dc28-e534-45f4-a661-3523f051f77a",
+      "destinationToken": "usr-b4e8ec34-52d8-4a81-9566-bdde1bd745b6",
+      "amount": "5000.00",
+      "fee": "0.00",
+      "currency": "USD",
+      "details": {
+        "clientPaymentId": "trans-0001",
+        "payeeName": "kevin Puckett"
+      }
     },
     {
-      "token": "trm-one-two",
-      "createdOn": "2019-05-27T15:30:56",
-      "transferMethodCountry": "US",
-      "transferMethodCurrency": "USD",
-      "bankId": "021000021",
-      "branchId": "021000021"
+      "journalId": "51660666",
+      "type": "TRANSFER_TO_BANK_ACCOUNT",
+      "createdOn": "2019-05-27T15:57:49",
+      "entry": "DEBIT",
+      "sourceToken": "usr-b4e8ec34-52d8-4a81-9566-bdde1bd745b6",
+      "destinationToken": "trm-0a2ac589-2cae-4ed3-9b0b-658246a34687",
+      "amount": "10.25",
+      "fee": "0.25",
+      "currency": "USD",
+      "details": {
+        "payeeName": "kevin Puckett",
+        "bankAccountId": "patzachery.mcclary@example.com"
+      }
     },
     {
-      "token": "trm-one-three",
-      "createdOn": "2019-05-27T13:49:56",
-      "transferMethodCountry": "US",
-      "transferMethodCurrency": "USD",
-      "bankId": "021000021",
-      "branchId": "021000021"
+      "journalId": "51660667",
+      "type": "PAYMENT",
+      "createdOn": "2019-05-27T16:01:10",
+      "entry": "CREDIT",
+      "sourceToken": "act-b1f6dc28-e534-45f4-a661-3523f051f77a",
+      "destinationToken": "usr-b4e8ec34-52d8-4a81-9566-bdde1bd745b6",
+      "amount": "11.00",
+      "fee": "0.00",
+      "currency": "USD",
+      "details": {
+        "clientPaymentId": "trans-02",
+        "payeeName": "kevin Puckett"
+      }
     },
     {
-      "token": "trm-two-one",
-      "createdOn": "2019-02-27T15:49:56",
-      "transferMethodCountry": "US",
-      "transferMethodCurrency": "USD",
-      "bankId": "021000021",
-      "branchId": "021000021"
+      "journalId": "51660675",
+      "type": "PAYMENT",
+      "createdOn": "2019-06-04T10:35:23",
+      "entry": "CREDIT",
+      "sourceToken": "act-b1f6dc28-e534-45f4-a661-3523f051f77a",
+      "destinationToken": "usr-b4e8ec34-52d8-4a81-9566-bdde1bd745b6",
+      "amount": "13.00",
+      "fee": "0.00",
+      "currency": "USD",
+      "details": {
+        "clientPaymentId": "CSietnRJQQ0bscYkOoPJxNiTDiVALhjQ",
+        "payeeName": "kevin Puckett"
+    }
     },
     {
-      "token": "trm-two-two",
-      "createdOn": "2019-02-27T15:30:56",
-      "transferMethodCountry": "US",
-      "transferMethodCurrency": "USD",
-      "bankId": "021000021",
-      "branchId": "021000021"
-    },
-    {
-      "token": "trm-two-three",
-      "createdOn": "2019-02-27T13:49:56",
-      "transferMethodCountry": "US",
-      "transferMethodCurrency": "USD",
-      "bankId": "021000021",
-      "branchId": "021000021"
-    },
-    {
-      "token": "trm-three-one",
-      "createdOn": "2018-12-27T15:49:56",
-      "transferMethodCountry": "US",
-      "transferMethodCurrency": "USD",
-      "bankId": "021000021",
-      "branchId": "021000021"
-    },
-    {
-      "token": "trm-three-two",
-      "createdOn": "2018-12-27T15:30:56",
-      "transferMethodCountry": "US",
-      "transferMethodCurrency": "USD",
-      "bankId": "021000021",
-      "branchId": "021000021"
-    },
-    {
-      "token": "trm-three-three",
-      "createdOn": "2018-12-27T13:49:56",
-      "transferMethodCountry": "US",
-      "transferMethodCurrency": "USD",
-      "bankId": "021000021",
-      "branchId": "021000021"
+      "journalId": "51660676",
+      "type": "PAYMENT",
+      "createdOn": "2019-06-04T11:16:21",
+      "entry": "CREDIT",
+      "sourceToken": "act-b1f6dc28-e534-45f4-a661-3523f051f77a",
+      "destinationToken": "usr-b4e8ec34-52d8-4a81-9566-bdde1bd745b6",
+      "amount": "14.00",
+      "fee": "0.00",
+      "currency": "USD",
+      "details": {
+        "clientPaymentId": "wUOdfLlJONacbdHlAHOAXQT7uwX7LTPy",
+        "payeeName": "kevin Puckett"
+      }
     }
   ],
   "links": [
@@ -81,19 +84,7 @@
       "params": {
         "rel": "self"
       },
-      "href": "https://localhost:8181/rest/internal/v1/users/usr-b4e8ec34-52d8-4a81-9566-bdde1bd745b6/transfer-methods?offset=0&limit=10&sortBy=-createdOn&status=ACTIVATED"
-    },
-    {
-      "params": {
-        "rel": "next"
-      },
-      "href": "https://localhost:8181/rest/internal/v1/users/usr-b4e8ec34-52d8-4a81-9566-bdde1bd745b6/transfer-methods?offset=10&limit=10&sortBy=-createdOn&status=ACTIVATED"
-    },
-    {
-      "params": {
-        "rel": "last"
-      },
-      "href": "https://localhost:8181/rest/internal/v1/users/usr-b4e8ec34-52d8-4a81-9566-bdde1bd745b6/transfer-methods?offset=20&limit=10&sortBy=-createdOn&status=ACTIVATED"
+      "href": "https://localhost:8181/rest/v3/users/usr-b4e8ec34-52d8-4a81-9566-bdde1bd745b6/receipts?offset=0&limit=10&createdAfter=2019-1-1"
     }
   ]
 }
