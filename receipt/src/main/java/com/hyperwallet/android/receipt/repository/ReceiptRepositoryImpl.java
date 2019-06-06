@@ -25,6 +25,9 @@ import com.hyperwallet.android.model.receipt.Receipt;
 
 public class ReceiptRepositoryImpl implements ReceiptRepository {
 
+    private static final int PAGE_SIZE = 10;
+    private static final int INITIAL_LOAD_SIZE = 20;
+
     private final ReceiptDataSourceFactory mDataSourceFactory;
     private final LiveData<ReceiptDataSource> mReceiptDataSourceLiveData;
     private LiveData<HyperwalletErrors> mErrorsLiveData;
@@ -40,9 +43,9 @@ public class ReceiptRepositoryImpl implements ReceiptRepository {
     public LiveData<PagedList<Receipt>> loadReceipts() {
         if (mReceiptsLiveData == null) {
             PagedList.Config config = new PagedList.Config.Builder()
-                    .setPageSize(10)
+                    .setPageSize(PAGE_SIZE)
                     .setEnablePlaceholders(true)
-                    .setInitialLoadSizeHint(20)
+                    .setInitialLoadSizeHint(INITIAL_LOAD_SIZE)
                     .build();
             mReceiptsLiveData = new LivePagedListBuilder<>(mDataSourceFactory, config).build();
         }
