@@ -30,7 +30,6 @@ public class ReceiptDataSourceFactory extends DataSource.Factory {
         super();
         mReceiptDataSource = new ReceiptDataSource();
         mDataSourceMutableLiveData = new MutableLiveData<>();
-        mDataSourceMutableLiveData.postValue(mReceiptDataSource);
         mDataSourceMutableLiveData.setValue(mReceiptDataSource);
     }
 
