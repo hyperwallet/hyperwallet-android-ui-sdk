@@ -24,12 +24,16 @@
               app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView android:id="@+id/transaction_title"
-              android:layout_width="wrap_content"
+              android:layout_width="0dp"
               android:layout_height="wrap_content"
               android:layout_marginStart="@dimen/grid_margin_left"
               android:layout_marginTop="@dimen/item_text_top_bottom_margin"
               android:text="@string/text_placeholder"
+              android:layout_marginEnd="@dimen/ellipsis_spacing"
+              android:ellipsize="end"
+              android:maxLines="1"
               android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+              app:layout_constraintEnd_toStartOf="@+id/transaction_amount"
               app:layout_constraintStart_toEndOf="@+id/transaction_type_icon"
               app:layout_constraintTop_toTopOf="parent"/>
 

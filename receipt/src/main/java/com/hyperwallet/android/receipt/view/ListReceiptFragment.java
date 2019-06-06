@@ -219,10 +219,6 @@ public class ListReceiptFragment extends Fragment {
         }
 
         class ReceiptViewHolder extends RecyclerView.ViewHolder {
-
-            private static final int MAX_CHARACTERS_FIRST_LINE = 38;
-            private static final String ELLIPSIS = "...";
-            private static final String SPACER = " ";
             private final TextView mTransactionAmount;
             private final TextView mTransactionCurrency;
             private final TextView mTransactionDate;
@@ -262,14 +258,12 @@ public class ListReceiptFragment extends Fragment {
                 }
 
                 mTransactionCurrency.setText(receipt.getCurrency());
-                mTransactionTitle.setText(getTransactionTitle(receipt.getType(),
-                        mTransactionAmount.getText().length(), mTransactionTitle.getContext()));
+                mTransactionTitle.setText(getTransactionTitle(receipt.getType(), mTransactionTitle.getContext()));
                 mTransactionDate.setText(DateUtils.toDateFormat(DateUtils.
                         fromDateTimeString(receipt.getCreatedOn()), CAPTION_DATE_FORMAT));
             }
 
-            String getTransactionTitle(@NonNull final String receiptType, final int numberOfCharsAlreadyUsed,
-                    @NonNull final Context context) {
+            String getTransactionTitle(@NonNull final String receiptType, @NonNull final Context context) {
                 String showTitle = context.getResources().getString(R.string.unknown_type);
                 int resourceId = context.getResources().getIdentifier(receiptType.toLowerCase(Locale.ROOT), "string",
                         context.getPackageName());
@@ -277,12 +271,6 @@ public class ListReceiptFragment extends Fragment {
                     showTitle = context.getResources().getString(resourceId);
                 }
 
-                if (!context.getResources().getBoolean(R.bool.isLandscape)
-                        && (showTitle.length() + numberOfCharsAlreadyUsed) >= MAX_CHARACTERS_FIRST_LINE) {
-                    int allowedCharsLength = MAX_CHARACTERS_FIRST_LINE -
-                            numberOfCharsAlreadyUsed - ELLIPSIS.length() - SPACER.length();
-                    return showTitle.substring(0, allowedCharsLength) + ELLIPSIS;
-                }
                 return showTitle;
             }
         }
