@@ -30,8 +30,8 @@ import com.hyperwallet.android.common.R;
 
 public class HorizontalDividerItemDecorator extends RecyclerView.ItemDecoration {
 
-    private final Drawable mHorizontalItemDivider;
-    private final int mDefaultPadding;
+    protected final Drawable mHorizontalItemDivider;
+    protected final int mDefaultPadding;
 
     public HorizontalDividerItemDecorator(@NonNull final Context context, final boolean withHeaderDivider) {
         mHorizontalItemDivider = context.getResources().getDrawable(R.drawable.horizontal_divider, null);

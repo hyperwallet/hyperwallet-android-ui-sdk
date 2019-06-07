@@ -2,8 +2,6 @@ package com.hyperwallet.android.receipt.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -11,45 +9,12 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class ReceiptItemDividerDecorator extends RecyclerView.ItemDecoration {
+import com.hyperwallet.android.common.view.HorizontalDividerItemDecorator;
 
-    private final Drawable mHorizontalItemDivider;
-    private final int mDefaultPadding;
+public class ReceiptItemDividerDecorator extends HorizontalDividerItemDecorator {
 
-    public ReceiptItemDividerDecorator(@NonNull final Context context, final boolean withHeaderDivider) {
-        mHorizontalItemDivider = context.getResources().getDrawable(
-                com.hyperwallet.android.common.R.drawable.horizontal_divider, null);
-        // get dp from dimension configuration
-        if (withHeaderDivider) {
-            mDefaultPadding = (int) (context.getResources().getDimension(
-                    com.hyperwallet.android.common.R.dimen.default_padding)
-                    / context.getResources().getDisplayMetrics().density) * 2;
-        } else {
-            mDefaultPadding = 0;
-        }
-    }
-
-    @Override
-    public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent,
-            @NonNull RecyclerView.State state) {
-        super.getItemOffsets(outRect, view, parent, state);
-
-        int itemCount = state.getItemCount();
-
-        final int itemPosition = parent.getChildAdapterPosition(view);
-
-        // no position, leave it alone
-        if (itemPosition == RecyclerView.NO_POSITION) {
-            return;
-        }
-
-        if (itemPosition == 0) { // first item
-            outRect.set(view.getPaddingLeft(), mDefaultPadding, view.getPaddingRight(), view.getPaddingBottom());
-        } else if (itemCount > 0 && itemPosition == itemCount - 1) { // last item
-            outRect.set(view.getPaddingLeft(), view.getPaddingTop(), view.getPaddingRight(), view.getPaddingBottom());
-        } else { // middle items
-            outRect.set(view.getPaddingLeft(), view.getPaddingTop(), view.getPaddingRight(), view.getPaddingBottom());
-        }
+    ReceiptItemDividerDecorator(@NonNull final Context context, final boolean withHeaderDivider) {
+        super(context, withHeaderDivider);
     }
 
     @Override
