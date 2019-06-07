@@ -23,6 +23,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * Common HW-SDK UI Date Utility class, that will assist on safe presentation of date whatever the mobile device setting
@@ -45,6 +46,7 @@ public final class DateUtils {
      */
     public static String toDateFormat(@NonNull final Date date) {
         SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
+        dateFormat.setTimeZone(TimeZone.getDefault());
         return dateFormat.format(date);
     }
 
@@ -57,6 +59,7 @@ public final class DateUtils {
      */
     public static String toDateFormat(@NonNull final Date date, @NonNull final String format) {
         SimpleDateFormat dateFormat = new SimpleDateFormat(format, Locale.getDefault());
+        dateFormat.setTimeZone(TimeZone.getDefault());
         return dateFormat.format(date);
     }
 
@@ -68,6 +71,7 @@ public final class DateUtils {
      */
     public static String toDateTimeFormat(@NonNull final Date date) {
         SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_TIME_FORMAT, Locale.getDefault());
+        dateFormat.setTimeZone(TimeZone.getDefault());
         return dateFormat.format(date);
     }
 
@@ -79,6 +83,7 @@ public final class DateUtils {
      */
     public static String toDateTimeMillisFormat(@NonNull final Date date) {
         SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_TIME_FORMAT_MILLISECONDS, Locale.getDefault());
+        dateFormat.setTimeZone(TimeZone.getDefault());
         return dateFormat.format(date);
     }
 
@@ -92,6 +97,7 @@ public final class DateUtils {
     public static Date fromDateTimeString(@NonNull final String dateString) {
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_TIME_FORMAT, Locale.getDefault());
+            dateFormat.setTimeZone(TimeZone.getDefault());
             return dateFormat.parse(dateString);
         } catch (ParseException e) {
             throw new IllegalArgumentException("An exception occurred when attempting to parse " +
@@ -103,6 +109,7 @@ public final class DateUtils {
     static Date fromDateTimeString(@NonNull final String dateString, @NonNull final String format) {
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat(format, Locale.getDefault());
+            dateFormat.setTimeZone(TimeZone.getDefault());
             return dateFormat.parse(dateString);
         } catch (ParseException e) {
             throw new IllegalArgumentException("An exception occurred when attempting to parse " +
