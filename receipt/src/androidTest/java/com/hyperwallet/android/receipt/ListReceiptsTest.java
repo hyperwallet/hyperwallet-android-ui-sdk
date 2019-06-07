@@ -1,4 +1,4 @@
-package com.hyperwallet.android.transfermethod.ui;
+package com.hyperwallet.android.receipt;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
@@ -14,19 +14,17 @@ import static org.hamcrest.Matchers.instanceOf;
 import static java.net.HttpURLConnection.HTTP_NO_CONTENT;
 import static java.net.HttpURLConnection.HTTP_OK;
 
-import static com.hyperwallet.android.util.EspressoUtils.atPosition;
-
 import android.widget.TextView;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
 import com.hyperwallet.android.Hyperwallet;
-import com.hyperwallet.android.hyperwallet_ui.R;
+import com.hyperwallet.android.receipt.repository.ReceiptRepositoryFactory;
 import com.hyperwallet.android.receipt.view.ListReceiptActivity;
 import com.hyperwallet.android.rule.HyperwalletExternalResourceManager;
 import com.hyperwallet.android.rule.HyperwalletMockWebServer;
-import com.hyperwallet.android.ui.repository.RepositoryFactory;
+import com.hyperwallet.android.util.EspressoUtils;
 import com.hyperwallet.android.util.RecyclerViewCountAssertion;
 import com.hyperwallet.android.util.TestAuthenticationProvider;
 
@@ -58,7 +56,7 @@ public class ListReceiptsTest {
 
     @After
     public void cleanup() {
-        RepositoryFactory.clearInstance();
+        ReceiptRepositoryFactory.clearInstance();
     }
 
     @Test
@@ -75,37 +73,48 @@ public class ListReceiptsTest {
         onView(withId(R.id.list_receipts)).check(matches(isDisplayed()));
 
         onView(withId(R.id.list_receipts))
-                .check(matches(atPosition(0, hasDescendant(withText("June 2019")))));
-        onView(withId(R.id.list_receipts)).check(matches(atPosition(0,
+                .check(matches(EspressoUtils.atPosition(0, hasDescendant(withText("June 2019")))));
+        onView(withId(R.id.list_receipts)).check(matches(EspressoUtils.atPosition(0,
                 hasDescendant(withText(com.hyperwallet.android.receipt.R.string.credit)))));
-        onView(withId(R.id.list_receipts)).check(matches(atPosition(0, hasDescendant(withText("Payment")))));
-        onView(withId(R.id.list_receipts)).check(matches(atPosition(0, hasDescendant(withText("+ 20.00")))));
-        onView(withId(R.id.list_receipts)).check(matches(atPosition(0, hasDescendant(withText("June 07, 2019")))));
-        onView(withId(R.id.list_receipts)).check(matches(atPosition(0, hasDescendant(withText("USD")))));
+        onView(withId(R.id.list_receipts)).check(
+                matches(EspressoUtils.atPosition(0, hasDescendant(withText("Payment")))));
+        onView(withId(R.id.list_receipts)).check(
+                matches(EspressoUtils.atPosition(0, hasDescendant(withText("+ 20.00")))));
+        onView(withId(R.id.list_receipts)).check(
+                matches(EspressoUtils.atPosition(0, hasDescendant(withText("June 07, 2019")))));
+        onView(withId(R.id.list_receipts)).check(matches(EspressoUtils.atPosition(0, hasDescendant(withText("USD")))));
 
-        onView(withId(R.id.list_receipts)).check(matches(atPosition(1,
+        onView(withId(R.id.list_receipts)).check(matches(EspressoUtils.atPosition(1,
                 hasDescendant(withText(com.hyperwallet.android.receipt.R.string.credit)))));
-        onView(withId(R.id.list_receipts)).check(matches(atPosition(1, hasDescendant(withText("Payment")))));
-        onView(withId(R.id.list_receipts)).check(matches(atPosition(1, hasDescendant(withText("+ 25.00")))));
-        onView(withId(R.id.list_receipts)).check(matches(atPosition(1, hasDescendant(withText("June 02, 2019")))));
-        onView(withId(R.id.list_receipts)).check(matches(atPosition(1, hasDescendant(withText("CAD")))));
+        onView(withId(R.id.list_receipts)).check(
+                matches(EspressoUtils.atPosition(1, hasDescendant(withText("Payment")))));
+        onView(withId(R.id.list_receipts)).check(
+                matches(EspressoUtils.atPosition(1, hasDescendant(withText("+ 25.00")))));
+        onView(withId(R.id.list_receipts)).check(
+                matches(EspressoUtils.atPosition(1, hasDescendant(withText("June 02, 2019")))));
+        onView(withId(R.id.list_receipts)).check(matches(EspressoUtils.atPosition(1, hasDescendant(withText("CAD")))));
 
-        onView(withId(R.id.list_receipts)).check(matches(atPosition(2,
+        onView(withId(R.id.list_receipts)).check(matches(EspressoUtils.atPosition(2,
                 hasDescendant(withText(com.hyperwallet.android.receipt.R.string.debit)))));
         onView(withId(R.id.list_receipts)).check(
-                matches(atPosition(2, hasDescendant(withText("Card Activation Fee")))));
-        onView(withId(R.id.list_receipts)).check(matches(atPosition(2, hasDescendant(withText("- 1.95")))));
-        onView(withId(R.id.list_receipts)).check(matches(atPosition(2, hasDescendant(withText("June 01, 2019")))));
-        onView(withId(R.id.list_receipts)).check(matches(atPosition(2, hasDescendant(withText("USD")))));
+                matches(EspressoUtils.atPosition(2, hasDescendant(withText("Card Activation Fee")))));
+        onView(withId(R.id.list_receipts)).check(
+                matches(EspressoUtils.atPosition(2, hasDescendant(withText("- 1.95")))));
+        onView(withId(R.id.list_receipts)).check(
+                matches(EspressoUtils.atPosition(2, hasDescendant(withText("June 01, 2019")))));
+        onView(withId(R.id.list_receipts)).check(matches(EspressoUtils.atPosition(2, hasDescendant(withText("USD")))));
 
         onView(withId(R.id.list_receipts))
-                .check(matches(atPosition(3, hasDescendant(withText("December 2018")))));
-        onView(withId(R.id.list_receipts)).check(matches(atPosition(3,
+                .check(matches(EspressoUtils.atPosition(3, hasDescendant(withText("December 2018")))));
+        onView(withId(R.id.list_receipts)).check(matches(EspressoUtils.atPosition(3,
                 hasDescendant(withText(com.hyperwallet.android.receipt.R.string.debit)))));
-        onView(withId(R.id.list_receipts)).check(matches(atPosition(3, hasDescendant(withText("Card Load")))));
-        onView(withId(R.id.list_receipts)).check(matches(atPosition(3, hasDescendant(withText("- 18.05")))));
-        onView(withId(R.id.list_receipts)).check(matches(atPosition(3, hasDescendant(withText("December 01, 2018")))));
-        onView(withId(R.id.list_receipts)).check(matches(atPosition(3, hasDescendant(withText("USD")))));
+        onView(withId(R.id.list_receipts)).check(
+                matches(EspressoUtils.atPosition(3, hasDescendant(withText("Card Load")))));
+        onView(withId(R.id.list_receipts)).check(
+                matches(EspressoUtils.atPosition(3, hasDescendant(withText("- 18.05")))));
+        onView(withId(R.id.list_receipts)).check(
+                matches(EspressoUtils.atPosition(3, hasDescendant(withText("December 01, 2018")))));
+        onView(withId(R.id.list_receipts)).check(matches(EspressoUtils.atPosition(3, hasDescendant(withText("USD")))));
 
         onView(withId(R.id.list_receipts)).check(new RecyclerViewCountAssertion(4));
     }
@@ -124,13 +133,16 @@ public class ListReceiptsTest {
         onView(withId(R.id.list_receipts)).check(matches(isDisplayed()));
 
         onView(withId(R.id.list_receipts))
-                .check(matches(atPosition(0, hasDescendant(withText("June 2019")))));
-        onView(withId(R.id.list_receipts)).check(matches(atPosition(0,
+                .check(matches(EspressoUtils.atPosition(0, hasDescendant(withText("June 2019")))));
+        onView(withId(R.id.list_receipts)).check(matches(EspressoUtils.atPosition(0,
                 hasDescendant(withText(com.hyperwallet.android.receipt.R.string.credit)))));
-        onView(withId(R.id.list_receipts)).check(matches(atPosition(0, hasDescendant(withText("Payment")))));
-        onView(withId(R.id.list_receipts)).check(matches(atPosition(0, hasDescendant(withText("+ 25.00")))));
-        onView(withId(R.id.list_receipts)).check(matches(atPosition(0, hasDescendant(withText("June 02, 2019")))));
-        onView(withId(R.id.list_receipts)).check(matches(atPosition(0, hasDescendant(withText("CAD")))));
+        onView(withId(R.id.list_receipts)).check(
+                matches(EspressoUtils.atPosition(0, hasDescendant(withText("Payment")))));
+        onView(withId(R.id.list_receipts)).check(
+                matches(EspressoUtils.atPosition(0, hasDescendant(withText("+ 25.00")))));
+        onView(withId(R.id.list_receipts)).check(
+                matches(EspressoUtils.atPosition(0, hasDescendant(withText("June 02, 2019")))));
+        onView(withId(R.id.list_receipts)).check(matches(EspressoUtils.atPosition(0, hasDescendant(withText("CAD")))));
 
         onView(withId(R.id.list_receipts)).check(new RecyclerViewCountAssertion(1));
     }
@@ -149,13 +161,16 @@ public class ListReceiptsTest {
         onView(withId(R.id.list_receipts)).check(matches(isDisplayed()));
 
         onView(withId(R.id.list_receipts))
-                .check(matches(atPosition(0, hasDescendant(withText("May 2019")))));
-        onView(withId(R.id.list_receipts)).check(matches(atPosition(0,
+                .check(matches(EspressoUtils.atPosition(0, hasDescendant(withText("May 2019")))));
+        onView(withId(R.id.list_receipts)).check(matches(EspressoUtils.atPosition(0,
                 hasDescendant(withText(com.hyperwallet.android.receipt.R.string.debit)))));
-        onView(withId(R.id.list_receipts)).check(matches(atPosition(0, hasDescendant(withText("Card Load")))));
-        onView(withId(R.id.list_receipts)).check(matches(atPosition(0, hasDescendant(withText("- 18.05")))));
-        onView(withId(R.id.list_receipts)).check(matches(atPosition(0, hasDescendant(withText("May 02, 2019")))));
-        onView(withId(R.id.list_receipts)).check(matches(atPosition(0, hasDescendant(withText("USD")))));
+        onView(withId(R.id.list_receipts)).check(
+                matches(EspressoUtils.atPosition(0, hasDescendant(withText("Card Load")))));
+        onView(withId(R.id.list_receipts)).check(
+                matches(EspressoUtils.atPosition(0, hasDescendant(withText("- 18.05")))));
+        onView(withId(R.id.list_receipts)).check(
+                matches(EspressoUtils.atPosition(0, hasDescendant(withText("May 02, 2019")))));
+        onView(withId(R.id.list_receipts)).check(matches(EspressoUtils.atPosition(0, hasDescendant(withText("USD")))));
 
         onView(withId(R.id.list_receipts)).check(new RecyclerViewCountAssertion(1));
     }
