@@ -16,6 +16,9 @@
  */
 package com.hyperwallet.android.receipt.repository;
 
+/**
+ * {@link ReceiptRepository} factory
+ */
 public class ReceiptRepositoryFactory {
 
     private static ReceiptRepositoryFactory sInstance;
@@ -25,6 +28,11 @@ public class ReceiptRepositoryFactory {
         mReceiptRepository = new ReceiptRepositoryImpl();
     }
 
+    /**
+     * Creates context single instance of this Factory
+     *
+     * @return receipt repository factory instance
+     */
     public static synchronized ReceiptRepositoryFactory getInstance() {
         if (sInstance == null) {
             sInstance = new ReceiptRepositoryFactory();
@@ -32,10 +40,16 @@ public class ReceiptRepositoryFactory {
         return sInstance;
     }
 
+    /**
+     * Clears instance of repository factory
+     */
     public static void clearInstance() {
         sInstance = null;
     }
 
+    /**
+     * @return ReceiptRepository instance implementation
+     * */
     public ReceiptRepository getReceiptRepository() {
         return mReceiptRepository;
     }

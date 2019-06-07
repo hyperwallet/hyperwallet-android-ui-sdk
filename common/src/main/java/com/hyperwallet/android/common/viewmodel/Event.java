@@ -19,6 +19,9 @@ package com.hyperwallet.android.common.viewmodel;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+/**
+ * Class that represents {@link androidx.lifecycle.LiveData} event with content
+ */
 public class Event<T> {
 
     private final T content;
@@ -28,18 +31,26 @@ public class Event<T> {
         content = t;
     }
 
+    /**
+     * @return content of this event, will also mark {@link Event#mIsContentConsumed} to <code>true</code>
+     * that will also mean that {@link Event#getContentIfNotConsumed()} will also return <code>true</code>
+     */
     @NonNull
     public T getContent() {
         mIsContentConsumed = true;
         return content;
     }
 
+    /**
+     * @return <code>true</code> if content assigned to event is already referenced
+     * from {@link Event#getContent()}; <code>false</code> otherwise.
+     */
     public boolean isContentConsumed() {
         return mIsContentConsumed;
     }
 
     /**
-     * retrieve perceived content based on iff content has not been retrieved
+     * Retrieve assigned content based on if and only if content has not been referenced from {@link Event#getContent()}
      *
      * @return content if content is not yet consumed; otherwise null
      */

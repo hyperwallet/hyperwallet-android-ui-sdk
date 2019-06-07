@@ -34,6 +34,10 @@ import com.hyperwallet.android.model.receipt.ReceiptQueryParam;
 
 import java.util.Calendar;
 
+/**
+ * ReceiptDataSource mediates communication to HW API Platform particularly on
+ * Receipts V3 API
+ */
 public class ReceiptDataSource extends PageKeyedDataSource<Integer, Receipt> {
 
     private static final int YEAR_BEFORE_NOW = -1;
@@ -51,6 +55,9 @@ public class ReceiptDataSource extends PageKeyedDataSource<Integer, Receipt> {
         mCalendarYearBeforeNow.add(Calendar.YEAR, YEAR_BEFORE_NOW);
     }
 
+    /**
+     * @see {@link PageKeyedDataSource#loadInitial(LoadInitialParams, LoadInitialCallback)}
+     */
     @Override
     public void loadInitial(@NonNull final LoadInitialParams<Integer> params,
             @NonNull final LoadInitialCallback<Integer, Receipt> callback) {
@@ -93,11 +100,19 @@ public class ReceiptDataSource extends PageKeyedDataSource<Integer, Receipt> {
                 });
     }
 
+    /**
+     * Unused in this case
+     *
+     * @see {@link PageKeyedDataSource#loadBefore(LoadParams, LoadCallback)}
+     */
     @Override
     public void loadBefore(@NonNull LoadParams<Integer> params,
             @NonNull LoadCallback<Integer, Receipt> callback) {
     }
 
+    /**
+     * @see {@link PageKeyedDataSource#loadAfter(LoadParams, LoadCallback)}
+     * */
     @Override
     public void loadAfter(@NonNull LoadParams<Integer> params,
             final @NonNull LoadCallback<Integer, Receipt> callback) {
@@ -143,6 +158,9 @@ public class ReceiptDataSource extends PageKeyedDataSource<Integer, Receipt> {
                 });
     }
 
+    /**
+     * Facilitates retry when network is down; any error that we can have a retry operation
+     * */
     void retry() {
         if (mLoadInitialCallback != null) {
             loadInitial(mLoadInitialParams, mLoadInitialCallback);
@@ -151,12 +169,17 @@ public class ReceiptDataSource extends PageKeyedDataSource<Integer, Receipt> {
         }
     }
 
-    LiveData<Boolean> isFetchingData() {
-        return mIsFetchingData;
-    }
-
+    /**
+     * Retrieve reference of Hyperwallet errors inorder for consumers to observe on data changes
+     *
+     * @return Live data of {@link HyperwalletErrors}
+     * */
     public LiveData<HyperwalletErrors> getErrors() {
         return mErrors;
+    }
+
+    LiveData<Boolean> isFetchingData() {
+        return mIsFetchingData;
     }
 
     Hyperwallet getHyperwallet() {

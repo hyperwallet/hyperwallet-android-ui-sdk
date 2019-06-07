@@ -4,11 +4,18 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Date;
+import java.util.Locale;
 
 public class DateUtilsTest {
+
+    @Before
+    public void configureLocale() {
+        Locale.setDefault(Locale.US);
+    }
 
     @Test
     public void testToDateFormat_returnsExpectedStringFormat() {

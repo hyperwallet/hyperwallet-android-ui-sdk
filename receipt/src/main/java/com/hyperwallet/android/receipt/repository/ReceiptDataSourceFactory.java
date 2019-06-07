@@ -21,6 +21,9 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.paging.DataSource;
 
+/**
+ * Data source factory that uses {@link DataSource.Factory} facility
+ */
 public class ReceiptDataSourceFactory extends DataSource.Factory {
 
     private final MutableLiveData<ReceiptDataSource> mDataSourceMutableLiveData;
@@ -33,10 +36,16 @@ public class ReceiptDataSourceFactory extends DataSource.Factory {
         mDataSourceMutableLiveData.setValue(mReceiptDataSource);
     }
 
+    /**
+     * Returns observable members of receipt data source
+     */
     LiveData<ReceiptDataSource> getReceiptDataSource() {
         return mDataSourceMutableLiveData;
     }
 
+    /**
+     * @see {@link DataSource.Factory#create()}
+     */
     @NonNull
     @Override
     public DataSource create() {
