@@ -16,8 +16,12 @@ import static java.net.HttpURLConnection.HTTP_OK;
 
 import static com.hyperwallet.android.util.EspressoUtils.atPosition;
 
+import android.content.Context;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.widget.TextView;
 
+import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
@@ -37,6 +41,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.Locale;
+
 @RunWith(AndroidJUnit4.class)
 public class ListReceiptsTest {
 
@@ -54,6 +60,7 @@ public class ListReceiptsTest {
 
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("authentication_token_response.json")).mock();
+        setLocale(Locale.US);
     }
 
     @After
@@ -171,5 +178,37 @@ public class ListReceiptsTest {
         onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
                 .check(matches(withText(R.string.title_activity_receipt_list)));
         //todo: check empty view when it will be ready
+    }
+
+    @Test
+    public void testListReceipts_checkDateTextOnLocaleChange() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("receipt_debit_response.json")).mock();
+        setLocale(Locale.ITALY);
+        // run test
+        mActivityTestRule.launchActivity(null);
+        // assert
+        onView(withId(R.id.list_receipts))
+                .check(matches(atPosition(0, hasDescendant(withText("maggio 2019")))));
+        onView(withId(R.id.list_receipts)).check(matches(atPosition(0, hasDescendant(withText("maggio 02, 2019")))));
+        mActivityTestRule.finishActivity();
+        setLocale(Locale.US);
+        mActivityTestRule.launchActivity(null);
+        onView(withId(R.id.list_receipts))
+                .check(matches(atPosition(0, hasDescendant(withText("May 2019")))));
+        onView(withId(R.id.list_receipts)).check(matches(atPosition(0, hasDescendant(withText("May 02, 2019")))));
+    }
+
+    private void setLocale(Locale locale) {
+        Context context = ApplicationProvider.getApplicationContext();
+        Locale.setDefault(locale);
+        Resources resources = context.getResources();
+        Configuration configuration = resources.getConfiguration();
+        if (android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.JELLY_BEAN) {
+            configuration.setLocale(locale);
+        } else {
+            configuration.locale = locale;
+        }
+        resources.updateConfiguration(configuration, resources.getDisplayMetrics());
     }
 }
