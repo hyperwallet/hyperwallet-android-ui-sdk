@@ -6,7 +6,7 @@
     {
       "journalId": "3051581",
       "type": "PAYMENT",
-      "createdOn": "2017-11-02T17:09:07",
+      "createdOn": "2019-06-02T17:09:07",
       "entry": "CREDIT",
       "sourceToken": "act-12345",
       "destinationToken": "usr-fa76a738-f43d-48b9-9a7a-7048d44a5d2d",
