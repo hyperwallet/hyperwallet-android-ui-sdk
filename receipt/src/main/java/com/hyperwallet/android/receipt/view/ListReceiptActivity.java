@@ -27,10 +27,12 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.hyperwallet.android.common.view.error.DefaultErrorDialogFragment;
 import com.hyperwallet.android.common.view.error.OnNetworkErrorCallback;
+import com.hyperwallet.android.common.viewmodel.Event;
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.receipt.R;
 import com.hyperwallet.android.receipt.repository.ReceiptRepositoryFactory;
@@ -38,11 +40,12 @@ import com.hyperwallet.android.receipt.viewmodel.ListReceiptViewModel;
 
 import java.util.List;
 
-public class ListReceiptActivity extends AppCompatActivity implements OnNetworkErrorCallback,
-        ListReceiptFragment.OnLoadReceiptErrorCallback {
+public class ListReceiptActivity extends AppCompatActivity implements OnNetworkErrorCallback {
+
+    private ListReceiptViewModel mListReceiptViewModel;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_receipt);
 
@@ -59,9 +62,19 @@ public class ListReceiptActivity extends AppCompatActivity implements OnNetworkE
         });
 
         ReceiptRepositoryFactory factory = ReceiptRepositoryFactory.getInstance();
-        ViewModelProviders.of(this, new ListReceiptViewModel
+        mListReceiptViewModel = ViewModelProviders.of(this, new ListReceiptViewModel
                 .ListReceiptViewModelFactory(factory.getReceiptRepository()))
                 .get(ListReceiptViewModel.class);
+
+        mListReceiptViewModel.getReceiptErrors().observe(this,
+                new Observer<Event<List<HyperwalletError>>>() {
+                    @Override
+                    public void onChanged(Event<List<HyperwalletError>> listEvent) {
+                        if (!listEvent.isContentConsumed()) {
+                            showErrorOnLoadReceipt(listEvent.getContent());
+                        }
+                    }
+                });
 
         if (savedInstanceState == null) {
             initFragment(ListReceiptFragment.newInstance());
@@ -69,7 +82,7 @@ public class ListReceiptActivity extends AppCompatActivity implements OnNetworkE
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    protected void onActivityResult(final int requestCode, final int resultCode, @Nullable final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
@@ -79,7 +92,7 @@ public class ListReceiptActivity extends AppCompatActivity implements OnNetworkE
         return true;
     }
 
-    private void initFragment(Fragment fragment) {
+    private void initFragment(@NonNull final Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.list_receipt_fragment, fragment);
@@ -98,7 +111,6 @@ public class ListReceiptActivity extends AppCompatActivity implements OnNetworkE
         fragment.retry();
     }
 
-    @Override
     public void showErrorOnLoadReceipt(@NonNull final List<HyperwalletError> errors) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         DefaultErrorDialogFragment fragment = (DefaultErrorDialogFragment)

@@ -23,7 +23,13 @@ import androidx.paging.PagedList;
 import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.receipt.Receipt;
 
+/**
+ * {@link ReceiptRepository} implementation
+ */
 public class ReceiptRepositoryImpl implements ReceiptRepository {
+
+    private static final int PAGE_SIZE = 10;
+    private static final int INITIAL_LOAD_SIZE = 20;
 
     private final ReceiptDataSourceFactory mDataSourceFactory;
     private final LiveData<ReceiptDataSource> mReceiptDataSourceLiveData;
@@ -36,19 +42,25 @@ public class ReceiptRepositoryImpl implements ReceiptRepository {
         mReceiptDataSourceLiveData = mDataSourceFactory.getReceiptDataSource();
     }
 
+    /**
+     * @see {@link ReceiptRepository#loadReceipts()}
+     */
     @Override
     public LiveData<PagedList<Receipt>> loadReceipts() {
         if (mReceiptsLiveData == null) {
             PagedList.Config config = new PagedList.Config.Builder()
-                    .setPageSize(10)
+                    .setPageSize(PAGE_SIZE)
                     .setEnablePlaceholders(true)
-                    .setInitialLoadSizeHint(20)
+                    .setInitialLoadSizeHint(INITIAL_LOAD_SIZE)
                     .build();
             mReceiptsLiveData = new LivePagedListBuilder<>(mDataSourceFactory, config).build();
         }
         return mReceiptsLiveData;
     }
 
+    /**
+     * @see {@link ReceiptRepository#isLoading()}
+     */
     @Override
     public LiveData<Boolean> isLoading() {
         if (mIsFetchingData == null) {
@@ -57,6 +69,9 @@ public class ReceiptRepositoryImpl implements ReceiptRepository {
         return mIsFetchingData;
     }
 
+    /**
+     * @see {@link ReceiptRepository#getErrors()}
+     * */
     @Override
     public LiveData<HyperwalletErrors> getErrors() {
         if (mErrorsLiveData == null) {
@@ -65,6 +80,9 @@ public class ReceiptRepositoryImpl implements ReceiptRepository {
         return mErrorsLiveData;
     }
 
+    /**
+     * @see {@link ReceiptRepository#retryLoadReceipt()}
+     * */
     @Override
     public void retryLoadReceipt() {
         if (mReceiptDataSourceLiveData.getValue() != null) {

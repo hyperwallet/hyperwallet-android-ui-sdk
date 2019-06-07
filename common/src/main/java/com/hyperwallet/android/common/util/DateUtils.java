@@ -17,12 +17,17 @@
 package com.hyperwallet.android.common.util;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+/**
+ * Common HW-SDK UI Date Utility class, that will assist on safe presentation of date whatever the mobile device setting
+ * is set Locale, Timezone and etc... that dictates how that dates are being presented
+ */
 public final class DateUtils {
 
     private static final String DATE_FORMAT = "yyyy-MM-dd";
@@ -33,17 +38,22 @@ public final class DateUtils {
     }
 
     /**
-     * date format: yyyy-MM-dd
+     * Creates a string date format: <code>yyyy-MM-dd</code>
+     *
+     * @param date Date object
+     * @return string date in <code>yyyy-MM-dd</code> format
      */
-    public static String toDateFormat(@NonNull Date date) {
+    public static String toDateFormat(@NonNull final Date date) {
         SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
         return dateFormat.format(date);
     }
 
     /**
+     * Creates a string date in specified format
+     *
      * @param date   Date object
      * @param format specify desired format of date
-     * @return formatted date string
+     * @return formatted date string based on format specified
      */
     public static String toDateFormat(@NonNull final Date date, @NonNull final String format) {
         SimpleDateFormat dateFormat = new SimpleDateFormat(format, Locale.getDefault());
@@ -51,7 +61,10 @@ public final class DateUtils {
     }
 
     /**
-     * date format: yyyy-MM-dd'T'HH:mm:ss
+     * Creates a string date format
+     *
+     * @param date Date object
+     * @return formatted string in <code>yyyy-MM-dd'T'HH:mm:ss</code> format
      */
     public static String toDateTimeFormat(@NonNull final Date date) {
         SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_TIME_FORMAT, Locale.getDefault());
@@ -59,7 +72,10 @@ public final class DateUtils {
     }
 
     /**
-     * date format: yyyy-MM-dd'T'HH:mm:ss.SSS
+     * Creates a string date format
+     *
+     * @param date Date object
+     * @return formatted string in <code>yyyy-MM-dd'T'HH:mm:ss.SSS</code> format
      */
     public static String toDateTimeMillisFormat(@NonNull final Date date) {
         SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_TIME_FORMAT_MILLISECONDS, Locale.getDefault());
@@ -67,7 +83,11 @@ public final class DateUtils {
     }
 
     /**
-     * date format: yyyy-MM-dd'T'HH:mm:ss
+     * Creates a Date object from string date
+     *
+     * @param dateString String date
+     * @return date Date object
+     * @throws IllegalArgumentException when string is un-parsable
      */
     public static Date fromDateTimeString(@NonNull final String dateString) {
         try {
@@ -79,11 +99,8 @@ public final class DateUtils {
         }
     }
 
-
-    /**
-     * date format: yyyy-MM-dd'T'HH:mm:ss
-     */
-    public static Date fromDateTimeString(@NonNull final String dateString, @NonNull final String format) {
+    @VisibleForTesting
+    static Date fromDateTimeString(@NonNull final String dateString, @NonNull final String format) {
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat(format, Locale.getDefault());
             return dateFormat.parse(dateString);
