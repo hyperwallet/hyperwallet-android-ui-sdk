@@ -133,6 +133,8 @@ public class ListTransferMethodTest {
                 matches(atPosition(3, hasDescendant(withText(R.string.paper_check)))));
         onView(withId(R.id.list_transfer_method_item)).check(matches(atPosition(3, hasDescendant(withText("Canada")))));
         onView(withId(R.id.list_transfer_method_item)).check(
+                matches(atPosition(3, hasDescendant(withText("")))));
+        onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(3, hasDescendant(withDrawable(R.drawable.ic_three_dots_16dp)))));
 
         onView(withId(R.id.list_transfer_method_item)).check(
@@ -151,6 +153,8 @@ public class ListTransferMethodTest {
                 matches(atPosition(5, hasDescendant(withText(R.string.paypal_account)))));
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(5, hasDescendant(withText("United States")))));
+        onView(withId(R.id.list_transfer_method_item)).check(
+                matches(atPosition(5, hasDescendant(withText("honey.thigpen@ukbuilder.com")))));
         //TODO: Try to check for non existence of transfer_method_type_description_2
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(5, hasDescendant(withDrawable(R.drawable.ic_three_dots_16dp)))));
