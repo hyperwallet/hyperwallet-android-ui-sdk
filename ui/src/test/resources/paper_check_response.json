@@ -1,0 +1,34 @@
+{
+  "token": "trm-316843d4-bfde-4dec-a391-ef926e4affbb",
+  "type": "PAPER_CHECK",
+  "status": "ACTIVATED",
+  "verificationStatus": "NOT_REQUIRED",
+  "createdOn": "2019-02-26T22:03:53",
+  "transferMethodCountry": "CA",
+  "transferMethodCurrency": "USD",
+  "bankAccountRelationship": "SELF",
+  "profileType": "INDIVIDUAL",
+  "firstName": "Gannon",
+  "lastName": "Evan",
+  "dateOfBirth": "1980-01-01",
+  "countryOfBirth": "US",
+  "countryOfNationality": "CA",
+  "gender": "MALE",
+  "phoneNumber": "+1 604 6666666",
+  "mobileNumber": "604 666 6666",
+  "governmentId": "987654321",
+  "addressLine1": "950 Granville Street",
+  "city": "Vancouver",
+  "stateProvince": "BC",
+  "country": "CA",
+  "postalCode": "V6Z1L2",
+  "shippingMethod": "EXPEDITED",
+  "links": [
+    {
+      "params": {
+        "rel": "self"
+      },
+      "href": "https://localhost:8181/rest/v3/users/usr-a51c7522-ccba-4bcf-a6a7-bc59dae8f9b0/bank-accounts/trm-92320ebd-c569-4b16-8790-6d22b477ac3c"
+    }
+  ]
+}
