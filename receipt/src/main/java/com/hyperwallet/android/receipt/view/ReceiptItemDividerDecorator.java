@@ -47,10 +47,16 @@ public class ReceiptItemDividerDecorator extends HorizontalDividerItemDecorator 
             } else if (i == parent.getChildCount() - 1) { // draw bottom
                 top = child.getBottom() + params.bottomMargin;
             } else { //draw middle
-                if (child instanceof LinearLayout) {
-                    left = ((ViewGroup) ((ViewGroup) child).getChildAt(1)).getChildAt(1).getLeft();
-                } else {
-                    // peek if its a header then draw line from beginning
+                if (child instanceof LinearLayout) { // header found
+                    // peek if next is a header then draw line from beginning
+                    if (parent.getChildAt(i + 1) != null
+                            && parent.getChildAt(i + 1) instanceof LinearLayout) {
+                        left = 0;
+                    } else {
+                        left = ((ViewGroup) ((ViewGroup) child).getChildAt(1)).getChildAt(1).getLeft();
+                    }
+                } else { // non header
+                    // peek if next is a header then draw line from beginning
                     if (parent.getChildAt(i + 1) != null
                             && parent.getChildAt(i + 1) instanceof LinearLayout) {
                         left = 0;

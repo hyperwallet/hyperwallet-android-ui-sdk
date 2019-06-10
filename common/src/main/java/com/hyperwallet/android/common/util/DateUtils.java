@@ -28,12 +28,16 @@ import java.util.TimeZone;
 /**
  * Common HW-SDK UI Date Utility class, that will assist on safe presentation of date whatever the mobile device setting
  * is set Locale, Timezone and etc... that dictates how that dates are being presented
+ *
+ * Moreover all date string to {@link Date} object conversion is automatically converted from
+ * GMT date string from API to locale Date set by the phone
  */
 public final class DateUtils {
 
     private static final String DATE_FORMAT = "yyyy-MM-dd";
     private static final String DATE_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
     private static final String DATE_TIME_FORMAT_MILLISECONDS = "yyyy-MM-dd'T'HH:mm:ss.SSS";
+    private static final TimeZone API_TIMEZONE = TimeZone.getTimeZone("GMT");
 
     private DateUtils() {
     }
@@ -88,16 +92,16 @@ public final class DateUtils {
     }
 
     /**
-     * Creates a Date object from string date
+     * Creates a Date object from string date using API Timezone
      *
-     * @param dateString String date
-     * @return date Date object
+     * @param dateString String date from API with GMT timezone
+     * @return date Date object converted to local timezone
      * @throws IllegalArgumentException when string is un-parsable
      */
     public static Date fromDateTimeString(@NonNull final String dateString) {
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_TIME_FORMAT, Locale.getDefault());
-            dateFormat.setTimeZone(TimeZone.getDefault());
+            dateFormat.setTimeZone(API_TIMEZONE);
             return dateFormat.parse(dateString);
         } catch (ParseException e) {
             throw new IllegalArgumentException("An exception occurred when attempting to parse " +
@@ -109,7 +113,7 @@ public final class DateUtils {
     static Date fromDateTimeString(@NonNull final String dateString, @NonNull final String format) {
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat(format, Locale.getDefault());
-            dateFormat.setTimeZone(TimeZone.getDefault());
+            dateFormat.setTimeZone(API_TIMEZONE);
             return dateFormat.parse(dateString);
         } catch (ParseException e) {
             throw new IllegalArgumentException("An exception occurred when attempting to parse " +
