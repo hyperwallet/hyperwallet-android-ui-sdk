@@ -16,12 +16,11 @@
  */
 package com.hyperwallet.android.ui.transfermethod;
 
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.BANK_ACCOUNT_ID;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.CARD_NUMBER;
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_COUNTRY;
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TYPE;
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.BANK_ACCOUNT;
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.BANK_CARD;
+import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.PAYPAL_ACCOUNT;
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.PREPAID_CARD;
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.WIRE_ACCOUNT;
 import static com.hyperwallet.android.ui.transfermethod.TransferMethodUtils.getStringFontIcon;
@@ -58,14 +57,16 @@ import com.hyperwallet.android.ui.view.HorizontalDividerItemDecorator;
 import com.hyperwallet.android.ui.view.widget.OneClickListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class ListTransferMethodFragment extends Fragment implements ListTransferMethodContract.View {
 
     static final String ARGUMENT_IS_TRANSFER_METHODS_RELOAD_NEEDED = "ARGUMENT_IS_TRANSFER_METHODS_RELOAD_NEEDED";
 
-    private static final int LAST_FOUR_DIGIT = 4;
+
     private static final String ARGUMENT_TRANSFER_METHOD_LIST = "ARGUMENT_TRANSFER_METHOD_LIST";
 
     private View mEmptyListView;
@@ -301,6 +302,7 @@ public class ListTransferMethodFragment extends Fragment implements ListTransfer
     private static class ListTransferMethodAdapter extends RecyclerView.Adapter<ListTransferMethodAdapter.ViewHolder> {
         private List<HyperwalletTransferMethod> mTransferMethodList;
         private OnTransferMethodContextMenuDeletionSelected mOnTransferMethodContextMenuDeletionSelected;
+        private Map<String, TransferMethodIdentificationStrategy> mTMIdentifications = new HashMap<>(2);
 
         ListTransferMethodAdapter(final List<HyperwalletTransferMethod> transferMethodList,
                 final OnTransferMethodContextMenuDeletionSelected onTransferMethodContextMenuSelection) {
@@ -310,9 +312,12 @@ public class ListTransferMethodFragment extends Fragment implements ListTransfer
 
         @NonNull
         @Override
-        public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int position) {
             LayoutInflater layout = LayoutInflater.from(viewGroup.getContext());
             View itemViewLayout = layout.inflate(R.layout.item_transfer_method_type, viewGroup, false);
+            final HyperwalletTransferMethod transferMethod = mTransferMethodList.get(position);
+            final String type = transferMethod.getField(TYPE);
+
             return new ViewHolder(itemViewLayout);
         }
 
@@ -327,23 +332,6 @@ public class ListTransferMethodFragment extends Fragment implements ListTransfer
             holder.recycle();
         }
 
-        private String getAccountIdentifier(HyperwalletTransferMethod transferMethod) {
-            String transferIdentification = "";
-            switch (transferMethod.getField(TYPE)) {
-                case BANK_ACCOUNT:
-                case WIRE_ACCOUNT:
-                    transferIdentification = transferMethod.getField(BANK_ACCOUNT_ID);
-                    break;
-                case BANK_CARD:
-                case PREPAID_CARD:
-                    transferIdentification = transferMethod.getField(CARD_NUMBER);
-                    break;
-                default: // none for paper check
-            }
-            return (transferIdentification.length() > LAST_FOUR_DIGIT
-                    ? transferIdentification.substring(transferIdentification.length() - LAST_FOUR_DIGIT)
-                    : transferIdentification);
-        }
 
         @Override
         public int getItemCount() {
@@ -373,16 +361,19 @@ public class ListTransferMethodFragment extends Fragment implements ListTransfer
 
 
             void bind(@NonNull final HyperwalletTransferMethod transferMethod) {
+                String type = transferMethod.getField(TYPE);
+                TransferMethodIdentificationStrategy identificationStrategy = getIdentificationStrategy(type);
+
                 mTitle.setText(
-                        getStringResourceByName(mTitle.getContext(), transferMethod.getField(TYPE)));
+                        getStringResourceByName(mTitle.getContext(), type));
 
                 Locale locale = new Locale.Builder().setRegion(
                         transferMethod.getField(TRANSFER_METHOD_COUNTRY)).build();
-                mIcon.setText(getStringFontIcon(mIcon.getContext(), transferMethod.getField(TYPE)));
+                mIcon.setText(getStringFontIcon(mIcon.getContext(), type));
                 mTransferMethodCountry.setText(locale.getDisplayName());
-                mTransferMethodIdentification.setText(mTransferMethodIdentification
-                        .getContext().getString(R.string.transfer_method_list_item_description,
-                                getAccountIdentifier(transferMethod)));
+                mTransferMethodIdentification.setText(
+                        identificationStrategy.getIdentificationText(mTransferMethodIdentification
+                                .getContext(), transferMethod));
 
                 mImageButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -413,6 +404,38 @@ public class ListTransferMethodFragment extends Fragment implements ListTransfer
 
             void recycle() {
                 mImageButton.setOnClickListener(null);
+            }
+        }
+
+        @NonNull
+        private TransferMethodIdentificationStrategy getIdentificationStrategy(String type) {
+            TransferMethodIdentificationStrategy identificationStrategy;
+            if (type != null && !mTMIdentifications.containsKey(type)) {
+                identificationStrategy = getTransferMethodIdentificationStrategy(type);
+                mTMIdentifications.put(type, identificationStrategy);
+            } else if (type != null && mTMIdentifications.containsKey(type)) {
+                identificationStrategy = mTMIdentifications.get(type);
+            } else {
+                identificationStrategy = TransferMethodIdentificationStrategy.DEFAULT;
+            }
+
+            return identificationStrategy;
+        }
+
+        @NonNull
+        private TransferMethodIdentificationStrategy getTransferMethodIdentificationStrategy(@NonNull String type) {
+
+            switch (type) {
+                case BANK_CARD:
+                case PREPAID_CARD:
+                case BANK_ACCOUNT:
+                case WIRE_ACCOUNT:
+                    return new CommonTransferMethodIdentification();
+                case PAYPAL_ACCOUNT:
+                    return new PayPalAccountTransferMethodIdentification();
+
+                default:
+                    return TransferMethodIdentificationStrategy.DEFAULT;
             }
         }
     }
