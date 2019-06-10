@@ -6,9 +6,7 @@ import androidx.paging.PageKeyedDataSource;
 
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.model.HyperwalletErrors;
-import com.hyperwallet.android.model.receipt.Receipt;
 
-import java.util.Date;
 
 abstract class ReceiptDataSource<Key, Value> extends PageKeyedDataSource<Key, Value> {
 

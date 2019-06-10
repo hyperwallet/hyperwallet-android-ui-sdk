@@ -83,8 +83,10 @@ public final class HyperwalletUi {
      * @param context A Context of the application consuming this Intent.
      * @return an Intent with the data necessary to launch the {@link ListReceiptActivity}
      */
-    public Intent getIntentListReceiptActivity(@NonNull final Context context) {
-        return new Intent(context, ListReceiptActivity.class);
+    public Intent getIntentListReceiptActivity(@NonNull final Context context, @NonNull final String token) {
+        Intent intent = new Intent(context, ListReceiptActivity.class);
+        intent.putExtra("TOKEN", token);
+        return intent;
     }
 
     /**

@@ -16,27 +16,39 @@
  */
 package com.hyperwallet.android.receipt.repository;
 
+import androidx.annotation.NonNull;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class ReceiptRepositoryFactory {
 
-    private static ReceiptRepositoryFactory sInstance;
+    private static Map<String, ReceiptRepositoryFactory> sInstances = new HashMap<>();
     private final ReceiptRepository mReceiptRepository;
+    private final String mToken;
 
-    private ReceiptRepositoryFactory() {
-        mReceiptRepository = new ReceiptRepositoryImpl();
+
+    private ReceiptRepositoryFactory(@NonNull final String token) {
+        mToken = token;
+        mReceiptRepository = new ReceiptRepositoryImpl(mToken);
     }
 
-    public static synchronized ReceiptRepositoryFactory getInstance() {
-        if (sInstance == null) {
-            sInstance = new ReceiptRepositoryFactory();
+
+    public static synchronized ReceiptRepositoryFactory getInstance(@NonNull final String token) {
+        if (!sInstances.containsKey(token)) {
+            sInstances.put(token, new ReceiptRepositoryFactory(token));
         }
-        return sInstance;
+        return sInstances.get(token);
     }
+
 
     public static void clearInstance() {
-        sInstance = null;
+        sInstances.clear();
     }
+
 
     public ReceiptRepository getReceiptRepository() {
         return mReceiptRepository;
     }
+
 }

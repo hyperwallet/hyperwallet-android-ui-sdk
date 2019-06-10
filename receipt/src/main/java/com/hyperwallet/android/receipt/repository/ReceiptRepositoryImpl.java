@@ -16,6 +16,7 @@
  */
 package com.hyperwallet.android.receipt.repository;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
@@ -29,13 +30,13 @@ public class ReceiptRepositoryImpl implements ReceiptRepository {
     private static final int INITIAL_LOAD_SIZE = 20;
 
     private final ReceiptDataSourceFactory mDataSourceFactory;
-    private final LiveData<UserReceiptDataSource> mReceiptDataSourceLiveData;
+    private final LiveData<ReceiptDataSource> mReceiptDataSourceLiveData;
     private LiveData<HyperwalletErrors> mErrorsLiveData;
     private LiveData<Boolean> mIsFetchingData;
     private LiveData<PagedList<Receipt>> mReceiptsLiveData;
 
-    ReceiptRepositoryImpl() {
-        mDataSourceFactory = new ReceiptDataSourceFactory();
+    ReceiptRepositoryImpl(@NonNull final String token) {
+        mDataSourceFactory = new ReceiptDataSourceFactory(token);
         mReceiptDataSourceLiveData = mDataSourceFactory.getReceiptDataSource();
     }
 
@@ -50,6 +51,11 @@ public class ReceiptRepositoryImpl implements ReceiptRepository {
             mReceiptsLiveData = new LivePagedListBuilder<>(mDataSourceFactory, config).build();
         }
         return mReceiptsLiveData;
+    }
+
+    public void invalidate() {
+        mReceiptsLiveData = null;
+        loadReceipts();
     }
 
     @Override

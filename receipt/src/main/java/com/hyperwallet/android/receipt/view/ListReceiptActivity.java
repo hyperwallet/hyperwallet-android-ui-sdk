@@ -41,6 +41,9 @@ import java.util.List;
 public class ListReceiptActivity extends AppCompatActivity implements OnNetworkErrorCallback,
         ListReceiptFragment.OnLoadReceiptErrorCallback {
 
+    //todo save state properly
+    private String mToken;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,13 +61,14 @@ public class ListReceiptActivity extends AppCompatActivity implements OnNetworkE
             }
         });
 
-        ReceiptRepositoryFactory factory = ReceiptRepositoryFactory.getInstance();
+        mToken = getIntent().getStringExtra("TOKEN");
+        ReceiptRepositoryFactory factory = ReceiptRepositoryFactory.getInstance(mToken);
         ViewModelProviders.of(this, new ListReceiptViewModel
                 .ListReceiptViewModelFactory(factory.getReceiptRepository()))
-                .get(ListReceiptViewModel.class);
+                .get(mToken, ListReceiptViewModel.class);
 
         if (savedInstanceState == null) {
-            initFragment(ListReceiptFragment.newInstance());
+            initFragment(ListReceiptFragment.newInstance(mToken));
         }
     }
 
@@ -93,7 +97,7 @@ public class ListReceiptActivity extends AppCompatActivity implements OnNetworkE
                 fragmentManager.findFragmentById(R.id.list_receipt_fragment);
 
         if (fragment == null) {
-            fragment = ListReceiptFragment.newInstance();
+            fragment = ListReceiptFragment.newInstance(mToken);
         }
         fragment.retry();
     }

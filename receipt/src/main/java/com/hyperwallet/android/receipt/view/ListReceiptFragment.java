@@ -58,18 +58,20 @@ public class ListReceiptFragment extends Fragment {
     private ListReceiptViewModel mListReceiptViewModel;
     private OnLoadReceiptErrorCallback mOnLoadReceiptErrorCallback;
     private View mProgressBar;
+    private String mToken;
 
     /**
      * Please don't use this constructor this is reserved for Android Core Framework
      *
-     * @see {@link ListReceiptFragment#newInstance()} instead.
+     * @see {@link ListReceiptFragment#newInstance(String)} instead.
      */
     public ListReceiptFragment() {
         setRetainInstance(true);
     }
 
-    static ListReceiptFragment newInstance() {
+    static ListReceiptFragment newInstance(@NonNull final String token) {
         ListReceiptFragment fragment = new ListReceiptFragment();
+        fragment.mToken = token;
         return fragment;
     }
 
@@ -88,8 +90,7 @@ public class ListReceiptFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mListReceiptViewModel = ViewModelProviders.of(requireActivity()).get(
-                ListReceiptViewModel.class);
+        mListReceiptViewModel = ViewModelProviders.of(requireActivity()).get(mToken, ListReceiptViewModel.class);
     }
 
     @Override
