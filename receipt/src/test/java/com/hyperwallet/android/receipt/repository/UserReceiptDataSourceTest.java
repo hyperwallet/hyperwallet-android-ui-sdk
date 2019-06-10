@@ -122,7 +122,7 @@ public class UserReceiptDataSourceTest {
         assertThat(receipts.get(0).getFee(), is("0.00"));
         assertThat(receipts.get(0).getCurrency(), is("USD"));
         assertThat(receipts.get(0).getDetails(), is(notNullValue()));
-        assertThat(receipts.get(0).getDetails().getPayeeName(), is("kevin Puckett"));
+        assertThat(receipts.get(0).getDetails().getPayeeName(), is("Kevin Puckett"));
         assertThat(receipts.get(0).getDetails().getClientPaymentId(), is("trans-0001"));
         assertThat(receipts.get(1).getJournalId(), is("51660666"));
         assertThat(receipts.get(1).getType(), is(TRANSFER_TO_BANK_ACCOUNT));
@@ -133,7 +133,7 @@ public class UserReceiptDataSourceTest {
         assertThat(receipts.get(1).getFee(), is("0.25"));
         assertThat(receipts.get(1).getCurrency(), is("USD"));
         assertThat(receipts.get(1).getDetails(), is(notNullValue()));
-        assertThat(receipts.get(1).getDetails().getPayeeName(), is("kevin Puckett"));
+        assertThat(receipts.get(1).getDetails().getPayeeName(), is("Kevin Puckett"));
         assertThat(receipts.get(1).getDetails().getBankAccountId(), is("patzachery.mcclary@example.com"));
 
         assertThat(mReceiptDataSource.getErrors().getValue(), is(nullValue()));
@@ -195,7 +195,7 @@ public class UserReceiptDataSourceTest {
     }
 
     @Test
-    public void testRetry_LoadInitial() {
+    public void testRetry_loadInitial() {
         final HyperwalletError error = new HyperwalletError("test message", "TEST_CODE");
         List<HyperwalletError> errorList = new ArrayList<>();
         errorList.add(error);
@@ -269,7 +269,7 @@ public class UserReceiptDataSourceTest {
         assertThat(receipts.get(3).getFee(), is("0.00"));
         assertThat(receipts.get(3).getCurrency(), is("USD"));
         assertThat(receipts.get(3).getDetails(), is(notNullValue()));
-        assertThat(receipts.get(3).getDetails().getPayeeName(), is("kevin Puckett"));
+        assertThat(receipts.get(3).getDetails().getPayeeName(), is("Kevin Puckett"));
         assertThat(receipts.get(3).getDetails().getClientPaymentId(), is("CSietnRJQQ0bscYkOoPJxNiTDiVALhjQ"));
         assertThat(receipts.get(4).getJournalId(), is("51660676"));
         assertThat(receipts.get(4).getType(), is(PAYMENT));
@@ -280,7 +280,7 @@ public class UserReceiptDataSourceTest {
         assertThat(receipts.get(4).getFee(), is("0.00"));
         assertThat(receipts.get(4).getCurrency(), is("USD"));
         assertThat(receipts.get(4).getDetails(), is(notNullValue()));
-        assertThat(receipts.get(4).getDetails().getPayeeName(), is("kevin Puckett"));
+        assertThat(receipts.get(4).getDetails().getPayeeName(), is("Kevin Puckett"));
         assertThat(receipts.get(4).getDetails().getClientPaymentId(), is("wUOdfLlJONacbdHlAHOAXQT7uwX7LTPy"));
 
         assertThat(mReceiptDataSource.getErrors().getValue(), is(nullValue()));
@@ -344,7 +344,7 @@ public class UserReceiptDataSourceTest {
     }
 
     @Test
-    public void testRetry_LoadAfter() {
+    public void testRetry_loadAfter() {
         final HyperwalletError error = new HyperwalletError("test message", "TEST_CODE");
         List<HyperwalletError> errorList = new ArrayList<>();
         errorList.add(error);

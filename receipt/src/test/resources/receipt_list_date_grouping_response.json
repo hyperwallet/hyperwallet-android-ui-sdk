@@ -15,7 +15,7 @@
       "currency": "USD",
       "details": {
         "clientPaymentId": "trans-0001",
-        "payeeName": "kevin Puckett"
+        "payeeName": "Kevin Puckett"
       }
     },
     {
@@ -29,7 +29,7 @@
       "fee": "0.25",
       "currency": "USD",
       "details": {
-        "payeeName": "kevin Puckett",
+        "payeeName": "Kevin Puckett",
         "bankAccountId": "patzachery.mcclary@example.com"
       }
     },
@@ -45,7 +45,7 @@
       "currency": "USD",
       "details": {
         "clientPaymentId": "trans-02",
-        "payeeName": "kevin Puckett"
+        "payeeName": "Kevin Puckett"
       }
     },
     {
@@ -60,7 +60,7 @@
       "currency": "USD",
       "details": {
         "clientPaymentId": "CSietnRJQQ0bscYkOoPJxNiTDiVALhjQ",
-        "payeeName": "kevin Puckett"
+        "payeeName": "Kevin Puckett"
     }
     },
     {
@@ -75,7 +75,7 @@
       "currency": "USD",
       "details": {
         "clientPaymentId": "wUOdfLlJONacbdHlAHOAXQT7uwX7LTPy",
-        "payeeName": "kevin Puckett"
+        "payeeName": "Kevin Puckett"
       }
     }
   ],

@@ -38,25 +38,19 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hyperwallet.android.common.util.DateUtils;
-import com.hyperwallet.android.common.viewmodel.Event;
-import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.receipt.Receipt;
 import com.hyperwallet.android.receipt.R;
 import com.hyperwallet.android.receipt.viewmodel.ListReceiptViewModel;
 
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
 public class ListReceiptFragment extends Fragment {
 
-    private static final String HEADER_DATE_FORMAT = "MMMM yyyy";
-    private static final String CAPTION_DATE_FORMAT = "MMMM dd, yyyy";
     private ListReceiptAdapter mListReceiptAdapter;
     private RecyclerView mListReceiptsView;
     private ListReceiptViewModel mListReceiptViewModel;
-    private OnLoadReceiptErrorCallback mOnLoadReceiptErrorCallback;
     private View mProgressBar;
     private String mToken;
 
@@ -76,37 +70,26 @@ public class ListReceiptFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-
-        try {
-            mOnLoadReceiptErrorCallback = (OnLoadReceiptErrorCallback) requireContext();
-        } catch (ClassCastException e) {
-            throw new ClassCastException(requireActivity().toString() + " must implement "
-                    + OnLoadReceiptErrorCallback.class.getCanonicalName());
-        }
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mListReceiptViewModel = ViewModelProviders.of(requireActivity()).get(mToken, ListReceiptViewModel.class);
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+    public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container,
             @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.list_receipt_fragment, container, false);
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull final View view, @Nullable final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mProgressBar = view.findViewById(R.id.list_receipt_progress_bar);
         mListReceiptAdapter = new ListReceiptAdapter(new ListReceiptItemDiffCallback());
         mListReceiptsView = view.findViewById(R.id.list_receipts);
         mListReceiptsView.setHasFixedSize(true);
         mListReceiptsView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mListReceiptsView.addItemDecoration(new ReceiptItemDividerDecorator(requireContext(), false));
         mListReceiptsView.setAdapter(mListReceiptAdapter);
         registerObservers();
     }
@@ -116,16 +99,6 @@ public class ListReceiptFragment extends Fragment {
             @Override
             public void onChanged(PagedList<Receipt> transferMethods) {
                 mListReceiptAdapter.submitList(transferMethods);
-            }
-        });
-
-        mListReceiptViewModel.getReceiptErrors().observe(getViewLifecycleOwner(),
-                new Observer<Event<List<HyperwalletError>>>() {
-            @Override
-            public void onChanged(Event<List<HyperwalletError>> listEvent) {
-                if (!listEvent.isContentConsumed()) {
-                    mOnLoadReceiptErrorCallback.showErrorOnLoadReceipt(listEvent.getContent());
-                }
             }
         });
 
@@ -145,21 +118,16 @@ public class ListReceiptFragment extends Fragment {
         mListReceiptViewModel.retryLoadReceipts();
     }
 
-    interface OnLoadReceiptErrorCallback {
-
-        void showErrorOnLoadReceipt(@NonNull final List<HyperwalletError> errors);
-    }
-
     private static class ListReceiptItemDiffCallback extends DiffUtil.ItemCallback<Receipt> {
 
         @Override
-        public boolean areItemsTheSame(@NonNull Receipt oldItem, @NonNull Receipt newItem) {
+        public boolean areItemsTheSame(@NonNull final Receipt oldItem, @NonNull final Receipt newItem) {
             return oldItem.hashCode() == newItem.hashCode()
                     && Objects.equals(oldItem, newItem);
         }
 
         @Override
-        public boolean areContentsTheSame(@NonNull Receipt oldItem, @NonNull Receipt newItem) {
+        public boolean areContentsTheSame(@NonNull final Receipt oldItem, @NonNull final Receipt newItem) {
             return oldItem.hashCode() == newItem.hashCode()
                     && Objects.equals(oldItem, newItem);
         }
@@ -168,15 +136,17 @@ public class ListReceiptFragment extends Fragment {
     private static class ListReceiptAdapter
             extends PagedListAdapter<Receipt, ListReceiptAdapter.ReceiptViewHolder> {
 
-        static final int HEADER_VIEW_TYPE = 1;
-        static final int DATA_VIEW_TYPE = 0;
+        private static final String HEADER_DATE_FORMAT = "MMMM yyyy";
+        private static final String CAPTION_DATE_FORMAT = "MMMM dd, yyyy";
+        private static final int HEADER_VIEW_TYPE = 1;
+        private static final int DATA_VIEW_TYPE = 0;
 
         ListReceiptAdapter(@NonNull final DiffUtil.ItemCallback<Receipt> diffCallback) {
             super(diffCallback);
         }
 
         @Override
-        public int getItemViewType(int position) {
+        public int getItemViewType(final int position) {
             if (position != 0) {
                 Receipt previous = getItem(position - 1);
                 Receipt current = getItem(position);
@@ -199,20 +169,19 @@ public class ListReceiptFragment extends Fragment {
 
         @NonNull
         @Override
-        public ReceiptViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+        public ReceiptViewHolder onCreateViewHolder(final @NonNull ViewGroup viewGroup, int viewType) {
             LayoutInflater layout = LayoutInflater.from(viewGroup.getContext());
 
             if (viewType == HEADER_VIEW_TYPE) {
                 View headerView = layout.inflate(R.layout.item_receipt_with_header, viewGroup, false);
                 return new ReceiptViewHolderWithHeader(headerView);
             }
-
             View dataView = layout.inflate(R.layout.item_receipt, viewGroup, false);
             return new ReceiptViewHolder(dataView);
         }
 
         @Override
-        public void onBindViewHolder(@NonNull ReceiptViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull final ReceiptViewHolder holder, final int position) {
             final Receipt receipt = getItem(position);
             if (receipt != null) {
                 holder.bind(receipt);
