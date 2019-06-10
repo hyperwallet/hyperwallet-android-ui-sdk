@@ -93,7 +93,7 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
         switch (transferMethod.getField(TYPE)) {
             case BANK_ACCOUNT:
             case WIRE_ACCOUNT:
-                    deactivateBankAccount(transferMethod, callback);
+                deactivateBankAccount(transferMethod, callback);
                 break;
             case BANK_CARD:
                 deactivateBankCardAccount(transferMethod, callback);
