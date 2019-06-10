@@ -1,4 +1,4 @@
-package com.hyperwallet.android.util;
+package com.hyperwallet.android.ui.util;
 
 import static androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom;
 import static androidx.test.espresso.matcher.ViewMatchers.isDescendantOfA;

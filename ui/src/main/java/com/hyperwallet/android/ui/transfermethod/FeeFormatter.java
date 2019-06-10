@@ -22,7 +22,7 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 
-import com.hyperwallet.android.hyperwallet_ui.R;
+import com.hyperwallet.android.hyperwallet.ui.R;
 import com.hyperwallet.android.model.graphql.HyperwalletFee;
 
 import java.util.List;

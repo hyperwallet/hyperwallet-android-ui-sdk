@@ -1,4 +1,4 @@
-package com.hyperwallet.android.common.view.error;
+package com.hyperwallet.android.ui.common.view.error;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -15,8 +15,8 @@ import static com.hyperwallet.android.ExceptionMapper.EC_UNEXPECTED_EXCEPTION;
 
 import android.content.res.Resources;
 
-import com.hyperwallet.android.common.R;
 import com.hyperwallet.android.model.HyperwalletError;
+import com.hyperwallet.android.ui.common.R;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

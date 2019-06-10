@@ -26,7 +26,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.hyperwallet.android.hyperwallet_ui.R;
+import com.hyperwallet.android.hyperwallet.ui.R;
 
 public class HorizontalDividerItemDecorator extends RecyclerView.ItemDecoration {
 

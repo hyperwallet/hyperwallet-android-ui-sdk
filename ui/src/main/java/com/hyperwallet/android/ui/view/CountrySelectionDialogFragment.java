@@ -46,7 +46,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.hyperwallet.android.hyperwallet_ui.R;
+import com.hyperwallet.android.hyperwallet.ui.R;
 
 import java.util.ArrayList;
 import java.util.List;

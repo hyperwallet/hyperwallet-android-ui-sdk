@@ -1,4 +1,4 @@
-package com.hyperwallet.android.transfermethod.ui;
+package com.hyperwallet.android.ui.transfermethod;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
@@ -29,8 +29,8 @@ import static com.hyperwallet.android.ui.transfermethod.AddTransferMethodActivit
 import static com.hyperwallet.android.ui.transfermethod.AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_CURRENCY;
 import static com.hyperwallet.android.ui.transfermethod.AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_PROFILE_TYPE;
 import static com.hyperwallet.android.ui.transfermethod.AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_TYPE;
-import static com.hyperwallet.android.util.EspressoUtils.atPosition;
-import static com.hyperwallet.android.util.EspressoUtils.withDrawable;
+import static com.hyperwallet.android.ui.util.EspressoUtils.atPosition;
+import static com.hyperwallet.android.ui.util.EspressoUtils.withDrawable;
 
 import android.widget.TextView;
 
@@ -42,14 +42,13 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
 import com.hyperwallet.android.Hyperwallet;
-import com.hyperwallet.android.common.util.EspressoIdlingResource;
-import com.hyperwallet.android.hyperwallet_ui.R;
-import com.hyperwallet.android.rule.HyperwalletExternalResourceManager;
-import com.hyperwallet.android.rule.HyperwalletMockWebServer;
+import com.hyperwallet.android.hyperwallet.ui.R;
+import com.hyperwallet.android.ui.common.util.EspressoIdlingResource;
 import com.hyperwallet.android.ui.repository.RepositoryFactory;
-import com.hyperwallet.android.ui.transfermethod.SelectTransferMethodActivity;
-import com.hyperwallet.android.util.RecyclerViewCountAssertion;
-import com.hyperwallet.android.util.TestAuthenticationProvider;
+import com.hyperwallet.android.ui.rule.HyperwalletExternalResourceManager;
+import com.hyperwallet.android.ui.rule.HyperwalletMockWebServer;
+import com.hyperwallet.android.ui.util.RecyclerViewCountAssertion;
+import com.hyperwallet.android.ui.util.TestAuthenticationProvider;
 
 import org.junit.After;
 import org.junit.Before;

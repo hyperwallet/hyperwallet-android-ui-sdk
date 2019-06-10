@@ -8,7 +8,7 @@ import static org.mockito.Mockito.when;
 import android.content.Context;
 import android.content.res.Resources;
 
-import com.hyperwallet.android.hyperwallet_ui.R;
+import com.hyperwallet.android.hyperwallet.ui.R;
 import com.hyperwallet.android.model.graphql.HyperwalletFee;
 import com.hyperwallet.android.ui.rule.HyperwalletExternalResourceManager;
 

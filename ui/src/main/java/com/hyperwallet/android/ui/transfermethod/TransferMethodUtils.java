@@ -29,7 +29,7 @@ import android.content.res.Resources;
 
 import androidx.annotation.NonNull;
 
-import com.hyperwallet.android.hyperwallet_ui.R;
+import com.hyperwallet.android.hyperwallet.ui.R;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodType;
 

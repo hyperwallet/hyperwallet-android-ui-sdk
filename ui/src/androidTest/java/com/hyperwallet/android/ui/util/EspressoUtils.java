@@ -1,4 +1,4 @@
-package com.hyperwallet.android.util;
+package com.hyperwallet.android.ui.util;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;

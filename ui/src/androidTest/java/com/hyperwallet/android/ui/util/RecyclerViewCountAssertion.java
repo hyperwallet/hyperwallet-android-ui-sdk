@@ -1,4 +1,4 @@
-package com.hyperwallet.android.util;
+package com.hyperwallet.android.ui.util;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;

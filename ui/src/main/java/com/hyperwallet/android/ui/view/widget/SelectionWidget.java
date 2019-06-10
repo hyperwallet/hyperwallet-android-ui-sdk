@@ -31,7 +31,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.material.textfield.TextInputLayout;
-import com.hyperwallet.android.hyperwallet_ui.R;
+import com.hyperwallet.android.hyperwallet.ui.R;
 import com.hyperwallet.android.model.graphql.field.HyperwalletField;
 import com.hyperwallet.android.model.graphql.field.HyperwalletFieldSelectionOption;
 import com.hyperwallet.android.ui.view.WidgetSelectionDialogFragment;

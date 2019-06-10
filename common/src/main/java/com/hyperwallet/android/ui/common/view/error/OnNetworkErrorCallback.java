@@ -1,4 +1,4 @@
-package com.hyperwallet.android.common.view.error;
+package com.hyperwallet.android.ui.common.view.error;
 
 import java.util.List;
 

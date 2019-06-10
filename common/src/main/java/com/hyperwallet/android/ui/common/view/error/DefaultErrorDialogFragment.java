@@ -14,7 +14,7 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.hyperwallet.android.common.view.error;
+package com.hyperwallet.android.ui.common.view.error;
 
 import static com.hyperwallet.android.ExceptionMapper.EC_AUTHENTICATION_TOKEN_PROVIDER_EXCEPTION;
 import static com.hyperwallet.android.ExceptionMapper.EC_IO_EXCEPTION;
@@ -33,8 +33,8 @@ import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.hyperwallet.android.common.R;
 import com.hyperwallet.android.model.HyperwalletError;
+import com.hyperwallet.android.ui.common.R;
 
 import java.util.ArrayList;
 import java.util.List;

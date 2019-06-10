@@ -1,4 +1,4 @@
-package com.hyperwallet.android;
+package com.hyperwallet.android.ui;
 
 
 import android.app.Application;
