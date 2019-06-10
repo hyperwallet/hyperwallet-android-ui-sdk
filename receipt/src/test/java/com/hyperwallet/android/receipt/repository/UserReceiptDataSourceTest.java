@@ -50,7 +50,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RunWith(RobolectricTestRunner.class)
-public class ReceiptDataSourceTest {
+public class UserReceiptDataSourceTest {
 
     @Rule
     public MockitoRule mMockito = MockitoJUnit.rule();
@@ -77,7 +77,7 @@ public class ReceiptDataSourceTest {
     private ArgumentCaptor<Integer> mNextCaptor;
 
     @Spy
-    private ReceiptDataSource mReceiptDataSource;
+    private UserReceiptDataSource mReceiptDataSource;
 
     @Before
     public void setUp() {

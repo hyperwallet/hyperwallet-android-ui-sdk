@@ -13,14 +13,14 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
 @RunWith(RobolectricTestRunner.class)
-public class ReceiptDataSourceFactoryTest {
+public class UserReceiptDataSourceFactoryTest {
 
     @Test
     public void testGetReceiptDataSource_returnsLiveDataReceiptSource() {
         // initialize
         ReceiptDataSourceFactory dataSourceFactory = new ReceiptDataSourceFactory();
         // test
-        LiveData<ReceiptDataSource> liveData = dataSourceFactory.getReceiptDataSource();
+        LiveData<UserReceiptDataSource> liveData = dataSourceFactory.getReceiptDataSource();
         // assert
         assertThat(liveData, is(notNullValue()));
     }
@@ -33,6 +33,6 @@ public class ReceiptDataSourceFactoryTest {
         DataSource dataSource = dataSourceFactory.create();
         // assert
         assertThat(dataSource, is(notNullValue()));
-        assertThat(dataSource, CoreMatchers.<DataSource>instanceOf(ReceiptDataSource.class));
+        assertThat(dataSource, CoreMatchers.<DataSource>instanceOf(UserReceiptDataSource.class));
     }
 }

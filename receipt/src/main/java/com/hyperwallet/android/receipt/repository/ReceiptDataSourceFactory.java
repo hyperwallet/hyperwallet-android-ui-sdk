@@ -26,9 +26,9 @@ public class ReceiptDataSourceFactory extends DataSource.Factory {
     private final MutableLiveData<ReceiptDataSource> mDataSourceMutableLiveData;
     private final ReceiptDataSource mReceiptDataSource;
 
-    ReceiptDataSourceFactory() {
+    ReceiptDataSourceFactory(@NonNull final String token) {
         super();
-        mReceiptDataSource = new ReceiptDataSource();
+        mReceiptDataSource = getDataSource(token);
         mDataSourceMutableLiveData = new MutableLiveData<>();
         mDataSourceMutableLiveData.postValue(mReceiptDataSource);
         mDataSourceMutableLiveData.setValue(mReceiptDataSource);
@@ -43,4 +43,17 @@ public class ReceiptDataSourceFactory extends DataSource.Factory {
     public DataSource create() {
         return mReceiptDataSource;
     }
+
+
+    private ReceiptDataSource getDataSource(@NonNull final String token) {
+        if (token.startsWith("usr-")) {
+            return new UserReceiptDataSource();
+        } else if (token.startsWith("trm-")) {
+            return new PrepaidCardReceiptDataSource();
+        } else {
+            throw new IllegalArgumentException("Invalid token. It must start with -usr or -trm but it is "+ token);
+        }
+    }
+
+
 }

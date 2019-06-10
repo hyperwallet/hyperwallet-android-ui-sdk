@@ -29,7 +29,7 @@ public class ReceiptRepositoryImpl implements ReceiptRepository {
     private static final int INITIAL_LOAD_SIZE = 20;
 
     private final ReceiptDataSourceFactory mDataSourceFactory;
-    private final LiveData<ReceiptDataSource> mReceiptDataSourceLiveData;
+    private final LiveData<UserReceiptDataSource> mReceiptDataSourceLiveData;
     private LiveData<HyperwalletErrors> mErrorsLiveData;
     private LiveData<Boolean> mIsFetchingData;
     private LiveData<PagedList<Receipt>> mReceiptsLiveData;
