@@ -111,7 +111,7 @@ public class ListReceiptActivity extends AppCompatActivity implements OnNetworkE
         fragment.retry();
     }
 
-    public void showErrorOnLoadReceipt(@NonNull final List<HyperwalletError> errors) {
+    private void showErrorOnLoadReceipt(@NonNull final List<HyperwalletError> errors) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         DefaultErrorDialogFragment fragment = (DefaultErrorDialogFragment)
                 fragmentManager.findFragmentByTag(DefaultErrorDialogFragment.TAG);

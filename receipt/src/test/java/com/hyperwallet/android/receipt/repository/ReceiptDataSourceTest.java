@@ -344,7 +344,7 @@ public class ReceiptDataSourceTest {
     }
 
     @Test
-    public void testRetry_LoadAfter() {
+    public void testRetry_loadAfter() {
         final HyperwalletError error = new HyperwalletError("test message", "TEST_CODE");
         List<HyperwalletError> errorList = new ArrayList<>();
         errorList.add(error);
