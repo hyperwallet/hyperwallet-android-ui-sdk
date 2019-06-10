@@ -21,6 +21,7 @@ import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMe
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.BANK_ACCOUNT;
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.BANK_CARD;
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.PAYPAL_ACCOUNT;
+import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.WIRE_ACCOUNT;
 
 import android.os.Handler;
 
@@ -52,6 +53,7 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
             LoadTransferMethodCallback callback) {
         switch (transferMethod.getField(TYPE)) {
             case BANK_ACCOUNT:
+            case WIRE_ACCOUNT:
                 createBankAccount(transferMethod, callback);
                 break;
             case BANK_CARD:
@@ -90,7 +92,8 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
             @NonNull final DeactivateTransferMethodCallback callback) {
         switch (transferMethod.getField(TYPE)) {
             case BANK_ACCOUNT:
-                deactivateBankAccount(transferMethod, callback);
+            case WIRE_ACCOUNT:
+                    deactivateBankAccount(transferMethod, callback);
                 break;
             case BANK_CARD:
                 deactivateBankCardAccount(transferMethod, callback);
