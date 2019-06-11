@@ -72,6 +72,7 @@ public class ListReceiptsTest {
     public void testListReceipts_userHasMultipleTransactions() {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("receipt_list_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();
 
         // run test
         mActivityTestRule.launchActivity(null);
@@ -132,6 +133,7 @@ public class ListReceiptsTest {
     public void testListReceipts_displayCreditTransaction() {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("receipt_credit_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();
 
         // run test
         mActivityTestRule.launchActivity(null);
@@ -160,6 +162,7 @@ public class ListReceiptsTest {
     public void testListReceipts_displayDebitTransaction() {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("receipt_debit_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();
 
         // run test
         mActivityTestRule.launchActivity(null);
@@ -188,6 +191,7 @@ public class ListReceiptsTest {
     public void testListReceipts_displayUnknownTransactionType() {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("receipt_unknown_type_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();
 
         // run test
         mActivityTestRule.launchActivity(null);
@@ -229,6 +233,8 @@ public class ListReceiptsTest {
     public void testListReceipts_checkDateTextOnLocaleChange() {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("receipt_debit_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();
+
         setLocale(Locale.ITALY);
         // run test
         mActivityTestRule.launchActivity(null);
