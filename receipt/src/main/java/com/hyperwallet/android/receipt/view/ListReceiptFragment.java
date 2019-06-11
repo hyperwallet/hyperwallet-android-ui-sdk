@@ -88,6 +88,7 @@ public class ListReceiptFragment extends Fragment {
         mListReceiptsView = view.findViewById(R.id.list_receipts);
         mListReceiptsView.setHasFixedSize(true);
         mListReceiptsView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mListReceiptsView.addItemDecoration(new ReceiptItemDividerDecorator(requireContext(), false));
         mListReceiptsView.setAdapter(mListReceiptAdapter);
         registerObservers();
     }

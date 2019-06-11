@@ -188,9 +188,12 @@ public class ReceiptDataSourceTest {
         verify(mInitialCallback, never()).onResult(ArgumentMatchers.<Receipt>anyList(), anyInt(), anyInt());
 
         assertThat(mReceiptDataSource.getErrors().getValue(), is(notNullValue()));
-        assertThat(mReceiptDataSource.getErrors().getValue().getErrors(), Matchers.<HyperwalletError>hasSize(1));
-        assertThat(mReceiptDataSource.getErrors().getValue().getErrors().get(0).getCode(), is("TEST_CODE"));
-        assertThat(mReceiptDataSource.getErrors().getValue().getErrors().get(0).getMessage(), is("test message"));
+        assertThat(mReceiptDataSource.getErrors().getValue().getContent().getErrors(),
+                Matchers.<HyperwalletError>hasSize(1));
+        assertThat(mReceiptDataSource.getErrors().getValue().getContent().getErrors().get(0).getCode(),
+                is("TEST_CODE"));
+        assertThat(mReceiptDataSource.getErrors().getValue().getContent().getErrors().get(0).getMessage(),
+                is("test message"));
         assertThat(mReceiptDataSource.isFetchingData().getValue(), is(false));
     }
 
@@ -336,15 +339,17 @@ public class ReceiptDataSourceTest {
 
         // error occurred, this will save params and callback
         assertThat(mReceiptDataSource.getErrors().getValue(), is(notNullValue()));
-        assertThat(mReceiptDataSource.getErrors().getValue().getErrors(), Matchers.<HyperwalletError>hasSize(1));
-        assertThat(mReceiptDataSource.getErrors().getValue().getErrors().get(0).getCode(), is("LOAD_AFTER_CODE"));
-        assertThat(mReceiptDataSource.getErrors().getValue().getErrors().get(0).getMessage(),
+        assertThat(mReceiptDataSource.getErrors().getValue().getContent().getErrors(),
+                Matchers.<HyperwalletError>hasSize(1));
+        assertThat(mReceiptDataSource.getErrors().getValue().getContent().getErrors().get(0).getCode(),
+                is("LOAD_AFTER_CODE"));
+        assertThat(mReceiptDataSource.getErrors().getValue().getContent().getErrors().get(0).getMessage(),
                 is("test message load after"));
         assertThat(mReceiptDataSource.isFetchingData().getValue(), is(false));
     }
 
     @Test
-    public void testRetry_LoadAfter() {
+    public void testRetry_loadAfter() {
         final HyperwalletError error = new HyperwalletError("test message", "TEST_CODE");
         List<HyperwalletError> errorList = new ArrayList<>();
         errorList.add(error);
