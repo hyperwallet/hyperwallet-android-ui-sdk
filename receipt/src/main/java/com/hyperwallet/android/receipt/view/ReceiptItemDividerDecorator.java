@@ -54,7 +54,13 @@ public class ReceiptItemDividerDecorator extends HorizontalDividerItemDecorator 
 
                 if (childCount > 1) { // draw bottom
                     if (child instanceof LinearLayout) { // receipt header
-                        left = ((ViewGroup) ((ViewGroup) child).getChildAt(1)).getChildAt(1).getLeft();
+                        // peek if next is a header then draw line from beginning
+                        if (parent.getChildAt(i + 1) != null
+                                && parent.getChildAt(i + 1) instanceof LinearLayout) {
+                            left = 0;
+                        } else {
+                            left = ((ViewGroup) ((ViewGroup) child).getChildAt(1)).getChildAt(1).getLeft();
+                        }
                     } else { // receipt item
                         // peek if next is a header then draw line from beginning
                         if (parent.getChildAt(i + 1) != null
