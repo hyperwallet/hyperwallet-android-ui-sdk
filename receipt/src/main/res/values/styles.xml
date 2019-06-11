@@ -1,0 +1,19 @@
+<resources>
+    <style name="Widget.Hyperwallet.ProgressBar.Receipts"
+           parent="@style/Widget.AppCompat.ProgressBar">
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="android:indeterminateTint">@color/colorPrimary</item>
+        <item name="android:elevation">@dimen/progress_bar_elevation</item>
+    </style>
+
+    <style name="TextAppearance.Hyperwallet.Positive"
+           parent="TextAppearance.MaterialComponents.Subtitle1">
+        <item name="android:textColor">@color/positiveColor</item>
+    </style>
+
+    <style name="TextAppearance.Hyperwallet.Negative"
+           parent="TextAppearance.MaterialComponents.Subtitle1">
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
+</resources>
