@@ -1,0 +1,25 @@
+{
+  "count": 1,
+  "offset": 0,
+  "limit": 10,
+  "data": [
+    {
+      "journalId": "3051590",
+      "type": "TRANSFER_TO_PREPAID_CARD",
+      "createdOn": "2019-05-02T17:12:18",
+      "entry": "DEBIT",
+      "sourceToken": "usr-fa76a738-f43d-48b9-9a7a-7048d44a5d2d",
+      "destinationToken": "trm-12345",
+      "amount": "18.05",
+      "currency": "USD"
+    }
+  ],
+  "links": [
+    {
+      "params": {
+        "rel": "self"
+      },
+      "href": "https://api.sandbox.hyperwallet.com/rest/v3/users/usr-fa76a738-f43d-48b9-9a7a-7048d44a5d2d/receipts?offset=0&limit=10"
+    }
+  ]
+}

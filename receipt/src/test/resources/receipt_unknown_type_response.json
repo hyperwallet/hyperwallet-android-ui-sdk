@@ -1,0 +1,30 @@
+{
+  "count": 1,
+  "offset": 0,
+  "limit": 10,
+  "data": [
+    {
+      "journalId": "3051581",
+      "type": "ICK",
+      "createdOn": "2019-06-02T17:09:07",
+      "entry": "CREDIT",
+      "sourceToken": "act-12345",
+      "destinationToken": "usr-fa76a738-f43d-48b9-9a7a-7048d44a5d2d",
+      "amount": "25.00",
+      "fee": "0.00",
+      "currency": "CAD",
+      "details": {
+        "clientPaymentId": "ABC1234",
+        "payeeName": "A Person"
+      }
+    }
+  ],
+  "links": [
+    {
+      "params": {
+        "rel": "self"
+      },
+      "href": "https://api.sandbox.hyperwallet.com/rest/v3/users/usr-fa76a738-f43d-48b9-9a7a-7048d44a5d2d/receipts?offset=0&limit=10"
+    }
+  ]
+}
