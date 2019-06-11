@@ -25,17 +25,14 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.paging.PagedList;
 
 import com.hyperwallet.android.common.viewmodel.Event;
-import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.receipt.Receipt;
 import com.hyperwallet.android.receipt.repository.ReceiptRepository;
 
-import java.util.List;
-
 public class ListReceiptViewModel extends ViewModel {
 
-    private MutableLiveData<Event<List<HyperwalletError>>> mErrorEvent = new MutableLiveData<>();
-    private Observer<HyperwalletErrors> mErrorEventObserver;
+    private MutableLiveData<Event<HyperwalletErrors>> mErrorEvent = new MutableLiveData<>();
+    private Observer<Event<HyperwalletErrors>> mErrorEventObserver;
     private ReceiptRepository mReceiptRepository;
 
     private ListReceiptViewModel(@NonNull final ReceiptRepository receiptRepository) {
@@ -44,12 +41,10 @@ public class ListReceiptViewModel extends ViewModel {
         mReceiptRepository.loadReceipts();
 
         // register one time error event observer
-        mErrorEventObserver = new Observer<HyperwalletErrors>() {
+        mErrorEventObserver = new Observer<Event<HyperwalletErrors>>() {
             @Override
-            public void onChanged(HyperwalletErrors errors) {
-                if (errors != null && !errors.getErrors().isEmpty()) {
-                    mErrorEvent.setValue(new Event<>(errors.getErrors()));
-                }
+            public void onChanged(Event<HyperwalletErrors> event) {
+                mErrorEvent.postValue(event);
             }
         };
         mReceiptRepository.getErrors().observeForever(mErrorEventObserver);
@@ -59,7 +54,7 @@ public class ListReceiptViewModel extends ViewModel {
         return mReceiptRepository.isLoading();
     }
 
-    public LiveData<Event<List<HyperwalletError>>> getReceiptErrors() {
+    public LiveData<Event<HyperwalletErrors>> getReceiptErrors() {
         return mErrorEvent;
     }
 

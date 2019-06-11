@@ -34,6 +34,7 @@ import com.hyperwallet.android.common.view.error.DefaultErrorDialogFragment;
 import com.hyperwallet.android.common.view.error.OnNetworkErrorCallback;
 import com.hyperwallet.android.common.viewmodel.Event;
 import com.hyperwallet.android.model.HyperwalletError;
+import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.receipt.R;
 import com.hyperwallet.android.receipt.repository.ReceiptRepositoryFactory;
 import com.hyperwallet.android.receipt.viewmodel.ListReceiptViewModel;
@@ -66,19 +67,24 @@ public class ListReceiptActivity extends AppCompatActivity implements OnNetworkE
                 .ListReceiptViewModelFactory(factory.getReceiptRepository()))
                 .get(ListReceiptViewModel.class);
 
-        mListReceiptViewModel.getReceiptErrors().observe(this,
-                new Observer<Event<List<HyperwalletError>>>() {
-                    @Override
-                    public void onChanged(Event<List<HyperwalletError>> listEvent) {
-                        if (!listEvent.isContentConsumed()) {
-                            showErrorOnLoadReceipt(listEvent.getContent());
-                        }
-                    }
-                });
+        mListReceiptViewModel.getReceiptErrors().observe(this, new Observer<Event<HyperwalletErrors>>() {
+            @Override
+            public void onChanged(Event<HyperwalletErrors> event) {
+                if (event != null && !event.isContentConsumed()) {
+                    showErrorOnLoadReceipt(event.getContent().getErrors());
+                }
+            }
+        });
 
         if (savedInstanceState == null) {
             initFragment(ListReceiptFragment.newInstance());
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ReceiptRepositoryFactory.clearInstance();
     }
 
     @Override

@@ -19,6 +19,7 @@ package com.hyperwallet.android.receipt.repository;
 import androidx.lifecycle.LiveData;
 import androidx.paging.PagedList;
 
+import com.hyperwallet.android.common.viewmodel.Event;
 import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.receipt.Receipt;
 
@@ -44,9 +45,9 @@ public interface ReceiptRepository {
     /**
      * Error information, consumer can subscribe of errors occur during data retrieval
      *
-     * @return live data list of errors if there's an error
+     * @return live event data list of errors if there's an error
      */
-    LiveData<HyperwalletErrors> getErrors();
+    LiveData<Event<HyperwalletErrors>> getErrors();
 
     /**
      * Reload receipt information, usually invoked when error is raised after the first load and consumer opts to retry
