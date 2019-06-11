@@ -27,7 +27,7 @@ import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.paging.HyperwalletPageList;
 import com.hyperwallet.android.model.receipt.Receipt;
 import com.hyperwallet.android.model.receipt.ReceiptQueryParam;
-import com.hyperwallet.android.receipt.rule.HyperwalletExternalResourceManager;
+import com.hyperwallet.android.rule.HyperwalletExternalResourceManager;
 
 import org.hamcrest.Matchers;
 import org.json.JSONObject;
