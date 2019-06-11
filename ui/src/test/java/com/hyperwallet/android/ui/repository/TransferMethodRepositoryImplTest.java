@@ -448,7 +448,7 @@ public class TransferMethodRepositoryImplTest {
                 listener.onSuccess(null);
                 return listener;
             }
-        }).when(mHyperwallet).listTransferMethods((HyperwalletTransferMethodQueryParam)any(),
+        }).when(mHyperwallet).listTransferMethods((HyperwalletTransferMethodQueryParam) any(),
                 ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<HyperwalletTransferMethod>>>any());
 
         // test
@@ -562,7 +562,7 @@ public class TransferMethodRepositoryImplTest {
     @Test
     public void testCreateTransferMethod_wireAccountWithSuccess() {
         HyperwalletBankAccount bankAccount = new HyperwalletBankAccount
-                .Builder("USA", "USD", "1411413412")
+                .Builder("US", "USD", "1411413412")
                 .transferMethodType(HyperwalletTransferMethod.TransferMethodTypes.WIRE_ACCOUNT)
                 .build();
 
@@ -571,7 +571,7 @@ public class TransferMethodRepositoryImplTest {
             public Object answer(InvocationOnMock invocation) {
                 HyperwalletListener listener = (HyperwalletListener) invocation.getArguments()[1];
                 HyperwalletBankAccount returnedBank = new HyperwalletBankAccount
-                        .Builder("USA", "USD", "1411413412")
+                        .Builder("US", "USD", "1411413412")
                         .bankName("Mock Bank Response")
                         .transferMethodType(HyperwalletTransferMethod.TransferMethodTypes.WIRE_ACCOUNT)
                         .build();
@@ -591,7 +591,7 @@ public class TransferMethodRepositoryImplTest {
         assertThat(transferMethod, is(notNullValue()));
         assertThat(transferMethod.getField(TYPE), is(HyperwalletTransferMethod.TransferMethodTypes.WIRE_ACCOUNT));
         assertThat(transferMethod.getField(BANK_NAME), is("Mock Bank Response"));
-        assertThat(transferMethod.getField(TRANSFER_METHOD_COUNTRY), is("USA"));
+        assertThat(transferMethod.getField(TRANSFER_METHOD_COUNTRY), is("US"));
         assertThat(transferMethod.getField(TRANSFER_METHOD_CURRENCY), is("USD"));
         assertThat(transferMethod.getField(BANK_ACCOUNT_ID), is("1411413412"));
     }
