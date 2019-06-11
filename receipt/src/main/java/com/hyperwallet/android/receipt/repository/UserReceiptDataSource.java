@@ -20,14 +20,10 @@ import android.os.Handler;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.paging.PageKeyedDataSource;
 
-import com.hyperwallet.android.Hyperwallet;
+import com.hyperwallet.android.common.viewmodel.Event;
 import com.hyperwallet.android.exception.HyperwalletException;
 import com.hyperwallet.android.listener.HyperwalletListener;
-import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.paging.HyperwalletPageList;
 import com.hyperwallet.android.model.receipt.Receipt;
 import com.hyperwallet.android.model.receipt.ReceiptQueryParam;
@@ -77,7 +73,7 @@ public class UserReceiptDataSource extends ReceiptDataSource<Integer, Receipt> {
                     @Override
                     public void onFailure(HyperwalletException exception) {
                         mIsFetchingData.postValue(Boolean.FALSE);
-                        mErrors.postValue(exception.getHyperwalletErrors());
+                        mErrors.postValue(new Event<>(exception.getHyperwalletErrors()));
                     }
 
                     @Override
@@ -127,7 +123,7 @@ public class UserReceiptDataSource extends ReceiptDataSource<Integer, Receipt> {
                     @Override
                     public void onFailure(HyperwalletException exception) {
                         mIsFetchingData.postValue(Boolean.FALSE);
-                        mErrors.postValue(exception.getHyperwalletErrors());
+                        mErrors.postValue(new Event<>(exception.getHyperwalletErrors()));
                     }
 
                     @Override

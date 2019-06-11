@@ -21,6 +21,7 @@ import android.os.Handler;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.hyperwallet.android.common.viewmodel.Event;
 import com.hyperwallet.android.exception.HyperwalletException;
 import com.hyperwallet.android.listener.HyperwalletListener;
 import com.hyperwallet.android.model.QueryParam;
@@ -72,7 +73,7 @@ public class PrepaidCardReceiptDataSource extends ReceiptDataSource<Date, Receip
                     @Override
                     public void onFailure(HyperwalletException exception) {
                         mIsFetchingData.postValue(Boolean.FALSE);
-                        mErrors.postValue(exception.getHyperwalletErrors());
+                        mErrors.postValue(new Event<>(exception.getHyperwalletErrors()));
                     }
 
                     @Override
@@ -120,7 +121,7 @@ public class PrepaidCardReceiptDataSource extends ReceiptDataSource<Date, Receip
                     @Override
                     public void onFailure(HyperwalletException exception) {
                         mIsFetchingData.postValue(Boolean.FALSE);
-                        mErrors.postValue(exception.getHyperwalletErrors());
+                        mErrors.postValue(new Event<>(exception.getHyperwalletErrors()));
                     }
 
                     @Override

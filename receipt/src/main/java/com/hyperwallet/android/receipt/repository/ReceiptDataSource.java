@@ -5,12 +5,13 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.paging.PageKeyedDataSource;
 
 import com.hyperwallet.android.Hyperwallet;
+import com.hyperwallet.android.common.viewmodel.Event;
 import com.hyperwallet.android.model.HyperwalletErrors;
 
 
 abstract class ReceiptDataSource<Key, Value> extends PageKeyedDataSource<Key, Value> {
 
-    final MutableLiveData<HyperwalletErrors> mErrors = new MutableLiveData<>();
+    final MutableLiveData<Event<HyperwalletErrors>> mErrors = new MutableLiveData<>();
     final MutableLiveData<Boolean> mIsFetchingData = new MutableLiveData<>();
     LoadInitialCallback<Key, Value> mLoadInitialCallback;
     LoadInitialParams<Key> mLoadInitialParams;
@@ -21,7 +22,7 @@ abstract class ReceiptDataSource<Key, Value> extends PageKeyedDataSource<Key, Va
         return mIsFetchingData;
     }
 
-    public LiveData<HyperwalletErrors> getErrors() {
+    public LiveData<Event<HyperwalletErrors>> getErrors() {
         return mErrors;
     }
 

@@ -70,15 +70,14 @@ public class ListReceiptActivity extends AppCompatActivity implements OnNetworkE
                 .ListReceiptViewModelFactory(factory.getReceiptRepository()))
                 .get(mToken, ListReceiptViewModel.class);
 
-        mListReceiptViewModel.getReceiptErrors().observe(this,
-                new Observer<Event<List<HyperwalletError>>>() {
-                    @Override
-                    public void onChanged(Event<List<HyperwalletError>> listEvent) {
-                        if (!listEvent.isContentConsumed()) {
-                            showErrorOnLoadReceipt(listEvent.getContent());
-                        }
-                    }
-                });
+        mListReceiptViewModel.getReceiptErrors().observe(this, new Observer<Event<List<HyperwalletError>>>() {
+            @Override
+            public void onChanged(Event<List<HyperwalletError>> listEvent) {
+                if(listEvent != null && !listEvent.isContentConsumed()) {
+                    showErrorOnLoadReceipt(listEvent.getContent());
+                }
+            }
+        });
 
         if (savedInstanceState == null) {
             initFragment(ListReceiptFragment.newInstance(mToken));
@@ -94,6 +93,12 @@ public class ListReceiptActivity extends AppCompatActivity implements OnNetworkE
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ReceiptRepositoryFactory.clearInstance();
     }
 
     private void initFragment(@NonNull final Fragment fragment) {

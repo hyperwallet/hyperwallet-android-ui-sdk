@@ -21,6 +21,7 @@ import androidx.lifecycle.LiveData;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
+import com.hyperwallet.android.common.viewmodel.Event;
 import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.receipt.Receipt;
 
@@ -31,7 +32,7 @@ public class ReceiptRepositoryImpl implements ReceiptRepository {
 
     private final ReceiptDataSourceFactory mDataSourceFactory;
     private final LiveData<ReceiptDataSource> mReceiptDataSourceLiveData;
-    private LiveData<HyperwalletErrors> mErrorsLiveData;
+    private LiveData<Event<HyperwalletErrors>> mErrorsLiveData;
     private LiveData<Boolean> mIsFetchingData;
     private LiveData<PagedList<Receipt>> mReceiptsLiveData;
 
@@ -53,10 +54,8 @@ public class ReceiptRepositoryImpl implements ReceiptRepository {
         return mReceiptsLiveData;
     }
 
-    public void invalidate() {
-        mReceiptsLiveData = null;
-        loadReceipts();
-    }
+
+
 
     @Override
     public LiveData<Boolean> isLoading() {
@@ -67,7 +66,7 @@ public class ReceiptRepositoryImpl implements ReceiptRepository {
     }
 
     @Override
-    public LiveData<HyperwalletErrors> getErrors() {
+    public LiveData<Event<HyperwalletErrors>> getErrors() {
         if (mErrorsLiveData == null) {
             mErrorsLiveData = mReceiptDataSourceLiveData.getValue().getErrors();
         }
