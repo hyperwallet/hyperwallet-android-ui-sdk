@@ -146,7 +146,7 @@ public class ListReceiptsTest {
         onView(withId(R.id.list_receipts)).check(matches(atPosition(0,
                 hasDescendant(withText(com.hyperwallet.android.receipt.R.string.credit)))));
         onView(withId(R.id.list_receipts)).check(
-                matches(atPosition(0, hasDescendant(withText("Payment")))));
+                matches(atPosition(0, hasDescendant(withText(R.string.payment)))));
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(0, hasDescendant(withText("+ 25.00")))));
         onView(withId(R.id.list_receipts)).check(
@@ -174,12 +174,40 @@ public class ListReceiptsTest {
         onView(withId(R.id.list_receipts)).check(matches(atPosition(0,
                 hasDescendant(withText(com.hyperwallet.android.receipt.R.string.debit)))));
         onView(withId(R.id.list_receipts)).check(
-                matches(atPosition(0, hasDescendant(withText("Card Load")))));
+                matches(atPosition(0, hasDescendant(withText(R.string.transfer_to_prepaid_card)))));
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(0, hasDescendant(withText("- 18.05")))));
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(0, hasDescendant(withText("May 02, 2019")))));
         onView(withId(R.id.list_receipts)).check(matches(atPosition(0, hasDescendant(withText("USD")))));
+
+        onView(withId(R.id.list_receipts)).check(new RecyclerViewCountAssertion(1));
+    }
+
+    @Test
+    public void testListReceipts_displayUnknownTransactionType() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("receipt_unknown_type_response.json")).mock();
+
+        // run test
+        mActivityTestRule.launchActivity(null);
+
+        // assert
+        onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
+                .check(matches(withText(R.string.title_activity_receipt_list)));
+        onView(withId(R.id.list_receipts)).check(matches(isDisplayed()));
+
+        onView(withId(R.id.list_receipts))
+                .check(matches(atPosition(0, hasDescendant(withText("June 2019")))));
+        onView(withId(R.id.list_receipts)).check(matches(atPosition(0,
+                hasDescendant(withText(com.hyperwallet.android.receipt.R.string.credit)))));
+        onView(withId(R.id.list_receipts)).check(
+                matches(atPosition(0, hasDescendant(withText(R.string.unknown_type)))));
+        onView(withId(R.id.list_receipts)).check(
+                matches(atPosition(0, hasDescendant(withText("+ 25.00")))));
+        onView(withId(R.id.list_receipts)).check(
+                matches(atPosition(0, hasDescendant(withText("June 02, 2019")))));
+        onView(withId(R.id.list_receipts)).check(matches(atPosition(0, hasDescendant(withText("CAD")))));
 
         onView(withId(R.id.list_receipts)).check(new RecyclerViewCountAssertion(1));
     }
