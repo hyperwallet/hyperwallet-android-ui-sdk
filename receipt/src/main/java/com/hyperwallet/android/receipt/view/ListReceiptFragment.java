@@ -92,8 +92,8 @@ public class ListReceiptFragment extends Fragment {
     private void registerObservers() {
         mListReceiptViewModel.getReceiptList().observe(getViewLifecycleOwner(), new Observer<PagedList<Receipt>>() {
             @Override
-            public void onChanged(PagedList<Receipt> transferMethods) {
-                mListReceiptAdapter.submitList(transferMethods);
+            public void onChanged(PagedList<Receipt> receipts) {
+                mListReceiptAdapter.submitList(receipts);
             }
         });
 
