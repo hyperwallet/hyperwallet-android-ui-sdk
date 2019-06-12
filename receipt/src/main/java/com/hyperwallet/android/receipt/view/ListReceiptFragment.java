@@ -188,16 +188,19 @@ public class ListReceiptFragment extends Fragment {
         class ReceiptViewHolder extends RecyclerView.ViewHolder {
 
             private ListReceiptViewModel mListReceiptViewModel;
+            private View mView;
 
             ReceiptViewHolder(@NonNull final ListReceiptViewModel receiptViewModel,
                     @NonNull final View item) {
                 super(item);
+                mView = item.findViewById(R.id.receipt_item);
                 mListReceiptViewModel = receiptViewModel;
             }
 
             void bind(@NonNull final Receipt receipt) {
-                ReceiptViewUtil.setTransactionView(receipt, itemView);
-                itemView.setOnClickListener(new OneClickListener() {
+                ReceiptViewUtil util = new ReceiptViewUtil();
+                util.setTransactionView(receipt, itemView);
+                mView.setOnClickListener(new OneClickListener() {
                     @Override
                     public void onOneClick(View v) {
                         mListReceiptViewModel.setDetailNavigation(receipt);

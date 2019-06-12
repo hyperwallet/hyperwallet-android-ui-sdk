@@ -29,27 +29,30 @@ import com.hyperwallet.android.common.util.DateUtils;
 import com.hyperwallet.android.model.receipt.Receipt;
 import com.hyperwallet.android.receipt.R;
 
+import java.text.DecimalFormat;
 import java.util.Locale;
 
 final class ReceiptViewUtil {
 
+    static final String DETAIL_DATE_FORMAT = "E MMM dd, YYYY - k:mm zzz";
+    static final String AMOUNT_FORMAT = "#,##0.00";
     private static final String CAPTION_DATE_FORMAT = "MMMM dd, yyyy";
 
-    private ReceiptViewUtil() {
-    }
-
-    static void setTransactionView(@NonNull final Receipt receipt, @NonNull final View view) {
+    void setTransactionView(@NonNull final Receipt receipt, @NonNull final View view) {
         TextView transactionTypeIcon = view.findViewById(R.id.transaction_type_icon);
         TextView transactionTitle = view.findViewById(R.id.transaction_title);
         TextView transactionDate = view.findViewById(R.id.transaction_date);
         TextView transactionAmount = view.findViewById(R.id.transaction_amount);
         TextView transactionCurrency = view.findViewById(R.id.transaction_currency);
+        DecimalFormat decimalFormat = new DecimalFormat(AMOUNT_FORMAT);
+        double amount = Double.parseDouble(receipt.getAmount());
+        String formattedAmount = decimalFormat.format(amount);
 
         if (CREDIT.equals(receipt.getEntry())) {
             transactionAmount.setTextColor(transactionAmount.getContext()
                     .getResources().getColor(R.color.positiveColor));
             transactionAmount.setText(transactionAmount.getContext()
-                    .getString(R.string.credit_sign, receipt.getAmount()));
+                    .getString(R.string.credit_sign, formattedAmount));
             transactionTypeIcon.setTextColor(transactionTypeIcon.getContext()
                     .getResources().getColor(R.color.positiveColor));
             transactionTypeIcon.setBackground(transactionTypeIcon.getContext()
@@ -59,7 +62,7 @@ final class ReceiptViewUtil {
             transactionAmount.setTextColor(transactionAmount.getContext()
                     .getResources().getColor(R.color.colorAccent));
             transactionAmount.setText(transactionAmount.getContext()
-                    .getString(R.string.debit_sign, receipt.getAmount()));
+                    .getString(R.string.debit_sign, formattedAmount));
             transactionTypeIcon.setTextColor(transactionTypeIcon.getContext()
                     .getResources().getColor(R.color.colorAccent));
             transactionTypeIcon.setBackground(transactionTypeIcon.getContext()

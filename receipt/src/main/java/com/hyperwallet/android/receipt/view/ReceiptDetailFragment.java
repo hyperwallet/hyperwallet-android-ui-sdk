@@ -16,6 +16,9 @@
  */
 package com.hyperwallet.android.receipt.view;
 
+import static com.hyperwallet.android.receipt.view.ReceiptViewUtil.AMOUNT_FORMAT;
+import static com.hyperwallet.android.receipt.view.ReceiptViewUtil.DETAIL_DATE_FORMAT;
+
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -37,8 +40,6 @@ import java.text.DecimalFormat;
 
 public class ReceiptDetailFragment extends Fragment {
 
-    private static final String DETAIL_DATE_FORMAT = "E MMM dd YYYY - k:mm z";
-    private static final String AMOUNT_FORMAT = "#,##0.00";
     private ReceiptDetailViewModel mReceiptDetailViewModel;
 
     public ReceiptDetailFragment() {
@@ -69,7 +70,8 @@ public class ReceiptDetailFragment extends Fragment {
         Receipt receipt = mReceiptDetailViewModel.getReceipt();
 
         // transactions
-        ReceiptViewUtil.setTransactionView(receipt, view);
+        ReceiptViewUtil util = new ReceiptViewUtil();
+        util.setTransactionView(receipt, view);
 
         // fee details
         if (!TextUtils.isEmpty(receipt.getFee())) {
