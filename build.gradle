@@ -31,7 +31,7 @@ allprojects {
 subprojects {
 
     ext {
-        hyperwalletGroupId = 'com.hyperwallet.android'
+        hyperwalletGroupId = 'com.hyperwallet.android.ui'
 
         compileVersion = 28
         minVersion = 21
