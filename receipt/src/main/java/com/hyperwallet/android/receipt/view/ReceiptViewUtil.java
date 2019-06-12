@@ -76,7 +76,7 @@ final class ReceiptViewUtil {
                 fromDateTimeString(receipt.getCreatedOn()), CAPTION_DATE_FORMAT));
     }
 
-    private static String getTransactionTitle(@NonNull final String receiptType, @NonNull final Context context) {
+    String getTransactionTitle(@NonNull final String receiptType, @NonNull final Context context) {
         String showTitle = context.getResources().getString(R.string.unknown_type);
         int resourceId = context.getResources().getIdentifier(receiptType.toLowerCase(Locale.ROOT), "string",
                 context.getPackageName());
