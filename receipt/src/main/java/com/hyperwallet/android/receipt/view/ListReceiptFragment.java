@@ -16,10 +16,6 @@
  */
 package com.hyperwallet.android.receipt.view;
 
-import static com.hyperwallet.android.model.receipt.Receipt.Entries.CREDIT;
-import static com.hyperwallet.android.model.receipt.Receipt.Entries.DEBIT;
-
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,12 +34,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hyperwallet.android.common.util.DateUtils;
+import com.hyperwallet.android.common.view.OneClickListener;
 import com.hyperwallet.android.model.receipt.Receipt;
 import com.hyperwallet.android.receipt.R;
 import com.hyperwallet.android.receipt.viewmodel.ListReceiptViewModel;
 
 import java.util.Calendar;
-import java.util.Locale;
 import java.util.Objects;
 
 public class ListReceiptFragment extends Fragment {
@@ -77,14 +73,14 @@ public class ListReceiptFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container,
             @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.list_receipt_fragment, container, false);
+        return inflater.inflate(R.layout.fragment_list_receipt, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull final View view, @Nullable final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mProgressBar = view.findViewById(R.id.list_receipt_progress_bar);
-        mListReceiptAdapter = new ListReceiptAdapter(new ListReceiptItemDiffCallback());
+        mListReceiptAdapter = new ListReceiptAdapter(mListReceiptViewModel, new ListReceiptItemDiffCallback());
         mListReceiptsView = view.findViewById(R.id.list_receipts);
         mListReceiptsView.setHasFixedSize(true);
         mListReceiptsView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -136,12 +132,14 @@ public class ListReceiptFragment extends Fragment {
             extends PagedListAdapter<Receipt, ListReceiptAdapter.ReceiptViewHolder> {
 
         private static final String HEADER_DATE_FORMAT = "MMMM yyyy";
-        private static final String CAPTION_DATE_FORMAT = "MMMM dd, yyyy";
         private static final int HEADER_VIEW_TYPE = 1;
         private static final int DATA_VIEW_TYPE = 0;
+        private final ListReceiptViewModel mReceiptViewModel;
 
-        ListReceiptAdapter(@NonNull final DiffUtil.ItemCallback<Receipt> diffCallback) {
+        ListReceiptAdapter(@NonNull final ListReceiptViewModel receiptViewModel,
+                @NonNull final DiffUtil.ItemCallback<Receipt> diffCallback) {
             super(diffCallback);
+            mReceiptViewModel = receiptViewModel;
         }
 
         @Override
@@ -173,10 +171,10 @@ public class ListReceiptFragment extends Fragment {
 
             if (viewType == HEADER_VIEW_TYPE) {
                 View headerView = layout.inflate(R.layout.item_receipt_with_header, viewGroup, false);
-                return new ReceiptViewHolderWithHeader(headerView);
+                return new ReceiptViewHolderWithHeader(mReceiptViewModel, headerView);
             }
             View dataView = layout.inflate(R.layout.item_receipt, viewGroup, false);
-            return new ReceiptViewHolder(dataView);
+            return new ReceiptViewHolder(mReceiptViewModel, dataView);
         }
 
         @Override
@@ -188,59 +186,23 @@ public class ListReceiptFragment extends Fragment {
         }
 
         class ReceiptViewHolder extends RecyclerView.ViewHolder {
-            private final TextView mTransactionAmount;
-            private final TextView mTransactionCurrency;
-            private final TextView mTransactionDate;
-            private final TextView mTransactionTitle;
-            private final TextView mTransactionTypeIcon;
 
-            ReceiptViewHolder(@NonNull final View item) {
+            private ListReceiptViewModel mListReceiptViewModel;
+
+            ReceiptViewHolder(@NonNull final ListReceiptViewModel receiptViewModel,
+                    @NonNull final View item) {
                 super(item);
-                mTransactionAmount = item.findViewById(R.id.transaction_amount);
-                mTransactionCurrency = item.findViewById(R.id.transaction_currency);
-                mTransactionDate = item.findViewById(R.id.transaction_date);
-                mTransactionTitle = item.findViewById(R.id.transaction_title);
-                mTransactionTypeIcon = item.findViewById(R.id.transaction_type_icon);
+                mListReceiptViewModel = receiptViewModel;
             }
 
             void bind(@NonNull final Receipt receipt) {
-                if (CREDIT.equals(receipt.getEntry())) {
-                    mTransactionAmount.setTextColor(mTransactionAmount.getContext()
-                            .getResources().getColor(R.color.positiveColor));
-                    mTransactionAmount.setText(mTransactionAmount.getContext()
-                            .getString(R.string.credit_sign, receipt.getAmount()));
-                    mTransactionTypeIcon.setTextColor(mTransactionTypeIcon.getContext()
-                            .getResources().getColor(R.color.positiveColor));
-                    mTransactionTypeIcon.setBackground(mTransactionTypeIcon.getContext()
-                            .getDrawable(R.drawable.circle_positive));
-                    mTransactionTypeIcon.setText(mTransactionTypeIcon.getContext().getText(R.string.credit));
-                } else if (DEBIT.equals(receipt.getEntry())) {
-                    mTransactionAmount.setTextColor(mTransactionAmount.getContext()
-                            .getResources().getColor(R.color.colorAccent));
-                    mTransactionAmount.setText(mTransactionAmount.getContext()
-                            .getString(R.string.debit_sign, receipt.getAmount()));
-                    mTransactionTypeIcon.setTextColor(mTransactionTypeIcon.getContext()
-                            .getResources().getColor(R.color.colorAccent));
-                    mTransactionTypeIcon.setBackground(mTransactionTypeIcon.getContext()
-                            .getDrawable(R.drawable.circle_negative));
-                    mTransactionTypeIcon.setText(mTransactionTypeIcon.getContext().getText(R.string.debit));
-                }
-
-                mTransactionCurrency.setText(receipt.getCurrency());
-                mTransactionTitle.setText(getTransactionTitle(receipt.getType(), mTransactionTitle.getContext()));
-                mTransactionDate.setText(DateUtils.toDateFormat(DateUtils.
-                        fromDateTimeString(receipt.getCreatedOn()), CAPTION_DATE_FORMAT));
-            }
-
-            String getTransactionTitle(@NonNull final String receiptType, @NonNull final Context context) {
-                String showTitle = context.getResources().getString(R.string.unknown_type);
-                int resourceId = context.getResources().getIdentifier(receiptType.toLowerCase(Locale.ROOT), "string",
-                        context.getPackageName());
-                if (resourceId != 0) {
-                    showTitle = context.getResources().getString(resourceId);
-                }
-
-                return showTitle;
+                ReceiptViewUtil.setTransactionView(receipt, itemView);
+                itemView.setOnClickListener(new OneClickListener() {
+                    @Override
+                    public void onOneClick(View v) {
+                        mListReceiptViewModel.setDetailNavigation(receipt);
+                    }
+                });
             }
         }
 
@@ -248,8 +210,9 @@ public class ListReceiptFragment extends Fragment {
 
             private final TextView mTransactionHeaderText;
 
-            ReceiptViewHolderWithHeader(@NonNull final View item) {
-                super(item);
+            ReceiptViewHolderWithHeader(@NonNull final ListReceiptViewModel receiptViewModel,
+                    @NonNull final View item) {
+                super(receiptViewModel, item);
                 mTransactionHeaderText = item.findViewById(R.id.item_date_header_title);
             }
 

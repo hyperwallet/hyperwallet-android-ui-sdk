@@ -1,6 +1,6 @@
 /*
  * The MIT License (MIT)
- * Copyright (c) 2018 Hyperwallet Systems Inc.
+ * Copyright (c) 2019 Hyperwallet Systems Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -14,33 +14,21 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.hyperwallet.android.ui.view.widget;
+package com.hyperwallet.android.receipt.viewmodel;
 
-import android.os.SystemClock;
-import android.view.View;
+import androidx.lifecycle.ViewModel;
 
-/**
- * Helper class that holds a time of the first click event and won't call onClick callback during a delay.
- */
-public abstract class OneClickListener implements View.OnClickListener {
-    private static final long CLICK_DELAY_MILLIS = 800L;
-    private long mFirstOccurrenceClickTime;
+import com.hyperwallet.android.model.receipt.Receipt;
 
-    @Override
-    public void onClick(View v) {
-        if (SystemClock.elapsedRealtime() - mFirstOccurrenceClickTime < CLICK_DELAY_MILLIS) {
-            return;
-        }
+public class ReceiptDetailViewModel extends ViewModel {
 
-        onOneClick(v);
-        mFirstOccurrenceClickTime = SystemClock.elapsedRealtime();
+    private Receipt mReceipt;
 
+    public Receipt getReceipt() {
+        return mReceipt;
     }
 
-    /**
-     * Handle click events with a delay. This callback is time aware and will not appear the second time during a delay.
-     *
-     * @param v View
-     */
-    public abstract void onOneClick(View v);
+    public void setReceipt(Receipt receipt) {
+        mReceipt = receipt;
+    }
 }

@@ -30,12 +30,12 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.hyperwallet.android.common.view.OneClickListener;
 import com.hyperwallet.android.common.view.error.DefaultErrorDialogFragment;
 import com.hyperwallet.android.common.view.error.OnNetworkErrorCallback;
 import com.hyperwallet.android.hyperwallet_ui.R;
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
-import com.hyperwallet.android.ui.view.widget.OneClickListener;
 
 import java.util.List;
 

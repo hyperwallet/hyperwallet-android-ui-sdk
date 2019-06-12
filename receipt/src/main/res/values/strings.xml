@@ -1,6 +1,22 @@
 <resources>
     <string name="app_name">receipt</string>
     <string name="title_activity_receipt_list">Transactions</string>
+    <string name="title_activity_receipt_detail">Transaction Details</string>
+    <string name="transaction_header_text">Transaction</string>
+    <string name="details_header_text">Details</string>
+    <string name="details_amount_label">Amount:</string>
+    <string name="fee_label">Fee:</string>
+    <string name="transfer_amount_label">Transfer Amount:</string>
+    <string name="receipt_header_label">Receipt</string>
+    <string name="receipt_id_label">Receipt ID:</string>
+    <string name="receipt_date_label">Date:</string>
+    <string name="client_id_label">Client ID:</string>
+    <string name="notes_label">Notes:</string>
+    <string name="charity_label">Charity Name:</string>
+    <string name="check_number_label">Check Number:</string>
+    <string name="website_label">Website:</string>
+    <string name="amount_view_format">%s %s</string>
+
     <string name="empty_transaction_information">Seems like, you don\'t have any Transactions,
         yet.
     </string>
@@ -115,4 +131,5 @@
     <string name="transfer_to_wire">Wire Transfer</string>
     <string name="wire_transfer_fee">Wire Transfer Fee</string>
     <string name="wire_transfer_return">Wire Transfer Return</string>
+    <string name="title_activity_main">MainActivity</string>
 </resources>

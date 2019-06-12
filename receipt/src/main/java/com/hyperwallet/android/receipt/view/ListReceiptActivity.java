@@ -33,15 +33,18 @@ import androidx.lifecycle.ViewModelProviders;
 import com.hyperwallet.android.common.view.error.DefaultErrorDialogFragment;
 import com.hyperwallet.android.common.view.error.OnNetworkErrorCallback;
 import com.hyperwallet.android.common.viewmodel.Event;
+import com.hyperwallet.android.common.viewmodel.ListDetailNavigator;
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.HyperwalletErrors;
+import com.hyperwallet.android.model.receipt.Receipt;
 import com.hyperwallet.android.receipt.R;
 import com.hyperwallet.android.receipt.repository.ReceiptRepositoryFactory;
 import com.hyperwallet.android.receipt.viewmodel.ListReceiptViewModel;
 
 import java.util.List;
 
-public class ListReceiptActivity extends AppCompatActivity implements OnNetworkErrorCallback {
+public class ListReceiptActivity extends AppCompatActivity implements OnNetworkErrorCallback,
+        ListDetailNavigator<Event<Receipt>> {
 
     private ListReceiptViewModel mListReceiptViewModel;
 
@@ -73,6 +76,13 @@ public class ListReceiptActivity extends AppCompatActivity implements OnNetworkE
                 if (event != null && !event.isContentConsumed()) {
                     showErrorOnLoadReceipt(event.getContent().getErrors());
                 }
+            }
+        });
+
+        mListReceiptViewModel.getDetailNavigation().observe(this, new Observer<Event<Receipt>>() {
+            @Override
+            public void onChanged(Event<Receipt> event) {
+                navigate(event);
             }
         });
 
@@ -128,6 +138,15 @@ public class ListReceiptActivity extends AppCompatActivity implements OnNetworkE
 
         if (!fragment.isAdded()) {
             fragment.show(fragmentManager);
+        }
+    }
+
+    @Override
+    public void navigate(@NonNull final Event<Receipt> event) {
+        if (!event.isContentConsumed()) {
+            Intent intent = new Intent(this, ReceiptDetailActivity.class);
+            intent.putExtra(ReceiptDetailActivity.EXTRA_RECEIPT, event.getContent());
+            startActivity(intent);
         }
     }
 }
