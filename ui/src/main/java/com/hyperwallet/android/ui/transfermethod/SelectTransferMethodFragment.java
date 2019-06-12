@@ -38,12 +38,12 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.hyperwallet.android.common.view.HorizontalDividerItemDecorator;
 import com.hyperwallet.android.hyperwallet_ui.R;
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.ui.repository.RepositoryFactory;
 import com.hyperwallet.android.ui.view.CountrySelectionDialogFragment;
 import com.hyperwallet.android.ui.view.CurrencySelectionDialogFragment;
-import com.hyperwallet.android.ui.view.HorizontalDividerItemDecorator;
 import com.hyperwallet.android.ui.view.widget.OneClickListener;
 
 import java.util.ArrayList;
@@ -183,7 +183,7 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
         mRecyclerView.setAdapter(mTransferMethodTypesAdapter);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mRecyclerView.addItemDecoration(new HorizontalDividerItemDecorator(getContext(), true));
+        mRecyclerView.addItemDecoration(new HorizontalDividerItemDecorator(requireContext(), true));
     }
 
     @Override

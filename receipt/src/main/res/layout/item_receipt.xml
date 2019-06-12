@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/item_receipt_information_height">
+
+    <TextView android:id="@+id/transaction_type_icon"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="@dimen/grid_margin_left"
+              android:layout_marginTop="@dimen/item_text_top_bottom_margin"
+              android:layout_marginBottom="@dimen/item_text_top_bottom_margin"
+              android:background="@drawable/circle_positive"
+              android:fontFamily="@font/icomoon"
+              android:gravity="center"
+              android:text="@string/font_icon_placeholder"
+              android:textColor="@color/positiveColor"
+              android:textSize="@dimen/font_default_icon_size"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintLeft_toLeftOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView android:id="@+id/transaction_title"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="@dimen/grid_margin_left"
+              android:layout_marginTop="@dimen/grid_margin_top"
+              android:text="@string/text_placeholder"
+              android:layout_marginEnd="@dimen/ellipsis_spacing"
+              android:ellipsize="end"
+              android:maxLines="1"
+              android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+              app:layout_constraintEnd_toStartOf="@+id/transaction_amount"
+              app:layout_constraintStart_toEndOf="@+id/transaction_type_icon"
+              app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView android:id="@+id/transaction_date"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="@dimen/grid_margin_left"
+              android:layout_marginTop="@dimen/item_text_top_bottom_margin"
+              android:layout_marginBottom="@dimen/grid_margin_right"
+              android:text="@string/text_placeholder"
+              android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintStart_toEndOf="@+id/transaction_type_icon"
+              app:layout_constraintTop_toBottomOf="@+id/transaction_title"/>
+
+    <TextView android:id="@+id/transaction_amount"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/grid_margin_top"
+              android:layout_marginEnd="@dimen/grid_margin_right"
+              android:text="@string/text_placeholder"
+              android:textAppearance="@style/TextAppearance.Hyperwallet.Positive"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView android:id="@+id/transaction_currency"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/item_text_top_bottom_margin"
+              android:layout_marginEnd="@dimen/grid_margin_right"
+              android:layout_marginBottom="@dimen/grid_margin_right"
+              android:text="@string/text_placeholder"
+              android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintTop_toBottomOf="@+id/transaction_title"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,11 +4,9 @@
     <item>
 
         <shape android:shape="oval">
-
-
-            <stroke android:color="#737373" android:width="3dp"/>
-            <size android:width="48dp" android:height="48dp"/>
-
+            <stroke android:color="@color/iconCircleWhite"
+                    android:width="@dimen/circle_white_density"/>
+            <size android:width="@dimen/circle_icon" android:height="@dimen/circle_icon"/>
         </shape>
     </item>
 

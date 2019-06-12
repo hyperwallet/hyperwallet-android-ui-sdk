@@ -23,5 +23,6 @@
 
     <!-- Icon decoration color -->
     <color name="fontIconBackground">#E5F7FA</color>
+    <color name="iconCircleWhite">#737373</color>
 </resources>
 

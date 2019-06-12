@@ -1,6 +1,21 @@
 <resources>
     <string name="app_name">receipt</string>
+    <string name="title_activity_receipt_list">Transactions</string>
+    <string name="empty_transaction_information">Seems like, you don\'t have any Transactions,
+        yet.
+    </string>
+    <string name="title_transfer_funds">Transfer Funds</string>
+    <string name="font_icon_placeholder">\uE900</string>
+    <string name="text_placeholder">Placeholder</string>
+
+    <!-- entry types -->
+    <string name="debit">\uE900</string>
+    <string name="credit">\uE902</string>
+    <string name="debit_sign">- %s</string>
+    <string name="credit_sign">+ %s</string>
+
     <!--Generic fee types-->
+    <string name="unknown_type">Unknown Transaction Type</string>
     <string name="annual_fee">Annual Fee</string>
     <string name="annual_fee_refund">Annual Fee Refund</string>
     <string name="customer_service_fee">Customer Service Fee</string>

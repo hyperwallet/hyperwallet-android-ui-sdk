@@ -16,6 +16,7 @@
  */
 package com.hyperwallet.android.ui.repository;
 
+import static com.hyperwallet.android.model.HyperwalletStatusTransition.StatusDefinition.ACTIVATED;
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TOKEN;
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TYPE;
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.BANK_ACCOUNT;
@@ -37,6 +38,7 @@ import com.hyperwallet.android.model.paging.HyperwalletPageList;
 import com.hyperwallet.android.model.transfermethod.HyperwalletBankAccount;
 import com.hyperwallet.android.model.transfermethod.HyperwalletBankCard;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
+import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethodQueryParam;
 import com.hyperwallet.android.model.transfermethod.PayPalAccount;
 
 public class TransferMethodRepositoryImpl implements TransferMethodRepository {
@@ -68,7 +70,11 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
 
     @Override
     public void loadTransferMethods(@NonNull final LoadTransferMethodListCallback callback) {
-        getHyperwallet().listTransferMethods(null,
+
+        HyperwalletTransferMethodQueryParam queryParam = new HyperwalletTransferMethodQueryParam.Builder()
+                .status(ACTIVATED)
+                .build();
+        getHyperwallet().listTransferMethods(queryParam,
                 new HyperwalletListener<HyperwalletPageList<HyperwalletTransferMethod>>() {
                     @Override
                     public void onSuccess(@Nullable HyperwalletPageList<HyperwalletTransferMethod> result) {
