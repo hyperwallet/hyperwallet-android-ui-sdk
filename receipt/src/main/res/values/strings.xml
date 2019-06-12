@@ -131,5 +131,4 @@
     <string name="transfer_to_wire">Wire Transfer</string>
     <string name="wire_transfer_fee">Wire Transfer Fee</string>
     <string name="wire_transfer_return">Wire Transfer Return</string>
-    <string name="title_activity_main">MainActivity</string>
 </resources>
