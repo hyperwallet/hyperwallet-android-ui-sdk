@@ -257,7 +257,7 @@ public class ListReceiptsTest {
         onView(withId(R.id.list_receipts)).perform(RecyclerViewActions.scrollToPosition(30));
         onView(withId(R.id.list_receipts)).check(new RecyclerViewCountAssertion(50));
 
-        // Verify that when the list reaches the end no additional data is loaded
+        // verify that when the list reaches the end no additional data is loaded
         onView(withId(R.id.list_receipts)).perform(RecyclerViewActions.scrollToPosition(40));
         onView(withId(R.id.list_receipts)).check(new RecyclerViewCountAssertion(50));
         onView(withId(R.id.list_receipts)).perform(RecyclerViewActions.scrollToPosition(50));
