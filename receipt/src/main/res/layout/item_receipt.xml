@@ -32,6 +32,7 @@
               android:ellipsize="end"
               android:maxLines="1"
               android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+              android:textStyle="bold"
               app:layout_constraintEnd_toStartOf="@+id/transaction_amount"
               app:layout_constraintStart_toEndOf="@+id/transaction_type_icon"
               app:layout_constraintTop_toTopOf="parent"/>
