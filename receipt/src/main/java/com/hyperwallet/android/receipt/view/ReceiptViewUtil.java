@@ -35,7 +35,7 @@ import java.util.Locale;
 final class ReceiptViewUtil {
 
     static final String DETAIL_DATE_FORMAT = "E MMM dd, YYYY - k:mm zzz";
-    static final String AMOUNT_FORMAT = "#,##0.00";
+    static final String AMOUNT_FORMAT = "###0.00";
     private static final String CAPTION_DATE_FORMAT = "MMMM dd, yyyy";
 
     void setTransactionView(@NonNull final Receipt receipt, @NonNull final View view) {

@@ -26,6 +26,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -33,6 +34,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.hyperwallet.android.common.util.DateUtils;
 import com.hyperwallet.android.model.receipt.Receipt;
+import com.hyperwallet.android.model.receipt.ReceiptDetails;
 import com.hyperwallet.android.receipt.R;
 import com.hyperwallet.android.receipt.viewmodel.ReceiptDetailViewModel;
 
@@ -102,35 +104,38 @@ public class ReceiptDetailFragment extends Fragment {
                 fromDateTimeString(receipt.getCreatedOn()), DETAIL_DATE_FORMAT));
 
         if (receipt.getDetails() != null) {
-            if (!TextUtils.isEmpty(receipt.getDetails().getCharityName())) {
-                view.findViewById(R.id.charity_layout).setVisibility(View.VISIBLE);
-                TextView charity = view.findViewById(R.id.charity_value);
-                charity.setText(receipt.getDetails().getCharityName());
+            ReceiptDetails receiptDetails = receipt.getDetails();
+            if (!TextUtils.isEmpty(receiptDetails.getCharityName())) {
+                setViewInformation(R.id.charity_layout, R.id.charity_value,
+                        view, receiptDetails.getCharityName());
             }
 
-            if (!TextUtils.isEmpty(receipt.getDetails().getCheckNumber())) {
-                view.findViewById(R.id.check_number_layout).setVisibility(View.VISIBLE);
-                TextView check = view.findViewById(R.id.check_number_value);
-                check.setText(receipt.getDetails().getCheckNumber());
+            if (!TextUtils.isEmpty(receiptDetails.getCheckNumber())) {
+                setViewInformation(R.id.check_number_layout, R.id.check_number_value,
+                        view, receiptDetails.getCheckNumber());
             }
 
-            if (!TextUtils.isEmpty(receipt.getDetails().getClientPaymentId())) {
-                view.findViewById(R.id.client_id_layout).setVisibility(View.VISIBLE);
-                TextView client = view.findViewById(R.id.client_id_value);
-                client.setText(receipt.getDetails().getClientPaymentId());
+            if (!TextUtils.isEmpty(receiptDetails.getClientPaymentId())) {
+                setViewInformation(R.id.client_id_layout, R.id.client_id_value,
+                        view, receiptDetails.getClientPaymentId());
             }
 
-            if (!TextUtils.isEmpty(receipt.getDetails().getNotes())) {
-                view.findViewById(R.id.notes_layout).setVisibility(View.VISIBLE);
-                TextView notes = view.findViewById(R.id.notes_value);
-                notes.setText(receipt.getDetails().getNotes());
+            if (!TextUtils.isEmpty(receiptDetails.getNotes())) {
+                setViewInformation(R.id.notes_layout, R.id.notes_value,
+                        view, receiptDetails.getNotes());
             }
 
-            if (!TextUtils.isEmpty(receipt.getDetails().getWebsite())) {
-                view.findViewById(R.id.website_layout).setVisibility(View.VISIBLE);
-                TextView website = view.findViewById(R.id.notes_value);
-                website.setText(receipt.getDetails().getWebsite());
+            if (!TextUtils.isEmpty(receiptDetails.getWebsite())) {
+                setViewInformation(R.id.website_layout, R.id.website_value,
+                        view, receiptDetails.getWebsite());
             }
         }
+    }
+
+    private void setViewInformation(@IdRes final int layout, @IdRes final int viewValue,
+            @NonNull final View view, @NonNull final String value) {
+        view.findViewById(layout).setVisibility(View.VISIBLE);
+        TextView textView = view.findViewById(viewValue);
+        textView.setText(value);
     }
 }
