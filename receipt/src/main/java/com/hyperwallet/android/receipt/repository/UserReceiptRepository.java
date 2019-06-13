@@ -26,7 +26,7 @@ import com.hyperwallet.android.model.receipt.Receipt;
 /**
  * Receipt Repository Contract
  */
-public interface ReceiptRepository {
+public interface UserReceiptRepository {
 
     /**
      * Load receipts information, consumer can subscribe to receipts data changes events

@@ -24,14 +24,14 @@ import androidx.paging.DataSource;
 /**
  * Data source factory that uses {@link DataSource.Factory} facility
  */
-public class ReceiptDataSourceFactory extends DataSource.Factory {
+public class UserReceiptDataSourceFactory extends DataSource.Factory {
 
-    private final MutableLiveData<ReceiptDataSource> mDataSourceMutableLiveData;
-    private final ReceiptDataSource mReceiptDataSource;
+    private final MutableLiveData<UserReceiptDataSource> mDataSourceMutableLiveData;
+    private final UserReceiptDataSource mReceiptDataSource;
 
-    ReceiptDataSourceFactory(@NonNull final String token) {
+    UserReceiptDataSourceFactory() {
         super();
-        mReceiptDataSource = getDataSource(token);
+        mReceiptDataSource = new UserReceiptDataSource();
         mDataSourceMutableLiveData = new MutableLiveData<>();
         mDataSourceMutableLiveData.setValue(mReceiptDataSource);
     }
@@ -39,7 +39,7 @@ public class ReceiptDataSourceFactory extends DataSource.Factory {
     /**
      * Returns observable members of receipt data source
      */
-    LiveData<ReceiptDataSource> getReceiptDataSource() {
+    LiveData<UserReceiptDataSource> getReceiptDataSource() {
         return mDataSourceMutableLiveData;
     }
 
@@ -51,17 +51,5 @@ public class ReceiptDataSourceFactory extends DataSource.Factory {
     public DataSource create() {
         return mReceiptDataSource;
     }
-
-
-    private ReceiptDataSource getDataSource(@NonNull final String token) {
-        if (token.startsWith("usr-")) {
-            return new UserReceiptDataSource();
-        } else if (token.startsWith("trm-")) {
-            return new PrepaidCardReceiptDataSource();
-        } else {
-            throw new IllegalArgumentException("Invalid token. It must start with -usr or -trm but it is "+ token);
-        }
-    }
-
 
 }

@@ -17,38 +17,39 @@
 package com.hyperwallet.android.receipt.repository;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.paging.DataSource;
 
-import java.util.HashMap;
-import java.util.Map;
+/**
+ * Data source factory that uses {@link DataSource.Factory} facility
+ */
+public class PrepaidCardReceiptDataSourceFactory extends DataSource.Factory {
 
-public class ReceiptRepositoryFactory {
+    private final MutableLiveData<PrepaidCardReceiptDataSource> mDataSourceMutableLiveData;
+    private final PrepaidCardReceiptDataSource mReceiptDataSource;
 
-    private static Map<String, ReceiptRepositoryFactory> sInstances = new HashMap<>();
-    private final ReceiptRepository mReceiptRepository;
-    private final String mToken;
-
-
-    private ReceiptRepositoryFactory(@NonNull final String token) {
-        mToken = token;
-        mReceiptRepository = new ReceiptRepositoryImpl(mToken);
+    PrepaidCardReceiptDataSourceFactory(@NonNull final String token) {
+        super();
+        mReceiptDataSource = new PrepaidCardReceiptDataSource(token);
+        mDataSourceMutableLiveData = new MutableLiveData<>();
+        mDataSourceMutableLiveData.setValue(mReceiptDataSource);
     }
 
-
-    public static synchronized ReceiptRepositoryFactory getInstance(@NonNull final String token) {
-        if (!sInstances.containsKey(token)) {
-            sInstances.put(token, new ReceiptRepositoryFactory(token));
-        }
-        return sInstances.get(token);
+    /**
+     * Returns observable members of receipt data source
+     */
+    LiveData<PrepaidCardReceiptDataSource> getReceiptDataSource() {
+        return mDataSourceMutableLiveData;
     }
 
-
-    public static void clearInstance() {
-        sInstances.clear();
-    }
-
-
-    public ReceiptRepository getReceiptRepository() {
-        return mReceiptRepository;
+    /**
+     * @see {@link DataSource.Factory#create()}
+     */
+    @NonNull
+    @Override
+    public DataSource create() {
+        return mReceiptDataSource;
     }
 
 }

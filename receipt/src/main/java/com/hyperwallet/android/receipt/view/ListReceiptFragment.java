@@ -40,7 +40,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.hyperwallet.android.common.util.DateUtils;
 import com.hyperwallet.android.model.receipt.Receipt;
 import com.hyperwallet.android.receipt.R;
-import com.hyperwallet.android.receipt.viewmodel.ListReceiptViewModel;
+import com.hyperwallet.android.receipt.viewmodel.ListUserReceiptViewModel;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -50,29 +50,28 @@ public class ListReceiptFragment extends Fragment {
 
     private ListReceiptAdapter mListReceiptAdapter;
     private RecyclerView mListReceiptsView;
-    private ListReceiptViewModel mListReceiptViewModel;
+    private ReceiptViewModel mListReceiptViewModel;
     private View mProgressBar;
-    private String mToken;
+
 
     /**
      * Please don't use this constructor this is reserved for Android Core Framework
      *
-     * @see {@link ListReceiptFragment#newInstance(String)} instead.
+     * @see {@link ListReceiptFragment#newInstance()} instead.
      */
     public ListReceiptFragment() {
         setRetainInstance(true);
     }
 
-    static ListReceiptFragment newInstance(@NonNull final String token) {
+    static ListReceiptFragment newInstance() {
         ListReceiptFragment fragment = new ListReceiptFragment();
-        fragment.mToken = token;
         return fragment;
     }
 
     @Override
     public void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mListReceiptViewModel = ViewModelProviders.of(requireActivity()).get(mToken, ListReceiptViewModel.class);
+        mListReceiptViewModel = ViewModelProviders.of(requireActivity()).get(ReceiptViewModel.class);
     }
 
     @Override

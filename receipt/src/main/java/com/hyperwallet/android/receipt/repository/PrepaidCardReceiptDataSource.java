@@ -20,10 +20,15 @@ import android.os.Handler;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.paging.PageKeyedDataSource;
 
+import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.common.viewmodel.Event;
 import com.hyperwallet.android.exception.HyperwalletException;
 import com.hyperwallet.android.listener.HyperwalletListener;
+import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.QueryParam;
 import com.hyperwallet.android.model.paging.HyperwalletPageList;
 import com.hyperwallet.android.model.receipt.Receipt;
@@ -32,13 +37,22 @@ import com.hyperwallet.android.util.DateUtil;
 import java.util.Calendar;
 import java.util.Date;
 
-public class PrepaidCardReceiptDataSource extends ReceiptDataSource<Date, Receipt> {
+public class PrepaidCardReceiptDataSource extends PageKeyedDataSource<Date, Receipt> {
 
     private static final int YEAR_BEFORE_NOW = -1;
     private final Calendar mCalendarYearBeforeNow;
+    private final MutableLiveData<Event<HyperwalletErrors>> mErrors = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> mIsFetchingData = new MutableLiveData<>();
+    private PageKeyedDataSource.LoadInitialCallback<Date, Receipt> mLoadInitialCallback;
+    private PageKeyedDataSource.LoadInitialParams<Date> mLoadInitialParams;
+    private PageKeyedDataSource.LoadCallback<Date, Receipt> mLoadAfterCallback;
+    private PageKeyedDataSource.LoadParams<Date> mLoadAfterParams;
 
-    PrepaidCardReceiptDataSource() {
+    private String mPrepaidCardToken;
+
+    PrepaidCardReceiptDataSource(@NonNull final String prepaidCardToken) {
         super();
+        mPrepaidCardToken = prepaidCardToken;
         mCalendarYearBeforeNow = Calendar.getInstance();
         mCalendarYearBeforeNow.add(Calendar.YEAR, YEAR_BEFORE_NOW);
     }
@@ -53,7 +67,7 @@ public class PrepaidCardReceiptDataSource extends ReceiptDataSource<Date, Receip
         QueryParam queryParam = new QueryParam.Builder()
                 .createdAfter(mCalendarYearBeforeNow.getTime()).build();
 
-        getHyperwallet().listPrepaidCardReceipts("", queryParam,
+        getHyperwallet().listPrepaidCardReceipts(mPrepaidCardToken, queryParam,
                 new HyperwalletListener<HyperwalletPageList<Receipt>>() {
                     @Override
                     public void onSuccess(@Nullable HyperwalletPageList<Receipt> result) {
@@ -137,5 +151,26 @@ public class PrepaidCardReceiptDataSource extends ReceiptDataSource<Date, Receip
             return DateUtil.fromDateTimeString(result.getDataList().get(result.getDataList().size() -1).getCreatedOn());
         }
         return new Date();
+    }
+
+
+    public LiveData<Boolean> isFetchingData() {
+        return mIsFetchingData;
+    }
+
+    public LiveData<Event<HyperwalletErrors>> getErrors() {
+        return mErrors;
+    }
+
+    void retry() {
+        if (mLoadInitialCallback != null) {
+            loadInitial(mLoadInitialParams, mLoadInitialCallback);
+        } else if (mLoadAfterCallback != null) {
+            loadAfter(mLoadAfterParams, mLoadAfterCallback);
+        }
+    }
+
+    Hyperwallet getHyperwallet() {
+        return Hyperwallet.getDefault();
     }
 }

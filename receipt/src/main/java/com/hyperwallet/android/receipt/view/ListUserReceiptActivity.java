@@ -35,17 +35,14 @@ import com.hyperwallet.android.common.view.error.OnNetworkErrorCallback;
 import com.hyperwallet.android.common.viewmodel.Event;
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.receipt.R;
-import com.hyperwallet.android.receipt.repository.ReceiptRepositoryFactory;
-import com.hyperwallet.android.receipt.viewmodel.ListReceiptViewModel;
+import com.hyperwallet.android.receipt.repository.UserReceiptRepositoryImpl;
+import com.hyperwallet.android.receipt.viewmodel.ListUserReceiptViewModel;
 
 import java.util.List;
 
-public class ListReceiptActivity extends AppCompatActivity implements OnNetworkErrorCallback {
+public class ListUserReceiptActivity extends AppCompatActivity implements OnNetworkErrorCallback {
 
-    private ListReceiptViewModel mListReceiptViewModel;
-
-    //todo save state properly
-    private String mToken;
+    private ReceiptViewModel mListReceiptViewModel;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -64,11 +61,10 @@ public class ListReceiptActivity extends AppCompatActivity implements OnNetworkE
             }
         });
 
-        mToken = getIntent().getStringExtra("TOKEN");
-        ReceiptRepositoryFactory factory = ReceiptRepositoryFactory.getInstance(mToken);
-        mListReceiptViewModel = ViewModelProviders.of(this, new ListReceiptViewModel
-                .ListReceiptViewModelFactory(factory.getReceiptRepository()))
-                .get(mToken, ListReceiptViewModel.class);
+
+        mListReceiptViewModel = ViewModelProviders.of(this, new ListUserReceiptViewModel
+                .ListReceiptViewModelFactory(new UserReceiptRepositoryImpl()))
+                .get(ReceiptViewModel.class);
 
         mListReceiptViewModel.getReceiptErrors().observe(this, new Observer<Event<List<HyperwalletError>>>() {
             @Override
@@ -80,7 +76,7 @@ public class ListReceiptActivity extends AppCompatActivity implements OnNetworkE
         });
 
         if (savedInstanceState == null) {
-            initFragment(ListReceiptFragment.newInstance(mToken));
+            initFragment(ListReceiptFragment.newInstance());
         }
     }
 
@@ -98,7 +94,6 @@ public class ListReceiptActivity extends AppCompatActivity implements OnNetworkE
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ReceiptRepositoryFactory.clearInstance();
     }
 
     private void initFragment(@NonNull final Fragment fragment) {
@@ -115,7 +110,7 @@ public class ListReceiptActivity extends AppCompatActivity implements OnNetworkE
                 fragmentManager.findFragmentById(R.id.list_receipt_fragment);
 
         if (fragment == null) {
-            fragment = ListReceiptFragment.newInstance(mToken);
+            fragment = ListReceiptFragment.newInstance();
         }
         fragment.retry();
     }

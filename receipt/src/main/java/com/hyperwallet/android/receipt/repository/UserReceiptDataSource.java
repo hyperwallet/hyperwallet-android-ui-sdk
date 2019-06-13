@@ -20,20 +20,34 @@ import android.os.Handler;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.paging.PageKeyedDataSource;
 
+import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.common.viewmodel.Event;
 import com.hyperwallet.android.exception.HyperwalletException;
 import com.hyperwallet.android.listener.HyperwalletListener;
+import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.paging.HyperwalletPageList;
 import com.hyperwallet.android.model.receipt.Receipt;
 import com.hyperwallet.android.model.receipt.ReceiptQueryParam;
 
 import java.util.Calendar;
 
-public class UserReceiptDataSource extends ReceiptDataSource<Integer, Receipt> {
+public class UserReceiptDataSource extends PageKeyedDataSource<Integer, Receipt> {
 
     private static final int YEAR_BEFORE_NOW = -1;
     private final Calendar mCalendarYearBeforeNow;
+
+    private final MutableLiveData<Event<HyperwalletErrors>> mErrors = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> mIsFetchingData = new MutableLiveData<>();
+    private PageKeyedDataSource.LoadInitialCallback<Integer, Receipt> mLoadInitialCallback;
+    private PageKeyedDataSource.LoadInitialParams<Integer> mLoadInitialParams;
+    private PageKeyedDataSource.LoadCallback<Integer, Receipt> mLoadAfterCallback;
+    private PageKeyedDataSource.LoadParams<Integer> mLoadAfterParams;
+
+
 
     UserReceiptDataSource() {
         super();
@@ -131,6 +145,26 @@ public class UserReceiptDataSource extends ReceiptDataSource<Integer, Receipt> {
                         return null;
                     }
                 });
+    }
+
+    public LiveData<Boolean> isFetchingData() {
+        return mIsFetchingData;
+    }
+
+    public LiveData<Event<HyperwalletErrors>> getErrors() {
+        return mErrors;
+    }
+
+    void retry() {
+        if (mLoadInitialCallback != null) {
+            loadInitial(mLoadInitialParams, mLoadInitialCallback);
+        } else if (mLoadAfterCallback != null) {
+            loadAfter(mLoadAfterParams, mLoadAfterCallback);
+        }
+    }
+
+    Hyperwallet getHyperwallet() {
+        return Hyperwallet.getDefault();
     }
 
 }

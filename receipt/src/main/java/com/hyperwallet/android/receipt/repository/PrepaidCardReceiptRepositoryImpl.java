@@ -18,6 +18,7 @@ package com.hyperwallet.android.receipt.repository;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
@@ -25,24 +26,26 @@ import com.hyperwallet.android.common.viewmodel.Event;
 import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.receipt.Receipt;
 
-public class ReceiptRepositoryImpl implements ReceiptRepository {
+public class PrepaidCardReceiptRepositoryImpl implements PrepaidCardReceiptRepository {
 
     private static final int PAGE_SIZE = 10;
     private static final int INITIAL_LOAD_SIZE = 20;
 
-    private final ReceiptDataSourceFactory mDataSourceFactory;
-    private final LiveData<ReceiptDataSource> mReceiptDataSourceLiveData;
+    private LiveData<PrepaidCardReceiptDataSource> mReceiptDataSourceLiveData;
     private LiveData<Event<HyperwalletErrors>> mErrorsLiveData;
     private LiveData<Boolean> mIsFetchingData;
+    private PrepaidCardReceiptDataSourceFactory mDataSourceFactory;
     private LiveData<PagedList<Receipt>> mReceiptsLiveData;
 
-    ReceiptRepositoryImpl(@NonNull final String token) {
-        mDataSourceFactory = new ReceiptDataSourceFactory(token);
+
+    public PrepaidCardReceiptRepositoryImpl(@NonNull final String token) {
+        mDataSourceFactory = new PrepaidCardReceiptDataSourceFactory(token);
         mReceiptDataSourceLiveData = mDataSourceFactory.getReceiptDataSource();
     }
 
+
     @Override
-    public LiveData<PagedList<Receipt>> loadReceipts() {
+    public LiveData<PagedList<Receipt>> getPrepaidCardReceipts() {
         if (mReceiptsLiveData == null) {
             PagedList.Config config = new PagedList.Config.Builder()
                     .setPageSize(PAGE_SIZE)
@@ -55,8 +58,6 @@ public class ReceiptRepositoryImpl implements ReceiptRepository {
     }
 
 
-
-
     @Override
     public LiveData<Boolean> isLoading() {
         if (mIsFetchingData == null) {
@@ -64,6 +65,7 @@ public class ReceiptRepositoryImpl implements ReceiptRepository {
         }
         return mIsFetchingData;
     }
+
 
     @Override
     public LiveData<Event<HyperwalletErrors>> getErrors() {
@@ -73,8 +75,9 @@ public class ReceiptRepositoryImpl implements ReceiptRepository {
         return mErrorsLiveData;
     }
 
+
     @Override
-    public void retryLoadReceipt() {
+    public void retryLoadPrepaidCardReceipt() {
         if (mReceiptDataSourceLiveData.getValue() != null) {
             mReceiptDataSourceLiveData.getValue().retry();
         }

@@ -31,7 +31,8 @@ import androidx.annotation.NonNull;
 
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.HyperwalletAuthenticationTokenProvider;
-import com.hyperwallet.android.receipt.view.ListReceiptActivity;
+import com.hyperwallet.android.receipt.view.ListPrepaidCardReceiptActivity;
+import com.hyperwallet.android.receipt.view.ListUserReceiptActivity;
 import com.hyperwallet.android.ui.transfermethod.AddTransferMethodActivity;
 import com.hyperwallet.android.ui.transfermethod.ListTransferMethodActivity;
 import com.hyperwallet.android.ui.transfermethod.SelectTransferMethodActivity;
@@ -81,13 +82,23 @@ public final class HyperwalletUi {
 
     /**
      * @param context A Context of the application consuming this Intent.
-     * @return an Intent with the data necessary to launch the {@link ListReceiptActivity}
+     * @return an Intent with the data necessary to launch the {@link ListUserReceiptActivity}
      */
-    public Intent getIntentListReceiptActivity(@NonNull final Context context, @NonNull final String token) {
-        Intent intent = new Intent(context, ListReceiptActivity.class);
+    public Intent getIntentListPrepaidCardReceiptActivity(@NonNull final Context context, @NonNull final String token) {
+        Intent intent = new Intent(context, ListPrepaidCardReceiptActivity.class);
         intent.putExtra("TOKEN", token);
         return intent;
     }
+
+
+    /**
+     * @param context A Context of the application consuming this Intent.
+     * @return an Intent with the data necessary to launch the {@link ListUserReceiptActivity}
+     */
+    public Intent getIntentListUserReceiptActivity(@NonNull final Context context) {
+        return new Intent(context, ListUserReceiptActivity.class);
+    }
+
 
     /**
      * @param context            A Context of the application consuming this Intent.

@@ -28,22 +28,23 @@ import com.hyperwallet.android.common.viewmodel.Event;
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.receipt.Receipt;
-import com.hyperwallet.android.receipt.repository.ReceiptRepository;
-import com.hyperwallet.android.receipt.repository.ReceiptRepositoryFactory;
+import com.hyperwallet.android.receipt.repository.PrepaidCardReceiptRepository;
+import com.hyperwallet.android.receipt.repository.PrepaidCardReceiptRepositoryImpl;
+import com.hyperwallet.android.receipt.repository.UserReceiptRepository;
+import com.hyperwallet.android.receipt.view.ReceiptViewModel;
 
 import java.util.List;
 
-public class ListReceiptViewModel extends ViewModel {
+public class ListPrepaidCardReceiptViewModel extends ReceiptViewModel {
 
     private MutableLiveData<Event<List<HyperwalletError>>> mErrorEvent = new MutableLiveData<>();
     private Observer<Event<HyperwalletErrors>> mErrorEventObserver;
-    private ReceiptRepository mReceiptRepository;
+    private PrepaidCardReceiptRepository mReceiptRepository;
 
 
-    private ListReceiptViewModel(@NonNull final ReceiptRepository receiptRepository) {
+    private ListPrepaidCardReceiptViewModel(@NonNull final PrepaidCardReceiptRepository receiptRepository) {
         mReceiptRepository = receiptRepository;
         // load initial receipts
-        mReceiptRepository.loadReceipts();
 
         // register one time error event observer
         mErrorEventObserver = new Observer<Event<HyperwalletErrors>>() {
@@ -57,20 +58,25 @@ public class ListReceiptViewModel extends ViewModel {
         mReceiptRepository.getErrors().observeForever(mErrorEventObserver);
     }
 
+    @Override
     public LiveData<Boolean> isLoadingData() {
         return mReceiptRepository.isLoading();
     }
 
+    @Override
     public LiveData<Event<List<HyperwalletError>>> getReceiptErrors() {
         return mErrorEvent;
     }
 
+    @Override
     public LiveData<PagedList<Receipt>> getReceiptList() {
-        return mReceiptRepository.loadReceipts();
+        return mReceiptRepository.getPrepaidCardReceipts();
     }
 
+
+    @Override
     public void retryLoadReceipts() {
-        mReceiptRepository.retryLoadReceipt();
+        mReceiptRepository.retryLoadPrepaidCardReceipt();
     }
 
     @Override
@@ -82,19 +88,19 @@ public class ListReceiptViewModel extends ViewModel {
 
     public static class ListReceiptViewModelFactory implements ViewModelProvider.Factory {
 
-        private final ReceiptRepository mReceiptRepository;
+        private final PrepaidCardReceiptRepository mReceiptRepository;
 
-        public ListReceiptViewModelFactory(@NonNull final ReceiptRepository receiptRepository) {
+        public ListReceiptViewModelFactory(@NonNull final PrepaidCardReceiptRepository receiptRepository) {
             mReceiptRepository = receiptRepository;
         }
 
         @NonNull
         @Override
         public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-            if (modelClass.isAssignableFrom(ListReceiptViewModel.class)) {
-                return (T) new ListReceiptViewModel(mReceiptRepository);
+            if (modelClass.isAssignableFrom(ListPrepaidCardReceiptViewModel.class)) {
+                return (T) new ListPrepaidCardReceiptViewModel(mReceiptRepository);
             }
-            throw new IllegalArgumentException("Expecting ViewModel class: " + ListReceiptViewModel.class.getName());
+            throw new IllegalArgumentException("Expecting ViewModel class: " + ListPrepaidCardReceiptViewModel.class.getName());
         }
     }
 }
