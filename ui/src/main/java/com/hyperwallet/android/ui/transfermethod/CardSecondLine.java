@@ -16,22 +16,38 @@
  */
 package com.hyperwallet.android.ui.transfermethod;
 
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.EMAIL;
+import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.CARD_NUMBER;
 
 import android.content.Context;
 
 import androidx.annotation.NonNull;
 
+import com.hyperwallet.android.hyperwallet_ui.R;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 
-
-public class PayPalAccountTransferMethodSecondLine implements TransferMethodSecondLineStrategy {
+/**
+ * Retrieves Card number from the {@link HyperwalletTransferMethod} field
+ * and forms an identifier String of the last 4 digits.
+ */
+public class CardSecondLine implements TransferMethodSecondLine {
+    private static final int LAST_FOUR_DIGIT = 4;
 
     @NonNull
     @Override
-    public String getText(@NonNull Context context,
-            @NonNull HyperwalletTransferMethod transferMethod) {
-        String identificationText = transferMethod.getField(EMAIL);
-        return identificationText != null ? identificationText : "";
+    public String getText(@NonNull final Context context,
+            @NonNull final HyperwalletTransferMethod transferMethod) {
+
+        return context.getString(R.string.transfer_method_list_item_description,
+                getCardIdentifier(transferMethod));
     }
+
+    private String getCardIdentifier(@NonNull final HyperwalletTransferMethod transferMethod) {
+        final String transferIdentification = transferMethod.getField(CARD_NUMBER);
+
+        return (transferIdentification.length() > LAST_FOUR_DIGIT
+                ? transferIdentification.substring(transferIdentification.length() - LAST_FOUR_DIGIT)
+                : transferIdentification);
+    }
+
+
 }

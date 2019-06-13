@@ -16,6 +16,18 @@
  */
 package com.hyperwallet.android.ui.transfermethod;
 
+import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
+
+/**
+ * Factory makes instance of a {@link TransferMethodSecondLine} by a corresponding
+ * {@link HyperwalletTransferMethod.TransferMethodType}
+ */
 interface SecondLinePresenter {
-    TransferMethodSecondLineStrategy obtainSecondLineStrategy(String type);
+    /**
+     * Get {@link TransferMethodSecondLine} by a {@link HyperwalletTransferMethod.TransferMethodType}
+     *
+     * @param type @{@link HyperwalletTransferMethod.TransferMethodType}
+     * @return Implementation of the {@link TransferMethodSecondLine}
+     */
+    TransferMethodSecondLine getSecondLinePresenter(@HyperwalletTransferMethod.TransferMethodType final String type);
 }

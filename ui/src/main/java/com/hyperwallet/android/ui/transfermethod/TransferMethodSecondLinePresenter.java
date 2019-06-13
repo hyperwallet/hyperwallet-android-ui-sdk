@@ -24,41 +24,56 @@ import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMe
 
 import androidx.annotation.NonNull;
 
+import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
+
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Factory instantiates instance of a {@link TransferMethodSecondLine} by a corresponding
+ * {@link HyperwalletTransferMethod.TransferMethodType}
+ */
 final class TransferMethodSecondLinePresenter implements SecondLinePresenter {
-    private Map<Class, TransferMethodSecondLineStrategy> mSecondLineStrategies = new HashMap<>(2);
+    private Map<Class, TransferMethodSecondLine> mSecondLineStrategies = new HashMap<>(3);
 
     @Override
     @NonNull
-    public TransferMethodSecondLineStrategy obtainSecondLineStrategy(String type) {
+    public TransferMethodSecondLine getSecondLinePresenter(
+            @HyperwalletTransferMethod.TransferMethodType final String type) {
         if (type == null) {
-            return TransferMethodSecondLineStrategy.DEFAULT;
+            return TransferMethodSecondLine.DEFAULT;
         }
 
         switch (type) {
             case BANK_CARD:
             case PREPAID_CARD:
+                if (!mSecondLineStrategies.containsKey(CardSecondLine.class)) {
+                    mSecondLineStrategies.put(
+                            CardSecondLine.class, new CardSecondLine());
+                }
+
+                //noinspection ConstantConditions
+                return mSecondLineStrategies.get(CardSecondLine.class);
             case BANK_ACCOUNT:
             case WIRE_ACCOUNT:
-                if (!mSecondLineStrategies.containsKey(TransferMethodSecondLine.class)) {
-                    mSecondLineStrategies.put(TransferMethodSecondLine.class, new TransferMethodSecondLine());
+                if (!mSecondLineStrategies.containsKey(AccountSecondLine.class)) {
+                    mSecondLineStrategies.put(
+                            AccountSecondLine.class, new AccountSecondLine());
                 }
 
                 //noinspection ConstantConditions
-                return mSecondLineStrategies.get(TransferMethodSecondLine.class);
+                return mSecondLineStrategies.get(AccountSecondLine.class);
             case PAYPAL_ACCOUNT:
-                if (!mSecondLineStrategies.containsKey(PayPalAccountTransferMethodSecondLine.class)) {
-                    mSecondLineStrategies.put(PayPalAccountTransferMethodSecondLine.class,
-                            new PayPalAccountTransferMethodSecondLine());
+                if (!mSecondLineStrategies.containsKey(PayPalAccountSecondLine.class)) {
+                    mSecondLineStrategies.put(PayPalAccountSecondLine.class,
+                            new PayPalAccountSecondLine());
                 }
 
                 //noinspection ConstantConditions
-                return mSecondLineStrategies.get(PayPalAccountTransferMethodSecondLine.class);
+                return mSecondLineStrategies.get(PayPalAccountSecondLine.class);
 
             default:
-                return TransferMethodSecondLineStrategy.DEFAULT;
+                return TransferMethodSecondLine.DEFAULT;
         }
     }
 }

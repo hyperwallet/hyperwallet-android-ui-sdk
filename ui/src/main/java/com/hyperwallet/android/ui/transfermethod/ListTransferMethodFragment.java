@@ -356,7 +356,7 @@ public class ListTransferMethodFragment extends Fragment implements ListTransfer
 
             void bind(@NonNull final HyperwalletTransferMethod transferMethod) {
                 String type = transferMethod.getField(TYPE);
-                TransferMethodSecondLineStrategy identificationStrategy = mSecondLinePresenter.obtainSecondLineStrategy(
+                TransferMethodSecondLine identificationStrategy = mSecondLinePresenter.getSecondLinePresenter(
                         type);
 
                 mTitle.setText(

@@ -16,6 +16,8 @@
  */
 package com.hyperwallet.android.ui.transfermethod;
 
+import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.EMAIL;
+
 import android.content.Context;
 
 import androidx.annotation.NonNull;
@@ -23,23 +25,16 @@ import androidx.annotation.NonNull;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 
 /**
- * Represents abstract strategy for the second line of TransferMethod list item.
+ * Retrieves PayPal account email from the {@link HyperwalletTransferMethod} and forms an identifier String.
  */
-public interface TransferMethodSecondLine {
-
-    String EMPTY_STRING = "";
-    TransferMethodSecondLine DEFAULT = new TransferMethodSecondLine() {
-
-        @NonNull
-        @Override
-        public String getText(@NonNull final Context context,
-                @NonNull final HyperwalletTransferMethod transferMethod) {
-
-            return EMPTY_STRING;
-        }
-    };
+public class PayPalAccountSecondLine implements TransferMethodSecondLine {
 
     @NonNull
-    String getText(@NonNull final Context context,
-            @NonNull final HyperwalletTransferMethod transferMethod);
+    @Override
+    public String getText(@NonNull final Context context,
+            @NonNull final HyperwalletTransferMethod transferMethod) {
+
+        final String identificationText = transferMethod.getField(EMAIL);
+        return identificationText != null ? identificationText : EMPTY_STRING;
+    }
 }

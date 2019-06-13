@@ -16,29 +16,36 @@
  */
 package com.hyperwallet.android.ui.transfermethod;
 
+import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.BANK_ACCOUNT_ID;
+
 import android.content.Context;
 
 import androidx.annotation.NonNull;
 
+import com.hyperwallet.android.hyperwallet_ui.R;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 
 /**
- * Represents abstract strategy for the second line of TransferMethod list item.
+ * Retrieves Bank account Id from the {@link HyperwalletTransferMethod} field
+ * and forms an identifier String of the last 4 digits.
  */
-public interface TransferMethodSecondLineStrategy {
-
-    TransferMethodSecondLineStrategy DEFAULT = new TransferMethodSecondLineStrategy() {
-
-        @NonNull
-        @Override
-        public String getText(@NonNull Context context,
-                @NonNull HyperwalletTransferMethod transferMethod) {
-            return "";
-        }
-    };
-
+public class AccountSecondLine implements TransferMethodSecondLine {
+    private static final int LAST_FOUR_DIGIT = 4;
 
     @NonNull
-    String getText(@NonNull final Context context,
-            @NonNull final HyperwalletTransferMethod transferMethod);
+    @Override
+    public String getText(@NonNull final Context context,
+            @NonNull final HyperwalletTransferMethod transferMethod) {
+
+        return context.getString(R.string.transfer_method_list_item_description,
+                getAccountIdentifier(transferMethod));
+    }
+
+    private String getAccountIdentifier(@NonNull final HyperwalletTransferMethod transferMethod) {
+        final String transferIdentification = transferMethod.getField(BANK_ACCOUNT_ID);
+
+        return (transferIdentification.length() > LAST_FOUR_DIGIT
+                ? transferIdentification.substring(transferIdentification.length() - LAST_FOUR_DIGIT)
+                : transferIdentification);
+    }
 }

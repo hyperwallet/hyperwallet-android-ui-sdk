@@ -42,75 +42,76 @@ public class TransferMethodSecondLinePresenterTest {
     }
 
     @Test
-    public void testObtainSecondLineStrategy_returnsCachedSecondLineStrategy() {
-        TransferMethodSecondLineStrategy actualStrategy = mPresenter.obtainSecondLineStrategy(BANK_CARD);
-        TransferMethodSecondLineStrategy candidateStrategy = mPresenter.obtainSecondLineStrategy(BANK_ACCOUNT);
+    public void testGetSecondLine_returnsCachedSecondLine() {
+        TransferMethodSecondLine actualStrategy = mPresenter.getSecondLinePresenter(
+                HyperwalletTransferMethod.TransferMethodTypes.WIRE_ACCOUNT);
+        TransferMethodSecondLine candidateStrategy = mPresenter.getSecondLinePresenter(BANK_ACCOUNT);
         assertThat(actualStrategy, is(candidateStrategy));
     }
 
     @Test
-    public void testObtainSecondLineStrategy_returnsSecondLineStrategy() {
-        TransferMethodSecondLineStrategy strategy1 = mPresenter.obtainSecondLineStrategy(BANK_CARD);
-        TransferMethodSecondLineStrategy strategy2 = mPresenter.obtainSecondLineStrategy(PAYPAL_ACCOUNT);
+    public void testGetSecondLine_returnsSecondLine() {
+        TransferMethodSecondLine strategy1 = mPresenter.getSecondLinePresenter(BANK_CARD);
+        TransferMethodSecondLine strategy2 = mPresenter.getSecondLinePresenter(PAYPAL_ACCOUNT);
         assertThat(strategy1, not(strategy2));
     }
 
     @Test
-    public void testObtainSecondLineStrategy_returnsEndingOn() {
-        TransferMethodSecondLineStrategy strategy = mPresenter.obtainSecondLineStrategy(BANK_CARD);
+    public void testGetSecondLine_returnsEndingOn() {
+        TransferMethodSecondLine strategy = mPresenter.getSecondLinePresenter(BANK_CARD);
         assertThat(strategy, is(strategy));
 
     }
 
     @Test
-    public void testObtainSecondLineStrategy_returnsPayPalSecondLine() throws JSONException {
+    public void testGetSecondLine_returnsPayPalSecondLine() throws JSONException {
         Context context = mock(Context.class);
         String json = mExternalResourceManager.getResourceContent("paypal_response.json");
         JSONObject htmJsonObject = new JSONObject(json);
         HyperwalletTransferMethod transferMethod = new HyperwalletTransferMethod(htmJsonObject);
 
-        TransferMethodSecondLineStrategy strategy = mPresenter.obtainSecondLineStrategy(PAYPAL_ACCOUNT);
+        TransferMethodSecondLine strategy = mPresenter.getSecondLinePresenter(PAYPAL_ACCOUNT);
         String actual = strategy.getText(context, transferMethod);
-        assertThat(strategy, instanceOf(PayPalAccountTransferMethodSecondLine.class));
+        assertThat(strategy, instanceOf(PayPalAccountSecondLine.class));
         assertThat(actual, is("sunshine.carreiro@hyperwallet.com"));
     }
 
     @Test
-    public void testObtainSecondLineStrategy_returnsBankCardSecondLine() throws JSONException {
+    public void testGetSecondLine_returnsCardSecondLine() throws JSONException {
         Context context = mock(Context.class);
         String json = mExternalResourceManager.getResourceContent("bank_card_response.json");
         JSONObject htmJsonObject = new JSONObject(json);
         HyperwalletTransferMethod transferMethod = new HyperwalletTransferMethod(htmJsonObject);
-        TransferMethodSecondLineStrategy strategy = mPresenter.obtainSecondLineStrategy(BANK_CARD);
+        TransferMethodSecondLine strategy = mPresenter.getSecondLinePresenter(BANK_CARD);
         strategy.getText(context, transferMethod);
 
-        assertThat(strategy, instanceOf(TransferMethodSecondLine.class));
+        assertThat(strategy, instanceOf(CardSecondLine.class));
         verify(context).getString(eq(R.string.transfer_method_list_item_description), eq("0006"));
     }
 
     @Test
-    public void testObtainSecondLineStrategy_returnsBankAccountSecondLine() throws JSONException {
+    public void testGetSecondLine_returnsAccountSecondLine() throws JSONException {
         Context context = mock(Context.class);
         String json = mExternalResourceManager.getResourceContent("bank_account_response.json");
         JSONObject htmJsonObject = new JSONObject(json);
         HyperwalletTransferMethod transferMethod = new HyperwalletTransferMethod(htmJsonObject);
-        TransferMethodSecondLineStrategy strategy = mPresenter.obtainSecondLineStrategy(BANK_ACCOUNT);
+        TransferMethodSecondLine strategy = mPresenter.getSecondLinePresenter(BANK_ACCOUNT);
         strategy.getText(context, transferMethod);
 
-        assertThat(strategy, instanceOf(TransferMethodSecondLine.class));
+        assertThat(strategy, instanceOf(AccountSecondLine.class));
         verify(context).getString(eq(R.string.transfer_method_list_item_description), eq("0254"));
     }
 
     @Test
-    public void testObtainSecondLineStrategy_returnsPaperCheckSecondLine() throws JSONException {
+    public void testGetSecondLine_returnsPaperCheckSecondLine() throws JSONException {
         Context context = mock(Context.class);
         String json = mExternalResourceManager.getResourceContent("paper_check_response.json");
         JSONObject htmJsonObject = new JSONObject(json);
         HyperwalletTransferMethod transferMethod = new HyperwalletTransferMethod(htmJsonObject);
-        TransferMethodSecondLineStrategy strategy = mPresenter.obtainSecondLineStrategy(PAPER_CHECK);
+        TransferMethodSecondLine strategy = mPresenter.getSecondLinePresenter(PAPER_CHECK);
         String actual = strategy.getText(context, transferMethod);
 
-        assertThat(strategy, instanceOf(TransferMethodSecondLineStrategy.class));
+        assertThat(strategy, instanceOf(TransferMethodSecondLine.class));
         assertThat(actual, is(""));
         verify(context, never()).getString(eq(R.string.transfer_method_list_item_description), anyString());
     }
