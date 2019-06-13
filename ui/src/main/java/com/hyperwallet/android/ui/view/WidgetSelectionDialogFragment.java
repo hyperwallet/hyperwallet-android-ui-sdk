@@ -50,6 +50,7 @@ import com.hyperwallet.android.hyperwallet_ui.R;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.TreeMap;
 
 public class WidgetSelectionDialogFragment extends DialogFragment implements ToolbarEventListener {
@@ -105,7 +106,8 @@ public class WidgetSelectionDialogFragment extends DialogFragment implements Too
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
         if (savedInstanceState != null) {
-            mNameValueMap = (TreeMap) savedInstanceState.getSerializable(ARGUMENT_NAME_VALUE_MAP);
+            mNameValueMap = new TreeMap<>(
+                    (Map<String, String>) savedInstanceState.getSerializable(ARGUMENT_NAME_VALUE_MAP));
             mSelectedName = savedInstanceState.getString(ARGUMENT_SELECTED_NAME);
             mSelectionLabel = savedInstanceState.getString(ARGUMENT_SELECTION_LABEL);
             mFieldName = savedInstanceState.getString(ARGUMENT_SELECTION_FIELD_NAME);
@@ -154,7 +156,8 @@ public class WidgetSelectionDialogFragment extends DialogFragment implements Too
             @Nullable Bundle savedInstanceState) {
 
         if (savedInstanceState != null) { // framework recreating previously destroyed instance
-            mNameValueMap = (TreeMap) savedInstanceState.getSerializable(ARGUMENT_NAME_VALUE_MAP);
+            mNameValueMap = new TreeMap<>(
+                    (Map<String, String>) savedInstanceState.getSerializable(ARGUMENT_NAME_VALUE_MAP));
             mSelectedName = savedInstanceState.getString(ARGUMENT_SELECTED_NAME);
             mSelectionLabel = savedInstanceState.getString(ARGUMENT_SELECTION_LABEL);
             mFieldName = savedInstanceState.getString(ARGUMENT_SELECTION_FIELD_NAME);
