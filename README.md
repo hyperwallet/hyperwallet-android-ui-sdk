@@ -16,7 +16,7 @@ Note that this SDK is geared towards those who need both backend data and UI fea
 To install Hyperwallet UI SDK, you just need to add the dependency into your build.gradle file in Android Studio (or Gradle). For example:
 
 ```bash
-api 'com.hyperwallet.android:ui-sdk:1.0.0-beta02'
+api 'com.hyperwallet.android.ui:ui-sdk:1.0.0-beta02'
 ```
 
 ## Initialization
