@@ -78,6 +78,13 @@ public class ReceiptDetailFragment extends Fragment {
         util.setTransactionView(receipt, view);
 
         // fee details
+        setFeeDetailsView(receipt, view);
+
+        // receipt details
+        setDetailsView(receipt, view);
+    }
+
+    private void setFeeDetailsView(@NonNull final Receipt receipt, @NonNull final View view) {
         if (!TextUtils.isEmpty(receipt.getFee())) {
             view.findViewById(R.id.fee_details_layout).setVisibility(View.VISIBLE);
             double feeAmount = Double.parseDouble(receipt.getFee());
@@ -97,8 +104,9 @@ public class ReceiptDetailFragment extends Fragment {
             transfer.setText(view.getContext().getString(R.string.amount_view_format,
                     decimalFormat.format(transferAmount), receipt.getCurrency()));
         }
+    }
 
-        // receipt details
+    private void setDetailsView(@NonNull final Receipt receipt, @NonNull final View view) {
         TextView receiptId = view.findViewById(R.id.receipt_id_value);
         receiptId.setText(receipt.getJournalId());
         TextView date = view.findViewById(R.id.date_value);
