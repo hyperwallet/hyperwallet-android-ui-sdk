@@ -24,11 +24,11 @@ import androidx.annotation.Nullable;
  */
 public class Event<T> {
 
-    private final T content;
+    private final T mContent;
     private boolean mIsContentConsumed;
 
     public Event(@NonNull final T t) {
-        content = t;
+        mContent = t;
     }
 
     /**
@@ -38,7 +38,7 @@ public class Event<T> {
     @NonNull
     public T getContent() {
         mIsContentConsumed = true;
-        return content;
+        return mContent;
     }
 
     /**
@@ -58,7 +58,7 @@ public class Event<T> {
     public T getContentIfNotConsumed() {
         if (!mIsContentConsumed) {
             mIsContentConsumed = true;
-            return content;
+            return mContent;
         }
         return null;
     }
