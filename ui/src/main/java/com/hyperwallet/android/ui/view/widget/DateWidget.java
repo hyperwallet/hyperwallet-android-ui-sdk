@@ -30,8 +30,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.android.material.textfield.TextInputLayout;
-import com.hyperwallet.android.hyperwallet_ui.R;
 import com.hyperwallet.android.model.graphql.field.HyperwalletField;
+import com.hyperwallet.android.ui.R;
 
 import java.text.ParseException;
 

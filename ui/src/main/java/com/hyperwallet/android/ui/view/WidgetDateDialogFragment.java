@@ -12,7 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.hyperwallet.android.hyperwallet_ui.R;
+import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.view.widget.DateUtil;
 
 import java.util.Calendar;

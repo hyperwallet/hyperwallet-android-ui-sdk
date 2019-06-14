@@ -81,7 +81,7 @@ sonarqube {
     properties {
         def libraries = project.android.sdkDirectory.getPath() + "/platforms/android-28/android.jar"
         property "sonar.sources", "src/main/java"
-        property "sonar.binaries", "build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/hyperwallet/android"
+        property "sonar.binaries", "build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/hyperwallet/android/ui"
         property "sonar.libraries", libraries
         property "sonar.projectName", "android-ui-sdk-common"
     }
