@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools"
-          package="com.hyperwallet.android.receipt">
+          package="com.hyperwallet.android.ui.receipt">
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
-        android:networkSecurityConfig="@xml/network_security_config"
-        tools:targetApi="n">
-
+        android:networkSecurityConfig="@xml/network_security_config" tools:targetApi="n">
         <activity android:name=".view.ReceiptDetailActivity"
                   android:label="@string/title_activity_receipt_detail"
                   android:theme="@style/AppTheme.NoActionBar"/>

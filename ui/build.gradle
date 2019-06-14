@@ -62,7 +62,7 @@ publishing {
                     configurations.implementation.allDependencies.each {
                         def dependencyNode = dependenciesNode.appendNode('dependency')
                         if (it.group == "hyperwallet-android-ui-sdk") {
-                            dependencyNode.appendNode('groupId', "com.hyperwallet.android")
+                            dependencyNode.appendNode('groupId', "com.hyperwallet.android.ui")
                         } else {
                             dependencyNode.appendNode('groupId', it.group)
                         }
@@ -106,7 +106,7 @@ sonarqube {
     properties {
         def libraries = project.android.sdkDirectory.getPath() + "/platforms/android-28/android.jar"
         property "sonar.sources", "src/main/java"
-        property "sonar.binaries", "build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/hyperwallet/android"
+        property "sonar.binaries", "build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/hyperwallet/android/ui"
         property "sonar.libraries", libraries
         property "sonar.projectName", "android-ui-sdk"
     }

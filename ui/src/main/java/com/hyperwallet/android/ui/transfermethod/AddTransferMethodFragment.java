@@ -23,6 +23,7 @@ import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMe
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.BANK_ACCOUNT;
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.BANK_CARD;
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.PAYPAL_ACCOUNT;
+import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.WIRE_ACCOUNT;
 
 import android.app.Activity;
 import android.content.Context;
@@ -45,7 +46,6 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.hyperwallet.android.exception.HyperwalletException;
-import com.hyperwallet.android.hyperwallet_ui.R;
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.graphql.HyperwalletFee;
 import com.hyperwallet.android.model.graphql.field.HyperwalletField;
@@ -55,6 +55,7 @@ import com.hyperwallet.android.model.transfermethod.HyperwalletBankCard;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.model.transfermethod.PayPalAccount;
 import com.hyperwallet.android.ui.HyperwalletLocalBroadcast;
+import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.repository.RepositoryFactory;
 import com.hyperwallet.android.ui.view.WidgetDateDialogFragment;
 import com.hyperwallet.android.ui.view.WidgetSelectionDialogFragment;
@@ -507,6 +508,13 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                     mTransferMethod = new PayPalAccount.Builder()
                             .transferMethodCountry(mCountry)
                             .transferMethodCurrency(mCurrency)
+                            .build();
+                    break;
+                case WIRE_ACCOUNT:
+                    mTransferMethod = new HyperwalletBankAccount.Builder()
+                            .transferMethodCountry(mCountry)
+                            .transferMethodCurrency(mCurrency)
+                            .transferMethodType(WIRE_ACCOUNT)
                             .build();
                     break;
                 default:
