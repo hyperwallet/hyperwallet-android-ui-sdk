@@ -22,6 +22,7 @@ import android.content.res.Resources;
 import android.widget.TextView;
 
 import androidx.test.core.app.ApplicationProvider;
+import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
@@ -227,6 +228,40 @@ public class ListReceiptsTest {
         onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
                 .check(matches(withText(R.string.title_activity_receipt_list)));
         //todo: check empty view when it will be ready
+    }
+
+    @Test
+    public void testListReceipt_displayPagedTransactions() throws InterruptedException {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("receipt_list_paged_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("receipt_list_paged_second_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("receipt_list_paged_third_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("receipt_list_paged_last_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();
+
+        // run test
+        mActivityTestRule.launchActivity(null);
+
+        onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
+        onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
+                .check(matches(withText(R.string.title_activity_receipt_list)));
+
+        onView(withId(R.id.list_receipts)).check(new RecyclerViewCountAssertion(20));
+        onView(withId(R.id.list_receipts)).perform(RecyclerViewActions.scrollToPosition(10));
+        onView(withId(R.id.list_receipts)).check(new RecyclerViewCountAssertion(30));
+        onView(withId(R.id.list_receipts)).perform(RecyclerViewActions.scrollToPosition(20));
+        onView(withId(R.id.list_receipts)).check(new RecyclerViewCountAssertion(40));
+        onView(withId(R.id.list_receipts)).perform(RecyclerViewActions.scrollToPosition(30));
+        onView(withId(R.id.list_receipts)).check(new RecyclerViewCountAssertion(50));
+
+        // verify that when the list reaches the end no additional data is loaded
+        onView(withId(R.id.list_receipts)).perform(RecyclerViewActions.scrollToPosition(40));
+        onView(withId(R.id.list_receipts)).check(new RecyclerViewCountAssertion(50));
+        onView(withId(R.id.list_receipts)).perform(RecyclerViewActions.scrollToPosition(50));
+        onView(withId(R.id.list_receipts)).check(new RecyclerViewCountAssertion(50));
     }
 
     @Test
