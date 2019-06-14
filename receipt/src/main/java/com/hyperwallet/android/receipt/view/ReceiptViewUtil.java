@@ -34,8 +34,9 @@ import java.util.Locale;
 
 final class ReceiptViewUtil {
 
-    static final String DETAIL_DATE_FORMAT = "E MMM dd, YYYY - k:mm zzz";
     static final String AMOUNT_FORMAT = "###0.00";
+    static final String DETAIL_DATE_TIME_24H_FORMAT = "E MMM dd, YYYY - HH:mm zzz";
+    static final String DETAIL_DATE_TIME_12H_FORMAT = "E MMM dd, YYYY - hh:mm a zzz";
     private static final String CAPTION_DATE_FORMAT = "MMMM dd, yyyy";
 
     void setTransactionView(@NonNull final Receipt receipt, @NonNull final View view) {

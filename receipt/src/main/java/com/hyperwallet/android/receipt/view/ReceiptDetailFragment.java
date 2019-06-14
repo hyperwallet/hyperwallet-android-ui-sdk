@@ -17,10 +17,12 @@
 package com.hyperwallet.android.receipt.view;
 
 import static com.hyperwallet.android.receipt.view.ReceiptViewUtil.AMOUNT_FORMAT;
-import static com.hyperwallet.android.receipt.view.ReceiptViewUtil.DETAIL_DATE_FORMAT;
+import static com.hyperwallet.android.receipt.view.ReceiptViewUtil.DETAIL_DATE_TIME_12H_FORMAT;
+import static com.hyperwallet.android.receipt.view.ReceiptViewUtil.DETAIL_DATE_TIME_24H_FORMAT;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -101,7 +103,9 @@ public class ReceiptDetailFragment extends Fragment {
         receiptId.setText(receipt.getJournalId());
         TextView date = view.findViewById(R.id.date_value);
         date.setText(DateUtils.toDateFormat(DateUtils.
-                fromDateTimeString(receipt.getCreatedOn()), DETAIL_DATE_FORMAT));
+                        fromDateTimeString(receipt.getCreatedOn()),
+                DateFormat.is24HourFormat(view.getContext()) ? DETAIL_DATE_TIME_24H_FORMAT
+                        : DETAIL_DATE_TIME_12H_FORMAT));
 
         if (receipt.getDetails() != null) {
             ReceiptDetails receiptDetails = receipt.getDetails();
