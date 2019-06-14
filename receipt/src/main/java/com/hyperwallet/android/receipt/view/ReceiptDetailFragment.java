@@ -88,8 +88,8 @@ public class ReceiptDetailFragment extends Fragment {
         if (!TextUtils.isEmpty(receipt.getFee())) {
             view.findViewById(R.id.fee_details_layout).setVisibility(View.VISIBLE);
             double feeAmount = Double.parseDouble(receipt.getFee());
-            double transferAmount = Double.parseDouble(receipt.getAmount());
-            double amount = transferAmount - feeAmount;
+            double amount = Double.parseDouble(receipt.getAmount());
+            double transferAmount = amount - feeAmount;
             DecimalFormat decimalFormat = new DecimalFormat(AMOUNT_FORMAT);
 
             TextView amountView = view.findViewById(R.id.details_amount_value);
