@@ -16,13 +16,18 @@
  */
 package com.hyperwallet.android.ui.receipt.view;
 
+import static android.text.format.DateUtils.FORMAT_ABBREV_WEEKDAY;
+import static android.text.format.DateUtils.FORMAT_SHOW_DATE;
+import static android.text.format.DateUtils.FORMAT_SHOW_TIME;
+import static android.text.format.DateUtils.FORMAT_SHOW_WEEKDAY;
+import static android.text.format.DateUtils.FORMAT_SHOW_YEAR;
+import static android.text.format.DateUtils.formatDateTime;
+
 import static com.hyperwallet.android.ui.receipt.view.ReceiptViewUtil.AMOUNT_FORMAT;
-import static com.hyperwallet.android.ui.receipt.view.ReceiptViewUtil.DETAIL_DATE_TIME_12H_FORMAT;
-import static com.hyperwallet.android.ui.receipt.view.ReceiptViewUtil.DETAIL_DATE_TIME_24H_FORMAT;
+import static com.hyperwallet.android.ui.receipt.view.ReceiptViewUtil.DETAIL_TIMEZONE;
 
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +46,7 @@ import com.hyperwallet.android.ui.receipt.R;
 import com.hyperwallet.android.ui.receipt.viewmodel.ReceiptDetailViewModel;
 
 import java.text.DecimalFormat;
+import java.util.Date;
 
 public class ReceiptDetailFragment extends Fragment {
 
@@ -93,15 +99,15 @@ public class ReceiptDetailFragment extends Fragment {
             DecimalFormat decimalFormat = new DecimalFormat(AMOUNT_FORMAT);
 
             TextView amountView = view.findViewById(R.id.details_amount_value);
-            amountView.setText(view.getContext().getString(R.string.amount_view_format,
+            amountView.setText(view.getContext().getString(R.string.concat_string_view_format,
                     decimalFormat.format(amount), receipt.getCurrency()));
 
             TextView fee = view.findViewById(R.id.details_fee_value);
-            fee.setText(view.getContext().getString(R.string.amount_view_format,
+            fee.setText(view.getContext().getString(R.string.concat_string_view_format,
                     decimalFormat.format(feeAmount), receipt.getCurrency()));
 
             TextView transfer = view.findViewById(R.id.details_transfer_amount_value);
-            transfer.setText(view.getContext().getString(R.string.amount_view_format,
+            transfer.setText(view.getContext().getString(R.string.concat_string_view_format,
                     decimalFormat.format(transferAmount), receipt.getCurrency()));
         }
     }
@@ -109,11 +115,14 @@ public class ReceiptDetailFragment extends Fragment {
     private void setDetailsView(@NonNull final Receipt receipt, @NonNull final View view) {
         TextView receiptId = view.findViewById(R.id.receipt_id_value);
         receiptId.setText(receipt.getJournalId());
-        TextView date = view.findViewById(R.id.date_value);
-        date.setText(DateUtils.toDateFormat(DateUtils.
-                        fromDateTimeString(receipt.getCreatedOn()),
-                DateFormat.is24HourFormat(view.getContext()) ? DETAIL_DATE_TIME_24H_FORMAT
-                        : DETAIL_DATE_TIME_12H_FORMAT));
+        TextView dateView = view.findViewById(R.id.date_value);
+
+        Date date = DateUtils.fromDateTimeString(receipt.getCreatedOn());
+        String timezone = DateUtils.toDateFormat(date, DETAIL_TIMEZONE);
+        dateView.setText(view.getContext().getString(R.string.concat_string_view_format,
+                formatDateTime(view.getContext(), date.getTime(),
+                        FORMAT_SHOW_DATE | FORMAT_SHOW_TIME | FORMAT_SHOW_YEAR
+                                | FORMAT_SHOW_WEEKDAY | FORMAT_ABBREV_WEEKDAY), timezone));
 
         if (receipt.getDetails() != null) {
             ReceiptDetails receiptDetails = receipt.getDetails();

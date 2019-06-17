@@ -16,6 +16,10 @@
  */
 package com.hyperwallet.android.ui.receipt.view;
 
+import static android.text.format.DateUtils.FORMAT_SHOW_DATE;
+import static android.text.format.DateUtils.FORMAT_SHOW_YEAR;
+import static android.text.format.DateUtils.formatDateTime;
+
 import static com.hyperwallet.android.model.receipt.Receipt.Entries.CREDIT;
 import static com.hyperwallet.android.model.receipt.Receipt.Entries.DEBIT;
 
@@ -30,14 +34,13 @@ import com.hyperwallet.android.ui.common.util.DateUtils;
 import com.hyperwallet.android.ui.receipt.R;
 
 import java.text.DecimalFormat;
+import java.util.Date;
 import java.util.Locale;
 
 final class ReceiptViewUtil {
 
     static final String AMOUNT_FORMAT = "###0.00";
-    static final String DETAIL_DATE_TIME_24H_FORMAT = "E MMM dd, YYYY - HH:mm zzz";
-    static final String DETAIL_DATE_TIME_12H_FORMAT = "E MMM dd, YYYY - hh:mm a zzz";
-    private static final String CAPTION_DATE_FORMAT = "MMMM dd, yyyy";
+    static final String DETAIL_TIMEZONE = "zzz";
 
     void setTransactionView(@NonNull final Receipt receipt, @NonNull final View view) {
         TextView transactionTypeIcon = view.findViewById(R.id.transaction_type_icon);
@@ -73,8 +76,9 @@ final class ReceiptViewUtil {
 
         transactionCurrency.setText(receipt.getCurrency());
         transactionTitle.setText(getTransactionTitle(receipt.getType(), transactionTitle.getContext()));
-        transactionDate.setText(DateUtils.toDateFormat(DateUtils.
-                fromDateTimeString(receipt.getCreatedOn()), CAPTION_DATE_FORMAT));
+        Date date = DateUtils.fromDateTimeString(receipt.getCreatedOn());
+        transactionDate.setText(formatDateTime(view.getContext(), date.getTime(),
+                FORMAT_SHOW_DATE | FORMAT_SHOW_YEAR));
     }
 
     String getTransactionTitle(@NonNull final String receiptType, @NonNull final Context context) {

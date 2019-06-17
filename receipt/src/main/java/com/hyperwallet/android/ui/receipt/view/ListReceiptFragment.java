@@ -16,6 +16,11 @@
  */
 package com.hyperwallet.android.ui.receipt.view;
 
+import static android.text.format.DateUtils.FORMAT_NO_MONTH_DAY;
+import static android.text.format.DateUtils.FORMAT_SHOW_DATE;
+import static android.text.format.DateUtils.FORMAT_SHOW_YEAR;
+import static android.text.format.DateUtils.formatDateTime;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,6 +45,7 @@ import com.hyperwallet.android.ui.receipt.R;
 import com.hyperwallet.android.ui.receipt.viewmodel.ListReceiptViewModel;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Objects;
 
 public class ListReceiptFragment extends Fragment {
@@ -222,8 +228,9 @@ public class ListReceiptFragment extends Fragment {
             @Override
             void bind(@NonNull final Receipt receipt) {
                 super.bind(receipt);
-                mTransactionHeaderText.setText(DateUtils.toDateFormat(
-                        DateUtils.fromDateTimeString(receipt.getCreatedOn()), HEADER_DATE_FORMAT));
+                Date date = DateUtils.fromDateTimeString(receipt.getCreatedOn());
+                mTransactionHeaderText.setText(formatDateTime(mTransactionHeaderText.getContext(), date.getTime(),
+                        FORMAT_SHOW_DATE | FORMAT_SHOW_YEAR | FORMAT_NO_MONTH_DAY));
             }
         }
     }

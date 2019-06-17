@@ -15,7 +15,7 @@
     <string name="charity_label">Charity Name:</string>
     <string name="check_number_label">Check Number:</string>
     <string name="website_label">Website:</string>
-    <string name="amount_view_format">%s %s</string>
+    <string name="concat_string_view_format">%s %s</string>
 
     <string name="empty_transaction_information">Seems like, you don\'t have any Transactions,
         yet.
