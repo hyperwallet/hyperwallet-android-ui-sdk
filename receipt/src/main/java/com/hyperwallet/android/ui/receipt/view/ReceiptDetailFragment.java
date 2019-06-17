@@ -82,11 +82,11 @@ public class ReceiptDetailFragment extends Fragment {
         ReceiptViewUtil util = new ReceiptViewUtil();
         util.setTransactionView(receipt, view);
 
-        // fee details
-        setFeeDetailsView(receipt, view);
-
         // receipt details
         setDetailsView(receipt, view);
+
+        // fee details
+        setFeeDetailsView(receipt, view);
     }
 
     private void setFeeDetailsView(@NonNull final Receipt receipt, @NonNull final View view) {
@@ -142,14 +142,14 @@ public class ReceiptDetailFragment extends Fragment {
                         view, receiptDetails.getClientPaymentId());
             }
 
-            if (!TextUtils.isEmpty(receiptDetails.getNotes())) {
-                setViewInformation(R.id.notes_layout, R.id.notes_value,
-                        view, receiptDetails.getNotes());
-            }
-
             if (!TextUtils.isEmpty(receiptDetails.getWebsite())) {
                 setViewInformation(R.id.website_layout, R.id.website_value,
                         view, receiptDetails.getWebsite());
+            }
+
+            if (!TextUtils.isEmpty(receiptDetails.getNotes())) {
+                setViewInformation(R.id.receipt_notes_information, R.id.notes_value,
+                        view, receiptDetails.getNotes());
             }
         }
     }
