@@ -53,7 +53,6 @@ public class ReceiptDetailFragment extends Fragment {
     private ReceiptDetailViewModel mReceiptDetailViewModel;
 
     public ReceiptDetailFragment() {
-        setRetainInstance(true);
     }
 
     public static ReceiptDetailFragment newInstance() {
@@ -96,6 +95,8 @@ public class ReceiptDetailFragment extends Fragment {
             double feeAmount = Double.parseDouble(receipt.getFee());
             double amount = Double.parseDouble(receipt.getAmount());
             double transferAmount = amount - feeAmount;
+
+            //TODO localization of currencies in consideration
             DecimalFormat decimalFormat = new DecimalFormat(AMOUNT_FORMAT);
 
             TextView amountView = view.findViewById(R.id.details_amount_value);

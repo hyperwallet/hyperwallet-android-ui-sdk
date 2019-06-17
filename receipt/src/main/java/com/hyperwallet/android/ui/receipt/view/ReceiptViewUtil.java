@@ -48,6 +48,8 @@ final class ReceiptViewUtil {
         TextView transactionDate = view.findViewById(R.id.transaction_date);
         TextView transactionAmount = view.findViewById(R.id.transaction_amount);
         TextView transactionCurrency = view.findViewById(R.id.transaction_currency);
+
+        //TODO localization of currencies in consideration
         DecimalFormat decimalFormat = new DecimalFormat(AMOUNT_FORMAT);
         double amount = Double.parseDouble(receipt.getAmount());
         String formattedAmount = decimalFormat.format(amount);

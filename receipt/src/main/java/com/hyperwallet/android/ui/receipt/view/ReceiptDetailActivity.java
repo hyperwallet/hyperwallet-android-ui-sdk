@@ -58,8 +58,8 @@ public class ReceiptDetailActivity extends AppCompatActivity {
             ReceiptDetailViewModel viewModel = ViewModelProviders.of(this).get(ReceiptDetailViewModel.class);
             viewModel.setReceipt((Receipt) parcel);
         } else {
-            throw new IllegalArgumentException("Cannot initialize " + ReceiptDetailActivity.class.getName()
-                    + " " + EXTRA_RECEIPT + " argument is not as what is expected.");
+            throw new IllegalArgumentException("Argument is not an instance of "
+                    + ReceiptDetailActivity.class.getName());
         }
 
         if (savedInstanceState == null) {

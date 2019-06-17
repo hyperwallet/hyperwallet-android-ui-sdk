@@ -1,6 +1,6 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="?android:attr/selectableItemBackground"
+    android:background="@drawable/view_item_ripple"
     android:id="@+id/receipt_item"
     android:layout_width="match_parent"
     android:layout_height="@dimen/item_receipt_information_height">

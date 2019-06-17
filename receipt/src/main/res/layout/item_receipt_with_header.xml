@@ -22,7 +22,7 @@
     </RelativeLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:background="?android:attr/selectableItemBackground"
+        android:background="@drawable/view_item_ripple"
         android:id="@+id/receipt_item"
         android:layout_width="match_parent"
         android:layout_height="@dimen/item_receipt_information_height">
