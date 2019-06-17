@@ -31,6 +31,7 @@ import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.paging.HyperwalletPageList;
 import com.hyperwallet.android.model.receipt.Receipt;
 import com.hyperwallet.android.model.receipt.ReceiptQueryParam;
+import com.hyperwallet.android.ui.common.util.EspressoIdlingResource;
 import com.hyperwallet.android.ui.common.viewmodel.Event;
 
 import java.util.Calendar;
@@ -71,6 +72,7 @@ public class ReceiptDataSource extends PageKeyedDataSource<Integer, Receipt> {
                 .limit(params.requestedLoadSize)
                 .sortByCreatedOnDesc().build();
 
+        EspressoIdlingResource.increment();
         getHyperwallet().listReceipts(queryParam,
                 new HyperwalletListener<HyperwalletPageList<Receipt>>() {
                     @Override
@@ -86,12 +88,14 @@ public class ReceiptDataSource extends PageKeyedDataSource<Integer, Receipt> {
                         // reset
                         mLoadInitialCallback = null;
                         mLoadInitialParams = null;
+                        EspressoIdlingResource.decrement();
                     }
 
                     @Override
                     public void onFailure(HyperwalletException exception) {
                         mIsFetchingData.postValue(Boolean.FALSE);
                         mErrors.postValue(new Event<>(exception.getHyperwalletErrors()));
+                        EspressoIdlingResource.decrement();
                     }
 
                     @Override
@@ -129,6 +133,7 @@ public class ReceiptDataSource extends PageKeyedDataSource<Integer, Receipt> {
                 .offset(params.key)
                 .sortByCreatedOnDesc().build();
 
+        EspressoIdlingResource.increment();
         getHyperwallet().listReceipts(queryParam,
                 new HyperwalletListener<HyperwalletPageList<Receipt>>() {
                     @Override
@@ -144,12 +149,14 @@ public class ReceiptDataSource extends PageKeyedDataSource<Integer, Receipt> {
                         // reset
                         mLoadAfterCallback = null;
                         mLoadAfterParams = null;
+                        EspressoIdlingResource.decrement();
                     }
 
                     @Override
                     public void onFailure(HyperwalletException exception) {
                         mIsFetchingData.postValue(Boolean.FALSE);
                         mErrors.postValue(new Event<>(exception.getHyperwalletErrors()));
+                        EspressoIdlingResource.decrement();
                     }
 
                     @Override
