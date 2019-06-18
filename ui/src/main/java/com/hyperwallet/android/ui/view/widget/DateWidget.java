@@ -37,7 +37,7 @@ import java.text.ParseException;
 
 public class DateWidget extends AbstractWidget implements DateChangedListener {
 
-    private final DateUtil mDateUtil;
+    private final DateUtils mDateUtils;
     private ViewGroup mContainer;
     private String mValue;
     private TextInputLayout mTextInputLayout;
@@ -46,7 +46,7 @@ public class DateWidget extends AbstractWidget implements DateChangedListener {
     public DateWidget(@NonNull HyperwalletField field, @NonNull WidgetEventListener listener,
             @Nullable String defaultValue, @NonNull View defaultFocusView) {
         super(field, listener, defaultValue, defaultFocusView);
-        mDateUtil = new DateUtil();
+        mDateUtils = new DateUtils();
         mValue = defaultValue;
     }
 
@@ -67,7 +67,7 @@ public class DateWidget extends AbstractWidget implements DateChangedListener {
             mEditText = new EditText(
                     new ContextThemeWrapper(viewGroup.getContext(), R.style.Widget_Hyperwallet_TextInputEditText));
             try {
-                mEditText.setText(mDateUtil.convertDateFromServerToWidgetFormat(
+                mEditText.setText(mDateUtils.convertDateFromServerToWidgetFormat(
                         TextUtils.isEmpty(mDefaultValue) ? mValue = mField.getValue() : mDefaultValue));
             } catch (ParseException e) {
                 mEditText.setText("");
@@ -114,7 +114,7 @@ public class DateWidget extends AbstractWidget implements DateChangedListener {
         if (!TextUtils.isEmpty(selectedDate)) {
             mValue = selectedDate;
             try {
-                mEditText.setText(mDateUtil.convertDateFromServerToWidgetFormat(selectedDate));
+                mEditText.setText(mDateUtils.convertDateFromServerToWidgetFormat(selectedDate));
                 mListener.saveTextChanged(getName(), getValue());
                 mListener.valueChanged();
             } catch (ParseException e) {

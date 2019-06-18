@@ -15,8 +15,8 @@ import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 
 @RunWith(JUnitParamsRunner.class)
-public class ExpireDateUtilTest {
-    private final ExpireDateUtil helper = new ExpireDateUtil();
+public class ExpireDateUtilsTest {
+    private final ExpireDateUtils helper = new ExpireDateUtils();
 
     @Test
     @Parameters(method = "parametersToTestValidDate")
