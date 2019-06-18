@@ -55,7 +55,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.io.IOException;
 import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
@@ -99,7 +98,7 @@ public class ListReceiptsTest {
     }
 
     @Test
-    public void testListReceipts_userHasMultipleTransactions() {
+    public void testListReceipt_userHasMultipleTransactions() {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("receipt_list_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();
@@ -160,7 +159,7 @@ public class ListReceiptsTest {
     }
 
     @Test
-    public void testListReceipts_displayCreditTransaction() {
+    public void testListReceipt_userHasCreditTransaction() {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("receipt_credit_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();
@@ -189,7 +188,7 @@ public class ListReceiptsTest {
     }
 
     @Test
-    public void testListReceipts_displayDebitTransaction() {
+    public void testListReceipt_userHasDebitTransaction() {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("receipt_debit_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();
@@ -218,7 +217,7 @@ public class ListReceiptsTest {
     }
 
     @Test
-    public void testListReceipts_displayUnknownTransactionType() {
+    public void testListReceipt_userHasUnknownTransactionType() {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("receipt_unknown_type_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();
@@ -247,7 +246,7 @@ public class ListReceiptsTest {
     }
 
     @Test
-    public void testListReceipts_userHasNoTransactions() {
+    public void testListReceipt_userHasNoTransactions() {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();
 
         // run test
@@ -260,7 +259,7 @@ public class ListReceiptsTest {
     }
 
     @Test
-    public void testListReceipts_displayTransactionDetails() {
+    public void testListReceipt_clickTransactionDisplaysDetails() {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("receipt_list_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();
@@ -320,7 +319,7 @@ public class ListReceiptsTest {
     }
 
     @Test
-    public void testListReceipts_displayTransactionDetailsWithoutFees() {
+    public void testListReceipt_clickTransactionDisplaysDetailsWithoutFees() {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("receipt_list_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();
@@ -373,7 +372,7 @@ public class ListReceiptsTest {
     }
 
     @Test
-    public void testListReceipts_displayPagedTransactions() throws InterruptedException {
+    public void testListReceipt_verifyTransactionsLoadedUponScrolling() throws InterruptedException {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("receipt_list_paged_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
@@ -407,7 +406,7 @@ public class ListReceiptsTest {
     }
 
     @Test
-    public void testListReceipts_checkDateTextOnLocaleChange() {
+    public void testListReceipt_checkDateTextOnLocaleChange() {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("receipt_debit_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();
@@ -422,7 +421,7 @@ public class ListReceiptsTest {
     }
 
     @Test
-    public void testListReceipts_displaysNetworkErrorDialogOnConnectionTimeout() throws IOException {
+    public void testListReceipt_displaysNetworkErrorDialogOnConnectionTimeout() {
         mMockWebServer.getServer().enqueue(new MockResponse().setResponseCode(HTTP_OK).setBody(sResourceManager
                 .getResourceContent("receipt_debit_response.json")).throttleBody(1, 5, TimeUnit.SECONDS));
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
