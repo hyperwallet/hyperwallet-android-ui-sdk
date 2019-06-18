@@ -15,8 +15,8 @@ import java.util.Calendar;
 import java.util.Collection;
 
 @RunWith(RobolectricTestRunner.class)
-public class DateUtilTest {
-    private final DateUtil mDateUtil = new DateUtil();
+public class DateUtilsTest {
+    private final DateUtils mDateUtils = new DateUtils();
 
     @Rule
     public final ExpectedException mThrown = ExpectedException.none();
@@ -25,32 +25,32 @@ public class DateUtilTest {
     public void testConvertDateFromServerToWidgetFormat() throws Exception {
         String serverDate = "2005-05-23";
         String widgetDate = "23 May 2005";
-        assertThat(mDateUtil.convertDateFromServerToWidgetFormat(serverDate), is(widgetDate));
+        assertThat(mDateUtils.convertDateFromServerToWidgetFormat(serverDate), is(widgetDate));
     }
 
     @Test
     public void testBuildParamsDateFromServerToWidget_whenIncorrectDate() throws Exception {
         mThrown.expect(ParseException.class);
-        mDateUtil.convertDateFromServerToWidgetFormat("1990-01");
+        mDateUtils.convertDateFromServerToWidgetFormat("1990-01");
     }
 
     @Test
     public void testConvertDateFromServerToWidgetFormat_whenDateIsNullOrEmpty() throws Exception {
-        assertThat(mDateUtil.convertDateFromServerToWidgetFormat(""), is(""));
-        assertThat(mDateUtil.convertDateFromServerToWidgetFormat(null), is(""));
+        assertThat(mDateUtils.convertDateFromServerToWidgetFormat(""), is(""));
+        assertThat(mDateUtils.convertDateFromServerToWidgetFormat(null), is(""));
     }
 
     @Test
     public void testBuildParamsDateFromServerToCalendar_whenIncorrectDate() throws Exception {
         mThrown.expect(ParseException.class);
-        mDateUtil.convertDateFromServerFormatToCalendar("123-32").getTime();
+        mDateUtils.convertDateFromServerFormatToCalendar("123-32").getTime();
     }
 
     @Test
     public void testConvertDateFromServerFormatToCalendar_whenDateIsNullOrEmpty() throws ParseException {
-        assertThat(mDateUtil.convertDateFromServerFormatToCalendar(null).getTime().toString(),
+        assertThat(mDateUtils.convertDateFromServerFormatToCalendar(null).getTime().toString(),
                 is(Calendar.getInstance().getTime().toString()));
-        assertThat(mDateUtil.convertDateFromServerFormatToCalendar("").getTime().toString(),
+        assertThat(mDateUtils.convertDateFromServerFormatToCalendar("").getTime().toString(),
                 is(Calendar.getInstance().getTime().toString()));
     }
 
@@ -59,7 +59,7 @@ public class DateUtilTest {
         String serverDate = "2005-05-23";
         final Calendar mayCalendar = Calendar.getInstance();
         mayCalendar.set(2005, 4, 23, 0, 0, 0);
-        assertThat(mDateUtil.convertDateFromServerFormatToCalendar(serverDate).getTime().toString(),
+        assertThat(mDateUtils.convertDateFromServerFormatToCalendar(serverDate).getTime().toString(),
                 is(mayCalendar.getTime().toString()));
     }
 
@@ -75,7 +75,7 @@ public class DateUtilTest {
             month = (int) item[1];
             dayOfMonth = (int) item[2];
             widgetDate = (String) item[3];
-            assertThat(mDateUtil.buildDateFromDateDialogToServerFormat(year, month, dayOfMonth), is(widgetDate));
+            assertThat(mDateUtils.buildDateFromDateDialogToServerFormat(year, month, dayOfMonth), is(widgetDate));
         }
     }
 

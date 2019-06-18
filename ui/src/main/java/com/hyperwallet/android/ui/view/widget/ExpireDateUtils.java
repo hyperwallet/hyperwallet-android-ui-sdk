@@ -26,7 +26,7 @@ import java.util.Calendar;
 /**
  * Class is used for manage and convert card expire date {@link ExpiryDateWidget}
  */
-class ExpireDateUtil {
+class ExpireDateUtils {
 
     static final char ONE_CHAR = '1';
     static final int MAX_INPUT_LENGTH = 5;
@@ -40,7 +40,7 @@ class ExpireDateUtil {
 
     private final Calendar mUpperValidDate = Calendar.getInstance();
 
-    ExpireDateUtil() {
+    ExpireDateUtils() {
         mUpperValidDate.add(Calendar.YEAR, VALID_PERIOD_IN_YEARS);
     }
 

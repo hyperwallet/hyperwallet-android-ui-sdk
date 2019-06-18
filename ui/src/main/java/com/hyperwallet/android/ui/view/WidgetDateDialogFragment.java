@@ -13,7 +13,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.hyperwallet.android.ui.R;
-import com.hyperwallet.android.ui.view.widget.DateUtil;
+import com.hyperwallet.android.ui.view.widget.DateUtils;
 
 import java.util.Calendar;
 
@@ -23,7 +23,7 @@ public class WidgetDateDialogFragment extends DialogFragment {
     private static final String ARGUMENT_DATE = "ARGUMENT_DATE";
     private static final String ARGUMENT_FIELD_NAME = "ARGUMENT_FIELD_NAME";
     private OnSelectedDateCallback mOnSelectedDateCallback;
-    private final DateUtil mDateUtil = new DateUtil();
+    private final DateUtils mDateUtils = new DateUtils();
 
     /**
      * Please do not use this to have instance of DateDialogFragment this is reserved for android framework
@@ -75,7 +75,7 @@ public class WidgetDateDialogFragment extends DialogFragment {
         final String fieldName = getArguments().getString(ARGUMENT_FIELD_NAME);
         Calendar calendar;
         try {
-            calendar = mDateUtil.convertDateFromServerFormatToCalendar(storedDate);
+            calendar = mDateUtils.convertDateFromServerFormatToCalendar(storedDate);
         } catch (Exception e) {
             calendar = Calendar.getInstance();
         }
@@ -85,7 +85,7 @@ public class WidgetDateDialogFragment extends DialogFragment {
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int resultYear, int resultMonth, int resultDayOfMonth) {
-                        final String selectedDate = mDateUtil
+                        final String selectedDate = mDateUtils
                                 .buildDateFromDateDialogToServerFormat(resultYear, resultMonth, resultDayOfMonth);
                         mOnSelectedDateCallback.setSelectedDateField(fieldName, selectedDate);
                     }
