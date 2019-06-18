@@ -71,7 +71,7 @@ public class ReceiptDataSource extends PageKeyedDataSource<Integer, Receipt> {
                 .limit(params.requestedLoadSize)
                 .sortByCreatedOnDesc().build();
 
-        getHyperwallet().listReceipts(queryParam,
+        getHyperwallet().listUserReceipts(queryParam,
                 new HyperwalletListener<HyperwalletPageList<Receipt>>() {
                     @Override
                     public void onSuccess(@Nullable HyperwalletPageList<Receipt> result) {
@@ -129,7 +129,7 @@ public class ReceiptDataSource extends PageKeyedDataSource<Integer, Receipt> {
                 .offset(params.key)
                 .sortByCreatedOnDesc().build();
 
-        getHyperwallet().listReceipts(queryParam,
+        getHyperwallet().listUserReceipts(queryParam,
                 new HyperwalletListener<HyperwalletPageList<Receipt>>() {
                     @Override
                     public void onSuccess(@Nullable HyperwalletPageList<Receipt> result) {
