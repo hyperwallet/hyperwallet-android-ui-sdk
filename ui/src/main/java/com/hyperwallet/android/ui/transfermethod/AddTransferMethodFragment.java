@@ -61,7 +61,7 @@ import com.hyperwallet.android.ui.view.WidgetDateDialogFragment;
 import com.hyperwallet.android.ui.view.WidgetSelectionDialogFragment;
 import com.hyperwallet.android.ui.view.widget.AbstractWidget;
 import com.hyperwallet.android.ui.view.widget.DateChangedListener;
-import com.hyperwallet.android.ui.view.widget.DateUtil;
+import com.hyperwallet.android.ui.view.widget.DateUtils;
 import com.hyperwallet.android.ui.view.widget.DateWidget;
 import com.hyperwallet.android.ui.view.widget.WidgetEventListener;
 import com.hyperwallet.android.ui.view.widget.WidgetFactory;
@@ -99,7 +99,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     private HyperwalletTransferMethod mTransferMethod;
     private String mTransferMethodProfileType;
     private HashMap<String, WidgetInputState> mWidgetInputStateHashMap;
-    private final DateUtil mDateUtil = new DateUtil();
+    private final DateUtils mDateUtils = new DateUtils();
 
     /**
      * Please do not use this to have instance of AddTransferMethodFragment this is reserved for android framework

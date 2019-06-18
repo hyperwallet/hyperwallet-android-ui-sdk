@@ -31,7 +31,7 @@ import java.util.Locale;
 /**
  * Class is used for manage and convert date {@link DateWidget}
  */
-public final class DateUtil {
+public final class DateUtils {
 
     private static final String SERVER_DATE_PATTERN = "yyyy-MM-dd";
     private static final String WIDGET_DATE_PATTERN = "dd MMMM yyyy";
@@ -39,7 +39,7 @@ public final class DateUtil {
     private final SimpleDateFormat mServerDateFormat = new SimpleDateFormat(SERVER_DATE_PATTERN, Locale.getDefault());
     private final SimpleDateFormat mWidgetDateFormat;
 
-    public DateUtil() {
+    public DateUtils() {
         mWidgetDateFormat = new SimpleDateFormat(
                 DateFormat.getBestDateTimePattern(Locale.getDefault(), WIDGET_DATE_PATTERN), Locale.getDefault());
     }
