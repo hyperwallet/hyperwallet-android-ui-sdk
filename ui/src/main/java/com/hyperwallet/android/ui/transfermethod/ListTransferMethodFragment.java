@@ -20,6 +20,7 @@ import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMe
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TYPE;
 import static com.hyperwallet.android.ui.transfermethod.TransferMethodUtils.getStringFontIcon;
 import static com.hyperwallet.android.ui.transfermethod.TransferMethodUtils.getStringResourceByName;
+import static com.hyperwallet.android.ui.transfermethod.TransferMethodUtils.getTransferMethodDetail;
 
 import android.content.Context;
 import android.content.Intent;
@@ -351,7 +352,7 @@ public class ListTransferMethodFragment extends Fragment implements ListTransfer
 
             void bind(@NonNull final HyperwalletTransferMethod transferMethod) {
                 String type = transferMethod.getField(TYPE);
-                final String transferMethodIdentification = TransferMethodUtils.getTransferMethodDetail(
+                final String transferMethodIdentification = getTransferMethodDetail(
                         mTransferMethodIdentification.getContext(),
                         transferMethod,
                         type);

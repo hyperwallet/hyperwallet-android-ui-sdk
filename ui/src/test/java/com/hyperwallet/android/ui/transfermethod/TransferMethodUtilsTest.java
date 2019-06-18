@@ -5,7 +5,6 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -15,11 +14,15 @@ import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMe
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.BANK_CARD;
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.PAPER_CHECK;
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.PAYPAL_ACCOUNT;
+import static com.hyperwallet.android.ui.transfermethod.TransferMethodUtils.getTransferMethodDetail;
 
 import android.content.Context;
 import android.content.res.Resources;
 
+import com.hyperwallet.android.model.transfermethod.HyperwalletBankAccount;
+import com.hyperwallet.android.model.transfermethod.HyperwalletBankCard;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
+import com.hyperwallet.android.model.transfermethod.PayPalAccount;
 import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.rule.HyperwalletExternalResourceManager;
 
@@ -142,46 +145,42 @@ public class TransferMethodUtilsTest {
     }
 
     @Test
-    public void testGetSecondLine_returnsPayPalSecondLine() throws JSONException {
-        String json = mExternalResourceManager.getResourceContent("paypal_response.json");
-        JSONObject htmJsonObject = new JSONObject(json);
-        HyperwalletTransferMethod transferMethod = new HyperwalletTransferMethod(htmJsonObject);
+    public void getTransferMethodDetail_returnsPayPalDetails() {
+        HyperwalletTransferMethod transferMethod = new PayPalAccount.Builder().email(
+                "sunshine.carreiro@hyperwallet.com").build();
 
-        String actual = TransferMethodUtils.getTransferMethodDetail(mContext, transferMethod, PAYPAL_ACCOUNT);
+        String actual = getTransferMethodDetail(mContext, transferMethod, PAYPAL_ACCOUNT);
         assertThat(actual, is("sunshine.carreiro@hyperwallet.com"));
     }
 
     @Test
-    public void testGetSecondLine_returnsCardSecondLine() throws JSONException {
-        String json = mExternalResourceManager.getResourceContent("bank_card_response.json");
-        JSONObject htmJsonObject = new JSONObject(json);
-        HyperwalletTransferMethod transferMethod = new HyperwalletTransferMethod(htmJsonObject);
+    public void getTransferMethodDetail_returnsCardDetails() {
+        HyperwalletTransferMethod transferMethod = new HyperwalletBankCard.Builder().cardNumber(
+                "************0006").build();
+
         when(mContext.getString(eq(R.string.transfer_method_list_item_description), eq("0006"))).thenReturn(
                 "Ending on 0006");
-        String actual = TransferMethodUtils.getTransferMethodDetail(mContext, transferMethod, BANK_CARD);
+        String actual = getTransferMethodDetail(mContext, transferMethod, BANK_CARD);
         assertThat(actual, is("Ending on 0006"));
     }
 
     @Test
-    public void testGetSecondLine_returnsAccountSecondLine() throws JSONException {
-        String json = mExternalResourceManager.getResourceContent("bank_account_response.json");
-        JSONObject htmJsonObject = new JSONObject(json);
-        HyperwalletTransferMethod transferMethod = new HyperwalletTransferMethod(htmJsonObject);
+    public void getTransferMethodDetail_returnsBankAccountDetails() {
+        HyperwalletTransferMethod transferMethod = new HyperwalletBankAccount.Builder().bankAccountId(
+                "8017110254").build();
+
         when(mContext.getString(eq(R.string.transfer_method_list_item_description), eq("0254"))).thenReturn(
                 "Ending on 0254");
-        String actual = TransferMethodUtils.getTransferMethodDetail(mContext, transferMethod, BANK_ACCOUNT);
+        String actual = getTransferMethodDetail(mContext, transferMethod, BANK_ACCOUNT);
         assertThat(actual, is("Ending on 0254"));
     }
 
     @Test
-    public void testGetSecondLine_returnsPaperCheckSecondLine() throws JSONException {
-        Context context = mock(Context.class);
-        String json = mExternalResourceManager.getResourceContent("paper_check_response.json");
-        JSONObject htmJsonObject = new JSONObject(json);
-        HyperwalletTransferMethod transferMethod = new HyperwalletTransferMethod(htmJsonObject);
-        String actual = TransferMethodUtils.getTransferMethodDetail(mContext, transferMethod, PAPER_CHECK);
+    public void getTransferMethodDetail_returnsPaperCheckDetails() {
+        HyperwalletTransferMethod transferMethod = new HyperwalletTransferMethod();
 
+        String actual = getTransferMethodDetail(mContext, transferMethod, PAPER_CHECK);
         assertThat(actual, CoreMatchers.is(""));
-        verify(context, never()).getString(eq(R.string.transfer_method_list_item_description), anyString());
+        verify(mContext, never()).getString(eq(R.string.transfer_method_list_item_description), anyString());
     }
 }
