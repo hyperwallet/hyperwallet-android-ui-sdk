@@ -73,7 +73,6 @@ public class ListTransferMethodFragment extends Fragment implements ListTransfer
     private OnLoadTransferMethodNetworkErrorCallback mOnLoadTransferMethodNetworkErrorCallback;
     private boolean mIsTransferMethodsReloadNeeded;
     private RecyclerView recyclerView;
-    private TransferMethodSecondLinePresenter mSecondLinePresenter;
 
     /**
      * Please don't use this constructor this is reserved for Android Core Framework
@@ -144,7 +143,7 @@ public class ListTransferMethodFragment extends Fragment implements ListTransfer
             mIsTransferMethodsReloadNeeded = true;
         }
         mListTransferMethodAdapter = new ListTransferMethodAdapter(mTransferMethodList,
-                mOnTransferMethodContextMenuDeletionSelected, mSecondLinePresenter);
+                mOnTransferMethodContextMenuDeletionSelected);
 
         recyclerView.setAdapter(mListTransferMethodAdapter);
     }
@@ -181,7 +180,6 @@ public class ListTransferMethodFragment extends Fragment implements ListTransfer
         super.onActivityCreated(savedInstanceState);
         RepositoryFactory factory = RepositoryFactory.getInstance();
         mPresenter = new ListTransferMethodPresenter(factory.getTransferMethodRepository(), this);
-        mSecondLinePresenter = new TransferMethodSecondLinePresenter();
     }
 
 
@@ -295,16 +293,13 @@ public class ListTransferMethodFragment extends Fragment implements ListTransfer
     }
 
     private static class ListTransferMethodAdapter extends RecyclerView.Adapter<ListTransferMethodAdapter.ViewHolder> {
-        private final TransferMethodSecondLinePresenter mSecondLinePresenter;
         private List<HyperwalletTransferMethod> mTransferMethodList;
         private OnTransferMethodContextMenuDeletionSelected mOnTransferMethodContextMenuDeletionSelected;
 
         ListTransferMethodAdapter(final List<HyperwalletTransferMethod> transferMethodList,
-                final OnTransferMethodContextMenuDeletionSelected onTransferMethodContextMenuSelection,
-                TransferMethodSecondLinePresenter secondLinePresenter) {
+                final OnTransferMethodContextMenuDeletionSelected onTransferMethodContextMenuSelection) {
             mTransferMethodList = transferMethodList;
             mOnTransferMethodContextMenuDeletionSelected = onTransferMethodContextMenuSelection;
-            mSecondLinePresenter = secondLinePresenter;
         }
 
         @NonNull
@@ -356,7 +351,9 @@ public class ListTransferMethodFragment extends Fragment implements ListTransfer
 
             void bind(@NonNull final HyperwalletTransferMethod transferMethod) {
                 String type = transferMethod.getField(TYPE);
-                TransferMethodSecondLine identificationStrategy = mSecondLinePresenter.getSecondLinePresenter(
+                final String transferMethodIdentification = TransferMethodUtils.getTransferMethodDetail(
+                        mTransferMethodIdentification.getContext(),
+                        transferMethod,
                         type);
 
                 mTitle.setText(
@@ -366,9 +363,7 @@ public class ListTransferMethodFragment extends Fragment implements ListTransfer
                         transferMethod.getField(TRANSFER_METHOD_COUNTRY)).build();
                 mIcon.setText(getStringFontIcon(mIcon.getContext(), type));
                 mTransferMethodCountry.setText(locale.getDisplayName());
-                mTransferMethodIdentification.setText(
-                        identificationStrategy.getText(mTransferMethodIdentification
-                                .getContext(), transferMethod));
+                mTransferMethodIdentification.setText(transferMethodIdentification);
 
                 mImageButton.setOnClickListener(new View.OnClickListener() {
                     @Override

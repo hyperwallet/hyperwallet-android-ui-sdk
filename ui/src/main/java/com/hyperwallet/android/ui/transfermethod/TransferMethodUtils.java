@@ -16,6 +16,9 @@
  */
 package com.hyperwallet.android.ui.transfermethod;
 
+import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.BANK_ACCOUNT_ID;
+import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.CARD_NUMBER;
+import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.EMAIL;
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TYPE;
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.BANK_ACCOUNT;
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.BANK_CARD;
@@ -28,6 +31,7 @@ import android.content.Context;
 import android.content.res.Resources;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
 
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodType;
@@ -36,6 +40,8 @@ import com.hyperwallet.android.ui.R;
 import java.util.Locale;
 
 public class TransferMethodUtils {
+
+    private static final int LAST_FOUR_DIGIT = 4;
 
     /**
      * Get string resource by TransferMethodType
@@ -124,5 +130,53 @@ public class TransferMethodUtils {
         }
 
         return title;
+    }
+
+    /**
+     * Gets Transfer method identifier from the {@link HyperwalletTransferMethod} field
+     * by a {@link TransferMethodType}.
+     *
+     * @param context        Context
+     * @param transferMethod HyperwalletTransferMethod
+     * @param type           TransferMethodType
+     */
+    public static String getTransferMethodDetail(@NonNull Context context,
+            @NonNull final HyperwalletTransferMethod transferMethod,
+            @TransferMethodType final String type) {
+        if (type == null) {
+            return "";
+        }
+
+        switch (type) {
+            case BANK_CARD:
+            case PREPAID_CARD:
+                return getFourDigitsIdentification(context,
+                        transferMethod,
+                        CARD_NUMBER,
+                        R.string.transfer_method_list_item_description);
+            case BANK_ACCOUNT:
+            case WIRE_ACCOUNT:
+                return getFourDigitsIdentification(context, transferMethod, BANK_ACCOUNT_ID,
+                        R.string.transfer_method_list_item_description);
+            case PAYPAL_ACCOUNT:
+                final String transferIdentification = transferMethod.getField(EMAIL);
+                return transferIdentification != null ? transferIdentification : "";
+            default:
+                return "";
+        }
+    }
+
+    private static String getFourDigitsIdentification(@NonNull final Context context,
+            @NonNull final HyperwalletTransferMethod transferMethod,
+            @NonNull @HyperwalletTransferMethod.TransferMethodFieldKey final String fieldKey,
+            @StringRes final int stringResId) {
+        final String transferIdentification = transferMethod.getField(fieldKey);
+
+        final String identificationText =
+                transferIdentification != null && transferIdentification.length() > LAST_FOUR_DIGIT
+                        ? transferIdentification.substring(transferIdentification.length() - LAST_FOUR_DIGIT)
+                        : "";
+
+        return context.getString(stringResId, identificationText);
     }
 }
