@@ -89,6 +89,8 @@ public interface SelectTransferMethodContract {
 
         void loadCurrency(final boolean forceUpdate, @NonNull final String countryCode);
 
+        void loadTransferMethodConfigurationKeys();
+
         void loadTransferMethodConfigurationKeys(final boolean forceUpdate, @NonNull final String countryCode,
                 @NonNull final String currencyCode);
 
