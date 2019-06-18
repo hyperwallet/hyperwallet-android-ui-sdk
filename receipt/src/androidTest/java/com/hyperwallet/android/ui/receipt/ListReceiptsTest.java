@@ -247,7 +247,7 @@ public class ListReceiptsTest {
     }
 
     @Test
-    public void testListReceipt_userHasNoTransactions() {
+    public void testListReceipts_userHasNoTransactions() {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();
 
         // run test
@@ -373,7 +373,7 @@ public class ListReceiptsTest {
     }
 
     @Test
-    public void testListReceipt_displayPagedTransactions() throws InterruptedException {
+    public void testListReceipts_displayPagedTransactions() throws InterruptedException {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("receipt_list_paged_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
