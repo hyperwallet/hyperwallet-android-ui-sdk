@@ -23,9 +23,10 @@ import static android.text.format.DateUtils.FORMAT_SHOW_WEEKDAY;
 import static android.text.format.DateUtils.FORMAT_SHOW_YEAR;
 import static android.text.format.DateUtils.formatDateTime;
 
-import static com.hyperwallet.android.ui.receipt.view.ReceiptViewUtil.AMOUNT_FORMAT;
-import static com.hyperwallet.android.ui.receipt.view.ReceiptViewUtil.DETAIL_TIMEZONE;
+import static com.hyperwallet.android.model.receipt.Receipt.Entries.CREDIT;
+import static com.hyperwallet.android.model.receipt.Receipt.Entries.DEBIT;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -47,8 +48,12 @@ import com.hyperwallet.android.ui.receipt.viewmodel.ReceiptDetailViewModel;
 
 import java.text.DecimalFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class ReceiptDetailFragment extends Fragment {
+
+    static final String AMOUNT_FORMAT = "###0.00";
+    static final String DETAIL_TIMEZONE = "zzz";
 
     private ReceiptDetailViewModel mReceiptDetailViewModel;
 
@@ -79,14 +84,66 @@ public class ReceiptDetailFragment extends Fragment {
         Receipt receipt = mReceiptDetailViewModel.getReceipt();
 
         // transactions
-        ReceiptViewUtil util = new ReceiptViewUtil();
-        util.setTransactionView(receipt, view);
+        setTransactionView(receipt, view);
 
         // receipt details
         setDetailsView(receipt, view);
 
         // fee details
         setFeeDetailsView(receipt, view);
+    }
+
+    // By design decision, this code is also repeated in ListReceiptFragment
+    private void setTransactionView(@NonNull final Receipt receipt, @NonNull final View view) {
+        TextView transactionTypeIcon = view.findViewById(R.id.transaction_type_icon);
+        TextView transactionTitle = view.findViewById(R.id.transaction_title);
+        TextView transactionDate = view.findViewById(R.id.transaction_date);
+        TextView transactionAmount = view.findViewById(R.id.transaction_amount);
+        TextView transactionCurrency = view.findViewById(R.id.transaction_currency);
+
+        //TODO localization of currencies in consideration
+        DecimalFormat decimalFormat = new DecimalFormat(AMOUNT_FORMAT);
+        double amount = Double.parseDouble(receipt.getAmount());
+        String formattedAmount = decimalFormat.format(amount);
+
+        if (CREDIT.equals(receipt.getEntry())) {
+            transactionAmount.setTextColor(transactionAmount.getContext()
+                    .getResources().getColor(R.color.positiveColor));
+            transactionAmount.setText(transactionAmount.getContext()
+                    .getString(R.string.credit_sign, formattedAmount));
+            transactionTypeIcon.setTextColor(transactionTypeIcon.getContext()
+                    .getResources().getColor(R.color.positiveColor));
+            transactionTypeIcon.setBackground(transactionTypeIcon.getContext()
+                    .getDrawable(R.drawable.circle_positive));
+            transactionTypeIcon.setText(transactionTypeIcon.getContext().getText(R.string.credit));
+        } else if (DEBIT.equals(receipt.getEntry())) {
+            transactionAmount.setTextColor(transactionAmount.getContext()
+                    .getResources().getColor(R.color.colorAccent));
+            transactionAmount.setText(transactionAmount.getContext()
+                    .getString(R.string.debit_sign, formattedAmount));
+            transactionTypeIcon.setTextColor(transactionTypeIcon.getContext()
+                    .getResources().getColor(R.color.colorAccent));
+            transactionTypeIcon.setBackground(transactionTypeIcon.getContext()
+                    .getDrawable(R.drawable.circle_negative));
+            transactionTypeIcon.setText(transactionTypeIcon.getContext().getText(R.string.debit));
+        }
+
+        transactionCurrency.setText(receipt.getCurrency());
+        transactionTitle.setText(getTransactionTitle(receipt.getType(), transactionTitle.getContext()));
+        Date date = DateUtils.fromDateTimeString(receipt.getCreatedOn());
+        transactionDate.setText(formatDateTime(view.getContext(), date.getTime(),
+                FORMAT_SHOW_DATE | FORMAT_SHOW_YEAR));
+    }
+
+    private String getTransactionTitle(@NonNull final String receiptType, @NonNull final Context context) {
+        String showTitle = context.getResources().getString(R.string.unknown_type);
+        int resourceId = context.getResources().getIdentifier(receiptType.toLowerCase(Locale.ROOT), "string",
+                context.getPackageName());
+        if (resourceId != 0) {
+            showTitle = context.getResources().getString(resourceId);
+        }
+
+        return showTitle;
     }
 
     private void setFeeDetailsView(@NonNull final Receipt receipt, @NonNull final View view) {
