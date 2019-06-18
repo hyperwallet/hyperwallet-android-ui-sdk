@@ -21,6 +21,10 @@ import static android.text.format.DateUtils.FORMAT_SHOW_DATE;
 import static android.text.format.DateUtils.FORMAT_SHOW_YEAR;
 import static android.text.format.DateUtils.formatDateTime;
 
+import static com.hyperwallet.android.model.receipt.Receipt.Entries.CREDIT;
+import static com.hyperwallet.android.model.receipt.Receipt.Entries.DEBIT;
+
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,8 +48,10 @@ import com.hyperwallet.android.ui.common.view.OneClickListener;
 import com.hyperwallet.android.ui.receipt.R;
 import com.hyperwallet.android.ui.receipt.viewmodel.ListReceiptViewModel;
 
+import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
 
 public class ListReceiptFragment extends Fragment {
@@ -137,7 +143,7 @@ public class ListReceiptFragment extends Fragment {
     private static class ListReceiptAdapter
             extends PagedListAdapter<Receipt, ListReceiptAdapter.ReceiptViewHolder> {
 
-        private static final String HEADER_DATE_FORMAT = "MMMM yyyy";
+        static final String AMOUNT_FORMAT = "###0.00";
         private static final int HEADER_VIEW_TYPE = 1;
         private static final int DATA_VIEW_TYPE = 0;
         private final ListReceiptViewModel mReceiptViewModel;
@@ -204,14 +210,63 @@ public class ListReceiptFragment extends Fragment {
             }
 
             void bind(@NonNull final Receipt receipt) {
-                ReceiptViewUtil util = new ReceiptViewUtil();
-                util.setTransactionView(receipt, itemView);
                 mView.setOnClickListener(new OneClickListener() {
                     @Override
                     public void onOneClick(View v) {
                         mListReceiptViewModel.setDetailNavigation(receipt);
                     }
                 });
+
+                // By design decision from here under, this code is also repeated in ReceiptDetailFragment
+                TextView transactionTypeIcon = itemView.findViewById(R.id.transaction_type_icon);
+                TextView transactionTitle = itemView.findViewById(R.id.transaction_title);
+                TextView transactionDate = itemView.findViewById(R.id.transaction_date);
+                TextView transactionAmount = itemView.findViewById(R.id.transaction_amount);
+                TextView transactionCurrency = itemView.findViewById(R.id.transaction_currency);
+
+                //TODO localization of currencies in consideration
+                DecimalFormat decimalFormat = new DecimalFormat(AMOUNT_FORMAT);
+                double amount = Double.parseDouble(receipt.getAmount());
+                String formattedAmount = decimalFormat.format(amount);
+
+                if (CREDIT.equals(receipt.getEntry())) {
+                    transactionAmount.setTextColor(transactionAmount.getContext()
+                            .getResources().getColor(R.color.positiveColor));
+                    transactionAmount.setText(transactionAmount.getContext()
+                            .getString(R.string.credit_sign, formattedAmount));
+                    transactionTypeIcon.setTextColor(transactionTypeIcon.getContext()
+                            .getResources().getColor(R.color.positiveColor));
+                    transactionTypeIcon.setBackground(transactionTypeIcon.getContext()
+                            .getDrawable(R.drawable.circle_positive));
+                    transactionTypeIcon.setText(transactionTypeIcon.getContext().getText(R.string.credit));
+                } else if (DEBIT.equals(receipt.getEntry())) {
+                    transactionAmount.setTextColor(transactionAmount.getContext()
+                            .getResources().getColor(R.color.colorAccent));
+                    transactionAmount.setText(transactionAmount.getContext()
+                            .getString(R.string.debit_sign, formattedAmount));
+                    transactionTypeIcon.setTextColor(transactionTypeIcon.getContext()
+                            .getResources().getColor(R.color.colorAccent));
+                    transactionTypeIcon.setBackground(transactionTypeIcon.getContext()
+                            .getDrawable(R.drawable.circle_negative));
+                    transactionTypeIcon.setText(transactionTypeIcon.getContext().getText(R.string.debit));
+                }
+
+                transactionCurrency.setText(receipt.getCurrency());
+                transactionTitle.setText(getTransactionTitle(receipt.getType(), transactionTitle.getContext()));
+                Date date = DateUtils.fromDateTimeString(receipt.getCreatedOn());
+                transactionDate.setText(formatDateTime(itemView.getContext(), date.getTime(),
+                        FORMAT_SHOW_DATE | FORMAT_SHOW_YEAR));
+            }
+
+            String getTransactionTitle(@NonNull final String receiptType, @NonNull final Context context) {
+                String showTitle = context.getResources().getString(R.string.unknown_type);
+                int resourceId = context.getResources().getIdentifier(receiptType.toLowerCase(Locale.ROOT), "string",
+                        context.getPackageName());
+                if (resourceId != 0) {
+                    showTitle = context.getResources().getString(resourceId);
+                }
+
+                return showTitle;
             }
         }
 

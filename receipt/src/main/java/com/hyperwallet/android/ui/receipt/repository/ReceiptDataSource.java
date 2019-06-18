@@ -73,7 +73,7 @@ public class ReceiptDataSource extends PageKeyedDataSource<Integer, Receipt> {
                 .sortByCreatedOnDesc().build();
 
         EspressoIdlingResource.increment();
-        getHyperwallet().listReceipts(queryParam,
+        getHyperwallet().listUserReceipts(queryParam,
                 new HyperwalletListener<HyperwalletPageList<Receipt>>() {
                     @Override
                     public void onSuccess(@Nullable HyperwalletPageList<Receipt> result) {
@@ -134,7 +134,7 @@ public class ReceiptDataSource extends PageKeyedDataSource<Integer, Receipt> {
                 .sortByCreatedOnDesc().build();
 
         EspressoIdlingResource.increment();
-        getHyperwallet().listReceipts(queryParam,
+        getHyperwallet().listUserReceipts(queryParam,
                 new HyperwalletListener<HyperwalletPageList<Receipt>>() {
                     @Override
                     public void onSuccess(@Nullable HyperwalletPageList<Receipt> result) {
