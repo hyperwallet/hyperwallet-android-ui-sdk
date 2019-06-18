@@ -159,14 +159,14 @@ public class ListReceiptFragment extends Fragment {
             if (position != 0) {
                 Receipt previous = getItem(position - 1);
                 Receipt current = getItem(position);
-                if (isDataViewType(previous, current)) {
+                if (isDateViewType(previous, current)) {
                     return DATA_VIEW_TYPE;
                 }
             }
             return HEADER_VIEW_TYPE;
         }
 
-        boolean isDataViewType(@NonNull final Receipt previous, @NonNull final Receipt current) {
+        boolean isDateViewType(@NonNull final Receipt previous, @NonNull final Receipt current) {
             Calendar prev = Calendar.getInstance();
             prev.setTime(DateUtils.fromDateTimeString(previous.getCreatedOn()));
             Calendar curr = Calendar.getInstance();
