@@ -20,6 +20,7 @@ import android.os.Handler;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.paging.PageKeyedDataSource;
@@ -31,28 +32,43 @@ import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.paging.HyperwalletPageList;
 import com.hyperwallet.android.model.receipt.Receipt;
 import com.hyperwallet.android.model.receipt.ReceiptQueryParam;
-import com.hyperwallet.android.ui.common.util.EspressoIdlingResource;
 import com.hyperwallet.android.ui.common.viewmodel.Event;
+import com.hyperwallet.android.util.DateUtil;
 
 import java.util.Calendar;
+import java.util.Date;
 
 /**
- * UserReceiptDataSource mediates communication to HW API Platform particularly on
- * Receipts Users V3 API
+ * PrepaidCardReceiptDataSource mediates communication to HW API Platform particularly on
+ * Receipts PrepaidCard V3 API
  */
-public class UserReceiptDataSource extends PageKeyedDataSource<Integer, Receipt> {
+public class PrepaidCardReceiptDataSource extends PageKeyedDataSource<Date, Receipt> {
 
     private static final int YEAR_BEFORE_NOW = -1;
+
     private final Calendar mCalendarYearBeforeNow;
+    private final String mToken;
     private final MutableLiveData<Event<HyperwalletErrors>> mErrors = new MutableLiveData<>();
     private final MutableLiveData<Boolean> mIsFetchingData = new MutableLiveData<>();
-    private LoadInitialCallback<Integer, Receipt> mLoadInitialCallback;
-    private LoadInitialParams<Integer> mLoadInitialParams;
-    private LoadCallback<Integer, Receipt> mLoadAfterCallback;
-    private LoadParams<Integer> mLoadAfterParams;
+    private PageKeyedDataSource.LoadCallback<Date, Receipt> mLoadAfterCallback;
+    private PageKeyedDataSource.LoadParams<Date> mLoadAfterParams;
+    private PageKeyedDataSource.LoadInitialCallback<Date, Receipt> mLoadInitialCallback;
+    private PageKeyedDataSource.LoadInitialParams<Date> mLoadInitialParams;
 
-    UserReceiptDataSource() {
-        super();
+    @VisibleForTesting
+    PrepaidCardReceiptDataSource() {
+        mCalendarYearBeforeNow = Calendar.getInstance();
+        mCalendarYearBeforeNow.add(Calendar.YEAR, YEAR_BEFORE_NOW);
+        mToken = "trm-test-token";
+    }
+
+    /**
+     * Initialize Prepaid card data source
+     *
+     * @param token Prepaid card token identifier, please get this data from HW Platform
+     */
+    public PrepaidCardReceiptDataSource(@NonNull final String token) {
+        mToken = token;
         mCalendarYearBeforeNow = Calendar.getInstance();
         mCalendarYearBeforeNow.add(Calendar.YEAR, YEAR_BEFORE_NOW);
     }
@@ -61,19 +77,17 @@ public class UserReceiptDataSource extends PageKeyedDataSource<Integer, Receipt>
      * @see {@link PageKeyedDataSource#loadInitial(LoadInitialParams, LoadInitialCallback)}
      */
     @Override
-    public void loadInitial(@NonNull final LoadInitialParams<Integer> params,
-            @NonNull final LoadInitialCallback<Integer, Receipt> callback) {
+    public void loadInitial(@NonNull final LoadInitialParams<Date> params,
+            @NonNull final LoadInitialCallback<Date, Receipt> callback) {
         mLoadInitialCallback = callback;
         mLoadInitialParams = params;
         mIsFetchingData.postValue(Boolean.TRUE);
 
         ReceiptQueryParam queryParam = new ReceiptQueryParam.Builder()
                 .createdAfter(mCalendarYearBeforeNow.getTime())
-                .limit(params.requestedLoadSize)
                 .sortByCreatedOnDesc().build();
 
-        EspressoIdlingResource.increment();
-        getHyperwallet().listUserReceipts(queryParam,
+        getHyperwallet().listPrepaidCardReceipts(mToken, queryParam,
                 new HyperwalletListener<HyperwalletPageList<Receipt>>() {
                     @Override
                     public void onSuccess(@Nullable HyperwalletPageList<Receipt> result) {
@@ -81,21 +95,18 @@ public class UserReceiptDataSource extends PageKeyedDataSource<Integer, Receipt>
                         mErrors.postValue(null);
 
                         if (result != null) {
-                            int next = result.getLimit() + result.getOffset();
-                            int previous = 0;
-                            callback.onResult(result.getDataList(), previous, next);
+                            callback.onResult(result.getDataList(), mCalendarYearBeforeNow.getTime(), null);
                         }
+
                         // reset
                         mLoadInitialCallback = null;
                         mLoadInitialParams = null;
-                        EspressoIdlingResource.decrement();
                     }
 
                     @Override
                     public void onFailure(HyperwalletException exception) {
                         mIsFetchingData.postValue(Boolean.FALSE);
                         mErrors.postValue(new Event<>(exception.getHyperwalletErrors()));
-                        EspressoIdlingResource.decrement();
                     }
 
                     @Override
@@ -106,35 +117,27 @@ public class UserReceiptDataSource extends PageKeyedDataSource<Integer, Receipt>
     }
 
     /**
-     * Unused in this case
-     *
      * @see {@link PageKeyedDataSource#loadBefore(LoadParams, LoadCallback)}
      */
     @Override
-    public void loadBefore(@NonNull LoadParams<Integer> params,
-            @NonNull LoadCallback<Integer, Receipt> callback) {
+    public void loadBefore(@NonNull final LoadParams<Date> params,
+            @NonNull final LoadCallback<Date, Receipt> callback) {
     }
 
     /**
      * @see {@link PageKeyedDataSource#loadAfter(LoadParams, LoadCallback)}
-     * */
+     */
     @Override
-    public void loadAfter(@NonNull LoadParams<Integer> params,
-            final @NonNull LoadCallback<Integer, Receipt> callback) {
-        mLoadInitialCallback = null;
-        mLoadInitialParams = null;
+    public void loadAfter(@NonNull final LoadParams<Date> params, @NonNull final LoadCallback<Date, Receipt> callback) {
         mLoadAfterCallback = callback;
         mLoadAfterParams = params;
-        mIsFetchingData.postValue(Boolean.TRUE);
 
         ReceiptQueryParam queryParam = new ReceiptQueryParam.Builder()
-                .createdAfter(mCalendarYearBeforeNow.getTime())
+                .createdAfter(params.key)
                 .limit(params.requestedLoadSize)
-                .offset(params.key)
                 .sortByCreatedOnDesc().build();
 
-        EspressoIdlingResource.increment();
-        getHyperwallet().listUserReceipts(queryParam,
+        getHyperwallet().listPrepaidCardReceipts(mToken, queryParam,
                 new HyperwalletListener<HyperwalletPageList<Receipt>>() {
                     @Override
                     public void onSuccess(@Nullable HyperwalletPageList<Receipt> result) {
@@ -142,21 +145,18 @@ public class UserReceiptDataSource extends PageKeyedDataSource<Integer, Receipt>
                         mErrors.postValue(null);
 
                         if (result != null) {
-                            int next = result.getLimit() + result.getOffset();
-                            callback.onResult(result.getDataList(), next);
+                            callback.onResult(result.getDataList(), getNextDate(result));
                         }
 
                         // reset
                         mLoadAfterCallback = null;
                         mLoadAfterParams = null;
-                        EspressoIdlingResource.decrement();
                     }
 
                     @Override
                     public void onFailure(HyperwalletException exception) {
                         mIsFetchingData.postValue(Boolean.FALSE);
                         mErrors.postValue(new Event<>(exception.getHyperwalletErrors()));
-                        EspressoIdlingResource.decrement();
                     }
 
                     @Override
@@ -168,7 +168,7 @@ public class UserReceiptDataSource extends PageKeyedDataSource<Integer, Receipt>
 
     /**
      * Facilitates retry when network is down; any error that we can have a retry operation
-     * */
+     */
     void retry() {
         if (mLoadInitialCallback != null) {
             loadInitial(mLoadInitialParams, mLoadInitialCallback);
@@ -181,7 +181,7 @@ public class UserReceiptDataSource extends PageKeyedDataSource<Integer, Receipt>
      * Retrieve reference of Hyperwallet errors inorder for consumers to observe on data changes
      *
      * @return Live event data of {@link HyperwalletErrors}
-     * */
+     */
     public LiveData<Event<HyperwalletErrors>> getErrors() {
         return mErrors;
     }
@@ -192,5 +192,14 @@ public class UserReceiptDataSource extends PageKeyedDataSource<Integer, Receipt>
 
     Hyperwallet getHyperwallet() {
         return Hyperwallet.getDefault();
+    }
+
+    private Date getNextDate(@Nullable final HyperwalletPageList<Receipt> result) {
+        if (result != null && result.getDataList() != null && !result.getDataList().isEmpty()) {
+            // get last receipt date
+            return DateUtil.fromDateTimeString(
+                    result.getDataList().get(result.getDataList().size() - 1).getCreatedOn());
+        }
+        return Calendar.getInstance().getTime();
     }
 }
