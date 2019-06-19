@@ -41,7 +41,6 @@ import androidx.test.rule.ActivityTestRule;
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.ui.common.util.DateUtils;
 import com.hyperwallet.android.ui.common.util.EspressoIdlingResource;
-import com.hyperwallet.android.ui.receipt.repository.UserReceiptRepositoryFactory;
 import com.hyperwallet.android.ui.receipt.rule.HyperwalletExternalResourceManager;
 import com.hyperwallet.android.ui.receipt.rule.HyperwalletMockWebServer;
 import com.hyperwallet.android.ui.receipt.util.RecyclerViewCountAssertion;
@@ -80,11 +79,6 @@ public class ListUserReceiptsTest {
                 .getResourceContent("authentication_token_response.json")).mock();
 
         setLocale(Locale.US);
-    }
-
-    @After
-    public void cleanup() {
-        UserReceiptRepositoryFactory.clearInstance();
     }
 
     @Before

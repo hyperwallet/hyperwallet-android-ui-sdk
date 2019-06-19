@@ -38,7 +38,7 @@ public class UserReceiptRepositoryImpl implements UserReceiptRepository {
     private LiveData<Boolean> mIsFetchingData;
     private LiveData<PagedList<Receipt>> mReceiptsLiveData;
 
-    UserReceiptRepositoryImpl() {
+    public UserReceiptRepositoryImpl() {
         mDataSourceFactory = new UserReceiptDataSourceFactory();
         mReceiptDataSourceLiveData = mDataSourceFactory.getUserReceiptDataSource();
     }

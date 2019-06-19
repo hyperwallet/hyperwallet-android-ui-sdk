@@ -38,7 +38,7 @@ import com.hyperwallet.android.ui.common.view.error.OnNetworkErrorCallback;
 import com.hyperwallet.android.ui.common.viewmodel.Event;
 import com.hyperwallet.android.ui.common.viewmodel.ListDetailNavigator;
 import com.hyperwallet.android.ui.receipt.R;
-import com.hyperwallet.android.ui.receipt.repository.UserReceiptRepositoryFactory;
+import com.hyperwallet.android.ui.receipt.repository.UserReceiptRepositoryImpl;
 import com.hyperwallet.android.ui.receipt.viewmodel.ListUserReceiptViewModel;
 
 import java.util.List;
@@ -65,9 +65,8 @@ public class ListUserReceiptActivity extends AppCompatActivity implements OnNetw
             }
         });
 
-        UserReceiptRepositoryFactory factory = UserReceiptRepositoryFactory.getInstance();
         mListUserReceiptViewModel = ViewModelProviders.of(this, new ListUserReceiptViewModel
-                .ListReceiptViewModelFactory(factory.getUserReceiptRepository()))
+                .ListReceiptViewModelFactory(new UserReceiptRepositoryImpl()))
                 .get(ListUserReceiptViewModel.class);
 
         mListUserReceiptViewModel.getReceiptErrors().observe(this, new Observer<Event<HyperwalletErrors>>() {
@@ -89,12 +88,6 @@ public class ListUserReceiptActivity extends AppCompatActivity implements OnNetw
         if (savedInstanceState == null) {
             initFragment(ListReceiptFragment.newInstance());
         }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        UserReceiptRepositoryFactory.clearInstance();
     }
 
     @Override
