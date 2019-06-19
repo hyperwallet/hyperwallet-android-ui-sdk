@@ -40,13 +40,14 @@ import com.hyperwallet.android.ui.common.viewmodel.ListDetailNavigator;
 import com.hyperwallet.android.ui.receipt.R;
 import com.hyperwallet.android.ui.receipt.repository.UserReceiptRepositoryImpl;
 import com.hyperwallet.android.ui.receipt.viewmodel.ListUserReceiptViewModel;
+import com.hyperwallet.android.ui.receipt.viewmodel.ReceiptViewModel;
 
 import java.util.List;
 
 public class ListUserReceiptActivity extends AppCompatActivity implements OnNetworkErrorCallback,
         ListDetailNavigator<Event<Receipt>> {
 
-    private ListUserReceiptViewModel mListUserReceiptViewModel;
+    private ReceiptViewModel mReceiptViewModel;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -65,11 +66,11 @@ public class ListUserReceiptActivity extends AppCompatActivity implements OnNetw
             }
         });
 
-        mListUserReceiptViewModel = ViewModelProviders.of(this, new ListUserReceiptViewModel
+        mReceiptViewModel = ViewModelProviders.of(this, new ListUserReceiptViewModel
                 .ListReceiptViewModelFactory(new UserReceiptRepositoryImpl()))
                 .get(ListUserReceiptViewModel.class);
 
-        mListUserReceiptViewModel.getReceiptErrors().observe(this, new Observer<Event<HyperwalletErrors>>() {
+        mReceiptViewModel.getReceiptErrors().observe(this, new Observer<Event<HyperwalletErrors>>() {
             @Override
             public void onChanged(Event<HyperwalletErrors> event) {
                 if (event != null && !event.isContentConsumed()) {
@@ -78,7 +79,7 @@ public class ListUserReceiptActivity extends AppCompatActivity implements OnNetw
             }
         });
 
-        mListUserReceiptViewModel.getDetailNavigation().observe(this, new Observer<Event<Receipt>>() {
+        mReceiptViewModel.getDetailNavigation().observe(this, new Observer<Event<Receipt>>() {
             @Override
             public void onChanged(Event<Receipt> event) {
                 navigate(event);

@@ -29,7 +29,7 @@ import com.hyperwallet.android.model.receipt.Receipt;
 import com.hyperwallet.android.ui.common.viewmodel.Event;
 import com.hyperwallet.android.ui.receipt.repository.UserReceiptRepository;
 
-public class ListUserReceiptViewModel extends ViewModel {
+public class ListUserReceiptViewModel extends ReceiptViewModel {
 
     private MutableLiveData<Event<HyperwalletErrors>> mErrorEvent = new MutableLiveData<>();
     private MutableLiveData<Event<Receipt>> mDetailNavigation = new MutableLiveData<>();
