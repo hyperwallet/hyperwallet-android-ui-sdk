@@ -21,6 +21,14 @@
             android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"/>
     </RelativeLayout>
 
-    <include layout="@layout/item_receipt"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:background="@drawable/view_item_ripple"
+        android:id="@+id/receipt_item"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_receipt_information_height">
+
+        <include layout="@layout/receipt"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

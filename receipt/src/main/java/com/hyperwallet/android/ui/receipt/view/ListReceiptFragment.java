@@ -16,6 +16,11 @@
  */
 package com.hyperwallet.android.ui.receipt.view;
 
+import static android.text.format.DateUtils.FORMAT_NO_MONTH_DAY;
+import static android.text.format.DateUtils.FORMAT_SHOW_DATE;
+import static android.text.format.DateUtils.FORMAT_SHOW_YEAR;
+import static android.text.format.DateUtils.formatDateTime;
+
 import static com.hyperwallet.android.model.receipt.Receipt.Entries.CREDIT;
 import static com.hyperwallet.android.model.receipt.Receipt.Entries.DEBIT;
 
@@ -39,10 +44,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.hyperwallet.android.model.receipt.Receipt;
 import com.hyperwallet.android.ui.common.util.DateUtils;
+import com.hyperwallet.android.ui.common.view.OneClickListener;
 import com.hyperwallet.android.ui.receipt.R;
 import com.hyperwallet.android.ui.receipt.viewmodel.ListReceiptViewModel;
 
+import java.text.DecimalFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -77,14 +85,14 @@ public class ListReceiptFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container,
             @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.list_receipt_fragment, container, false);
+        return inflater.inflate(R.layout.fragment_list_receipt, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull final View view, @Nullable final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mProgressBar = view.findViewById(R.id.list_receipt_progress_bar);
-        mListReceiptAdapter = new ListReceiptAdapter(new ListReceiptItemDiffCallback());
+        mListReceiptAdapter = new ListReceiptAdapter(mListReceiptViewModel, new ListReceiptItemDiffCallback());
         mListReceiptsView = view.findViewById(R.id.list_receipts);
         mListReceiptsView.setHasFixedSize(true);
         mListReceiptsView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -96,8 +104,8 @@ public class ListReceiptFragment extends Fragment {
     private void registerObservers() {
         mListReceiptViewModel.getReceiptList().observe(getViewLifecycleOwner(), new Observer<PagedList<Receipt>>() {
             @Override
-            public void onChanged(PagedList<Receipt> transferMethods) {
-                mListReceiptAdapter.submitList(transferMethods);
+            public void onChanged(PagedList<Receipt> receipts) {
+                mListReceiptAdapter.submitList(receipts);
             }
         });
 
@@ -135,13 +143,15 @@ public class ListReceiptFragment extends Fragment {
     private static class ListReceiptAdapter
             extends PagedListAdapter<Receipt, ListReceiptAdapter.ReceiptViewHolder> {
 
-        private static final String HEADER_DATE_FORMAT = "MMMM yyyy";
-        private static final String CAPTION_DATE_FORMAT = "MMMM dd, yyyy";
+        static final String AMOUNT_FORMAT = "###0.00";
         private static final int HEADER_VIEW_TYPE = 1;
         private static final int DATA_VIEW_TYPE = 0;
+        private final ListReceiptViewModel mReceiptViewModel;
 
-        ListReceiptAdapter(@NonNull final DiffUtil.ItemCallback<Receipt> diffCallback) {
+        ListReceiptAdapter(@NonNull final ListReceiptViewModel receiptViewModel,
+                @NonNull final DiffUtil.ItemCallback<Receipt> diffCallback) {
             super(diffCallback);
+            mReceiptViewModel = receiptViewModel;
         }
 
         @Override
@@ -173,10 +183,10 @@ public class ListReceiptFragment extends Fragment {
 
             if (viewType == HEADER_VIEW_TYPE) {
                 View headerView = layout.inflate(R.layout.item_receipt_with_header, viewGroup, false);
-                return new ReceiptViewHolderWithHeader(headerView);
+                return new ReceiptViewHolderWithHeader(mReceiptViewModel, headerView);
             }
             View dataView = layout.inflate(R.layout.item_receipt, viewGroup, false);
-            return new ReceiptViewHolder(dataView);
+            return new ReceiptViewHolder(mReceiptViewModel, dataView);
         }
 
         @Override
@@ -188,48 +198,64 @@ public class ListReceiptFragment extends Fragment {
         }
 
         class ReceiptViewHolder extends RecyclerView.ViewHolder {
-            private final TextView mTransactionAmount;
-            private final TextView mTransactionCurrency;
-            private final TextView mTransactionDate;
-            private final TextView mTransactionTitle;
-            private final TextView mTransactionTypeIcon;
 
-            ReceiptViewHolder(@NonNull final View item) {
+            private ListReceiptViewModel mListReceiptViewModel;
+            private View mView;
+
+            ReceiptViewHolder(@NonNull final ListReceiptViewModel receiptViewModel,
+                    @NonNull final View item) {
                 super(item);
-                mTransactionAmount = item.findViewById(R.id.transaction_amount);
-                mTransactionCurrency = item.findViewById(R.id.transaction_currency);
-                mTransactionDate = item.findViewById(R.id.transaction_date);
-                mTransactionTitle = item.findViewById(R.id.transaction_title);
-                mTransactionTypeIcon = item.findViewById(R.id.transaction_type_icon);
+                mView = item.findViewById(R.id.receipt_item);
+                mListReceiptViewModel = receiptViewModel;
             }
 
             void bind(@NonNull final Receipt receipt) {
+                mView.setOnClickListener(new OneClickListener() {
+                    @Override
+                    public void onOneClick(View v) {
+                        mListReceiptViewModel.setDetailNavigation(receipt);
+                    }
+                });
+
+                // By design decision from here under, this code is also repeated in ReceiptDetailFragment
+                TextView transactionTypeIcon = itemView.findViewById(R.id.transaction_type_icon);
+                TextView transactionTitle = itemView.findViewById(R.id.transaction_title);
+                TextView transactionDate = itemView.findViewById(R.id.transaction_date);
+                TextView transactionAmount = itemView.findViewById(R.id.transaction_amount);
+                TextView transactionCurrency = itemView.findViewById(R.id.transaction_currency);
+
+                //TODO localization of currencies in consideration
+                DecimalFormat decimalFormat = new DecimalFormat(AMOUNT_FORMAT);
+                double amount = Double.parseDouble(receipt.getAmount());
+                String formattedAmount = decimalFormat.format(amount);
+
                 if (CREDIT.equals(receipt.getEntry())) {
-                    mTransactionAmount.setTextColor(mTransactionAmount.getContext()
+                    transactionAmount.setTextColor(transactionAmount.getContext()
                             .getResources().getColor(R.color.positiveColor));
-                    mTransactionAmount.setText(mTransactionAmount.getContext()
-                            .getString(R.string.credit_sign, receipt.getAmount()));
-                    mTransactionTypeIcon.setTextColor(mTransactionTypeIcon.getContext()
+                    transactionAmount.setText(transactionAmount.getContext()
+                            .getString(R.string.credit_sign, formattedAmount));
+                    transactionTypeIcon.setTextColor(transactionTypeIcon.getContext()
                             .getResources().getColor(R.color.positiveColor));
-                    mTransactionTypeIcon.setBackground(mTransactionTypeIcon.getContext()
+                    transactionTypeIcon.setBackground(transactionTypeIcon.getContext()
                             .getDrawable(R.drawable.circle_positive));
-                    mTransactionTypeIcon.setText(mTransactionTypeIcon.getContext().getText(R.string.credit));
+                    transactionTypeIcon.setText(transactionTypeIcon.getContext().getText(R.string.credit));
                 } else if (DEBIT.equals(receipt.getEntry())) {
-                    mTransactionAmount.setTextColor(mTransactionAmount.getContext()
+                    transactionAmount.setTextColor(transactionAmount.getContext()
                             .getResources().getColor(R.color.colorAccent));
-                    mTransactionAmount.setText(mTransactionAmount.getContext()
-                            .getString(R.string.debit_sign, receipt.getAmount()));
-                    mTransactionTypeIcon.setTextColor(mTransactionTypeIcon.getContext()
+                    transactionAmount.setText(transactionAmount.getContext()
+                            .getString(R.string.debit_sign, formattedAmount));
+                    transactionTypeIcon.setTextColor(transactionTypeIcon.getContext()
                             .getResources().getColor(R.color.colorAccent));
-                    mTransactionTypeIcon.setBackground(mTransactionTypeIcon.getContext()
+                    transactionTypeIcon.setBackground(transactionTypeIcon.getContext()
                             .getDrawable(R.drawable.circle_negative));
-                    mTransactionTypeIcon.setText(mTransactionTypeIcon.getContext().getText(R.string.debit));
+                    transactionTypeIcon.setText(transactionTypeIcon.getContext().getText(R.string.debit));
                 }
 
-                mTransactionCurrency.setText(receipt.getCurrency());
-                mTransactionTitle.setText(getTransactionTitle(receipt.getType(), mTransactionTitle.getContext()));
-                mTransactionDate.setText(DateUtils.toDateFormat(DateUtils.
-                        fromDateTimeString(receipt.getCreatedOn()), CAPTION_DATE_FORMAT));
+                transactionCurrency.setText(receipt.getCurrency());
+                transactionTitle.setText(getTransactionTitle(receipt.getType(), transactionTitle.getContext()));
+                Date date = DateUtils.fromDateTimeString(receipt.getCreatedOn());
+                transactionDate.setText(formatDateTime(itemView.getContext(), date.getTime(),
+                        FORMAT_SHOW_DATE | FORMAT_SHOW_YEAR));
             }
 
             String getTransactionTitle(@NonNull final String receiptType, @NonNull final Context context) {
@@ -248,16 +274,18 @@ public class ListReceiptFragment extends Fragment {
 
             private final TextView mTransactionHeaderText;
 
-            ReceiptViewHolderWithHeader(@NonNull final View item) {
-                super(item);
+            ReceiptViewHolderWithHeader(@NonNull final ListReceiptViewModel receiptViewModel,
+                    @NonNull final View item) {
+                super(receiptViewModel, item);
                 mTransactionHeaderText = item.findViewById(R.id.item_date_header_title);
             }
 
             @Override
             void bind(@NonNull final Receipt receipt) {
                 super.bind(receipt);
-                mTransactionHeaderText.setText(DateUtils.toDateFormat(
-                        DateUtils.fromDateTimeString(receipt.getCreatedOn()), HEADER_DATE_FORMAT));
+                Date date = DateUtils.fromDateTimeString(receipt.getCreatedOn());
+                mTransactionHeaderText.setText(formatDateTime(mTransactionHeaderText.getContext(), date.getTime(),
+                        FORMAT_SHOW_DATE | FORMAT_SHOW_YEAR | FORMAT_NO_MONTH_DAY));
             }
         }
     }

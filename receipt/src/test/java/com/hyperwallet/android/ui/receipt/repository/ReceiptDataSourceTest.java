@@ -96,13 +96,13 @@ public class ReceiptDataSourceTest {
                 listener.onSuccess(response);
                 return listener;
             }
-        }).when(mHyperwallet).listReceipts(any(ReceiptQueryParam.class),
+        }).when(mHyperwallet).listUserReceipts(any(ReceiptQueryParam.class),
                 ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
 
         // test
         mReceiptDataSource.loadInitial(mInitialParams, mInitialCallback);
 
-        verify(mHyperwallet).listReceipts(any(ReceiptQueryParam.class),
+        verify(mHyperwallet).listUserReceipts(any(ReceiptQueryParam.class),
                 ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
         verify(mInitialCallback).onResult(mListArgumentCaptor.capture(), mPreviousCaptor.capture(),
                 mNextCaptor.capture());
@@ -149,13 +149,13 @@ public class ReceiptDataSourceTest {
                 listener.onSuccess(null);
                 return listener;
             }
-        }).when(mHyperwallet).listReceipts(any(ReceiptQueryParam.class),
+        }).when(mHyperwallet).listUserReceipts(any(ReceiptQueryParam.class),
                 ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
 
         // test
         mReceiptDataSource.loadInitial(mInitialParams, mInitialCallback);
 
-        verify(mHyperwallet).listReceipts(any(ReceiptQueryParam.class),
+        verify(mHyperwallet).listUserReceipts(any(ReceiptQueryParam.class),
                 ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
         verify(mInitialCallback, never()).onResult(ArgumentMatchers.<Receipt>anyList(), anyInt(), anyInt());
 
@@ -177,13 +177,13 @@ public class ReceiptDataSourceTest {
                 listener.onFailure(new HyperwalletException(errors));
                 return listener;
             }
-        }).when(mHyperwallet).listReceipts(any(ReceiptQueryParam.class),
+        }).when(mHyperwallet).listUserReceipts(any(ReceiptQueryParam.class),
                 ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
 
         // test
         mReceiptDataSource.loadInitial(mInitialParams, mInitialCallback);
 
-        verify(mHyperwallet).listReceipts(any(ReceiptQueryParam.class),
+        verify(mHyperwallet).listUserReceipts(any(ReceiptQueryParam.class),
                 ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
         verify(mInitialCallback, never()).onResult(ArgumentMatchers.<Receipt>anyList(), anyInt(), anyInt());
 
@@ -211,13 +211,13 @@ public class ReceiptDataSourceTest {
                 listener.onFailure(new HyperwalletException(errors));
                 return listener;
             }
-        }).when(mHyperwallet).listReceipts(any(ReceiptQueryParam.class),
+        }).when(mHyperwallet).listUserReceipts(any(ReceiptQueryParam.class),
                 ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
 
         // test
         mReceiptDataSource.loadInitial(mInitialParams, mInitialCallback);
 
-        verify(mHyperwallet).listReceipts(any(ReceiptQueryParam.class),
+        verify(mHyperwallet).listUserReceipts(any(ReceiptQueryParam.class),
                 ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
         verify(mInitialCallback, never()).onResult(ArgumentMatchers.<Receipt>anyList(), anyInt(), anyInt());
 
@@ -248,13 +248,13 @@ public class ReceiptDataSourceTest {
                 listener.onSuccess(response);
                 return listener;
             }
-        }).when(mHyperwallet).listReceipts(any(ReceiptQueryParam.class),
+        }).when(mHyperwallet).listUserReceipts(any(ReceiptQueryParam.class),
                 ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
 
         // test
         mReceiptDataSource.loadAfter(mLoadAfterParams, mLoadAfterCallback);
 
-        verify(mHyperwallet).listReceipts(any(ReceiptQueryParam.class),
+        verify(mHyperwallet).listUserReceipts(any(ReceiptQueryParam.class),
                 ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
         verify(mLoadAfterCallback).onResult(mListArgumentCaptor.capture(), mNextCaptor.capture());
 
@@ -299,13 +299,13 @@ public class ReceiptDataSourceTest {
                 listener.onSuccess(null);
                 return listener;
             }
-        }).when(mHyperwallet).listReceipts(any(ReceiptQueryParam.class),
+        }).when(mHyperwallet).listUserReceipts(any(ReceiptQueryParam.class),
                 ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
 
         // test
         mReceiptDataSource.loadAfter(mLoadAfterParams, mLoadAfterCallback);
 
-        verify(mHyperwallet).listReceipts(any(ReceiptQueryParam.class),
+        verify(mHyperwallet).listUserReceipts(any(ReceiptQueryParam.class),
                 ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
         verify(mLoadAfterCallback, never()).onResult(ArgumentMatchers.<List<Receipt>>any(), anyInt());
 
@@ -327,13 +327,13 @@ public class ReceiptDataSourceTest {
                 listener.onFailure(new HyperwalletException(errors));
                 return listener;
             }
-        }).when(mHyperwallet).listReceipts(any(ReceiptQueryParam.class),
+        }).when(mHyperwallet).listUserReceipts(any(ReceiptQueryParam.class),
                 ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
 
         // test
         mReceiptDataSource.loadAfter(mLoadAfterParams, mLoadAfterCallback);
 
-        verify(mHyperwallet).listReceipts(any(ReceiptQueryParam.class),
+        verify(mHyperwallet).listUserReceipts(any(ReceiptQueryParam.class),
                 ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
         verify(mLoadAfterCallback, never()).onResult(ArgumentMatchers.<Receipt>anyList(), anyInt());
 
@@ -362,13 +362,13 @@ public class ReceiptDataSourceTest {
                 listener.onFailure(new HyperwalletException(errors));
                 return listener;
             }
-        }).when(mHyperwallet).listReceipts(any(ReceiptQueryParam.class),
+        }).when(mHyperwallet).listUserReceipts(any(ReceiptQueryParam.class),
                 ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
 
         // test
         mReceiptDataSource.loadAfter(mLoadAfterParams, mLoadAfterCallback);
 
-        verify(mHyperwallet).listReceipts(any(ReceiptQueryParam.class),
+        verify(mHyperwallet).listUserReceipts(any(ReceiptQueryParam.class),
                 ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
         verify(mLoadAfterCallback, never()).onResult(ArgumentMatchers.<Receipt>anyList(), anyInt());
 

@@ -41,10 +41,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.common.view.HorizontalDividerItemDecorator;
+import com.hyperwallet.android.ui.common.view.OneClickListener;
 import com.hyperwallet.android.ui.repository.RepositoryFactory;
 import com.hyperwallet.android.ui.view.CountrySelectionDialogFragment;
 import com.hyperwallet.android.ui.view.CurrencySelectionDialogFragment;
-import com.hyperwallet.android.ui.view.widget.OneClickListener;
 
 import java.util.ArrayList;
 import java.util.List;

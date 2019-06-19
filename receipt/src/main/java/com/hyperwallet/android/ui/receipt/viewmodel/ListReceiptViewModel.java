@@ -32,6 +32,7 @@ import com.hyperwallet.android.ui.receipt.repository.ReceiptRepository;
 public class ListReceiptViewModel extends ViewModel {
 
     private MutableLiveData<Event<HyperwalletErrors>> mErrorEvent = new MutableLiveData<>();
+    private MutableLiveData<Event<Receipt>> mDetailNavigation = new MutableLiveData<>();
     private Observer<Event<HyperwalletErrors>> mErrorEventObserver;
     private ReceiptRepository mReceiptRepository;
 
@@ -64,6 +65,14 @@ public class ListReceiptViewModel extends ViewModel {
 
     public void retryLoadReceipts() {
         mReceiptRepository.retryLoadReceipt();
+    }
+
+    public LiveData<Event<Receipt>> getDetailNavigation() {
+        return mDetailNavigation;
+    }
+
+    public void setDetailNavigation(@NonNull final Receipt receipt) {
+        mDetailNavigation.postValue(new Event<>(receipt));
     }
 
     @Override
