@@ -80,7 +80,7 @@ public class ListPrepaidCardReceiptsTest {
     @Test
     public void testListReceipt_userHasMultipleTransactions() {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("ppc_receipt_list.json")).mock();
+                .getResourceContent("prepaid_card_receipt_list.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();
 
         // run test

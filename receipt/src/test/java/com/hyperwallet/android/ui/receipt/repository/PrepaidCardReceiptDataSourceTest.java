@@ -88,7 +88,7 @@ public class PrepaidCardReceiptDataSourceTest {
 
     @Test
     public void testLoadInitial_returnsReceipts() throws Exception {
-        String json = mExternalResourceManager.getResourceContent("ppc_receipt_list.json");
+        String json = mExternalResourceManager.getResourceContent("prepaid_card_receipt_list.json");
         JSONObject jsonObject = new JSONObject(json);
         final HyperwalletPageList<Receipt> response = new HyperwalletPageList<>(jsonObject, Receipt.class);
 
@@ -245,7 +245,7 @@ public class PrepaidCardReceiptDataSourceTest {
 
     @Test
     public void testLoadAfter_returnsReceipts() throws Exception {
-        String json = mExternalResourceManager.getResourceContent("ppc_receipt_list.json");
+        String json = mExternalResourceManager.getResourceContent("prepaid_card_receipt_list.json");
         JSONObject jsonObject = new JSONObject(json);
         final HyperwalletPageList<Receipt> response = new HyperwalletPageList<>(jsonObject, Receipt.class);
 
