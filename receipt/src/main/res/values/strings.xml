@@ -1,6 +1,22 @@
 <resources>
     <string name="app_name">receipt</string>
     <string name="title_activity_receipt_list">Transactions</string>
+    <string name="title_activity_receipt_detail">Transaction Details</string>
+    <string name="transaction_header_text">Transaction</string>
+    <string name="fee_details_header_text">Fee Specification</string>
+    <string name="details_amount_label">Amount:</string>
+    <string name="fee_label">Fee:</string>
+    <string name="transfer_amount_label">Transfer Amount:</string>
+    <string name="receipt_header_label">Receipt</string>
+    <string name="journalId">Receipt ID:</string>
+    <string name="createdOn">Date:</string>
+    <string name="clientPaymentId">Client Transaction ID:</string>
+    <string name="notes">Notes</string>
+    <string name="charityName">Charity Name:</string>
+    <string name="checkNumber">Check Number:</string>
+    <string name="website">Promo Website:</string>
+    <string name="concat_string_view_format">%s %s</string>
+
     <string name="empty_transaction_information">Seems like, you don\'t have any Transactions,
         yet.
     </string>

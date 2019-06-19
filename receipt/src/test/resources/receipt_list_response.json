@@ -11,11 +11,15 @@
       "sourceToken": "act-12345",
       "destinationToken": "usr-fa76a738-f43d-48b9-9a7a-7048d44a5d2d",
       "amount": "20.00",
-      "fee": "0.00",
+      "fee": "2.25",
       "currency": "USD",
       "details": {
         "clientPaymentId": "8OxXefx5",
-        "payeeName": "A Person"
+        "payeeName": "A Person",
+        "website": "https://api.sandbox.hyperwallet.com",
+        "notes": "Sample payment for the period of June 15th, 2019 to July 23, 2019",
+        "charityName": "Sample Charity",
+        "checkNumber": "Sample Check Number"
       }
     },
     {

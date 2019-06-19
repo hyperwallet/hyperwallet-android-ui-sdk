@@ -29,8 +29,7 @@
         android:layout_marginStart="@dimen/grid_margin_left"
         android:layout_marginTop="@dimen/grid_margin_top"
         android:text="@string/not_available"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-        android:textStyle="bold"
+        android:textAppearance="@style/TextAppearance.Hyperwallet.Subtitle1"
         app:layout_constraintLeft_toRightOf="@+id/transfer_method_type_icon"
         app:layout_constraintTop_toTopOf="parent" />
 
