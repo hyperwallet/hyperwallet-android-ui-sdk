@@ -22,7 +22,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.paging.DataSource;
 
 /**
- * Data source factory that uses {@link DataSource.Factory} facility
+ * Data source factory for User receipt data source, that uses {@link DataSource.Factory} facility
  */
 public class UserReceiptDataSourceFactory extends DataSource.Factory {
 
@@ -37,7 +37,7 @@ public class UserReceiptDataSourceFactory extends DataSource.Factory {
     }
 
     /**
-     * Returns observable members of receipt data source
+     * Returns observable members of user receipt data source
      */
     LiveData<UserReceiptDataSource> getUserReceiptDataSource() {
         return mDataSourceMutableLiveData;

@@ -1,21 +1,6 @@
-/*
- * The MIT License (MIT)
- * Copyright (c) 2019 Hyperwallet Systems Inc.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
- * associated documentation files (the "Software"), to deal in the Software without restriction,
- * including without limitation the rights to use, copy, modify, merge, publish, distribute,
- * sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
- * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
- * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- */
 package com.hyperwallet.android.ui.receipt.repository;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
@@ -24,30 +9,27 @@ import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.receipt.Receipt;
 import com.hyperwallet.android.ui.common.viewmodel.Event;
 
-/**
- * {@link UserReceiptRepository} implementation
- */
-public class UserReceiptRepositoryImpl implements UserReceiptRepository {
+public class PrepaidCardReceiptRepositoryImpl implements PrepaidCardReceiptRepository {
 
     private static final int PAGE_SIZE = 10;
     private static final int INITIAL_LOAD_SIZE = 20;
 
-    private final UserReceiptDataSourceFactory mDataSourceFactory;
-    private final LiveData<UserReceiptDataSource> mReceiptDataSourceLiveData;
+    private final PrepaidCardReceiptDataSourceFactory mDataSourceFactory;
+    private final LiveData<PrepaidCardReceiptDataSource> mReceiptDataSourceLiveData;
     private LiveData<Event<HyperwalletErrors>> mErrorsLiveData;
     private LiveData<Boolean> mIsFetchingData;
     private LiveData<PagedList<Receipt>> mReceiptsLiveData;
 
-    public UserReceiptRepositoryImpl() {
-        mDataSourceFactory = new UserReceiptDataSourceFactory();
-        mReceiptDataSourceLiveData = mDataSourceFactory.getUserReceiptDataSource();
+    public PrepaidCardReceiptRepositoryImpl(@NonNull final String token) {
+        mDataSourceFactory = new PrepaidCardReceiptDataSourceFactory(token);
+        mReceiptDataSourceLiveData = mDataSourceFactory.getPrepaidCardReceiptDataSource();
     }
 
     /**
-     * @see {@link UserReceiptRepository#loadUserReceipts()}
+     * @see {@link PrepaidCardReceiptRepository#loadPrepaidCardReceipts()}
      */
     @Override
-    public LiveData<PagedList<Receipt>> loadUserReceipts() {
+    public LiveData<PagedList<Receipt>> loadPrepaidCardReceipts() {
         if (mReceiptsLiveData == null) {
             PagedList.Config config = new PagedList.Config.Builder()
                     .setPageSize(PAGE_SIZE)
@@ -60,7 +42,7 @@ public class UserReceiptRepositoryImpl implements UserReceiptRepository {
     }
 
     /**
-     * @see {@link UserReceiptRepository#isLoading()}
+     * @see {@link PrepaidCardReceiptRepository#isLoading()}
      */
     @Override
     public LiveData<Boolean> isLoading() {
@@ -71,8 +53,8 @@ public class UserReceiptRepositoryImpl implements UserReceiptRepository {
     }
 
     /**
-     * @see {@link UserReceiptRepository#getErrors()}
-     * */
+     * @see {@link PrepaidCardReceiptRepository#getErrors()}
+     */
     @Override
     public LiveData<Event<HyperwalletErrors>> getErrors() {
         if (mErrorsLiveData == null) {
@@ -82,8 +64,8 @@ public class UserReceiptRepositoryImpl implements UserReceiptRepository {
     }
 
     /**
-     * @see {@link UserReceiptRepository#retryLoadReceipt()}
-     * */
+     * @see {@link PrepaidCardReceiptRepository#retryLoadReceipt()}
+     */
     @Override
     public void retryLoadReceipt() {
         if (mReceiptDataSourceLiveData.getValue() != null) {

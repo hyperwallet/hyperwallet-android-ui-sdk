@@ -18,10 +18,10 @@ package com.hyperwallet.android.ui.receipt.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -38,21 +38,23 @@ import com.hyperwallet.android.ui.common.view.error.OnNetworkErrorCallback;
 import com.hyperwallet.android.ui.common.viewmodel.Event;
 import com.hyperwallet.android.ui.common.viewmodel.ListDetailNavigator;
 import com.hyperwallet.android.ui.receipt.R;
-import com.hyperwallet.android.ui.receipt.repository.UserReceiptRepositoryImpl;
-import com.hyperwallet.android.ui.receipt.viewmodel.ListUserReceiptViewModel;
+import com.hyperwallet.android.ui.receipt.repository.PrepaidCardReceiptRepositoryImpl;
+import com.hyperwallet.android.ui.receipt.viewmodel.ListPrepaidCardReceiptViewModel;
 import com.hyperwallet.android.ui.receipt.viewmodel.ReceiptViewModel;
 
 import java.util.List;
 
-public class ListUserReceiptActivity extends AppCompatActivity implements OnNetworkErrorCallback,
+public class ListPrepaidCardReceiptActivity extends AppCompatActivity implements OnNetworkErrorCallback,
         ListDetailNavigator<Event<Receipt>> {
+
+    public static final String EXTRA_PREPAID_CARD_TOKEN = "PREPAID_CARD_TOKEN";
 
     private ReceiptViewModel mReceiptViewModel;
 
     @Override
-    protected void onCreate(final Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_user_receipt);
+        setContentView(R.layout.activity_list_prepaid_card_receipt);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -66,8 +68,14 @@ public class ListUserReceiptActivity extends AppCompatActivity implements OnNetw
             }
         });
 
-        mReceiptViewModel = ViewModelProviders.of(this, new ListUserReceiptViewModel
-                .ListReceiptViewModelFactory(new UserReceiptRepositoryImpl()))
+        String token = getIntent().getStringExtra(EXTRA_PREPAID_CARD_TOKEN);
+        if (TextUtils.isEmpty(token)) {
+            throw new IllegalArgumentException("Activity " + ListPrepaidCardReceiptActivity.class.getName()
+                    + " requires parameter: EXTRA_" + EXTRA_PREPAID_CARD_TOKEN + " value");
+        }
+
+        mReceiptViewModel = ViewModelProviders.of(this, new ListPrepaidCardReceiptViewModel
+                .ListPrepaidCardReceiptViewModelFactory(new PrepaidCardReceiptRepositoryImpl(token)))
                 .get(ReceiptViewModel.class);
 
         mReceiptViewModel.getReceiptErrors().observe(this, new Observer<Event<HyperwalletErrors>>() {
@@ -81,7 +89,7 @@ public class ListUserReceiptActivity extends AppCompatActivity implements OnNetw
 
         mReceiptViewModel.getDetailNavigation().observe(this, new Observer<Event<Receipt>>() {
             @Override
-            public void onChanged(Event<Receipt> event) {
+            public void onChanged(@NonNull final Event<Receipt> event) {
                 navigate(event);
             }
         });
@@ -89,24 +97,6 @@ public class ListUserReceiptActivity extends AppCompatActivity implements OnNetw
         if (savedInstanceState == null) {
             initFragment(ListReceiptFragment.newInstance());
         }
-    }
-
-    @Override
-    protected void onActivityResult(final int requestCode, final int resultCode, @Nullable final Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return true;
-    }
-
-    private void initFragment(@NonNull final Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.list_receipt_fragment, fragment);
-        fragmentTransaction.commit();
     }
 
     @Override
@@ -121,6 +111,22 @@ public class ListUserReceiptActivity extends AppCompatActivity implements OnNetw
         fragment.retry();
     }
 
+    @Override
+    public void navigate(@NonNull final Event<Receipt> event) {
+        if (!event.isContentConsumed()) {
+            Intent intent = new Intent(this, ReceiptDetailActivity.class);
+            intent.putExtra(ReceiptDetailActivity.EXTRA_RECEIPT, event.getContent());
+            startActivity(intent);
+        }
+    }
+
+    private void initFragment(@NonNull final Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.list_receipt_fragment, fragment);
+        fragmentTransaction.commit();
+    }
+
     private void showErrorOnLoadReceipt(@NonNull final List<HyperwalletError> errors) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         DefaultErrorDialogFragment fragment = (DefaultErrorDialogFragment)
@@ -132,15 +138,6 @@ public class ListUserReceiptActivity extends AppCompatActivity implements OnNetw
 
         if (!fragment.isAdded()) {
             fragment.show(fragmentManager);
-        }
-    }
-
-    @Override
-    public void navigate(@NonNull final Event<Receipt> event) {
-        if (!event.isContentConsumed()) {
-            Intent intent = new Intent(this, ReceiptDetailActivity.class);
-            intent.putExtra(ReceiptDetailActivity.EXTRA_RECEIPT, event.getContent());
-            startActivity(intent);
         }
     }
 }

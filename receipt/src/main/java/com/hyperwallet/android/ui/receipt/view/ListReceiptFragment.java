@@ -46,7 +46,6 @@ import com.hyperwallet.android.model.receipt.Receipt;
 import com.hyperwallet.android.ui.common.util.DateUtils;
 import com.hyperwallet.android.ui.common.view.OneClickListener;
 import com.hyperwallet.android.ui.receipt.R;
-import com.hyperwallet.android.ui.receipt.viewmodel.ListUserReceiptViewModel;
 import com.hyperwallet.android.ui.receipt.viewmodel.ReceiptViewModel;
 
 import java.text.DecimalFormat;
@@ -80,7 +79,7 @@ public class ListReceiptFragment extends Fragment {
     public void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mReceiptViewModel = ViewModelProviders.of(requireActivity()).get(
-                ListUserReceiptViewModel.class);
+                ReceiptViewModel.class);
     }
 
     @Override

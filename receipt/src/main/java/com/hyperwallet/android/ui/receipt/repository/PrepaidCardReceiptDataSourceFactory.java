@@ -16,43 +16,38 @@
  */
 package com.hyperwallet.android.ui.receipt.repository;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
-import androidx.paging.PagedList;
-
-import com.hyperwallet.android.model.HyperwalletErrors;
-import com.hyperwallet.android.model.receipt.Receipt;
-import com.hyperwallet.android.ui.common.viewmodel.Event;
+import androidx.lifecycle.MutableLiveData;
+import androidx.paging.DataSource;
 
 /**
- * Receipt Repository Contract
+ * Data source factory for PrepaidCard receipt data source, that uses {@link DataSource.Factory} facility
  */
-public interface UserReceiptRepository {
+public class PrepaidCardReceiptDataSourceFactory extends DataSource.Factory {
+
+    private final MutableLiveData<PrepaidCardReceiptDataSource> mDataSourceMutableLiveData;
+    private final PrepaidCardReceiptDataSource mPrepaidCardReceiptDataSource;
+
+    PrepaidCardReceiptDataSourceFactory(@NonNull final String token) {
+        mPrepaidCardReceiptDataSource = new PrepaidCardReceiptDataSource(token);
+        mDataSourceMutableLiveData = new MutableLiveData<>();
+        mDataSourceMutableLiveData.setValue(mPrepaidCardReceiptDataSource);
+    }
 
     /**
-     * Load user receipts information, consumer can subscribe to receipts data changes events
-     *
-     * @return live data paged user receipts
+     * Returns observable members of prepaid card receipt data source
      */
-    LiveData<PagedList<Receipt>> loadUserReceipts();
+    LiveData<PrepaidCardReceiptDataSource> getPrepaidCardReceiptDataSource() {
+        return mDataSourceMutableLiveData;
+    }
 
     /**
-     * Loading indicator consumer can subscribe to loading of data events
-     *
-     * @return live data <code>true</code> if load receipt is in loading state; <code>false</code> otherwise
+     * @see {@link DataSource.Factory#create()}
      */
-    LiveData<Boolean> isLoading();
-
-    /**
-     * Error information, consumer can subscribe of errors occur during data retrieval
-     *
-     * @return live event data list of errors if there's an error
-     */
-    LiveData<Event<HyperwalletErrors>> getErrors();
-
-    /**
-     * Reload receipt information, usually invoked when error is raised after the first load and consumer opts to retry
-     * the last operation
-     */
-    void retryLoadReceipt();
-
+    @NonNull
+    @Override
+    public DataSource create() {
+        return mPrepaidCardReceiptDataSource;
+    }
 }
