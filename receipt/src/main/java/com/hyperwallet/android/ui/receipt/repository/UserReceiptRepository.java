@@ -16,39 +16,43 @@
  */
 package com.hyperwallet.android.ui.receipt.repository;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.paging.DataSource;
+import androidx.paging.PagedList;
+
+import com.hyperwallet.android.model.HyperwalletErrors;
+import com.hyperwallet.android.model.receipt.Receipt;
+import com.hyperwallet.android.ui.common.viewmodel.Event;
 
 /**
- * Data source factory that uses {@link DataSource.Factory} facility
+ * Receipt Repository Contract
  */
-public class ReceiptDataSourceFactory extends DataSource.Factory {
-
-    private final MutableLiveData<ReceiptDataSource> mDataSourceMutableLiveData;
-    private final ReceiptDataSource mReceiptDataSource;
-
-    ReceiptDataSourceFactory() {
-        super();
-        mReceiptDataSource = new ReceiptDataSource();
-        mDataSourceMutableLiveData = new MutableLiveData<>();
-        mDataSourceMutableLiveData.setValue(mReceiptDataSource);
-    }
+public interface UserReceiptRepository {
 
     /**
-     * Returns observable members of receipt data source
+     * Load receipts information, consumer can subscribe to receipts data changes events
+     *
+     * @return live data paged receipts
      */
-    LiveData<ReceiptDataSource> getReceiptDataSource() {
-        return mDataSourceMutableLiveData;
-    }
+    LiveData<PagedList<Receipt>> loadReceipts();
 
     /**
-     * @see {@link DataSource.Factory#create()}
+     * Loading indicator consumer can subscribe to loading of data events
+     *
+     * @return live data <code>true</code> if load receipt is in loading state; <code>false</code> otherwise
      */
-    @NonNull
-    @Override
-    public DataSource create() {
-        return mReceiptDataSource;
-    }
+    LiveData<Boolean> isLoading();
+
+    /**
+     * Error information, consumer can subscribe of errors occur during data retrieval
+     *
+     * @return live event data list of errors if there's an error
+     */
+    LiveData<Event<HyperwalletErrors>> getErrors();
+
+    /**
+     * Reload receipt information, usually invoked when error is raised after the first load and consumer opts to retry
+     * the last operation
+     */
+    void retryLoadReceipt();
+
 }

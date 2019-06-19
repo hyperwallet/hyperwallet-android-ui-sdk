@@ -38,20 +38,20 @@ import com.hyperwallet.android.ui.common.view.error.OnNetworkErrorCallback;
 import com.hyperwallet.android.ui.common.viewmodel.Event;
 import com.hyperwallet.android.ui.common.viewmodel.ListDetailNavigator;
 import com.hyperwallet.android.ui.receipt.R;
-import com.hyperwallet.android.ui.receipt.repository.ReceiptRepositoryFactory;
-import com.hyperwallet.android.ui.receipt.viewmodel.ListReceiptViewModel;
+import com.hyperwallet.android.ui.receipt.repository.UserReceiptRepositoryFactory;
+import com.hyperwallet.android.ui.receipt.viewmodel.ListUserReceiptViewModel;
 
 import java.util.List;
 
-public class ListReceiptActivity extends AppCompatActivity implements OnNetworkErrorCallback,
+public class ListUserReceiptActivity extends AppCompatActivity implements OnNetworkErrorCallback,
         ListDetailNavigator<Event<Receipt>> {
 
-    private ListReceiptViewModel mListReceiptViewModel;
+    private ListUserReceiptViewModel mListUserReceiptViewModel;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_receipt);
+        setContentView(R.layout.activity_list_user_receipt);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -65,12 +65,12 @@ public class ListReceiptActivity extends AppCompatActivity implements OnNetworkE
             }
         });
 
-        ReceiptRepositoryFactory factory = ReceiptRepositoryFactory.getInstance();
-        mListReceiptViewModel = ViewModelProviders.of(this, new ListReceiptViewModel
-                .ListReceiptViewModelFactory(factory.getReceiptRepository()))
-                .get(ListReceiptViewModel.class);
+        UserReceiptRepositoryFactory factory = UserReceiptRepositoryFactory.getInstance();
+        mListUserReceiptViewModel = ViewModelProviders.of(this, new ListUserReceiptViewModel
+                .ListReceiptViewModelFactory(factory.getUserReceiptRepository()))
+                .get(ListUserReceiptViewModel.class);
 
-        mListReceiptViewModel.getReceiptErrors().observe(this, new Observer<Event<HyperwalletErrors>>() {
+        mListUserReceiptViewModel.getReceiptErrors().observe(this, new Observer<Event<HyperwalletErrors>>() {
             @Override
             public void onChanged(Event<HyperwalletErrors> event) {
                 if (event != null && !event.isContentConsumed()) {
@@ -79,7 +79,7 @@ public class ListReceiptActivity extends AppCompatActivity implements OnNetworkE
             }
         });
 
-        mListReceiptViewModel.getDetailNavigation().observe(this, new Observer<Event<Receipt>>() {
+        mListUserReceiptViewModel.getDetailNavigation().observe(this, new Observer<Event<Receipt>>() {
             @Override
             public void onChanged(Event<Receipt> event) {
                 navigate(event);
@@ -94,7 +94,7 @@ public class ListReceiptActivity extends AppCompatActivity implements OnNetworkE
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ReceiptRepositoryFactory.clearInstance();
+        UserReceiptRepositoryFactory.clearInstance();
     }
 
     @Override

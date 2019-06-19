@@ -37,10 +37,10 @@ import com.hyperwallet.android.ui.common.viewmodel.Event;
 import java.util.Calendar;
 
 /**
- * ReceiptDataSource mediates communication to HW API Platform particularly on
+ * UserReceiptDataSource mediates communication to HW API Platform particularly on
  * Receipts V3 API
  */
-public class ReceiptDataSource extends PageKeyedDataSource<Integer, Receipt> {
+public class UserReceiptDataSource extends PageKeyedDataSource<Integer, Receipt> {
 
     private static final int YEAR_BEFORE_NOW = -1;
     private final Calendar mCalendarYearBeforeNow;
@@ -51,7 +51,7 @@ public class ReceiptDataSource extends PageKeyedDataSource<Integer, Receipt> {
     private LoadCallback<Integer, Receipt> mLoadAfterCallback;
     private LoadParams<Integer> mLoadAfterParams;
 
-    ReceiptDataSource() {
+    UserReceiptDataSource() {
         super();
         mCalendarYearBeforeNow = Calendar.getInstance();
         mCalendarYearBeforeNow.add(Calendar.YEAR, YEAR_BEFORE_NOW);

@@ -25,26 +25,26 @@ import com.hyperwallet.android.model.receipt.Receipt;
 import com.hyperwallet.android.ui.common.viewmodel.Event;
 
 /**
- * {@link ReceiptRepository} implementation
+ * {@link UserReceiptRepository} implementation
  */
-public class ReceiptRepositoryImpl implements ReceiptRepository {
+public class UserReceiptRepositoryImpl implements UserReceiptRepository {
 
     private static final int PAGE_SIZE = 10;
     private static final int INITIAL_LOAD_SIZE = 20;
 
-    private final ReceiptDataSourceFactory mDataSourceFactory;
-    private final LiveData<ReceiptDataSource> mReceiptDataSourceLiveData;
+    private final UserReceiptDataSourceFactory mDataSourceFactory;
+    private final LiveData<UserReceiptDataSource> mReceiptDataSourceLiveData;
     private LiveData<Event<HyperwalletErrors>> mErrorsLiveData;
     private LiveData<Boolean> mIsFetchingData;
     private LiveData<PagedList<Receipt>> mReceiptsLiveData;
 
-    ReceiptRepositoryImpl() {
-        mDataSourceFactory = new ReceiptDataSourceFactory();
-        mReceiptDataSourceLiveData = mDataSourceFactory.getReceiptDataSource();
+    UserReceiptRepositoryImpl() {
+        mDataSourceFactory = new UserReceiptDataSourceFactory();
+        mReceiptDataSourceLiveData = mDataSourceFactory.getUserReceiptDataSource();
     }
 
     /**
-     * @see {@link ReceiptRepository#loadReceipts()}
+     * @see {@link UserReceiptRepository#loadReceipts()}
      */
     @Override
     public LiveData<PagedList<Receipt>> loadReceipts() {
@@ -60,7 +60,7 @@ public class ReceiptRepositoryImpl implements ReceiptRepository {
     }
 
     /**
-     * @see {@link ReceiptRepository#isLoading()}
+     * @see {@link UserReceiptRepository#isLoading()}
      */
     @Override
     public LiveData<Boolean> isLoading() {
@@ -71,7 +71,7 @@ public class ReceiptRepositoryImpl implements ReceiptRepository {
     }
 
     /**
-     * @see {@link ReceiptRepository#getErrors()}
+     * @see {@link UserReceiptRepository#getErrors()}
      * */
     @Override
     public LiveData<Event<HyperwalletErrors>> getErrors() {
@@ -82,7 +82,7 @@ public class ReceiptRepositoryImpl implements ReceiptRepository {
     }
 
     /**
-     * @see {@link ReceiptRepository#retryLoadReceipt()}
+     * @see {@link UserReceiptRepository#retryLoadReceipt()}
      * */
     @Override
     public void retryLoadReceipt() {

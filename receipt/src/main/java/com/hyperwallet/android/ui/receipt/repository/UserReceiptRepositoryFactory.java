@@ -17,15 +17,15 @@
 package com.hyperwallet.android.ui.receipt.repository;
 
 /**
- * {@link ReceiptRepository} factory
+ * {@link UserReceiptRepository} factory
  */
-public class ReceiptRepositoryFactory {
+public class UserReceiptRepositoryFactory {
 
-    private static ReceiptRepositoryFactory sInstance;
-    private final ReceiptRepository mReceiptRepository;
+    private static UserReceiptRepositoryFactory sInstance;
+    private final UserReceiptRepository mUserReceiptRepository;
 
-    private ReceiptRepositoryFactory() {
-        mReceiptRepository = new ReceiptRepositoryImpl();
+    private UserReceiptRepositoryFactory() {
+        mUserReceiptRepository = new UserReceiptRepositoryImpl();
     }
 
     /**
@@ -33,9 +33,9 @@ public class ReceiptRepositoryFactory {
      *
      * @return receipt repository factory instance
      */
-    public static synchronized ReceiptRepositoryFactory getInstance() {
+    public static synchronized UserReceiptRepositoryFactory getInstance() {
         if (sInstance == null) {
-            sInstance = new ReceiptRepositoryFactory();
+            sInstance = new UserReceiptRepositoryFactory();
         }
         return sInstance;
     }
@@ -48,9 +48,9 @@ public class ReceiptRepositoryFactory {
     }
 
     /**
-     * @return ReceiptRepository instance implementation
+     * @return UserReceiptRepository instance implementation
      * */
-    public ReceiptRepository getReceiptRepository() {
-        return mReceiptRepository;
+    public UserReceiptRepository getUserReceiptRepository() {
+        return mUserReceiptRepository;
     }
 }

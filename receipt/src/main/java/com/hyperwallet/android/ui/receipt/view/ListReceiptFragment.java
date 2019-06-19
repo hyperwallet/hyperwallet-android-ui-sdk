@@ -46,7 +46,7 @@ import com.hyperwallet.android.model.receipt.Receipt;
 import com.hyperwallet.android.ui.common.util.DateUtils;
 import com.hyperwallet.android.ui.common.view.OneClickListener;
 import com.hyperwallet.android.ui.receipt.R;
-import com.hyperwallet.android.ui.receipt.viewmodel.ListReceiptViewModel;
+import com.hyperwallet.android.ui.receipt.viewmodel.ListUserReceiptViewModel;
 
 import java.text.DecimalFormat;
 import java.util.Calendar;
@@ -58,7 +58,7 @@ public class ListReceiptFragment extends Fragment {
 
     private ListReceiptAdapter mListReceiptAdapter;
     private RecyclerView mListReceiptsView;
-    private ListReceiptViewModel mListReceiptViewModel;
+    private ListUserReceiptViewModel mListUserReceiptViewModel;
     private View mProgressBar;
 
     /**
@@ -78,8 +78,8 @@ public class ListReceiptFragment extends Fragment {
     @Override
     public void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mListReceiptViewModel = ViewModelProviders.of(requireActivity()).get(
-                ListReceiptViewModel.class);
+        mListUserReceiptViewModel = ViewModelProviders.of(requireActivity()).get(
+                ListUserReceiptViewModel.class);
     }
 
     @Override
@@ -92,7 +92,7 @@ public class ListReceiptFragment extends Fragment {
     public void onViewCreated(@NonNull final View view, @Nullable final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mProgressBar = view.findViewById(R.id.list_receipt_progress_bar);
-        mListReceiptAdapter = new ListReceiptAdapter(mListReceiptViewModel, new ListReceiptItemDiffCallback());
+        mListReceiptAdapter = new ListReceiptAdapter(mListUserReceiptViewModel, new ListReceiptItemDiffCallback());
         mListReceiptsView = view.findViewById(R.id.list_receipts);
         mListReceiptsView.setHasFixedSize(true);
         mListReceiptsView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -102,14 +102,14 @@ public class ListReceiptFragment extends Fragment {
     }
 
     private void registerObservers() {
-        mListReceiptViewModel.getReceiptList().observe(getViewLifecycleOwner(), new Observer<PagedList<Receipt>>() {
+        mListUserReceiptViewModel.getReceiptList().observe(getViewLifecycleOwner(), new Observer<PagedList<Receipt>>() {
             @Override
             public void onChanged(PagedList<Receipt> receipts) {
                 mListReceiptAdapter.submitList(receipts);
             }
         });
 
-        mListReceiptViewModel.isLoadingData().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+        mListUserReceiptViewModel.isLoadingData().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean loading) {
                 if (loading) {
@@ -122,7 +122,7 @@ public class ListReceiptFragment extends Fragment {
     }
 
     void retry() {
-        mListReceiptViewModel.retryLoadReceipts();
+        mListUserReceiptViewModel.retryLoadReceipts();
     }
 
     private static class ListReceiptItemDiffCallback extends DiffUtil.ItemCallback<Receipt> {
@@ -146,9 +146,9 @@ public class ListReceiptFragment extends Fragment {
         static final String AMOUNT_FORMAT = "###0.00";
         private static final int HEADER_VIEW_TYPE = 1;
         private static final int DATA_VIEW_TYPE = 0;
-        private final ListReceiptViewModel mReceiptViewModel;
+        private final ListUserReceiptViewModel mReceiptViewModel;
 
-        ListReceiptAdapter(@NonNull final ListReceiptViewModel receiptViewModel,
+        ListReceiptAdapter(@NonNull final ListUserReceiptViewModel receiptViewModel,
                 @NonNull final DiffUtil.ItemCallback<Receipt> diffCallback) {
             super(diffCallback);
             mReceiptViewModel = receiptViewModel;
@@ -199,21 +199,21 @@ public class ListReceiptFragment extends Fragment {
 
         class ReceiptViewHolder extends RecyclerView.ViewHolder {
 
-            private ListReceiptViewModel mListReceiptViewModel;
+            private ListUserReceiptViewModel mListUserReceiptViewModel;
             private View mView;
 
-            ReceiptViewHolder(@NonNull final ListReceiptViewModel receiptViewModel,
+            ReceiptViewHolder(@NonNull final ListUserReceiptViewModel receiptViewModel,
                     @NonNull final View item) {
                 super(item);
                 mView = item.findViewById(R.id.receipt_item);
-                mListReceiptViewModel = receiptViewModel;
+                mListUserReceiptViewModel = receiptViewModel;
             }
 
             void bind(@NonNull final Receipt receipt) {
                 mView.setOnClickListener(new OneClickListener() {
                     @Override
                     public void onOneClick(View v) {
-                        mListReceiptViewModel.setDetailNavigation(receipt);
+                        mListUserReceiptViewModel.setDetailNavigation(receipt);
                     }
                 });
 
@@ -274,7 +274,7 @@ public class ListReceiptFragment extends Fragment {
 
             private final TextView mTransactionHeaderText;
 
-            ReceiptViewHolderWithHeader(@NonNull final ListReceiptViewModel receiptViewModel,
+            ReceiptViewHolderWithHeader(@NonNull final ListUserReceiptViewModel receiptViewModel,
                     @NonNull final View item) {
                 super(receiptViewModel, item);
                 mTransactionHeaderText = item.findViewById(R.id.item_date_header_title);

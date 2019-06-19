@@ -27,19 +27,19 @@ import androidx.paging.PagedList;
 import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.receipt.Receipt;
 import com.hyperwallet.android.ui.common.viewmodel.Event;
-import com.hyperwallet.android.ui.receipt.repository.ReceiptRepository;
+import com.hyperwallet.android.ui.receipt.repository.UserReceiptRepository;
 
-public class ListReceiptViewModel extends ViewModel {
+public class ListUserReceiptViewModel extends ViewModel {
 
     private MutableLiveData<Event<HyperwalletErrors>> mErrorEvent = new MutableLiveData<>();
     private MutableLiveData<Event<Receipt>> mDetailNavigation = new MutableLiveData<>();
     private Observer<Event<HyperwalletErrors>> mErrorEventObserver;
-    private ReceiptRepository mReceiptRepository;
+    private UserReceiptRepository mUserReceiptRepository;
 
-    private ListReceiptViewModel(@NonNull final ReceiptRepository receiptRepository) {
-        mReceiptRepository = receiptRepository;
+    private ListUserReceiptViewModel(@NonNull final UserReceiptRepository userReceiptRepository) {
+        mUserReceiptRepository = userReceiptRepository;
         // load initial receipts
-        mReceiptRepository.loadReceipts();
+        mUserReceiptRepository.loadReceipts();
 
         // register one time error event observer
         mErrorEventObserver = new Observer<Event<HyperwalletErrors>>() {
@@ -48,11 +48,11 @@ public class ListReceiptViewModel extends ViewModel {
                 mErrorEvent.postValue(event);
             }
         };
-        mReceiptRepository.getErrors().observeForever(mErrorEventObserver);
+        mUserReceiptRepository.getErrors().observeForever(mErrorEventObserver);
     }
 
     public LiveData<Boolean> isLoadingData() {
-        return mReceiptRepository.isLoading();
+        return mUserReceiptRepository.isLoading();
     }
 
     public LiveData<Event<HyperwalletErrors>> getReceiptErrors() {
@@ -60,11 +60,11 @@ public class ListReceiptViewModel extends ViewModel {
     }
 
     public LiveData<PagedList<Receipt>> getReceiptList() {
-        return mReceiptRepository.loadReceipts();
+        return mUserReceiptRepository.loadReceipts();
     }
 
     public void retryLoadReceipts() {
-        mReceiptRepository.retryLoadReceipt();
+        mUserReceiptRepository.retryLoadReceipt();
     }
 
     public LiveData<Event<Receipt>> getDetailNavigation() {
@@ -78,25 +78,26 @@ public class ListReceiptViewModel extends ViewModel {
     @Override
     protected void onCleared() {
         super.onCleared();
-        mReceiptRepository.getErrors().removeObserver(mErrorEventObserver);
-        mReceiptRepository = null;
+        mUserReceiptRepository.getErrors().removeObserver(mErrorEventObserver);
+        mUserReceiptRepository = null;
     }
 
     public static class ListReceiptViewModelFactory implements ViewModelProvider.Factory {
 
-        private final ReceiptRepository mReceiptRepository;
+        private final UserReceiptRepository mUserReceiptRepository;
 
-        public ListReceiptViewModelFactory(@NonNull final ReceiptRepository receiptRepository) {
-            mReceiptRepository = receiptRepository;
+        public ListReceiptViewModelFactory(@NonNull final UserReceiptRepository userReceiptRepository) {
+            mUserReceiptRepository = userReceiptRepository;
         }
 
         @NonNull
         @Override
         public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-            if (modelClass.isAssignableFrom(ListReceiptViewModel.class)) {
-                return (T) new ListReceiptViewModel(mReceiptRepository);
+            if (modelClass.isAssignableFrom(ListUserReceiptViewModel.class)) {
+                return (T) new ListUserReceiptViewModel(mUserReceiptRepository);
             }
-            throw new IllegalArgumentException("Expecting ViewModel class: " + ListReceiptViewModel.class.getName());
+            throw new IllegalArgumentException(
+                    "Expecting ViewModel class: " + ListUserReceiptViewModel.class.getName());
         }
     }
 }

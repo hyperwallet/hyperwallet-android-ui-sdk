@@ -41,12 +41,12 @@ import androidx.test.rule.ActivityTestRule;
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.ui.common.util.DateUtils;
 import com.hyperwallet.android.ui.common.util.EspressoIdlingResource;
-import com.hyperwallet.android.ui.receipt.repository.ReceiptRepositoryFactory;
+import com.hyperwallet.android.ui.receipt.repository.UserReceiptRepositoryFactory;
 import com.hyperwallet.android.ui.receipt.rule.HyperwalletExternalResourceManager;
 import com.hyperwallet.android.ui.receipt.rule.HyperwalletMockWebServer;
 import com.hyperwallet.android.ui.receipt.util.RecyclerViewCountAssertion;
 import com.hyperwallet.android.ui.receipt.util.TestAuthenticationProvider;
-import com.hyperwallet.android.ui.receipt.view.ListReceiptActivity;
+import com.hyperwallet.android.ui.receipt.view.ListUserReceiptActivity;
 
 import org.junit.After;
 import org.junit.Before;
@@ -62,15 +62,15 @@ import java.util.concurrent.TimeUnit;
 import okhttp3.mockwebserver.MockResponse;
 
 @RunWith(AndroidJUnit4.class)
-public class ListReceiptsTest {
+public class ListUserReceiptsTest {
 
     @ClassRule
     public static HyperwalletExternalResourceManager sResourceManager = new HyperwalletExternalResourceManager();
     @Rule
     public HyperwalletMockWebServer mMockWebServer = new HyperwalletMockWebServer(8080);
     @Rule
-    public ActivityTestRule<ListReceiptActivity> mActivityTestRule =
-            new ActivityTestRule<>(ListReceiptActivity.class, true, false);
+    public ActivityTestRule<ListUserReceiptActivity> mActivityTestRule =
+            new ActivityTestRule<>(ListUserReceiptActivity.class, true, false);
 
     @Before
     public void setup() {
@@ -84,7 +84,7 @@ public class ListReceiptsTest {
 
     @After
     public void cleanup() {
-        ReceiptRepositoryFactory.clearInstance();
+        UserReceiptRepositoryFactory.clearInstance();
     }
 
     @Before

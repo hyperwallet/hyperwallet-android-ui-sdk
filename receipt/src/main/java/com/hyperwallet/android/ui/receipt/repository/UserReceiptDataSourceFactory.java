@@ -16,43 +16,39 @@
  */
 package com.hyperwallet.android.ui.receipt.repository;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
-import androidx.paging.PagedList;
-
-import com.hyperwallet.android.model.HyperwalletErrors;
-import com.hyperwallet.android.model.receipt.Receipt;
-import com.hyperwallet.android.ui.common.viewmodel.Event;
+import androidx.lifecycle.MutableLiveData;
+import androidx.paging.DataSource;
 
 /**
- * Receipt Repository Contract
+ * Data source factory that uses {@link DataSource.Factory} facility
  */
-public interface ReceiptRepository {
+public class UserReceiptDataSourceFactory extends DataSource.Factory {
+
+    private final MutableLiveData<UserReceiptDataSource> mDataSourceMutableLiveData;
+    private final UserReceiptDataSource mUserReceiptDataSource;
+
+    UserReceiptDataSourceFactory() {
+        super();
+        mUserReceiptDataSource = new UserReceiptDataSource();
+        mDataSourceMutableLiveData = new MutableLiveData<>();
+        mDataSourceMutableLiveData.setValue(mUserReceiptDataSource);
+    }
 
     /**
-     * Load receipts information, consumer can subscribe to receipts data changes events
-     *
-     * @return live data paged receipts
+     * Returns observable members of receipt data source
      */
-    LiveData<PagedList<Receipt>> loadReceipts();
+    LiveData<UserReceiptDataSource> getUserReceiptDataSource() {
+        return mDataSourceMutableLiveData;
+    }
 
     /**
-     * Loading indicator consumer can subscribe to loading of data events
-     *
-     * @return live data <code>true</code> if load receipt is in loading state; <code>false</code> otherwise
+     * @see {@link DataSource.Factory#create()}
      */
-    LiveData<Boolean> isLoading();
-
-    /**
-     * Error information, consumer can subscribe of errors occur during data retrieval
-     *
-     * @return live event data list of errors if there's an error
-     */
-    LiveData<Event<HyperwalletErrors>> getErrors();
-
-    /**
-     * Reload receipt information, usually invoked when error is raised after the first load and consumer opts to retry
-     * the last operation
-     */
-    void retryLoadReceipt();
-
+    @NonNull
+    @Override
+    public DataSource create() {
+        return mUserReceiptDataSource;
+    }
 }
