@@ -31,6 +31,7 @@ import android.content.Context;
 import android.content.res.Resources;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
@@ -142,7 +143,7 @@ public class TransferMethodUtils {
      */
     public static String getTransferMethodDetail(@NonNull Context context,
             @NonNull final HyperwalletTransferMethod transferMethod,
-            @TransferMethodType final String type) {
+            @Nullable @TransferMethodType final String type) {
         if (type == null) {
             return "";
         }
