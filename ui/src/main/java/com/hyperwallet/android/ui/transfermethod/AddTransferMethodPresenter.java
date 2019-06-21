@@ -21,6 +21,7 @@ import androidx.annotation.Nullable;
 
 import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.graphql.HyperwalletTransferMethodConfigurationField;
+import com.hyperwallet.android.model.graphql.ProcessingTime;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.ui.repository.TransferMethodConfigurationRepository;
 import com.hyperwallet.android.ui.repository.TransferMethodRepository;
@@ -86,7 +87,7 @@ public class AddTransferMethodPresenter implements AddTransferMethodContract.Pre
                 new TransferMethodConfigurationRepository.LoadFieldsCallback() {
                     @Override
                     public void onFieldsLoaded(HyperwalletTransferMethodConfigurationField field,
-                            @Nullable final String processingTime) {
+                            @Nullable final ProcessingTime processingTime) {
                         if (!mView.isActive()) {
                             return;
                         }

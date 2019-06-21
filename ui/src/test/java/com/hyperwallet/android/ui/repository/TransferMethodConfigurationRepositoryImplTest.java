@@ -6,7 +6,6 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
@@ -25,6 +24,7 @@ import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.TypeReference;
 import com.hyperwallet.android.model.graphql.HyperwalletTransferMethodConfigurationField;
 import com.hyperwallet.android.model.graphql.HyperwalletTransferMethodConfigurationKey;
+import com.hyperwallet.android.model.graphql.ProcessingTime;
 import com.hyperwallet.android.model.graphql.field.HyperwalletFieldGroup;
 import com.hyperwallet.android.model.graphql.field.HyperwalletTransferMethodConfiguration;
 import com.hyperwallet.android.model.graphql.field.HyperwalletTransferMethodConfigurationFieldResult;
@@ -80,7 +80,7 @@ public class TransferMethodConfigurationRepositoryImplTest {
     @Captor
     private ArgumentCaptor<HyperwalletErrors> mErrorsArgumentCaptor;
     @Captor
-    private ArgumentCaptor<String> mStringArgumentCaptor;
+    private ArgumentCaptor<ProcessingTime> mStringArgumentCaptor;
     @Mock
     private Hyperwallet mHyperwallet;
     @Mock
@@ -220,7 +220,7 @@ public class TransferMethodConfigurationRepositoryImplTest {
                 loadFieldsCallback);
 
         verify(loadFieldsCallback, never()).onFieldsLoaded(
-                any(HyperwalletTransferMethodConfigurationField.class), anyString());
+                any(HyperwalletTransferMethodConfigurationField.class), any(ProcessingTime.class));
         verify(loadFieldsCallback).onError(mErrorsArgumentCaptor.capture());
 
         HyperwalletErrors hyperwalletErrors = mErrorsArgumentCaptor.getValue();

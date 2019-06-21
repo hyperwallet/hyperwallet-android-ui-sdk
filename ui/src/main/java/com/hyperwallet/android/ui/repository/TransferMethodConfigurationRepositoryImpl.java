@@ -37,6 +37,7 @@ import com.hyperwallet.android.exception.HyperwalletException;
 import com.hyperwallet.android.listener.HyperwalletListener;
 import com.hyperwallet.android.model.graphql.HyperwalletTransferMethodConfigurationField;
 import com.hyperwallet.android.model.graphql.HyperwalletTransferMethodConfigurationKey;
+import com.hyperwallet.android.model.graphql.ProcessingTime;
 import com.hyperwallet.android.model.graphql.keyed.HyperwalletTransferMethodType;
 import com.hyperwallet.android.model.graphql.query.HyperwalletTransferMethodConfigurationFieldQuery;
 import com.hyperwallet.android.model.graphql.query.HyperwalletTransferMethodConfigurationKeysQuery;
@@ -177,7 +178,7 @@ public class TransferMethodConfigurationRepositoryImpl implements TransferMethod
     //TODO this method is just temporary, placed to get the processing time
     //Next iteration from API will have ProcessingTime as a separate node
     @Nullable
-    private String getProcessingTime(String country, String currency, String transferMethodType) {
+    private ProcessingTime getProcessingTime(String country, String currency, String transferMethodType) {
         if (mTransferMethodConfigurationKey != null) {
             Set<HyperwalletTransferMethodType> transferMethodTypes = mTransferMethodConfigurationKey
                     .getTransferMethodType(country, currency);

@@ -19,6 +19,7 @@ import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.graphql.HyperwalletFee;
 import com.hyperwallet.android.model.graphql.HyperwalletTransferMethodConfigurationField;
+import com.hyperwallet.android.model.graphql.ProcessingTime;
 import com.hyperwallet.android.model.graphql.field.HyperwalletFieldGroup;
 import com.hyperwallet.android.model.graphql.field.HyperwalletTransferMethodConfiguration;
 import com.hyperwallet.android.model.transfermethod.HyperwalletBankAccount;
@@ -150,7 +151,7 @@ public class AddTransferMethodPresenterTest {
             public Object answer(InvocationOnMock invocation) {
                 TransferMethodConfigurationRepository.LoadFieldsCallback callback =
                         (TransferMethodConfigurationRepository.LoadFieldsCallback) invocation.getArguments()[4];
-                callback.onFieldsLoaded(result, "");
+                callback.onFieldsLoaded(result, null);
                 return callback;
             }
         }).when(tmcRepository).getFields(anyString(), anyString(), anyString(), anyString(),
@@ -219,7 +220,8 @@ public class AddTransferMethodPresenterTest {
                 any(TransferMethodConfigurationRepository.LoadFieldsCallback.class));
         verify(view, never()).hideProgressBar();
         verify(view, never()).showTransferMethodFields(ArgumentMatchers.<HyperwalletFieldGroup>anyList());
-        verify(view, never()).showTransactionInformation(ArgumentMatchers.<HyperwalletFee>anyList(), anyString());
+        verify(view, never()).showTransactionInformation(ArgumentMatchers.<HyperwalletFee>anyList(),
+                any(ProcessingTime.class));
     }
 
     @Test

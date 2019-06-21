@@ -15,7 +15,16 @@
                     {
                       "code": "BANK_ACCOUNT",
                       "name": "Bank Account",
-                      "processingTime": "1-2 Business days",
+                      "processingTime": {
+                        "nodes": [
+                          {
+                            "value": "1-2 Business days",
+                            "country": "CA",
+                            "currency": "CAD",
+                            "transferMethodType": "BANK_ACCOUNT"
+                          }
+                        ]
+                      },
                       "fees": {
                         "nodes": [
                           {
@@ -31,7 +40,16 @@
                     {
                       "code": "PAYPAL_ACCOUNT",
                       "name": "PayPal Account",
-                      "processingTime": "IMMEDIATE",
+                      "processingTime": {
+                        "nodes": [
+                          {
+                            "value": "IMMEDIATE",
+                            "country": "CA",
+                            "currency": "CAD",
+                            "transferMethodType": "PAYPAL_ACCOUNT"
+                          }
+                        ]
+                      },
                       "fees": {
                         "nodes": [
                           {
@@ -55,7 +73,16 @@
                     {
                       "code": "BANK_ACCOUNT",
                       "name": "Bank Account",
-                      "processingTime": "1-2 Business days",
+                      "processingTime": {
+                        "nodes": [
+                          {
+                            "value": "1-2 Business days",
+                            "country": "CA",
+                            "currency": "USD",
+                            "transferMethodType": "BANK_ACCOUNT"
+                          }
+                        ]
+                      },
                       "fees": {
                         "nodes": [
                           {
@@ -87,7 +114,16 @@
                     {
                       "code": "BANK_ACCOUNT",
                       "name": "Bank Account",
-                      "processingTime": "2-3 Business days",
+                      "processingTime": {
+                        "nodes": [
+                          {
+                            "value": "2-3 Business days",
+                            "country": "HR",
+                            "currency": "EUR",
+                            "transferMethodType": "BANK_ACCOUNT"
+                          }
+                        ]
+                      },
                       "fees": {
                         "nodes": [
                           {
@@ -111,7 +147,16 @@
                     {
                       "code": "BANK_ACCOUNT",
                       "name": "Bank Account",
-                      "processingTime": "1-2 Business days",
+                      "processingTime": {
+                        "nodes": [
+                          {
+                            "value": "1-2 Business days",
+                            "country": "HR",
+                            "currency": "HRK",
+                            "transferMethodType": "BANK_ACCOUNT"
+                          }
+                        ]
+                      },
                       "fees": {
                         "nodes": [
                           {
@@ -143,7 +188,16 @@
                     {
                       "code": "BANK_ACCOUNT",
                       "name": "Bank Account",
-                      "processingTime": "1-2 Business days",
+                      "processingTime": {
+                        "nodes": [
+                          {
+                            "value": "1-2 Business days",
+                            "country": "MX",
+                            "currency": "MXN",
+                            "transferMethodType": "BANK_ACCOUNT"
+                          }
+                        ]
+                      },
                       "fees": {
                         "nodes": [
                           {
@@ -175,7 +229,16 @@
                     {
                       "code": "BANK_ACCOUNT",
                       "name": "Bank Account",
-                      "processingTime": "2-4 Business days",
+                      "processingTime": {
+                        "nodes": [
+                          {
+                            "value": "2-4 Business days",
+                            "country": "GB",
+                            "currency": "EUR",
+                            "transferMethodType": "BANK_ACCOUNT"
+                          }
+                        ]
+                      },
                       "fees": {
                         "nodes": [
                           {
@@ -199,7 +262,16 @@
                     {
                       "code": "BANK_ACCOUNT",
                       "name": "Bank Account",
-                      "processingTime": "1-2 Business days",
+                      "processingTime": {
+                        "nodes": [
+                          {
+                            "value": "1-2 Business days",
+                            "country": "GB",
+                            "currency": "GBP",
+                            "transferMethodType": "BANK_ACCOUNT"
+                          }
+                        ]
+                      },
                       "fees": {
                         "nodes": [
                           {
@@ -231,7 +303,16 @@
                     {
                       "code": "BANK_ACCOUNT",
                       "name": "Bank Account",
-                      "processingTime": "1-2 Business days",
+                      "processingTime": {
+                        "nodes": [
+                          {
+                            "value": "1-2 Business days",
+                            "country": "US",
+                            "currency": "USD",
+                            "transferMethodType": "BANK_ACCOUNT"
+                          }
+                        ]
+                      },
                       "fees": {
                         "nodes": [
                           {
@@ -262,13 +343,21 @@
                     {
                       "code": "WIRE_ACCOUNT",
                       "name": "Wire Transfer",
-                      "processingTime": "1-3 Business days",
+                      "processingTime": {
+                        "nodes": [
+                          {
+                            "value": "1-3 Business days",
+                            "country": "US",
+                            "currency": "USD",
+                            "transferMethodType": "WIRE_ACCOUNT"
+                          }
+                        ]
+                      },
                       "fees": {
                         "nodes": [
                           {
                             "country": "US",
                             "currency": "USD",
-                            "processingTime": "1-3 Business days",
                             "transferMethodType": "WIRE_ACCOUNT",
                             "value": "20.00",
                             "feeRateType": "FLAT"
@@ -279,7 +368,16 @@
                     {
                       "code": "PAYPAL_ACCOUNT",
                       "name": "PayPal Account",
-                      "processingTime": "IMMEDIATE",
+                      "processingTime": {
+                        "nodes": [
+                          {
+                            "value": "IMMEDIATE",
+                            "country": "US",
+                            "currency": "USD",
+                            "transferMethodType": "WIRE_ACCOUNT"
+                          }
+                        ]
+                      },
                       "fees": {
                         "nodes": [
                           {
