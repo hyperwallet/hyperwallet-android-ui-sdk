@@ -25,6 +25,19 @@
             android:name="com.hyperwallet.android.ui.transfermethod.ListTransferMethodActivity"
             android:label="@string/title_activity_list_transfer_method"
             android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity
+            android:name="com.hyperwallet.android.ui.transfermethod.TransferMethodSelectorActivity"
+            android:label="@string/title_activity_list_transfer_method"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="com.hyperwallet.android.ui.transfermethod.intent.action.SELECT"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+
+
+
     </application>
 
 </manifest>

@@ -19,6 +19,7 @@ package com.hyperwallet.android.ui.receipt.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -99,7 +100,12 @@ public class ListReceiptActivity extends AppCompatActivity implements OnNetworkE
 
     @Override
     protected void onActivityResult(final int requestCode, final int resultCode, @Nullable final Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 999) {
+            if (resultCode == RESULT_OK) {
+                Toast.makeText(this, data.getStringExtra("TOKEN"), Toast.LENGTH_LONG).show();
+            }
+        }
+
     }
 
     @Override
@@ -144,9 +150,17 @@ public class ListReceiptActivity extends AppCompatActivity implements OnNetworkE
     @Override
     public void navigate(@NonNull final Event<Receipt> event) {
         if (!event.isContentConsumed()) {
-            Intent intent = new Intent(this, ReceiptDetailActivity.class);
-            intent.putExtra(ReceiptDetailActivity.EXTRA_RECEIPT, event.getContent());
-            startActivity(intent);
+//            Intent intent = new Intent(this, ReceiptDetailActivity.class);
+//            intent.putExtra(ReceiptDetailActivity.EXTRA_RECEIPT, event.getContent());
+//            startActivity(intent);
+            Intent sendIntent = new Intent("com.hyperwallet.android.ui.transfermethod.intent.action.SELECT");
+            if (sendIntent.resolveActivity(getPackageManager()) != null) {
+                startActivityForResult(sendIntent, 999);
+            }
+
         }
     }
+
+
+
 }
