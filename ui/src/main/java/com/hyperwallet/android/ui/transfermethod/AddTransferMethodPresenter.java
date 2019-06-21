@@ -17,11 +17,9 @@
 package com.hyperwallet.android.ui.transfermethod;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.graphql.HyperwalletTransferMethodConfigurationField;
-import com.hyperwallet.android.model.graphql.ProcessingTime;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.ui.repository.TransferMethodConfigurationRepository;
 import com.hyperwallet.android.ui.repository.TransferMethodRepository;
@@ -86,8 +84,7 @@ public class AddTransferMethodPresenter implements AddTransferMethodContract.Pre
                 country, currency, transferMethodType, transferMethodProfileType,
                 new TransferMethodConfigurationRepository.LoadFieldsCallback() {
                     @Override
-                    public void onFieldsLoaded(HyperwalletTransferMethodConfigurationField field,
-                            @Nullable final ProcessingTime processingTime) {
+                    public void onFieldsLoaded(HyperwalletTransferMethodConfigurationField field) {
                         if (!mView.isActive()) {
                             return;
                         }
@@ -95,7 +92,7 @@ public class AddTransferMethodPresenter implements AddTransferMethodContract.Pre
                         mView.hideProgressBar();
                         mView.showTransferMethodFields(field.getFields().getFieldGroups());
                         // there can be multiple fees when we have flat fee + percentage fees
-                        mView.showTransactionInformation(field.getFees(), processingTime);
+                        mView.showTransactionInformation(field.getFees(), field.getProcessingTime());
                     }
 
                     @Override

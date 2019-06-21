@@ -1235,6 +1235,16 @@
           "feeRateType": "FLAT"
         }
       ]
+    },
+    "processingTime": {
+      "nodes": [
+        {
+          "value": "1-2 Business days",
+          "country": "US",
+          "currency": "USD",
+          "transferMethodType": "BANK_ACCOUNT"
+        }
+      ]
     }
   }
 }

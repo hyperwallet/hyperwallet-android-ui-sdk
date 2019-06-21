@@ -118,8 +118,7 @@ public class TransferMethodConfigurationRepositoryImpl implements TransferMethod
                     public void onSuccess(HyperwalletTransferMethodConfigurationField result) {
                         FieldMapKey fieldMapKey = new FieldMapKey(country, currency, transferMethodType);
                         mFieldMap.put(fieldMapKey, result);
-                        loadFieldsCallback.onFieldsLoaded(result,
-                                getProcessingTime(country, currency, transferMethodType));
+                        loadFieldsCallback.onFieldsLoaded(result);
                         EspressoIdlingResource.decrement();
                     }
 
@@ -160,8 +159,7 @@ public class TransferMethodConfigurationRepositoryImpl implements TransferMethod
             getTransferMethodConfigurationFieldResult(country, currency, transferMethodType,
                     transferMethodProfileType, loadFieldsCallback);
         } else {
-            loadFieldsCallback.onFieldsLoaded(transferMethodConfigurationField,
-                    getProcessingTime(country, currency, transferMethodType));
+            loadFieldsCallback.onFieldsLoaded(transferMethodConfigurationField);
         }
     }
 

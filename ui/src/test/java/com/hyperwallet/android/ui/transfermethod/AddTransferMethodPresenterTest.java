@@ -151,7 +151,7 @@ public class AddTransferMethodPresenterTest {
             public Object answer(InvocationOnMock invocation) {
                 TransferMethodConfigurationRepository.LoadFieldsCallback callback =
                         (TransferMethodConfigurationRepository.LoadFieldsCallback) invocation.getArguments()[4];
-                callback.onFieldsLoaded(result, null);
+                callback.onFieldsLoaded(result);
                 return callback;
             }
         }).when(tmcRepository).getFields(anyString(), anyString(), anyString(), anyString(),

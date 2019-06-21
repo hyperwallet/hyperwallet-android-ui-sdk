@@ -32,7 +32,6 @@ import androidx.annotation.Nullable;
 import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.graphql.HyperwalletTransferMethodConfigurationField;
 import com.hyperwallet.android.model.graphql.HyperwalletTransferMethodConfigurationKey;
-import com.hyperwallet.android.model.graphql.ProcessingTime;
 
 public interface TransferMethodConfigurationRepository {
 
@@ -55,8 +54,7 @@ public interface TransferMethodConfigurationRepository {
 
     interface LoadFieldsCallback {
 
-        void onFieldsLoaded(@Nullable final HyperwalletTransferMethodConfigurationField field,
-                @Nullable final ProcessingTime processingTime);
+        void onFieldsLoaded(@Nullable final HyperwalletTransferMethodConfigurationField field);
 
         void onError(@NonNull final HyperwalletErrors errors);
     }
