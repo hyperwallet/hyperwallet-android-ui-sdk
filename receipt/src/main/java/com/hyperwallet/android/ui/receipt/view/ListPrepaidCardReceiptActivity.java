@@ -71,7 +71,7 @@ public class ListPrepaidCardReceiptActivity extends AppCompatActivity implements
         String token = getIntent().getStringExtra(EXTRA_PREPAID_CARD_TOKEN);
         if (TextUtils.isEmpty(token)) {
             throw new IllegalArgumentException("Activity " + ListPrepaidCardReceiptActivity.class.getName()
-                    + " requires parameter: EXTRA_" + EXTRA_PREPAID_CARD_TOKEN + " value");
+                    + " requires parameter: " + EXTRA_PREPAID_CARD_TOKEN + " value");
         }
 
         mReceiptViewModel = ViewModelProviders.of(this, new ListPrepaidCardReceiptViewModel

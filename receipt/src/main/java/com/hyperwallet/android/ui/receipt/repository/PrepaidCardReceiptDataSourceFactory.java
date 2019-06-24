@@ -30,6 +30,7 @@ public class PrepaidCardReceiptDataSourceFactory extends DataSource.Factory {
     private final PrepaidCardReceiptDataSource mPrepaidCardReceiptDataSource;
 
     PrepaidCardReceiptDataSourceFactory(@NonNull final String token) {
+        super();
         mPrepaidCardReceiptDataSource = new PrepaidCardReceiptDataSource(token);
         mDataSourceMutableLiveData = new MutableLiveData<>();
         mDataSourceMutableLiveData.setValue(mPrepaidCardReceiptDataSource);

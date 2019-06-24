@@ -67,7 +67,7 @@ public class PrepaidCardReceiptDataSource extends PageKeyedDataSource<Date, Rece
      *
      * @param token Prepaid card token identifier, please get this data from HW Platform
      */
-    public PrepaidCardReceiptDataSource(@NonNull final String token) {
+    PrepaidCardReceiptDataSource(@NonNull final String token) {
         mToken = token;
         mCalendarYearBeforeNow = Calendar.getInstance();
         mCalendarYearBeforeNow.add(Calendar.YEAR, YEAR_BEFORE_NOW);
@@ -131,6 +131,7 @@ public class PrepaidCardReceiptDataSource extends PageKeyedDataSource<Date, Rece
     public void loadAfter(@NonNull final LoadParams<Date> params, @NonNull final LoadCallback<Date, Receipt> callback) {
         mLoadAfterCallback = callback;
         mLoadAfterParams = params;
+        mIsFetchingData.postValue(Boolean.TRUE);
 
         ReceiptQueryParam queryParam = new ReceiptQueryParam.Builder()
                 .createdAfter(params.key)

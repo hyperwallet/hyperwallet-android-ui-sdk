@@ -217,7 +217,7 @@ public class ListReceiptFragment extends Fragment {
                     }
                 });
 
-                // By design decision from here under, this code is also repeated in ReceiptDetailFragment
+                // By design decision from hereon, this code is also repeated in ReceiptDetailFragment
                 TextView transactionTypeIcon = itemView.findViewById(R.id.transaction_type_icon);
                 TextView transactionTitle = itemView.findViewById(R.id.transaction_title);
                 TextView transactionDate = itemView.findViewById(R.id.transaction_date);
@@ -274,8 +274,7 @@ public class ListReceiptFragment extends Fragment {
 
             private final TextView mTransactionHeaderText;
 
-            ReceiptViewHolderWithHeader(@NonNull final ReceiptViewModel receiptViewModel,
-                    @NonNull final View item) {
+            ReceiptViewHolderWithHeader(@NonNull final ReceiptViewModel receiptViewModel, @NonNull final View item) {
                 super(receiptViewModel, item);
                 mTransactionHeaderText = item.findViewById(R.id.item_date_header_title);
             }

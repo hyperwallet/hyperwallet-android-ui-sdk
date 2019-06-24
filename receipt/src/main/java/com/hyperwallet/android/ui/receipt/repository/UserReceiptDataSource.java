@@ -111,15 +111,15 @@ public class UserReceiptDataSource extends PageKeyedDataSource<Integer, Receipt>
      * @see {@link PageKeyedDataSource#loadBefore(LoadParams, LoadCallback)}
      */
     @Override
-    public void loadBefore(@NonNull LoadParams<Integer> params,
-            @NonNull LoadCallback<Integer, Receipt> callback) {
+    public void loadBefore(@NonNull final LoadParams<Integer> params,
+            @NonNull final LoadCallback<Integer, Receipt> callback) {
     }
 
     /**
      * @see {@link PageKeyedDataSource#loadAfter(LoadParams, LoadCallback)}
      * */
     @Override
-    public void loadAfter(@NonNull LoadParams<Integer> params,
+    public void loadAfter(@NonNull final LoadParams<Integer> params,
             final @NonNull LoadCallback<Integer, Receipt> callback) {
         mLoadInitialCallback = null;
         mLoadInitialParams = null;
