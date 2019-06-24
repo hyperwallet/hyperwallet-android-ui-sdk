@@ -20,10 +20,16 @@ android {
     }
 }
 
-def fileFilter = ['**/BuildConfig.*']
+def fileFilter = ['**/BuildConfig.*',
+                  '**/com/hyperwallet/android/ui/common/view/error/DefaultErrorDialogFragment.*',
+                  '**/com/hyperwallet/android/ui/common/view/HorizontalDividerItemDecorator.*',
+                  '**/com/hyperwallet/android/ui/common/view/OneClickListener.*',
+                  '**/com/hyperwallet/android/ui/common/util/EspressoIdlingResource.*',
+                  '**/com/hyperwallet/android/ui/common/viewmodel/Event.*'
+]
 
 def debugClassPaths = [
-        '**/intermediates/javac/dev/*/classes/**'
+        '**/intermediates/javac/debug/*/classes/**'
 ]
 
 final def coverageSourceDirs = ["$project.projectDir/src/main/java/*"]
@@ -48,7 +54,7 @@ task jacocoTestReport(type: JacocoReport, dependsOn: 'testDebugUnitTest') {
 
     additionalSourceDirs = files(coverageSourceDirs)
     sourceDirectories = files(coverageSourceDirs)
-    executionData = files("${buildDir}/jacoco/testDevUnitTest.exec")
+    executionData = files("${buildDir}/jacoco/testDebugUnitTest.exec")
 }
 
 task jacocoTestCoverageVerification(type: JacocoCoverageVerification, dependsOn: 'jacocoTestReport') {
