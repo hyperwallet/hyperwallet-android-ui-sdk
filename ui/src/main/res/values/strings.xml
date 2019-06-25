@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">hyperwallet_ui</string>
+    <string name="app_name">hyperwallet.ui</string>
     <string name="title_account_add">Add Account</string>
     <string name="not_available">Not Available</string>
     <string name="unknown">Unknown</string>

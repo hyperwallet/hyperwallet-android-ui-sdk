@@ -16,16 +16,11 @@
  */
 package com.hyperwallet.android.ui.transfermethod;
 
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.BANK_ACCOUNT_ID;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.CARD_NUMBER;
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_COUNTRY;
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TYPE;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.BANK_ACCOUNT;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.BANK_CARD;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.PREPAID_CARD;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.WIRE_ACCOUNT;
 import static com.hyperwallet.android.ui.transfermethod.TransferMethodUtils.getStringFontIcon;
 import static com.hyperwallet.android.ui.transfermethod.TransferMethodUtils.getStringResourceByName;
+import static com.hyperwallet.android.ui.transfermethod.TransferMethodUtils.getTransferMethodDetail;
 
 import android.content.Context;
 import android.content.Intent;
@@ -48,14 +43,14 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.hyperwallet.android.common.view.HorizontalDividerItemDecorator;
-import com.hyperwallet.android.hyperwallet_ui.R;
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.HyperwalletStatusTransition;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.ui.HyperwalletLocalBroadcast;
+import com.hyperwallet.android.ui.R;
+import com.hyperwallet.android.ui.common.view.HorizontalDividerItemDecorator;
+import com.hyperwallet.android.ui.common.view.OneClickListener;
 import com.hyperwallet.android.ui.repository.RepositoryFactory;
-import com.hyperwallet.android.ui.view.widget.OneClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +60,7 @@ public class ListTransferMethodFragment extends Fragment implements ListTransfer
 
     static final String ARGUMENT_IS_TRANSFER_METHODS_RELOAD_NEEDED = "ARGUMENT_IS_TRANSFER_METHODS_RELOAD_NEEDED";
 
-    private static final int LAST_FOUR_DIGIT = 4;
+
     private static final String ARGUMENT_TRANSFER_METHOD_LIST = "ARGUMENT_TRANSFER_METHOD_LIST";
 
     private View mEmptyListView;
@@ -310,7 +305,7 @@ public class ListTransferMethodFragment extends Fragment implements ListTransfer
 
         @NonNull
         @Override
-        public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int position) {
             LayoutInflater layout = LayoutInflater.from(viewGroup.getContext());
             View itemViewLayout = layout.inflate(R.layout.item_transfer_method_type, viewGroup, false);
             return new ViewHolder(itemViewLayout);
@@ -327,23 +322,6 @@ public class ListTransferMethodFragment extends Fragment implements ListTransfer
             holder.recycle();
         }
 
-        private String getAccountIdentifier(HyperwalletTransferMethod transferMethod) {
-            String transferIdentification = "";
-            switch (transferMethod.getField(TYPE)) {
-                case BANK_ACCOUNT:
-                case WIRE_ACCOUNT:
-                    transferIdentification = transferMethod.getField(BANK_ACCOUNT_ID);
-                    break;
-                case BANK_CARD:
-                case PREPAID_CARD:
-                    transferIdentification = transferMethod.getField(CARD_NUMBER);
-                    break;
-                default: // none for paper check
-            }
-            return (transferIdentification.length() > LAST_FOUR_DIGIT
-                    ? transferIdentification.substring(transferIdentification.length() - LAST_FOUR_DIGIT)
-                    : transferIdentification);
-        }
 
         @Override
         public int getItemCount() {
@@ -373,16 +351,20 @@ public class ListTransferMethodFragment extends Fragment implements ListTransfer
 
 
             void bind(@NonNull final HyperwalletTransferMethod transferMethod) {
+                String type = transferMethod.getField(TYPE);
+                final String transferMethodIdentification = getTransferMethodDetail(
+                        mTransferMethodIdentification.getContext(),
+                        transferMethod,
+                        type);
+
                 mTitle.setText(
-                        getStringResourceByName(mTitle.getContext(), transferMethod.getField(TYPE)));
+                        getStringResourceByName(mTitle.getContext(), type));
 
                 Locale locale = new Locale.Builder().setRegion(
                         transferMethod.getField(TRANSFER_METHOD_COUNTRY)).build();
-                mIcon.setText(getStringFontIcon(mIcon.getContext(), transferMethod.getField(TYPE)));
+                mIcon.setText(getStringFontIcon(mIcon.getContext(), type));
                 mTransferMethodCountry.setText(locale.getDisplayName());
-                mTransferMethodIdentification.setText(mTransferMethodIdentification
-                        .getContext().getString(R.string.transfer_method_list_item_description,
-                                getAccountIdentifier(transferMethod)));
+                mTransferMethodIdentification.setText(transferMethodIdentification);
 
                 mImageButton.setOnClickListener(new View.OnClickListener() {
                     @Override

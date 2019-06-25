@@ -558,4 +558,75 @@ public class TransferMethodRepositoryImplTest {
         // assert
         assertThat(mErrorsArgumentCaptor.getValue().getErrors(), hasItem(returnedError));
     }
+
+    @Test
+    public void testCreateTransferMethod_wireAccountWithSuccess() {
+        HyperwalletBankAccount bankAccount = new HyperwalletBankAccount
+                .Builder("US", "USD", "1411413412")
+                .transferMethodType(HyperwalletTransferMethod.TransferMethodTypes.WIRE_ACCOUNT)
+                .build();
+
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                HyperwalletListener listener = (HyperwalletListener) invocation.getArguments()[1];
+                HyperwalletBankAccount returnedBank = new HyperwalletBankAccount
+                        .Builder("US", "USD", "1411413412")
+                        .bankName("Mock Bank Response")
+                        .transferMethodType(HyperwalletTransferMethod.TransferMethodTypes.WIRE_ACCOUNT)
+                        .build();
+                listener.onSuccess(returnedBank);
+                return listener;
+            }
+        }).when(mHyperwallet).createBankAccount(any(HyperwalletBankAccount.class),
+                ArgumentMatchers.<HyperwalletListener<HyperwalletBankAccount>>any());
+
+        // test
+        mTransferMethodRepository.createTransferMethod(bankAccount, mLoadTransferMethodCallback);
+
+        verify(mLoadTransferMethodCallback).onTransferMethodLoaded(mBankAccountArgumentCaptor.capture());
+        verify(mLoadTransferMethodCallback, never()).onError(any(HyperwalletErrors.class));
+
+        HyperwalletBankAccount transferMethod = mBankAccountArgumentCaptor.getValue();
+        assertThat(transferMethod, is(notNullValue()));
+        assertThat(transferMethod.getField(TYPE), is(HyperwalletTransferMethod.TransferMethodTypes.WIRE_ACCOUNT));
+        assertThat(transferMethod.getField(BANK_NAME), is("Mock Bank Response"));
+        assertThat(transferMethod.getField(TRANSFER_METHOD_COUNTRY), is("US"));
+        assertThat(transferMethod.getField(TRANSFER_METHOD_CURRENCY), is("USD"));
+        assertThat(transferMethod.getField(BANK_ACCOUNT_ID), is("1411413412"));
+    }
+
+    @Test
+    public void testDeactivateTransferMethod_wireAccountWithSuccess() {
+        HyperwalletBankAccount bankAccount = new HyperwalletBankAccount
+                .Builder("CA", "CAD", "3423423432")
+                .transferMethodType(HyperwalletTransferMethod.TransferMethodTypes.WIRE_ACCOUNT)
+                .token("trm-123")
+                .build();
+        bankAccount.setField(STATUS, HyperwalletStatusTransition.StatusDefinition.ACTIVATED);
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                HyperwalletStatusTransition statusTransition = new HyperwalletStatusTransition(DE_ACTIVATED);
+                statusTransition.setNotes("Closing this account.");
+                HyperwalletListener listener = (HyperwalletListener) invocation.getArguments()[2];
+                listener.onSuccess(statusTransition);
+                return listener;
+            }
+        }).when(mHyperwallet).deactivateBankAccount(anyString(), ArgumentMatchers.<String>isNull(),
+                ArgumentMatchers.<HyperwalletListener<HyperwalletStatusTransition>>any());
+
+        // test
+        mTransferMethodRepository.deactivateTransferMethod(bankAccount, mDeactivateTransferMethodCallback);
+
+        verify(mDeactivateTransferMethodCallback).onTransferMethodDeactivated(
+                mStatusTransitionArgumentCaptor.capture());
+        verify(mDeactivateTransferMethodCallback, never()).onError(any(HyperwalletErrors.class));
+
+        HyperwalletStatusTransition statusTransition = mStatusTransitionArgumentCaptor.getValue();
+        assertThat(statusTransition, is(notNullValue()));
+        assertThat(statusTransition.getTransition(), is(DE_ACTIVATED));
+        assertThat(statusTransition.getNotes(), is("Closing this account."));
+    }
+
 }

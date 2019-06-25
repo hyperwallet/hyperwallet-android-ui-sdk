@@ -31,7 +31,7 @@ import androidx.annotation.NonNull;
 
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.HyperwalletAuthenticationTokenProvider;
-import com.hyperwallet.android.receipt.view.ListReceiptActivity;
+import com.hyperwallet.android.ui.receipt.view.ListReceiptActivity;
 import com.hyperwallet.android.ui.transfermethod.AddTransferMethodActivity;
 import com.hyperwallet.android.ui.transfermethod.ListTransferMethodActivity;
 import com.hyperwallet.android.ui.transfermethod.SelectTransferMethodActivity;

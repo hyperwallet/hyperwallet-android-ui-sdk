@@ -16,10 +16,10 @@
  */
 package com.hyperwallet.android.ui.view.widget;
 
-import static com.hyperwallet.android.ui.view.widget.ExpireDateUtil.MAX_INPUT_LENGTH;
-import static com.hyperwallet.android.ui.view.widget.ExpireDateUtil.ONE_CHAR;
-import static com.hyperwallet.android.ui.view.widget.ExpireDateUtil.SEPARATOR;
-import static com.hyperwallet.android.ui.view.widget.ExpireDateUtil.ZERO_CHAR;
+import static com.hyperwallet.android.ui.view.widget.ExpireDateUtils.MAX_INPUT_LENGTH;
+import static com.hyperwallet.android.ui.view.widget.ExpireDateUtils.ONE_CHAR;
+import static com.hyperwallet.android.ui.view.widget.ExpireDateUtils.SEPARATOR;
+import static com.hyperwallet.android.ui.view.widget.ExpireDateUtils.ZERO_CHAR;
 
 import android.content.Context;
 import android.text.Editable;
@@ -38,11 +38,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.android.material.textfield.TextInputLayout;
-import com.hyperwallet.android.hyperwallet_ui.R;
 import com.hyperwallet.android.model.graphql.field.HyperwalletField;
+import com.hyperwallet.android.ui.R;
 
 public class ExpiryDateWidget extends AbstractWidget {
-    private final ExpireDateUtil mExpireDateUtil;
+    private final ExpireDateUtils mExpireDateUtils;
     private ViewGroup mContainer;
     private TextInputLayout mTextInputLayout;
     private String mValue;
@@ -53,7 +53,7 @@ public class ExpiryDateWidget extends AbstractWidget {
             @Nullable String defaultValue, @NonNull View defaultFocusView) {
         super(field, listener, defaultValue, defaultFocusView);
         mValue = defaultValue;
-        mExpireDateUtil = new ExpireDateUtil();
+        mExpireDateUtils = new ExpireDateUtils();
     }
 
     @Override
@@ -82,7 +82,7 @@ public class ExpiryDateWidget extends AbstractWidget {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
                     if (!hasFocus) {
-                        mValue = mExpireDateUtil.convertDateToServerFormat(((EditText) v).getText().toString());
+                        mValue = mExpireDateUtils.convertDateToServerFormat(((EditText) v).getText().toString());
                         mListener.valueChanged();
                     } else {
                         mListener.widgetFocused(ExpiryDateWidget.this.getName());
@@ -141,9 +141,9 @@ public class ExpiryDateWidget extends AbstractWidget {
                         }
                     }
 
-                    dateParts = mExpireDateUtil.getDateParts(input);
+                    dateParts = mExpireDateUtils.getDateParts(input);
 
-                    if (!mExpireDateUtil.isValidMonth(dateParts[0])) {
+                    if (!mExpireDateUtils.isValidMonth(dateParts[0])) {
                         inErrorState = true;
                     }
 
@@ -161,7 +161,7 @@ public class ExpiryDateWidget extends AbstractWidget {
                     dateBuilder.append(dateParts[1]);
 
                     String formattedDate = dateBuilder.toString();
-                    int cursorPosition = mExpireDateUtil.getCursorPosition(formattedDate.length(), changeStart,
+                    int cursorPosition = mExpireDateUtils.getCursorPosition(formattedDate.length(), changeStart,
                             insertionSize);
 
                     ignoreConcurrentChanges = true;
@@ -169,7 +169,7 @@ public class ExpiryDateWidget extends AbstractWidget {
                     editText.setSelection(cursorPosition);
 
                     if (before != count) {
-                        mValue = mExpireDateUtil.convertDateToServerFormat(formattedDate);
+                        mValue = mExpireDateUtils.convertDateToServerFormat(formattedDate);
                         mListener.saveTextChanged(getName(), mValue);
                     }
                     ignoreConcurrentChanges = false;
@@ -182,7 +182,7 @@ public class ExpiryDateWidget extends AbstractWidget {
 
             editText.setInputType(InputType.TYPE_CLASS_DATETIME);
             editText.setHint(mField.getLabel());
-            editText.setText(mExpireDateUtil.convertDateFromServerFormat(
+            editText.setText(mExpireDateUtils.convertDateFromServerFormat(
                     TextUtils.isEmpty(mDefaultValue) ? mField.getValue() : mDefaultValue));
 
             editText.setOnKeyListener(new DefaultKeyListener(mDefaultFocusView, editText));
@@ -219,7 +219,7 @@ public class ExpiryDateWidget extends AbstractWidget {
             return mMessageInvalidDateLength;
         }
 
-        if (mExpireDateUtil.isInvalidDate(mValue)) {
+        if (mExpireDateUtils.isInvalidDate(mValue)) {
             return mMessageInvalidDate;
         }
 
@@ -228,7 +228,7 @@ public class ExpiryDateWidget extends AbstractWidget {
 
     @Override
     protected boolean isInvalidRegex() {
-        return mExpireDateUtil.isInvalidDate(mValue);
+        return mExpireDateUtils.isInvalidDate(mValue);
     }
 }
 
