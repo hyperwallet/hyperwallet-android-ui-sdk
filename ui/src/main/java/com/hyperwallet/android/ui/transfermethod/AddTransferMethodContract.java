@@ -17,6 +17,7 @@
 package com.hyperwallet.android.ui.transfermethod;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.graphql.HyperwalletFee;
@@ -41,7 +42,8 @@ public interface AddTransferMethodContract {
 
         void showTransferMethodFields(@NonNull final List<HyperwalletFieldGroup> fields);
 
-        void showTransactionInformation(List<HyperwalletFee> fees, ProcessingTime processingTime);
+        void showTransactionInformation(@NonNull final List<HyperwalletFee> fees,
+                @Nullable final ProcessingTime processingTime);
 
         void showCreateButtonProgressBar();
 

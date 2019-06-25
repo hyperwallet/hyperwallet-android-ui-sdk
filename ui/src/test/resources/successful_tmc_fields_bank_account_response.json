@@ -1236,7 +1236,7 @@
         }
       ]
     },
-    "processingTime": {
+    "processingTimes": {
       "nodes": [
         {
           "value": "1-2 Business days",

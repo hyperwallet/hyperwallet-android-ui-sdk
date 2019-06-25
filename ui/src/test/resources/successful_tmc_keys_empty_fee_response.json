@@ -15,7 +15,7 @@
                     {
                       "code": "BANK_ACCOUNT",
                       "name": "Bank Account",
-                      "processingTime": {
+                      "processingTimes": {
                         "nodes": [
                           {
                             "value": "1-2 Business days",
