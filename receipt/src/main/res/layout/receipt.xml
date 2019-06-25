@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-       xmlns:app="http://schemas.android.com/apk/res-auto">
+       xmlns:app="http://schemas.android.com/apk/res-auto"
+       xmlns:tools="http://schemas.android.com/tools"
+       tools:layout_height="wrap_content"
+       tools:layout_width="match_parent"
+       tools:showIn="@layout/fragment_receipt_detail">
 
     <TextView android:id="@+id/transaction_type_icon"
               android:layout_width="wrap_content"
@@ -24,10 +28,11 @@
               android:layout_height="wrap_content"
               android:layout_marginStart="@dimen/grid_margin_left"
               android:layout_marginTop="@dimen/grid_margin_top"
-              android:text="@string/text_placeholder"
               android:layout_marginEnd="@dimen/ellipsis_spacing"
               android:ellipsize="end"
+              android:fontFamily="sans-serif-thin"
               android:maxLines="1"
+              android:text="@string/text_placeholder"
               android:textAppearance="@style/TextAppearance.Hyperwallet.Subtitle1"
               app:layout_constraintEnd_toStartOf="@+id/transaction_amount"
               app:layout_constraintStart_toEndOf="@+id/transaction_type_icon"
