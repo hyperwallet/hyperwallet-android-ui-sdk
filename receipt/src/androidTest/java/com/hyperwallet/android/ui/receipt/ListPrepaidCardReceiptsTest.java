@@ -56,7 +56,7 @@ public class ListPrepaidCardReceiptsTest {
                 protected Intent getActivityIntent() {
                     Intent intent = new Intent(ApplicationProvider.getApplicationContext(),
                             ListPrepaidCardReceiptActivity.class);
-                    intent.putExtra(EXTRA_PREPAID_CARD_TOKEN, "trm-test-token-bla-bla");
+                    intent.putExtra(EXTRA_PREPAID_CARD_TOKEN, "trm-test-token");
                     return intent;
                 }
             };
