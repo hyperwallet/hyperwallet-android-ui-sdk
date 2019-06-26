@@ -52,7 +52,7 @@ public class ListPrepaidCardReceiptViewModel extends ReceiptViewModel {
     }
 
     /**
-     * @see {@link ReceiptViewModel#isLoadingData()}
+     * @see ReceiptViewModel#isLoadingData()
      */
     @Override
     public LiveData<Boolean> isLoadingData() {
@@ -60,7 +60,7 @@ public class ListPrepaidCardReceiptViewModel extends ReceiptViewModel {
     }
 
     /**
-     * @see {@link ReceiptViewModel#getReceiptErrors()}
+     * @see ReceiptViewModel#getReceiptErrors()
      */
     @Override
     public LiveData<Event<HyperwalletErrors>> getReceiptErrors() {
@@ -68,7 +68,7 @@ public class ListPrepaidCardReceiptViewModel extends ReceiptViewModel {
     }
 
     /**
-     * @see {@link ReceiptViewModel#getReceiptList()}
+     * @see ReceiptViewModel#getReceiptList()
      */
     @Override
     public LiveData<PagedList<Receipt>> getReceiptList() {
@@ -76,7 +76,7 @@ public class ListPrepaidCardReceiptViewModel extends ReceiptViewModel {
     }
 
     /**
-     * @see {@link ReceiptViewModel#retryLoadReceipts()}
+     * @see ReceiptViewModel#retryLoadReceipts()
      */
     @Override
     public void retryLoadReceipts() {
@@ -84,7 +84,7 @@ public class ListPrepaidCardReceiptViewModel extends ReceiptViewModel {
     }
 
     /**
-     * @see {@link ReceiptViewModel#getDetailNavigation()}
+     * @see ReceiptViewModel#getDetailNavigation()
      */
     @Override
     public LiveData<Event<Receipt>> getDetailNavigation() {
@@ -92,7 +92,7 @@ public class ListPrepaidCardReceiptViewModel extends ReceiptViewModel {
     }
 
     /**
-     * @see {@link ReceiptViewModel#setDetailNavigation(Receipt)}
+     * @see ReceiptViewModel#setDetailNavigation(Receipt)
      */
     @Override
     public void setDetailNavigation(@NonNull Receipt receipt) {
@@ -100,7 +100,7 @@ public class ListPrepaidCardReceiptViewModel extends ReceiptViewModel {
     }
 
     /**
-     * @see {@link ViewModel#onCleared()}
+     * @see ViewModel#onCleared()
      */
     @Override
     protected void onCleared() {

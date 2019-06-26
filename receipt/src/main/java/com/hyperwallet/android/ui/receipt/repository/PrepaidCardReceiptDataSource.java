@@ -20,7 +20,6 @@ import android.os.Handler;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.paging.PageKeyedDataSource;
@@ -55,13 +54,6 @@ public class PrepaidCardReceiptDataSource extends PageKeyedDataSource<Date, Rece
     private PageKeyedDataSource.LoadInitialCallback<Date, Receipt> mLoadInitialCallback;
     private PageKeyedDataSource.LoadInitialParams<Date> mLoadInitialParams;
 
-    @VisibleForTesting
-    PrepaidCardReceiptDataSource() {
-        mCalendarYearBeforeNow = Calendar.getInstance();
-        mCalendarYearBeforeNow.add(Calendar.YEAR, YEAR_BEFORE_NOW);
-        mToken = "trm-test-token";
-    }
-
     /**
      * Initialize Prepaid card data source
      *
@@ -74,7 +66,7 @@ public class PrepaidCardReceiptDataSource extends PageKeyedDataSource<Date, Rece
     }
 
     /**
-     * @see {@link PageKeyedDataSource#loadInitial(LoadInitialParams, LoadInitialCallback)}
+     * @see PageKeyedDataSource#loadInitial(LoadInitialParams, LoadInitialCallback)
      */
     @Override
     public void loadInitial(@NonNull final LoadInitialParams<Date> params,
@@ -117,7 +109,7 @@ public class PrepaidCardReceiptDataSource extends PageKeyedDataSource<Date, Rece
     }
 
     /**
-     * @see {@link PageKeyedDataSource#loadBefore(LoadParams, LoadCallback)}
+     * @see PageKeyedDataSource#loadBefore(LoadParams, LoadCallback)
      */
     @Override
     public void loadBefore(@NonNull final LoadParams<Date> params,
@@ -125,7 +117,7 @@ public class PrepaidCardReceiptDataSource extends PageKeyedDataSource<Date, Rece
     }
 
     /**
-     * @see {@link PageKeyedDataSource#loadAfter(LoadParams, LoadCallback)}
+     * @see PageKeyedDataSource#loadAfter(LoadParams, LoadCallback)
      */
     @Override
     public void loadAfter(@NonNull final LoadParams<Date> params, @NonNull final LoadCallback<Date, Receipt> callback) {

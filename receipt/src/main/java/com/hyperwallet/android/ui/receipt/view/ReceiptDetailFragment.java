@@ -52,8 +52,8 @@ import java.util.Locale;
 
 public class ReceiptDetailFragment extends Fragment {
 
-    static final String AMOUNT_FORMAT = "###0.00";
-    static final String DETAIL_TIMEZONE = "zzz";
+    private static final String AMOUNT_FORMAT = "###0.00";
+    private static final String DETAIL_TIMEZONE = "zzz";
 
     private ReceiptDetailViewModel mReceiptDetailViewModel;
 

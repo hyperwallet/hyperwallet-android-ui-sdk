@@ -26,7 +26,7 @@ public class PrepaidCardReceiptRepositoryImpl implements PrepaidCardReceiptRepos
     }
 
     /**
-     * @see {@link PrepaidCardReceiptRepository#loadPrepaidCardReceipts()}
+     * @see PrepaidCardReceiptRepository#loadPrepaidCardReceipts()
      */
     @Override
     public LiveData<PagedList<Receipt>> loadPrepaidCardReceipts() {
@@ -42,7 +42,7 @@ public class PrepaidCardReceiptRepositoryImpl implements PrepaidCardReceiptRepos
     }
 
     /**
-     * @see {@link PrepaidCardReceiptRepository#isLoading()}
+     * @see PrepaidCardReceiptRepository#isLoading()
      */
     @Override
     public LiveData<Boolean> isLoading() {
@@ -53,7 +53,7 @@ public class PrepaidCardReceiptRepositoryImpl implements PrepaidCardReceiptRepos
     }
 
     /**
-     * @see {@link PrepaidCardReceiptRepository#getErrors()}
+     * @see PrepaidCardReceiptRepository#getErrors()
      */
     @Override
     public LiveData<Event<HyperwalletErrors>> getErrors() {
@@ -64,7 +64,7 @@ public class PrepaidCardReceiptRepositoryImpl implements PrepaidCardReceiptRepos
     }
 
     /**
-     * @see {@link PrepaidCardReceiptRepository#retryLoadReceipt()}
+     * @see PrepaidCardReceiptRepository#retryLoadReceipt()
      */
     @Override
     public void retryLoadReceipt() {

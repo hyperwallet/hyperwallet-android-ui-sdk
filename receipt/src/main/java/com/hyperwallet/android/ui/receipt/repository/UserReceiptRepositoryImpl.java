@@ -44,7 +44,7 @@ public class UserReceiptRepositoryImpl implements UserReceiptRepository {
     }
 
     /**
-     * @see {@link UserReceiptRepository#loadUserReceipts()}
+     * @see UserReceiptRepository#loadUserReceipts()
      */
     @Override
     public LiveData<PagedList<Receipt>> loadUserReceipts() {
@@ -60,7 +60,7 @@ public class UserReceiptRepositoryImpl implements UserReceiptRepository {
     }
 
     /**
-     * @see {@link UserReceiptRepository#isLoading()}
+     * @see UserReceiptRepository#isLoading()
      */
     @Override
     public LiveData<Boolean> isLoading() {
@@ -71,7 +71,7 @@ public class UserReceiptRepositoryImpl implements UserReceiptRepository {
     }
 
     /**
-     * @see {@link UserReceiptRepository#getErrors()}
+     * @see UserReceiptRepository#getErrors()
      * */
     @Override
     public LiveData<Event<HyperwalletErrors>> getErrors() {
@@ -82,7 +82,7 @@ public class UserReceiptRepositoryImpl implements UserReceiptRepository {
     }
 
     /**
-     * @see {@link UserReceiptRepository#retryLoadReceipt()}
+     * @see UserReceiptRepository#retryLoadReceipt()
      * */
     @Override
     public void retryLoadReceipt() {

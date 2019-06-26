@@ -9,6 +9,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -39,7 +40,6 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Captor;
 import org.mockito.Mock;
-import org.mockito.Spy;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
@@ -77,11 +77,11 @@ public class PrepaidCardReceiptDataSourceTest {
     @Captor
     private ArgumentCaptor<Date> mNextCaptor;
 
-    @Spy
     private PrepaidCardReceiptDataSource mPrepaidCardReceiptDataSource;
 
     @Before
     public void setUp() {
+        mPrepaidCardReceiptDataSource = spy(new PrepaidCardReceiptDataSource("test-token"));
         doReturn(mHyperwallet).when(mPrepaidCardReceiptDataSource).getHyperwallet();
     }
 

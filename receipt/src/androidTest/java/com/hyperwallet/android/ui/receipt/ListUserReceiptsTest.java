@@ -366,7 +366,7 @@ public class ListUserReceiptsTest {
     }
 
     @Test
-    public void testListReceipt_verifyTransactionsLoadedUponScrolling() throws InterruptedException {
+    public void testListReceipt_verifyTransactionsLoadedUponScrolling() {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("receipt_list_paged_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager

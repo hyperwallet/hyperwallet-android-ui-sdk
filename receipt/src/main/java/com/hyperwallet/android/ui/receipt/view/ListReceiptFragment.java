@@ -64,7 +64,7 @@ public class ListReceiptFragment extends Fragment {
     /**
      * Please don't use this constructor this is reserved for Android Core Framework
      *
-     * @see {@link ListReceiptFragment#newInstance()} instead.
+     * @see #newInstance()
      */
     public ListReceiptFragment() {
         setRetainInstance(true);

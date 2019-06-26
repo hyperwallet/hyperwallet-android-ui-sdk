@@ -44,7 +44,7 @@ public class PrepaidCardReceiptDataSourceFactory extends DataSource.Factory {
     }
 
     /**
-     * @see {@link DataSource.Factory#create()}
+     * @see DataSource.Factory#create()
      */
     @NonNull
     @Override

@@ -58,7 +58,7 @@ public class UserReceiptDataSource extends PageKeyedDataSource<Integer, Receipt>
     }
 
     /**
-     * @see {@link PageKeyedDataSource#loadInitial(LoadInitialParams, LoadInitialCallback)}
+     * @see PageKeyedDataSource#loadInitial(LoadInitialParams, LoadInitialCallback)
      */
     @Override
     public void loadInitial(@NonNull final LoadInitialParams<Integer> params,
@@ -108,7 +108,7 @@ public class UserReceiptDataSource extends PageKeyedDataSource<Integer, Receipt>
     /**
      * Unused in this case
      *
-     * @see {@link PageKeyedDataSource#loadBefore(LoadParams, LoadCallback)}
+     * @see PageKeyedDataSource#loadBefore(LoadParams, LoadCallback)
      */
     @Override
     public void loadBefore(@NonNull final LoadParams<Integer> params,
@@ -116,7 +116,7 @@ public class UserReceiptDataSource extends PageKeyedDataSource<Integer, Receipt>
     }
 
     /**
-     * @see {@link PageKeyedDataSource#loadAfter(LoadParams, LoadCallback)}
+     * @see PageKeyedDataSource#loadAfter(LoadParams, LoadCallback)
      * */
     @Override
     public void loadAfter(@NonNull final LoadParams<Integer> params,

@@ -52,49 +52,49 @@ public class ListUserReceiptViewModel extends ReceiptViewModel {
     }
 
     /**
-     * @see {@link ReceiptViewModel#isLoadingData()}
+     * @see ReceiptViewModel#isLoadingData()
      */
     public LiveData<Boolean> isLoadingData() {
         return mUserReceiptRepository.isLoading();
     }
 
     /**
-     * @see {@link ReceiptViewModel#getReceiptErrors()}
+     * @see ReceiptViewModel#getReceiptErrors()
      */
     public LiveData<Event<HyperwalletErrors>> getReceiptErrors() {
         return mErrorEvent;
     }
 
     /**
-     * @see {@link ReceiptViewModel#getReceiptList()}
+     * @see ReceiptViewModel#getReceiptList()
      */
     public LiveData<PagedList<Receipt>> getReceiptList() {
         return mUserReceiptRepository.loadUserReceipts();
     }
 
     /**
-     * @see {@link ReceiptViewModel#retryLoadReceipts()}
+     * @see ReceiptViewModel#retryLoadReceipts()
      * */
     public void retryLoadReceipts() {
         mUserReceiptRepository.retryLoadReceipt();
     }
 
     /**
-     * @see {@link ReceiptViewModel#getDetailNavigation()}
+     * @see ReceiptViewModel#getDetailNavigation()
      * */
     public LiveData<Event<Receipt>> getDetailNavigation() {
         return mDetailNavigation;
     }
 
     /**
-     * @see {@link ReceiptViewModel#setDetailNavigation(Receipt)}
+     * @see ReceiptViewModel#setDetailNavigation(Receipt)
      * */
     public void setDetailNavigation(@NonNull final Receipt receipt) {
         mDetailNavigation.postValue(new Event<>(receipt));
     }
 
     /**
-     * @see {@link ViewModel#onCleared()}
+     * @see ViewModel#onCleared()
      * */
     @Override
     protected void onCleared() {
