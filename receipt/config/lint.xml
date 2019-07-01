@@ -7,10 +7,4 @@
     <issue id="Overdraw">
         <ignore regexp="(item_receipt).xml"/>
     </issue>
-    <issue id="OldTargetApi">
-        <ignore regexp="(build).gradle"/>
-    </issue>
-    <issue id="GradleDependency">
-        <ignore regexp="(build).gradle"/>
-    </issue>
 </lint>
