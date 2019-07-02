@@ -413,7 +413,7 @@ public class ListTransferMethodTest {
     }
 
     @Test
-    public void testListTransferMethod_removeBankAccountClickCancel() throws InterruptedException {
+    public void testListTransferMethod_removeBankAccountClickCancel() {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_response.json")).mock();
 

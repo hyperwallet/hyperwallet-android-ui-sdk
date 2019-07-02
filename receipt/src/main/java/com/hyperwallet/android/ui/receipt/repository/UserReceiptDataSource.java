@@ -37,10 +37,10 @@ import com.hyperwallet.android.ui.common.viewmodel.Event;
 import java.util.Calendar;
 
 /**
- * ReceiptDataSource mediates communication to HW API Platform particularly on
- * Receipts V3 API
+ * UserReceiptDataSource mediates communication to HW API Platform particularly on
+ * Receipts Users V3 API
  */
-public class ReceiptDataSource extends PageKeyedDataSource<Integer, Receipt> {
+public class UserReceiptDataSource extends PageKeyedDataSource<Integer, Receipt> {
 
     private static final int YEAR_BEFORE_NOW = -1;
     private final Calendar mCalendarYearBeforeNow;
@@ -51,14 +51,14 @@ public class ReceiptDataSource extends PageKeyedDataSource<Integer, Receipt> {
     private LoadCallback<Integer, Receipt> mLoadAfterCallback;
     private LoadParams<Integer> mLoadAfterParams;
 
-    ReceiptDataSource() {
+    UserReceiptDataSource() {
         super();
         mCalendarYearBeforeNow = Calendar.getInstance();
         mCalendarYearBeforeNow.add(Calendar.YEAR, YEAR_BEFORE_NOW);
     }
 
     /**
-     * @see {@link PageKeyedDataSource#loadInitial(LoadInitialParams, LoadInitialCallback)}
+     * @see PageKeyedDataSource#loadInitial(LoadInitialParams, LoadInitialCallback)
      */
     @Override
     public void loadInitial(@NonNull final LoadInitialParams<Integer> params,
@@ -108,18 +108,18 @@ public class ReceiptDataSource extends PageKeyedDataSource<Integer, Receipt> {
     /**
      * Unused in this case
      *
-     * @see {@link PageKeyedDataSource#loadBefore(LoadParams, LoadCallback)}
+     * @see PageKeyedDataSource#loadBefore(LoadParams, LoadCallback)
      */
     @Override
-    public void loadBefore(@NonNull LoadParams<Integer> params,
-            @NonNull LoadCallback<Integer, Receipt> callback) {
+    public void loadBefore(@NonNull final LoadParams<Integer> params,
+            @NonNull final LoadCallback<Integer, Receipt> callback) {
     }
 
     /**
-     * @see {@link PageKeyedDataSource#loadAfter(LoadParams, LoadCallback)}
+     * @see PageKeyedDataSource#loadAfter(LoadParams, LoadCallback)
      * */
     @Override
-    public void loadAfter(@NonNull LoadParams<Integer> params,
+    public void loadAfter(@NonNull final LoadParams<Integer> params,
             final @NonNull LoadCallback<Integer, Receipt> callback) {
         mLoadInitialCallback = null;
         mLoadInitialParams = null;

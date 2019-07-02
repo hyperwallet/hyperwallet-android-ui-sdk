@@ -41,12 +41,11 @@ import androidx.test.rule.ActivityTestRule;
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.ui.common.util.DateUtils;
 import com.hyperwallet.android.ui.common.util.EspressoIdlingResource;
-import com.hyperwallet.android.ui.receipt.repository.ReceiptRepositoryFactory;
 import com.hyperwallet.android.ui.receipt.rule.HyperwalletExternalResourceManager;
 import com.hyperwallet.android.ui.receipt.rule.HyperwalletMockWebServer;
 import com.hyperwallet.android.ui.receipt.util.RecyclerViewCountAssertion;
 import com.hyperwallet.android.ui.receipt.util.TestAuthenticationProvider;
-import com.hyperwallet.android.ui.receipt.view.ListReceiptActivity;
+import com.hyperwallet.android.ui.receipt.view.ListUserReceiptActivity;
 
 import org.junit.After;
 import org.junit.Before;
@@ -62,15 +61,15 @@ import java.util.concurrent.TimeUnit;
 import okhttp3.mockwebserver.MockResponse;
 
 @RunWith(AndroidJUnit4.class)
-public class ListReceiptsTest {
+public class ListUserReceiptsTest {
 
     @ClassRule
     public static HyperwalletExternalResourceManager sResourceManager = new HyperwalletExternalResourceManager();
     @Rule
     public HyperwalletMockWebServer mMockWebServer = new HyperwalletMockWebServer(8080);
     @Rule
-    public ActivityTestRule<ListReceiptActivity> mActivityTestRule =
-            new ActivityTestRule<>(ListReceiptActivity.class, true, false);
+    public ActivityTestRule<ListUserReceiptActivity> mActivityTestRule =
+            new ActivityTestRule<>(ListUserReceiptActivity.class, true, false);
 
     @Before
     public void setup() {
@@ -80,11 +79,6 @@ public class ListReceiptsTest {
                 .getResourceContent("authentication_token_response.json")).mock();
 
         setLocale(Locale.US);
-    }
-
-    @After
-    public void cleanup() {
-        ReceiptRepositoryFactory.clearInstance();
     }
 
     @Before
@@ -372,7 +366,7 @@ public class ListReceiptsTest {
     }
 
     @Test
-    public void testListReceipt_verifyTransactionsLoadedUponScrolling() throws InterruptedException {
+    public void testListReceipt_verifyTransactionsLoadedUponScrolling() {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("receipt_list_paged_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager

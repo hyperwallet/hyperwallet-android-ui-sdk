@@ -23,17 +23,14 @@ import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.receipt.Receipt;
 import com.hyperwallet.android.ui.common.viewmodel.Event;
 
-/**
- * Receipt Repository Contract
- */
-public interface ReceiptRepository {
+public interface PrepaidCardReceiptRepository {
 
     /**
-     * Load receipts information, consumer can subscribe to receipts data changes events
+     * Load prepaid card receipts information, consumer can subscribe to receipts data changes events
      *
-     * @return live data paged receipts
+     * @return live data paged prepaid card receipts
      */
-    LiveData<PagedList<Receipt>> loadReceipts();
+    LiveData<PagedList<Receipt>> loadPrepaidCardReceipts();
 
     /**
      * Loading indicator consumer can subscribe to loading of data events
