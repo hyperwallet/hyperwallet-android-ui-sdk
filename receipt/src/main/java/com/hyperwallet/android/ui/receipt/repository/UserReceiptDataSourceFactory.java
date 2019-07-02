@@ -16,41 +16,39 @@
  */
 package com.hyperwallet.android.ui.receipt.repository;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.paging.DataSource;
+
 /**
- * {@link ReceiptRepository} factory
+ * Data source factory for User receipt data source, that uses {@link DataSource.Factory} facility
  */
-public class ReceiptRepositoryFactory {
+public class UserReceiptDataSourceFactory extends DataSource.Factory {
 
-    private static ReceiptRepositoryFactory sInstance;
-    private final ReceiptRepository mReceiptRepository;
+    private final MutableLiveData<UserReceiptDataSource> mDataSourceMutableLiveData;
+    private final UserReceiptDataSource mUserReceiptDataSource;
 
-    private ReceiptRepositoryFactory() {
-        mReceiptRepository = new ReceiptRepositoryImpl();
+    UserReceiptDataSourceFactory() {
+        super();
+        mUserReceiptDataSource = new UserReceiptDataSource();
+        mDataSourceMutableLiveData = new MutableLiveData<>();
+        mDataSourceMutableLiveData.setValue(mUserReceiptDataSource);
     }
 
     /**
-     * Creates context single instance of this Factory
-     *
-     * @return receipt repository factory instance
+     * Returns observable members of user receipt data source
      */
-    public static synchronized ReceiptRepositoryFactory getInstance() {
-        if (sInstance == null) {
-            sInstance = new ReceiptRepositoryFactory();
-        }
-        return sInstance;
+    LiveData<UserReceiptDataSource> getUserReceiptDataSource() {
+        return mDataSourceMutableLiveData;
     }
 
     /**
-     * Clears instance of repository factory
+     * @see DataSource.Factory#create()
      */
-    public static void clearInstance() {
-        sInstance = null;
-    }
-
-    /**
-     * @return ReceiptRepository instance implementation
-     * */
-    public ReceiptRepository getReceiptRepository() {
-        return mReceiptRepository;
+    @NonNull
+    @Override
+    public DataSource create() {
+        return mUserReceiptDataSource;
     }
 }

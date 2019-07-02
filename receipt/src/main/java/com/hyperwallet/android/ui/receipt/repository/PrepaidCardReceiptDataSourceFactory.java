@@ -22,33 +22,33 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.paging.DataSource;
 
 /**
- * Data source factory that uses {@link DataSource.Factory} facility
+ * Data source factory for PrepaidCard receipt data source, that uses {@link DataSource.Factory} facility
  */
-public class ReceiptDataSourceFactory extends DataSource.Factory {
+public class PrepaidCardReceiptDataSourceFactory extends DataSource.Factory {
 
-    private final MutableLiveData<ReceiptDataSource> mDataSourceMutableLiveData;
-    private final ReceiptDataSource mReceiptDataSource;
+    private final MutableLiveData<PrepaidCardReceiptDataSource> mDataSourceMutableLiveData;
+    private final PrepaidCardReceiptDataSource mPrepaidCardReceiptDataSource;
 
-    ReceiptDataSourceFactory() {
+    PrepaidCardReceiptDataSourceFactory(@NonNull final String token) {
         super();
-        mReceiptDataSource = new ReceiptDataSource();
+        mPrepaidCardReceiptDataSource = new PrepaidCardReceiptDataSource(token);
         mDataSourceMutableLiveData = new MutableLiveData<>();
-        mDataSourceMutableLiveData.setValue(mReceiptDataSource);
+        mDataSourceMutableLiveData.setValue(mPrepaidCardReceiptDataSource);
     }
 
     /**
-     * Returns observable members of receipt data source
+     * Returns observable members of prepaid card receipt data source
      */
-    LiveData<ReceiptDataSource> getReceiptDataSource() {
+    LiveData<PrepaidCardReceiptDataSource> getPrepaidCardReceiptDataSource() {
         return mDataSourceMutableLiveData;
     }
 
     /**
-     * @see {@link DataSource.Factory#create()}
+     * @see DataSource.Factory#create()
      */
     @NonNull
     @Override
     public DataSource create() {
-        return mReceiptDataSource;
+        return mPrepaidCardReceiptDataSource;
     }
 }
