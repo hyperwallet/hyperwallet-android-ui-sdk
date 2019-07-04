@@ -50,7 +50,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RunWith(RobolectricTestRunner.class)
-public class ReceiptDataSourceTest {
+public class UserReceiptDataSourceTest {
 
     @Rule
     public MockitoRule mMockito = MockitoJUnit.rule();
@@ -77,11 +77,11 @@ public class ReceiptDataSourceTest {
     private ArgumentCaptor<Integer> mNextCaptor;
 
     @Spy
-    private ReceiptDataSource mReceiptDataSource;
+    private UserReceiptDataSource mUserReceiptDataSource;
 
     @Before
     public void setUp() {
-        doReturn(mHyperwallet).when(mReceiptDataSource).getHyperwallet();
+        doReturn(mHyperwallet).when(mUserReceiptDataSource).getHyperwallet();
     }
 
     @Test
@@ -100,7 +100,7 @@ public class ReceiptDataSourceTest {
                 ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
 
         // test
-        mReceiptDataSource.loadInitial(mInitialParams, mInitialCallback);
+        mUserReceiptDataSource.loadInitial(mInitialParams, mInitialCallback);
 
         verify(mHyperwallet).listUserReceipts(any(ReceiptQueryParam.class),
                 ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
@@ -136,8 +136,8 @@ public class ReceiptDataSourceTest {
         assertThat(receipts.get(1).getDetails().getPayeeName(), is("Kevin Puckett"));
         assertThat(receipts.get(1).getDetails().getBankAccountId(), is("patzachery.mcclary@example.com"));
 
-        assertThat(mReceiptDataSource.getErrors().getValue(), is(nullValue()));
-        assertThat(mReceiptDataSource.isFetchingData().getValue(), is(false));
+        assertThat(mUserReceiptDataSource.getErrors().getValue(), is(nullValue()));
+        assertThat(mUserReceiptDataSource.isFetchingData().getValue(), is(false));
     }
 
     @Test
@@ -153,14 +153,14 @@ public class ReceiptDataSourceTest {
                 ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
 
         // test
-        mReceiptDataSource.loadInitial(mInitialParams, mInitialCallback);
+        mUserReceiptDataSource.loadInitial(mInitialParams, mInitialCallback);
 
         verify(mHyperwallet).listUserReceipts(any(ReceiptQueryParam.class),
                 ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
         verify(mInitialCallback, never()).onResult(ArgumentMatchers.<Receipt>anyList(), anyInt(), anyInt());
 
-        assertThat(mReceiptDataSource.getErrors().getValue(), is(nullValue()));
-        assertThat(mReceiptDataSource.isFetchingData().getValue(), is(false));
+        assertThat(mUserReceiptDataSource.getErrors().getValue(), is(nullValue()));
+        assertThat(mUserReceiptDataSource.isFetchingData().getValue(), is(false));
     }
 
     @Test
@@ -181,20 +181,20 @@ public class ReceiptDataSourceTest {
                 ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
 
         // test
-        mReceiptDataSource.loadInitial(mInitialParams, mInitialCallback);
+        mUserReceiptDataSource.loadInitial(mInitialParams, mInitialCallback);
 
         verify(mHyperwallet).listUserReceipts(any(ReceiptQueryParam.class),
                 ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
         verify(mInitialCallback, never()).onResult(ArgumentMatchers.<Receipt>anyList(), anyInt(), anyInt());
 
-        assertThat(mReceiptDataSource.getErrors().getValue(), is(notNullValue()));
-        assertThat(mReceiptDataSource.getErrors().getValue().getContent().getErrors(),
+        assertThat(mUserReceiptDataSource.getErrors().getValue(), is(notNullValue()));
+        assertThat(mUserReceiptDataSource.getErrors().getValue().getContent().getErrors(),
                 Matchers.<HyperwalletError>hasSize(1));
-        assertThat(mReceiptDataSource.getErrors().getValue().getContent().getErrors().get(0).getCode(),
+        assertThat(mUserReceiptDataSource.getErrors().getValue().getContent().getErrors().get(0).getCode(),
                 is("TEST_CODE"));
-        assertThat(mReceiptDataSource.getErrors().getValue().getContent().getErrors().get(0).getMessage(),
+        assertThat(mUserReceiptDataSource.getErrors().getValue().getContent().getErrors().get(0).getMessage(),
                 is("test message"));
-        assertThat(mReceiptDataSource.isFetchingData().getValue(), is(false));
+        assertThat(mUserReceiptDataSource.isFetchingData().getValue(), is(false));
     }
 
     @Test
@@ -215,23 +215,23 @@ public class ReceiptDataSourceTest {
                 ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
 
         // test
-        mReceiptDataSource.loadInitial(mInitialParams, mInitialCallback);
+        mUserReceiptDataSource.loadInitial(mInitialParams, mInitialCallback);
 
         verify(mHyperwallet).listUserReceipts(any(ReceiptQueryParam.class),
                 ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
         verify(mInitialCallback, never()).onResult(ArgumentMatchers.<Receipt>anyList(), anyInt(), anyInt());
 
         // error occurred, this will save params and callback
-        assertThat(mReceiptDataSource.getErrors().getValue(), is(notNullValue()));
+        assertThat(mUserReceiptDataSource.getErrors().getValue(), is(notNullValue()));
 
         // test retry, saved params and callback will be used and no null pointer exception is thrown
-        mReceiptDataSource.retry();
+        mUserReceiptDataSource.retry();
 
         // verify calls
-        verify(mReceiptDataSource, times(2)).loadInitial(
+        verify(mUserReceiptDataSource, times(2)).loadInitial(
                 ArgumentMatchers.<PageKeyedDataSource.LoadInitialParams<Integer>>any(),
                 ArgumentMatchers.<PageKeyedDataSource.LoadInitialCallback<Integer, Receipt>>any());
-        verify(mReceiptDataSource, never()).loadAfter(
+        verify(mUserReceiptDataSource, never()).loadAfter(
                 ArgumentMatchers.<PageKeyedDataSource.LoadParams<Integer>>any(),
                 ArgumentMatchers.<PageKeyedDataSource.LoadCallback<Integer, Receipt>>any());
     }
@@ -252,7 +252,7 @@ public class ReceiptDataSourceTest {
                 ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
 
         // test
-        mReceiptDataSource.loadAfter(mLoadAfterParams, mLoadAfterCallback);
+        mUserReceiptDataSource.loadAfter(mLoadAfterParams, mLoadAfterCallback);
 
         verify(mHyperwallet).listUserReceipts(any(ReceiptQueryParam.class),
                 ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
@@ -286,8 +286,8 @@ public class ReceiptDataSourceTest {
         assertThat(receipts.get(4).getDetails().getPayeeName(), is("Kevin Puckett"));
         assertThat(receipts.get(4).getDetails().getClientPaymentId(), is("wUOdfLlJONacbdHlAHOAXQT7uwX7LTPy"));
 
-        assertThat(mReceiptDataSource.getErrors().getValue(), is(nullValue()));
-        assertThat(mReceiptDataSource.isFetchingData().getValue(), is(false));
+        assertThat(mUserReceiptDataSource.getErrors().getValue(), is(nullValue()));
+        assertThat(mUserReceiptDataSource.isFetchingData().getValue(), is(false));
     }
 
     @Test
@@ -303,14 +303,14 @@ public class ReceiptDataSourceTest {
                 ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
 
         // test
-        mReceiptDataSource.loadAfter(mLoadAfterParams, mLoadAfterCallback);
+        mUserReceiptDataSource.loadAfter(mLoadAfterParams, mLoadAfterCallback);
 
         verify(mHyperwallet).listUserReceipts(any(ReceiptQueryParam.class),
                 ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
         verify(mLoadAfterCallback, never()).onResult(ArgumentMatchers.<List<Receipt>>any(), anyInt());
 
-        assertThat(mReceiptDataSource.getErrors().getValue(), is(nullValue()));
-        assertThat(mReceiptDataSource.isFetchingData().getValue(), is(false));
+        assertThat(mUserReceiptDataSource.getErrors().getValue(), is(nullValue()));
+        assertThat(mUserReceiptDataSource.isFetchingData().getValue(), is(false));
     }
 
     @Test
@@ -331,21 +331,21 @@ public class ReceiptDataSourceTest {
                 ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
 
         // test
-        mReceiptDataSource.loadAfter(mLoadAfterParams, mLoadAfterCallback);
+        mUserReceiptDataSource.loadAfter(mLoadAfterParams, mLoadAfterCallback);
 
         verify(mHyperwallet).listUserReceipts(any(ReceiptQueryParam.class),
                 ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
         verify(mLoadAfterCallback, never()).onResult(ArgumentMatchers.<Receipt>anyList(), anyInt());
 
         // error occurred, this will save params and callback
-        assertThat(mReceiptDataSource.getErrors().getValue(), is(notNullValue()));
-        assertThat(mReceiptDataSource.getErrors().getValue().getContent().getErrors(),
+        assertThat(mUserReceiptDataSource.getErrors().getValue(), is(notNullValue()));
+        assertThat(mUserReceiptDataSource.getErrors().getValue().getContent().getErrors(),
                 Matchers.<HyperwalletError>hasSize(1));
-        assertThat(mReceiptDataSource.getErrors().getValue().getContent().getErrors().get(0).getCode(),
+        assertThat(mUserReceiptDataSource.getErrors().getValue().getContent().getErrors().get(0).getCode(),
                 is("LOAD_AFTER_CODE"));
-        assertThat(mReceiptDataSource.getErrors().getValue().getContent().getErrors().get(0).getMessage(),
+        assertThat(mUserReceiptDataSource.getErrors().getValue().getContent().getErrors().get(0).getMessage(),
                 is("test message load after"));
-        assertThat(mReceiptDataSource.isFetchingData().getValue(), is(false));
+        assertThat(mUserReceiptDataSource.isFetchingData().getValue(), is(false));
     }
 
     @Test
@@ -366,23 +366,23 @@ public class ReceiptDataSourceTest {
                 ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
 
         // test
-        mReceiptDataSource.loadAfter(mLoadAfterParams, mLoadAfterCallback);
+        mUserReceiptDataSource.loadAfter(mLoadAfterParams, mLoadAfterCallback);
 
         verify(mHyperwallet).listUserReceipts(any(ReceiptQueryParam.class),
                 ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
         verify(mLoadAfterCallback, never()).onResult(ArgumentMatchers.<Receipt>anyList(), anyInt());
 
         // error occurred, this will save params and callback
-        assertThat(mReceiptDataSource.getErrors().getValue(), is(notNullValue()));
+        assertThat(mUserReceiptDataSource.getErrors().getValue(), is(notNullValue()));
 
         // test retry, saved params and callback will be used and no null pointer exception is thrown
-        mReceiptDataSource.retry();
+        mUserReceiptDataSource.retry();
 
         // verify calls
-        verify(mReceiptDataSource, times(2)).loadAfter(
+        verify(mUserReceiptDataSource, times(2)).loadAfter(
                 ArgumentMatchers.<PageKeyedDataSource.LoadParams<Integer>>any(),
                 ArgumentMatchers.<PageKeyedDataSource.LoadCallback<Integer, Receipt>>any());
-        verify(mReceiptDataSource, never()).loadInitial(
+        verify(mUserReceiptDataSource, never()).loadInitial(
                 ArgumentMatchers.<PageKeyedDataSource.LoadInitialParams<Integer>>any(),
                 ArgumentMatchers.<PageKeyedDataSource.LoadInitialCallback<Integer, Receipt>>any());
     }

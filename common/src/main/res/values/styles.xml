@@ -235,7 +235,6 @@
 
     <style name="TextAppearance.Hyperwallet.Subtitle1"
            parent="@style/TextAppearance.MaterialComponents.Subtitle1">
-        <item name="android:textStyle">bold</item>
     </style>
 </resources>
 
