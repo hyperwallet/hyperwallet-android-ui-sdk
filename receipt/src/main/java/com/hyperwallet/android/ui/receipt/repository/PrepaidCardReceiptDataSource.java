@@ -31,6 +31,7 @@ import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.paging.HyperwalletPageList;
 import com.hyperwallet.android.model.receipt.Receipt;
 import com.hyperwallet.android.model.receipt.ReceiptQueryParam;
+import com.hyperwallet.android.ui.common.util.EspressoIdlingResource;
 import com.hyperwallet.android.ui.common.viewmodel.Event;
 import com.hyperwallet.android.util.DateUtil;
 
@@ -79,6 +80,7 @@ public class PrepaidCardReceiptDataSource extends PageKeyedDataSource<Date, Rece
                 .createdAfter(mCalendarYearBeforeNow.getTime())
                 .sortByCreatedOnDesc().build();
 
+        EspressoIdlingResource.increment();
         getHyperwallet().listPrepaidCardReceipts(mToken, queryParam,
                 new HyperwalletListener<HyperwalletPageList<Receipt>>() {
                     @Override
@@ -93,12 +95,14 @@ public class PrepaidCardReceiptDataSource extends PageKeyedDataSource<Date, Rece
                         // reset
                         mLoadInitialCallback = null;
                         mLoadInitialParams = null;
+                        EspressoIdlingResource.decrement();
                     }
 
                     @Override
                     public void onFailure(HyperwalletException exception) {
                         mIsFetchingData.postValue(Boolean.FALSE);
                         mErrors.postValue(new Event<>(exception.getHyperwalletErrors()));
+                        EspressoIdlingResource.decrement();
                     }
 
                     @Override
@@ -130,6 +134,7 @@ public class PrepaidCardReceiptDataSource extends PageKeyedDataSource<Date, Rece
                 .limit(params.requestedLoadSize)
                 .sortByCreatedOnDesc().build();
 
+        EspressoIdlingResource.increment();
         getHyperwallet().listPrepaidCardReceipts(mToken, queryParam,
                 new HyperwalletListener<HyperwalletPageList<Receipt>>() {
                     @Override
@@ -144,12 +149,14 @@ public class PrepaidCardReceiptDataSource extends PageKeyedDataSource<Date, Rece
                         // reset
                         mLoadAfterCallback = null;
                         mLoadAfterParams = null;
+                        EspressoIdlingResource.decrement();
                     }
 
                     @Override
                     public void onFailure(HyperwalletException exception) {
                         mIsFetchingData.postValue(Boolean.FALSE);
                         mErrors.postValue(new Event<>(exception.getHyperwalletErrors()));
+                        EspressoIdlingResource.decrement();
                     }
 
                     @Override

@@ -110,7 +110,7 @@ public class ListUserReceiptsTest {
         onView(withId(R.id.list_receipts)).check(matches(atPosition(0,
                 hasDescendant(withText(com.hyperwallet.android.ui.receipt.R.string.credit)))));
         onView(withId(R.id.list_receipts)).check(
-                matches(atPosition(0, hasDescendant(withText("Payment")))));
+                matches(atPosition(0, hasDescendant(withText(R.string.payment)))));
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(0, hasDescendant(withText("+ 20.00")))));
         onView(withId(R.id.list_receipts)).check(
@@ -120,7 +120,7 @@ public class ListUserReceiptsTest {
         onView(withId(R.id.list_receipts)).check(matches(atPosition(1,
                 hasDescendant(withText(com.hyperwallet.android.ui.receipt.R.string.credit)))));
         onView(withId(R.id.list_receipts)).check(
-                matches(atPosition(1, hasDescendant(withText("Payment")))));
+                matches(atPosition(1, hasDescendant(withText(R.string.payment)))));
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(1, hasDescendant(withText("+ 25.00")))));
         onView(withId(R.id.list_receipts)).check(
@@ -130,7 +130,7 @@ public class ListUserReceiptsTest {
         onView(withId(R.id.list_receipts)).check(matches(atPosition(2,
                 hasDescendant(withText(com.hyperwallet.android.ui.receipt.R.string.debit)))));
         onView(withId(R.id.list_receipts)).check(
-                matches(atPosition(2, hasDescendant(withText("Card Activation Fee")))));
+                matches(atPosition(2, hasDescendant(withText(R.string.card_activation_fee)))));
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(2, hasDescendant(withText("- 1.95")))));
         onView(withId(R.id.list_receipts)).check(
@@ -142,7 +142,7 @@ public class ListUserReceiptsTest {
         onView(withId(R.id.list_receipts)).check(matches(atPosition(3,
                 hasDescendant(withText(com.hyperwallet.android.ui.receipt.R.string.debit)))));
         onView(withId(R.id.list_receipts)).check(
-                matches(atPosition(3, hasDescendant(withText("Card Load")))));
+                matches(atPosition(3, hasDescendant(withText(R.string.transfer_to_prepaid_card)))));
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(3, hasDescendant(withText("- 18.05")))));
         onView(withId(R.id.list_receipts)).check(
@@ -417,7 +417,7 @@ public class ListUserReceiptsTest {
     @Test
     public void testListReceipt_displaysNetworkErrorDialogOnConnectionTimeout() {
         mMockWebServer.getServer().enqueue(new MockResponse().setResponseCode(HTTP_OK).setBody(sResourceManager
-                .getResourceContent("receipt_debit_response.json")).throttleBody(512, 15, TimeUnit.SECONDS));
+                .getResourceContent("receipt_debit_response.json")).throttleBody(512, 10, TimeUnit.SECONDS));
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("receipt_debit_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();
