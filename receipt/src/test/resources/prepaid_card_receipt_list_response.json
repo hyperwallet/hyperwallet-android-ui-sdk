@@ -2,14 +2,21 @@
   "data": [
     {
       "journalId": "FISVL_5240220",
-      "type": "DEPOSIT",
+      "type": "PREPAID_CARD_SALE",
       "createdOn": "2019-06-06T22:48:41",
-      "entry": "CREDIT",
+      "entry": "DEBIT",
       "destinationToken": "trm-2e02da75-a36c-4723-b613-0b64e6f582d9",
       "amount": "10.00",
+      "fee": "3.00",
       "currency": "USD",
       "details": {
-        "cardNumber": "************0673"
+        "cardNumber": "************0673",
+        "clientPaymentId": "AOxXefx9",
+        "payeeName": "A Person",
+        "website": "https://api.sandbox.hyperwallet.com",
+        "notes": "Sample prepaid card payment for the period of June 15th, 2019 to July 23, 2019",
+        "charityName": "Sample Charity",
+        "checkNumber": "Sample Check Number"
       }
     },
     {
@@ -27,7 +34,7 @@
     {
       "journalId": "FISA_5240222",
       "type": "ADJUSTMENT",
-      "createdOn": "2019-06-06T22:49:17",
+      "createdOn": "2019-06-01T22:49:17",
       "entry": "DEBIT",
       "sourceToken": "trm-2e02da75-a36c-4723-b613-0b64e6f582d9",
       "amount": "8.90",

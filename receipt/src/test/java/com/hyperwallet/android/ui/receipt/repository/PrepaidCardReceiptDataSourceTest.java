@@ -14,8 +14,10 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import static com.hyperwallet.android.model.receipt.Receipt.Entries.CREDIT;
+import static com.hyperwallet.android.model.receipt.Receipt.Entries.DEBIT;
 import static com.hyperwallet.android.model.receipt.Receipt.ReceiptTypes.ADJUSTMENT;
 import static com.hyperwallet.android.model.receipt.Receipt.ReceiptTypes.DEPOSIT;
+import static com.hyperwallet.android.model.receipt.Receipt.ReceiptTypes.PREPAID_CARD_SALE;
 
 import androidx.paging.PageKeyedDataSource;
 
@@ -88,7 +90,7 @@ public class PrepaidCardReceiptDataSourceTest {
 
     @Test
     public void testLoadInitial_returnsReceipts() throws Exception {
-        String json = mExternalResourceManager.getResourceContent("prepaid_card_receipt_list.json");
+        String json = mExternalResourceManager.getResourceContent("prepaid_card_receipt_list_response.json");
         JSONObject jsonObject = new JSONObject(json);
         final HyperwalletPageList<Receipt> response = new HyperwalletPageList<>(jsonObject, Receipt.class);
 
@@ -118,9 +120,9 @@ public class PrepaidCardReceiptDataSourceTest {
         List<Receipt> receipts = mListArgumentCaptor.getValue();
         assertThat(receipts, Matchers.<Receipt>hasSize(7));
         assertThat(receipts.get(0).getJournalId(), is("FISVL_5240220"));
-        assertThat(receipts.get(0).getType(), is(DEPOSIT));
+        assertThat(receipts.get(0).getType(), is(PREPAID_CARD_SALE));
         assertThat(receipts.get(0).getCreatedOn(), is("2019-06-06T22:48:41"));
-        assertThat(receipts.get(0).getEntry(), is(CREDIT));
+        assertThat(receipts.get(0).getEntry(), is(DEBIT));
         assertThat(receipts.get(0).getDestinationToken(), is("trm-2e02da75-a36c-4723-b613-0b64e6f582d9"));
         assertThat(receipts.get(0).getAmount(), is("10.00"));
         assertThat(receipts.get(0).getCurrency(), is("USD"));
@@ -245,7 +247,7 @@ public class PrepaidCardReceiptDataSourceTest {
 
     @Test
     public void testLoadAfter_returnsReceipts() throws Exception {
-        String json = mExternalResourceManager.getResourceContent("prepaid_card_receipt_list.json");
+        String json = mExternalResourceManager.getResourceContent("prepaid_card_receipt_list_response.json");
         JSONObject jsonObject = new JSONObject(json);
         final HyperwalletPageList<Receipt> response = new HyperwalletPageList<>(jsonObject, Receipt.class);
 
