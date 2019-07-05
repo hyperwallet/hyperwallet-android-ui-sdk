@@ -1119,6 +1119,16 @@
           "feeRateType": "FLAT"
         }
       ]
+    },
+    "processingTimes": {
+      "nodes": [
+        {
+          "country": "US",
+          "currency": "USD",
+          "transferMethodType": "BANK_CARD",
+          "value": "IMMEDIATE"
+        }
+      ]
     }
   }
 }
