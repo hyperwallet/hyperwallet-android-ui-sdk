@@ -20,6 +20,7 @@ import android.os.Handler;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.paging.PageKeyedDataSource;
@@ -194,8 +195,9 @@ public class PrepaidCardReceiptDataSource extends PageKeyedDataSource<Date, Rece
         return Hyperwallet.getDefault();
     }
 
-    private Date getNextDate(@Nullable final HyperwalletPageList<Receipt> result) {
-        if (result != null && result.getDataList() != null && !result.getDataList().isEmpty()) {
+    @VisibleForTesting
+    Date getNextDate(@NonNull final HyperwalletPageList<Receipt> result) {
+        if (result.getDataList() != null && !result.getDataList().isEmpty()) {
             // get last receipt date
             return DateUtil.fromDateTimeString(
                     result.getDataList().get(result.getDataList().size() - 1).getCreatedOn());

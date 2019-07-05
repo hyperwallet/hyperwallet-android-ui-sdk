@@ -33,6 +33,7 @@ import com.hyperwallet.android.rule.HyperwalletExternalResourceManager;
 import com.hyperwallet.android.util.DateUtil;
 
 import org.hamcrest.Matchers;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Rule;
@@ -395,4 +396,11 @@ public class PrepaidCardReceiptDataSourceTest {
                 ArgumentMatchers.<PageKeyedDataSource.LoadParams<Date>>any(),
                 ArgumentMatchers.<PageKeyedDataSource.LoadCallback<Date, Receipt>>any());
     }
+
+    @Test
+    public void testGetNextDate_verifyDefaultValue() {
+        Date date = mPrepaidCardReceiptDataSource.getNextDate(new HyperwalletPageList<Receipt>(null));
+        assertThat(date, is(notNullValue()));
+    }
+
 }

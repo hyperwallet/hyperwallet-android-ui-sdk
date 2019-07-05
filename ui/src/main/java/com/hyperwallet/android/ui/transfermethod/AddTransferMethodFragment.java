@@ -48,6 +48,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.hyperwallet.android.exception.HyperwalletException;
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.graphql.HyperwalletFee;
+import com.hyperwallet.android.model.graphql.ProcessingTime;
 import com.hyperwallet.android.model.graphql.field.HyperwalletField;
 import com.hyperwallet.android.model.graphql.field.HyperwalletFieldGroup;
 import com.hyperwallet.android.model.transfermethod.HyperwalletBankAccount;
@@ -356,7 +357,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
 
     @Override
     public void showTransactionInformation(@NonNull final List<HyperwalletFee> fees,
-            @Nullable final String processingTime) {
+            @Nullable final ProcessingTime processingTime) {
         View header = getView().findViewById(R.id.add_transfer_method_static_container_header);
         View container = getView().findViewById(R.id.add_transfer_method_static_container);
         View feeLabel = getView().findViewById(R.id.add_transfer_method_fee_label);
@@ -376,8 +377,8 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
             feeValue.setVisibility(View.GONE);
         }
 
-        if (!TextUtils.isEmpty(processingTime)) {
-            processingTimeValue.setText(processingTime);
+        if (processingTime != null && !TextUtils.isEmpty(processingTime.getValue())) {
+            processingTimeValue.setText(processingTime.getValue());
             processingTimeLabel.setVisibility(View.VISIBLE);
             processingTimeValue.setVisibility(View.VISIBLE);
             if (feeValue.getVisibility() == View.GONE) {

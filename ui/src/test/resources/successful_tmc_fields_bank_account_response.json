@@ -53,11 +53,11 @@
                     "fieldSelectionOptions": [
                       {
                         "label": "Checking",
-                        "value": "CHECKING"
+                        "value": "Checking"
                       },
                       {
                         "label": "Savings",
-                        "value": "SAVINGS"
+                        "value": "Savings"
                       }
                     ],
                     "label": "Account Type",
@@ -1233,6 +1233,16 @@
           "transferMethodType": "BANK_ACCOUNT",
           "value": "2.00",
           "feeRateType": "FLAT"
+        }
+      ]
+    },
+    "processingTimes": {
+      "nodes": [
+        {
+          "country": "US",
+          "currency": "USD",
+          "transferMethodType": "BANK_ACCOUNT",
+          "value": "1-2 Business days"
         }
       ]
     }
