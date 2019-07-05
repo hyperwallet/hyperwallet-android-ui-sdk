@@ -36,11 +36,10 @@ task jacocoTestReport(type: JacocoReport, dependsOn: 'testDebugUnitTest') {
 
     group = 'Reporting'
     description = 'Generate Jacoco coverage reports.'
-
     reports {
         html {
             enabled = true
-            destination file("$buildDir/reports/jacoco")
+            destination file("$project.buildDir/reports/jacoco")
         }
     }
 
@@ -52,7 +51,7 @@ task jacocoTestReport(type: JacocoReport, dependsOn: 'testDebugUnitTest') {
 
     additionalSourceDirs = files(coverageSourceDirs)
     sourceDirectories = files(coverageSourceDirs)
-    executionData = files("${buildDir}/jacoco/testDebugUnitTest.exec")
+    executionData = files("${project.buildDir}/jacoco/testDebugUnitTest.exec")
 }
 
 task jacocoTestCoverageVerification(type: JacocoCoverageVerification, dependsOn: 'jacocoTestReport') {
@@ -65,7 +64,7 @@ task jacocoTestCoverageVerification(type: JacocoCoverageVerification, dependsOn:
     )
     additionalSourceDirs = files(coverageSourceDirs)
     sourceDirectories = files(coverageSourceDirs)
-    executionData = files("${buildDir}/jacoco/testDebugUnitTest.exec")
+    executionData = files("${project.buildDir}/jacoco/testDebugUnitTest.exec")
 
     violationRules {
         setFailOnViolation(true)
