@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.ListReceiptActivity">
+    tools:context=".view.ListPrepaidCardReceiptActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -35,7 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context=".view.ListReceiptActivity"
-        tools:showIn="@layout/activity_list_receipt"/>
+        tools:context=".view.ListPrepaidCardReceiptActivity"
+        tools:showIn="@layout/activity_list_prepaid_card_receipt"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -6,7 +6,6 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
@@ -79,8 +78,6 @@ public class TransferMethodConfigurationRepositoryImplTest {
     private ArgumentCaptor<HyperwalletTransferMethodConfigurationField> fieldResultArgumentCaptor;
     @Captor
     private ArgumentCaptor<HyperwalletErrors> mErrorsArgumentCaptor;
-    @Captor
-    private ArgumentCaptor<String> mStringArgumentCaptor;
     @Mock
     private Hyperwallet mHyperwallet;
     @Mock
@@ -181,7 +178,7 @@ public class TransferMethodConfigurationRepositoryImplTest {
         mTransferMethodConfigurationRepositoryImplMock.getFields(COUNTRY, CURRENCY, TRANSFER_METHOD_TYPE, INDIVIDUAL,
                 loadFieldsCallback);
 
-        verify(loadFieldsCallback).onFieldsLoaded(fieldResultArgumentCaptor.capture(), mStringArgumentCaptor.capture());
+        verify(loadFieldsCallback).onFieldsLoaded(fieldResultArgumentCaptor.capture());
         verify(loadFieldsCallback, never()).onError(any(HyperwalletErrors.class));
 
         HyperwalletTransferMethodConfigurationField transferMethodConfigurationFieldResult =
@@ -219,8 +216,7 @@ public class TransferMethodConfigurationRepositoryImplTest {
         mTransferMethodConfigurationRepositoryImplMock.getFields(COUNTRY, CURRENCY, TRANSFER_METHOD_TYPE, INDIVIDUAL,
                 loadFieldsCallback);
 
-        verify(loadFieldsCallback, never()).onFieldsLoaded(
-                any(HyperwalletTransferMethodConfigurationField.class), anyString());
+        verify(loadFieldsCallback, never()).onFieldsLoaded(any(HyperwalletTransferMethodConfigurationField.class));
         verify(loadFieldsCallback).onError(mErrorsArgumentCaptor.capture());
 
         HyperwalletErrors hyperwalletErrors = mErrorsArgumentCaptor.getValue();
@@ -270,7 +266,7 @@ public class TransferMethodConfigurationRepositoryImplTest {
                 any(String.class),
                 any(String.class),
                 any(TransferMethodConfigurationRepository.LoadFieldsCallback.class));
-        verify(loadFieldsCallback).onFieldsLoaded(fieldResultArgumentCaptor.capture(), mStringArgumentCaptor.capture());
+        verify(loadFieldsCallback).onFieldsLoaded(fieldResultArgumentCaptor.capture());
         verify(loadFieldsCallback, never()).onError(any(HyperwalletErrors.class));
     }
 

@@ -37,7 +37,6 @@ import com.hyperwallet.android.exception.HyperwalletException;
 import com.hyperwallet.android.listener.HyperwalletListener;
 import com.hyperwallet.android.model.graphql.HyperwalletTransferMethodConfigurationField;
 import com.hyperwallet.android.model.graphql.HyperwalletTransferMethodConfigurationKey;
-import com.hyperwallet.android.model.graphql.keyed.HyperwalletTransferMethodType;
 import com.hyperwallet.android.model.graphql.query.HyperwalletTransferMethodConfigurationFieldQuery;
 import com.hyperwallet.android.model.graphql.query.HyperwalletTransferMethodConfigurationKeysQuery;
 import com.hyperwallet.android.ui.common.util.EspressoIdlingResource;
@@ -45,7 +44,6 @@ import com.hyperwallet.android.ui.common.util.EspressoIdlingResource;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 public class TransferMethodConfigurationRepositoryImpl implements TransferMethodConfigurationRepository {
     private final Handler mHandler;
@@ -117,8 +115,7 @@ public class TransferMethodConfigurationRepositoryImpl implements TransferMethod
                     public void onSuccess(HyperwalletTransferMethodConfigurationField result) {
                         FieldMapKey fieldMapKey = new FieldMapKey(country, currency, transferMethodType);
                         mFieldMap.put(fieldMapKey, result);
-                        loadFieldsCallback.onFieldsLoaded(result,
-                                getProcessingTime(country, currency, transferMethodType));
+                        loadFieldsCallback.onFieldsLoaded(result);
                         EspressoIdlingResource.decrement();
                     }
 
@@ -159,8 +156,7 @@ public class TransferMethodConfigurationRepositoryImpl implements TransferMethod
             getTransferMethodConfigurationFieldResult(country, currency, transferMethodType,
                     transferMethodProfileType, loadFieldsCallback);
         } else {
-            loadFieldsCallback.onFieldsLoaded(transferMethodConfigurationField,
-                    getProcessingTime(country, currency, transferMethodType));
+            loadFieldsCallback.onFieldsLoaded(transferMethodConfigurationField);
         }
     }
 
@@ -174,21 +170,6 @@ public class TransferMethodConfigurationRepositoryImpl implements TransferMethod
         mFieldMap.clear();
     }
 
-    //TODO this method is just temporary, placed to get the processing time
-    //Next iteration from API will have ProcessingTime as a separate node
-    @Nullable
-    private String getProcessingTime(String country, String currency, String transferMethodType) {
-        if (mTransferMethodConfigurationKey != null) {
-            Set<HyperwalletTransferMethodType> transferMethodTypes = mTransferMethodConfigurationKey
-                    .getTransferMethodType(country, currency);
-            for (HyperwalletTransferMethodType type : transferMethodTypes) {
-                if (type.getName().equals(transferMethodType)) {
-                    return type.getProcessingTime();
-                }
-            }
-        }
-        return null;
-    }
 }
 
 class FieldMapKey {

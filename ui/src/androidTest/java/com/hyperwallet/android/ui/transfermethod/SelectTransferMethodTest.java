@@ -225,6 +225,8 @@ public class SelectTransferMethodTest {
                 matches(atPosition(1, hasDescendant(withText(R.string.bank_card)))));
         onView(withId(R.id.select_transfer_method_types_list)).check(
                 matches(atPosition(1, hasDescendant(withText("Transaction Fee: USD 1.75")))));
+        onView(withId(R.id.select_transfer_method_types_list)).check(
+                matches(atPosition(1, hasDescendant(withText("Processing Time: IMMEDIATE")))));
 
         onView(withId(R.id.select_transfer_method_types_list)).check(
                 matches(atPosition(2, hasDescendant(withText(R.string.wire_account_font_icon)))));

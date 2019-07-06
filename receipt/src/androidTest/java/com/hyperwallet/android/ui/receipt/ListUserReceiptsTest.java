@@ -41,12 +41,11 @@ import androidx.test.rule.ActivityTestRule;
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.ui.common.util.DateUtils;
 import com.hyperwallet.android.ui.common.util.EspressoIdlingResource;
-import com.hyperwallet.android.ui.receipt.repository.ReceiptRepositoryFactory;
 import com.hyperwallet.android.ui.receipt.rule.HyperwalletExternalResourceManager;
 import com.hyperwallet.android.ui.receipt.rule.HyperwalletMockWebServer;
 import com.hyperwallet.android.ui.receipt.util.RecyclerViewCountAssertion;
 import com.hyperwallet.android.ui.receipt.util.TestAuthenticationProvider;
-import com.hyperwallet.android.ui.receipt.view.ListReceiptActivity;
+import com.hyperwallet.android.ui.receipt.view.ListUserReceiptActivity;
 
 import org.junit.After;
 import org.junit.Before;
@@ -62,15 +61,15 @@ import java.util.concurrent.TimeUnit;
 import okhttp3.mockwebserver.MockResponse;
 
 @RunWith(AndroidJUnit4.class)
-public class ListReceiptsTest {
+public class ListUserReceiptsTest {
 
     @ClassRule
     public static HyperwalletExternalResourceManager sResourceManager = new HyperwalletExternalResourceManager();
     @Rule
     public HyperwalletMockWebServer mMockWebServer = new HyperwalletMockWebServer(8080);
     @Rule
-    public ActivityTestRule<ListReceiptActivity> mActivityTestRule =
-            new ActivityTestRule<>(ListReceiptActivity.class, true, false);
+    public ActivityTestRule<ListUserReceiptActivity> mActivityTestRule =
+            new ActivityTestRule<>(ListUserReceiptActivity.class, true, false);
 
     @Before
     public void setup() {
@@ -80,11 +79,6 @@ public class ListReceiptsTest {
                 .getResourceContent("authentication_token_response.json")).mock();
 
         setLocale(Locale.US);
-    }
-
-    @After
-    public void cleanup() {
-        ReceiptRepositoryFactory.clearInstance();
     }
 
     @Before
@@ -116,7 +110,7 @@ public class ListReceiptsTest {
         onView(withId(R.id.list_receipts)).check(matches(atPosition(0,
                 hasDescendant(withText(com.hyperwallet.android.ui.receipt.R.string.credit)))));
         onView(withId(R.id.list_receipts)).check(
-                matches(atPosition(0, hasDescendant(withText("Payment")))));
+                matches(atPosition(0, hasDescendant(withText(R.string.payment)))));
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(0, hasDescendant(withText("+ 20.00")))));
         onView(withId(R.id.list_receipts)).check(
@@ -126,7 +120,7 @@ public class ListReceiptsTest {
         onView(withId(R.id.list_receipts)).check(matches(atPosition(1,
                 hasDescendant(withText(com.hyperwallet.android.ui.receipt.R.string.credit)))));
         onView(withId(R.id.list_receipts)).check(
-                matches(atPosition(1, hasDescendant(withText("Payment")))));
+                matches(atPosition(1, hasDescendant(withText(R.string.payment)))));
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(1, hasDescendant(withText("+ 25.00")))));
         onView(withId(R.id.list_receipts)).check(
@@ -136,7 +130,7 @@ public class ListReceiptsTest {
         onView(withId(R.id.list_receipts)).check(matches(atPosition(2,
                 hasDescendant(withText(com.hyperwallet.android.ui.receipt.R.string.debit)))));
         onView(withId(R.id.list_receipts)).check(
-                matches(atPosition(2, hasDescendant(withText("Card Activation Fee")))));
+                matches(atPosition(2, hasDescendant(withText(R.string.card_activation_fee)))));
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(2, hasDescendant(withText("- 1.95")))));
         onView(withId(R.id.list_receipts)).check(
@@ -148,7 +142,7 @@ public class ListReceiptsTest {
         onView(withId(R.id.list_receipts)).check(matches(atPosition(3,
                 hasDescendant(withText(com.hyperwallet.android.ui.receipt.R.string.debit)))));
         onView(withId(R.id.list_receipts)).check(
-                matches(atPosition(3, hasDescendant(withText("Card Load")))));
+                matches(atPosition(3, hasDescendant(withText(R.string.transfer_to_prepaid_card)))));
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(3, hasDescendant(withText("- 18.05")))));
         onView(withId(R.id.list_receipts)).check(
@@ -372,7 +366,7 @@ public class ListReceiptsTest {
     }
 
     @Test
-    public void testListReceipt_verifyTransactionsLoadedUponScrolling() throws InterruptedException {
+    public void testListReceipt_verifyTransactionsLoadedUponScrolling() {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("receipt_list_paged_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
@@ -423,7 +417,7 @@ public class ListReceiptsTest {
     @Test
     public void testListReceipt_displaysNetworkErrorDialogOnConnectionTimeout() {
         mMockWebServer.getServer().enqueue(new MockResponse().setResponseCode(HTTP_OK).setBody(sResourceManager
-                .getResourceContent("receipt_debit_response.json")).throttleBody(512, 15, TimeUnit.SECONDS));
+                .getResourceContent("receipt_debit_response.json")).throttleBody(512, 10, TimeUnit.SECONDS));
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("receipt_debit_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();

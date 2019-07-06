@@ -1,0 +1,24 @@
+{
+  "data": [
+    {
+      "journalId": "FISVL_5240220",
+      "type": "DEPOSIT",
+      "createdOn": "2019-06-06T22:48:41",
+      "entry": "CREDIT",
+      "destinationToken": "trm-2e02da75-a36c-4723-b613-0b64e6f582d9",
+      "amount": "15.00",
+      "currency": "CAD",
+      "details": {
+        "cardNumber": "************0673"
+      }
+    }
+  ],
+  "links": [
+    {
+      "params": {
+        "rel": "self"
+      },
+      "href": "https://qamaster-hyperwallet.aws.paylution.net/rest/v3/users/usr-e17ae43b-284d-4198-9585-f417943c624f/prepaid-cards/trm-2e02da75-a36c-4723-b613-0b64e6f582d9/receipts"
+    }
+  ]
+}

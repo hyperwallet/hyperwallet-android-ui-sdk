@@ -150,12 +150,11 @@ public class PayPalTest {
                 matches(withText(R.string.add_transfer_method_fee_label)));
         onView(withId(R.id.add_transfer_method_fee_value)).check(matches(withText("USD 0.25")));
 
-        //TODO: Uncomment when processing time node is implemented
-//        onView(withId(R.id.add_transfer_method_processing_label)).check(
-//                matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-//        onView(withId(R.id.add_transfer_method_processing_label)).check(
-//                matches(withText(R.string.add_transfer_method_processing_time_label)));
-//        onView(withId(R.id.add_transfer_method_fee_value)).check(matches(withText("IMMEDIATE")));
+        onView(withId(R.id.add_transfer_method_processing_label)).check(
+                matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withId(R.id.add_transfer_method_processing_label)).check(
+                matches(withText(R.string.add_transfer_method_processing_time_label)));
+        onView(withId(R.id.add_transfer_method_processing_time_value)).check(matches(withText("IMMEDIATE")));
 
     }
 
