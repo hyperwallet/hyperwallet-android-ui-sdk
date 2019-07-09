@@ -44,7 +44,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hyperwallet.android.model.HyperwalletError;
-import com.hyperwallet.android.model.HyperwalletStatusTransition;
+import com.hyperwallet.android.model.StatusTransition;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.ui.HyperwalletLocalBroadcast;
 import com.hyperwallet.android.ui.R;
@@ -223,7 +223,7 @@ public class ListTransferMethodFragment extends Fragment implements ListTransfer
 
     @Override
     public void notifyTransferMethodDeactivated(
-            @NonNull final HyperwalletStatusTransition statusTransition) {
+            @NonNull final StatusTransition statusTransition) {
         Intent intent = HyperwalletLocalBroadcast.createBroadcastIntentTransferMethodDeactivated(
                 statusTransition);
         LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);

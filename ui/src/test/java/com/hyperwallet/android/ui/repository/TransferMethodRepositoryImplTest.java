@@ -13,8 +13,8 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
-import static com.hyperwallet.android.model.HyperwalletStatusTransition.StatusDefinition.ACTIVATED;
-import static com.hyperwallet.android.model.HyperwalletStatusTransition.StatusDefinition.DE_ACTIVATED;
+import static com.hyperwallet.android.model.StatusTransition.StatusDefinition.ACTIVATED;
+import static com.hyperwallet.android.model.StatusTransition.StatusDefinition.DE_ACTIVATED;
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.BANK_ACCOUNT_ID;
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.BANK_NAME;
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.STATUS;
@@ -28,7 +28,7 @@ import com.hyperwallet.android.exception.HyperwalletException;
 import com.hyperwallet.android.listener.HyperwalletListener;
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.HyperwalletErrors;
-import com.hyperwallet.android.model.HyperwalletStatusTransition;
+import com.hyperwallet.android.model.StatusTransition;
 import com.hyperwallet.android.model.paging.HyperwalletPageList;
 import com.hyperwallet.android.model.transfermethod.HyperwalletBankAccount;
 import com.hyperwallet.android.model.transfermethod.HyperwalletBankCard;
@@ -81,7 +81,7 @@ public class TransferMethodRepositoryImplTest {
     @Captor
     private ArgumentCaptor<PayPalAccount> mPayPalAccountArgumentCaptor;
     @Captor
-    private ArgumentCaptor<HyperwalletStatusTransition> mStatusTransitionArgumentCaptor;
+    private ArgumentCaptor<StatusTransition> mStatusTransitionArgumentCaptor;
     @Captor
     private ArgumentCaptor<List<HyperwalletTransferMethod>> mListTransferMethodCaptor;
 
@@ -162,18 +162,21 @@ public class TransferMethodRepositoryImplTest {
                 .Builder("CA", "CAD", "3423423432")
                 .token("trm-854c4ec1-9161-49d6-92e2-b8d15aa4bf56")
                 .build();
-        bankAccount.setField(STATUS, HyperwalletStatusTransition.StatusDefinition.ACTIVATED);
+        bankAccount.setField(STATUS, StatusTransition.StatusDefinition.ACTIVATED);
         doAnswer(new Answer() {
             @Override
             public Object answer(InvocationOnMock invocation) {
-                HyperwalletStatusTransition statusTransition = new HyperwalletStatusTransition(DE_ACTIVATED);
-                statusTransition.setNotes("Closing this account.");
+                StatusTransition statusTransition = new StatusTransition.Builder()
+                        .transition(DE_ACTIVATED)
+                        .notes("Closing this account.")
+                        .build();
+
                 HyperwalletListener listener = (HyperwalletListener) invocation.getArguments()[2];
                 listener.onSuccess(statusTransition);
                 return listener;
             }
         }).when(mHyperwallet).deactivateBankAccount(anyString(), ArgumentMatchers.<String>isNull(),
-                ArgumentMatchers.<HyperwalletListener<HyperwalletStatusTransition>>any());
+                ArgumentMatchers.<HyperwalletListener<StatusTransition>>any());
 
         // test
         mTransferMethodRepository.deactivateTransferMethod(bankAccount, mDeactivateTransferMethodCallback);
@@ -182,7 +185,7 @@ public class TransferMethodRepositoryImplTest {
                 mStatusTransitionArgumentCaptor.capture());
         verify(mDeactivateTransferMethodCallback, never()).onError(any(HyperwalletErrors.class));
 
-        HyperwalletStatusTransition statusTransition = mStatusTransitionArgumentCaptor.getValue();
+        StatusTransition statusTransition = mStatusTransitionArgumentCaptor.getValue();
         assertThat(statusTransition, is(notNullValue()));
         assertThat(statusTransition.getTransition(), is(DE_ACTIVATED));
         assertThat(statusTransition.getNotes(), is("Closing this account."));
@@ -194,7 +197,7 @@ public class TransferMethodRepositoryImplTest {
                 .Builder("CA", "CAD", "3423423432")
                 .token("trm-854c4ec1-9161-49d6-92e2-b8d15aa4bf56")
                 .build();
-        bankAccount.setField(STATUS, HyperwalletStatusTransition.StatusDefinition.ACTIVATED);
+        bankAccount.setField(STATUS, StatusTransition.StatusDefinition.ACTIVATED);
         final HyperwalletError error = new HyperwalletError("test message", "TEST_CODE");
         doAnswer(new Answer() {
             @Override
@@ -207,13 +210,13 @@ public class TransferMethodRepositoryImplTest {
                 return listener;
             }
         }).when(mHyperwallet).deactivateBankAccount(anyString(), ArgumentMatchers.<String>isNull(),
-                ArgumentMatchers.<HyperwalletListener<HyperwalletStatusTransition>>any());
+                ArgumentMatchers.<HyperwalletListener<StatusTransition>>any());
 
         // test
         mTransferMethodRepository.deactivateTransferMethod(bankAccount, mDeactivateTransferMethodCallback);
 
         verify(mDeactivateTransferMethodCallback, never()).onTransferMethodDeactivated(
-                any(HyperwalletStatusTransition.class));
+                any(StatusTransition.class));
         verify(mDeactivateTransferMethodCallback).onError(mErrorsArgumentCaptor.capture());
 
         assertThat(mErrorsArgumentCaptor.getValue().getErrors(), hasItem(error));
@@ -225,18 +228,21 @@ public class TransferMethodRepositoryImplTest {
                 .Builder("CA", "CAD", "1232345456784", "2019-05", "234")
                 .token("trm-854c4ec1-9161-49d6-92e2-b8d15aa4bf56")
                 .build();
-        bankCard.setField(STATUS, HyperwalletStatusTransition.StatusDefinition.ACTIVATED);
+        bankCard.setField(STATUS, StatusTransition.StatusDefinition.ACTIVATED);
         doAnswer(new Answer() {
             @Override
             public Object answer(InvocationOnMock invocation) {
-                HyperwalletStatusTransition statusTransition = new HyperwalletStatusTransition(DE_ACTIVATED);
-                statusTransition.setNotes("Closing this account.");
+                StatusTransition statusTransition = new StatusTransition.Builder()
+                        .notes("Closing this account.")
+                        .transition(DE_ACTIVATED)
+                        .build();
+
                 HyperwalletListener listener = (HyperwalletListener) invocation.getArguments()[2];
                 listener.onSuccess(statusTransition);
                 return listener;
             }
         }).when(mHyperwallet).deactivateBankCard(anyString(), ArgumentMatchers.<String>isNull(),
-                ArgumentMatchers.<HyperwalletListener<HyperwalletStatusTransition>>any());
+                ArgumentMatchers.<HyperwalletListener<StatusTransition>>any());
 
         // test
         mTransferMethodRepository.deactivateTransferMethod(bankCard, mDeactivateTransferMethodCallback);
@@ -245,7 +251,7 @@ public class TransferMethodRepositoryImplTest {
                 mStatusTransitionArgumentCaptor.capture());
         verify(mDeactivateTransferMethodCallback, never()).onError(any(HyperwalletErrors.class));
 
-        HyperwalletStatusTransition statusTransition = mStatusTransitionArgumentCaptor.getValue();
+        StatusTransition statusTransition = mStatusTransitionArgumentCaptor.getValue();
         assertThat(statusTransition, is(notNullValue()));
         assertThat(statusTransition.getTransition(), is(DE_ACTIVATED));
         assertThat(statusTransition.getNotes(), is("Closing this account."));
@@ -257,7 +263,7 @@ public class TransferMethodRepositoryImplTest {
                 .Builder("CA", "CAD", "1232345456784", "2019-05", "234")
                 .token("trm-854c4ec1-9161-49d6-92e2-b8d15aa4bf56")
                 .build();
-        bankCard.setField(STATUS, HyperwalletStatusTransition.StatusDefinition.ACTIVATED);
+        bankCard.setField(STATUS, StatusTransition.StatusDefinition.ACTIVATED);
         final HyperwalletError error = new HyperwalletError("test message", "TEST_CODE");
         doAnswer(new Answer() {
             @Override
@@ -270,13 +276,13 @@ public class TransferMethodRepositoryImplTest {
                 return listener;
             }
         }).when(mHyperwallet).deactivateBankCard(anyString(), ArgumentMatchers.<String>isNull(),
-                ArgumentMatchers.<HyperwalletListener<HyperwalletStatusTransition>>any());
+                ArgumentMatchers.<HyperwalletListener<StatusTransition>>any());
 
         // test
         mTransferMethodRepository.deactivateTransferMethod(bankCard, mDeactivateTransferMethodCallback);
 
         verify(mDeactivateTransferMethodCallback, never()).onTransferMethodDeactivated(
-                any(HyperwalletStatusTransition.class));
+                any(StatusTransition.class));
         verify(mDeactivateTransferMethodCallback).onError(mErrorsArgumentCaptor.capture());
 
         assertThat(mErrorsArgumentCaptor.getValue().getErrors(), hasItem(error));
@@ -289,14 +295,17 @@ public class TransferMethodRepositoryImplTest {
         doAnswer(new Answer() {
             @Override
             public Object answer(InvocationOnMock invocation) {
-                HyperwalletStatusTransition statusTransition = new HyperwalletStatusTransition(DE_ACTIVATED);
-                statusTransition.setNotes("Closing this account.");
+                StatusTransition statusTransition = new StatusTransition.Builder()
+                        .notes("Closing this account.")
+                        .transition(DE_ACTIVATED)
+                        .build();
+
                 HyperwalletListener listener = (HyperwalletListener) invocation.getArguments()[2];
                 listener.onSuccess(statusTransition);
                 return listener;
             }
         }).when(mHyperwallet).deactivatePayPalAccount(anyString(), ArgumentMatchers.<String>isNull(),
-                ArgumentMatchers.<HyperwalletListener<HyperwalletStatusTransition>>any());
+                ArgumentMatchers.<HyperwalletListener<StatusTransition>>any());
 
         // test
         mTransferMethodRepository.deactivateTransferMethod(payPalAccount, mDeactivateTransferMethodCallback);
@@ -305,7 +314,7 @@ public class TransferMethodRepositoryImplTest {
                 mStatusTransitionArgumentCaptor.capture());
         verify(mDeactivateTransferMethodCallback, never()).onError(any(HyperwalletErrors.class));
 
-        HyperwalletStatusTransition statusTransition = mStatusTransitionArgumentCaptor.getValue();
+        StatusTransition statusTransition = mStatusTransitionArgumentCaptor.getValue();
         assertThat(statusTransition, is(notNullValue()));
         assertThat(statusTransition.getTransition(), is(DE_ACTIVATED));
         assertThat(statusTransition.getNotes(), is("Closing this account."));
@@ -315,7 +324,7 @@ public class TransferMethodRepositoryImplTest {
     public void testDeactivateTransferMethod_payPalAccountWithError() {
         PayPalAccount payPalAccount = new PayPalAccount.Builder("US", "US", "jsmith4@hyperwallet.com")
                 .token("trm-854c4ec1-9161-49d6-92e2-b8d15aa4bf56").build();
-        payPalAccount.setField(STATUS, HyperwalletStatusTransition.StatusDefinition.ACTIVATED);
+        payPalAccount.setField(STATUS, StatusTransition.StatusDefinition.ACTIVATED);
         final HyperwalletError error = new HyperwalletError("test message", "TEST_CODE");
         doAnswer(new Answer() {
             @Override
@@ -328,13 +337,13 @@ public class TransferMethodRepositoryImplTest {
                 return listener;
             }
         }).when(mHyperwallet).deactivatePayPalAccount(anyString(), ArgumentMatchers.<String>isNull(),
-                ArgumentMatchers.<HyperwalletListener<HyperwalletStatusTransition>>any());
+                ArgumentMatchers.<HyperwalletListener<StatusTransition>>any());
 
         // test
         mTransferMethodRepository.deactivateTransferMethod(payPalAccount, mDeactivateTransferMethodCallback);
 
         verify(mDeactivateTransferMethodCallback, never()).onTransferMethodDeactivated(
-                any(HyperwalletStatusTransition.class));
+                any(StatusTransition.class));
         verify(mDeactivateTransferMethodCallback).onError(mErrorsArgumentCaptor.capture());
 
         assertThat(mErrorsArgumentCaptor.getValue().getErrors(), hasItem(error));
@@ -603,18 +612,21 @@ public class TransferMethodRepositoryImplTest {
                 .transferMethodType(HyperwalletTransferMethod.TransferMethodTypes.WIRE_ACCOUNT)
                 .token("trm-123")
                 .build();
-        bankAccount.setField(STATUS, HyperwalletStatusTransition.StatusDefinition.ACTIVATED);
+        bankAccount.setField(STATUS, StatusTransition.StatusDefinition.ACTIVATED);
         doAnswer(new Answer() {
             @Override
             public Object answer(InvocationOnMock invocation) {
-                HyperwalletStatusTransition statusTransition = new HyperwalletStatusTransition(DE_ACTIVATED);
-                statusTransition.setNotes("Closing this account.");
+                StatusTransition statusTransition = new StatusTransition.Builder()
+                        .notes("Closing this account.")
+                        .transition(DE_ACTIVATED)
+                        .build();
+
                 HyperwalletListener listener = (HyperwalletListener) invocation.getArguments()[2];
                 listener.onSuccess(statusTransition);
                 return listener;
             }
         }).when(mHyperwallet).deactivateBankAccount(anyString(), ArgumentMatchers.<String>isNull(),
-                ArgumentMatchers.<HyperwalletListener<HyperwalletStatusTransition>>any());
+                ArgumentMatchers.<HyperwalletListener<StatusTransition>>any());
 
         // test
         mTransferMethodRepository.deactivateTransferMethod(bankAccount, mDeactivateTransferMethodCallback);
@@ -623,7 +635,7 @@ public class TransferMethodRepositoryImplTest {
                 mStatusTransitionArgumentCaptor.capture());
         verify(mDeactivateTransferMethodCallback, never()).onError(any(HyperwalletErrors.class));
 
-        HyperwalletStatusTransition statusTransition = mStatusTransitionArgumentCaptor.getValue();
+        StatusTransition statusTransition = mStatusTransitionArgumentCaptor.getValue();
         assertThat(statusTransition, is(notNullValue()));
         assertThat(statusTransition.getTransition(), is(DE_ACTIVATED));
         assertThat(statusTransition.getNotes(), is("Closing this account."));
