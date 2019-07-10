@@ -1,1 +1,1 @@
-include ':ui', ':common', ':receipt'
+include ':ui', ':common', ':receipt', ':transfer'
