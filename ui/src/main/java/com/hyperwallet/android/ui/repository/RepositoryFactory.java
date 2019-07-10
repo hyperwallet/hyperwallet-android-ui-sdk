@@ -27,6 +27,9 @@
 
 package com.hyperwallet.android.ui.repository;
 
+import com.hyperwallet.android.ui.user.repository.UserRepository;
+import com.hyperwallet.android.ui.user.repository.UserRepositoryImpl;
+
 public class RepositoryFactory {
     private static RepositoryFactory sInstance;
     private TransferMethodConfigurationRepository mTransferMethodConfigurationRepository;

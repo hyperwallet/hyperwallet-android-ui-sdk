@@ -11,6 +11,7 @@ dependencies {
 
     implementation project(":common")
     implementation project(":receipt")
+    implementation project(":userrepository")
 
     androidTestImplementation "androidx.test:rules:$testRulesVersion"
     androidTestImplementation "androidx.test.espresso:espresso-contrib:$espressoVersion"
