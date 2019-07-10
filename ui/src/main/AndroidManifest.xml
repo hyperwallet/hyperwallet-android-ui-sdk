@@ -27,7 +27,7 @@
             android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity
-            android:name="com.hyperwallet.android.ui.transfermethod.TransferMethodSelectorActivity"
+            android:name="com.hyperwallet.android.ui.transfermethod.ListTransferDestinationActivity"
             android:label="@string/title_activity_list_transfer_method"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>

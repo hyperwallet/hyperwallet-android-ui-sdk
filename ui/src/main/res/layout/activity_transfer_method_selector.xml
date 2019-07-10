@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.hyperwallet.android.ui.transfermethod.TransferMethodSelectorActivity">
+    tools:context="com.hyperwallet.android.ui.transfermethod.ListTransferDestinationActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -35,7 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context="com.hyperwallet.android.ui.transfermethod.TransferMethodSelectorActivity"
+        tools:context="com.hyperwallet.android.ui.transfermethod.ListTransferDestinationActivity"
         tools:showIn="@layout/activity_transfer_method_selector"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

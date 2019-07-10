@@ -7,25 +7,23 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.hyperwallet.android.model.HyperwalletErrors;
-import com.hyperwallet.android.model.receipt.Receipt;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.ui.common.viewmodel.Event;
 import com.hyperwallet.android.ui.repository.TransferMethodRepository;
 
 import java.util.List;
 
-public class TransferMethodSelectorViewModel extends ViewModel {
+public class ListTransferDestinationViewModel extends ViewModel {
 
     private MutableLiveData<List<HyperwalletTransferMethod>> mTransferMethodList;
     private MutableLiveData<Event<HyperwalletTransferMethod>> mSelection;
     private TransferMethodRepository mTransferMethodRepository;
 
-    public TransferMethodSelectorViewModel(@NonNull final TransferMethodRepository transferMethodRepository) {
+    public ListTransferDestinationViewModel(@NonNull final TransferMethodRepository transferMethodRepository) {
         mTransferMethodRepository = transferMethodRepository;
-        mSelection = new MutableLiveData<>();
     }
 
-    public LiveData<List<HyperwalletTransferMethod>> getTransferMethodList() {
+    public LiveData<List<HyperwalletTransferMethod>> getTransferDestinationList() {
         if (mTransferMethodList == null) {
             mTransferMethodList = new MutableLiveData<>();
             loadTransferMethods();
@@ -35,6 +33,9 @@ public class TransferMethodSelectorViewModel extends ViewModel {
 
 
     public LiveData<Event<HyperwalletTransferMethod>> getTransferMethodSelection() {
+        if (mSelection == null) {
+            mSelection = new MutableLiveData<>();
+        }
         return mSelection;
     }
 
@@ -58,18 +59,18 @@ public class TransferMethodSelectorViewModel extends ViewModel {
     }
 
 
-    public static class TransferMethodSelectorViewModelFactory implements ViewModelProvider.Factory {
+    public static class ListTransferDestinationViewModelFactory implements ViewModelProvider.Factory {
 
         private TransferMethodRepository mTransferMethodRepository;
 
-        public TransferMethodSelectorViewModelFactory(@NonNull final TransferMethodRepository transferMethodRepository) {
+        public ListTransferDestinationViewModelFactory(@NonNull final TransferMethodRepository transferMethodRepository) {
             mTransferMethodRepository = transferMethodRepository;
         }
 
         @NonNull
         @Override
         public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-            return (T) new TransferMethodSelectorViewModel(mTransferMethodRepository);
+            return (T) new ListTransferDestinationViewModel(mTransferMethodRepository);
         }
     }
 

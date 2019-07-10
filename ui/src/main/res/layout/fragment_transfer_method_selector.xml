@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.hyperwallet.android.ui.transfermethod.TransferMethodSelectorFragment">
+    tools:context="com.hyperwallet.android.ui.transfermethod.ListTransferDestinationFragment">
 
     <FrameLayout
         android:id="@+id/list_transfer_method_selector_progress_bar_layout"

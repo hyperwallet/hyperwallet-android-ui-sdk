@@ -12,22 +12,15 @@ import static com.hyperwallet.android.ui.transfermethod.TransferMethodUtils.getS
 import static com.hyperwallet.android.ui.transfermethod.TransferMethodUtils.getStringResourceByName;
 
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.view.menu.MenuBuilder;
-import androidx.appcompat.widget.PopupMenu;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,30 +28,28 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.common.view.HorizontalDividerItemDecorator;
-import com.hyperwallet.android.ui.common.view.OneClickListener;
-import com.hyperwallet.android.ui.transfermethod.ListTransferMethodFragment;
-import com.hyperwallet.android.ui.viewmodel.TransferMethodSelectorViewModel;
+import com.hyperwallet.android.ui.viewmodel.ListTransferDestinationViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class TransferMethodSelectorFragment extends Fragment {
+public class ListTransferDestinationFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private View mProgressBar;
-    private TransferMethodSelectorViewModel mTransferMethodSelectorViewModel;
-    private ListTransferMethodSelectorAdapter mListTransferMethodSelectorAdapter;
+    private ListTransferDestinationViewModel mTransferMethodSelectorViewModel;
+    private ListTransferDestinationAdapter mListTransferMethodSelectorAdapter;
 
-    public static TransferMethodSelectorFragment newInstance() {
-        return new TransferMethodSelectorFragment();
+    public static ListTransferDestinationFragment newInstance() {
+        return new ListTransferDestinationFragment();
     }
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mTransferMethodSelectorViewModel = ViewModelProviders.of(getActivity()).get(TransferMethodSelectorViewModel.class);
+        mTransferMethodSelectorViewModel = ViewModelProviders.of(requireActivity()).get(ListTransferDestinationViewModel.class);
     }
 
     @Nullable
@@ -78,9 +69,9 @@ public class TransferMethodSelectorFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.addItemDecoration(new HorizontalDividerItemDecorator(requireContext(), false));
-        mListTransferMethodSelectorAdapter = new ListTransferMethodSelectorAdapter(new ArrayList<HyperwalletTransferMethod>(), mTransferMethodSelectorViewModel);
+        mListTransferMethodSelectorAdapter = new ListTransferDestinationAdapter(new ArrayList<HyperwalletTransferMethod>(), mTransferMethodSelectorViewModel);
         recyclerView.setAdapter(mListTransferMethodSelectorAdapter);
-        mTransferMethodSelectorViewModel.getTransferMethodList().observe(this,
+        mTransferMethodSelectorViewModel.getTransferDestinationList().observe(this,
                 new Observer<List<HyperwalletTransferMethod>>() {
                     @Override
                     public void onChanged(List<HyperwalletTransferMethod> transferMethods) {
@@ -92,13 +83,13 @@ public class TransferMethodSelectorFragment extends Fragment {
 
 
 
-    private static class ListTransferMethodSelectorAdapter extends RecyclerView.Adapter<TransferMethodSelectorFragment.ListTransferMethodSelectorAdapter.ViewHolder> {
+    private static class ListTransferDestinationAdapter extends RecyclerView.Adapter<ListTransferDestinationAdapter.ViewHolder> {
 
         private List<HyperwalletTransferMethod> mTransferMethodList;
-        private TransferMethodSelectorViewModel mTransferMethodSelectorViewModel;
+        private ListTransferDestinationViewModel mTransferMethodSelectorViewModel;
 
-        ListTransferMethodSelectorAdapter(@NonNull final List<HyperwalletTransferMethod> transferMethodList,
-                @NonNull final TransferMethodSelectorViewModel transferMethodSelectorViewModel) {
+        ListTransferDestinationAdapter(@NonNull final List<HyperwalletTransferMethod> transferMethodList,
+                @NonNull final ListTransferDestinationViewModel transferMethodSelectorViewModel) {
             mTransferMethodList = transferMethodList;
             mTransferMethodSelectorViewModel = transferMethodSelectorViewModel;
         }

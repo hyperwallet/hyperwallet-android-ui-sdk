@@ -18,11 +18,11 @@ import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.common.viewmodel.Event;
 import com.hyperwallet.android.ui.repository.RepositoryFactory;
-import com.hyperwallet.android.ui.viewmodel.TransferMethodSelectorViewModel;
+import com.hyperwallet.android.ui.viewmodel.ListTransferDestinationViewModel;
 
-public class TransferMethodSelectorActivity extends AppCompatActivity {
+public class ListTransferDestinationActivity extends AppCompatActivity {
 
-    private TransferMethodSelectorViewModel mTransferMethodSelectorViewModel;
+    private ListTransferDestinationViewModel mTransferMethodSelectorViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +42,9 @@ public class TransferMethodSelectorActivity extends AppCompatActivity {
         });
 
         mTransferMethodSelectorViewModel = ViewModelProviders.of(this,
-                new TransferMethodSelectorViewModel.TransferMethodSelectorViewModelFactory(
+                new ListTransferDestinationViewModel.ListTransferDestinationViewModelFactory(
                         RepositoryFactory.getInstance().getTransferMethodRepository())).get(
-                TransferMethodSelectorViewModel.class);
+                ListTransferDestinationViewModel.class);
 
         mTransferMethodSelectorViewModel.getTransferMethodSelection().observe(this,
                 new Observer<Event<HyperwalletTransferMethod>>() {
@@ -56,7 +56,7 @@ public class TransferMethodSelectorActivity extends AppCompatActivity {
                     }
                 });
         if (savedInstanceState == null) {
-            initFragment(TransferMethodSelectorFragment.newInstance());
+            initFragment(ListTransferDestinationFragment.newInstance());
         }
     }
 
