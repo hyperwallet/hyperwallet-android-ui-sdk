@@ -22,7 +22,7 @@ import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.graphql.HyperwalletTransferMethodConfigurationField;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.ui.repository.TransferMethodConfigurationRepository;
-import com.hyperwallet.android.ui.repository.TransferMethodRepository;
+import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepository;
 
 public class AddTransferMethodPresenter implements AddTransferMethodContract.Presenter {
 
