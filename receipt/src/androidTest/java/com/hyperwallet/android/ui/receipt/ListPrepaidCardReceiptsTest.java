@@ -165,6 +165,7 @@ public class ListPrepaidCardReceiptsTest {
                 matches(atPosition(4, hasDescendant(withText("February 28, 2019")))));
         onView(withId(R.id.list_receipts)).check(matches(atPosition(4, hasDescendant(withText("USD")))));
 
+        onView(withId(R.id.list_receipts)).perform(RecyclerViewActions.scrollToPosition(5));
         onView(withId(R.id.list_receipts)).check(matches(atPosition(5,
                 hasDescendant(withText(R.string.credit)))));
         onView(withId(R.id.list_receipts)).check(
@@ -175,6 +176,7 @@ public class ListPrepaidCardReceiptsTest {
                 matches(atPosition(5, hasDescendant(withText("February 23, 2019")))));
         onView(withId(R.id.list_receipts)).check(matches(atPosition(5, hasDescendant(withText("USD")))));
 
+        onView(withId(R.id.list_receipts)).perform(RecyclerViewActions.scrollToPosition(6));
         onView(withId(R.id.list_receipts)).check(matches(atPosition(6,
                 hasDescendant(withText(R.string.credit)))));
         onView(withId(R.id.list_receipts)).check(
