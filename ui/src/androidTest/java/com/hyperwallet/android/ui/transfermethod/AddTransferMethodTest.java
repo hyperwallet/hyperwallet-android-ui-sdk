@@ -22,7 +22,7 @@ import static java.net.HttpURLConnection.HTTP_BAD_REQUEST;
 import static java.net.HttpURLConnection.HTTP_OK;
 
 import static com.hyperwallet.android.ui.common.view.error.DefaultErrorDialogFragment.RESULT_ERROR;
-import static com.hyperwallet.android.ui.util.EspressoUtils.nestedScrollTo;
+import static com.hyperwallet.android.ui.testutils.espresso.EspressoUtils.nestedScrollTo;
 
 import android.app.Instrumentation;
 import android.content.Intent;
@@ -39,9 +39,9 @@ import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.common.util.EspressoIdlingResource;
 import com.hyperwallet.android.ui.common.view.error.DefaultErrorDialogFragment;
 import com.hyperwallet.android.ui.repository.RepositoryFactory;
-import com.hyperwallet.android.ui.rule.HyperwalletExternalResourceManager;
-import com.hyperwallet.android.ui.rule.HyperwalletMockWebServer;
-import com.hyperwallet.android.ui.util.TestAuthenticationProvider;
+import com.hyperwallet.android.ui.testutils.TestAuthenticationProvider;
+import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
+import com.hyperwallet.android.ui.testutils.rule.HyperwalletMockWebServer;
 
 import org.junit.After;
 import org.junit.Before;

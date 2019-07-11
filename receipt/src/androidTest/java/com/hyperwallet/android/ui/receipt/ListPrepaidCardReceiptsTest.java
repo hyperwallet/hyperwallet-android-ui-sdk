@@ -24,8 +24,8 @@ import static org.hamcrest.Matchers.instanceOf;
 import static java.net.HttpURLConnection.HTTP_NO_CONTENT;
 import static java.net.HttpURLConnection.HTTP_OK;
 
-import static com.hyperwallet.android.ui.receipt.util.EspressoUtils.atPosition;
 import static com.hyperwallet.android.ui.receipt.view.ListPrepaidCardReceiptActivity.EXTRA_PREPAID_CARD_TOKEN;
+import static com.hyperwallet.android.ui.testutils.espresso.EspressoUtils.atPosition;
 
 import android.content.Context;
 import android.content.Intent;
@@ -43,11 +43,11 @@ import androidx.test.rule.ActivityTestRule;
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.ui.common.util.DateUtils;
 import com.hyperwallet.android.ui.common.util.EspressoIdlingResource;
-import com.hyperwallet.android.ui.receipt.rule.HyperwalletExternalResourceManager;
-import com.hyperwallet.android.ui.receipt.rule.HyperwalletMockWebServer;
-import com.hyperwallet.android.ui.receipt.util.RecyclerViewCountAssertion;
-import com.hyperwallet.android.ui.receipt.util.TestAuthenticationProvider;
 import com.hyperwallet.android.ui.receipt.view.ListPrepaidCardReceiptActivity;
+import com.hyperwallet.android.ui.testutils.TestAuthenticationProvider;
+import com.hyperwallet.android.ui.testutils.espresso.RecyclerViewCountAssertion;
+import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
+import com.hyperwallet.android.ui.testutils.rule.HyperwalletMockWebServer;
 
 import org.junit.After;
 import org.junit.Before;

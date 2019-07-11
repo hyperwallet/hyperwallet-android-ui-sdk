@@ -10,7 +10,7 @@ import android.content.res.Resources;
 
 import com.hyperwallet.android.model.graphql.HyperwalletFee;
 import com.hyperwallet.android.ui.R;
-import com.hyperwallet.android.ui.rule.HyperwalletExternalResourceManager;
+import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;

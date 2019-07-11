@@ -21,8 +21,8 @@ import static java.net.HttpURLConnection.HTTP_OK;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 import static com.hyperwallet.android.model.HyperwalletStatusTransition.StatusDefinition.DE_ACTIVATED;
-import static com.hyperwallet.android.ui.util.EspressoUtils.atPosition;
-import static com.hyperwallet.android.ui.util.EspressoUtils.withDrawable;
+import static com.hyperwallet.android.ui.testutils.espresso.EspressoUtils.atPosition;
+import static com.hyperwallet.android.ui.testutils.espresso.EspressoUtils.withDrawable;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -41,10 +41,10 @@ import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.model.HyperwalletStatusTransition;
 import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.repository.RepositoryFactory;
-import com.hyperwallet.android.ui.rule.HyperwalletExternalResourceManager;
-import com.hyperwallet.android.ui.rule.HyperwalletMockWebServer;
-import com.hyperwallet.android.ui.util.RecyclerViewCountAssertion;
-import com.hyperwallet.android.ui.util.TestAuthenticationProvider;
+import com.hyperwallet.android.ui.testutils.TestAuthenticationProvider;
+import com.hyperwallet.android.ui.testutils.espresso.RecyclerViewCountAssertion;
+import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
+import com.hyperwallet.android.ui.testutils.rule.HyperwalletMockWebServer;
 
 import org.hamcrest.Matchers;
 import org.junit.After;

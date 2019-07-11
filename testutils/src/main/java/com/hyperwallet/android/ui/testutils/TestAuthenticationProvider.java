@@ -1,4 +1,4 @@
-package com.hyperwallet.android.ui.util;
+package com.hyperwallet.android.ui.testutils;
 
 import com.hyperwallet.android.HyperwalletAuthenticationTokenListener;
 import com.hyperwallet.android.HyperwalletAuthenticationTokenProvider;

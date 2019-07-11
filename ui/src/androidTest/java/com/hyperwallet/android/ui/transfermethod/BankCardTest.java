@@ -22,10 +22,10 @@ import static java.net.HttpURLConnection.HTTP_CREATED;
 import static java.net.HttpURLConnection.HTTP_OK;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
-import static com.hyperwallet.android.ui.util.EspressoUtils.hasEmptyText;
-import static com.hyperwallet.android.ui.util.EspressoUtils.hasErrorText;
-import static com.hyperwallet.android.ui.util.EspressoUtils.nestedScrollTo;
-import static com.hyperwallet.android.ui.util.EspressoUtils.withHint;
+import static com.hyperwallet.android.ui.testutils.espresso.EspressoUtils.hasEmptyText;
+import static com.hyperwallet.android.ui.testutils.espresso.EspressoUtils.hasErrorText;
+import static com.hyperwallet.android.ui.testutils.espresso.EspressoUtils.nestedScrollTo;
+import static com.hyperwallet.android.ui.testutils.espresso.EspressoUtils.withHint;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -46,9 +46,9 @@ import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.common.util.EspressoIdlingResource;
 import com.hyperwallet.android.ui.repository.RepositoryFactory;
-import com.hyperwallet.android.ui.rule.HyperwalletExternalResourceManager;
-import com.hyperwallet.android.ui.rule.HyperwalletMockWebServer;
-import com.hyperwallet.android.ui.util.TestAuthenticationProvider;
+import com.hyperwallet.android.ui.testutils.TestAuthenticationProvider;
+import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
+import com.hyperwallet.android.ui.testutils.rule.HyperwalletMockWebServer;
 
 import org.junit.After;
 import org.junit.Before;

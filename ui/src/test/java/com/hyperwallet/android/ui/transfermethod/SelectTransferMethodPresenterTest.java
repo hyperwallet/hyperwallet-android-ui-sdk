@@ -21,7 +21,7 @@ import com.hyperwallet.android.ui.repository.TransferMethodConfigurationReposito
 import com.hyperwallet.android.ui.repository.TransferMethodConfigurationRepositoryImpl;
 import com.hyperwallet.android.ui.repository.UserRepository;
 import com.hyperwallet.android.ui.repository.UserRepositoryImpl;
-import com.hyperwallet.android.ui.rule.HyperwalletExternalResourceManager;
+import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
 
 import org.json.JSONObject;
 import org.junit.Before;

@@ -1,13 +1,13 @@
-package com.hyperwallet.android.ui.receipt.util;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+package com.hyperwallet.android.ui.testutils.espresso;
 
 import android.view.View;
 
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.test.espresso.NoMatchingViewException;
 import androidx.test.espresso.ViewAssertion;
+
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
 
 public class RecyclerViewCountAssertion implements ViewAssertion {
     private final int mCount;
@@ -25,6 +25,6 @@ public class RecyclerViewCountAssertion implements ViewAssertion {
         RecyclerView recyclerView = (RecyclerView) view;
         RecyclerView.Adapter adapter = recyclerView.getAdapter();
 
-        assertThat(adapter.getItemCount(), is(mCount));
+        MatcherAssert.assertThat(adapter.getItemCount(), CoreMatchers.is(mCount));
     }
 }

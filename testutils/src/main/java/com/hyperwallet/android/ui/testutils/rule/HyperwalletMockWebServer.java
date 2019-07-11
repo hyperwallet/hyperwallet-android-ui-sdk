@@ -1,4 +1,4 @@
-package com.hyperwallet.android.ui.rule;
+package com.hyperwallet.android.ui.testutils.rule;
 
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;

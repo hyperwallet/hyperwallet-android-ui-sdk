@@ -1,11 +1,4 @@
-package com.hyperwallet.android.ui.util;
-
-import static androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom;
-import static androidx.test.espresso.matcher.ViewMatchers.isDescendantOfA;
-import static androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
-
-import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.anyOf;
+package com.hyperwallet.android.ui.testutils.espresso;
 
 import android.view.View;
 
@@ -16,6 +9,7 @@ import androidx.test.espresso.action.ScrollToAction;
 import androidx.test.espresso.matcher.ViewMatchers;
 
 import org.hamcrest.Matcher;
+import org.hamcrest.Matchers;
 
 public class NestedScrollToAction implements ViewAction {
     private static final String TAG = ScrollToAction.class.getSimpleName();
@@ -23,10 +17,10 @@ public class NestedScrollToAction implements ViewAction {
     @SuppressWarnings("unchecked")
     @Override
     public Matcher<View> getConstraints() {
-        return allOf(
-                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE),
-                isDescendantOfA(
-                        anyOf(isAssignableFrom(NestedScrollView.class))));
+        return Matchers.allOf(
+                ViewMatchers.withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE),
+                ViewMatchers.isDescendantOfA(
+                        Matchers.anyOf(ViewMatchers.isAssignableFrom(NestedScrollView.class))));
     }
 
     @Override

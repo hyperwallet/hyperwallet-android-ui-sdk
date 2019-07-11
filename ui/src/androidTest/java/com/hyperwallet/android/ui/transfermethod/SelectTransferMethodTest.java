@@ -25,12 +25,12 @@ import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMe
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.BANK_CARD;
 import static com.hyperwallet.android.model.user.HyperwalletUser.ProfileTypes.BUSINESS;
 import static com.hyperwallet.android.model.user.HyperwalletUser.ProfileTypes.INDIVIDUAL;
+import static com.hyperwallet.android.ui.testutils.espresso.EspressoUtils.atPosition;
+import static com.hyperwallet.android.ui.testutils.espresso.EspressoUtils.withDrawable;
 import static com.hyperwallet.android.ui.transfermethod.AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_COUNTRY;
 import static com.hyperwallet.android.ui.transfermethod.AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_CURRENCY;
 import static com.hyperwallet.android.ui.transfermethod.AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_PROFILE_TYPE;
 import static com.hyperwallet.android.ui.transfermethod.AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_TYPE;
-import static com.hyperwallet.android.ui.util.EspressoUtils.atPosition;
-import static com.hyperwallet.android.ui.util.EspressoUtils.withDrawable;
 
 import android.widget.TextView;
 
@@ -45,10 +45,10 @@ import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.common.util.EspressoIdlingResource;
 import com.hyperwallet.android.ui.repository.RepositoryFactory;
-import com.hyperwallet.android.ui.rule.HyperwalletExternalResourceManager;
-import com.hyperwallet.android.ui.rule.HyperwalletMockWebServer;
-import com.hyperwallet.android.ui.util.RecyclerViewCountAssertion;
-import com.hyperwallet.android.ui.util.TestAuthenticationProvider;
+import com.hyperwallet.android.ui.testutils.TestAuthenticationProvider;
+import com.hyperwallet.android.ui.testutils.espresso.RecyclerViewCountAssertion;
+import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
+import com.hyperwallet.android.ui.testutils.rule.HyperwalletMockWebServer;
 
 import org.junit.After;
 import org.junit.Before;

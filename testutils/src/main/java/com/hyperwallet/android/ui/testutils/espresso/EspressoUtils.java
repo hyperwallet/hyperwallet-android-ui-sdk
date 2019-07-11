@@ -1,4 +1,4 @@
-package com.hyperwallet.android.ui.receipt.util;
+package com.hyperwallet.android.ui.testutils.espresso;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
