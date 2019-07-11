@@ -39,3 +39,83 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 }
+
+def aarFile = file("$buildDir/outputs/aar/transfer-$version" + ".aar")
+def aarArtifact = artifacts.add('archives', aarFile) {
+    type 'aar'
+}
+
+def isReleaseVersion = !version.endsWith('SNAPSHOT')
+
+publishing {
+
+    repositories {
+        maven {
+            def releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+            def snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots"
+            url = isReleaseVersion ? releasesRepoUrl : snapshotsRepoUrl
+            credentials {
+                username sonatypeUsername
+                password sonatypePassword
+            }
+        }
+    }
+
+    publications {
+        hyperwalletTransferUi(MavenPublication) {
+            groupId = hyperwalletGroupId
+            artifactId = 'transfer'
+            version = version
+
+            artifact(sourcesJar)
+            artifact(javadocsJar)
+            artifact(aarArtifact)
+
+            pom {
+                name = 'Hyperwallet Android Transfer UI SDK'
+                description = 'Hyperwallet Transfer UI SDK for Android to integrate with Hyperwallet Platform'
+                url = 'https://github.com/hyperwallet/hyperwallet-android-ui-sdk'
+                pom.withXml {
+                    def dependenciesNode = asNode().appendNode('dependencies')
+                    configurations.implementation.allDependencies.each {
+                        def dependencyNode = dependenciesNode.appendNode('dependency')
+                        if (it.group == "hyperwallet-android-ui-sdk") {
+                            dependencyNode.appendNode('groupId', "com.hyperwallet.android.ui")
+                        } else {
+                            dependencyNode.appendNode('groupId', it.group)
+                        }
+                        dependencyNode.appendNode('artifactId', it.name)
+                        dependencyNode.appendNode('version', it.version)
+                    }
+                }
+                licenses {
+                    license {
+                        name = 'MIT License'
+                        url = 'http://www.opensource.org/licenses/MIT'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'devs'
+                        name = 'Hyperwallet Developers'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com/hyperwallet/hyperwallet-android-ui-sdk.git'
+                    developerConnection = 'scm:git:git://github.com/hyperwallet/hyperwallet-android-ui-sdk.git'
+                    url = 'https://github.com/hyperwallet/hyperwallet-android-ui-sdk'
+                }
+            }
+        }
+    }
+}
+
+tasks.withType(Sign) {
+    onlyIf {
+        isReleaseVersion && sonatypeUsername?.trim() && sonatypePassword?.trim()
+    }
+}
+
+signing {
+    sign publishing.publications.hyperwalletTransferUi
+}

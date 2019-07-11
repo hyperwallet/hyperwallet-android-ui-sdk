@@ -9,6 +9,7 @@ dependencies {
 
     api project(":common")
     api project(":receipt")
+    api project(":transfer")
 
     androidTestImplementation "androidx.test:rules:$testRulesVersion"
     androidTestImplementation "androidx.test.espresso:espresso-contrib:$espressoVersion"

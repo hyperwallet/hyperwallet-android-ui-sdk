@@ -32,6 +32,7 @@ import androidx.annotation.NonNull;
 
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.HyperwalletAuthenticationTokenProvider;
+import com.hyperwallet.android.transfer.CreateTransferActivity;
 import com.hyperwallet.android.ui.receipt.view.ListPrepaidCardReceiptActivity;
 import com.hyperwallet.android.ui.receipt.view.ListUserReceiptActivity;
 import com.hyperwallet.android.ui.transfermethod.AddTransferMethodActivity;
@@ -117,6 +118,12 @@ public final class HyperwalletUi {
         intent.putExtra(EXTRA_TRANSFER_METHOD_CURRENCY, currency);
         intent.putExtra(EXTRA_TRANSFER_METHOD_TYPE, transferMethodType);
         intent.putExtra(EXTRA_TRANSFER_METHOD_PROFILE_TYPE, profileType);
+        return intent;
+    }
+
+
+    public Intent getIntentCreateTransfer(@NonNull final Context context) {
+        Intent intent = new Intent(context, CreateTransferActivity.class);
         return intent;
     }
 }

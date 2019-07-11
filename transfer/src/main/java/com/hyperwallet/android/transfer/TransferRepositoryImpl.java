@@ -19,7 +19,7 @@ public class TransferRepositoryImpl implements TransferRepository {
         Hyperwallet.getDefault().createTransfer(transfer, new HyperwalletListener<Transfer>() {
             @Override
             public void onSuccess(@Nullable Transfer result) {
-                callback.onTransferCreated(transfer);
+                callback.onTransferCreated(result);
             }
 
             @Override

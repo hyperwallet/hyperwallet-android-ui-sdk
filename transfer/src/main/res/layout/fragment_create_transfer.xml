@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include android:id="@+id/transfer_destination" layout="@layout/transfer_destination"/>
+
+    <TextView
+        android:id="@+id/available_funds"
+        tools:text="@string/available_funds"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/transfer_destination"/>
+
+    <EditText
+        android:id="@+id/transfer_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:layout_below="@id/available_funds"/>
+
+    <TextView
+        android:id="@+id/tv_transfer_all_funds"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/transfer_all_funds"
+        android:layout_below="@id/transfer_amount"/>
+
+    <CheckBox
+        android:id="@+id/cb_transfer_all_funds"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/tv_transfer_all_funds"
+        android:layout_below="@id/transfer_amount" />
+
+
+</RelativeLayout>

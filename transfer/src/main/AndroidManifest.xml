@@ -1,2 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.hyperwallet.android.transfer" />
+xmlns:tools="http://schemas.android.com/tools"
+package="com.hyperwallet.android.transfer">
+
+<uses-permission android:name="android.permission.INTERNET"/>
+
+<application
+    android:networkSecurityConfig="@xml/network_security_config"
+    tools:targetApi="n">
+    <activity
+        android:name=".CreateTransferActivity"
+        android:label="@string/title_activity_create_transfer"
+        android:theme="@style/AppTheme.NoActionBar"/>
+</application>
+
+</manifest>
