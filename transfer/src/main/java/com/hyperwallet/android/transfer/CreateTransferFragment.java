@@ -97,7 +97,7 @@ public class CreateTransferFragment extends Fragment {
 
     private void setAvailableFunds(@NonNull final View view) {
         mAvailableFunds = view.findViewById(R.id.available_funds);
-        mCreateTransferViewModel.getTransfer().observe(this, new Observer<Transfer>() {
+        mCreateTransferViewModel.getQuoteAllFunds().observe(this, new Observer<Transfer>() {
             @Override
             public void onChanged(Transfer transfer) {
                 mAvailableFunds.setText(getString(R.string.available_funds, transfer.getDestinationAmount(), transfer.getDestinationCurrency()));
