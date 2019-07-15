@@ -1,5 +1,3 @@
-apply plugin: 'maven-publish'
-apply plugin: 'signing'
 apply from: "$rootProject.projectDir/android-library.gradle"
 
 dependencies {
@@ -9,9 +7,9 @@ dependencies {
     implementation "androidx.legacy:legacy-support-v4:$legacySupportV4Version"
     implementation "androidx.recyclerview:recyclerview:$recycleViewVersion"
 
-    implementation project(":common")
-    implementation project(":receipt")
-    implementation project(":userrepository")
+    api project(":common")
+    api project(":receipt")
+    api project(":userrepository")
 
     androidTestImplementation "androidx.test:rules:$testRulesVersion"
     androidTestImplementation "androidx.test.espresso:espresso-contrib:$espressoVersion"
