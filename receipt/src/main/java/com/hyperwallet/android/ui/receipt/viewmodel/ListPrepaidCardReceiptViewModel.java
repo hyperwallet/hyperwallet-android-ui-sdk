@@ -120,7 +120,7 @@ public class ListPrepaidCardReceiptViewModel extends ReceiptViewModel {
         @NonNull
         @Override
         public <T extends ViewModel> T create(@NonNull final Class<T> modelClass) {
-            if (modelClass.isAssignableFrom(ListUserReceiptViewModel.class)) {
+            if (modelClass.isAssignableFrom(ListPrepaidCardReceiptViewModel.class)) {
                 return (T) new ListPrepaidCardReceiptViewModel(mPrepaidCardReceiptRepository);
             }
             throw new IllegalArgumentException(
