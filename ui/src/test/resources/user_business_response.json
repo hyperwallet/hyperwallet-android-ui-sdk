@@ -1,5 +1,5 @@
 {
-  "token": "usr-e602a937-334c-49e5-b37e-4c842c1cc7a1",
+  "token": "usr-token-1",
   "status": "PRE_ACTIVATED",
   "verificationStatus": "NOT_REQUIRED",
   "createdOn": "2019-05-14T21:51:15",
@@ -28,17 +28,17 @@
   "addressLine2": "second floor",
   "city": "Burnaby",
   "stateProvince": "XZ",
-  "country": "CA",
+  "country": "US",
   "postalCode": "v5z3a2",
   "language": "en",
   "timeZone": "GMT",
-  "programToken": "prg-7a2441be-1b00-4239-b2d6-623a0eb8f160",
+  "programToken": "prg-token-1",
   "links": [
     {
       "params": {
         "rel": "self"
       },
-      "href": "https://api.sandbox.hyperwallet.com/rest/v3/users/usr-e602a937-334c-49e5-b37e-4c842c1cc7a1"
+      "href": "https://localhost/rest/v3/users/usr-token-1"
     }
   ]
 }

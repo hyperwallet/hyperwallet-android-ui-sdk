@@ -55,8 +55,6 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
 
     private static final String ARGUMENT_COUNTRY_CODE_SELECTED = "ARGUMENT_COUNTRY_CODE_SELECTED";
     private static final String ARGUMENT_CURRENCY_CODE_SELECTED = "ARGUMENT_CURRENCY_CODE_SELECTED";
-    private static final String DEFAULT_COUNTRY_CODE = "US";
-    private static final String DEFAULT_CURRENCY_CODE = "USD";
     private static final boolean FORCE_UPDATE = false;
     private static final String TAG = SelectTransferMethodFragment.class.getName();
 
@@ -80,8 +78,6 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
 
     public static SelectTransferMethodFragment newInstance() {
         SelectTransferMethodFragment selectTransferMethodFragment = new SelectTransferMethodFragment();
-        selectTransferMethodFragment.mSelectedCountryCode = DEFAULT_COUNTRY_CODE;
-        selectTransferMethodFragment.mSelectedCurrencyCode = DEFAULT_CURRENCY_CODE;
 
         Bundle arguments = new Bundle();
         arguments.putString(ARGUMENT_COUNTRY_CODE_SELECTED, selectTransferMethodFragment.mSelectedCountryCode);
