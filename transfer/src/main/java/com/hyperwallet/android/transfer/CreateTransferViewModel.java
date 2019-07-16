@@ -1,6 +1,7 @@
 package com.hyperwallet.android.transfer;
 
 import android.os.Handler;
+import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,13 +27,21 @@ import java.util.UUID;
 public class CreateTransferViewModel extends ViewModel {
 
     private TransferRepository mTransferRepository;
-    private HyperwalletUser mUser;
 
     private MutableLiveData<HyperwalletTransferMethod> mTransferDestination = new MutableLiveData<>();
-    private MutableLiveData<Boolean> mTransferAvailableFunds = new MutableLiveData<>();
+    private MutableLiveData<Boolean> mTransferAllAvailableFunds = new MutableLiveData<>();
     private MutableLiveData<Transfer> mQuoteAvailableFunds = new MutableLiveData<>();
     private MutableLiveData<Event<Transfer>> mDetailNavigation = new MutableLiveData<>();
+    private String mSourceToken;
 
+
+    //todo pass in the user repository and transfer method repository
+    public CreateTransferViewModel(@Nullable final String sourceToken,
+            @NonNull final TransferRepository transferRepository) {
+        mTransferRepository = transferRepository;
+        mSourceToken = sourceToken;
+        loadTransferDestination(mSourceToken);
+    }
 
     //todo pass in the user repository and transfer method repository
     public CreateTransferViewModel(@NonNull final TransferRepository transferRepository) {
@@ -41,10 +50,10 @@ public class CreateTransferViewModel extends ViewModel {
     }
 
 
-    public void createTransfer(String amount, String notes) {
+    public void createTransfer(@Nullable final String amount, @Nullable final String notes) {
         Transfer transfer = new Transfer.Builder()
                 .clientTransferID("mbl-"+UUID.randomUUID().toString())
-                .sourceToken(mUser.getToken())
+                .sourceToken(mSourceToken)
                 .destinationToken(mTransferDestination.getValue().getField(HyperwalletTransferMethod.TransferMethodFields.TOKEN))
                 .destinationCurrency(mTransferDestination.getValue().getField(HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_CURRENCY))
                 .destinationAmount(amount)
@@ -66,16 +75,16 @@ public class CreateTransferViewModel extends ViewModel {
 
     //todo - it will be used when user selects another transfer destination
     public void setTransferDestination(@NonNull final HyperwalletTransferMethod transferDestination) {
-        if (mUser != null) {
-            quoteTransferAvailableFunds(transferDestination, mUser);
-        } else {
+        if (TextUtils.isEmpty(mSourceToken)) {
             quoteTransferAvailableFunds(transferDestination);
+        } else {
+            quoteTransferAvailableFunds(mSourceToken, transferDestination);
         }
     }
 
 
-    public void setTransferAvailableFunds(final boolean transferAvailableFunds) {
-        mTransferAvailableFunds.postValue(transferAvailableFunds);
+    public void setTransferAllAvailableFunds(final boolean transferAllAvailableFunds) {
+        mTransferAllAvailableFunds.postValue(transferAllAvailableFunds);
     }
 
 
@@ -84,8 +93,8 @@ public class CreateTransferViewModel extends ViewModel {
     }
 
 
-    public LiveData<Boolean> getTransferAvailableFunds() {
-        return mTransferAvailableFunds;
+    public LiveData<Boolean> getTransferAllAvailableFunds() {
+        return mTransferAllAvailableFunds;
     }
 
 
@@ -100,30 +109,27 @@ public class CreateTransferViewModel extends ViewModel {
 
 
     private void loadTransferSource() {
-        if (mUser == null) {
-            //todo replace with user repository
-            Hyperwallet.getDefault().getUser(new HyperwalletListener<HyperwalletUser>() {
-                @Override
-                public void onSuccess(@Nullable final HyperwalletUser result) {
-                    mUser = result;
-                    loadTransferDestination(mUser);
-                }
+        Hyperwallet.getDefault().getUser(new HyperwalletListener<HyperwalletUser>() {
+            @Override
+            public void onSuccess(@Nullable final HyperwalletUser result) {
+                mSourceToken = result.getToken();
+                loadTransferDestination(mSourceToken);
+            }
 
-                @Override
-                public void onFailure(HyperwalletException exception) {
+            @Override
+            public void onFailure(HyperwalletException exception) {
 
-                }
+            }
 
-                @Override
-                public Handler getHandler() {
-                    return null;
-                }
-            });
-        }
+            @Override
+            public Handler getHandler() {
+                return null;
+            }
+        });
     }
 
 
-    private void loadTransferDestination(@NonNull final HyperwalletUser user) {
+    private void loadTransferDestination(@NonNull final String sourceToken) {
 
         //todo replace with transfer method repository and possibly expose a new method there...
         HyperwalletTransferMethodQueryParam queryParam = new HyperwalletTransferMethodQueryParam.Builder()
@@ -135,9 +141,10 @@ public class CreateTransferViewModel extends ViewModel {
                 new HyperwalletListener<HyperwalletPageList<HyperwalletTransferMethod>>() {
                     @Override
                     public void onSuccess(@Nullable HyperwalletPageList<HyperwalletTransferMethod> result) {
+                        //todo handle case where no transfer method is available
                         HyperwalletTransferMethod transferMethod = result.getDataList().get(0);
                         mTransferDestination.postValue(transferMethod);
-                        quoteTransferAvailableFunds(transferMethod, user);
+                        quoteTransferAvailableFunds(sourceToken, transferMethod);
                     }
 
                     @Override
@@ -158,8 +165,8 @@ public class CreateTransferViewModel extends ViewModel {
         Hyperwallet.getDefault().getUser(new HyperwalletListener<HyperwalletUser>() {
             @Override
             public void onSuccess(@Nullable HyperwalletUser result) {
-                mUser = result;
-                quoteTransferAvailableFunds(transferDestination, result);
+                mSourceToken = result.getToken();
+                quoteTransferAvailableFunds(mSourceToken, transferDestination);
             }
 
             @Override
@@ -175,15 +182,16 @@ public class CreateTransferViewModel extends ViewModel {
 
     }
 
-    private void quoteTransferAvailableFunds(@NonNull final HyperwalletTransferMethod transferMethod,
-            @NonNull final HyperwalletUser user) {
+    private void quoteTransferAvailableFunds(@NonNull String sourceToken,
+            @NonNull final HyperwalletTransferMethod transferMethod) {
 
         Transfer transfer = new Transfer.Builder()
                 .clientTransferID("mbl-"+UUID.randomUUID().toString())
-                .sourceToken(user.getToken())
+                .sourceToken(sourceToken)
                 .destinationToken(transferMethod.getField(HyperwalletTransferMethod.TransferMethodFields.TOKEN))
                 .destinationCurrency(transferMethod.getField(HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_CURRENCY))
                 .build();
+
 
         mTransferRepository.createTransfer(transfer, new TransferRepository.CreateTransferCallback() {
             @Override
@@ -202,16 +210,19 @@ public class CreateTransferViewModel extends ViewModel {
     public static class CreateTransferViewModelFactory implements ViewModelProvider.Factory {
 
         private TransferRepository mTransferRepository;
+        private String mSourceToken;
 
         //todo pass in the user repository and transfer method repository
-        public CreateTransferViewModelFactory(@NonNull final TransferRepository transferRepository) {
+        public CreateTransferViewModelFactory(@Nullable String sourceToken,
+                @NonNull final TransferRepository transferRepository) {
             mTransferRepository = transferRepository;
+            mSourceToken = sourceToken;
         }
 
         @NonNull
         @Override
         public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-            return (T) new CreateTransferViewModel(mTransferRepository);
+            return (T) new CreateTransferViewModel(mSourceToken, mTransferRepository);
         }
     }
 

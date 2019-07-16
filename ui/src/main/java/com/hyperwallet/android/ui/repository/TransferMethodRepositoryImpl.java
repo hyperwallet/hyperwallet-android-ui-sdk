@@ -71,8 +71,10 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
     @Override
     public void loadTransferMethods(@NonNull final LoadTransferMethodListCallback callback) {
 
+        //todo invoke new method in the repository - the new method will return the latest active account
         HyperwalletTransferMethodQueryParam queryParam = new HyperwalletTransferMethodQueryParam.Builder()
                 .status(ACTIVATED)
+                .limit(1)
                 .build();
         getHyperwallet().listTransferMethods(queryParam,
                 new HyperwalletListener<HyperwalletPageList<HyperwalletTransferMethod>>() {

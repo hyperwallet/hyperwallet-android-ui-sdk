@@ -126,4 +126,10 @@ public final class HyperwalletUi {
         Intent intent = new Intent(context, CreateTransferActivity.class);
         return intent;
     }
+
+    public Intent getIntentCreateTransfer(@NonNull final Context context, @NonNull final String sourceToken) {
+        Intent intent = new Intent(context, CreateTransferActivity.class);
+        return intent;
+    }
+
 }

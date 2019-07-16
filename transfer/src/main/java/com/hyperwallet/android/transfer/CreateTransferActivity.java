@@ -23,7 +23,7 @@ public class CreateTransferActivity extends AppCompatActivity {
 
         TransferRepository transferRepository = TransferRepositoryFactory.getInstance().getTransferRepository();
         CreateTransferViewModel.CreateTransferViewModelFactory factory =
-                new CreateTransferViewModel.CreateTransferViewModelFactory(transferRepository);
+                new CreateTransferViewModel.CreateTransferViewModelFactory(null, transferRepository);
         mCreateTransferViewModel = ViewModelProviders.of(this, factory).get(CreateTransferViewModel.class);
 
         Toolbar toolbar = findViewById(R.id.toolbar);

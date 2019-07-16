@@ -55,14 +55,14 @@ public class CreateTransferFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        setTransferDestination(view);
-        setAvailableFunds(view);
-        setTransferAmount(view);
+        registerTransferDestinationObserver(view);
+        registerAvailableFundsObserver(view);
+        registerTransferAmountObserver(view);
 
     }
 
 
-    private void setTransferDestination(@NonNull final View view) {
+    private void registerTransferDestinationObserver(@NonNull final View view) {
         mTransferDestinationIcon = view.findViewById(R.id.transfer_destination_icon);
         mTransferDestinationTitle = view.findViewById(R.id.transfer_destination_title);
         mTransferDestinationCountry = view.findViewById(R.id.transfer_destination_description_1);
@@ -95,9 +95,9 @@ public class CreateTransferFragment extends Fragment {
     }
 
 
-    private void setAvailableFunds(@NonNull final View view) {
+    private void registerAvailableFundsObserver(@NonNull final View view) {
         mAvailableFunds = view.findViewById(R.id.available_funds);
-        mCreateTransferViewModel.getQuoteAllFunds().observe(this, new Observer<Transfer>() {
+        mCreateTransferViewModel.getQuoteAvailableFunds().observe(this, new Observer<Transfer>() {
             @Override
             public void onChanged(Transfer transfer) {
                 mAvailableFunds.setText(getString(R.string.available_funds, transfer.getDestinationAmount(), transfer.getDestinationCurrency()));
@@ -106,22 +106,22 @@ public class CreateTransferFragment extends Fragment {
     }
 
 
-    private void setTransferAmount(@NonNull final View view) {
+    private void registerTransferAmountObserver(@NonNull final View view) {
         mTransferAmount = view.findViewById(R.id.transfer_amount);
         mTransferAllFunds = view.findViewById(R.id.cb_transfer_all_funds);
         mTransferAllFunds.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 boolean checked = ((CheckBox) v).isChecked();
-                mCreateTransferViewModel.setTransferAllFunds(checked);
+                mCreateTransferViewModel.setTransferAllAvailableFunds(checked);
             }
         });
-        mCreateTransferViewModel.getTransferAllFunds().observe(this, new Observer<Boolean>() {
+        mCreateTransferViewModel.getTransferAllAvailableFunds().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean transferAllFunds) {
                 if (transferAllFunds) {
                     mTransferAmount.setEnabled(!transferAllFunds);
-                    mTransferAmount.setText(mCreateTransferViewModel.getTransfer().getValue().getDestinationAmount());
+                    mTransferAmount.setText(mCreateTransferViewModel.getQuoteAvailableFunds().getValue().getDestinationAmount());
                 } else {
                     mTransferAmount.setEnabled(!transferAllFunds);
                     mTransferAmount.setText("");
