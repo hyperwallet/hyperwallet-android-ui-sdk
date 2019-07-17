@@ -17,9 +17,14 @@
  */
 package com.hyperwallet.android.ui.transfermethod;
 
+import static com.hyperwallet.android.ExceptionMapper.EC_UNEXPECTED_EXCEPTION;
+
+import android.text.TextUtils;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.graphql.HyperwalletTransferMethodConfigurationKey;
 import com.hyperwallet.android.model.graphql.keyed.Country;
@@ -30,12 +35,15 @@ import com.hyperwallet.android.ui.repository.TransferMethodConfigurationReposito
 import com.hyperwallet.android.ui.repository.UserRepository;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeMap;
 
 public class SelectTransferMethodPresenter implements SelectTransferMethodContract.Presenter {
+
+    private static final String DEFAULT_COUNTRY_CODE = "US";
 
     private final TransferMethodConfigurationRepository mTransferMethodConfigurationRepository;
     private final UserRepository mUserRepository;
@@ -50,8 +58,8 @@ public class SelectTransferMethodPresenter implements SelectTransferMethodContra
     }
 
     @Override
-    public void loadTransferMethodConfigurationKeys(final boolean forceUpdate, @NonNull final String countryCode,
-            @NonNull final String currencyCode) {
+    public void loadTransferMethodConfigurationKeys(final boolean forceUpdate, @Nullable final String countryCode,
+            @Nullable final String currencyCode) {
 
         mView.showProgressBar();
 
@@ -69,16 +77,41 @@ public class SelectTransferMethodPresenter implements SelectTransferMethodContra
                                 if (!mView.isActive()) {
                                     return;
                                 }
+
+                                Country country = TextUtils.isEmpty(countryCode) ? key.getCountry(user.getCountry())
+                                        : key.getCountry(countryCode);
+
+                                if (country == null) { // param and user country is null
+                                    country = key.getCountry(DEFAULT_COUNTRY_CODE);
+                                }
+
+                                String currencyCodeString = currencyCode;
+                                Set<Currency> currencies = key.getCurrencies(country.getCode());
+                                if (TextUtils.isEmpty(currencyCodeString) && currencies != null
+                                        && !currencies.isEmpty()) {
+                                    currencyCodeString = ((Currency) currencies.toArray()[0]).getCode();
+                                }
+
+                                // at this point if currencyCodeString is still null/empty, that means program is
+                                // mis-configured
+                                if (TextUtils.isEmpty(currencyCodeString)) {
+                                    HyperwalletError error = new HyperwalletError(
+                                            "Can't get Currency based from Country: " + country.getCode(),
+                                            EC_UNEXPECTED_EXCEPTION);
+                                    showErrorLoadTransferMethods(new HyperwalletErrors(Arrays.asList(error)));
+                                    return;
+                                }
+
                                 mView.hideProgressBar();
                                 Set<HyperwalletTransferMethodType> transferMethodTypes =
-                                        key.getTransferMethodType(countryCode, currencyCode) != null
-                                                ? key.getTransferMethodType(countryCode, currencyCode) :
+                                        key.getTransferMethodType(country.getCode(), currencyCodeString) != null
+                                                ? key.getTransferMethodType(country.getCode(), currencyCodeString) :
                                                 new HashSet<HyperwalletTransferMethodType>();
 
-                                mView.showTransferMethodCountry(countryCode);
-                                mView.showTransferMethodCurrency(currencyCode);
+                                mView.showTransferMethodCountry(country.getCode());
+                                mView.showTransferMethodCurrency(currencyCodeString);
                                 mView.showTransferMethodTypes(
-                                        getTransferMethodSelectionItems(countryCode, currencyCode,
+                                        getTransferMethodSelectionItems(country.getCode(), currencyCodeString,
                                                 user.getProfileType(), transferMethodTypes));
                             }
 

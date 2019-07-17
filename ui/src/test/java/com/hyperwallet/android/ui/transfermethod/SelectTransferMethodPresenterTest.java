@@ -1,5 +1,7 @@
 package com.hyperwallet.android.ui.transfermethod;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
@@ -10,6 +12,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
+
+import static com.hyperwallet.android.ExceptionMapper.EC_UNEXPECTED_EXCEPTION;
 
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.HyperwalletErrors;
@@ -23,12 +27,15 @@ import com.hyperwallet.android.ui.repository.UserRepository;
 import com.hyperwallet.android.ui.repository.UserRepositoryImpl;
 import com.hyperwallet.android.ui.rule.HyperwalletExternalResourceManager;
 
+import org.hamcrest.Matchers;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.ArgumentMatchers;
+import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
@@ -50,7 +57,11 @@ public class SelectTransferMethodPresenterTest {
     private TransferMethodConfigurationRepositoryImpl mTransferMethodConfigurationRepository;
     @Mock
     private UserRepositoryImpl mUserRepository;
+    @Captor
+    private ArgumentCaptor<List<HyperwalletError>> mErrorCaptor;
+
     private HyperwalletTransferMethodConfigurationKey mResult;
+    private HyperwalletTransferMethodConfigurationKey mPartialResult;
     private HyperwalletUser mUser;
     private SelectTransferMethodPresenter selectTransferMethodPresenter;
 
@@ -60,6 +71,10 @@ public class SelectTransferMethodPresenterTest {
         String responseBody = externalResourceManager.getResourceContent("successful_tmc_keys_response.json");
         final JSONObject jsonObject = new JSONObject(responseBody);
         mResult = new HyperwalletTransferMethodConfigurationKeyResult(jsonObject);
+
+        String partialResponseBody = externalResourceManager.getResourceContent(
+                "partial_success_tmc_keys_response.json");
+        mPartialResult = new HyperwalletTransferMethodConfigurationKeyResult(new JSONObject(partialResponseBody));
 
         String userResponseBody = externalResourceManager.getResourceContent("user_response.json");
         final JSONObject userJsonObject = new JSONObject(userResponseBody);
@@ -185,6 +200,94 @@ public class SelectTransferMethodPresenterTest {
         verify(view, never()).showTransferMethodTypes(ArgumentMatchers.<TransferMethodSelectionItem>anyList());
         verify(view).showErrorLoadTransferMethodConfigurationKeys(eq(errors.getErrors()));
         verify(view, never()).showAddTransferMethod(anyString(), anyString(), anyString(), anyString());
+    }
+
+    @Test
+    public void testLoadTransferMethodConfigurationKeys_loadsKeysIntoUserProfileCountryViewOnSuccess() {
+        // When
+        when(view.isActive()).thenReturn(true);
+
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                TransferMethodConfigurationRepository.LoadKeysCallback callback =
+                        (TransferMethodConfigurationRepository.LoadKeysCallback) invocation.getArguments()[0];
+                callback.onKeysLoaded(mResult);
+                return callback;
+            }
+        }).when(mTransferMethodConfigurationRepository).getKeys(any(
+                TransferMethodConfigurationRepository.LoadKeysCallback.class));
+
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                UserRepository.LoadUserCallback userCallback =
+                        (UserRepository.LoadUserCallback) invocation.getArguments()[0];
+                userCallback.onUserLoaded(mUser);
+                return userCallback;
+            }
+        }).when(mUserRepository).loadUser(any(
+                UserRepository.LoadUserCallback.class));
+
+        // Then
+        selectTransferMethodPresenter.loadTransferMethodConfigurationKeys(false, null, null);
+
+        verify(view).showTransferMethodCountry("US");
+        verify(view).showTransferMethodCurrency("USD");
+        verify(view).showTransferMethodTypes(ArgumentMatchers.<TransferMethodSelectionItem>anyList());
+        verify(view, never()).showErrorLoadTransferMethodConfigurationKeys(
+                ArgumentMatchers.<HyperwalletError>anyList());
+        verify(view, never()).showErrorLoadCurrency(ArgumentMatchers.<HyperwalletError>anyList());
+        verify(view, never()).showErrorLoadTransferMethodTypes(ArgumentMatchers.<HyperwalletError>anyList());
+        verify(view, never()).showErrorLoadCountrySelection(ArgumentMatchers.<HyperwalletError>anyList());
+        verify(view, never()).showErrorLoadCurrencySelection(ArgumentMatchers.<HyperwalletError>anyList());
+        verify(view, never()).showAddTransferMethod(anyString(), anyString(), anyString(), anyString());
+    }
+
+    @Test
+    public void testLoadTransferMethodConfigurationKeys_loadsKeysIntoUserProfileCountryViewOnError() {
+        // When
+        when(view.isActive()).thenReturn(true);
+
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                TransferMethodConfigurationRepository.LoadKeysCallback callback =
+                        (TransferMethodConfigurationRepository.LoadKeysCallback) invocation.getArguments()[0];
+                callback.onKeysLoaded(mPartialResult);
+                return callback;
+            }
+        }).when(mTransferMethodConfigurationRepository).getKeys(any(
+                TransferMethodConfigurationRepository.LoadKeysCallback.class));
+
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                UserRepository.LoadUserCallback userCallback =
+                        (UserRepository.LoadUserCallback) invocation.getArguments()[0];
+                userCallback.onUserLoaded(mUser);
+                return userCallback;
+            }
+        }).when(mUserRepository).loadUser(any(
+                UserRepository.LoadUserCallback.class));
+
+        // Then
+        selectTransferMethodPresenter.loadTransferMethodConfigurationKeys(false, null, null);
+
+
+        verify(view).showProgressBar();
+        verify(view, times(2)).isActive();
+        verify(view).hideProgressBar();
+        verify(view).showErrorLoadTransferMethodConfigurationKeys(mErrorCaptor.capture());
+        verify(view, never()).showTransferMethodCountry(anyString());
+        verify(view, never()).showTransferMethodCurrency(anyString());
+        verify(view, never()).showTransferMethodTypes(ArgumentMatchers.<TransferMethodSelectionItem>anyList());
+
+        // Assert
+        List<HyperwalletError> errors = mErrorCaptor.getValue();
+        assertThat(errors, Matchers.<HyperwalletError>hasSize(1));
+        assertThat(errors.get(0).getCode(), is(EC_UNEXPECTED_EXCEPTION));
+        assertThat(errors.get(0).getMessage(), is("Can't get Currency based from Country: US"));
     }
 
     @Test

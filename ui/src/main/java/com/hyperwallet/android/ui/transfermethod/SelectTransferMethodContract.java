@@ -28,6 +28,7 @@
 package com.hyperwallet.android.ui.transfermethod;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.hyperwallet.android.model.HyperwalletError;
 
@@ -89,8 +90,8 @@ public interface SelectTransferMethodContract {
 
         void loadCurrency(final boolean forceUpdate, @NonNull final String countryCode);
 
-        void loadTransferMethodConfigurationKeys(final boolean forceUpdate, @NonNull final String countryCode,
-                @NonNull final String currencyCode);
+        void loadTransferMethodConfigurationKeys(final boolean forceUpdate, @Nullable final String countryCode,
+                @Nullable final String currencyCode);
 
         void loadTransferMethodTypes(final boolean forceUpdate, @NonNull final String countryCode,
                 @NonNull final String currencyCode);
