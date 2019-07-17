@@ -1,5 +1,6 @@
 package com.hyperwallet.android.ui.user.repository;
 
+import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -20,8 +21,6 @@ import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.user.HyperwalletUser;
 
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Rule;
@@ -136,7 +135,7 @@ public class UserRepositoryImplTest {
         verify(mMockCallback, never()).onError(any(HyperwalletErrors.class));
 
         HyperwalletUser user = mUserCaptor.getValue();
-        assertThat(user, CoreMatchers.is(Matchers.nullValue()));
+        assertThat(user, is(Matchers.nullValue()));
     }
 
 
@@ -162,7 +161,7 @@ public class UserRepositoryImplTest {
         verify(mMockCallback, never()).onUserLoaded(ArgumentMatchers.<HyperwalletUser>any());
         verify(mMockCallback).onError(mErrorCaptor.capture());
 
-        MatcherAssert.assertThat(mErrorCaptor.getValue().getErrors(), Matchers.hasItem(error));
+        assertThat(mErrorCaptor.getValue().getErrors(), hasItem(error));
     }
 
     @Test
