@@ -12,8 +12,6 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleExtensionsVersion"
     implementation "androidx.paging:paging-runtime:$pagingRuntimeVersion"
 
-    testImplementation "org.robolectric:robolectric:$robolectricVersion"
-
     androidTestImplementation "androidx.test:rules:$testRulesVersion"
     androidTestImplementation "androidx.test.espresso:espresso-contrib:$espressoVersion"
     androidTestImplementation "androidx.test.espresso:espresso-intents:$espressoVersion"
