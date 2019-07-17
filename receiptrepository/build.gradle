@@ -1,0 +1,13 @@
+apply from: "$rootProject.projectDir/android-library.gradle"
+
+dependencies {
+    api project(":common")
+
+    implementation "androidx.legacy:legacy-support-v4:$legacySupportV4Version"
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleExtensionsVersion"
+    implementation "androidx.paging:paging-runtime:$pagingRuntimeVersion"
+    testImplementation "org.robolectric:robolectric:$robolectricVersion"
+
+    androidTestImplementation "androidx.test:rules:$testRulesVersion"
+    androidTestImplementation "com.squareup.okhttp3:mockwebserver:$mockServerVersion"
+}
