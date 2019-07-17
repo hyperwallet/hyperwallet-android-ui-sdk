@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <issue id="VectorPath" severity="ignore"/>
+    <issue id="RtlEnabled">
+        <ignore regexp="(AndroidManifest).xml"/>
+    </issue>
+    <issue id="Overdraw">
+        <ignore regexp="(item_receipt).xml"/>
+    </issue>
+</lint>
