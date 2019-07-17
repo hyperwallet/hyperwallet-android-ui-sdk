@@ -404,4 +404,43 @@ public class SelectTransferMethodTest {
         onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar)))).check(
                 matches(withText(R.string.title_add_bank_card)));
     }
+
+    @Test
+    public void testSelectTransferMethod_verifyThatCountryIsFromUserProfile() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("user_ca_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_keys_response.json")).mock();
+
+        mActivityTestRule.launchActivity(null);
+
+        onView(withId(R.id.select_transfer_method_country_value)).check(matches(withText("Canada")));
+        onView(withId(R.id.select_transfer_method_currency_value)).check(matches(withText("CAD")));
+    }
+
+    @Test
+    public void testSelectTransferMethod_verifyDefaultsToUSWhenUserProfileCountryIsNotConfigured() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("user_not_configured_country_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_keys_response.json")).mock();
+
+        mActivityTestRule.launchActivity(null);
+
+        onView(withId(R.id.select_transfer_method_country_value)).check(matches(withText("United States")));
+        onView(withId(R.id.select_transfer_method_currency_value)).check(matches(withText("USD")));
+    }
+
+    @Test
+    public void testSelectTransferMethod_verifyDefaultsToUSWhenUserProfileDoesNotHaveCountry() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("user_no_country_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_keys_response.json")).mock();
+
+        mActivityTestRule.launchActivity(null);
+
+        onView(withId(R.id.select_transfer_method_country_value)).check(matches(withText("United States")));
+        onView(withId(R.id.select_transfer_method_currency_value)).check(matches(withText("USD")));
+    }
 }
