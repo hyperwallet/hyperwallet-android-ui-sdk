@@ -32,7 +32,7 @@ import com.hyperwallet.android.model.graphql.keyed.Currency;
 import com.hyperwallet.android.model.graphql.keyed.HyperwalletTransferMethodType;
 import com.hyperwallet.android.model.user.HyperwalletUser;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodConfigurationRepository;
-import com.hyperwallet.android.ui.repository.UserRepository;
+import com.hyperwallet.android.ui.user.repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.Arrays;
