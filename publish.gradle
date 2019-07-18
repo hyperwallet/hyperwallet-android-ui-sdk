@@ -22,11 +22,7 @@ publishing {
     publications {
         hyperwalletUiPublish(MavenPublication) {
             groupId = hyperwalletGroupId
-            if (project.name == "ui") {
-                artifactId = "ui-sdk"
-            } else {
-                artifactId = project.name
-            }
+            artifactId = project.name
 
             version = version
 

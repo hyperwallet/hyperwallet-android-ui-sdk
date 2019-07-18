@@ -1,2 +1,2 @@
-include ':ui', ':common', ':receipt', ':transfermethodrepository'
+include ':transfermethodui', ':common', ':receipt', ':transfermethodrepository'
 //add libraries here
