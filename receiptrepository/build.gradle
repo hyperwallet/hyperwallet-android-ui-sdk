@@ -1,4 +1,5 @@
 apply from: "$rootProject.projectDir/android-library.gradle"
+apply from: "$rootProject.projectDir/publish.gradle"
 
 dependencies {
     implementation project(":common")
