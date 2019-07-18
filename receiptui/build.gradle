@@ -2,17 +2,15 @@ apply from: "$rootProject.projectDir/android-library.gradle"
 apply from: "$rootProject.projectDir/publish.gradle"
 
 dependencies {
+    implementation project(":common")
+    implementation project(":receiptrepository")
 
-    implementation "androidx.appcompat:appcompat:$appcompatVersion"
+    implementation "com.google.android.material:material:$androidMaterialVersion"
     implementation "androidx.constraintlayout:constraintlayout:$constraintlayoutVersion"
     implementation "androidx.legacy:legacy-support-v4:$legacySupportV4Version"
     implementation "androidx.recyclerview:recyclerview:$recycleViewVersion"
-
-    api project(":common")
-    api project(':receiptui')
-    api project(":userrepository")
-    api project(":transfermethodrepository")
-
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleExtensionsVersion"
+    implementation "androidx.paging:paging-runtime:$pagingRuntimeVersion"
 
     androidTestImplementation "androidx.test:rules:$testRulesVersion"
     androidTestImplementation "androidx.test.espresso:espresso-contrib:$espressoVersion"
@@ -20,7 +18,4 @@ dependencies {
     androidTestImplementation "com.squareup.okhttp3:mockwebserver:$mockServerVersion"
     androidTestImplementation "com.squareup.leakcanary:leakcanary-android-instrumentation:$leakcanaryVersion"
     androidTestImplementation "com.squareup.leakcanary:leakcanary-support-fragment:$leakcanaryVersion"
-
-    testImplementation "org.robolectric:robolectric:$robolectricVersion"
-    testImplementation "com.squareup.okhttp3:mockwebserver:$mockWebServerVersion"
 }
