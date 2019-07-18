@@ -38,7 +38,7 @@ import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.HyperwalletStatusTransition;
 import com.hyperwallet.android.model.transfermethod.HyperwalletBankAccount;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
-import com.hyperwallet.android.ui.repository.TransferMethodRepository;
+import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepository;
 
 import org.junit.Before;
 import org.junit.Rule;

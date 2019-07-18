@@ -16,7 +16,7 @@
  * THE SOFTWARE.
  */
 
-package com.hyperwallet.android.ui.repository;
+package com.hyperwallet.android.ui.user.repository;
 
 import androidx.annotation.NonNull;
 

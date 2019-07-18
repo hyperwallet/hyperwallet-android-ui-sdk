@@ -24,7 +24,7 @@
  * USE OR OTHER DEALINGS
  * IN THE SOFTWARE.
  */
-package com.hyperwallet.android.ui.repository;
+package com.hyperwallet.android.ui.transfermethod.repository;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

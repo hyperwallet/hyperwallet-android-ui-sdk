@@ -58,6 +58,7 @@ import com.hyperwallet.android.model.transfermethod.PayPalAccount;
 import com.hyperwallet.android.ui.HyperwalletLocalBroadcast;
 import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.repository.RepositoryFactory;
+import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
 import com.hyperwallet.android.ui.view.WidgetDateDialogFragment;
 import com.hyperwallet.android.ui.view.WidgetSelectionDialogFragment;
 import com.hyperwallet.android.ui.view.widget.AbstractWidget;
@@ -202,7 +203,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        RepositoryFactory factory = RepositoryFactory.getInstance();
+        TransferMethodRepositoryFactory factory = TransferMethodRepositoryFactory.getInstance();
         mPresenter = new AddTransferMethodPresenter(this,
                 factory.getTransferMethodConfigurationRepository(),
                 factory.getTransferMethodRepository());
