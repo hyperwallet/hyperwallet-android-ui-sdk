@@ -11,6 +11,7 @@ dependencies {
     api project(":common")
     api project(":receipt")
     api project(":userrepository")
+    api project(":transfermethodrepository")
 
     androidTestImplementation "androidx.test:rules:$testRulesVersion"
     androidTestImplementation "androidx.test.espresso:espresso-contrib:$espressoVersion"

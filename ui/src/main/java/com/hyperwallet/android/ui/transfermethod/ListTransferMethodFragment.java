@@ -50,7 +50,7 @@ import com.hyperwallet.android.ui.HyperwalletLocalBroadcast;
 import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.common.view.HorizontalDividerItemDecorator;
 import com.hyperwallet.android.ui.common.view.OneClickListener;
-import com.hyperwallet.android.ui.repository.RepositoryFactory;
+import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -179,7 +179,7 @@ public class ListTransferMethodFragment extends Fragment implements ListTransfer
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        RepositoryFactory factory = RepositoryFactory.getInstance();
+        TransferMethodRepositoryFactory factory = TransferMethodRepositoryFactory.getInstance();
         mPresenter = new ListTransferMethodPresenter(factory.getTransferMethodRepository(), this);
     }
 
