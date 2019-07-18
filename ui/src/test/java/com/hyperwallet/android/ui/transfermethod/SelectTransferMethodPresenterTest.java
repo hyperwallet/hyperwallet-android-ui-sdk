@@ -23,9 +23,9 @@ import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.model.user.HyperwalletUser;
 import com.hyperwallet.android.ui.repository.TransferMethodConfigurationRepository;
 import com.hyperwallet.android.ui.repository.TransferMethodConfigurationRepositoryImpl;
-import com.hyperwallet.android.ui.repository.UserRepository;
-import com.hyperwallet.android.ui.repository.UserRepositoryImpl;
 import com.hyperwallet.android.ui.rule.HyperwalletExternalResourceManager;
+import com.hyperwallet.android.ui.user.repository.UserRepository;
+import com.hyperwallet.android.ui.user.repository.UserRepositoryImpl;
 
 import org.hamcrest.Matchers;
 import org.json.JSONObject;
