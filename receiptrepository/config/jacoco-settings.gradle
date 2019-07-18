@@ -20,10 +20,7 @@ android {
     }
 }
 
-def fileFilter = ['**/BuildConfig.*',
-                  '**/com/hyperwallet/android/ui/receipt/view/*.*',
-                  '**/com/hyperwallet/android/ui/receipt/viewmodel/*.*',
-                  '**/com/hyperwallet/android/ui/receipt/repository/ReceiptRepositoryImpl.*'
+def fileFilter = ['**/BuildConfig.*'
 ]
 
 def debugClassPaths = [
