@@ -12,7 +12,7 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:$recycleViewVersion"
 
     api project(":common")
-    api project(":receipt")
+    api project(':receiptui')
 
     androidTestImplementation "androidx.test:rules:$testRulesVersion"
     androidTestImplementation "androidx.test.espresso:espresso-contrib:$espressoVersion"
