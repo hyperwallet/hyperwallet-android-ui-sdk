@@ -27,6 +27,7 @@
 
 package com.hyperwallet.android.ui.repository;
 
+@Deprecated
 public class RepositoryFactory {
     private static RepositoryFactory sInstance;
     private TransferMethodConfigurationRepository mTransferMethodConfigurationRepository;
