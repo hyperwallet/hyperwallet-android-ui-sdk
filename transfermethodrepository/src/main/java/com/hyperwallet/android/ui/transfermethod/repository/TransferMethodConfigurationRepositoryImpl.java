@@ -50,6 +50,7 @@ public class TransferMethodConfigurationRepositoryImpl implements TransferMethod
     private final Map<FieldMapKey, HyperwalletTransferMethodConfigurationField> mFieldMap;
     private HyperwalletTransferMethodConfigurationKey mTransferMethodConfigurationKey;
 
+    //todo use default modifier after RepositoryFactory is removed
     public TransferMethodConfigurationRepositoryImpl() {
         mHandler = new Handler();
         mFieldMap = new HashMap<>();
