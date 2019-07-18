@@ -319,8 +319,8 @@ public class ListPrepaidCardReceiptsTest {
     @Test
     public void testListPrepaidCardReceipt_displaysNetworkErrorDialogOnConnectionTimeout() {
         mMockWebServer.getServer().enqueue(new MockResponse().setResponseCode(HTTP_OK).setBody(sResourceManager
-                .getResourceContent("prepaid_card_receipt_debit_response.json")).throttleBody(512, 10,
-                TimeUnit.SECONDS));
+                .getResourceContent("prepaid_card_receipt_debit_response.json"))
+                .setBodyDelay(10500, TimeUnit.MILLISECONDS));
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("prepaid_card_receipt_debit_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();
