@@ -5,6 +5,7 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.notNullValue;
 
+import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodConfigurationRepository;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepository;
 
 import org.junit.Test;

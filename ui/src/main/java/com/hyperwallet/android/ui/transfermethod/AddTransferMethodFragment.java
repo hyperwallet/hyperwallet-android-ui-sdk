@@ -203,11 +203,10 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        TransferMethodRepositoryFactory transferMethodRepositoryFactory = TransferMethodRepositoryFactory.getInstance();
-        RepositoryFactory factory = RepositoryFactory.getInstance();
+        TransferMethodRepositoryFactory factory = TransferMethodRepositoryFactory.getInstance();
         mPresenter = new AddTransferMethodPresenter(this,
                 factory.getTransferMethodConfigurationRepository(),
-                transferMethodRepositoryFactory.getTransferMethodRepository());
+                factory.getTransferMethodRepository());
     }
 
     @Override

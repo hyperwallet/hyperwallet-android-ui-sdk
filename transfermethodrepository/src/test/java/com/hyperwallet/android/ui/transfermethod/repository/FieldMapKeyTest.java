@@ -1,7 +1,9 @@
-package com.hyperwallet.android.ui.repository;
+package com.hyperwallet.android.ui.transfermethod.repository;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+
+import com.hyperwallet.android.ui.transfermethod.repository.FieldMapKey;
 
 import org.junit.Test;
 

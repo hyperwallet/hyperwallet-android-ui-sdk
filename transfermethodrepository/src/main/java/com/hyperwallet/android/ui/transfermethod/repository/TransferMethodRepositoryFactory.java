@@ -3,9 +3,11 @@ package com.hyperwallet.android.ui.transfermethod.repository;
 public class TransferMethodRepositoryFactory {
     private static TransferMethodRepositoryFactory sInstance;
     private TransferMethodRepository mTransferMethodRepository;
+    private TransferMethodConfigurationRepository mTransferMethodConfigurationRepository;
 
     private TransferMethodRepositoryFactory() {
         mTransferMethodRepository = new TransferMethodRepositoryImpl();
+        mTransferMethodConfigurationRepository = new TransferMethodConfigurationRepositoryImpl();
     }
 
     public static synchronized TransferMethodRepositoryFactory getInstance() {
@@ -21,5 +23,9 @@ public class TransferMethodRepositoryFactory {
 
     public TransferMethodRepository getTransferMethodRepository() {
         return mTransferMethodRepository;
+    }
+
+    public TransferMethodConfigurationRepository getTransferMethodConfigurationRepository() {
+        return mTransferMethodConfigurationRepository;
     }
 }

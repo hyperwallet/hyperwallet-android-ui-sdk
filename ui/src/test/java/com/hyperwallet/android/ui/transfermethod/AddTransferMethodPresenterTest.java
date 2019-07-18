@@ -24,7 +24,7 @@ import com.hyperwallet.android.model.graphql.field.HyperwalletFieldGroup;
 import com.hyperwallet.android.model.graphql.field.HyperwalletTransferMethodConfiguration;
 import com.hyperwallet.android.model.transfermethod.HyperwalletBankAccount;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
-import com.hyperwallet.android.ui.repository.TransferMethodConfigurationRepository;
+import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodConfigurationRepository;
 import com.hyperwallet.android.ui.rule.HyperwalletExternalResourceManager;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepository;
 
