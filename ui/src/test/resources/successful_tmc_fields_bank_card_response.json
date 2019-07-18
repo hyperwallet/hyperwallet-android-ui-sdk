@@ -82,6 +82,7 @@
                     "name": "bankAccountRelationship",
                     "placeholder": "",
                     "isRequired": true,
+                    "value": "SELF",
                     "validationMessage": {
                       "length": "",
                       "pattern": "is invalid length or format.",

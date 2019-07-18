@@ -201,7 +201,7 @@ public class BankAccountTest {
         onView(withId(R.id.add_transfer_method_processing_label))
                 .check(matches(withText(R.string.add_transfer_method_processing_time_label)));
         onView(withId(R.id.add_transfer_method_processing_time_value))
-                .check(matches(withText("1-2 Business days")));
+                .check(matches(withText("1 - 2 Business days")));
     }
 
     @Test
@@ -212,10 +212,10 @@ public class BankAccountTest {
         onView(withId(R.id.bankAccountId)).check(matches(hasEmptyText()));
         onView(withId(R.id.bankAccountPurpose)).check(matches(hasEmptyText()));
 
-        onView(withId(R.id.firstName)).check(matches(withText("Brody")));
+        onView(withId(R.id.firstName)).check(matches(withText("Craig")));
         onView(withId(R.id.middleName)).check(matches(hasEmptyText()));
-        onView(withId(R.id.lastName)).check(matches(withText("Nehru")));
-        onView(withId(R.id.dateOfBirth)).check(matches(withText("January 01, 2000")));
+        onView(withId(R.id.lastName)).check(matches(withText("Brenden")));
+        onView(withId(R.id.dateOfBirth)).check(matches(withText("January 01, 1980")));
 
         onView(withId(R.id.phoneNumber)).check(matches(withText("+1 604 6666666")));
         onView(withId(R.id.mobileNumber)).check(matches(withText("604 666 6666")));

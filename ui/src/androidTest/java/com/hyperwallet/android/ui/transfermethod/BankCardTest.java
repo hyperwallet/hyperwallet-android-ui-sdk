@@ -159,7 +159,7 @@ public class BankCardTest {
                 matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
         onView(withId(R.id.add_transfer_method_processing_label)).check(
                 matches(withText(R.string.add_transfer_method_processing_time_label)));
-        onView(withId(R.id.add_transfer_method_processing_time_value)).check(matches(withText("IMMEDIATE")));
+        onView(withId(R.id.add_transfer_method_processing_time_value)).check(matches(withText("1 - 2 Business days")));
     }
 
     @Test
