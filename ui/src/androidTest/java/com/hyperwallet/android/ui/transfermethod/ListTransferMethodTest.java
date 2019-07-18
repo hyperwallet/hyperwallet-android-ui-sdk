@@ -20,7 +20,7 @@ import static java.net.HttpURLConnection.HTTP_NO_CONTENT;
 import static java.net.HttpURLConnection.HTTP_OK;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
-import static com.hyperwallet.android.model.HyperwalletStatusTransition.StatusDefinition.DE_ACTIVATED;
+import static com.hyperwallet.android.model.StatusTransition.StatusDefinition.DE_ACTIVATED;
 import static com.hyperwallet.android.ui.util.EspressoUtils.atPosition;
 import static com.hyperwallet.android.ui.util.EspressoUtils.withDrawable;
 
@@ -38,7 +38,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
 import com.hyperwallet.android.Hyperwallet;
-import com.hyperwallet.android.model.HyperwalletStatusTransition;
+import com.hyperwallet.android.model.StatusTransition;
 import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.repository.RepositoryFactory;
 import com.hyperwallet.android.ui.rule.HyperwalletExternalResourceManager;
@@ -221,7 +221,7 @@ public class ListTransferMethodTest {
             public void onReceive(Context context, Intent intent) {
                 gate.countDown();
 
-                HyperwalletStatusTransition statusTransition = intent.getParcelableExtra(
+                StatusTransition statusTransition = intent.getParcelableExtra(
                         "hyperwallet-local-broadcast-payload");
                 assertThat("Transition is not valid", statusTransition.getTransition(), is(DE_ACTIVATED));
             }
@@ -297,7 +297,7 @@ public class ListTransferMethodTest {
             public void onReceive(Context context, Intent intent) {
                 gate.countDown();
 
-                HyperwalletStatusTransition statusTransition = intent.getParcelableExtra(
+                StatusTransition statusTransition = intent.getParcelableExtra(
                         "hyperwallet-local-broadcast-payload");
                 assertThat("Transition is not valid", statusTransition.getTransition(), is(DE_ACTIVATED));
             }
@@ -363,7 +363,7 @@ public class ListTransferMethodTest {
             public void onReceive(Context context, Intent intent) {
                 gate.countDown();
 
-                HyperwalletStatusTransition statusTransition = intent.getParcelableExtra(
+                StatusTransition statusTransition = intent.getParcelableExtra(
                         "hyperwallet-local-broadcast-payload");
                 assertThat("Transition is not valid", statusTransition.getTransition(), is(DE_ACTIVATED));
             }
