@@ -135,13 +135,9 @@ public class SelectTransferMethodTest {
         onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.country_selection_toolbar)))).check(
                 matches(withText(R.string.select_transfer_method_country)));
         onView(withId(R.id.search_button)).check(doesNotExist());
-        onView(withId(R.id.country_selection_list)).check(new RecyclerViewCountAssertion(5));
+        onView(withId(R.id.country_selection_list)).check(new RecyclerViewCountAssertion(2));
         onView(allOf(withId(R.id.country_name), withText("Canada"))).check(matches(isDisplayed()));
-        onView(allOf(withId(R.id.country_name), withText("Croatia"))).check(matches(isDisplayed()));
-        onView(allOf(withId(R.id.country_name), withText("Mexico"))).check(matches(isDisplayed()));
-        onView(allOf(withId(R.id.country_name), withText("United Kingdom"))).check(matches(isDisplayed()));
         onView(allOf(withId(R.id.country_name), withText("United States"))).check(matches(isDisplayed()));
-
         onView(allOf(withId(R.id.country_item_selected_image),
                 hasSibling(allOf(withId(R.id.country_name), withText("United States"))))).check(matches(isDisplayed()));
 
@@ -217,7 +213,7 @@ public class SelectTransferMethodTest {
         onView(withId(R.id.select_transfer_method_types_list)).check(
                 matches(atPosition(0, hasDescendant(withText("Transaction Fee: USD 2.00")))));
         onView(withId(R.id.select_transfer_method_types_list)).check(
-                matches(atPosition(0, hasDescendant(withText("Processing Time: 1-2 Business days")))));
+                matches(atPosition(0, hasDescendant(withText("Processing Time: 1 - 2 Business days")))));
 
         onView(withId(R.id.select_transfer_method_types_list)).check(
                 matches(atPosition(1, hasDescendant(withText(R.string.bank_card_font_icon)))));
@@ -226,25 +222,25 @@ public class SelectTransferMethodTest {
         onView(withId(R.id.select_transfer_method_types_list)).check(
                 matches(atPosition(1, hasDescendant(withText("Transaction Fee: USD 1.75")))));
         onView(withId(R.id.select_transfer_method_types_list)).check(
-                matches(atPosition(1, hasDescendant(withText("Processing Time: IMMEDIATE")))));
+                matches(atPosition(1, hasDescendant(withText("Processing Time: 1 - 2 Business days")))));
 
         onView(withId(R.id.select_transfer_method_types_list)).check(
-                matches(atPosition(2, hasDescendant(withText(R.string.wire_account_font_icon)))));
+                matches(atPosition(2, hasDescendant(withText(R.string.paypal_account_font_icon)))));
         onView(withId(R.id.select_transfer_method_types_list)).check(
-                matches(atPosition(2, hasDescendant(withText(R.string.wire_account)))));
+                matches(atPosition(2, hasDescendant(withText(R.string.paypal_account)))));
         onView(withId(R.id.select_transfer_method_types_list)).check(
-                matches(atPosition(2, hasDescendant(withText("Transaction Fee: USD 20.00")))));
+                matches(atPosition(2, hasDescendant(withText("Transaction Fee: USD 0.25")))));
         onView(withId(R.id.select_transfer_method_types_list)).check(
-                matches(atPosition(2, hasDescendant(withText("Processing Time: 1-3 Business days")))));
+                matches(atPosition(2, hasDescendant(withText("Processing Time: IMMEDIATE")))));
 
         onView(withId(R.id.select_transfer_method_types_list)).check(
-                matches(atPosition(3, hasDescendant(withText(R.string.paypal_account_font_icon)))));
+                matches(atPosition(3, hasDescendant(withText(R.string.wire_account_font_icon)))));
         onView(withId(R.id.select_transfer_method_types_list)).check(
-                matches(atPosition(3, hasDescendant(withText(R.string.paypal_account)))));
+                matches(atPosition(3, hasDescendant(withText(R.string.wire_account)))));
         onView(withId(R.id.select_transfer_method_types_list)).check(
-                matches(atPosition(3, hasDescendant(withText("Transaction Fee: USD 0.25")))));
+                matches(atPosition(3, hasDescendant(withText("Transaction Fee: USD 20.00")))));
         onView(withId(R.id.select_transfer_method_types_list)).check(
-                matches(atPosition(3, hasDescendant(withText("Processing Time: IMMEDIATE")))));
+                matches(atPosition(3, hasDescendant(withText("Processing Time: 1 - 3 Business days")))));
 
     }
 
@@ -266,7 +262,7 @@ public class SelectTransferMethodTest {
         onView(withId(R.id.select_transfer_method_types_list)).check(
                 matches(atPosition(0, hasDescendant(withText(R.string.bank_account)))));
         onView(withId(R.id.select_transfer_method_types_list)).check(
-                matches(atPosition(0, hasDescendant(withText("Processing Time: 1-2 Business days")))));
+                matches(atPosition(0, hasDescendant(withText("Processing Time: 1 - 2 Business days")))));
         onView(withId(R.id.transfer_method_type_description_1)).check(
                 matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
 
@@ -312,7 +308,7 @@ public class SelectTransferMethodTest {
         onView(withId(R.id.select_transfer_method_country_value)).perform(click());
         onView(allOf(withId(R.id.country_name), withText("Canada"))).perform(click());
 
-        onView(withId(R.id.select_transfer_method_types_list)).check(new RecyclerViewCountAssertion(2));
+        onView(withId(R.id.select_transfer_method_types_list)).check(new RecyclerViewCountAssertion(1));
         onView(withId(R.id.select_transfer_method_types_list)).check(
                 matches(atPosition(0, hasDescendant(withText(R.string.bank_account_font_icon)))));
         onView(withId(R.id.select_transfer_method_types_list)).check(
@@ -320,17 +316,7 @@ public class SelectTransferMethodTest {
         onView(withId(R.id.select_transfer_method_types_list)).check(
                 matches(atPosition(0, hasDescendant(withText("Transaction Fee: CAD 2.20")))));
         onView(withId(R.id.select_transfer_method_types_list)).check(
-                matches(atPosition(0, hasDescendant(withText("Processing Time: 1-2 Business days")))));
-
-        onView(withId(R.id.select_transfer_method_types_list)).check(
-                matches(atPosition(1, hasDescendant(withText(R.string.paypal_account_font_icon)))));
-        onView(withId(R.id.select_transfer_method_types_list)).check(
-                matches(atPosition(1, hasDescendant(withText(R.string.paypal_account)))));
-        onView(withId(R.id.select_transfer_method_types_list)).check(
-                matches(atPosition(1, hasDescendant(withText("Transaction Fee: CAD 0.25")))));
-        onView(withId(R.id.select_transfer_method_types_list)).check(
-                matches(atPosition(1, hasDescendant(withText("Processing Time: IMMEDIATE")))));
-
+                matches(atPosition(0, hasDescendant(withText("Processing Time: 1 - 3 Business days")))));
     }
 
     @Test

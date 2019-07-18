@@ -53,11 +53,11 @@
                     "fieldSelectionOptions": [
                       {
                         "label": "Checking",
-                        "value": "Checking"
+                        "value": "CHECKING"
                       },
                       {
                         "label": "Savings",
-                        "value": "Savings"
+                        "value": "SAVINGS"
                       }
                     ],
                     "label": "Account Type",
@@ -89,7 +89,6 @@
                     "name": "bankAccountRelationship",
                     "placeholder": "",
                     "isRequired": true,
-                    "value": "SELF",
                     "validationMessage": {
                       "length": "",
                       "pattern": "is invalid length or format.",
@@ -104,13 +103,13 @@
                   {
                     "category": "PROFILE",
                     "dataType": "TEXT",
-                    "isEditable": false,
+                    "isEditable": true,
                     "label": "First Name",
                     "name": "firstName",
                     "placeholder": "",
                     "regularExpression": "^[\\sa-zA-Z0-9\\-.,'\\u00C0-\\u00FF\\u0100-\\u017F\\u0180-\\u024F]{1,50}$",
                     "isRequired": true,
-                    "value": "Brody",
+                    "value": "Craig",
                     "validationMessage": {
                       "length": "",
                       "pattern": "is invalid length or format.",
@@ -141,7 +140,7 @@
                     "placeholder": "",
                     "regularExpression": "^[\\sa-zA-Z0-9\\-.,'\\u00C0-\\u00FF\\u0100-\\u017F\\u0180-\\u024F]{1,50}$",
                     "isRequired": true,
-                    "value": "Nehru",
+                    "value": "Brenden",
                     "validationMessage": {
                       "length": "",
                       "pattern": "is invalid length or format.",
@@ -156,7 +155,7 @@
                     "name": "dateOfBirth",
                     "placeholder": "",
                     "isRequired": false,
-                    "value": "2000-01-01",
+                    "value": "1980-01-01",
                     "validationMessage": {
                       "length": "",
                       "pattern": "is invalid length or format.",
@@ -208,7 +207,7 @@
                   {
                     "category": "ADDRESS",
                     "dataType": "SELECTION",
-                    "isEditable": false,
+                    "isEditable": true,
                     "fieldSelectionOptions": [
                       {
                         "label": "Afghanistan",
@@ -315,10 +314,6 @@
                         "value": "BO"
                       },
                       {
-                        "label": "Caribbean Netherlands",
-                        "value": "BQ"
-                      },
-                      {
                         "label": "Bosnia and Herzegovina",
                         "value": "BA"
                       },
@@ -337,6 +332,10 @@
                       {
                         "label": "British Indian Ocean Territory",
                         "value": "IO"
+                      },
+                      {
+                        "label": "British Virgin Islands",
+                        "value": "VG"
                       },
                       {
                         "label": "Brunei",
@@ -369,6 +368,10 @@
                       {
                         "label": "Cape Verde",
                         "value": "CV"
+                      },
+                      {
+                        "label": "Caribbean Netherlands",
+                        "value": "BQ"
                       },
                       {
                         "label": "Cayman Islands",
@@ -449,10 +452,6 @@
                       {
                         "label": "Dominican Republic",
                         "value": "DO"
-                      },
-                      {
-                        "label": "Timor-Leste",
-                        "value": "TL"
                       },
                       {
                         "label": "Ecuador",
@@ -645,10 +644,6 @@
                       {
                         "label": "Kiribati",
                         "value": "KI"
-                      },
-                      {
-                        "label": "South Korea",
-                        "value": "KR"
                       },
                       {
                         "label": "Kosovo",
@@ -903,6 +898,14 @@
                         "value": "RW"
                       },
                       {
+                        "label": "Saint Barth\u00e9lemy",
+                        "value": "BL"
+                      },
+                      {
+                        "label": "Saint Helena",
+                        "value": "SH"
+                      },
+                      {
                         "label": "Saint Kitts and Nevis",
                         "value": "KN"
                       },
@@ -913,6 +916,10 @@
                       {
                         "label": "Saint Martin",
                         "value": "MF"
+                      },
+                      {
+                        "label": "Saint Pierre and Miquelon",
+                        "value": "PM"
                       },
                       {
                         "label": "Saint Vincent and the Grenadines",
@@ -979,6 +986,10 @@
                         "value": "GS"
                       },
                       {
+                        "label": "South Korea",
+                        "value": "KR"
+                      },
+                      {
                         "label": "South Sudan",
                         "value": "SS"
                       },
@@ -989,18 +1000,6 @@
                       {
                         "label": "Sri Lanka",
                         "value": "LK"
-                      },
-                      {
-                        "label": "Saint Barth\u00e9lemy",
-                        "value": "BL"
-                      },
-                      {
-                        "label": "Saint Helena",
-                        "value": "SH"
-                      },
-                      {
-                        "label": "Saint Pierre and Miquelon",
-                        "value": "PM"
                       },
                       {
                         "label": "Suriname",
@@ -1039,6 +1038,10 @@
                         "value": "TH"
                       },
                       {
+                        "label": "Timor-Leste",
+                        "value": "TL"
+                      },
+                      {
                         "label": "Togo",
                         "value": "TG"
                       },
@@ -1075,6 +1078,14 @@
                         "value": "TV"
                       },
                       {
+                        "label": "U.S. Outlying Islands",
+                        "value": "UM"
+                      },
+                      {
+                        "label": "U.S. Virgin Islands",
+                        "value": "VI"
+                      },
+                      {
                         "label": "Uganda",
                         "value": "UG"
                       },
@@ -1093,10 +1104,6 @@
                       {
                         "label": "United States",
                         "value": "US"
-                      },
-                      {
-                        "label": "U.S. Outlying Islands",
-                        "value": "UM"
                       },
                       {
                         "label": "Uruguay",
@@ -1121,14 +1128,6 @@
                       {
                         "label": "Vietnam",
                         "value": "VN"
-                      },
-                      {
-                        "label": "British Virgin Islands",
-                        "value": "VG"
-                      },
-                      {
-                        "label": "U.S. Virgin Islands",
-                        "value": "VI"
                       },
                       {
                         "label": "Wallis and Futuna",
@@ -1228,11 +1227,10 @@
     "fees": {
       "nodes": [
         {
-          "country": "US",
-          "currency": "USD",
-          "transferMethodType": "BANK_ACCOUNT",
           "value": "2.00",
-          "feeRateType": "FLAT"
+          "feeRateType": "FLAT",
+          "country": "US",
+          "currency": "USD"
         }
       ]
     },
@@ -1242,7 +1240,7 @@
           "country": "US",
           "currency": "USD",
           "transferMethodType": "BANK_ACCOUNT",
-          "value": "1-2 Business days"
+          "value": "1 - 2 Business days"
         }
       ]
     }

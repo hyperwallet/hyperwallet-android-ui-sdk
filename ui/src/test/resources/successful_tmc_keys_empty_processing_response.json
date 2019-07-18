@@ -9,7 +9,7 @@
             "nodes": [
               {
                 "code": "USD",
-                "name": "United States Dollar",
+                "name": "USD",
                 "transferMethodTypes": {
                   "nodes": [
                     {
@@ -25,7 +25,7 @@
                             "feeRateType": "FLAT"
                           }
                         ]
-                      }
+                }
                     }
                   ]
                 }

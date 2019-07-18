@@ -9,7 +9,7 @@
             "nodes": [
               {
                 "code": "USD",
-                "name": "United States Dollar",
+                "name": "USD",
                 "transferMethodTypes": {
                   "nodes": [
                     {
@@ -18,13 +18,13 @@
                       "processingTimes": {
                         "nodes": [
                           {
-                            "value": "1-2 Business days",
                             "country": "US",
                             "currency": "USD",
-                            "transferMethodType": "BANK_ACCOUNT"
+                            "transferMethodType": "BANK_ACCOUNT",
+                            "value": "1 - 2 Business days"
                           }
                         ]
-                      }
+                }
                     }
                   ]
                 }
