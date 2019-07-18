@@ -27,22 +27,22 @@ public class ListUserReceiptViewModelTest {
     }
 
     @Test
-    public void testIsLoadingData_liveDataIsNotNull() {
+    public void testIsLoadingData_returnsLiveData() {
         assertThat(mReceiptViewModelToTest.isLoadingData(), is(notNullValue()));
     }
 
     @Test
-    public void testGetReceiptErrors_liveDataIsNotNull() {
+    public void testGetReceiptErrors_returnsLiveData() {
         assertThat(mReceiptViewModelToTest.getReceiptErrors(), is(notNullValue()));
     }
 
     @Test
-    public void testGetReceiptList_liveDataIsNotNull() {
+    public void testGetReceiptList_returnsLiveData() {
         assertThat(mReceiptViewModelToTest.getReceiptList(), is(notNullValue()));
     }
 
     @Test
-    public void testGetDetailNavigation_liveDataIsNotNull() {
+    public void testGetDetailNavigation_returnsLiveData() {
         assertThat(mReceiptViewModelToTest.getDetailNavigation(), is(notNullValue()));
     }
 }

@@ -29,22 +29,22 @@ public class ListPrepaidCardReceiptViewModelTest {
     }
 
     @Test
-    public void testIsLoadingData_liveDataNotNull() {
+    public void testIsLoadingData_returnsLiveData() {
         assertThat(mReceiptViewModelToTest.isLoadingData(), is(notNullValue()));
     }
 
     @Test
-    public void testGetReceiptErrors_liveDataNotNull() {
+    public void testGetReceiptErrors_returnsLiveData() {
         assertThat(mReceiptViewModelToTest.getReceiptErrors(), is(notNullValue()));
     }
 
     @Test
-    public void testGetReceiptList_liveDataNotNull() {
+    public void testGetReceiptList_returnsLiveData() {
         assertThat(mReceiptViewModelToTest.getReceiptList(), is(notNullValue()));
     }
 
     @Test
-    public void testGetDetailNavigation_liveDataIsNotNull() {
+    public void testGetDetailNavigation_returnsLiveData() {
         assertThat(mReceiptViewModelToTest.getDetailNavigation(), is(notNullValue()));
     }
 }

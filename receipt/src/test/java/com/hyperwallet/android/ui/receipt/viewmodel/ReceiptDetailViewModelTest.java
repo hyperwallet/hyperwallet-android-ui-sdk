@@ -1,6 +1,7 @@
 package com.hyperwallet.android.ui.receipt.viewmodel;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -18,6 +19,7 @@ import com.hyperwallet.android.ui.receipt.view.ReceiptDetailActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,20 +32,61 @@ public class ReceiptDetailViewModelTest {
     @Rule
     public HyperwalletExternalResourceManager mExternalResourceManager = new HyperwalletExternalResourceManager();
 
-    @Test
-    public void testReceiptDetailViewModelInstance_isInitializedProperly() throws JSONException, HyperwalletException {
+    private Intent mIntent;
+    private Receipt mReceipt;
+    private HyperwalletPageList<Receipt> mReceiptList;
 
+    @Before
+    public void initialize() throws JSONException, HyperwalletException {
         String json = mExternalResourceManager.getResourceContent("prepaid_card_receipt_list_response.json");
         JSONObject jsonObject = new JSONObject(json);
-        final HyperwalletPageList<Receipt> response = new HyperwalletPageList<>(jsonObject, Receipt.class);
+        mReceiptList = new HyperwalletPageList<>(jsonObject, Receipt.class);
 
-        Intent intent = new Intent();
-        intent.putExtra(EXTRA_RECEIPT, response.getDataList().get(0));
+        mIntent = new Intent();
+        mReceipt = mReceiptList.getDataList().get(0);
+        mIntent.putExtra(EXTRA_RECEIPT, mReceipt);
+    }
 
-        ReceiptDetailActivity activity = Robolectric.buildActivity(ReceiptDetailActivity.class, intent).setup().get();
+    @Test
+    public void testReceiptDetailViewModel_isInitialized() {
+
+        ReceiptDetailActivity activity = Robolectric.buildActivity(ReceiptDetailActivity.class, mIntent).setup().get();
 
         ReceiptDetailViewModel model = ViewModelProviders.of(activity).get(ReceiptDetailViewModel.class);
 
         assertThat(model, is(notNullValue()));
+    }
+
+    @Test
+    public void testReceiptDetailViewModel_verifyDefaultValues() {
+        ReceiptDetailActivity activity = Robolectric.buildActivity(ReceiptDetailActivity.class, mIntent).setup().get();
+
+        ReceiptDetailViewModel model = ViewModelProviders.of(activity).get(ReceiptDetailViewModel.class);
+
+        assertThat(model, is(notNullValue()));
+        assertThat(model.getReceipt(), is(notNullValue()));
+        assertThat(model.getReceipt(), is(mReceipt));
+        assertThat(model.getReceipt().getDetails(), is(mReceipt.getDetails()));
+    }
+
+    @Test
+    public void testReceiptDetailViewModel_verifyReceiptSet() {
+        ReceiptDetailActivity activity = Robolectric.buildActivity(ReceiptDetailActivity.class, mIntent).setup().get();
+
+        ReceiptDetailViewModel model = ViewModelProviders.of(activity).get(ReceiptDetailViewModel.class);
+
+        // default receipt
+        assertThat(model, is(notNullValue()));
+        assertThat(model.getReceipt(), is(mReceipt));
+        assertThat(model.getReceipt().getDetails(), is(mReceipt.getDetails()));
+
+        // prepare and set new receipt
+        Receipt newReceipt = mReceiptList.getDataList().get(1);
+        model.setReceipt(newReceipt);
+
+        // new receipt is now latest value of model.getReceipt
+        assertThat(model.getReceipt(), is(not(mReceipt)));
+        assertThat(model.getReceipt(), is(newReceipt));
+        assertThat(model.getReceipt().getDetails(), is(newReceipt.getDetails()));
     }
 }
