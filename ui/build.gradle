@@ -1,4 +1,5 @@
 apply from: "$rootProject.projectDir/android-library.gradle"
+apply from: "$rootProject.projectDir/publish.gradle"
 
 dependencies {
 
@@ -19,95 +20,4 @@ dependencies {
 
     testImplementation "org.robolectric:robolectric:$robolectricVersion"
     testImplementation "com.squareup.okhttp3:mockwebserver:$mockWebServerVersion"
-}
-
-
-def aarFile = file("$buildDir/outputs/aar/ui-$version" + ".aar")
-def aarArtifact = artifacts.add('archives', aarFile) {
-    type 'aar'
-}
-
-def isReleaseVersion = !version.endsWith('SNAPSHOT')
-
-publishing {
-
-    repositories {
-        maven {
-            def releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2"
-            def snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots"
-            url = isReleaseVersion ? releasesRepoUrl : snapshotsRepoUrl
-            credentials {
-                username sonatypeUsername
-                password sonatypePassword
-            }
-        }
-    }
-
-    publications {
-        hyperwalletUi(MavenPublication) {
-            groupId = hyperwalletGroupId
-            artifactId = 'ui-sdk'
-            version = version
-
-            artifact(sourcesJar)
-            artifact(javadocsJar)
-            artifact(aarArtifact)
-
-            pom {
-                name = 'Hyperwallet Android UI SDK'
-                description = 'Hyperwallet UI SDK for Android to integrate with Hyperwallet Platform'
-                url = 'https://github.com/hyperwallet/hyperwallet-android-ui-sdk'
-                pom.withXml {
-                    def dependenciesNode = asNode().appendNode('dependencies')
-                    configurations.implementation.allDependencies.each {
-                        def dependencyNode = dependenciesNode.appendNode('dependency')
-                        if (it.group == "hyperwallet-android-ui-sdk") {
-                            dependencyNode.appendNode('groupId', "com.hyperwallet.android.ui")
-                        } else {
-                            dependencyNode.appendNode('groupId', it.group)
-                        }
-                        dependencyNode.appendNode('artifactId', it.name)
-                        dependencyNode.appendNode('version', it.version)
-                    }
-                }
-                licenses {
-                    license {
-                        name = 'MIT License'
-                        url = 'http://www.opensource.org/licenses/MIT'
-                    }
-                }
-                developers {
-                    developer {
-                        id = 'devs'
-                        name = 'Hyperwallet Developers'
-                    }
-                }
-                scm {
-                    connection = 'scm:git:git://github.com/hyperwallet/hyperwallet-android-ui-sdk.git'
-                    developerConnection = 'scm:git:git://github.com/hyperwallet/hyperwallet-android-ui-sdk.git'
-                    url = 'https://github.com/hyperwallet/hyperwallet-android-ui-sdk'
-                }
-            }
-        }
-    }
-}
-
-tasks.withType(Sign) {
-    onlyIf {
-        isReleaseVersion && sonatypeUsername?.trim() && sonatypePassword?.trim()
-    }
-}
-
-signing {
-    sign publishing.publications.hyperwalletUi
-}
-
-sonarqube {
-    properties {
-        def libraries = project.android.sdkDirectory.getPath() + "/platforms/android-28/android.jar"
-        property "sonar.sources", "src/main/java"
-        property "sonar.binaries", "build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/hyperwallet/android/ui"
-        property "sonar.libraries", libraries
-        property "sonar.projectName", "android-ui-sdk"
-    }
 }
