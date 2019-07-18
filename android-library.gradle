@@ -1,4 +1,7 @@
 apply plugin: 'com.android.library'
+apply plugin: 'maven-publish'
+apply plugin: 'signing'
+apply plugin: 'org.sonarqube'
 apply from: "$projectDir/config/jacoco-settings.gradle"
 
 android {
@@ -53,7 +56,7 @@ task sourcesJar(type: Jar) {
 
 dependencies {
     implementation "com.google.android.material:material:$androidMaterialVersion"
-    implementation "com.hyperwallet.android:core-sdk:$hyperwalletCoreVersion"
+    api "com.hyperwallet.android:core-sdk:$hyperwalletCoreVersion"
 
     implementation "androidx.test.espresso:espresso-idling-resource:$espressoVersion"
 
@@ -64,6 +67,3 @@ dependencies {
     testImplementation group: 'org.mockito', name: 'mockito-core', version: "$mockitoVersion"
     testImplementation group: 'pl.pragmatists', name: 'JUnitParams', version: "$junitParamsVersion"
 }
-
-
-
