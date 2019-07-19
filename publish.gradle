@@ -31,8 +31,8 @@ publishing {
             artifact(aarArtifact)
 
             pom {
-                name = 'Hyperwallet Android Receipt UI SDK'
-                description = 'Hyperwallet Receipt UI SDK for Android to integrate with Hyperwallet Platform'
+                name = project.mavenName
+                description = project.description
                 url = 'https://github.com/hyperwallet/hyperwallet-android-ui-sdk'
                 pom.withXml {
                     def dependenciesNode = asNode().appendNode('dependencies')
