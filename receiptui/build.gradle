@@ -1,4 +1,8 @@
 apply from: "$rootProject.projectDir/android-library.gradle"
+description = 'Hyperwallet Receipt UI SDK for Android to integrate with the Hyperwallet Platform'
+project.ext {
+    mavenName = 'Hyperwallet Android Receipt UI SDK'
+}
 apply from: "$rootProject.projectDir/publish.gradle"
 
 dependencies {
