@@ -22,8 +22,8 @@ public class WidgetDateDialogFragment extends DialogFragment {
     public static final String TAG = WidgetDateDialogFragment.class.getName();
     private static final String ARGUMENT_DATE = "ARGUMENT_DATE";
     private static final String ARGUMENT_FIELD_NAME = "ARGUMENT_FIELD_NAME";
-    private OnSelectedDateCallback mOnSelectedDateCallback;
     private final DateUtils mDateUtils = new DateUtils();
+    private OnSelectedDateCallback mOnSelectedDateCallback;
 
     /**
      * Please do not use this to have instance of DateDialogFragment this is reserved for android framework

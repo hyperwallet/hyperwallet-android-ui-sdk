@@ -21,7 +21,7 @@ android {
 }
 
 def fileFilter = ['**/BuildConfig.*',
-                  '**/com/hyperwallet/android/ui/transfermethod/HyperwalletUi.*',
+                  '**/com/hyperwallet/android/ui/transfermethod/HyperwalletTransferMethodUi.*',
                   '**/com/hyperwallet/android/ui/transfermethod/**/*Activity*.*',
                   '**/com/hyperwallet/android/ui/transfermethod/**/*Fragment*.*',
                   '**/com/hyperwallet/android/ui/transfermethod/view/TransferMethodSelectionItem.*',

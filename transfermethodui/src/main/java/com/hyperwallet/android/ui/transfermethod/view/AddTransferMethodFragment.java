@@ -55,8 +55,8 @@ import com.hyperwallet.android.model.transfermethod.HyperwalletBankAccount;
 import com.hyperwallet.android.model.transfermethod.HyperwalletBankCard;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.model.transfermethod.PayPalAccount;
-import com.hyperwallet.android.ui.transfermethod.HyperwalletLocalBroadcast;
 import com.hyperwallet.android.ui.R;
+import com.hyperwallet.android.ui.transfermethod.HyperwalletTransferMethodLocalBroadcast;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
 import com.hyperwallet.android.ui.transfermethod.view.widget.AbstractWidget;
 import com.hyperwallet.android.ui.transfermethod.view.widget.DateChangedListener;
@@ -82,7 +82,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     private static final String ARGUMENT_TRANSFER_METHOD = "ARGUMENT_TRANSFER_METHOD";
     private static final String ARGUMENT_WIDGET_STATE_MAP = "ARGUMENT_WIDGET_STATE_MAP";
     private static final boolean FORCE_UPDATE = false;
-
+    private final DateUtils mDateUtils = new DateUtils();
     private String mCountry;
     private View mCreateButtonProgressBar;
     private Button mCreateTransferMethodButton;
@@ -98,7 +98,6 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     private HyperwalletTransferMethod mTransferMethod;
     private String mTransferMethodProfileType;
     private HashMap<String, WidgetInputState> mWidgetInputStateHashMap;
-    private final DateUtils mDateUtils = new DateUtils();
 
     /**
      * Please do not use this to have instance of AddTransferMethodFragment this is reserved for android framework
@@ -294,7 +293,8 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
 
     @Override
     public void notifyTransferMethodAdded(@NonNull final HyperwalletTransferMethod transferMethod) {
-        Intent intent = HyperwalletLocalBroadcast.createBroadcastIntentTransferMethodAdded(transferMethod);
+        Intent intent = HyperwalletTransferMethodLocalBroadcast.createBroadcastIntentTransferMethodAdded(
+                transferMethod);
         LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
         getActivity().setResult(Activity.RESULT_OK);
         getActivity().finish();
@@ -482,14 +482,6 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
         fragmentTransaction.commit();
     }
 
-    interface OnLoadTransferMethodConfigurationFieldsNetworkErrorCallback {
-        void showErrorsLoadTransferMethodConfigurationFields(@NonNull final List<HyperwalletError> errors);
-    }
-
-    interface OnAddTransferMethodNetworkErrorCallback {
-        void showErrorsAddTransferMethod(@NonNull final List<HyperwalletError> errors);
-    }
-
     private void triggerSubmit() {
         if (performValidation(true)) {
             switch (mTransferMethodType) {
@@ -620,5 +612,13 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                 }
             }
         }
+    }
+
+    interface OnLoadTransferMethodConfigurationFieldsNetworkErrorCallback {
+        void showErrorsLoadTransferMethodConfigurationFields(@NonNull final List<HyperwalletError> errors);
+    }
+
+    interface OnAddTransferMethodNetworkErrorCallback {
+        void showErrorsAddTransferMethod(@NonNull final List<HyperwalletError> errors);
     }
 }

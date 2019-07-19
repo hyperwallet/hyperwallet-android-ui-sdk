@@ -16,10 +16,9 @@ import java.util.Collection;
 
 @RunWith(RobolectricTestRunner.class)
 public class DateUtilsTest {
-    private final DateUtils mDateUtils = new DateUtils();
-
     @Rule
     public final ExpectedException mThrown = ExpectedException.none();
+    private final DateUtils mDateUtils = new DateUtils();
 
     @Test
     public void testConvertDateFromServerToWidgetFormat() throws Exception {

@@ -39,7 +39,7 @@ import com.hyperwallet.android.model.graphql.HyperwalletTransferMethodConfigurat
 import com.hyperwallet.android.model.graphql.HyperwalletTransferMethodConfigurationKey;
 import com.hyperwallet.android.model.graphql.query.HyperwalletTransferMethodConfigurationFieldQuery;
 import com.hyperwallet.android.model.graphql.query.HyperwalletTransferMethodConfigurationKeysQuery;
-import com.hyperwallet.android.ui.transfermethod.repository.util.EspressoIdlingResource;
+import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -50,14 +50,10 @@ public class TransferMethodConfigurationRepositoryImpl implements TransferMethod
     private final Map<FieldMapKey, HyperwalletTransferMethodConfigurationField> mFieldMap;
     private HyperwalletTransferMethodConfigurationKey mTransferMethodConfigurationKey;
 
+    //todo use default modifier after RepositoryFactory is removed
     public TransferMethodConfigurationRepositoryImpl() {
         mHandler = new Handler();
         mFieldMap = new HashMap<>();
-    }
-
-    @VisibleForTesting
-    Hyperwallet getHyperwallet() {
-        return Hyperwallet.getDefault();
     }
 
     @VisibleForTesting()
@@ -67,6 +63,11 @@ public class TransferMethodConfigurationRepositoryImpl implements TransferMethod
         mHandler = handler;
         mTransferMethodConfigurationKey = transferMethodConfigurationKey;
         mFieldMap = fieldMap;
+    }
+
+    @VisibleForTesting
+    Hyperwallet getHyperwallet() {
+        return Hyperwallet.getDefault();
     }
 
     @VisibleForTesting

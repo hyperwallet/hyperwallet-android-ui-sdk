@@ -8,9 +8,10 @@ dependencies {
     implementation "androidx.legacy:legacy-support-v4:$legacySupportV4Version"
     implementation "androidx.recyclerview:recyclerview:$recycleViewVersion"
 
-    api project(":common")
-    api project(":receipt")
-    api project(":transfermethodrepository")
+    implementation project(':commonui')
+    implementation project(":userrepository")
+    implementation project(":transfermethodrepository")
+
 
     androidTestImplementation "androidx.test:rules:$testRulesVersion"
     androidTestImplementation "androidx.test.espresso:espresso-contrib:$espressoVersion"

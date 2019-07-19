@@ -46,10 +46,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.HyperwalletStatusTransition;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
-import com.hyperwallet.android.ui.transfermethod.HyperwalletLocalBroadcast;
 import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.common.view.HorizontalDividerItemDecorator;
 import com.hyperwallet.android.ui.common.view.OneClickListener;
+import com.hyperwallet.android.ui.transfermethod.HyperwalletTransferMethodLocalBroadcast;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
 
 import java.util.ArrayList;
@@ -224,7 +224,7 @@ public class ListTransferMethodFragment extends Fragment implements ListTransfer
     @Override
     public void notifyTransferMethodDeactivated(
             @NonNull final HyperwalletStatusTransition statusTransition) {
-        Intent intent = HyperwalletLocalBroadcast.createBroadcastIntentTransferMethodDeactivated(
+        Intent intent = HyperwalletTransferMethodLocalBroadcast.createBroadcastIntentTransferMethodDeactivated(
                 statusTransition);
         LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
         mPresenter.loadTransferMethods();

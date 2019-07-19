@@ -43,9 +43,9 @@ import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.transfermethod.repository.RepositoryFactory;
 import com.hyperwallet.android.ui.transfermethod.rule.HyperwalletExternalResourceManager;
 import com.hyperwallet.android.ui.transfermethod.rule.HyperwalletMockWebServer;
-import com.hyperwallet.android.ui.transfermethod.view.ListTransferMethodActivity;
 import com.hyperwallet.android.ui.transfermethod.util.RecyclerViewCountAssertion;
 import com.hyperwallet.android.ui.transfermethod.util.TestAuthenticationProvider;
+import com.hyperwallet.android.ui.transfermethod.view.ListTransferMethodActivity;
 
 import org.hamcrest.Matchers;
 import org.junit.After;

@@ -43,6 +43,7 @@ import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.common.view.HorizontalDividerItemDecorator;
 import com.hyperwallet.android.ui.common.view.OneClickListener;
 import com.hyperwallet.android.ui.transfermethod.repository.RepositoryFactory;
+import com.hyperwallet.android.ui.user.repository.UserRepositoryFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -183,10 +184,11 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        UserRepositoryFactory userRepositoryFactory = UserRepositoryFactory.getInstance();
         RepositoryFactory factory = RepositoryFactory.getInstance();
         mPresenter = new SelectTransferMethodPresenter(this,
                 factory.getTransferMethodConfigurationRepository(),
-                factory.getUserRepository());
+                userRepositoryFactory.getUserRepository());
     }
 
 

@@ -32,7 +32,7 @@ import com.hyperwallet.android.model.graphql.keyed.Currency;
 import com.hyperwallet.android.model.graphql.keyed.HyperwalletTransferMethodConfigurationKeyResult;
 import com.hyperwallet.android.model.graphql.query.HyperwalletTransferMethodConfigurationFieldQuery;
 import com.hyperwallet.android.model.graphql.query.HyperwalletTransferMethodConfigurationKeysQuery;
-import com.hyperwallet.android.ui.transfermethod.repository.rule.HyperwalletExternalResourceManager;
+import com.hyperwallet.android.ui.transfermethod.rule.HyperwalletExternalResourceManager;
 import com.hyperwallet.android.util.JsonUtils;
 
 import org.hamcrest.collection.IsEmptyCollection;

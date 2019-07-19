@@ -25,12 +25,12 @@ import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMe
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.BANK_CARD;
 import static com.hyperwallet.android.model.user.HyperwalletUser.ProfileTypes.BUSINESS;
 import static com.hyperwallet.android.model.user.HyperwalletUser.ProfileTypes.INDIVIDUAL;
+import static com.hyperwallet.android.ui.transfermethod.util.EspressoUtils.atPosition;
+import static com.hyperwallet.android.ui.transfermethod.util.EspressoUtils.withDrawable;
 import static com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_COUNTRY;
 import static com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_CURRENCY;
 import static com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_PROFILE_TYPE;
 import static com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_TYPE;
-import static com.hyperwallet.android.ui.transfermethod.util.EspressoUtils.atPosition;
-import static com.hyperwallet.android.ui.transfermethod.util.EspressoUtils.withDrawable;
 
 import android.widget.TextView;
 
@@ -43,13 +43,12 @@ import androidx.test.rule.ActivityTestRule;
 
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.ui.R;
-import com.hyperwallet.android.ui.common.util.EspressoIdlingResource;
 import com.hyperwallet.android.ui.transfermethod.repository.RepositoryFactory;
 import com.hyperwallet.android.ui.transfermethod.rule.HyperwalletExternalResourceManager;
 import com.hyperwallet.android.ui.transfermethod.rule.HyperwalletMockWebServer;
-import com.hyperwallet.android.ui.transfermethod.view.SelectTransferMethodActivity;
 import com.hyperwallet.android.ui.transfermethod.util.RecyclerViewCountAssertion;
 import com.hyperwallet.android.ui.transfermethod.util.TestAuthenticationProvider;
+import com.hyperwallet.android.ui.transfermethod.view.SelectTransferMethodActivity;
 
 import org.junit.After;
 import org.junit.Before;
