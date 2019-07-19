@@ -43,12 +43,14 @@ import androidx.test.rule.ActivityTestRule;
 
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.ui.R;
-import com.hyperwallet.android.ui.transfermethod.repository.RepositoryFactory;
+import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
+import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
 import com.hyperwallet.android.ui.transfermethod.rule.HyperwalletExternalResourceManager;
 import com.hyperwallet.android.ui.transfermethod.rule.HyperwalletMockWebServer;
 import com.hyperwallet.android.ui.transfermethod.util.RecyclerViewCountAssertion;
 import com.hyperwallet.android.ui.transfermethod.util.TestAuthenticationProvider;
 import com.hyperwallet.android.ui.transfermethod.view.SelectTransferMethodActivity;
+import com.hyperwallet.android.ui.user.repository.UserRepositoryFactory;
 
 import org.junit.After;
 import org.junit.Before;
@@ -82,6 +84,7 @@ public class SelectTransferMethodTest {
     @After
     public void cleanup() {
         TransferMethodRepositoryFactory.clearInstance();
+        UserRepositoryFactory.clearInstance();
     }
 
     @Before

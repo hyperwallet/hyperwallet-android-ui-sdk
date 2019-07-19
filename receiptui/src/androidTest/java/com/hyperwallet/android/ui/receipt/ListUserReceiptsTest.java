@@ -39,6 +39,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
 import com.hyperwallet.android.Hyperwallet;
+import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
 import com.hyperwallet.android.ui.common.util.DateUtils;
 import com.hyperwallet.android.ui.receipt.rule.HyperwalletExternalResourceManager;
 import com.hyperwallet.android.ui.receipt.rule.HyperwalletMockWebServer;
@@ -416,7 +417,7 @@ public class ListUserReceiptsTest {
     @Test
     public void testListReceipt_displaysNetworkErrorDialogOnConnectionTimeout() {
         mMockWebServer.getServer().enqueue(new MockResponse().setResponseCode(HTTP_OK).setBody(sResourceManager
-                .getResourceContent("receipt_debit_response.json")).throttleBody(512, 10, TimeUnit.SECONDS));
+                .getResourceContent("receipt_debit_response.json")).setBodyDelay(10500, TimeUnit.MILLISECONDS));
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("receipt_debit_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();
