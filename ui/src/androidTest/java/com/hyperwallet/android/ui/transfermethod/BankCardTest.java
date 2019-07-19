@@ -45,9 +45,9 @@ import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.common.util.EspressoIdlingResource;
-import com.hyperwallet.android.ui.repository.RepositoryFactory;
 import com.hyperwallet.android.ui.rule.HyperwalletExternalResourceManager;
 import com.hyperwallet.android.ui.rule.HyperwalletMockWebServer;
+import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
 import com.hyperwallet.android.ui.util.TestAuthenticationProvider;
 
 import org.junit.After;
@@ -105,7 +105,7 @@ public class BankCardTest {
 
     @After
     public void cleanup() {
-        RepositoryFactory.clearInstance();
+        TransferMethodRepositoryFactory.clearInstance();
     }
 
     @Before

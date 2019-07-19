@@ -42,7 +42,7 @@ import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.common.view.HorizontalDividerItemDecorator;
 import com.hyperwallet.android.ui.common.view.OneClickListener;
-import com.hyperwallet.android.ui.repository.RepositoryFactory;
+import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
 import com.hyperwallet.android.ui.user.repository.UserRepositoryFactory;
 import com.hyperwallet.android.ui.view.CountrySelectionDialogFragment;
 import com.hyperwallet.android.ui.view.CurrencySelectionDialogFragment;
@@ -187,9 +187,9 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         UserRepositoryFactory userRepositoryFactory = UserRepositoryFactory.getInstance();
-        RepositoryFactory factory = RepositoryFactory.getInstance();
+        TransferMethodRepositoryFactory transferMethodRepositoryFactory = TransferMethodRepositoryFactory.getInstance();
         mPresenter = new SelectTransferMethodPresenter(this,
-                factory.getTransferMethodConfigurationRepository(),
+                transferMethodRepositoryFactory.getTransferMethodConfigurationRepository(),
                 userRepositoryFactory.getUserRepository());
     }
 
