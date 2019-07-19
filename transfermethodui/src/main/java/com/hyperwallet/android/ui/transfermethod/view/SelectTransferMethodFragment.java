@@ -42,7 +42,6 @@ import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.common.view.HorizontalDividerItemDecorator;
 import com.hyperwallet.android.ui.common.view.OneClickListener;
-import com.hyperwallet.android.ui.transfermethod.repository.RepositoryFactory;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
 import com.hyperwallet.android.ui.user.repository.UserRepositoryFactory;
 
