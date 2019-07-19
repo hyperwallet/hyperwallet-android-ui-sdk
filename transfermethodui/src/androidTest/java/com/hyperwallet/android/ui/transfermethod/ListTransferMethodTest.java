@@ -40,7 +40,7 @@ import androidx.test.rule.ActivityTestRule;
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.model.HyperwalletStatusTransition;
 import com.hyperwallet.android.ui.R;
-import com.hyperwallet.android.ui.transfermethod.repository.RepositoryFactory;
+import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
 import com.hyperwallet.android.ui.transfermethod.rule.HyperwalletExternalResourceManager;
 import com.hyperwallet.android.ui.transfermethod.rule.HyperwalletMockWebServer;
 import com.hyperwallet.android.ui.transfermethod.util.RecyclerViewCountAssertion;
