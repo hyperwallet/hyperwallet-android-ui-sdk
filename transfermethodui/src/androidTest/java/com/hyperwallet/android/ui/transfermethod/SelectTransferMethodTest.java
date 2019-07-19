@@ -81,7 +81,7 @@ public class SelectTransferMethodTest {
 
     @After
     public void cleanup() {
-        RepositoryFactory.clearInstance();
+        TransferMethodRepositoryFactory.clearInstance();
     }
 
     @Before

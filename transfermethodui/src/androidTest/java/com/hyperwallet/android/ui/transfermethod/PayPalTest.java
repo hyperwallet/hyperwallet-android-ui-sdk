@@ -95,7 +95,7 @@ public class PayPalTest {
 
     @After
     public void cleanup() {
-        RepositoryFactory.clearInstance();
+        TransferMethodRepositoryFactory.clearInstance();
     }
 
     @Before

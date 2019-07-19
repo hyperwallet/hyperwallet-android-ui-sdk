@@ -101,7 +101,7 @@ public class BankAccountTest {
 
     @After
     public void cleanup() {
-        RepositoryFactory.clearInstance();
+        TransferMethodRepositoryFactory.clearInstance();
     }
 
     @Before
