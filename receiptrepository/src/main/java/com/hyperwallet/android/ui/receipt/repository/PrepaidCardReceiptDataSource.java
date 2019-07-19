@@ -32,8 +32,8 @@ import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.paging.HyperwalletPageList;
 import com.hyperwallet.android.model.receipt.Receipt;
 import com.hyperwallet.android.model.receipt.ReceiptQueryParam;
-import com.hyperwallet.android.ui.common.util.EspressoIdlingResource;
-import com.hyperwallet.android.ui.common.viewmodel.Event;
+import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
+import com.hyperwallet.android.ui.common.repository.Event;
 import com.hyperwallet.android.util.DateUtil;
 
 import java.util.Calendar;

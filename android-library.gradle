@@ -55,9 +55,9 @@ task sourcesJar(type: Jar) {
 }
 
 dependencies {
-    implementation "com.google.android.material:material:$androidMaterialVersion"
-    implementation "com.hyperwallet.android:core-sdk:$hyperwalletCoreVersion"
 
+    api "com.hyperwallet.android:core-sdk:$hyperwalletCoreVersion"
+    implementation "com.google.android.material:material:$androidMaterialVersion"
     implementation "androidx.test.espresso:espresso-idling-resource:$espressoVersion"
 
     androidTestImplementation "androidx.test.ext:junit:$extJunitVerson"

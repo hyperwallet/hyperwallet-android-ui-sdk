@@ -31,8 +31,8 @@ import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.paging.HyperwalletPageList;
 import com.hyperwallet.android.model.receipt.Receipt;
 import com.hyperwallet.android.model.receipt.ReceiptQueryParam;
-import com.hyperwallet.android.ui.common.util.EspressoIdlingResource;
-import com.hyperwallet.android.ui.common.viewmodel.Event;
+import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
+import com.hyperwallet.android.ui.common.repository.Event;
 
 import java.util.Calendar;
 
@@ -117,7 +117,7 @@ public class UserReceiptDataSource extends PageKeyedDataSource<Integer, Receipt>
 
     /**
      * @see PageKeyedDataSource#loadAfter(LoadParams, LoadCallback)
-     * */
+     */
     @Override
     public void loadAfter(@NonNull final LoadParams<Integer> params,
             final @NonNull LoadCallback<Integer, Receipt> callback) {
@@ -168,7 +168,7 @@ public class UserReceiptDataSource extends PageKeyedDataSource<Integer, Receipt>
 
     /**
      * Facilitates retry when network is down; any error that we can have a retry operation
-     * */
+     */
     void retry() {
         if (mLoadInitialCallback != null) {
             loadInitial(mLoadInitialParams, mLoadInitialCallback);
@@ -181,7 +181,7 @@ public class UserReceiptDataSource extends PageKeyedDataSource<Integer, Receipt>
      * Retrieve reference of Hyperwallet errors inorder for consumers to observe on data changes
      *
      * @return Live event data of {@link HyperwalletErrors}
-     * */
+     */
     public LiveData<Event<HyperwalletErrors>> getErrors() {
         return mErrors;
     }

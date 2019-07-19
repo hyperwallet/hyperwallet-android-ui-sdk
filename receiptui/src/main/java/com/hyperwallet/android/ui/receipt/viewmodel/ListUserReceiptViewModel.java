@@ -26,7 +26,7 @@ import androidx.paging.PagedList;
 
 import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.receipt.Receipt;
-import com.hyperwallet.android.ui.common.viewmodel.Event;
+import com.hyperwallet.android.ui.common.repository.Event;
 import com.hyperwallet.android.ui.receipt.repository.UserReceiptRepository;
 
 public class ListUserReceiptViewModel extends ReceiptViewModel {
@@ -74,28 +74,28 @@ public class ListUserReceiptViewModel extends ReceiptViewModel {
 
     /**
      * @see ReceiptViewModel#retryLoadReceipts()
-     * */
+     */
     public void retryLoadReceipts() {
         mUserReceiptRepository.retryLoadReceipt();
     }
 
     /**
      * @see ReceiptViewModel#getDetailNavigation()
-     * */
+     */
     public LiveData<Event<Receipt>> getDetailNavigation() {
         return mDetailNavigation;
     }
 
     /**
      * @see ReceiptViewModel#setDetailNavigation(Receipt)
-     * */
+     */
     public void setDetailNavigation(@NonNull final Receipt receipt) {
         mDetailNavigation.postValue(new Event<>(receipt));
     }
 
     /**
      * @see ViewModel#onCleared()
-     * */
+     */
     @Override
     protected void onCleared() {
         super.onCleared();

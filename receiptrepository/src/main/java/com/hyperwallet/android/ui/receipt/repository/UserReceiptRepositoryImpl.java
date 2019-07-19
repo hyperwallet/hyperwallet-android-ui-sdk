@@ -22,7 +22,7 @@ import androidx.paging.PagedList;
 
 import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.receipt.Receipt;
-import com.hyperwallet.android.ui.common.viewmodel.Event;
+import com.hyperwallet.android.ui.common.repository.Event;
 
 /**
  * {@link UserReceiptRepository} implementation
@@ -72,7 +72,7 @@ public class UserReceiptRepositoryImpl implements UserReceiptRepository {
 
     /**
      * @see UserReceiptRepository#getErrors()
-     * */
+     */
     @Override
     public LiveData<Event<HyperwalletErrors>> getErrors() {
         if (mErrorsLiveData == null) {
@@ -83,7 +83,7 @@ public class UserReceiptRepositoryImpl implements UserReceiptRepository {
 
     /**
      * @see UserReceiptRepository#retryLoadReceipt()
-     * */
+     */
     @Override
     public void retryLoadReceipt() {
         if (mReceiptDataSourceLiveData.getValue() != null) {

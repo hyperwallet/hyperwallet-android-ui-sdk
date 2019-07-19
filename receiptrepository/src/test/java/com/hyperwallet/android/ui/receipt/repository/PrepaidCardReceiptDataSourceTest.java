@@ -29,7 +29,7 @@ import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.paging.HyperwalletPageList;
 import com.hyperwallet.android.model.receipt.Receipt;
 import com.hyperwallet.android.model.receipt.ReceiptQueryParam;
-import com.hyperwallet.android.ui.rule.HyperwalletExternalResourceManager;
+import com.hyperwallet.android.ui.receipt.rule.HyperwalletExternalResourceManager;
 import com.hyperwallet.android.util.DateUtil;
 
 import org.hamcrest.Matchers;
@@ -55,20 +55,19 @@ import java.util.List;
 @RunWith(RobolectricTestRunner.class)
 public class PrepaidCardReceiptDataSourceTest {
 
+    // can't be mocked due to params.key is of type Integer and autoboxing will not work with null to 0
+    private final PageKeyedDataSource.LoadParams<Date> mLoadAfterParams = new PageKeyedDataSource.LoadParams<>(
+            new Date(), 10);
     @Rule
     public MockitoRule mMockito = MockitoJUnit.rule();
     @Rule
     public HyperwalletExternalResourceManager mExternalResourceManager = new HyperwalletExternalResourceManager();
-
     @Mock
     private Hyperwallet mHyperwallet;
     @Mock
     private PageKeyedDataSource.LoadInitialParams<Date> mInitialParams;
     @Mock
     private PageKeyedDataSource.LoadInitialCallback<Date, Receipt> mInitialCallback;
-    // can't be mocked due to params.key is of type Integer and autoboxing will not work with null to 0
-    private final PageKeyedDataSource.LoadParams<Date> mLoadAfterParams = new PageKeyedDataSource.LoadParams<>(
-            new Date(), 10);
     @Mock
     private PageKeyedDataSource.LoadCallback<Date, Receipt> mLoadAfterCallback;
 

@@ -2,7 +2,7 @@ apply from: "$rootProject.projectDir/android-library.gradle"
 apply from: "$rootProject.projectDir/publish.gradle"
 
 dependencies {
-    androidTestImplementation "androidx.test:rules:$testRulesVersion"
+    api project(':commonrepository')
     testImplementation "org.robolectric:robolectric:$robolectricVersion"
     testImplementation "com.squareup.okhttp3:mockwebserver:$mockWebServerVersion"
 }

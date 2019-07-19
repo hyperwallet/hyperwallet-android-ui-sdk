@@ -11,7 +11,7 @@ import androidx.paging.PagedList;
 
 import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.receipt.Receipt;
-import com.hyperwallet.android.ui.common.viewmodel.Event;
+import com.hyperwallet.android.ui.common.repository.Event;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
