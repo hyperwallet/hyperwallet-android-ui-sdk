@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
+          package="com.hyperwallet.android.ui">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <application android:networkSecurityConfig="@xml/network_security_config" tools:targetApi="n">
+        <activity
+            android:name="com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity"
+            android:label="@string/title_activity_add_transfer_method"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize"/>
+
+        <activity
+            android:name="com.hyperwallet.android.ui.transfermethod.view.SelectTransferMethodActivity"
+            android:label="@string/title_activity_select_transfer_method"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable"/>
+        </activity>
+
+        <activity
+            android:name="com.hyperwallet.android.ui.transfermethod.view.ListTransferMethodActivity"
+            android:label="@string/title_activity_list_transfer_method"
+            android:theme="@style/AppTheme.NoActionBar"/>
+    </application>
+
+</manifest>
