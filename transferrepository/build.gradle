@@ -1,0 +1,16 @@
+apply from: "$rootProject.projectDir/android-library.gradle"
+description = 'Hyperwallet Transfer Repository SDK for Android to integrate with the Hyperwallet Platform'
+project.ext {
+    mavenName = 'Hyperwallet Android Transfer Repository SDK'
+}
+apply from: "$rootProject.projectDir/publish.gradle"
+
+
+dependencies {
+
+    implementation "androidx.legacy:legacy-support-v4:$legacySupportV4Version"
+    implementation "androidx.paging:paging-runtime:$pagingRuntimeVersion"
+    api project(':commonrepository')
+
+    testImplementation "org.robolectric:robolectric:$robolectricVersion"
+}
