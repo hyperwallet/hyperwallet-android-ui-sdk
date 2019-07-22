@@ -1,8 +1,14 @@
-apply from: "$rootProject.projectDir/android-library.gradle"
-description = 'Hyperwallet Common UI SDK for Android to integrate with the Hyperwallet Platform'
 project.ext {
     mavenName = 'Hyperwallet Android Common UI SDK'
+    fileFilter = ['**/BuildConfig.*',
+                  '**/com/hyperwallet/android/ui/common/view/error/DefaultErrorDialogFragment.*',
+                  '**/com/hyperwallet/android/ui/common/view/HorizontalDividerItemDecorator.*',
+                  '**/com/hyperwallet/android/ui/common/view/OneClickListener.*'
+    ]
 }
+description = 'Hyperwallet Common UI SDK for Android to integrate with the Hyperwallet Platform'
+
+apply from: "$rootProject.projectDir/android-library.gradle"
 apply from: "$rootProject.projectDir/publish.gradle"
 
 dependencies {
