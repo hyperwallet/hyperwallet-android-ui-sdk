@@ -1,0 +1,44 @@
+{
+  "token": "usr-e602a937-334c-49e5-b37e-4c842c1cc7a1",
+  "status": "PRE_ACTIVATED",
+  "verificationStatus": "NOT_REQUIRED",
+  "createdOn": "2019-05-14T21:51:15",
+  "clientUserId": "testUserCIQlsWTo0BOQ",
+  "profileType": "BUSINESS",
+  "businessType": "CORPORATION",
+  "businessName": "Alana LTD",
+  "businessRegistrationId": "1234",
+  "businessRegistrationStateProvince": "BCA",
+  "businessRegistrationCountry": "CA",
+  "businessContactRole": "OTHER",
+  "firstName": "Bevis",
+  "middleName": "Kylynn",
+  "lastName": "Pace",
+  "dateOfBirth": "2001-01-01",
+  "countryOfBirth": "US",
+  "countryOfNationality": "FR",
+  "gender": "FEMALE",
+  "phoneNumber": "604-345-1777",
+  "mobileNumber": "604-345-1888",
+  "email": "lizeth.mazzotta@fullmail.com",
+  "governmentId": "999000999",
+  "passportId": "123456789",
+  "driversLicenseId": "234234243",
+  "addressLine1": "838 7th ave",
+  "addressLine2": "second floor",
+  "city": "Burnaby",
+  "stateProvince": "XZ",
+  "country": "US",
+  "postalCode": "v5z3a2",
+  "language": "en",
+  "timeZone": "GMT",
+  "programToken": "prg-7a2441be-1b00-4239-b2d6-623a0eb8f160",
+  "links": [
+    {
+      "params": {
+        "rel": "self"
+      },
+      "href": "https://api.sandbox.hyperwallet.com/rest/v3/users/usr-e602a937-334c-49e5-b37e-4c842c1cc7a1"
+    }
+  ]
+}

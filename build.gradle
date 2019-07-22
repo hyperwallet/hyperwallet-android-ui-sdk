@@ -5,12 +5,12 @@ buildscript {
         google()
         jcenter()
         mavenLocal()
-        
+
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.3.2'
         classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.7"
-        
+
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -21,10 +21,45 @@ allprojects {
         google()
         jcenter()
         mavenLocal()
-        
+
     }
 
-    project.version = "1.0.0-beta02";
+    project.version = "1.0.0-beta03"
+
+}
+
+subprojects {
+
+    ext {
+        hyperwalletGroupId = 'com.hyperwallet.android.ui'
+
+        compileVersion = 28
+        minVersion = 21
+        targetVersion = 28
+        codeVersion = 1
+
+        hyperwalletCoreVersion = '1.0.0-beta03'
+        //
+        androidMaterialVersion = '1.0.0'
+        appcompatVersion = '1.0.2'
+        constraintlayoutVersion = '1.1.3'
+        legacySupportV4Version = '1.0.0'
+        recycleViewVersion = '1.0.0'
+        lifecycleExtensionsVersion = '2.0.0'
+        pagingRuntimeVersion = '2.1.0'
+        //Testing
+        extJunitVerson = '1.1.1'
+        testRunnerVersion = '1.2.0'
+        testRulesVersion = '1.2.0'
+        espressoVersion = '3.2.0'
+        mockServerVersion = '3.11.0'
+        leakcanaryVersion = '1.6.3'
+        mockitoVersion = '2.27.0'
+        junitParamsVersion = '1.1.1'
+        robolectricVersion = '4.1'
+        mockWebServerVersion = '3.11.0'
+    }
+
 }
 
 task clean(type: Delete) {

@@ -13,10 +13,11 @@ Note that this SDK is geared towards those who need both backend data and UI fea
 
 ## Installation
 
-To install Hyperwallet UI SDK, you just need to add the dependency into your build.gradle file in Android Studio (or Gradle). For example:
+To install Hyperwallet UI SDK, you just need to add the dependencies into your build.gradle file in Android Studio (or Gradle). For example:
 
 ```bash
-api 'com.hyperwallet.android:ui-sdk:1.0.0-beta02'
+api 'com.hyperwallet.android.ui:transfermethodui:1.0.0-beta03'
+api 'com.hyperwallet.android.ui:receiptui:1.0.0-beta03'
 ```
 
 ## Initialization
@@ -25,10 +26,12 @@ After you're done installing the SDK, you need to initialize an instance in orde
 
 ```java
 // initialize UI SDK
-Hyperwallet.getInstance(hyperwalletAuthenticationTokenProvider)
+HyperwalletReceiptUi.getInstance(hyperwalletAuthenticationTokenProvider);
+HyperwalletTransferMethodUi.getInstance(hyperwalletAuthenticationTokenProvider);
 
 // use UI SDK functions
-Hyperwallet.getDefault().getIntentListTransferMethodActivity(MainActivity.this);
+mHyperwalletTransferMethodUi.getIntentListTransferMethodActivity(MainActivity.this);
+mHyperwalletReceiptUi.getIntentListUserReceiptActivity(MainActivity.this);
 ```
 
 ## Authentication
@@ -88,7 +91,7 @@ The functions in UI SDK are available to use once the authentication is done.
 ```
 @Override
 public void onClick(View view) {
-    Intent it = Hyperwallet.getDefault().getIntentListTransferMethodActivity(MainActivity.this);
+    Intent it = mHyperwalletTransferMethodUi.getIntentListTransferMethodActivity(MainActivity.this);
     startActivity(it);
 }
 ```
@@ -98,7 +101,7 @@ public void onClick(View view) {
 ```
 @Override
 public void onClick(View view) {
-    Intent it = Hyperwallet.getDefault().getIntentSelectTransferMethodActivity(MainActivity.this);
+    Intent it = mHyperwalletTransferMethodUi.getIntentSelectTransferMethodActivity(MainActivity.this);
     startActivity(it);
 }
 ```
@@ -107,7 +110,7 @@ public void onClick(View view) {
 ```
 @Override
 public void onClick(View view) {
-    Intent it = mHyperwalletUi.getIntentAddTransferMethodActivity(MainActivity.this, 
+    Intent it = mHyperwalletTransferMethodUi.getIntentAddTransferMethodActivity(MainActivity.this, 
                                                                   "US", 
                                                                   "USD", 
                                                                   "BANK_ACCOUNT");

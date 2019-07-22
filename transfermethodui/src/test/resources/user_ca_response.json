@@ -1,0 +1,26 @@
+{
+  "token": "usr-token-2",
+  "status": "PRE_ACTIVATED",
+  "createdOn": "2017-10-30T22:15:45",
+  "clientUserId": "123456",
+  "profileType": "INDIVIDUAL",
+  "firstName": "Person",
+  "lastName": "FromCanada",
+  "dateOfBirth": "1991-01-01",
+  "email": "user+4satF1xV@hyperwallet.com",
+  "addressLine1": "950 Granville",
+  "city": "Vancouver",
+  "stateProvince": "BC",
+  "country": "CA",
+  "postalCode": "H0H0H0",
+  "language": "en",
+  "programToken": "prg-token-2",
+  "links": [
+    {
+      "params": {
+        "rel": "self"
+      },
+      "href": "https://localhost/rest/v3/users/usr-token-2"
+    }
+  ]
+}

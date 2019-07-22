@@ -1,0 +1,7 @@
+apply from: "$rootProject.projectDir/android-library.gradle"
+description = 'Hyperwallet Common Repository SDK for Android to integrate with the Hyperwallet Platform'
+project.ext {
+    mavenName = 'Hyperwallet Android Common Repository SDK'
+}
+apply from: "$rootProject.projectDir/publish.gradle"
+

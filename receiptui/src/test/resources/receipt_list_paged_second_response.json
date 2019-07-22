@@ -1,0 +1,202 @@
+{
+  "count": 50,
+  "offset": 20,
+  "limit": 10,
+  "data": [
+    {
+      "journalId": "55241309",
+      "type": "PAYMENT",
+      "createdOn": "2019-04-01T22:25:08",
+      "entry": "CREDIT",
+      "sourceToken": "act-68adaba2-42f4-4f0f-8670-81c09f319a12",
+      "destinationToken": "usr-02d381d3-bf7e-43fe-9d00-02e26b28df57",
+      "amount": "31.00",
+      "fee": "0.00",
+      "currency": "USD",
+      "details": {
+        "clientPaymentId": "6gxTXpwcubH3fVRtFdQNurWOyUW1HkVX",
+        "notes": "ABC1",
+        "payeeName": "Brendan Zachery"
+      }
+    },
+    {
+      "journalId": "55241308",
+      "type": "PAYMENT",
+      "createdOn": "2019-04-01T22:25:08",
+      "entry": "CREDIT",
+      "sourceToken": "act-68adaba2-42f4-4f0f-8670-81c09f319a12",
+      "destinationToken": "usr-02d381d3-bf7e-43fe-9d00-02e26b28df57",
+      "amount": "86.00",
+      "fee": "0.00",
+      "currency": "USD",
+      "details": {
+        "clientPaymentId": "S1qT2lRll6L30mC0DFj7KcVe3mWoKDQB",
+        "notes": "ABC1",
+        "payeeName": "Brendan Zachery"
+      }
+    },
+    {
+      "journalId": "55241307",
+      "type": "PAYMENT",
+      "createdOn": "2019-04-01T22:25:08",
+      "entry": "CREDIT",
+      "sourceToken": "act-68adaba2-42f4-4f0f-8670-81c09f319a12",
+      "destinationToken": "usr-02d381d3-bf7e-43fe-9d00-02e26b28df57",
+      "amount": "71.00",
+      "fee": "0.00",
+      "currency": "USD",
+      "details": {
+        "clientPaymentId": "HtMITxyTfeCcSdhLWsQT5qkGjpucotrF",
+        "notes": "ABC1",
+        "payeeName": "Brendan Zachery"
+      }
+    },
+    {
+      "journalId": "55241306",
+      "type": "PAYMENT",
+      "createdOn": "2019-04-01T22:25:08",
+      "entry": "CREDIT",
+      "sourceToken": "act-68adaba2-42f4-4f0f-8670-81c09f319a12",
+      "destinationToken": "usr-02d381d3-bf7e-43fe-9d00-02e26b28df57",
+      "amount": "51.00",
+      "fee": "0.00",
+      "currency": "USD",
+      "details": {
+        "clientPaymentId": "khPj2gCEvgLE3DbMgIP3FrCFrdQwBltv",
+        "notes": "ABC1",
+        "payeeName": "Brendan Zachery"
+      }
+    },
+    {
+      "journalId": "55241305",
+      "type": "PAYMENT",
+      "createdOn": "2019-04-01T22:25:08",
+      "entry": "CREDIT",
+      "sourceToken": "act-68adaba2-42f4-4f0f-8670-81c09f319a12",
+      "destinationToken": "usr-02d381d3-bf7e-43fe-9d00-02e26b28df57",
+      "amount": "44.00",
+      "fee": "0.00",
+      "currency": "USD",
+      "details": {
+        "clientPaymentId": "3pqvOo05oV0uhDl27f2Qqm73jYDWNwK8",
+        "notes": "ABC1",
+        "payeeName": "Brendan Zachery"
+      }
+    },
+    {
+      "journalId": "55241304",
+      "type": "TRANSFER_TO_BANK_ACCOUNT",
+      "createdOn": "2019-03-11T22:25:08",
+      "entry": "DEBIT",
+      "sourceToken": "usr-02d381d3-bf7e-43fe-9d00-02e26b28df57",
+      "destinationToken": "trm-070124d6-778a-4886-95d9-c2e179533a42",
+      "amount": "60.00",
+      "fee": "2.00",
+      "currency": "USD",
+      "details": {
+        "payeeName": "Brendan Zachery",
+        "branchId": "021000021",
+        "bankAccountId": "********5888",
+        "bankAccountPurpose": "SAVINGS"
+      }
+    },
+    {
+      "journalId": "55241303",
+      "type": "TRANSFER_TO_BANK_ACCOUNT",
+      "createdOn": "2019-03-11T22:25:08",
+      "entry": "DEBIT",
+      "sourceToken": "usr-02d381d3-bf7e-43fe-9d00-02e26b28df57",
+      "destinationToken": "trm-070124d6-778a-4886-95d9-c2e179533a42",
+      "amount": "86.00",
+      "fee": "2.00",
+      "currency": "USD",
+      "details": {
+        "payeeName": "Brendan Zachery",
+        "branchId": "021000021",
+        "bankAccountId": "********5888",
+        "bankAccountPurpose": "SAVINGS"
+      }
+    },
+    {
+      "journalId": "55241302",
+      "type": "TRANSFER_TO_BANK_ACCOUNT",
+      "createdOn": "2019-03-11T22:25:08",
+      "entry": "DEBIT",
+      "sourceToken": "usr-02d381d3-bf7e-43fe-9d00-02e26b28df57",
+      "destinationToken": "trm-070124d6-778a-4886-95d9-c2e179533a42",
+      "amount": "74.00",
+      "fee": "2.00",
+      "currency": "USD",
+      "details": {
+        "payeeName": "Brendan Zachery",
+        "branchId": "021000021",
+        "bankAccountId": "********5888",
+        "bankAccountPurpose": "SAVINGS"
+      }
+    },
+    {
+      "journalId": "55241301",
+      "type": "PAYMENT",
+      "createdOn": "2019-03-11T22:25:08",
+      "entry": "CREDIT",
+      "sourceToken": "act-68adaba2-42f4-4f0f-8670-81c09f319a12",
+      "destinationToken": "usr-02d381d3-bf7e-43fe-9d00-02e26b28df57",
+      "amount": "27.00",
+      "fee": "0.00",
+      "currency": "USD",
+      "details": {
+        "clientPaymentId": "E1PCxrtc6o3UUGck3wGBWIevYgaMcIrR",
+        "notes": "ABC1",
+        "payeeName": "Brendan Zachery"
+      }
+    },
+    {
+      "journalId": "55241300",
+      "type": "PAYMENT",
+      "createdOn": "2019-03-05T22:25:08",
+      "entry": "CREDIT",
+      "sourceToken": "act-68adaba2-42f4-4f0f-8670-81c09f319a12",
+      "destinationToken": "usr-02d381d3-bf7e-43fe-9d00-02e26b28df57",
+      "amount": "33.00",
+      "fee": "0.00",
+      "currency": "USD",
+      "details": {
+        "clientPaymentId": "gyHQFLHOTH540eDlysJsSVPOJdSOSHRl",
+        "notes": "ABC1",
+        "payeeName": "Brendan Zachery"
+      }
+    }
+  ],
+  "links": [
+    {
+      "params": {
+        "rel": "self"
+      },
+      "href": "https://qamaster-hyperwallet.aws.paylution.net/rest/v3/users/usr-02d381d3-bf7e-43fe-9d00-02e26b28df57/receipts?offset=20&limit=10&sortBy=-createdOn&createdAfter=2018-06-10T13%3A29%3A49"
+    },
+    {
+      "params": {
+        "rel": "next"
+      },
+      "href": "https://qamaster-hyperwallet.aws.paylution.net/rest/v3/users/usr-02d381d3-bf7e-43fe-9d00-02e26b28df57/receipts?offset=30&limit=10&sortBy=-createdOn&createdAfter=2018-06-10T13%3A29%3A49"
+    },
+    {
+      "params": {
+        "rel": "previous"
+      },
+      "href": "https://qamaster-hyperwallet.aws.paylution.net/rest/v3/users/usr-02d381d3-bf7e-43fe-9d00-02e26b28df57/receipts?offset=10&limit=10&sortBy=-createdOn&createdAfter=2018-06-10T13%3A29%3A49"
+    },
+    {
+      "params": {
+        "rel": "first"
+      },
+      "href": "https://qamaster-hyperwallet.aws.paylution.net/rest/v3/users/usr-02d381d3-bf7e-43fe-9d00-02e26b28df57/receipts?offset=0&limit=10&sortBy=-createdOn&createdAfter=2018-06-10T13%3A29%3A49"
+    },
+    {
+      "params": {
+        "rel": "last"
+      },
+      "href": "https://qamaster-hyperwallet.aws.paylution.net/rest/v3/users/usr-02d381d3-bf7e-43fe-9d00-02e26b28df57/receipts?offset=40&limit=10&sortBy=-createdOn&createdAfter=2018-06-10T13%3A29%3A49"
+    }
+  ]
+}

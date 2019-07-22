@@ -1,0 +1,38 @@
+{
+  "data": {
+    "countries": {
+      "nodes": [
+        {
+          "code": "US",
+          "name": "United States",
+          "currencies": {
+            "nodes": [
+              {
+                "code": "USD",
+                "name": "United States Dollar",
+                "transferMethodTypes": {
+                  "nodes": [
+                    {
+                      "code": "BANK_ACCOUNT",
+                      "name": "Bank Account",
+                      "processingTimes": {
+                        "nodes": [
+                          {
+                            "value": "1-2 Business days",
+                            "country": "US",
+                            "currency": "USD",
+                            "transferMethodType": "BANK_ACCOUNT"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Primary -->
+    <color name="colorPrimaryDark">#007F9F</color> <!-- N1 Hovers/Progress -->
+    <color name="colorPrimary">#00AFD0</color> <!-- N2 Brand Primary Color  -->
+    <color name="colorPrimaryLight">#60E1FF</color>  <!-- N3 Action  -->
+    <color name="colorPrimaryAccent">#E1F6FA</color> <!-- N3 Highlight  -->
+
+    <!-- Secondary Colors -->
+    <color name="colorSecondaryDark">#666666</color>
+    <color name="colorSecondary">#C4C4C4</color>
+    <color name="colorSecondaryLight">#E0E0E0</color>
+    <color name="colorSecondaryAccent">#EFEFF4</color>
+    <color name="colorButtonDisabled">#DBDBDB</color>
+    <color name="colorButtonTextDisabled">#ACACAC</color>
+    <color name="colorInputFormBackground">#F7F7F7</color>
+
+    <!-- Regular Colors -->
+    <color name="regularColorPrimary">#FFFFFF</color>
+    <color name="regularColorSecondary">#000000</color>
+
+    <color name="colorAccent">#DB4437</color>
+
+    <!-- Icon decoration color -->
+    <color name="fontIconBackground">#E5F7FA</color>
+    <color name="iconCircleWhite">#737373</color>
+</resources>
+

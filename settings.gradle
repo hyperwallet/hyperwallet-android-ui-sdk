@@ -1,1 +1,1 @@
-include ':ui'
+include ':transfermethodui', ':receiptui', ':commonui', ':receiptrepository', ':userrepository', ':transfermethodrepository', ':commonrepository'
