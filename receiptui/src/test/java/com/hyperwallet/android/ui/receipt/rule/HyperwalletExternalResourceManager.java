@@ -1,4 +1,4 @@
-package com.hyperwallet.android.ui.transfermethod.rule;
+package com.hyperwallet.android.ui.receipt.rule;
 
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
