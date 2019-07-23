@@ -62,6 +62,14 @@ public class CreateTransferFragment extends Fragment {
     }
 
 
+    void retry() {
+        if (mCreateTransferViewModel.isInitialized()) {
+            mCreateTransferViewModel.createTransfer(mTransferAmount.getText().toString(), "some notes");
+        } else {
+            mCreateTransferViewModel.retryInitialization();
+        }
+    }
+
     private void registerTransferDestinationObserver(@NonNull final View view) {
         mTransferDestinationIcon = view.findViewById(R.id.transfer_destination_icon);
         mTransferDestinationTitle = view.findViewById(R.id.transfer_destination_title);

@@ -32,6 +32,8 @@ public class CreateTransferViewModel extends ViewModel {
     private MutableLiveData<Boolean> mTransferAllAvailableFunds = new MutableLiveData<>();
     private MutableLiveData<Transfer> mQuoteAvailableFunds = new MutableLiveData<>();
     private MutableLiveData<Event<Transfer>> mDetailNavigation = new MutableLiveData<>();
+    private MutableLiveData<Event<HyperwalletErrors>> mTransferInitializationErrors = new MutableLiveData<>();
+    private MutableLiveData<Event<HyperwalletErrors>> mCreateTransferErrors = new MutableLiveData<>();
     private String mSourceToken;
 
 
@@ -52,10 +54,12 @@ public class CreateTransferViewModel extends ViewModel {
 
     public void createTransfer(@Nullable final String amount, @Nullable final String notes) {
         Transfer transfer = new Transfer.Builder()
-                .clientTransferID("mbl-"+UUID.randomUUID().toString())
+                .clientTransferID("mbl-" + UUID.randomUUID().toString())
                 .sourceToken(mSourceToken)
-                .destinationToken(mTransferDestination.getValue().getField(HyperwalletTransferMethod.TransferMethodFields.TOKEN))
-                .destinationCurrency(mTransferDestination.getValue().getField(HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_CURRENCY))
+                .destinationToken(
+                        mTransferDestination.getValue().getField(HyperwalletTransferMethod.TransferMethodFields.TOKEN))
+                .destinationCurrency(mTransferDestination.getValue().getField(
+                        HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_CURRENCY))
                 .destinationAmount(amount)
                 .notes(notes)
                 .build();
@@ -67,7 +71,7 @@ public class CreateTransferViewModel extends ViewModel {
 
             @Override
             public void onError(HyperwalletErrors errors) {
-                System.out.println("errors!!!");
+                mCreateTransferErrors.postValue(new Event<>(errors));
             }
         });
     }
@@ -75,10 +79,42 @@ public class CreateTransferViewModel extends ViewModel {
 
     //todo - it will be used when user selects another transfer destination
     public void setTransferDestination(@NonNull final HyperwalletTransferMethod transferDestination) {
+        mTransferDestination.postValue(transferDestination);
         if (TextUtils.isEmpty(mSourceToken)) {
             quoteTransferAvailableFunds(transferDestination);
         } else {
             quoteTransferAvailableFunds(mSourceToken, transferDestination);
+        }
+    }
+
+    public void retry() {
+        if (shouldRetryInitialization()) {
+            retryInitialization();
+        } else {
+            createTransfer("2300", "notes");
+        }
+    }
+
+    private boolean shouldRetryInitialization() {
+        return TextUtils.isEmpty(mSourceToken) || mTransferDestination.getValue() == null
+                || mQuoteAvailableFunds.getValue() == null
+                || !(isQuoteAvailableFundsUptoDate());
+
+    }
+
+    private boolean isQuoteAvailableFundsUptoDate() {
+        return mQuoteAvailableFunds.getValue().getSourceToken().equals(mSourceToken)
+                && mQuoteAvailableFunds.getValue().getDestinationToken().equals(
+                mTransferDestination.getValue().getField(HyperwalletTransferMethod.TransferMethodFields.TOKEN));
+    }
+
+    private void retryInitialization() {
+        if (TextUtils.isEmpty(mSourceToken)) {
+            loadTransferSource();
+        } else if (mTransferDestination.getValue() == null) {
+            loadTransferDestination(mSourceToken);
+        } else {
+            quoteTransferAvailableFunds(mSourceToken, mTransferDestination.getValue());
         }
     }
 
@@ -103,6 +139,15 @@ public class CreateTransferViewModel extends ViewModel {
     }
 
 
+    public MutableLiveData<Event<HyperwalletErrors>> getCreateTransferErrors() {
+        return mCreateTransferErrors;
+    }
+
+    public MutableLiveData<Event<HyperwalletErrors>> getTransferInitializationErrors() {
+        return mTransferInitializationErrors;
+    }
+
+
     public LiveData<Event<Transfer>> getDetailNavigation() {
         return mDetailNavigation;
     }
@@ -118,7 +163,7 @@ public class CreateTransferViewModel extends ViewModel {
 
             @Override
             public void onFailure(HyperwalletException exception) {
-
+                mTransferInitializationErrors.postValue(new Event<>(exception.getHyperwalletErrors()));
             }
 
             @Override
@@ -149,7 +194,7 @@ public class CreateTransferViewModel extends ViewModel {
 
                     @Override
                     public void onFailure(HyperwalletException exception) {
-
+                        mTransferInitializationErrors.postValue(new Event<>(exception.getHyperwalletErrors()));
                     }
 
                     @Override
@@ -171,7 +216,7 @@ public class CreateTransferViewModel extends ViewModel {
 
             @Override
             public void onFailure(HyperwalletException exception) {
-
+                mTransferInitializationErrors.postValue(new Event<>(exception.getHyperwalletErrors()));
             }
 
             @Override
@@ -186,10 +231,11 @@ public class CreateTransferViewModel extends ViewModel {
             @NonNull final HyperwalletTransferMethod transferMethod) {
 
         Transfer transfer = new Transfer.Builder()
-                .clientTransferID("mbl-"+UUID.randomUUID().toString())
+                .clientTransferID("mbl-" + UUID.randomUUID().toString())
                 .sourceToken(sourceToken)
                 .destinationToken(transferMethod.getField(HyperwalletTransferMethod.TransferMethodFields.TOKEN))
-                .destinationCurrency(transferMethod.getField(HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_CURRENCY))
+                .destinationCurrency(transferMethod.getField(
+                        HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_CURRENCY))
                 .build();
 
 
@@ -201,7 +247,7 @@ public class CreateTransferViewModel extends ViewModel {
 
             @Override
             public void onError(HyperwalletErrors errors) {
-                System.out.println("errors!!!");
+                mTransferInitializationErrors.postValue(new Event<>(errors));
             }
         });
     }
