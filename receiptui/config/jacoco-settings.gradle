@@ -21,6 +21,7 @@ android {
 }
 
 def fileFilter = ['**/BuildConfig.*',
+                  '**/com/hyperwallet/android/ui/receipt/HyperwalletReceiptUi.*',
                   '**/com/hyperwallet/android/ui/receipt/view/*.*',
                   '**/com/hyperwallet/android/ui/receipt/viewmodel/*.*'
 ]
