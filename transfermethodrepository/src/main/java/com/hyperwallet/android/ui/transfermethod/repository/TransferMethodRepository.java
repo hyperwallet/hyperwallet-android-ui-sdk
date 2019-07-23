@@ -19,7 +19,7 @@ package com.hyperwallet.android.ui.transfermethod.repository;
 import androidx.annotation.NonNull;
 
 import com.hyperwallet.android.model.HyperwalletErrors;
-import com.hyperwallet.android.model.HyperwalletStatusTransition;
+import com.hyperwallet.android.model.StatusTransition;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 
 import java.util.List;
@@ -87,7 +87,7 @@ public interface TransferMethodRepository {
      */
     interface DeactivateTransferMethodCallback {
 
-        void onTransferMethodDeactivated(final @NonNull HyperwalletStatusTransition statusTransition);
+        void onTransferMethodDeactivated(final @NonNull StatusTransition statusTransition);
 
         void onError(HyperwalletErrors errors);
     }
