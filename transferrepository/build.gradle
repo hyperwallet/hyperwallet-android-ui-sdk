@@ -5,11 +5,8 @@ project.ext {
 }
 apply from: "$rootProject.projectDir/publish.gradle"
 
-
 dependencies {
 
-    implementation "androidx.legacy:legacy-support-v4:$legacySupportV4Version"
-    implementation "androidx.paging:paging-runtime:$pagingRuntimeVersion"
     api project(':commonrepository')
 
     testImplementation "org.robolectric:robolectric:$robolectricVersion"
