@@ -32,8 +32,9 @@ public class CreateTransferActivity extends AppCompatActivity implements OnNetwo
 
         TransferRepository transferRepository = TransferRepositoryFactory.getInstance().getTransferRepository();
         CreateTransferViewModel.CreateTransferViewModelFactory factory =
-                new CreateTransferViewModel.CreateTransferViewModelFactory(null, transferRepository);
+                new CreateTransferViewModel.CreateTransferViewModelFactory(transferRepository);
         mCreateTransferViewModel = ViewModelProviders.of(this, factory).get(CreateTransferViewModel.class);
+        registerObservers();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

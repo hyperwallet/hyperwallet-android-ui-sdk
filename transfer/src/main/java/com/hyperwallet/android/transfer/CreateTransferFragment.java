@@ -5,6 +5,7 @@ import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -15,8 +16,10 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.transfer.Transfer;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
+import com.hyperwallet.android.ui.common.viewmodel.Event;
 
 import java.util.Locale;
 
@@ -30,6 +33,7 @@ public class CreateTransferFragment extends Fragment {
     private TextView mAvailableFunds;
     private EditText mTransferAmount;
     private CheckBox mTransferAllFunds;
+    private Button mNext;
 
 
     public static CreateTransferFragment newInstance() {
@@ -58,13 +62,19 @@ public class CreateTransferFragment extends Fragment {
         registerTransferDestinationObserver(view);
         registerAvailableFundsObserver(view);
         registerTransferAmountObserver(view);
-
+        mNext = view.findViewById(R.id.btn_next);
+        mNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCreateTransferViewModel.createTransfer(mTransferAmount.getText().toString(), "notes here");
+            }
+        });
     }
 
 
     void retry() {
         if (mCreateTransferViewModel.isInitialized()) {
-            mCreateTransferViewModel.createTransfer(mTransferAmount.getText().toString(), "some notes");
+            mCreateTransferViewModel.retryCrateTransfer();
         } else {
             mCreateTransferViewModel.retryInitialization();
         }
@@ -137,6 +147,5 @@ public class CreateTransferFragment extends Fragment {
             }
         });
     }
-
 
 }

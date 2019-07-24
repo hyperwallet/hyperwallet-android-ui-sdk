@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.exception.HyperwalletException;
 import com.hyperwallet.android.listener.HyperwalletListener;
+import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.HyperwalletStatusTransition;
 import com.hyperwallet.android.model.paging.HyperwalletPageList;
@@ -32,10 +33,17 @@ public class CreateTransferViewModel extends ViewModel {
     private MutableLiveData<Boolean> mTransferAllAvailableFunds = new MutableLiveData<>();
     private MutableLiveData<Transfer> mQuoteAvailableFunds = new MutableLiveData<>();
     private MutableLiveData<Event<Transfer>> mDetailNavigation = new MutableLiveData<>();
-    private MutableLiveData<Event<HyperwalletErrors>> mTransferInitializationErrors = new MutableLiveData<>();
-    private MutableLiveData<Event<HyperwalletErrors>> mCreateTransferErrors = new MutableLiveData<>();
-    private String mSourceToken;
 
+    private MutableLiveData<Event<HyperwalletErrors>> mLoadTransferRequiredDataErrors = new MutableLiveData<>();
+    private MutableLiveData<Event<HyperwalletErrors>> mCreateTransferErrors = new MutableLiveData<>();
+
+    private MutableLiveData<Event<HyperwalletError>> mInvalidAmountError = new MutableLiveData<>();
+    private MutableLiveData<Event<HyperwalletError>> mInvalidDestinationError = new MutableLiveData<>();
+
+
+    private String mSourceToken;
+    private String mAmount;
+    private String mNotes;
 
     //todo pass in the user repository and transfer method repository
     public CreateTransferViewModel(@Nullable final String sourceToken,
@@ -53,6 +61,8 @@ public class CreateTransferViewModel extends ViewModel {
 
 
     public void createTransfer(@Nullable final String amount, @Nullable final String notes) {
+        mAmount = amount;
+        mNotes = notes;
         Transfer transfer = new Transfer.Builder()
                 .clientTransferID("mbl-" + UUID.randomUUID().toString())
                 .sourceToken(mSourceToken)
@@ -60,8 +70,8 @@ public class CreateTransferViewModel extends ViewModel {
                         mTransferDestination.getValue().getField(HyperwalletTransferMethod.TransferMethodFields.TOKEN))
                 .destinationCurrency(mTransferDestination.getValue().getField(
                         HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_CURRENCY))
-                .destinationAmount(amount)
-                .notes(notes)
+                .destinationAmount(mAmount)
+                .notes(mNotes)
                 .build();
         mTransferRepository.createTransfer(transfer, new TransferRepository.CreateTransferCallback() {
             @Override
@@ -71,7 +81,7 @@ public class CreateTransferViewModel extends ViewModel {
 
             @Override
             public void onError(HyperwalletErrors errors) {
-                mCreateTransferErrors.postValue(new Event<>(errors));
+                handleCreateTransferError(errors);
             }
         });
     }
@@ -87,28 +97,16 @@ public class CreateTransferViewModel extends ViewModel {
         }
     }
 
-    public void retry() {
-        if (shouldRetryInitialization()) {
-            retryInitialization();
-        } else {
-            createTransfer("2300", "notes");
-        }
-    }
-
-    private boolean shouldRetryInitialization() {
-        return TextUtils.isEmpty(mSourceToken) || mTransferDestination.getValue() == null
-                || mQuoteAvailableFunds.getValue() == null
-                || !(isQuoteAvailableFundsUptoDate());
+    //this could be private - we could expose a method called retry and make the decision in the viewmodel
+    public boolean hasTransferRequiredData() {
+        return TextUtils.isEmpty(mSourceToken) || mTransferDestination.getValue() == null //if we agree that we will create an empty transfer method as destination
+                || mQuoteAvailableFunds.getValue() == null //if we agree that we will create an empty transfer with zero amount
+                || !(isQuoteAvailableFundsUpToDate());
 
     }
 
-    private boolean isQuoteAvailableFundsUptoDate() {
-        return mQuoteAvailableFunds.getValue().getSourceToken().equals(mSourceToken)
-                && mQuoteAvailableFunds.getValue().getDestinationToken().equals(
-                mTransferDestination.getValue().getField(HyperwalletTransferMethod.TransferMethodFields.TOKEN));
-    }
-
-    private void retryInitialization() {
+    //this could be private - we could expose a method called retry and make the decision in the viewmodel
+    public void retryLoadTransferRequiredData() {
         if (TextUtils.isEmpty(mSourceToken)) {
             loadTransferSource();
         } else if (mTransferDestination.getValue() == null) {
@@ -116,6 +114,11 @@ public class CreateTransferViewModel extends ViewModel {
         } else {
             quoteTransferAvailableFunds(mSourceToken, mTransferDestination.getValue());
         }
+    }
+
+    //this could be private - we could expose a method called retry and make the decision in the viewmodel
+    public void retryCrateTransfer() {
+        createTransfer(mAmount, mNotes);
     }
 
 
@@ -143,8 +146,8 @@ public class CreateTransferViewModel extends ViewModel {
         return mCreateTransferErrors;
     }
 
-    public MutableLiveData<Event<HyperwalletErrors>> getTransferInitializationErrors() {
-        return mTransferInitializationErrors;
+    public MutableLiveData<Event<HyperwalletErrors>> getLoadTransferRequiredDataErrors() {
+        return mLoadTransferRequiredDataErrors;
     }
 
 
@@ -152,6 +155,12 @@ public class CreateTransferViewModel extends ViewModel {
         return mDetailNavigation;
     }
 
+
+    private boolean isQuoteAvailableFundsUpToDate() {
+        return mQuoteAvailableFunds.getValue().getSourceToken().equals(mSourceToken)
+                && mQuoteAvailableFunds.getValue().getDestinationToken().equals(
+                mTransferDestination.getValue().getField(HyperwalletTransferMethod.TransferMethodFields.TOKEN));
+    }
 
     private void loadTransferSource() {
         Hyperwallet.getDefault().getUser(new HyperwalletListener<HyperwalletUser>() {
@@ -163,7 +172,7 @@ public class CreateTransferViewModel extends ViewModel {
 
             @Override
             public void onFailure(HyperwalletException exception) {
-                mTransferInitializationErrors.postValue(new Event<>(exception.getHyperwalletErrors()));
+                mLoadTransferRequiredDataErrors.postValue(new Event<>(exception.getHyperwalletErrors()));
             }
 
             @Override
@@ -186,15 +195,21 @@ public class CreateTransferViewModel extends ViewModel {
                 new HyperwalletListener<HyperwalletPageList<HyperwalletTransferMethod>>() {
                     @Override
                     public void onSuccess(@Nullable HyperwalletPageList<HyperwalletTransferMethod> result) {
-                        //todo handle case where no transfer method is available
-                        HyperwalletTransferMethod transferMethod = result.getDataList().get(0);
-                        mTransferDestination.postValue(transferMethod);
-                        quoteTransferAvailableFunds(sourceToken, transferMethod);
+
+                        if (result == null || result.getDataList() == null || result.getDataList().isEmpty()) { //could not find transfer destination
+                            mTransferDestination.postValue(new HyperwalletTransferMethod());
+                            mQuoteAvailableFunds.postValue(new Transfer.Builder().build());
+                        } else {
+                            HyperwalletTransferMethod transferMethod = result.getDataList().get(0);
+                            mTransferDestination.postValue(transferMethod);
+                            quoteTransferAvailableFunds(sourceToken, transferMethod);
+                        }
+
                     }
 
                     @Override
                     public void onFailure(HyperwalletException exception) {
-                        mTransferInitializationErrors.postValue(new Event<>(exception.getHyperwalletErrors()));
+                        mLoadTransferRequiredDataErrors.postValue(new Event<>(exception.getHyperwalletErrors()));
                     }
 
                     @Override
@@ -216,7 +231,7 @@ public class CreateTransferViewModel extends ViewModel {
 
             @Override
             public void onFailure(HyperwalletException exception) {
-                mTransferInitializationErrors.postValue(new Event<>(exception.getHyperwalletErrors()));
+                mLoadTransferRequiredDataErrors.postValue(new Event<>(exception.getHyperwalletErrors()));
             }
 
             @Override
@@ -247,9 +262,25 @@ public class CreateTransferViewModel extends ViewModel {
 
             @Override
             public void onError(HyperwalletErrors errors) {
-                mTransferInitializationErrors.postValue(new Event<>(errors));
+                mLoadTransferRequiredDataErrors.postValue(new Event<>(errors));
             }
         });
+    }
+
+
+    private void handleCreateTransferError(@NonNull final HyperwalletErrors errors) {
+        if (errors.containsInputError()) {
+            HyperwalletError error = errors.getErrors().get(0);
+            if (error.getFieldName().equals("destinationAmount")) {
+                mInvalidAmountError.postValue(new Event<>(error));
+            } else if (error.getFieldName().equals("destinationToken")) {
+                mInvalidDestinationError.postValue(new Event<>(error));
+            } else {
+                mCreateTransferErrors.postValue(new Event<>(errors));
+            }
+        } else {
+            mCreateTransferErrors.postValue(new Event<>(errors));
+        }
     }
 
 
@@ -265,10 +296,18 @@ public class CreateTransferViewModel extends ViewModel {
             mSourceToken = sourceToken;
         }
 
+        public CreateTransferViewModelFactory(@NonNull final TransferRepository transferRepository) {
+            mTransferRepository = transferRepository;
+        }
+
         @NonNull
         @Override
         public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-            return (T) new CreateTransferViewModel(mSourceToken, mTransferRepository);
+            if (TextUtils.isEmpty(mSourceToken)) {
+                return (T) new CreateTransferViewModel(mTransferRepository);
+            } else {
+                return (T) new CreateTransferViewModel(mSourceToken, mTransferRepository);
+            }
         }
     }
 

@@ -36,5 +36,10 @@
         android:layout_toEndOf="@id/tv_transfer_all_funds"
         android:layout_below="@id/transfer_amount" />
 
+    <Button
+        android:id="@+id/btn_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
 
 </RelativeLayout>
