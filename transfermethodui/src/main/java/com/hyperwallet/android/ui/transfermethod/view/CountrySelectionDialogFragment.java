@@ -47,6 +47,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hyperwallet.android.ui.R;
+import com.hyperwallet.android.ui.common.view.ToolbarEventListener;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -6,8 +6,11 @@ project.ext {
 apply from: "$rootProject.projectDir/publish.gradle"
 
 dependencies {
+    implementation project(':commonui')
     implementation project(":transferrepository")
     implementation project(":transfermethodrepository")
+
+    implementation "androidx.constraintlayout:constraintlayout:$constraintlayoutVersion"
 
     testImplementation "org.robolectric:robolectric:$robolectricVersion"
     androidTestImplementation "androidx.test:rules:$testRulesVersion"
