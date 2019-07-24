@@ -17,7 +17,6 @@
  */
 package com.hyperwallet.android.ui.transfer.view;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -39,21 +38,10 @@ import com.hyperwallet.android.ui.transfer.R;
 import java.util.List;
 
 public class ListTransferDestinationActivity extends AppCompatActivity implements
-        CountrySelectionDialogFragment.CountrySelectionItemClickListener,
-        CurrencySelectionDialogFragment.CurrencySelectionItemClickListener,
-        SelectTransferMethodFragment.OnLoadTransferMethodConfigurationKeysNetworkErrorCallback,
-        SelectTransferMethodFragment.OnLoadCurrencyConfigurationNetworkErrorCallback,
-        SelectTransferMethodFragment.OnLoadTransferMethodTypeNetworkErrorCallback,
-        SelectTransferMethodFragment.OnLoadCountrySelectionNetworkErrorCallback,
-        SelectTransferMethodFragment.OnLoadCurrencySelectionNetworkErrorCallback,
+        ListTransferDestinationFragment.DestinationItemClickListener,
         OnNetworkErrorCallback {
 
     private static final String ARGUMENT_RETRY_ACTION = "ARGUMENT_RETRY_ACTION";
-    private static final short RETRY_LOAD_COUNTRY_SELECTION = 103;
-    private static final short RETRY_LOAD_CURRENCY_CONFIGURATION = 101;
-    private static final short RETRY_LOAD_CURRENCY_SELECTION = 104;
-    private static final short RETRY_LOAD_TRANSFER_METHOD_CONFIGURATION_KEYS = 100;
-    private static final short RETRY_LOAD_TRANSFER_METHOD_TYPES = 102;
     private static final String TAG = ListTransferDestinationActivity.class.getSimpleName();
 
     private short mRetryCode;
@@ -61,10 +49,10 @@ public class ListTransferDestinationActivity extends AppCompatActivity implement
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_select_transfer_method);
+        setContentView(R.layout.activity_list_transfer_destination);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.activity_select_transfer_method_title);
+        toolbar.setTitle(R.string.destination);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -115,51 +103,32 @@ public class ListTransferDestinationActivity extends AppCompatActivity implement
     private void initFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.add(R.id.select_transfer_method_fragment, fragment);
+        transaction.add(R.id.frame, fragment);
         transaction.commit();
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == AddTransferMethodActivity.REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                setResult(RESULT_OK);
-                finish();
-            }
-        }
-    }
-
-    @Override
-    public void onCountryItemClicked(String countryCode) {
+    public void selectTransferDestination(int position) {
         FragmentManager fragmentManager = getSupportFragmentManager();
-        SelectTransferMethodFragment selectTransferMethodFragment =
-                (SelectTransferMethodFragment) fragmentManager.findFragmentById(R.id.select_transfer_method_fragment);
-        selectTransferMethodFragment.showCountryCode(countryCode);
-        CountrySelectionDialogFragment countrySelectionDialogFragment =
-                (CountrySelectionDialogFragment) fragmentManager.findFragmentById(android.R.id.content);
-        countrySelectionDialogFragment.dismiss();
-        getSupportFragmentManager().popBackStack(CountrySelectionDialogFragment.TAG,
-                FragmentManager.POP_BACK_STACK_INCLUSIVE);
-    }
 
-    @Override
-    public void showErrorsLoadTransferMethodConfigurationKeys(@NonNull final List<HyperwalletError> errors) {
-        mRetryCode = RETRY_LOAD_TRANSFER_METHOD_CONFIGURATION_KEYS;
-        showError(errors);
+        ListTransferDestinationFragment countrySelectionDialogFragment =
+                (ListTransferDestinationFragment) fragmentManager.findFragmentById(android.R.id.content);
+
+
     }
 
     @Override
     public void retry() {
         ListTransferDestinationFragment fragment = getSelectTransferMethodFragment();
-        fragment.reloadCurrency();
+        //fragment.reloadTransferDestination();
     }
 
     private ListTransferDestinationFragment getSelectTransferMethodFragment() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         ListTransferDestinationFragment fragment = (ListTransferDestinationFragment)
-                fragmentManager.findFragmentById(R.id.select_transfer_method_fragment);
+                fragmentManager.findFragmentById(R.id.frame);
         if (fragment == null) {
-            fragment = SelectTransferMethodFragment.newInstance();
+            fragment = ListTransferDestinationFragment.newInstance();
         }
         return fragment;
     }

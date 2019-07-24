@@ -5,5 +5,15 @@
     <string name="cancel_button_label">Cancel</string>
     <string name="close_button_label">Close</string>
     <string name="try_again_button_label">Try again</string>
+    <string name="transfer_method_list_item_description">Ending on %s</string>
+    <string name="not_translated_in_braces">(not translated)</string>
+
+    <!-- title and font icon -->
+    <string name="bank_account">Bank Account</string>
+    <string name="bank_card">Debit Card</string>
+    <string name="wire_account">Wire Transfer</string>
+    <string name="paper_check">Paper Check</string>
+    <string name="prepaid_card">Prepaid Card</string>
+    <string name="paypal_account">PayPal Account</string>
 
 </resources>
