@@ -8,4 +8,8 @@ apply from: "$rootProject.projectDir/publish.gradle"
 dependencies {
     implementation project(":transferrepository")
     implementation project(":transfermethodrepository")
+
+    testImplementation "org.robolectric:robolectric:$robolectricVersion"
+    androidTestImplementation "androidx.test:rules:$testRulesVersion"
+
 }
