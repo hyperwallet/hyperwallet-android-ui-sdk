@@ -14,7 +14,7 @@ import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMe
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.BANK_CARD;
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.PAPER_CHECK;
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.PAYPAL_ACCOUNT;
-import static com.hyperwallet.android.ui.transfermethod.view.TransferMethodUtils.getTransferMethodDetail;
+import static com.hyperwallet.android.ui.common.util.TransferMethodUtils.getTransferMethodDetail;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -24,8 +24,8 @@ import com.hyperwallet.android.model.transfermethod.HyperwalletBankCard;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.model.transfermethod.PayPalAccount;
 import com.hyperwallet.android.ui.R;
+import com.hyperwallet.android.ui.common.util.TransferMethodUtils;
 import com.hyperwallet.android.ui.transfermethod.rule.HyperwalletExternalResourceManager;
-import com.hyperwallet.android.ui.transfermethod.view.TransferMethodUtils;
 
 import org.hamcrest.CoreMatchers;
 import org.json.JSONException;

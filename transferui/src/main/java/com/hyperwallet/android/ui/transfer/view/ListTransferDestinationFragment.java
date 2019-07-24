@@ -20,6 +20,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,41 +39,37 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.ui.common.view.ToolbarEventListener;
 import com.hyperwallet.android.ui.transfer.R;
 
-import java.util.TreeMap;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ListTransferDestinationFragment extends DialogFragment implements ToolbarEventListener {
 
     public static final String TAG = ListTransferDestinationFragment.class.getSimpleName();
     private static final String ARGUMENT_CURRENCY_NAME_CODE_MAP = "ARGUMENT_CURRENCY_NAME_CODE_MAP";
-    private static final String ARGUMENT_SEARCH_CURRENCY_NAME_QUERY = "ARGUMENT_SEARCH_CURRENCY_NAME_QUERY";
     private static final String ARGUMENT_SELECTED_CURRENCY_NAME = "ARGUMENT_SELECTED_CURRENCY_NAME";
-    private static final int MAX_NO_SEARCH_COUNT = 20;
 
     private ListTransferDestinationAdapter mAdapter;
+    private List<HyperwalletTransferMethod> mDestinations = new ArrayList<>(20);
     private DestinationItemClickListener mDestinationItemClickListener;
-    private String mSearchCurrencyNameQuery;
-    private String mSelectedCurrencyName;
+    private HyperwalletTransferMethod mSelectedDestination;
     private RecyclerView mRecyclerView;
 
-    public static ListTransferDestinationFragment newInstance(
-            @NonNull final TreeMap<String, String> currencyNameCodeMap,
-            @NonNull final String selectedCurrencyName) {
+    public static ListTransferDestinationFragment newInstance() {
 
-        ListTransferDestinationFragment currencySelectionDialogFragment = new ListTransferDestinationFragment();
-        currencySelectionDialogFragment.mCurrencyNameCodeMap = currencyNameCodeMap;
-        currencySelectionDialogFragment.mSelectedCurrencyName = selectedCurrencyName;
-        currencySelectionDialogFragment.mSearchCurrencyNameQuery = "";
+        ListTransferDestinationFragment listTransferDestinationDialogFragment = new ListTransferDestinationFragment();
 
         Bundle bundle = new Bundle();
-        bundle.putSerializable(ARGUMENT_CURRENCY_NAME_CODE_MAP, currencySelectionDialogFragment.mCurrencyNameCodeMap);
-        bundle.putString(ARGUMENT_SELECTED_CURRENCY_NAME, currencySelectionDialogFragment.mSelectedCurrencyName);
-        bundle.putString(ARGUMENT_SEARCH_CURRENCY_NAME_QUERY, currencySelectionDialogFragment.mSearchCurrencyNameQuery);
-        currencySelectionDialogFragment.setArguments(bundle);
+        bundle.putParcelableArrayList(ARGUMENT_CURRENCY_NAME_CODE_MAP,
+                (ArrayList<? extends Parcelable>) listTransferDestinationDialogFragment.mDestinations);
+        bundle.putParcelable(ARGUMENT_SELECTED_CURRENCY_NAME,
+                listTransferDestinationDialogFragment.mSelectedDestination);
+        listTransferDestinationDialogFragment.setArguments(bundle);
 
-        return currencySelectionDialogFragment;
+        return listTransferDestinationDialogFragment;
     }
 
     @Override
@@ -126,23 +123,24 @@ public class ListTransferDestinationFragment extends DialogFragment implements T
         super.onViewStateRestored(savedInstanceState);
 
         if (savedInstanceState != null) {
-            mSelectedCurrencyName = savedInstanceState.getString(ARGUMENT_SELECTED_CURRENCY_NAME);
-            mSearchCurrencyNameQuery = savedInstanceState.getString(ARGUMENT_SEARCH_CURRENCY_NAME_QUERY);
+            mDestinations = savedInstanceState.getParcelableArrayList(ARGUMENT_CURRENCY_NAME_CODE_MAP);
+            mSelectedDestination = savedInstanceState.getParcelable(ARGUMENT_SELECTED_CURRENCY_NAME);
+
         } else {
-            mSelectedCurrencyName = getArguments().getString(ARGUMENT_SELECTED_CURRENCY_NAME);
-            mSearchCurrencyNameQuery = getArguments().getString(ARGUMENT_SEARCH_CURRENCY_NAME_QUERY);
+            mDestinations = getArguments().getParcelableArrayList(ARGUMENT_CURRENCY_NAME_CODE_MAP);
+            mSelectedDestination = getArguments().getParcelable(ARGUMENT_SELECTED_CURRENCY_NAME);
         }
 
-        mAdapter = new ListTransferDestinationAdapter(mCurrencyNameCodeMap, mSelectedCurrencyName,
-                mDestinationItemClickListener, this);
+        mAdapter = new ListTransferDestinationAdapter(mDestinations, mSelectedDestination,
+                mDestinationItemClickListener);
         mRecyclerView.setAdapter(mAdapter);
     }
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putSerializable(ARGUMENT_CURRENCY_NAME_CODE_MAP, mCurrencyNameCodeMap);
-        outState.putString(ARGUMENT_SELECTED_CURRENCY_NAME, mSelectedCurrencyName);
-        outState.putString(ARGUMENT_SEARCH_CURRENCY_NAME_QUERY, mSearchCurrencyNameQuery);
+        outState.putParcelableArrayList(ARGUMENT_CURRENCY_NAME_CODE_MAP,
+                (ArrayList<? extends Parcelable>) mDestinations);
+        outState.putParcelable(ARGUMENT_SELECTED_CURRENCY_NAME, mSelectedDestination);
         super.onSaveInstanceState(outState);
     }
 
@@ -184,6 +182,6 @@ public class ListTransferDestinationFragment extends DialogFragment implements T
     }
 
     public interface DestinationItemClickListener {
-        void onDestinationItemClicked(int position);
+        void selectTransferDestination(int position);
     }
 }

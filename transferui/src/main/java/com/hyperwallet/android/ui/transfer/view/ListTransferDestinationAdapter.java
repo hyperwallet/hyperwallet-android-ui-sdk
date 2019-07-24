@@ -9,25 +9,24 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
-import com.hyperwallet.android.ui.common.view.ToolbarEventListener;
 import com.hyperwallet.android.ui.transfer.R;
 
 import java.util.List;
+import java.util.Objects;
 
 public class ListTransferDestinationAdapter extends RecyclerView.Adapter<DestinationViewHolder> implements
         ListTransferDestinationFragment.DestinationItemClickListener {
 
     private List<HyperwalletTransferMethod> mDestinations;
     private ListTransferDestinationFragment.DestinationItemClickListener mDestinationItemClickListener;
-    private String mSelectedCurrencyName;
-    private ToolbarEventListener mToolbarEventListener;
+    private HyperwalletTransferMethod mSelectedDestination;
 
-    ListTransferDestinationAdapter(List<String> mDestinations, final String selectedCurrencyName,
-            final ListTransferDestinationFragment.DestinationItemClickListener destinationItemClickListener,
-            final ToolbarEventListener toolbarEventListener) {
-        mSelectedCurrencyName = selectedCurrencyName;
+    ListTransferDestinationAdapter(@NonNull List<HyperwalletTransferMethod> destinations,
+            final HyperwalletTransferMethod selectedDestination,
+            final ListTransferDestinationFragment.DestinationItemClickListener destinationItemClickListener) {
+        mDestinations = destinations;
+        mSelectedDestination = selectedDestination;
         mDestinationItemClickListener = destinationItemClickListener;
-        mToolbarEventListener = toolbarEventListener;
     }
 
     @NonNull
@@ -42,8 +41,8 @@ public class ListTransferDestinationAdapter extends RecyclerView.Adapter<Destina
 
     @Override
     public void onBindViewHolder(@NonNull DestinationViewHolder holder, int position) {
-        String currencyName = mDestinations.get(position);
-        holder.bind(currencyName);
+        HyperwalletTransferMethod destination = mDestinations.get(position);
+        holder.bind(destination, Objects.equals(destination, mSelectedDestination));
     }
 
     @Override
@@ -57,7 +56,12 @@ public class ListTransferDestinationAdapter extends RecyclerView.Adapter<Destina
     }
 
     @Override
-    public void onDestinationItemClicked(int position) {
+    public void selectTransferDestination(int position) {
 
+    }
+
+    public void replaceData(List<HyperwalletTransferMethod> destinations) {
+        mDestinations.addAll(destinations);
+        notifyDataSetChanged();
     }
 }
