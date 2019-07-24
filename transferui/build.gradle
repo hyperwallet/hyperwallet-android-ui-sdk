@@ -1,0 +1,11 @@
+apply from: "$rootProject.projectDir/android-library.gradle"
+description = 'Hyperwallet Transfer UI SDK for Android to integrate with the Hyperwallet Platform'
+project.ext {
+    mavenName = 'Hyperwallet Android Transfer UI SDK'
+}
+apply from: "$rootProject.projectDir/publish.gradle"
+
+dependencies {
+    implementation project(":transferrepository")
+    implementation project(":transfermethodrepository")
+}

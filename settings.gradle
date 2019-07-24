@@ -1,1 +1,9 @@
-include ':transfermethodui', ':receiptui', ':commonui', ':receiptrepository', ':userrepository', ':transfermethodrepository', ':commonrepository'
+include ':commonui',
+        ':commonrepository',
+        ':receiptrepository',
+        ':receiptui',
+        ':transfermethodrepository',
+        ':transfermethodui',
+        ':transferrepository',
+        ':transferui',
+        ':userrepository'
