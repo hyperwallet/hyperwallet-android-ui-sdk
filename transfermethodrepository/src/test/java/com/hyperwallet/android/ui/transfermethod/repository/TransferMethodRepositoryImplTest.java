@@ -492,6 +492,90 @@ public class TransferMethodRepositoryImplTest {
     }
 
     @Test
+    public void testLoadLatestTransferMethod_returnsBankAccount() {
+        List<HyperwalletBankAccount> accounts = new ArrayList<HyperwalletBankAccount>() {{
+            add(new HyperwalletBankAccount
+                    .Builder("CA", "CAD", "3423423432")
+                    .build());
+            add(new HyperwalletBankAccount
+                    .Builder("US", "USD", "1231231222")
+                    .build());
+        }};
+
+        final HyperwalletPageList<HyperwalletBankAccount> pageList = new HyperwalletPageList<>(accounts);
+
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                HyperwalletListener listener = (HyperwalletListener) invocation.getArguments()[1];
+                listener.onSuccess(pageList);
+                return listener;
+            }
+        }).when(mHyperwallet).listTransferMethods((HyperwalletTransferMethodQueryParam) any(),
+                ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<HyperwalletTransferMethod>>>any());
+
+        // test
+        mTransferMethodRepository.loadLatestTransferMethod(mLoadTransferMethodCallback);
+
+        verify(mLoadTransferMethodCallback).onTransferMethodLoaded(mBankAccountArgumentCaptor.capture());
+        verify(mLoadTransferMethodCallback, never()).onError(any(HyperwalletErrors.class));
+
+        HyperwalletBankAccount transferMethod = mBankAccountArgumentCaptor.getValue();
+        assertThat(transferMethod, is(notNullValue()));
+        assertThat(transferMethod.getField(TRANSFER_METHOD_COUNTRY), is("CA"));
+        assertThat(transferMethod.getField(TRANSFER_METHOD_CURRENCY), is("CAD"));
+        assertThat(transferMethod.getField(BANK_ACCOUNT_ID), is("3423423432"));
+    }
+
+    @Test
+    public void testLoadLatestTransferMethod_returnsNoAccounts() {
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                HyperwalletListener listener = (HyperwalletListener) invocation.getArguments()[1];
+                listener.onSuccess(null);
+                return listener;
+            }
+        }).when(mHyperwallet).listTransferMethods((HyperwalletTransferMethodQueryParam) any(),
+                ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<HyperwalletTransferMethod>>>any());
+
+        // test
+        mTransferMethodRepository.loadLatestTransferMethod(mLoadTransferMethodCallback);
+
+        verify(mLoadTransferMethodCallback).onTransferMethodLoaded(mBankAccountArgumentCaptor.capture());
+        verify(mLoadTransferMethodCallback, never()).onError(any(HyperwalletErrors.class));
+
+        HyperwalletBankAccount transferMethod = mBankAccountArgumentCaptor.getValue();
+        assertThat(transferMethod, is(nullValue()));
+    }
+
+    @Test
+    public void testLoadLatestTransferMethod_withError() {
+        final HyperwalletError error = new HyperwalletError("test message", "TEST_CODE");
+
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                HyperwalletListener listener = (HyperwalletListener) invocation.getArguments()[1];
+                List<HyperwalletError> errorList = new ArrayList<>();
+                errorList.add(error);
+                HyperwalletErrors errors = new HyperwalletErrors(errorList);
+                listener.onFailure(new HyperwalletException(errors));
+                return listener;
+            }
+        }).when(mHyperwallet).listTransferMethods((HyperwalletTransferMethodQueryParam) any(),
+                ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<HyperwalletTransferMethod>>>any());
+
+        // test
+        mTransferMethodRepository.loadLatestTransferMethod(mLoadTransferMethodCallback);
+
+        verify(mLoadTransferMethodCallback, never()).onTransferMethodLoaded(any(HyperwalletTransferMethod.class));
+        verify(mLoadTransferMethodCallback).onError(mErrorsArgumentCaptor.capture());
+
+        assertThat(mErrorsArgumentCaptor.getValue().getErrors(), hasItem(error));
+    }
+
+    @Test
     public void testCreateTransferMethod_payPalAccountWithSuccess() {
         // prepare
         final PayPalAccount returnedPayPalAccount = new PayPalAccount.Builder()

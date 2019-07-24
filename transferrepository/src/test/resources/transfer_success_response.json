@@ -1,0 +1,23 @@
+{
+  "token": "trf-token",
+  "status": "QUOTED",
+  "createdOn": "2019-07-08T08:07:46",
+  "clientTransferId": "007634427520425",
+  "sourceToken": "usr-token",
+  "sourceAmount": "27.20",
+  "sourceCurrency": "USD",
+  "destinationToken": "trm-token",
+  "destinationAmount": "25.20",
+  "destinationFeeAmount": "2.00",
+  "destinationCurrency": "USD",
+  "notes": "Partial Balance",
+  "memo": "TransferClientId56387",
+  "links": [
+    {
+      "params": {
+        "rel": "self"
+      },
+      "href": "https://localhost/rest/v3/transfers/trf-token"
+    }
+  ]
+}
