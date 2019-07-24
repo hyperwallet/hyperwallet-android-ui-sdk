@@ -36,6 +36,7 @@ public class CreateTransferFragment extends Fragment {
     private Button mNext;
 
 
+
     public static CreateTransferFragment newInstance() {
         return new CreateTransferFragment();
     }
@@ -73,11 +74,7 @@ public class CreateTransferFragment extends Fragment {
 
 
     void retry() {
-        if (mCreateTransferViewModel.isInitialized()) {
-            mCreateTransferViewModel.retryCrateTransfer();
-        } else {
-            mCreateTransferViewModel.retryInitialization();
-        }
+        mCreateTransferViewModel.retry(); //we let the view model decide what needs to be retried based on its state
     }
 
     private void registerTransferDestinationObserver(@NonNull final View view) {

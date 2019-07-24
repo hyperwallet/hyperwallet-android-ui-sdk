@@ -73,7 +73,7 @@ public class CreateTransferActivity extends AppCompatActivity implements OnNetwo
 
 
     private void registerObservers() {
-        mCreateTransferViewModel.getTransferInitializationErrors().observe(this,
+        mCreateTransferViewModel.getLoadTransferRequiredDataErrors().observe(this,
                 new Observer<Event<HyperwalletErrors>>() {
                     @Override
                     public void onChanged(Event<HyperwalletErrors> hyperwalletErrorsEvent) {
