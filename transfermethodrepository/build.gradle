@@ -7,6 +7,8 @@ apply from: "$rootProject.projectDir/publish.gradle"
 
 dependencies {
     api project(':commonrepository')
+
     testImplementation "org.robolectric:robolectric:$robolectricVersion"
     testImplementation "com.squareup.okhttp3:mockwebserver:$mockWebServerVersion"
+    testImplementation project(':testutils')
 }
