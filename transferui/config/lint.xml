@@ -4,4 +4,7 @@
     <issue id="RtlEnabled">
         <ignore regexp="(AndroidManifest).xml"/>
     </issue>
+    <issue id="Autofill">
+        <ignore regexp="(fragment_create_transfer).xml"/>
+    </issue>
 </lint>

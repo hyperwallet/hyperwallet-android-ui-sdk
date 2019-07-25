@@ -18,9 +18,9 @@ package com.hyperwallet.android.ui.transfermethod.view;
 
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_COUNTRY;
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TYPE;
-import static com.hyperwallet.android.ui.transfermethod.view.TransferMethodUtils.getStringFontIcon;
-import static com.hyperwallet.android.ui.transfermethod.view.TransferMethodUtils.getStringResourceByName;
-import static com.hyperwallet.android.ui.transfermethod.view.TransferMethodUtils.getTransferMethodDetail;
+import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getStringFontIcon;
+import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getStringResourceByName;
+import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getTransferMethodDetail;
 
 import android.content.Context;
 import android.content.Intent;

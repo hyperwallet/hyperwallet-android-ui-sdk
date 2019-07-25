@@ -8,4 +8,9 @@ apply from: "$rootProject.projectDir/publish.gradle"
 dependencies {
     implementation project(":transferrepository")
     implementation project(":transfermethodrepository")
+    implementation project(":userrepository")
+    implementation project(":commonui")
+    implementation "androidx.constraintlayout:constraintlayout:$constraintlayoutVersion"
+    implementation "androidx.legacy:legacy-support-v4:$legacySupportV4Version"
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleExtensionsVersion"
 }
