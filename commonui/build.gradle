@@ -9,4 +9,11 @@ dependencies {
     implementation project(':commonrepository')
 
     testImplementation "org.robolectric:robolectric:$robolectricVersion"
+
+    androidTestImplementation "androidx.test:rules:$testRulesVersion"
+    androidTestImplementation "com.squareup.okhttp3:mockwebserver:$mockServerVersion"
+    androidTestImplementation "com.squareup.leakcanary:leakcanary-android-instrumentation:$leakcanaryVersion"
+    androidTestImplementation "com.squareup.leakcanary:leakcanary-support-fragment:$leakcanaryVersion"
+    androidTestImplementation "com.squareup.leakcanary:leakcanary-android-instrumentation:$leakcanaryVersion"
+    androidTestImplementation "com.squareup.leakcanary:leakcanary-support-fragment:$leakcanaryVersion"
 }

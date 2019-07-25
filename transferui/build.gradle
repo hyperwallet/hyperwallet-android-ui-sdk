@@ -15,4 +15,7 @@ dependencies {
 
     testImplementation "org.robolectric:robolectric:$robolectricVersion"
     androidTestImplementation "androidx.test:rules:$testRulesVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:$espressoVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-intents:$espressoVersion"
+    androidTestImplementation "com.squareup.okhttp3:mockwebserver:$mockServerVersion"
 }

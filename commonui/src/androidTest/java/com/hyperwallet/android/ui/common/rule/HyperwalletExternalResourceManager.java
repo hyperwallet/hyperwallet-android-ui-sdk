@@ -1,4 +1,4 @@
-package com.hyperwallet.android.ui.transfer.rule;
+package com.hyperwallet.android.ui.common.rule;
 
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
@@ -10,7 +10,6 @@ import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -36,6 +35,7 @@ public class HyperwalletExternalResourceManager extends TestWatcher {
     }
 
     private String getContent(final String resourceName) {
+
         URL resource = classLoader.getResource(resourceName);
         InputStream inputStream = null;
         Writer writer = new StringWriter();
@@ -43,7 +43,7 @@ public class HyperwalletExternalResourceManager extends TestWatcher {
         if (resource != null) {
             try {
                 inputStream = resource.openStream();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
+                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
                 String line = reader.readLine();
                 while (line != null) {
                     writer.write(line);
