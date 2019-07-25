@@ -40,7 +40,6 @@ import com.hyperwallet.android.ui.transfer.viewmodel.ListTransferDestinationView
 public class ListTransferDestinationActivity extends AppCompatActivity {
 
     public static final String ARGUMENT_SELECTED_DESTINATION = "argument_selected_destination";
-    public static final int REQUEST_CODE = 100;
     private static final String TAG = ListTransferDestinationActivity.class.getSimpleName();
 
     private ListTransferDestinationViewModel mListTransferDestinationViewModel;

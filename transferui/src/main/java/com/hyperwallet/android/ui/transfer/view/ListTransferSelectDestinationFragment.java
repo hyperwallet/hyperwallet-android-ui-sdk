@@ -103,7 +103,7 @@ public class ListTransferSelectDestinationFragment extends DialogFragment implem
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Toolbar toolbar = view.findViewById(R.id.currency_selection_toolbar);
+        Toolbar toolbar = view.findViewById(R.id.destination_selection_toolbar);
         toolbar.setTitle(R.string.destination);
         toolbar.setNavigationIcon(R.drawable.ic_close_14dp);
 
@@ -121,7 +121,7 @@ public class ListTransferSelectDestinationFragment extends DialogFragment implem
         });
 
         onView();
-        mRecyclerView = view.findViewById(R.id.currency_selection_list);
+        mRecyclerView = view.findViewById(R.id.destination_selection_list);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
