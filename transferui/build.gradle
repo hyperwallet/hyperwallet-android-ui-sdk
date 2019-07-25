@@ -11,8 +11,8 @@ dependencies {
     implementation project(":transfermethodrepository")
 
     implementation "androidx.constraintlayout:constraintlayout:$constraintlayoutVersion"
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleExtensionsVersion"
 
     testImplementation "org.robolectric:robolectric:$robolectricVersion"
     androidTestImplementation "androidx.test:rules:$testRulesVersion"
-
 }

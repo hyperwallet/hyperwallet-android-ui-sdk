@@ -36,12 +36,15 @@ import androidx.core.app.NavUtils;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.ui.common.view.ToolbarEventListener;
 import com.hyperwallet.android.ui.transfer.R;
+import com.hyperwallet.android.ui.transfer.viewmodel.ListTransferDestinationViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +60,7 @@ public class ListTransferDestinationFragment extends DialogFragment implements T
     private DestinationItemClickListener mDestinationItemClickListener;
     private HyperwalletTransferMethod mSelectedDestination;
     private RecyclerView mRecyclerView;
+    private ListTransferDestinationViewModel mListTransferDestinationViewModel;
 
     public static ListTransferDestinationFragment newInstance() {
 
@@ -70,6 +74,13 @@ public class ListTransferDestinationFragment extends DialogFragment implements T
         listTransferDestinationDialogFragment.setArguments(bundle);
 
         return listTransferDestinationDialogFragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable final Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mListTransferDestinationViewModel = ViewModelProviders.of(requireActivity()).get(
+                ListTransferDestinationViewModel.class);
     }
 
     @Override
@@ -116,6 +127,29 @@ public class ListTransferDestinationFragment extends DialogFragment implements T
         mRecyclerView = view.findViewById(R.id.currency_selection_list);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        registerObservers();
+    }
+
+    private void registerObservers() {
+        mListTransferDestinationViewModel.getTransferDestinationList().observe(getViewLifecycleOwner(),
+                new Observer<List<HyperwalletTransferMethod>>() {
+                    @Override
+                    public void onChanged(List<HyperwalletTransferMethod> destinations) {
+                        mAdapter.replaceData(destinations);
+                    }
+                });
+
+//        mReceiptViewModel.isLoadingData().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+//            @Override
+//            public void onChanged(Boolean loading) {
+//                if (loading) {
+//                    mProgressBar.setVisibility(View.VISIBLE);
+//                } else {
+//                    mProgressBar.setVisibility(View.GONE);
+//                }
+//            }
+//        });
     }
 
     @Override
