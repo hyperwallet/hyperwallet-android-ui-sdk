@@ -20,7 +20,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -42,35 +41,33 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
+import com.hyperwallet.android.ui.common.repository.Event;
 import com.hyperwallet.android.ui.common.view.ToolbarEventListener;
 import com.hyperwallet.android.ui.transfer.R;
 import com.hyperwallet.android.ui.transfer.viewmodel.ListTransferDestinationViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class ListTransferDestinationFragment extends DialogFragment implements ToolbarEventListener {
+public class ListTransferSelectDestinationFragment extends DialogFragment implements ToolbarEventListener,
+        SelectDestinationItemClickListener {
 
-    public static final String TAG = ListTransferDestinationFragment.class.getSimpleName();
-    private static final String ARGUMENT_CURRENCY_NAME_CODE_MAP = "ARGUMENT_CURRENCY_NAME_CODE_MAP";
-    private static final String ARGUMENT_SELECTED_CURRENCY_NAME = "ARGUMENT_SELECTED_CURRENCY_NAME";
+    public static final String TAG = ListTransferSelectDestinationFragment.class.getSimpleName();
+    private static final String ARGUMENT_SELECTED_TRANSFER_DESTINATION = "ARGUMENT_SELECTED_TRANSFER_DESTINATION";
 
     private ListTransferDestinationAdapter mAdapter;
-    private List<HyperwalletTransferMethod> mDestinations = new ArrayList<>(20);
-    private DestinationItemClickListener mDestinationItemClickListener;
+    private SelectDestinationItemClickListener mSelectDestinationItemClickListener;
     private HyperwalletTransferMethod mSelectedDestination;
     private RecyclerView mRecyclerView;
     private ListTransferDestinationViewModel mListTransferDestinationViewModel;
 
-    public static ListTransferDestinationFragment newInstance() {
+    public static ListTransferSelectDestinationFragment newInstance(HyperwalletTransferMethod selectedDestination) {
 
-        ListTransferDestinationFragment listTransferDestinationDialogFragment = new ListTransferDestinationFragment();
+        ListTransferSelectDestinationFragment
+                listTransferDestinationDialogFragment = new ListTransferSelectDestinationFragment();
 
         Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList(ARGUMENT_CURRENCY_NAME_CODE_MAP,
-                (ArrayList<? extends Parcelable>) listTransferDestinationDialogFragment.mDestinations);
-        bundle.putParcelable(ARGUMENT_SELECTED_CURRENCY_NAME,
-                listTransferDestinationDialogFragment.mSelectedDestination);
+        bundle.putParcelable(ARGUMENT_SELECTED_TRANSFER_DESTINATION,
+                selectedDestination);
         listTransferDestinationDialogFragment.setArguments(bundle);
 
         return listTransferDestinationDialogFragment;
@@ -87,11 +84,11 @@ public class ListTransferDestinationFragment extends DialogFragment implements T
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            mDestinationItemClickListener = (DestinationItemClickListener) context;
+            mSelectDestinationItemClickListener = (SelectDestinationItemClickListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(getActivity().toString()
                     + " must implement "
-                    + DestinationItemClickListener.class.getCanonicalName());
+                    + SelectDestinationItemClickListener.class.getCanonicalName());
         }
     }
 
@@ -139,17 +136,6 @@ public class ListTransferDestinationFragment extends DialogFragment implements T
                         mAdapter.replaceData(destinations);
                     }
                 });
-
-//        mReceiptViewModel.isLoadingData().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
-//            @Override
-//            public void onChanged(Boolean loading) {
-//                if (loading) {
-//                    mProgressBar.setVisibility(View.VISIBLE);
-//                } else {
-//                    mProgressBar.setVisibility(View.GONE);
-//                }
-//            }
-//        });
     }
 
     @Override
@@ -157,24 +143,19 @@ public class ListTransferDestinationFragment extends DialogFragment implements T
         super.onViewStateRestored(savedInstanceState);
 
         if (savedInstanceState != null) {
-            mDestinations = savedInstanceState.getParcelableArrayList(ARGUMENT_CURRENCY_NAME_CODE_MAP);
-            mSelectedDestination = savedInstanceState.getParcelable(ARGUMENT_SELECTED_CURRENCY_NAME);
-
+            mSelectedDestination = savedInstanceState.getParcelable(ARGUMENT_SELECTED_TRANSFER_DESTINATION);
         } else {
-            mDestinations = getArguments().getParcelableArrayList(ARGUMENT_CURRENCY_NAME_CODE_MAP);
-            mSelectedDestination = getArguments().getParcelable(ARGUMENT_SELECTED_CURRENCY_NAME);
+            mSelectedDestination = getArguments().getParcelable(ARGUMENT_SELECTED_TRANSFER_DESTINATION);
         }
 
-        mAdapter = new ListTransferDestinationAdapter(mDestinations, mSelectedDestination,
-                mDestinationItemClickListener);
+        mAdapter = new ListTransferDestinationAdapter(mSelectedDestination,
+                mSelectDestinationItemClickListener);
         mRecyclerView.setAdapter(mAdapter);
     }
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putParcelableArrayList(ARGUMENT_CURRENCY_NAME_CODE_MAP,
-                (ArrayList<? extends Parcelable>) mDestinations);
-        outState.putParcelable(ARGUMENT_SELECTED_CURRENCY_NAME, mSelectedDestination);
+        outState.putParcelable(ARGUMENT_SELECTED_TRANSFER_DESTINATION, mSelectedDestination);
         super.onSaveInstanceState(outState);
     }
 
@@ -215,7 +196,9 @@ public class ListTransferDestinationFragment extends DialogFragment implements T
         inputMethodManager.hideSoftInputFromWindow(focusedView.getWindowToken(), 0);
     }
 
-    public interface DestinationItemClickListener {
-        void selectTransferDestination(int position);
+    @Override
+    public void selectTransferDestination(int position) {
+        HyperwalletTransferMethod destination = mAdapter.getItem(position);
+        mListTransferDestinationViewModel.getTransferDestinationSection().setValue(new Event<>(destination));
     }
 }
