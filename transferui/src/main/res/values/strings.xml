@@ -14,4 +14,5 @@
     <string name="add_transfer_label">Add Account</string>
     <string name="add_transfer_description_1">An account hasn\'t been setup yet,</string>
     <string name="add_transfer_description_2">please add an account first.</string>
+    <string name="transfer_destination_selection_description">Transfer method selection</string>
 </resources>
