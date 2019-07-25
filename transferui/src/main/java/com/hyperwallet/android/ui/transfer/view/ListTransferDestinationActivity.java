@@ -62,7 +62,7 @@ public class ListTransferDestinationActivity extends AppCompatActivity {
         });
 
         if (savedInstanceState == null) {
-            initFragment(ListTransferSelectDestinationFragment.newInstance(
+            initFragment(ListTransferDestinationFragment.newInstance(
                     (HyperwalletTransferMethod) getIntent().getParcelableExtra(ARGUMENT_SELECTED_DESTINATION)));
         }
 
