@@ -2,6 +2,7 @@ package com.hyperwallet.android.ui.transfer;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
@@ -61,13 +62,13 @@ public class ListTransferDestinationTest {
     }
 
     @Test
-    public void testSelectTransferMethod_verifyTransferMethodsListEmptyProcessing() {
-//        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-//                .getResourceContent("user_response.json")).mock();
-//
+    public void testSelectTransferMethod_verifyTransferMethodsListProcessing() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_list_response.json")).mock();
+
         mActivityTestRule.launchActivity(null);
 
-//        onView(withId(R.id.select_transfer_method_currency_value)).check(matches(withText("USD")));
+        onView(withId(R.id.destination_selection_list)).check(matches(isDisplayed()));
     }
 
 }

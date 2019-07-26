@@ -103,22 +103,22 @@ public class ListTransferDestinationFragment extends DialogFragment implements T
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Toolbar toolbar = view.findViewById(R.id.destination_selection_toolbar);
-        toolbar.setTitle(R.string.destination);
-        toolbar.setNavigationIcon(R.drawable.ic_close_14dp);
-
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hideSoftKey(v);
-                onClose();
-                getFragmentManager().popBackStack(TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                dismiss();
-            }
-        });
+//        Toolbar toolbar = view.findViewById(R.id.destination_selection_toolbar);
+//        toolbar.setTitle(R.string.destination);
+//        toolbar.setNavigationIcon(R.drawable.ic_close_14dp);
+//
+//        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+//        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                hideSoftKey(v);
+//                onClose();
+//                getFragmentManager().popBackStack(TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+//                dismiss();
+//            }
+//        });
 
         onView();
         mRecyclerView = view.findViewById(R.id.destination_selection_list);
