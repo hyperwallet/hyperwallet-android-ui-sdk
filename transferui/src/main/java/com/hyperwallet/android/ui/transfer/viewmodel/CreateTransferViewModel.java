@@ -54,12 +54,21 @@ public class CreateTransferViewModel extends ViewModel {
     private final MutableLiveData<HyperwalletTransferMethod> mTransferDestination = new MutableLiveData<>();
     private final MutableLiveData<Boolean> mTransferAvailableFunds = new MutableLiveData<>();
     private final MutableLiveData<Boolean> mIsLoading = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> mIsCreateQuoteLoading = new MutableLiveData<>();
     private final MutableLiveData<Transfer> mQuoteAvailableFunds = new MutableLiveData<>();
+    private final MutableLiveData<Transfer> mQuoteTransfer = new MutableLiveData<>();
     private final MutableLiveData<String> mTransferAmount = new MutableLiveData<>();
+    private final MutableLiveData<String> mTransferNotes = new MutableLiveData<>();
 
+    // initialisation/loading error
     private Observer<Event<HyperwalletErrors>> mLoadErrorEventObserver;
     private final MutableLiveData<Event<HyperwalletErrors>> mLoadErrorEvent = new MutableLiveData<>();
     private final MutableLiveData<Event<HyperwalletErrors>> mLoadErrors = new MutableLiveData<>();
+
+    // create quote error
+    private Observer<Event<HyperwalletErrors>> mQuoteEventObserver;
+    private final MutableLiveData<Event<HyperwalletErrors>> mQuoteErrorEvent = new MutableLiveData<>();
+    private final MutableLiveData<Event<HyperwalletErrors>> mQuoteErrors = new MutableLiveData<>();
 
 
     /**
@@ -80,8 +89,11 @@ public class CreateTransferViewModel extends ViewModel {
         mTransferMethodRepository = transferMethodRepository;
         mUserRepository = userRepository;
 
-        createLoadErrorObserver();
+        // initialized
+        mTransferAvailableFunds.setValue(Boolean.FALSE);
         mIsLoading.postValue(Boolean.TRUE);
+        mIsCreateQuoteLoading.setValue(Boolean.FALSE);
+        createLoadErrorObserver();
         loadTransferDestination(sourceToken);
     }
 
@@ -101,9 +113,13 @@ public class CreateTransferViewModel extends ViewModel {
         mTransferMethodRepository = transferMethodRepository;
         mUserRepository = userRepository;
 
-        createLoadErrorObserver();
+        // initialized
+        mTransferAvailableFunds.setValue(Boolean.FALSE);
         mIsLoading.postValue(Boolean.TRUE);
+        mIsCreateQuoteLoading.setValue(Boolean.FALSE);
+        createLoadErrorObserver();
         loadTransferSource();
+        createQuoteErrorObserver();
     }
 
     public LiveData<Boolean> isTransferAllAvailableFunds() {
@@ -122,12 +138,24 @@ public class CreateTransferViewModel extends ViewModel {
         return mTransferAmount;
     }
 
+    public void setTransferNotes(@Nullable final String notes) {
+        mTransferNotes.postValue(notes);
+    }
+
+    public LiveData<String> getTransferNotes() {
+        return mTransferNotes;
+    }
+
     public LiveData<HyperwalletTransferMethod> getTransferDestination() {
         return mTransferDestination;
     }
 
     public LiveData<Boolean> isLoading() {
         return mIsLoading;
+    }
+
+    public LiveData<Boolean> isCreateQuoteLoading() {
+        return mIsCreateQuoteLoading;
     }
 
     public LiveData<Transfer> getQuoteAvailableFunds() {
@@ -138,10 +166,53 @@ public class CreateTransferViewModel extends ViewModel {
         return mLoadErrorEvent;
     }
 
+    public LiveData<Transfer> getQuoteTransfer() {
+        return mQuoteTransfer;
+    }
+
+    public LiveData<Event<HyperwalletErrors>> getQuoteErrors() {
+        return mQuoteErrorEvent;
+    }
+
+    public void createQuoteTransfer() {
+        mIsCreateQuoteLoading.postValue(Boolean.TRUE);
+        Transfer transfer = mTransferAvailableFunds.getValue() ?
+                new Transfer.Builder()
+                        .clientTransferID(CLIENT_IDENTIFICATION_PREFIX + UUID.randomUUID().toString())
+                        .sourceToken(mQuoteAvailableFunds.getValue().getSourceToken())
+                        .destinationToken(mTransferDestination.getValue().getField(TOKEN))
+                        .destinationCurrency(mTransferDestination.getValue().getField(TRANSFER_METHOD_CURRENCY))
+                        .notes(mTransferNotes.getValue())
+                        .build() :
+                new Transfer.Builder()
+                        .clientTransferID(CLIENT_IDENTIFICATION_PREFIX + UUID.randomUUID().toString())
+                        .sourceToken(mQuoteAvailableFunds.getValue().getSourceToken())
+                        .destinationToken(mTransferDestination.getValue().getField(TOKEN))
+                        .destinationCurrency(mTransferDestination.getValue().getField(TRANSFER_METHOD_CURRENCY))
+                        .notes(mTransferNotes.getValue())
+                        .destinationAmount(mTransferAmount.getValue())
+                        .build();
+
+        mTransferRepository.createTransfer(transfer, new TransferRepository.CreateTransferCallback() {
+            @Override
+            public void onTransferCreated(@Nullable Transfer transfer) {
+                mQuoteTransfer.postValue(transfer);
+                mIsCreateQuoteLoading.postValue(Boolean.FALSE);
+            }
+
+            @Override
+            public void onError(@NonNull HyperwalletErrors errors) {
+                mQuoteErrors.postValue(new Event<>(errors));
+                mIsCreateQuoteLoading.postValue(Boolean.FALSE);
+            }
+        });
+    }
+
     @Override
     protected void onCleared() {
         super.onCleared();
         mLoadErrors.removeObserver(mLoadErrorEventObserver);
+        mQuoteErrors.removeObserver(mQuoteEventObserver);
     }
 
     private void createLoadErrorObserver() {
@@ -152,6 +223,16 @@ public class CreateTransferViewModel extends ViewModel {
             }
         };
         mLoadErrors.observeForever(mLoadErrorEventObserver);
+    }
+
+    private void createQuoteErrorObserver() {
+        mQuoteEventObserver = new Observer<Event<HyperwalletErrors>>() {
+            @Override
+            public void onChanged(Event<HyperwalletErrors> event) {
+                mQuoteErrorEvent.postValue(event);
+            }
+        };
+        mQuoteErrors.observeForever(mQuoteEventObserver);
     }
 
     private void loadTransferSource() {

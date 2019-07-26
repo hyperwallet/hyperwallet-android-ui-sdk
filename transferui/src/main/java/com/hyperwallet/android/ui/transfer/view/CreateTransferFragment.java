@@ -25,7 +25,9 @@ import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getTran
 
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -98,20 +100,58 @@ public class CreateTransferFragment extends Fragment {
         mProgressBar = view.findViewById(R.id.progress_bar);
         mTransferCurrency = view.findViewById(R.id.transfer_amount_currency);
         mTransferAllFundsSummary = view.findViewById(R.id.transfer_summary);
-        mTransferNotes = view.findViewById(R.id.transfer_notes);
         mTransferNextButtonProgress = view.findViewById(R.id.transfer_action_button_progress_bar);
 
+        // next button
         mTransferNextButton = view.findViewById(R.id.transfer_action_button);
         mTransferNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO temporary next action
-                Snackbar.make(mTransferNextButton, "Create Transfer Next Button Clicked", Snackbar.LENGTH_SHORT).show();
+                mCreateTransferViewModel.createQuoteTransfer();
             }
         });
         disableNextButton();
 
+        // transfer amount
         mTransferAmount = view.findViewById(R.id.transfer_amount);
+        prepareTransferAmount();
+
+        // transfer notes;
+        mTransferNotes = view.findViewById(R.id.transfer_notes);
+        prepareTransferNotes();
+
+        // transfer destination
+        mTransferDestination = view.findViewById(R.id.transfer_destination);
+        mTransferDestination.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO temporary action for transfer destination clicked; it should open up transfer method list UI
+                Snackbar.make(mTransferDestination, "LIST Transfer clicked", Snackbar.LENGTH_SHORT).show();
+            }
+        });
+
+        // add transfer destination
+        mAddTransferDestination = view.findViewById(R.id.add_transfer_destination);
+        mAddTransferDestination.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO temporary action for transfer destination clicked; it should open up add transfer method UI
+                Snackbar.make(mAddTransferDestination, "ADD Transfer clicked", Snackbar.LENGTH_SHORT).show();
+            }
+        });
+
+        // toggle button
+        Switch transferAllSwitch = view.findViewById(R.id.switchButton);
+        transferAllSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mCreateTransferViewModel.setTransferAllAvailableFunds(isChecked);
+            }
+        });
+        registerObserver();
+    }
+
+    private void prepareTransferAmount() {
         mTransferAmount.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI | EditorInfo.IME_ACTION_NEXT);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             mTransferAmount.setImportantForAutofill(View.IMPORTANT_FOR_AUTOFILL_NO);
@@ -124,34 +164,49 @@ public class CreateTransferFragment extends Fragment {
                 }
             }
         });
-
-
-        mTransferDestination = view.findViewById(R.id.transfer_destination);
-        mTransferDestination.setOnClickListener(new View.OnClickListener() {
+        mTransferAmount.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View v) {
-                //TODO temporary action for transfer destination clicked; it should open up transfer method list UI
-                Snackbar.make(mTransferDestination, "LIST Transfer clicked", Snackbar.LENGTH_SHORT).show();
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (before != count) {
+                    mCreateTransferViewModel.setTransferAmount(s.toString());
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
             }
         });
+    }
 
-        mAddTransferDestination = view.findViewById(R.id.add_transfer_destination);
-        mAddTransferDestination.setOnClickListener(new View.OnClickListener() {
+    private void prepareTransferNotes() {
+        mTransferNotes.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void onClick(View v) {
-                //TODO temporary action for transfer destination clicked; it should open up add transfer method UI
-                Snackbar.make(mAddTransferDestination, "ADD Transfer clicked", Snackbar.LENGTH_SHORT).show();
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    mCreateTransferViewModel.setTransferNotes(((EditText) v).getText().toString());
+                }
             }
         });
-
-        Switch transferAllSwitch = view.findViewById(R.id.switchButton);
-        transferAllSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        mTransferNotes.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mCreateTransferViewModel.setTransferAllAvailableFunds(isChecked);
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (before != count) {
+                    mCreateTransferViewModel.setTransferNotes(s.toString());
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
             }
         });
-        registerObserver();
     }
 
     private void registerObserver() {
@@ -217,9 +272,42 @@ public class CreateTransferFragment extends Fragment {
             public void onChanged(String amount) {
                 mTransferAmount.setText(amount);
                 if (!TextUtils.isEmpty(amount)) {
+                    mTransferAmount.setSelection(amount.length());
                     enableNextButton();
                 } else {
+                    mTransferAmount.setSelection(0);
                     disableNextButton();
+                }
+            }
+        });
+
+        mCreateTransferViewModel.getTransferNotes().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String notes) {
+                mTransferNotes.setText(notes);
+                mTransferNotes.setSelection(TextUtils.isEmpty(notes) ? 0 : notes.length());
+            }
+        });
+
+        mCreateTransferViewModel.isCreateQuoteLoading().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean loading) {
+                if (loading) {
+                    mTransferNextButtonProgress.setVisibility(View.VISIBLE);
+                } else {
+                    mTransferNextButtonProgress.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        mCreateTransferViewModel.getQuoteTransfer().observe(getViewLifecycleOwner(), new Observer<Transfer>() {
+            @Override
+            public void onChanged(Transfer transfer) {
+                try {
+                    Snackbar.make(mTransferNextButton, transfer.toJsonString(), Snackbar.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    Snackbar.make(mTransferNextButton, "Exception occurred! Transfer conversion",
+                            Snackbar.LENGTH_SHORT).show();
                 }
             }
         });
