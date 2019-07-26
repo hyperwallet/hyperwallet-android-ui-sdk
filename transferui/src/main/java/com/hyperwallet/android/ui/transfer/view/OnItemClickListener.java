@@ -14,17 +14,8 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.hyperwallet.android.ui.transfermethod.view;
+package com.hyperwallet.android.ui.transfer.view;
 
-import android.view.View;
-
-import androidx.annotation.NonNull;
-
-public interface ToolbarEventListener {
-
-    void onClose();
-
-    void onView();
-
-    void hideSoftKey(@NonNull View focusedView);
+public interface OnItemClickListener {
+    void onItemClick(int position);
 }
