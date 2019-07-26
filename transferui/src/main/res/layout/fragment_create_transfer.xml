@@ -76,10 +76,10 @@
 
                 <EditText
                     android:id="@+id/transfer_amount"
-                    android:inputType="text"
+                    android:inputType="numberDecimal"
                     android:maxLines="1"
                     android:layout_width="match_parent"
-                    android:hint="@string/transfer_amount_label"
+                    android:hint="@string/transfer_amount_hint"
                     android:layout_marginStart="-4dp"
                     android:layout_marginEnd="-4dp"
                     android:layout_height="wrap_content"/>
@@ -91,8 +91,8 @@
                     android:layout_alignTop="@+id/transfer_amount"
                     android:layout_alignEnd="@+id/transfer_amount"
                     android:layout_alignBottom="@+id/transfer_amount"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="3dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="4dp"
                     android:layout_marginBottom="0dp"
                     android:text="@string/transfer_currency_placeholder"/>
             </RelativeLayout>
@@ -128,7 +128,7 @@
                     app:layout_constraintTop_toTopOf="parent"/>
 
                 <TextView
-                    android:id="@+id/transfer_summary_label"
+                    android:id="@+id/transfer_summary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/grid_margin_left"
@@ -158,14 +158,14 @@
 
             <LinearLayout
                 android:id="@+id/transfer_notes_data_container"
-                android:layout_marginStart="@dimen/grid_margin_left"
-                android:layout_marginEnd="@dimen/grid_margin_right"
-                android:layout_marginTop="@dimen/grid_margin_top"
-                android:layout_marginBottom="@dimen/grid_margin_bottom"
+                android:paddingTop="@dimen/grid_margin_top"
+                android:paddingStart="@dimen/grid_margin_left"
+                android:paddingEnd="@dimen/grid_margin_right"
+                android:paddingBottom="@dimen/grid_margin_bottom"
                 android:orientation="vertical"
                 android:background="@drawable/content_border_bottom"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
 
                 <EditText
                     android:id="@+id/transfer_notes"

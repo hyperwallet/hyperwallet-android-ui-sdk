@@ -55,6 +55,7 @@ public class CreateTransferViewModel extends ViewModel {
     private final MutableLiveData<Boolean> mTransferAvailableFunds = new MutableLiveData<>();
     private final MutableLiveData<Boolean> mIsLoading = new MutableLiveData<>();
     private final MutableLiveData<Transfer> mQuoteAvailableFunds = new MutableLiveData<>();
+    private final MutableLiveData<String> mTransferAmount = new MutableLiveData<>();
 
     private Observer<Event<HyperwalletErrors>> mLoadErrorEventObserver;
     private final MutableLiveData<Event<HyperwalletErrors>> mLoadErrorEvent = new MutableLiveData<>();
@@ -105,16 +106,24 @@ public class CreateTransferViewModel extends ViewModel {
         loadTransferSource();
     }
 
-    public LiveData<HyperwalletTransferMethod> getTransferDestination() {
-        return mTransferDestination;
-    }
-
     public LiveData<Boolean> isTransferAllAvailableFunds() {
         return mTransferAvailableFunds;
     }
 
     public void setTransferAllAvailableFunds(Boolean transferAll) {
         mTransferAvailableFunds.postValue(transferAll);
+    }
+
+    public void setTransferAmount(@NonNull final String amount) {
+        mTransferAmount.postValue(amount);
+    }
+
+    public LiveData<String> getTransferAmount() {
+        return mTransferAmount;
+    }
+
+    public LiveData<HyperwalletTransferMethod> getTransferDestination() {
+        return mTransferDestination;
     }
 
     public LiveData<Boolean> isLoading() {

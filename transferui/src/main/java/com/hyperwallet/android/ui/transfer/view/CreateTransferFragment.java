@@ -23,10 +23,13 @@ import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getStri
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getStringResourceByName;
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getTransferMethodDetail;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -93,9 +96,8 @@ public class CreateTransferFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         mProgressBar = view.findViewById(R.id.progress_bar);
-        mTransferAmount = view.findViewById(R.id.transfer_amount);
         mTransferCurrency = view.findViewById(R.id.transfer_amount_currency);
-        mTransferAllFundsSummary = view.findViewById(R.id.transfer_summary_label);
+        mTransferAllFundsSummary = view.findViewById(R.id.transfer_summary);
         mTransferNotes = view.findViewById(R.id.transfer_notes);
         mTransferNextButtonProgress = view.findViewById(R.id.transfer_action_button_progress_bar);
 
@@ -107,6 +109,22 @@ public class CreateTransferFragment extends Fragment {
                 Snackbar.make(mTransferNextButton, "Create Transfer Next Button Clicked", Snackbar.LENGTH_SHORT).show();
             }
         });
+        disableNextButton();
+
+        mTransferAmount = view.findViewById(R.id.transfer_amount);
+        mTransferAmount.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI | EditorInfo.IME_ACTION_NEXT);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            mTransferAmount.setImportantForAutofill(View.IMPORTANT_FOR_AUTOFILL_NO);
+        }
+        mTransferAmount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    mCreateTransferViewModel.setTransferAmount(((EditText) v).getText().toString());
+                }
+            }
+        });
+
 
         mTransferDestination = view.findViewById(R.id.transfer_destination);
         mTransferDestination.setOnClickListener(new View.OnClickListener() {
@@ -122,7 +140,7 @@ public class CreateTransferFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //TODO temporary action for transfer destination clicked; it should open up add transfer method UI
-                Snackbar.make(mTransferDestination, "ADD Transfer clicked", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(mAddTransferDestination, "ADD Transfer clicked", Snackbar.LENGTH_SHORT).show();
             }
         });
 
@@ -177,14 +195,46 @@ public class CreateTransferFragment extends Fragment {
                     @Override
                     public void onChanged(final Boolean transferAll) {
                         if (transferAll) {
-                            // TODO update transfer all ui; lock transfer amount; copy full allowable transfer to
-                            //  amount; enable next button
+                            Transfer transfer = mCreateTransferViewModel.getQuoteAvailableFunds().getValue();
+                            if (transfer != null) {
+                                mTransferCurrency.setTextColor(
+                                        getResources().getColor(R.color.colorButtonTextDisabled));
+                                mTransferAmount.setEnabled(false);
+                                mTransferAmount.setText(transfer.getDestinationAmount());
+                                enableNextButton();
+                            }
                         } else {
-                            // TODO update transfer all ui; unlock transfer amount; reset amount to empty; disable
-                            //  next button
+                            mTransferCurrency.setTextColor(getResources().getColor(R.color.colorSecondaryDark));
+                            mTransferAmount.setEnabled(true);
+                            mTransferAmount.setText(null);
+                            disableNextButton();
                         }
                     }
                 });
+
+        mCreateTransferViewModel.getTransferAmount().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String amount) {
+                mTransferAmount.setText(amount);
+                if (!TextUtils.isEmpty(amount)) {
+                    enableNextButton();
+                } else {
+                    disableNextButton();
+                }
+            }
+        });
+    }
+
+    private void enableNextButton() {
+        mTransferNextButton.setEnabled(true);
+        mTransferNextButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        mTransferNextButton.setTextColor(getResources().getColor(R.color.regularColorPrimary));
+    }
+
+    private void disableNextButton() {
+        mTransferNextButton.setEnabled(false);
+        mTransferNextButton.setBackgroundColor(getResources().getColor(R.color.colorSecondaryDark));
+        mTransferNextButton.setTextColor(getResources().getColor(R.color.colorButtonTextDisabled));
     }
 
     private void showTransferDestination(@NonNull final HyperwalletTransferMethod transferMethod) {

@@ -98,6 +98,14 @@ public class CreateTransferActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        TransferRepositoryFactory.clearInstance();
+        TransferMethodRepositoryFactory.clearInstance();
+        UserRepositoryFactory.clearInstance();
+        super.onDestroy();
+    }
+
     private void initFragment(@NonNull final Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
