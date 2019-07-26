@@ -17,6 +17,7 @@
 package com.hyperwallet.android.ui.transfermethod.repository;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 
 import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.StatusTransition;
@@ -53,6 +54,11 @@ public interface TransferMethodRepository {
      */
     void deactivateTransferMethod(@NonNull final HyperwalletTransferMethod transferMethod,
             @NonNull final DeactivateTransferMethodCallback callback);
+
+    /**
+     * @return live data of loading information
+     */
+    LiveData<Boolean> isLoadingData();
 
     /**
      * Callback interface that responses to action when invoked to

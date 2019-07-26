@@ -29,6 +29,8 @@ import android.os.Handler;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.exception.HyperwalletException;
@@ -43,6 +45,7 @@ import com.hyperwallet.android.model.transfermethod.PayPalAccount;
 
 public class TransferMethodRepositoryImpl implements TransferMethodRepository {
 
+    private final MutableLiveData<Boolean> mIsLoadingData = new MutableLiveData<>();
     private Handler mHandler = new Handler();
 
     @VisibleForTesting
@@ -74,15 +77,18 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
         HyperwalletTransferMethodQueryParam queryParam = new HyperwalletTransferMethodQueryParam.Builder()
                 .status(ACTIVATED)
                 .build();
+        mIsLoadingData.postValue(Boolean.TRUE);
         getHyperwallet().listTransferMethods(queryParam,
                 new HyperwalletListener<HyperwalletPageList<HyperwalletTransferMethod>>() {
                     @Override
                     public void onSuccess(@Nullable HyperwalletPageList<HyperwalletTransferMethod> result) {
+                        mIsLoadingData.postValue(Boolean.FALSE);
                         callback.onTransferMethodListLoaded(result != null ? result.getDataList() : null);
                     }
 
                     @Override
                     public void onFailure(HyperwalletException exception) {
+                        mIsLoadingData.postValue(Boolean.FALSE);
                         callback.onError(exception.getHyperwalletErrors());
                     }
 
@@ -109,6 +115,11 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
                 break;
             default: //no default action
         }
+    }
+
+    @Override
+    public LiveData<Boolean> isLoadingData() {
+        return mIsLoadingData;
     }
 
     private void deactivateBankAccount(@NonNull final HyperwalletTransferMethod transferMethod,

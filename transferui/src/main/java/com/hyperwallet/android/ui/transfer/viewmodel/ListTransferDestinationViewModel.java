@@ -1,6 +1,7 @@
 package com.hyperwallet.android.ui.transfer.viewmodel;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
@@ -18,7 +19,7 @@ public class ListTransferDestinationViewModel extends ViewModel {
     private final MutableLiveData<Event<HyperwalletTransferMethod>> mTransferDestinationSection =
             new MutableLiveData<>();
     private final MutableLiveData<Event<HyperwalletErrors>> mTransferDestinationError = new MutableLiveData<>();
-    private TransferMethodRepository mTransferMethodRepository;
+    private final TransferMethodRepository mTransferMethodRepository;
 
     public ListTransferDestinationViewModel(
             @NonNull final TransferMethodRepository transferMethodRepository) {
@@ -53,12 +54,10 @@ public class ListTransferDestinationViewModel extends ViewModel {
     }
 
     /**
-     * @see ViewModel#onCleared()
+     * @return live data of loading information
      */
-    @Override
-    protected void onCleared() {
-        super.onCleared();
-        mTransferMethodRepository = null;
+    public LiveData<Boolean> isLoadingData() {
+        return mTransferMethodRepository.isLoadingData();
     }
 
     public static class ListTransferDestinationViewModelFactory implements ViewModelProvider.Factory {
