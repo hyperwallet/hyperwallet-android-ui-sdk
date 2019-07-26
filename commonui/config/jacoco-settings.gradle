@@ -24,7 +24,7 @@ def fileFilter = ['**/BuildConfig.*',
                   '**/com/hyperwallet/android/ui/common/view/error/DefaultErrorDialogFragment.*',
                   '**/com/hyperwallet/android/ui/common/view/HorizontalDividerItemDecorator.*',
                   '**/com/hyperwallet/android/ui/common/view/OneClickListener.*',
-                  '**/com/hyperwallet/android/ui/common/util/TransferMethodUtils.*'
+                  '**/com/hyperwallet/android/ui/common/com.hyperwallet.android.ui.transfer.util/TransferMethodUtils.*'
 ]
 
 def debugClassPaths = [

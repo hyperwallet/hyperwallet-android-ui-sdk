@@ -36,8 +36,9 @@ import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.ui.common.repository.Event;
 import com.hyperwallet.android.ui.transfer.R;
 import com.hyperwallet.android.ui.transfer.viewmodel.ListTransferDestinationViewModel;
+import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
 
-public class ListTransferDestinationActivity extends AppCompatActivity {
+public class ListTransferDestinationActivity extends AppCompatActivity implements SelectDestinationItemClickListener {
 
     public static final String ARGUMENT_SELECTED_DESTINATION = "argument_selected_destination";
     private static final String TAG = ListTransferDestinationActivity.class.getSimpleName();
@@ -66,7 +67,12 @@ public class ListTransferDestinationActivity extends AppCompatActivity {
                     (HyperwalletTransferMethod) getIntent().getParcelableExtra(ARGUMENT_SELECTED_DESTINATION)));
         }
 
-        mListTransferDestinationViewModel = ViewModelProviders.of(this).get(
+//        mListTransferDestinationViewModel = ViewModelProviders.of(this).get(
+//                ListTransferDestinationViewModel.class);
+
+        mListTransferDestinationViewModel = ViewModelProviders.of(this, new ListTransferDestinationViewModel
+                .ListTransferDestinationViewModelFactory(
+                TransferMethodRepositoryFactory.getInstance().getTransferMethodRepository())).get(
                 ListTransferDestinationViewModel.class);
 
         registerObservers();
@@ -105,5 +111,10 @@ public class ListTransferDestinationActivity extends AppCompatActivity {
                         finish();
                     }
                 });
+    }
+
+    @Override
+    public void selectTransferDestination(int position) {
+
     }
 }
