@@ -23,6 +23,7 @@ android {
 def fileFilter = ['**/BuildConfig.*',
                   '**/com/hyperwallet/android/ui/common/view/error/DefaultErrorDialogFragment.*',
                   '**/com/hyperwallet/android/ui/common/view/HorizontalDividerItemDecorator.*',
+                  '**/com/hyperwallet/android/ui/common/view/TransferMethodUtils.*',
                   '**/com/hyperwallet/android/ui/common/view/OneClickListener.*'
 ]
 

@@ -7,4 +7,6 @@ apply from: "$rootProject.projectDir/publish.gradle"
 
 dependencies {
     implementation project(':commonrepository')
+
+    testImplementation "org.robolectric:robolectric:$robolectricVersion"
 }
