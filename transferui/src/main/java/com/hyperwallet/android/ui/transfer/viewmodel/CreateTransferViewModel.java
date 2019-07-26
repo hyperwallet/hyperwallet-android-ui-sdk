@@ -255,7 +255,11 @@ public class CreateTransferViewModel extends ViewModel {
             @Override
             public void onTransferMethodLoaded(@Nullable HyperwalletTransferMethod transferMethod) {
                 mTransferDestination.postValue(transferMethod);
-                quoteAvailableTransferFunds(sourceToken, transferMethod);
+                if (transferMethod == null) { // dismiss quote
+                    mIsLoading.postValue(Boolean.FALSE);
+                } else {
+                    quoteAvailableTransferFunds(sourceToken, transferMethod);
+                }
             }
 
             @Override

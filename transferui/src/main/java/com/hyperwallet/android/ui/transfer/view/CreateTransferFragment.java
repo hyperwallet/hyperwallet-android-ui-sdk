@@ -58,6 +58,7 @@ import java.util.Locale;
  */
 public class CreateTransferFragment extends Fragment {
 
+    private static final String EMPTY_STRING = "";
     private View mProgressBar;
     private CreateTransferViewModel mCreateTransferViewModel;
     private EditText mTransferAmount;
@@ -68,6 +69,7 @@ public class CreateTransferFragment extends Fragment {
     private View mTransferNextButtonProgress;
     private View mTransferDestination;
     private View mAddTransferDestination;
+    private Switch mTransferAllSwitch;
 
     /**
      * Please don't use this constructor this is reserved for Android Core Framework
@@ -98,8 +100,14 @@ public class CreateTransferFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         mProgressBar = view.findViewById(R.id.progress_bar);
+
         mTransferCurrency = view.findViewById(R.id.transfer_amount_currency);
+        mTransferCurrency.setText(EMPTY_STRING);
+
         mTransferAllFundsSummary = view.findViewById(R.id.transfer_summary);
+        String defaultSummary = requireContext().getString(R.string.transfer_summary_label, "0", EMPTY_STRING);
+        mTransferAllFundsSummary.setText(defaultSummary);
+
         mTransferNextButtonProgress = view.findViewById(R.id.transfer_action_button_progress_bar);
 
         // next button
@@ -141,8 +149,8 @@ public class CreateTransferFragment extends Fragment {
         });
 
         // toggle button
-        Switch transferAllSwitch = view.findViewById(R.id.switchButton);
-        transferAllSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        mTransferAllSwitch = view.findViewById(R.id.switchButton);
+        mTransferAllSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 mCreateTransferViewModel.setTransferAllAvailableFunds(isChecked);
@@ -215,8 +223,10 @@ public class CreateTransferFragment extends Fragment {
             public void onChanged(final Boolean loading) {
                 if (loading) {
                     mProgressBar.setVisibility(View.VISIBLE);
+                    disableInputControls();
                 } else {
                     mProgressBar.setVisibility(View.GONE);
+                    enableInputControls();
                 }
             }
         });
@@ -238,9 +248,11 @@ public class CreateTransferFragment extends Fragment {
                     public void onChanged(final HyperwalletTransferMethod transferMethod) {
                         if (transferMethod != null) {
                             showTransferDestination(transferMethod);
+                            enableInputControls();
                         } else {
                             mAddTransferDestination.setVisibility(View.VISIBLE);
                             mTransferDestination.setVisibility(View.GONE);
+                            disableInputControls();
                         }
                     }
                 });
@@ -271,7 +283,8 @@ public class CreateTransferFragment extends Fragment {
             @Override
             public void onChanged(String amount) {
                 mTransferAmount.setText(amount);
-                if (!TextUtils.isEmpty(amount)) {
+                if (!TextUtils.isEmpty(amount)
+                        && mCreateTransferViewModel.getTransferDestination().getValue() != null) {
                     mTransferAmount.setSelection(amount.length());
                     enableNextButton();
                 } else {
@@ -294,8 +307,10 @@ public class CreateTransferFragment extends Fragment {
             public void onChanged(Boolean loading) {
                 if (loading) {
                     mTransferNextButtonProgress.setVisibility(View.VISIBLE);
+                    disableInputControls();
                 } else {
                     mTransferNextButtonProgress.setVisibility(View.GONE);
+                    enableInputControls();
                 }
             }
         });
@@ -303,6 +318,7 @@ public class CreateTransferFragment extends Fragment {
         mCreateTransferViewModel.getQuoteTransfer().observe(getViewLifecycleOwner(), new Observer<Transfer>() {
             @Override
             public void onChanged(Transfer transfer) {
+                // TODO create intent to call next Transfer confirmation screen with parcelable payload of Transfer
                 try {
                     Snackbar.make(mTransferNextButton, transfer.toJsonString(), Snackbar.LENGTH_SHORT).show();
                 } catch (Exception e) {
@@ -311,6 +327,20 @@ public class CreateTransferFragment extends Fragment {
                 }
             }
         });
+    }
+
+    private void disableInputControls() {
+        mTransferAmount.setEnabled(false);
+        mTransferNotes.setEnabled(false);
+        mTransferAllSwitch.setEnabled(false);
+        mTransferCurrency.setTextColor(getResources().getColor(R.color.colorButtonTextDisabled));
+    }
+
+    private void enableInputControls() {
+        mTransferAmount.setEnabled(true);
+        mTransferNotes.setEnabled(true);
+        mTransferAllSwitch.setEnabled(true);
+        mTransferCurrency.setTextColor(getResources().getColor(R.color.colorSecondaryDark));
     }
 
     private void enableNextButton() {
