@@ -1,7 +1,7 @@
-package com.hyperwallet.android.ui.transfermethod;
+package com.hyperwallet.android.ui.common.util;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
@@ -14,7 +14,7 @@ import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMe
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.BANK_CARD;
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.PAPER_CHECK;
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.PAYPAL_ACCOUNT;
-import static com.hyperwallet.android.ui.transfermethod.view.TransferMethodUtils.getTransferMethodDetail;
+import static com.hyperwallet.android.ui.common.util.TransferMethodUtils.getTransferMethodDetail;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -23,11 +23,9 @@ import com.hyperwallet.android.model.transfermethod.HyperwalletBankAccount;
 import com.hyperwallet.android.model.transfermethod.HyperwalletBankCard;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.model.transfermethod.PayPalAccount;
-import com.hyperwallet.android.ui.R;
-import com.hyperwallet.android.ui.transfermethod.rule.HyperwalletExternalResourceManager;
-import com.hyperwallet.android.ui.transfermethod.view.TransferMethodUtils;
+import com.hyperwallet.android.ui.common.R;
+import com.hyperwallet.android.ui.common.rule.HyperwalletExternalResourceManager;
 
-import org.hamcrest.CoreMatchers;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Before;
@@ -159,7 +157,8 @@ public class TransferMethodUtilsTest {
         HyperwalletTransferMethod transferMethod = new HyperwalletBankCard.Builder().cardNumber(
                 "************0006").build();
 
-        when(mContext.getString(eq(R.string.transfer_method_list_item_description), eq("0006"))).thenReturn(
+        when(mContext.getString(eq(R.string.transfer_method_list_item_description),
+                eq("0006"))).thenReturn(
                 "Ending on 0006");
         String actual = getTransferMethodDetail(mContext, transferMethod, BANK_CARD);
         assertThat(actual, is("Ending on 0006"));
@@ -170,7 +169,8 @@ public class TransferMethodUtilsTest {
         HyperwalletTransferMethod transferMethod = new HyperwalletBankAccount.Builder().bankAccountId(
                 "8017110254").build();
 
-        when(mContext.getString(eq(R.string.transfer_method_list_item_description), eq("0254"))).thenReturn(
+        when(mContext.getString(eq(R.string.transfer_method_list_item_description),
+                eq("0254"))).thenReturn(
                 "Ending on 0254");
         String actual = getTransferMethodDetail(mContext, transferMethod, BANK_ACCOUNT);
         assertThat(actual, is("Ending on 0254"));
@@ -181,7 +181,8 @@ public class TransferMethodUtilsTest {
         HyperwalletTransferMethod transferMethod = new HyperwalletTransferMethod();
 
         String actual = getTransferMethodDetail(mContext, transferMethod, PAPER_CHECK);
-        assertThat(actual, CoreMatchers.is(""));
-        verify(mContext, never()).getString(eq(R.string.transfer_method_list_item_description), anyString());
+        assertThat(actual, is(""));
+        verify(mContext, never()).getString(eq(R.string.transfer_method_list_item_description),
+                anyString());
     }
 }

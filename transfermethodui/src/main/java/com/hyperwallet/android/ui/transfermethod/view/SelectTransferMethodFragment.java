@@ -18,7 +18,7 @@
 
 package com.hyperwallet.android.ui.transfermethod.view;
 
-import static com.hyperwallet.android.ui.transfermethod.view.TransferMethodUtils.getStringFontIcon;
+import static com.hyperwallet.android.ui.common.util.TransferMethodUtils.getStringFontIcon;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
