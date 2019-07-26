@@ -26,8 +26,6 @@ import com.hyperwallet.android.model.transfermethod.PayPalAccount;
 import com.hyperwallet.android.ui.common.R;
 import com.hyperwallet.android.ui.common.view.rule.HyperwalletExternalResourceManager;
 
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.MatcherAssert;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Before;
@@ -64,7 +62,7 @@ public class TransferMethodUtilsTest {
     public void testGetTransferMethodName_returnsCorrectNameForName() {
         when(mContext.getString(R.string.bank_card)).thenReturn("My bank card");
         String transferMethodName = TransferMethodUtils.getTransferMethodName(mContext, BANK_CARD);
-        MatcherAssert.assertThat(transferMethodName, is("My bank card"));
+        assertThat(transferMethodName, is("My bank card"));
         verify(mContext, times(1)).getString(anyInt());
     }
 
@@ -75,7 +73,7 @@ public class TransferMethodUtilsTest {
         HyperwalletTransferMethod hyperwalletTransferMethod = new HyperwalletTransferMethod(htmJsonObject);
         when(mContext.getString(R.string.bank_card)).thenReturn("My card");
         String transferMethodName = TransferMethodUtils.getTransferMethodName(mContext, hyperwalletTransferMethod);
-        MatcherAssert.assertThat(transferMethodName, is("My card"));
+        assertThat(transferMethodName, is("My card"));
         verify(mContext, times(1)).getString(anyInt());
     }
 
@@ -83,7 +81,7 @@ public class TransferMethodUtilsTest {
     public void testGetTransferMethodName_returnsDefaultValue() {
         when(mContext.getString(R.string.not_translated_in_braces)).thenReturn("(not translated)");
         String transferMethodName = TransferMethodUtils.getTransferMethodName(mContext, "some custom name");
-        MatcherAssert.assertThat(transferMethodName, is("some custom name(not translated)"));
+        assertThat(transferMethodName, is("some custom name(not translated)"));
         verify(mContext, times(1)).getString(anyInt());
     }
 
@@ -95,7 +93,7 @@ public class TransferMethodUtilsTest {
 
         String stringResource = TransferMethodUtils.getStringResourceByName(mContext,
                 HyperwalletTransferMethod.TransferMethodTypes.WIRE_ACCOUNT);
-        MatcherAssert.assertThat(stringResource, is("wire acc"));
+        assertThat(stringResource, is("wire acc"));
         verify(mResources, times(1)).getIdentifier(anyString(), anyString(), anyString());
         verify(mContext, times(1)).getString(anyInt());
     }
@@ -109,7 +107,7 @@ public class TransferMethodUtilsTest {
 
         String stringResource = TransferMethodUtils.getStringResourceByName(mContext,
                 "some type");
-        MatcherAssert.assertThat(stringResource, is("bank acc"));
+        assertThat(stringResource, is("bank acc"));
         verify(mResources, times(2)).getIdentifier(anyString(), anyString(), anyString());
         verify(mContext, times(1)).getString(anyInt());
     }
@@ -124,7 +122,7 @@ public class TransferMethodUtilsTest {
 
         String stringResource = TransferMethodUtils.getStringFontIcon(mContext,
                 HyperwalletTransferMethod.TransferMethodTypes.PAPER_CHECK);
-        MatcherAssert.assertThat(stringResource, is("paper icon"));
+        assertThat(stringResource, is("paper icon"));
         verify(mResources, times(1)).getIdentifier(anyString(), anyString(), anyString());
         verify(mContext, times(1)).getString(anyInt());
     }
@@ -141,7 +139,7 @@ public class TransferMethodUtilsTest {
         String stringResource = TransferMethodUtils.getStringFontIcon(mContext,
                 "some type");
 
-        MatcherAssert.assertThat(stringResource, is("bank icon"));
+        assertThat(stringResource, is("bank icon"));
         verify(mResources, times(2)).getIdentifier(anyString(), anyString(), anyString());
         verify(mContext, times(1)).getString(anyInt());
     }
@@ -152,7 +150,7 @@ public class TransferMethodUtilsTest {
                 "sunshine.carreiro@hyperwallet.com").build();
 
         String actual = getTransferMethodDetail(mContext, transferMethod, PAYPAL_ACCOUNT);
-        MatcherAssert.assertThat(actual, is("sunshine.carreiro@hyperwallet.com"));
+        assertThat(actual, is("sunshine.carreiro@hyperwallet.com"));
     }
 
     @Test
@@ -164,7 +162,7 @@ public class TransferMethodUtilsTest {
                 eq("0006"))).thenReturn(
                 "Ending on 0006");
         String actual = getTransferMethodDetail(mContext, transferMethod, BANK_CARD);
-        MatcherAssert.assertThat(actual, is("Ending on 0006"));
+        assertThat(actual, is("Ending on 0006"));
     }
 
     @Test
@@ -176,7 +174,7 @@ public class TransferMethodUtilsTest {
                 eq("0254"))).thenReturn(
                 "Ending on 0254");
         String actual = getTransferMethodDetail(mContext, transferMethod, BANK_ACCOUNT);
-        MatcherAssert.assertThat(actual, is("Ending on 0254"));
+        assertThat(actual, is("Ending on 0254"));
     }
 
     @Test
@@ -184,7 +182,7 @@ public class TransferMethodUtilsTest {
         HyperwalletTransferMethod transferMethod = new HyperwalletTransferMethod();
 
         String actual = getTransferMethodDetail(mContext, transferMethod, PAPER_CHECK);
-        assertThat(actual, CoreMatchers.is(""));
+        assertThat(actual, is(""));
         verify(mContext, never()).getString(ArgumentMatchers.eq(R.string.transfer_method_list_item_description),
                 anyString());
     }
