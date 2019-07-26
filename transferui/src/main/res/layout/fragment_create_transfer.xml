@@ -76,6 +76,7 @@
 
                 <EditText
                     android:id="@+id/transfer_amount"
+                    android:theme="@style/Widget.Hyperwallet.Transfer.EditText"
                     android:inputType="numberDecimal"
                     android:maxLines="1"
                     android:layout_width="match_parent"
@@ -91,7 +92,7 @@
                     android:layout_alignTop="@+id/transfer_amount"
                     android:layout_alignEnd="@+id/transfer_amount"
                     android:layout_alignBottom="@+id/transfer_amount"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="13dp"
                     android:layout_marginEnd="4dp"
                     android:layout_marginBottom="0dp"
                     android:text="@string/transfer_currency_placeholder"/>
@@ -169,6 +170,7 @@
 
                 <EditText
                     android:id="@+id/transfer_notes"
+                    android:theme="@style/Widget.Hyperwallet.Transfer.EditText"
                     android:inputType="text"
                     android:maxLines="3"
                     android:layout_width="match_parent"
