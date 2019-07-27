@@ -16,6 +16,8 @@
  */
 package com.hyperwallet.android.ui.common.viewmodel;
 
+import androidx.annotation.NonNull;
+
 /**
  * Detail interface for having a list UI with detail information through navigation
  */
@@ -26,5 +28,5 @@ public interface ListDetailNavigator<Event> {
      *
      * @param e Navigation event
      */
-    void navigate(Event e);
+    void navigate(@NonNull final Event e);
 }

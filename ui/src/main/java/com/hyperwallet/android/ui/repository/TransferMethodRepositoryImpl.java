@@ -16,7 +16,7 @@
  */
 package com.hyperwallet.android.ui.repository;
 
-import static com.hyperwallet.android.model.HyperwalletStatusTransition.StatusDefinition.ACTIVATED;
+import static com.hyperwallet.android.model.StatusTransition.StatusDefinition.ACTIVATED;
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TOKEN;
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TYPE;
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.BANK_ACCOUNT;
@@ -33,7 +33,7 @@ import androidx.annotation.VisibleForTesting;
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.exception.HyperwalletException;
 import com.hyperwallet.android.listener.HyperwalletListener;
-import com.hyperwallet.android.model.HyperwalletStatusTransition;
+import com.hyperwallet.android.model.StatusTransition;
 import com.hyperwallet.android.model.paging.HyperwalletPageList;
 import com.hyperwallet.android.model.transfermethod.HyperwalletBankAccount;
 import com.hyperwallet.android.model.transfermethod.HyperwalletBankCard;
@@ -116,9 +116,9 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
     private void deactivateBankAccount(@NonNull final HyperwalletTransferMethod transferMethod,
             @NonNull final DeactivateTransferMethodCallback callback) {
         getHyperwallet().deactivateBankAccount(transferMethod.getField(TOKEN), null,
-                new HyperwalletListener<HyperwalletStatusTransition>() {
+                new HyperwalletListener<StatusTransition>() {
                     @Override
-                    public void onSuccess(@Nullable HyperwalletStatusTransition result) {
+                    public void onSuccess(@Nullable StatusTransition result) {
                         callback.onTransferMethodDeactivated(result);
                     }
 
@@ -137,9 +137,9 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
     private void deactivateBankCardAccount(@NonNull final HyperwalletTransferMethod transferMethod,
             @NonNull final DeactivateTransferMethodCallback callback) {
         getHyperwallet().deactivateBankCard(transferMethod.getField(TOKEN), null,
-                new HyperwalletListener<HyperwalletStatusTransition>() {
+                new HyperwalletListener<StatusTransition>() {
                     @Override
-                    public void onSuccess(@Nullable HyperwalletStatusTransition result) {
+                    public void onSuccess(@Nullable StatusTransition result) {
                         callback.onTransferMethodDeactivated(result);
                     }
 
@@ -158,9 +158,9 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
     private void deactivatePayPalAccount(@NonNull final HyperwalletTransferMethod transferMethod,
             @NonNull final DeactivateTransferMethodCallback callback) {
         getHyperwallet().deactivatePayPalAccount(transferMethod.getField(TOKEN), null,
-                new HyperwalletListener<HyperwalletStatusTransition>() {
+                new HyperwalletListener<StatusTransition>() {
                     @Override
-                    public void onSuccess(@Nullable HyperwalletStatusTransition result) {
+                    public void onSuccess(@Nullable StatusTransition result) {
                         callback.onTransferMethodDeactivated(result);
                     }
 

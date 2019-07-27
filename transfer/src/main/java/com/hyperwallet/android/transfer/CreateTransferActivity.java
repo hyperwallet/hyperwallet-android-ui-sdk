@@ -1,5 +1,6 @@
 package com.hyperwallet.android.transfer;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -15,13 +16,15 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.HyperwalletErrors;
+import com.hyperwallet.android.model.transfer.Transfer;
 import com.hyperwallet.android.ui.common.view.error.DefaultErrorDialogFragment;
 import com.hyperwallet.android.ui.common.view.error.OnNetworkErrorCallback;
 import com.hyperwallet.android.ui.common.viewmodel.Event;
+import com.hyperwallet.android.ui.common.viewmodel.ListDetailNavigator;
 
 import java.util.List;
 
-public class CreateTransferActivity extends AppCompatActivity implements OnNetworkErrorCallback {
+public class CreateTransferActivity extends AppCompatActivity implements OnNetworkErrorCallback, ListDetailNavigator<Event<Transfer>> {
 
     private CreateTransferViewModel mCreateTransferViewModel;
 
@@ -92,6 +95,17 @@ public class CreateTransferActivity extends AppCompatActivity implements OnNetwo
             }
         });
 
+
+        mCreateTransferViewModel.getDetailNavigation().observe(this, new Observer<Event<Transfer>>() {
+            @Override
+            public void onChanged(Event<Transfer> transferEvent) {
+                if (!transferEvent.isContentConsumed()) {
+                    navigate(transferEvent);
+                }
+            }
+        });
+
+
     }
 
     private void showTransferError(@NonNull final List<HyperwalletError> errors) {
@@ -108,4 +122,19 @@ public class CreateTransferActivity extends AppCompatActivity implements OnNetwo
         }
     }
 
+    @Override
+    public void navigate(@NonNull final Event<Transfer> e) {
+        Intent intent = new Intent(this, ScheduleTransferActivity.class);
+        intent.putExtra(ScheduleTransferActivity.TRANSFER_EXTRA, e.getContent());
+        startActivityForResult(intent, 123);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == 123) { //todo we probably won't need this
+            finish();
+        }
+    }
 }

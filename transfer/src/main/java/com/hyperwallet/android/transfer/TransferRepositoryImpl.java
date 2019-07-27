@@ -8,8 +8,7 @@ import androidx.annotation.Nullable;
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.exception.HyperwalletException;
 import com.hyperwallet.android.listener.HyperwalletListener;
-import com.hyperwallet.android.model.HyperwalletErrors;
-import com.hyperwallet.android.model.HyperwalletStatusTransition;
+import com.hyperwallet.android.model.StatusTransition;
 import com.hyperwallet.android.model.transfer.Transfer;
 
 public class TransferRepositoryImpl implements TransferRepository {
@@ -35,9 +34,27 @@ public class TransferRepositoryImpl implements TransferRepository {
     }
 
 
-    public void scheduleTransfer(@NonNull final HyperwalletStatusTransition statusTransition,
+    public void scheduleTransfer(@NonNull final Transfer transfer,
             @NonNull final ScheduleTransferCallback callback) {
 
+
+        Hyperwallet.getDefault().scheduleTransfer(transfer.getToken(), null,
+                new HyperwalletListener<StatusTransition>() {
+                    @Override
+                    public void onSuccess(@Nullable StatusTransition result) {
+                        callback.onTransferScheduled(result);
+                    }
+
+                    @Override
+                    public void onFailure(HyperwalletException exception) {
+                        callback.onError(exception.getHyperwalletErrors());
+                    }
+
+                    @Override
+                    public Handler getHandler() {
+                        return null;
+                    }
+                });
     }
 
 

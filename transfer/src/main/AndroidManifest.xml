@@ -12,6 +12,12 @@ package="com.hyperwallet.android.transfer">
         android:name=".CreateTransferActivity"
         android:label="@string/title_activity_create_transfer"
         android:theme="@style/AppTheme.NoActionBar"/>
+
+    <activity android:name=".ScheduleTransferActivity"
+        android:label="Schedule Transfer"
+        android:theme="@style/AppTheme.NoActionBar"/>
+
+
 </application>
 
 </manifest>

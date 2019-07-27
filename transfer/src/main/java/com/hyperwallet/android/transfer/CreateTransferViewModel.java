@@ -16,7 +16,7 @@ import com.hyperwallet.android.exception.HyperwalletException;
 import com.hyperwallet.android.listener.HyperwalletListener;
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.HyperwalletErrors;
-import com.hyperwallet.android.model.HyperwalletStatusTransition;
+import com.hyperwallet.android.model.StatusTransition;
 import com.hyperwallet.android.model.paging.HyperwalletPageList;
 import com.hyperwallet.android.model.transfer.Transfer;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
@@ -45,6 +45,8 @@ public class CreateTransferViewModel extends ViewModel {
       */
     private MutableLiveData<Event<HyperwalletErrors>> mCreateTransferErrors = new MutableLiveData<>();
     private MutableLiveData<Event<HyperwalletErrors>> mLoadTransferRequiredDataErrors = new MutableLiveData<>();
+
+
     private MutableLiveData<Event<HyperwalletError>> mInvalidAmountError = new MutableLiveData<>();
     private MutableLiveData<Event<HyperwalletError>> mInvalidDestinationError = new MutableLiveData<>();
 
@@ -77,7 +79,7 @@ public class CreateTransferViewModel extends ViewModel {
         mAmount = amount;
         mNotes = notes;
         Transfer transfer = new Transfer.Builder()
-                .clientTransferID("mbl-" + UUID.randomUUID().toString())
+                .clientTransferID("android-" + UUID.randomUUID().toString())
                 .sourceToken(mSourceToken)
                 .destinationToken(
                         mTransferDestination.getValue().getField(HyperwalletTransferMethod.TransferMethodFields.TOKEN))
@@ -103,6 +105,7 @@ public class CreateTransferViewModel extends ViewModel {
     //todo - it will be used when user selects another transfer destination
     public void setTransferDestination(@NonNull final HyperwalletTransferMethod transferDestination) {
         mTransferDestination.postValue(transferDestination);
+        mState.toTransferDestinationKnown();
         if (TextUtils.isEmpty(mSourceToken)) {
             quoteTransferAvailableFunds(transferDestination);
         } else {
@@ -174,7 +177,7 @@ public class CreateTransferViewModel extends ViewModel {
         Hyperwallet.getDefault().getUser(new HyperwalletListener<HyperwalletUser>() {
             @Override
             public void onSuccess(@Nullable final HyperwalletUser result) {
-                mState.next();
+                mState.toTransferSourceKnown();
                 mSourceToken = result.getToken();
                 loadTransferDestination(mSourceToken);
 
@@ -198,14 +201,14 @@ public class CreateTransferViewModel extends ViewModel {
         //todo replace with transfer method repository and possibly expose a new method there...
         HyperwalletTransferMethodQueryParam queryParam = new HyperwalletTransferMethodQueryParam.Builder()
                 .limit(1)
-                .status(HyperwalletStatusTransition.StatusDefinition.ACTIVATED)
+                .status(StatusTransition.StatusDefinition.ACTIVATED)
                 .build();
 
         Hyperwallet.getDefault().listTransferMethods(queryParam,
                 new HyperwalletListener<HyperwalletPageList<HyperwalletTransferMethod>>() {
                     @Override
                     public void onSuccess(@Nullable HyperwalletPageList<HyperwalletTransferMethod> result) {
-                        mState.next();
+                        mState.toTransferDestinationKnown();
                         HyperwalletTransferMethod transferMethod = result.getDataList().get(0);
                         mTransferDestination.postValue(transferMethod);
                         quoteTransferAvailableFunds(sourceToken, transferMethod);
@@ -230,8 +233,9 @@ public class CreateTransferViewModel extends ViewModel {
             @Override
             public void onSuccess(@Nullable HyperwalletUser result) {
                 mSourceToken = result.getToken();
+                mState.toTransferSourceKnown();
+                mState.toTransferDestinationKnown();
                 quoteTransferAvailableFunds(mSourceToken, transferDestination);
-                mState.next();
             }
 
             @Override
@@ -262,7 +266,7 @@ public class CreateTransferViewModel extends ViewModel {
         mTransferRepository.createTransfer(transfer, new TransferRepository.CreateTransferCallback() {
             @Override
             public void onTransferCreated(Transfer transfer) {
-                mState.next();
+                mState.toTransferMaxAmountKnown();
                 mQuoteAvailableFunds.postValue(transfer);
             }
 
@@ -311,17 +315,29 @@ public class CreateTransferViewModel extends ViewModel {
             mState = INITIAL;
         }
 
-        private void next() {
-            switch (mState) {
-                case INITIAL:
-                    mState = TRANSFER_SOURCE_KNOWN;
-                    break;
-                case TRANSFER_SOURCE_KNOWN:
-                    mState = TRANSFER_DESTINATION_KNOWN;
-                    break;
-                case TRANSFER_DESTINATION_KNOWN:
-                    mState = TRANSFER_MAX_AMOUNT_KNOWN;
-                    break;
+        private void toTransferSourceKnown() {
+            if (mState == INITIAL) {
+                mState = TRANSFER_SOURCE_KNOWN;
+            } else {
+                throw new IllegalStateException("Cannot move from "+ mState + "to "+TRANSFER_SOURCE_KNOWN);
+            }
+
+        }
+
+        private void toTransferDestinationKnown() {
+            if (mState == TRANSFER_SOURCE_KNOWN || mState == TRANSFER_MAX_AMOUNT_KNOWN) {
+                mState = TRANSFER_DESTINATION_KNOWN;
+            } else {
+                throw new IllegalStateException("Cannot move from "+ mState + "to "+TRANSFER_DESTINATION_KNOWN);
+            }
+
+        }
+
+        private void toTransferMaxAmountKnown() {
+            if (mState == TRANSFER_DESTINATION_KNOWN) {
+                mState = TRANSFER_MAX_AMOUNT_KNOWN;
+            } else {
+                throw new IllegalStateException("Cannot move from "+ mState + "to "+TRANSFER_MAX_AMOUNT_KNOWN);
             }
         }
 
