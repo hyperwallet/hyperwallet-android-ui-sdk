@@ -53,6 +53,10 @@ public class ListTransferDestinationViewModel extends ViewModel {
         return mTransferDestinationSection;
     }
 
+    public MutableLiveData<Event<HyperwalletErrors>> getTransferDestinationError() {
+        return mTransferDestinationError;
+    }
+
     /**
      * @return live data of loading information
      */

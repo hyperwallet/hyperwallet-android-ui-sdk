@@ -5,11 +5,8 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.notNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-
-import androidx.lifecycle.ViewModel;
 
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepository;
@@ -47,6 +44,11 @@ public class ListTransferDestinationViewModelTest {
     @Test
     public void testGetTransferDestinationSection_returnsLiveData() {
         assertThat(mModelToTest.getTransferDestinationSection(), is(notNullValue()));
+    }
+
+    @Test
+    public void testGetTransferDestinationError_returnsLiveData() {
+        assertThat(mModelToTest.getTransferDestinationError(), is(notNullValue()));
     }
 
     @Test
