@@ -321,4 +321,8 @@ public class ListTransferDestinationFragment extends DialogFragment implements T
             itemView.setOnClickListener(null);
         }
     }
+
+    interface SelectDestinationItemClickListener {
+        void selectTransferDestination(HyperwalletTransferMethod destinationItem);
+    }
 }
