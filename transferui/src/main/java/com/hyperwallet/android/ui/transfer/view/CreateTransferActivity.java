@@ -70,7 +70,7 @@ public class CreateTransferActivity extends AppCompatActivity {
         // initialize view model factory based from intent parameters
         String sourceToken = getIntent().getStringExtra(EXTRA_TRANSFER_SOURCE_TOKEN);
 
-        CreateTransferViewModel.CreateTransferViewModelFactory factory;
+        final CreateTransferViewModel.CreateTransferViewModelFactory factory;
         if (TextUtils.isEmpty(sourceToken)) {
             factory = new CreateTransferViewModel.CreateTransferViewModelFactory(
                     TransferRepositoryFactory.getInstance().getTransferRepository(),

@@ -70,7 +70,6 @@ public class CreateTransferViewModel extends ViewModel {
     private final MutableLiveData<Event<HyperwalletErrors>> mQuoteErrorEvent = new MutableLiveData<>();
     private final MutableLiveData<Event<HyperwalletErrors>> mQuoteErrors = new MutableLiveData<>();
 
-
     /**
      * Initialize Create Transfer View Model with designated transfer source token
      *
@@ -89,7 +88,7 @@ public class CreateTransferViewModel extends ViewModel {
         mTransferMethodRepository = transferMethodRepository;
         mUserRepository = userRepository;
 
-        // initialized
+        // initialize
         mTransferAvailableFunds.setValue(Boolean.FALSE);
         mIsLoading.postValue(Boolean.TRUE);
         mIsCreateQuoteLoading.setValue(Boolean.FALSE);
@@ -113,7 +112,7 @@ public class CreateTransferViewModel extends ViewModel {
         mTransferMethodRepository = transferMethodRepository;
         mUserRepository = userRepository;
 
-        // initialized
+        // initialize
         mTransferAvailableFunds.setValue(Boolean.FALSE);
         mIsLoading.postValue(Boolean.TRUE);
         mIsCreateQuoteLoading.setValue(Boolean.FALSE);
@@ -324,11 +323,16 @@ public class CreateTransferViewModel extends ViewModel {
         @NonNull
         @Override
         public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-            if (TextUtils.isEmpty(sourceToken)) {
-                return (T) new CreateTransferViewModel(transferRepository, transferMethodRepository, userRepository);
+            if (modelClass.isAssignableFrom(CreateTransferViewModel.class)) {
+                if (TextUtils.isEmpty(sourceToken)) {
+                    return (T) new CreateTransferViewModel(transferRepository, transferMethodRepository,
+                            userRepository);
+                }
+                return (T) new CreateTransferViewModel(sourceToken, transferRepository, transferMethodRepository,
+                        userRepository);
             }
-            return (T) new CreateTransferViewModel(sourceToken, transferRepository, transferMethodRepository,
-                    userRepository);
+
+            throw new IllegalArgumentException("Expecting ViewModel class: " + CreateTransferViewModel.class.getName());
         }
     }
 }
