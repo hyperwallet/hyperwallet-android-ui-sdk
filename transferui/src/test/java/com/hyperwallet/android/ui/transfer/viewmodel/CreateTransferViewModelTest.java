@@ -255,8 +255,7 @@ public class CreateTransferViewModelTest {
                         mTransferMethodRepository, mUserRepository);
 
         CreateTransferViewModel viewModel = factory.create(CreateTransferViewModel.class);
-        viewModel.setTransferNotes("Create quote test notes");
-        viewModel.setTransferAmount("123.23");
+        viewModel.setTransferAllAvailableFunds(true);
 
         // test
         viewModel.createQuoteTransfer();
