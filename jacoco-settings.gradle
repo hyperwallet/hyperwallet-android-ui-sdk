@@ -1,9 +1,7 @@
 apply plugin: 'jacoco'
 
-final def jacocoVersion = "0.8.2"
-
 jacoco {
-    toolVersion = jacocoVersion
+    toolVersion = project.ext.jacocoVersion
 }
 
 android {
@@ -20,7 +18,6 @@ android {
     }
 }
 
-def fileFilter = ['**/BuildConfig.*']
 def debugClassPaths = [
         '**/intermediates/javac/debug/*/classes/**'
 ]
@@ -42,7 +39,7 @@ task jacocoTestReport(type: JacocoReport, dependsOn: 'testDebugUnitTest') {
     classDirectories = fileTree(
             dir: "${buildDir}",
             includes: debugClassPaths,
-            excludes: fileFilter
+            excludes: project.ext.fileFilter
     )
 
     additionalSourceDirs = files(coverageSourceDirs)
