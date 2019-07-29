@@ -22,6 +22,7 @@ android {
 
 def fileFilter = ['**/BuildConfig.*',
                   '**/com/hyperwallet/android/ui/transfer/view/*.*',
+                  '**/com/hyperwallet/android/ui/transfer/HyperwalletTransferUi.*',
                   '**/com/hyperwallet/android/ui/transfer/viewmodel/*.*'
 ]
 
