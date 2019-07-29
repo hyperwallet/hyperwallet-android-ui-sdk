@@ -59,6 +59,7 @@ import java.util.Locale;
 public class CreateTransferFragment extends Fragment {
 
     private static final String EMPTY_STRING = "";
+    private static final String ZERO_AMOUNT = "0.00";
     private View mProgressBar;
     private CreateTransferViewModel mCreateTransferViewModel;
     private EditText mTransferAmount;
@@ -105,7 +106,7 @@ public class CreateTransferFragment extends Fragment {
         mTransferCurrency.setText(EMPTY_STRING);
 
         mTransferAllFundsSummary = view.findViewById(R.id.transfer_summary);
-        String defaultSummary = requireContext().getString(R.string.transfer_summary_label, "0", EMPTY_STRING);
+        String defaultSummary = requireContext().getString(R.string.transfer_summary_label, ZERO_AMOUNT, EMPTY_STRING);
         mTransferAllFundsSummary.setText(defaultSummary);
 
         mTransferNextButtonProgress = view.findViewById(R.id.transfer_action_button_progress_bar);
