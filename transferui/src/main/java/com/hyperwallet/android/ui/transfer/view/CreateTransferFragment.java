@@ -23,7 +23,6 @@ import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getStri
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getStringResourceByName;
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getTransferMethodDetail;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -31,7 +30,6 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -163,10 +161,6 @@ public class CreateTransferFragment extends Fragment {
     }
 
     private void prepareTransferAmount() {
-        mTransferAmount.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI | EditorInfo.IME_ACTION_NEXT);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            mTransferAmount.setImportantForAutofill(View.IMPORTANT_FOR_AUTOFILL_NO);
-        }
         mTransferAmount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -290,12 +284,11 @@ public class CreateTransferFragment extends Fragment {
             @Override
             public void onChanged(String amount) {
                 mTransferAmount.setText(amount);
-                if (!TextUtils.isEmpty(amount)
-                        && mCreateTransferViewModel.getTransferDestination().getValue() != null) {
-                    mTransferAmount.setSelection(amount.length());
+                mTransferAmount.setSelection(TextUtils.isEmpty(amount) ? 0 : amount.length());
+
+                if (mCreateTransferViewModel.getTransferDestination().getValue() != null) {
                     enableNextButton();
                 } else {
-                    mTransferAmount.setSelection(0);
                     disableNextButton();
                 }
             }
