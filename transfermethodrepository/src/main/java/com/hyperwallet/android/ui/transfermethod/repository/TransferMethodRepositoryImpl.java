@@ -105,6 +105,7 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
     @Override
     public void loadLatestTransferMethod(@NonNull final LoadTransferMethodCallback callback) {
         HyperwalletTransferMethodQueryParam queryParam = new HyperwalletTransferMethodQueryParam.Builder()
+                .limit(1)
                 .status(ACTIVATED)
                 .build();
         getHyperwallet().listTransferMethods(queryParam,

@@ -73,6 +73,7 @@ public class CreateTransferViewModelTest {
     private TransferRepository mTransferRepository;
 
     private Transfer mTransfer;
+    private HyperwalletTransferMethod mTransferMethod;
 
     @Before
     public void setup() {
@@ -93,9 +94,9 @@ public class CreateTransferViewModelTest {
                 .memo("Create quote test notes")
                 .build();
 
-        final HyperwalletTransferMethod transferMethod = new HyperwalletTransferMethod();
-        transferMethod.setField(TOKEN, "trm-bank-token");
-        transferMethod.setField(TRANSFER_METHOD_CURRENCY, "CAD");
+        mTransferMethod = new HyperwalletTransferMethod();
+        mTransferMethod.setField(TOKEN, "trm-bank-token");
+        mTransferMethod.setField(TRANSFER_METHOD_CURRENCY, "CAD");
 
         doAnswer(new Answer() {
             @Override
@@ -123,7 +124,7 @@ public class CreateTransferViewModelTest {
             @Override
             public Object answer(InvocationOnMock invocation) {
                 TransferMethodRepository.LoadTransferMethodCallback callback = invocation.getArgument(0);
-                callback.onTransferMethodLoaded(transferMethod);
+                callback.onTransferMethodLoaded(mTransferMethod);
                 return callback;
             }
         }).when(mTransferMethodRepository).loadLatestTransferMethod(any(TransferMethodRepository
@@ -152,6 +153,70 @@ public class CreateTransferViewModelTest {
         assertThat(viewModel.isTransferAllAvailableFunds(), is(notNullValue()));
         assertThat(viewModel.isTransferAllAvailableFunds().getValue(), is(false));
         assertThat(viewModel.isCreateQuoteLoading().getValue(), is(false));
+    }
+
+    @Test
+    public void testCreateTransferViewModel_verifyDefaultValuesWithFundingSource() {
+        CreateTransferViewModel viewModel = new CreateTransferViewModel.CreateTransferViewModelFactory(
+                "src-token", mTransferRepository, mTransferMethodRepository, mUserRepository
+        ).create(CreateTransferViewModel.class);
+
+        assertThat(viewModel, is(notNullValue()));
+        assertThat(viewModel.isTransferAllAvailableFunds().getValue(), is(false));
+        assertThat(viewModel.getTransferAmount().getValue(), is(nullValue()));
+        assertThat(viewModel.getTransferNotes().getValue(), is(nullValue()));
+        assertThat(viewModel.getTransferDestination().getValue().getField(TOKEN), is(mTransferMethod.getField(TOKEN)));
+        assertThat(viewModel.getTransferDestination().getValue().getField(TRANSFER_METHOD_CURRENCY),
+                is(mTransferMethod.getField(TRANSFER_METHOD_CURRENCY)));
+        assertThat(viewModel.isLoading().getValue(), is(false));
+        assertThat(viewModel.isCreateQuoteLoading().getValue(), is(false));
+        assertThat(viewModel.getQuoteAvailableFunds().getValue().getToken(), is(mTransfer.getToken()));
+        assertThat(viewModel.getQuoteAvailableFunds().getValue().getStatus(), is(mTransfer.getStatus()));
+        assertThat(viewModel.getQuoteAvailableFunds().getValue().getClientTransferId(),
+                is(mTransfer.getClientTransferId()));
+        assertThat(viewModel.getQuoteAvailableFunds().getValue().getSourceToken(), is(mTransfer.getSourceToken()));
+        assertThat(viewModel.getQuoteAvailableFunds().getValue().getSourceCurrency(),
+                is(mTransfer.getSourceCurrency()));
+        assertThat(viewModel.getQuoteAvailableFunds().getValue().getDestinationToken(),
+                is(mTransfer.getDestinationToken()));
+        assertThat(viewModel.getQuoteAvailableFunds().getValue().getDestinationAmount(),
+                is(mTransfer.getDestinationAmount()));
+        assertThat(viewModel.getQuoteAvailableFunds().getValue().getDestinationCurrency(),
+                is(mTransfer.getDestinationCurrency()));
+        assertThat(viewModel.getQuoteAvailableFunds().getValue().getMemo(), is(mTransfer.getMemo()));
+        assertThat(viewModel.getCreateTransfer().getValue(), is(nullValue()));
+    }
+
+    @Test
+    public void testCreateTransferViewModel_verifyDefaultValuesWithoutFundingSource() {
+        CreateTransferViewModel viewModel = new CreateTransferViewModel.CreateTransferViewModelFactory(
+                mTransferRepository, mTransferMethodRepository, mUserRepository
+        ).create(CreateTransferViewModel.class);
+
+        assertThat(viewModel, is(notNullValue()));
+        assertThat(viewModel.isTransferAllAvailableFunds().getValue(), is(false));
+        assertThat(viewModel.getTransferAmount().getValue(), is(nullValue()));
+        assertThat(viewModel.getTransferNotes().getValue(), is(nullValue()));
+        assertThat(viewModel.getTransferDestination().getValue().getField(TOKEN), is(mTransferMethod.getField(TOKEN)));
+        assertThat(viewModel.getTransferDestination().getValue().getField(TRANSFER_METHOD_CURRENCY),
+                is(mTransferMethod.getField(TRANSFER_METHOD_CURRENCY)));
+        assertThat(viewModel.isLoading().getValue(), is(false));
+        assertThat(viewModel.isCreateQuoteLoading().getValue(), is(false));
+        assertThat(viewModel.getQuoteAvailableFunds().getValue().getToken(), is(mTransfer.getToken()));
+        assertThat(viewModel.getQuoteAvailableFunds().getValue().getStatus(), is(mTransfer.getStatus()));
+        assertThat(viewModel.getQuoteAvailableFunds().getValue().getClientTransferId(),
+                is(mTransfer.getClientTransferId()));
+        assertThat(viewModel.getQuoteAvailableFunds().getValue().getSourceToken(), is(mTransfer.getSourceToken()));
+        assertThat(viewModel.getQuoteAvailableFunds().getValue().getSourceCurrency(),
+                is(mTransfer.getSourceCurrency()));
+        assertThat(viewModel.getQuoteAvailableFunds().getValue().getDestinationToken(),
+                is(mTransfer.getDestinationToken()));
+        assertThat(viewModel.getQuoteAvailableFunds().getValue().getDestinationAmount(),
+                is(mTransfer.getDestinationAmount()));
+        assertThat(viewModel.getQuoteAvailableFunds().getValue().getDestinationCurrency(),
+                is(mTransfer.getDestinationCurrency()));
+        assertThat(viewModel.getQuoteAvailableFunds().getValue().getMemo(), is(mTransfer.getMemo()));
+        assertThat(viewModel.getCreateTransfer().getValue(), is(nullValue()));
     }
 
     @Test
@@ -202,21 +267,21 @@ public class CreateTransferViewModelTest {
         viewModel.setTransferAmount("123.23");
 
         // test
-        viewModel.createQuoteTransfer();
+        viewModel.createTransfer();
 
-        assertThat(viewModel.getQuoteErrors().getValue(), is(nullValue()));
-        assertThat(viewModel.getQuoteTransfer().getValue(), is(notNullValue()));
-        assertThat(viewModel.getQuoteTransfer().getValue().getSourceToken(), is(mTransfer.getSourceToken()));
-        assertThat(viewModel.getQuoteTransfer().getValue().getToken(), is(mTransfer.getToken()));
-        assertThat(viewModel.getQuoteTransfer().getValue().getCreatedOn(), is(mTransfer.getCreatedOn()));
-        assertThat(viewModel.getQuoteTransfer().getValue().getClientTransferId(), is(mTransfer.getClientTransferId()));
-        assertThat(viewModel.getQuoteTransfer().getValue().getSourceCurrency(), is(mTransfer.getSourceCurrency()));
-        assertThat(viewModel.getQuoteTransfer().getValue().getDestinationToken(), is(mTransfer.getDestinationToken()));
-        assertThat(viewModel.getQuoteTransfer().getValue().getDestinationAmount(),
+        assertThat(viewModel.getCreateTransferErrors().getValue(), is(nullValue()));
+        assertThat(viewModel.getCreateTransfer().getValue(), is(notNullValue()));
+        assertThat(viewModel.getCreateTransfer().getValue().getSourceToken(), is(mTransfer.getSourceToken()));
+        assertThat(viewModel.getCreateTransfer().getValue().getToken(), is(mTransfer.getToken()));
+        assertThat(viewModel.getCreateTransfer().getValue().getCreatedOn(), is(mTransfer.getCreatedOn()));
+        assertThat(viewModel.getCreateTransfer().getValue().getClientTransferId(), is(mTransfer.getClientTransferId()));
+        assertThat(viewModel.getCreateTransfer().getValue().getSourceCurrency(), is(mTransfer.getSourceCurrency()));
+        assertThat(viewModel.getCreateTransfer().getValue().getDestinationToken(), is(mTransfer.getDestinationToken()));
+        assertThat(viewModel.getCreateTransfer().getValue().getDestinationAmount(),
                 is(mTransfer.getDestinationAmount()));
-        assertThat(viewModel.getQuoteTransfer().getValue().getDestinationCurrency(),
+        assertThat(viewModel.getCreateTransfer().getValue().getDestinationCurrency(),
                 is(mTransfer.getDestinationCurrency()));
-        assertThat(viewModel.getQuoteTransfer().getValue().getMemo(), is(mTransfer.getMemo()));
+        assertThat(viewModel.getCreateTransfer().getValue().getMemo(), is(mTransfer.getMemo()));
     }
 
     @Test
@@ -232,7 +297,6 @@ public class CreateTransferViewModelTest {
 
         doAnswer(new Answer() {
             private int call = 0;
-
             @Override
             public Object answer(InvocationOnMock invocation) {
                 if (++call == 1) { // 1st call
@@ -258,14 +322,14 @@ public class CreateTransferViewModelTest {
         viewModel.setTransferAllAvailableFunds(true);
 
         // test
-        viewModel.createQuoteTransfer();
+        viewModel.createTransfer();
 
-        assertThat(viewModel.getQuoteErrors().getValue(), is(notNullValue()));
-        assertThat(viewModel.getQuoteErrors().getValue().getContent().getErrors(),
+        assertThat(viewModel.getCreateTransferErrors().getValue(), is(notNullValue()));
+        assertThat(viewModel.getCreateTransferErrors().getValue().getContent().getErrors(),
                 Matchers.<HyperwalletError>hasSize(1));
-        assertThat(viewModel.getQuoteErrors().getValue().getContent().getErrors().get(0).getMessage(),
+        assertThat(viewModel.getCreateTransferErrors().getValue().getContent().getErrors().get(0).getMessage(),
                 is("The source token you provided doesn’t exist or is not a valid source."));
-        assertThat(viewModel.getQuoteErrors().getValue().getContent().getErrors().get(0).getCode(),
+        assertThat(viewModel.getCreateTransferErrors().getValue().getContent().getErrors().get(0).getCode(),
                 is("INVALID_SOURCE_TOKEN"));
     }
 

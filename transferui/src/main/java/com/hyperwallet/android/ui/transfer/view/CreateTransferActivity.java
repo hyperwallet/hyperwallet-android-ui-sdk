@@ -94,7 +94,7 @@ public class CreateTransferActivity extends AppCompatActivity {
         });
 
         //TODO temporarily display dialog on all quote transfer error
-        mCreateTransferViewModel.getQuoteErrors().observe(this, new Observer<Event<HyperwalletErrors>>() {
+        mCreateTransferViewModel.getCreateTransferErrors().observe(this, new Observer<Event<HyperwalletErrors>>() {
             @Override
             public void onChanged(Event<HyperwalletErrors> event) {
                 if (event != null && !event.isContentConsumed()) {

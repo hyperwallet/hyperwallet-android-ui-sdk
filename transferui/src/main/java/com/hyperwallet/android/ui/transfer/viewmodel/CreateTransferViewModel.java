@@ -45,7 +45,7 @@ import java.util.UUID;
  */
 public class CreateTransferViewModel extends ViewModel {
 
-    private static final String CLIENT_IDENTIFICATION_PREFIX = "HW-MBLA-";
+    private static final String CLIENT_IDENTIFICATION_PREFIX = "HW-ANDROID-";
 
     private final TransferRepository mTransferRepository;
     private final TransferMethodRepository mTransferMethodRepository;
@@ -56,7 +56,7 @@ public class CreateTransferViewModel extends ViewModel {
     private final MutableLiveData<Boolean> mIsLoading = new MutableLiveData<>();
     private final MutableLiveData<Boolean> mIsCreateQuoteLoading = new MutableLiveData<>();
     private final MutableLiveData<Transfer> mQuoteAvailableFunds = new MutableLiveData<>();
-    private final MutableLiveData<Transfer> mQuoteTransfer = new MutableLiveData<>();
+    private final MutableLiveData<Transfer> mCreateTransfer = new MutableLiveData<>();
     private final MutableLiveData<String> mTransferAmount = new MutableLiveData<>();
     private final MutableLiveData<String> mTransferNotes = new MutableLiveData<>();
 
@@ -66,18 +66,17 @@ public class CreateTransferViewModel extends ViewModel {
     private final MutableLiveData<Event<HyperwalletErrors>> mLoadErrors = new MutableLiveData<>();
 
     // create quote error
-    private Observer<Event<HyperwalletErrors>> mQuoteEventObserver;
-    private final MutableLiveData<Event<HyperwalletErrors>> mQuoteErrorEvent = new MutableLiveData<>();
-    private final MutableLiveData<Event<HyperwalletErrors>> mQuoteErrors = new MutableLiveData<>();
+    private Observer<Event<HyperwalletErrors>> mCreateTransferEventObserver;
+    private final MutableLiveData<Event<HyperwalletErrors>> mCreateTransferErrorEvent = new MutableLiveData<>();
+    private final MutableLiveData<Event<HyperwalletErrors>> mCreateTransferErrors = new MutableLiveData<>();
 
     /**
      * Initialize Create Transfer View Model with designated transfer source token
      *
-     * @param sourceToken              Source token that represents either from Wallet, Bank or other EA tokens
-     * @param transferRepository       Transfer repository for making transfer calls to HW Transfer Platform
-     * @param transferMethodRepository Transfer Method repository for making transfer method calls to HW Transfer
-     *                                 Platform
-     * @param userRepository           User repository for making user calls to HW Transfer Platform
+     * @param sourceToken              Source token that represents either from User, Bank or PrepaidCard tokens
+     * @param transferRepository       Transfer repository for making transfer calls to Hyperwallet
+     * @param transferMethodRepository Transfer Method repository for making transfer method calls to Hyperwallet
+     * @param userRepository           User repository for making user calls to Hyperwallet
      */
     CreateTransferViewModel(@NonNull final String sourceToken,
             @NonNull final TransferRepository transferRepository,
@@ -99,10 +98,9 @@ public class CreateTransferViewModel extends ViewModel {
     /**
      * Initialize Create Transfer View Model with designated transfer source token
      *
-     * @param transferRepository       Transfer repository for making transfer calls to HW Transfer Platform
-     * @param transferMethodRepository Transfer Method repository for making transfer method calls to HW Transfer
-     *                                 Platform
-     * @param userRepository           User repository for making user calls to HW Transfer Platform
+     * @param transferRepository       Transfer repository for making transfer calls to Hyperwallet
+     * @param transferMethodRepository Transfer Method repository for making transfer method calls to Hyperwallet
+     * @param userRepository           User repository for making user calls to Hyperwallet
      */
     CreateTransferViewModel(@NonNull final TransferRepository transferRepository,
             @NonNull final TransferMethodRepository transferMethodRepository,
@@ -118,14 +116,14 @@ public class CreateTransferViewModel extends ViewModel {
         mIsCreateQuoteLoading.setValue(Boolean.FALSE);
         createLoadErrorObserver();
         loadTransferSource();
-        createQuoteErrorObserver();
+        createTransferErrorObserver();
     }
 
     public LiveData<Boolean> isTransferAllAvailableFunds() {
         return mTransferAvailableFunds;
     }
 
-    public void setTransferAllAvailableFunds(Boolean transferAll) {
+    public void setTransferAllAvailableFunds(@NonNull final Boolean transferAll) {
         mTransferAvailableFunds.postValue(transferAll);
     }
 
@@ -165,15 +163,15 @@ public class CreateTransferViewModel extends ViewModel {
         return mLoadErrorEvent;
     }
 
-    public LiveData<Transfer> getQuoteTransfer() {
-        return mQuoteTransfer;
+    public LiveData<Transfer> getCreateTransfer() {
+        return mCreateTransfer;
     }
 
-    public LiveData<Event<HyperwalletErrors>> getQuoteErrors() {
-        return mQuoteErrorEvent;
+    public LiveData<Event<HyperwalletErrors>> getCreateTransferErrors() {
+        return mCreateTransferErrorEvent;
     }
 
-    public void createQuoteTransfer() {
+    public void createTransfer() {
         mIsCreateQuoteLoading.postValue(Boolean.TRUE);
         Transfer transfer = mTransferAvailableFunds.getValue() ?
                 new Transfer.Builder()
@@ -195,13 +193,13 @@ public class CreateTransferViewModel extends ViewModel {
         mTransferRepository.createTransfer(transfer, new TransferRepository.CreateTransferCallback() {
             @Override
             public void onTransferCreated(@Nullable Transfer transfer) {
-                mQuoteTransfer.postValue(transfer);
+                mCreateTransfer.postValue(transfer);
                 mIsCreateQuoteLoading.postValue(Boolean.FALSE);
             }
 
             @Override
             public void onError(@NonNull HyperwalletErrors errors) {
-                mQuoteErrors.postValue(new Event<>(errors));
+                mCreateTransferErrors.postValue(new Event<>(errors));
                 mIsCreateQuoteLoading.postValue(Boolean.FALSE);
             }
         });
@@ -211,7 +209,7 @@ public class CreateTransferViewModel extends ViewModel {
     protected void onCleared() {
         super.onCleared();
         mLoadErrors.removeObserver(mLoadErrorEventObserver);
-        mQuoteErrors.removeObserver(mQuoteEventObserver);
+        mCreateTransferErrors.removeObserver(mCreateTransferEventObserver);
     }
 
     private void createLoadErrorObserver() {
@@ -224,14 +222,14 @@ public class CreateTransferViewModel extends ViewModel {
         mLoadErrors.observeForever(mLoadErrorEventObserver);
     }
 
-    private void createQuoteErrorObserver() {
-        mQuoteEventObserver = new Observer<Event<HyperwalletErrors>>() {
+    private void createTransferErrorObserver() {
+        mCreateTransferEventObserver = new Observer<Event<HyperwalletErrors>>() {
             @Override
             public void onChanged(Event<HyperwalletErrors> event) {
-                mQuoteErrorEvent.postValue(event);
+                mCreateTransferErrorEvent.postValue(event);
             }
         };
-        mQuoteErrors.observeForever(mQuoteEventObserver);
+        mCreateTransferErrors.observeForever(mCreateTransferEventObserver);
     }
 
     private void loadTransferSource() {

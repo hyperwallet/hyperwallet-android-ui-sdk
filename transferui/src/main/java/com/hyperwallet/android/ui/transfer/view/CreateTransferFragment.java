@@ -116,7 +116,7 @@ public class CreateTransferFragment extends Fragment {
         mTransferNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mCreateTransferViewModel.createQuoteTransfer();
+                mCreateTransferViewModel.createTransfer();
             }
         });
         disableNextButton();
@@ -157,7 +157,9 @@ public class CreateTransferFragment extends Fragment {
                 mCreateTransferViewModel.setTransferAllAvailableFunds(isChecked);
             }
         });
-        registerObserver();
+        registerTransferDestinationObserver();
+        registerAvailableFundsObserver();
+        registerTransferAmountObserver();
     }
 
     private void prepareTransferAmount() {
@@ -218,7 +220,7 @@ public class CreateTransferFragment extends Fragment {
         });
     }
 
-    private void registerObserver() {
+    private void registerTransferDestinationObserver() {
         mCreateTransferViewModel.isLoading().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(final Boolean loading) {
@@ -228,17 +230,6 @@ public class CreateTransferFragment extends Fragment {
                 } else {
                     mProgressBar.setVisibility(View.GONE);
                     enableInputControls();
-                }
-            }
-        });
-
-        mCreateTransferViewModel.getQuoteAvailableFunds().observe(getViewLifecycleOwner(), new Observer<Transfer>() {
-            @Override
-            public void onChanged(final Transfer transfer) {
-                if (transfer != null) {
-                    String summary = requireContext().getString(R.string.transfer_summary_label,
-                            transfer.getDestinationAmount(), transfer.getDestinationCurrency());
-                    mTransferAllFundsSummary.setText(summary);
                 }
             }
         });
@@ -257,7 +248,22 @@ public class CreateTransferFragment extends Fragment {
                         }
                     }
                 });
+    }
 
+    private void registerAvailableFundsObserver() {
+        mCreateTransferViewModel.getQuoteAvailableFunds().observe(getViewLifecycleOwner(), new Observer<Transfer>() {
+            @Override
+            public void onChanged(final Transfer transfer) {
+                if (transfer != null) {
+                    String summary = requireContext().getString(R.string.transfer_summary_label,
+                            transfer.getDestinationAmount(), transfer.getDestinationCurrency());
+                    mTransferAllFundsSummary.setText(summary);
+                }
+            }
+        });
+    }
+
+    private void registerTransferAmountObserver() {
         mCreateTransferViewModel.isTransferAllAvailableFunds().observe(getViewLifecycleOwner(),
                 new Observer<Boolean>() {
                     @Override
@@ -316,7 +322,7 @@ public class CreateTransferFragment extends Fragment {
             }
         });
 
-        mCreateTransferViewModel.getQuoteTransfer().observe(getViewLifecycleOwner(), new Observer<Transfer>() {
+        mCreateTransferViewModel.getCreateTransfer().observe(getViewLifecycleOwner(), new Observer<Transfer>() {
             @Override
             public void onChanged(Transfer transfer) {
                 // TODO create intent to call next Transfer confirmation screen with parcelable payload of Transfer
