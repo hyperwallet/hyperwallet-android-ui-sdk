@@ -330,29 +330,29 @@ public class CreateTransferFragment extends Fragment {
     }
 
     private void disableInputControls() {
+        mTransferCurrency.setTextColor(getResources().getColor(R.color.colorButtonTextDisabled));
         mTransferAmount.setEnabled(false);
         mTransferNotes.setEnabled(false);
         mTransferAllSwitch.setEnabled(false);
-        mTransferCurrency.setTextColor(getResources().getColor(R.color.colorButtonTextDisabled));
     }
 
     private void enableInputControls() {
+        mTransferCurrency.setTextColor(getResources().getColor(R.color.colorSecondaryDark));
         mTransferAmount.setEnabled(true);
         mTransferNotes.setEnabled(true);
         mTransferAllSwitch.setEnabled(true);
-        mTransferCurrency.setTextColor(getResources().getColor(R.color.colorSecondaryDark));
     }
 
     private void enableNextButton() {
-        mTransferNextButton.setEnabled(true);
         mTransferNextButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         mTransferNextButton.setTextColor(getResources().getColor(R.color.regularColorPrimary));
+        mTransferNextButton.setEnabled(true);
     }
 
     private void disableNextButton() {
+        mTransferNextButton.setBackgroundColor(getResources().getColor(R.color.colorSecondary));
+        mTransferNextButton.setTextColor(getResources().getColor(R.color.colorSecondaryDark));
         mTransferNextButton.setEnabled(false);
-        mTransferNextButton.setBackgroundColor(getResources().getColor(R.color.colorSecondaryDark));
-        mTransferNextButton.setTextColor(getResources().getColor(R.color.colorButtonTextDisabled));
     }
 
     private void showTransferDestination(@NonNull final HyperwalletTransferMethod transferMethod) {
