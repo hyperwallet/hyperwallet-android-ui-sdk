@@ -8,8 +8,13 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
+import androidx.lifecycle.ViewModel;
+
+import com.hyperwallet.android.Hyperwallet;
+import com.hyperwallet.android.HyperwalletAuthenticationTokenProvider;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepository;
+import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryImpl;
 
 import org.junit.Before;
@@ -29,6 +34,7 @@ public class ListTransferDestinationViewModelTest {
 
     @Before
     public void initializedViewModel() {
+        Hyperwallet.getInstance(mock(HyperwalletAuthenticationTokenProvider.class));
         transferMethodRepository = mock(TransferMethodRepositoryImpl.class);
         ListTransferDestinationViewModel.ListTransferDestinationViewModelFactory factory =
                 new ListTransferDestinationViewModel.ListTransferDestinationViewModelFactory(transferMethodRepository);
@@ -62,5 +68,30 @@ public class ListTransferDestinationViewModelTest {
         HyperwalletTransferMethod transferMethod = new HyperwalletTransferMethod();
         mModelToTest.selectTransferDestination(transferMethod);
         assertThat(mModelToTest.getTransferDestinationSection().getValue().getContent(), is(transferMethod));
+    }
+
+    @Test
+    public void testSelectTransferDestinationViewModelFactory_createSelectTransferDestinationViewModelUnSuccessful() {
+        class DummyViewModel extends ViewModel {
+
+        }
+
+        ListTransferDestinationViewModel.ListTransferDestinationViewModelFactory factory =
+                new ListTransferDestinationViewModel.ListTransferDestinationViewModelFactory(
+                        TransferMethodRepositoryFactory.getInstance().getTransferMethodRepository());
+        mThrown.expect(IllegalArgumentException.class);
+        mThrown.expectMessage(
+                "Expecting ViewModel class: com.hyperwallet.android.ui.transfer.viewmodel"
+                        + ".ListTransferDestinationViewModel");
+        factory.create(DummyViewModel.class);
+    }
+
+    @Test
+    public void testSelectTransferDestinationViewModelFactory_createSelectTransferDestinationViewModelSuccessful() {
+        ListTransferDestinationViewModel.ListTransferDestinationViewModelFactory factory =
+                new ListTransferDestinationViewModel.ListTransferDestinationViewModelFactory(
+                        TransferMethodRepositoryFactory.getInstance().getTransferMethodRepository());
+        ListTransferDestinationViewModel viewModel = factory.create(ListTransferDestinationViewModel.class);
+        assertThat(viewModel, is(notNullValue()));
     }
 }
