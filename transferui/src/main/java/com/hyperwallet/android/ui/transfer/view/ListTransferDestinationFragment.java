@@ -132,11 +132,7 @@ public class ListTransferDestinationFragment extends DialogFragment {
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
 
-        if (savedInstanceState != null) {
-            mTransferDestination = savedInstanceState.getParcelable(ARGUMENT_SELECTED_TRANSFER);
-        } else {
-            mTransferDestination = getArguments().getParcelable(ARGUMENT_SELECTED_TRANSFER);
-        }
+        mTransferDestination = getArguments().getParcelable(ARGUMENT_SELECTED_TRANSFER);
         mListTransferDestinationAdapter = new ListTransferDestinationAdapter(mTransferDestination,
                 mListTransferDestinationViewModel);
         mRecyclerView.setAdapter(mListTransferDestinationAdapter);
@@ -193,7 +189,7 @@ public class ListTransferDestinationFragment extends DialogFragment {
 
         private final List<HyperwalletTransferMethod> mTransferDestinations = new ArrayList<>();
         private final ListTransferDestinationViewModel mViewModel;
-        private HyperwalletTransferMethod mSelectedDestination;
+        private final HyperwalletTransferMethod mSelectedDestination;
 
         ListTransferDestinationAdapter(@NonNull final HyperwalletTransferMethod selectedDestination,
                 @NonNull final ListTransferDestinationViewModel viewModel) {
