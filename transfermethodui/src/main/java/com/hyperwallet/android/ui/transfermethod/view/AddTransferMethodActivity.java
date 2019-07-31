@@ -30,6 +30,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.ui.R;
+import com.hyperwallet.android.ui.common.view.TransferMethodUtils;
 import com.hyperwallet.android.ui.common.view.error.DefaultErrorDialogFragment;
 import com.hyperwallet.android.ui.common.view.error.OnNetworkErrorCallback;
 

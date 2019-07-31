@@ -1,9 +1,7 @@
 <resources>
     <string name="app_name">hyperwallet.ui</string>
     <string name="title_account_add">Add Account</string>
-    <string name="not_available">Not Available</string>
     <string name="unknown">Unknown</string>
-    <string name="not_translated_in_braces">(not translated)</string>
 
     <string name="title_activity_select_transfer_method">Select Transfer Method</string>
     <!-- SelectTransferMethodActivity -->
@@ -38,7 +36,6 @@
     <string name="empty_list_transfer_method_information">You didn\'t add an account yet. Once
         created, it will show up here!
     </string>
-    <string name="transfer_method_list_item_description">Ending on %s</string>
     <string name="transfer_method_remove_confirmation">Are you sure that you want to remove this
         account?
     </string>
@@ -60,21 +57,6 @@
     <string name="fee_mix_only_min_formatter">%1$s %2$s + %3$s%% (Min:%1$s %4$s)</string>
     <string name="fee_mix_only_max_formatter">%1$s %2$s + %3$s%% (Max:%1$s %4$s)</string>
     <string name="fee_mix_formatter">%1$s %2$s + %3$s%% (Min:%1$s %4$s, Max:%1$s %5$s)</string>
-
-    <!-- title and font icon -->
-    <string name="bank_account">Bank Account</string>
-    <string name="bank_card">Debit Card</string>
-    <string name="wire_account">Wire Transfer</string>
-    <string name="paper_check">Paper Check</string>
-    <string name="prepaid_card">Prepaid Card</string>
-    <string name="paypal_account">PayPal Account</string>
-
-    <string name="bank_account_font_icon">\uE000</string>
-    <string name="bank_card_font_icon">\uE005</string>
-    <string name="wire_account_font_icon">\uE00D</string>
-    <string name="paper_check_font_icon">\uE002</string>
-    <string name="prepaid_card_font_icon">\uE00A</string>
-    <string name="paypal_account_font_icon">\uE021</string>
 
     <string name="account_holder">Account Holder</string>
     <string name="account_information">Account Information</string>
