@@ -1,5 +1,6 @@
-apply from: "$rootProject.projectDir/android-library.gradle"
 description = 'Test Utils for Hyperwallet UI SDK'
+
+apply from: "$rootProject.projectDir/android-library.gradle"
 
 dependencies {
     implementation "androidx.test:rules:$testRulesVersion"
