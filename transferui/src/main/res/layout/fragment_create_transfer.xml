@@ -48,7 +48,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="@dimen/grid_margin_left"
                     android:layout_marginTop="@dimen/grid_margin_top"
-                    android:text="@string/destination_header_label"
+                    android:text="@string/transfer_destination"
                     android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"/>
             </LinearLayout>
 

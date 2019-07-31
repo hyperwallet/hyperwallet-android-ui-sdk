@@ -147,6 +147,12 @@ public class CreateTransferViewModel extends ViewModel {
         return mTransferDestination;
     }
 
+    public void setTransferDestination(@NonNull final HyperwalletTransferMethod transferDestination) {
+        mIsLoading.postValue(Boolean.TRUE);
+        mTransferDestination.postValue(transferDestination);
+        quoteAvailableTransferFunds(mQuoteAvailableFunds.getValue().getSourceToken(), transferDestination);
+    }
+
     public LiveData<Boolean> isLoading() {
         return mIsLoading;
     }

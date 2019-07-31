@@ -16,6 +16,8 @@
  */
 package com.hyperwallet.android.ui.transfer.view;
 
+import static android.app.Activity.RESULT_OK;
+
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_COUNTRY;
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_CURRENCY;
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TYPE;
@@ -23,6 +25,7 @@ import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getStri
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getStringResourceByName;
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getTransferMethodDetail;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -45,6 +48,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.google.android.material.snackbar.Snackbar;
 import com.hyperwallet.android.model.transfer.Transfer;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
+import com.hyperwallet.android.ui.common.view.OneClickListener;
 import com.hyperwallet.android.ui.transfer.R;
 import com.hyperwallet.android.ui.transfer.viewmodel.CreateTransferViewModel;
 
@@ -55,6 +59,8 @@ import java.util.Locale;
  * Create Transfer Fragment
  */
 public class CreateTransferFragment extends Fragment {
+
+    public static final short SELECT_TRANSFER_DESTINATION_RESULT_CODE = 101;
 
     private static final String EMPTY_STRING = "";
     private static final String ZERO_AMOUNT = "0.00";
@@ -104,7 +110,8 @@ public class CreateTransferFragment extends Fragment {
         mTransferCurrency.setText(EMPTY_STRING);
 
         mTransferAllFundsSummary = view.findViewById(R.id.transfer_summary);
-        String defaultSummary = requireContext().getString(R.string.transfer_summary_label, ZERO_AMOUNT, EMPTY_STRING);
+        final String defaultSummary = requireContext().getString(R.string.transfer_summary_label, ZERO_AMOUNT,
+                EMPTY_STRING);
         mTransferAllFundsSummary.setText(defaultSummary);
 
         mTransferNextButtonProgress = view.findViewById(R.id.transfer_action_button_progress_bar);
@@ -129,19 +136,22 @@ public class CreateTransferFragment extends Fragment {
 
         // transfer destination
         mTransferDestination = view.findViewById(R.id.transfer_destination);
-        mTransferDestination.setOnClickListener(new View.OnClickListener() {
+        mTransferDestination.setOnClickListener(new OneClickListener() {
             @Override
-            public void onClick(View v) {
-                //TODO temporary action for transfer destination clicked; it should open up transfer method list UI
-                Snackbar.make(mTransferDestination, "LIST Transfer clicked", Snackbar.LENGTH_SHORT).show();
+            public void onOneClick(View v) {
+                HyperwalletTransferMethod activeDestination =
+                        mCreateTransferViewModel.getTransferDestination().getValue();
+                Intent intent = new Intent(requireContext(), ListTransferDestinationActivity.class);
+                intent.putExtra(ListTransferDestinationActivity.EXTRA_SELECTED_DESTINATION, activeDestination);
+                startActivityForResult(intent, SELECT_TRANSFER_DESTINATION_RESULT_CODE);
             }
         });
 
         // add transfer destination
         mAddTransferDestination = view.findViewById(R.id.add_transfer_destination);
-        mAddTransferDestination.setOnClickListener(new View.OnClickListener() {
+        mAddTransferDestination.setOnClickListener(new OneClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onOneClick(View v) {
                 //TODO temporary action for transfer destination clicked; it should open up add transfer method UI
                 Snackbar.make(mAddTransferDestination, "ADD Transfer clicked", Snackbar.LENGTH_SHORT).show();
             }
@@ -158,6 +168,15 @@ public class CreateTransferFragment extends Fragment {
         registerTransferDestinationObserver();
         registerAvailableFundsObserver();
         registerTransferAmountObserver();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK && requestCode == SELECT_TRANSFER_DESTINATION_RESULT_CODE && data != null) {
+            HyperwalletTransferMethod selectedTransferMethod = data.getParcelableExtra(
+                    ListTransferDestinationActivity.EXTRA_SELECTED_DESTINATION);
+            mCreateTransferViewModel.setTransferDestination(selectedTransferMethod);
+        }
     }
 
     private void prepareTransferAmount() {

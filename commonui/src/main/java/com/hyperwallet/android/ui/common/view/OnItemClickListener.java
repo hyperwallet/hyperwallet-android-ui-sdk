@@ -16,31 +16,10 @@
  */
 package com.hyperwallet.android.ui.common.view;
 
-import android.os.SystemClock;
-import android.view.View;
-
 /**
- * Helper class that holds a time of the first click event and won't call onClick callback during a delay.
+ * Click listener that delegates events from a View to an Adapter when one of item has clicked.
  */
-public abstract class OneClickListener implements View.OnClickListener {
-    private static final long CLICK_DELAY_MILLIS = 800L;
-    private long mFirstOccurrenceClickTime;
+public interface OnItemClickListener {
 
-    @Override
-    public void onClick(View v) {
-        if (SystemClock.elapsedRealtime() - mFirstOccurrenceClickTime < CLICK_DELAY_MILLIS) {
-            return;
-        }
-
-        onOneClick(v);
-        mFirstOccurrenceClickTime = SystemClock.elapsedRealtime();
-
-    }
-
-    /**
-     * Handle click events with a delay. This callback is time aware and will not appear the second time during a delay.
-     *
-     * @param v View
-     */
-    public abstract void onOneClick(View v);
+    void onItemClick(int position);
 }
