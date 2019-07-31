@@ -1,0 +1,9 @@
+description = 'Test Utils for Hyperwallet UI SDK'
+
+apply from: "$rootProject.projectDir/android-library.gradle"
+
+dependencies {
+    implementation "androidx.test:rules:$testRulesVersion"
+    implementation "androidx.test.espresso:espresso-core:$espressoVersion"
+    implementation "com.squareup.okhttp3:mockwebserver:$mockServerVersion"
+}
