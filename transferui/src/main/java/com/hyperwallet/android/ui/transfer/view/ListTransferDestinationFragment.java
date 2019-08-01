@@ -255,7 +255,7 @@ public class ListTransferDestinationFragment extends DialogFragment {
             mViewModel.selectedTransferDestination(mTransferMethod);
         }
 
-        void bind(HyperwalletTransferMethod destination, boolean selected) {
+        void bind(@NonNull final HyperwalletTransferMethod destination, final boolean selected) {
             mTransferMethod = destination;
             String type = destination.getField(TYPE);
             Locale locale = new Locale.Builder().setRegion(destination.getField(TRANSFER_METHOD_COUNTRY)).build();
