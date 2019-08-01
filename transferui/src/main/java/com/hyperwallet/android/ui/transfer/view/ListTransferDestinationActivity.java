@@ -110,7 +110,9 @@ public class ListTransferDestinationActivity extends AppCompatActivity {
                 new Observer<Event<HyperwalletErrors>>() {
                     @Override
                     public void onChanged(Event<HyperwalletErrors> errorsEvent) {
-                        showError(errorsEvent.getContent().getErrors());
+                        if (!errorsEvent.isContentConsumed()) {
+                            showError(errorsEvent.getContent().getErrors());
+                        }
                     }
                 });
     }
