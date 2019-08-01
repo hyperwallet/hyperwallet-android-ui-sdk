@@ -7,7 +7,6 @@
     android:layout_height="wrap_content"
     android:paddingStart="@dimen/grid_padding_left"
     android:paddingEnd="@dimen/grid_padding_right"
-    tools:background="#DADADA"
     tools:layout_height="wrap_content"
     tools:layout_width="match_parent">
 
@@ -74,8 +73,8 @@
         android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="@dimen/divider_height"
+        android:background="?android:attr/listDivider"
         android:layout_marginTop="@dimen/divider_padding_top"
-        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="@+id/title"
         app:layout_constraintTop_toBottomOf="@+id/description_2"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
