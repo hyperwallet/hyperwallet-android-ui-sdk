@@ -64,7 +64,7 @@ public class ListTransferDestinationViewModelTest {
     }
 
     @Test
-    public void testSelectTransferDestination_callRepository() {
+    public void testSelectTransferDestination_callsRepository() {
         HyperwalletTransferMethod transferMethod = new HyperwalletTransferMethod();
         mModelToTest.selectedTransferDestination(transferMethod);
         assertThat(mModelToTest.getSelectedTransferDestination().getValue().getContent(), is(transferMethod));
