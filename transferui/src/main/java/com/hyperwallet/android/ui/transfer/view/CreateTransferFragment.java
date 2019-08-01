@@ -200,6 +200,12 @@ public class CreateTransferFragment extends Fragment {
                 if (before != count) {
                     mCreateTransferViewModel.setTransferAmount(s.toString());
                 }
+
+                if (TextUtils.isEmpty(mTransferAmount.getText())) {
+                    disableNextButton();
+                } else {
+                    enableNextButton();
+                }
             }
 
             @Override
@@ -290,13 +296,11 @@ public class CreateTransferFragment extends Fragment {
                                         getResources().getColor(R.color.colorButtonTextDisabled));
                                 mTransferAmount.setEnabled(false);
                                 mTransferAmount.setText(transfer.getDestinationAmount());
-                                enableNextButton();
                             }
                         } else {
                             mTransferCurrency.setTextColor(getResources().getColor(R.color.colorSecondaryDark));
                             mTransferAmount.setEnabled(true);
                             mTransferAmount.setText(null);
-                            disableNextButton();
                         }
                     }
                 });
@@ -306,12 +310,6 @@ public class CreateTransferFragment extends Fragment {
             public void onChanged(String amount) {
                 mTransferAmount.setText(amount);
                 mTransferAmount.setSelection(TextUtils.isEmpty(amount) ? 0 : amount.length());
-
-                if (mCreateTransferViewModel.getTransferDestination().getValue() != null) {
-                    enableNextButton();
-                } else {
-                    disableNextButton();
-                }
             }
         });
 

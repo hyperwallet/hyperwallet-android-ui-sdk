@@ -216,7 +216,6 @@
                 <Button
                     android:id="@+id/transfer_action_button"
                     style="@style/Widget.Hyperwallet.Button"
-                    android:enabled="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|center"
