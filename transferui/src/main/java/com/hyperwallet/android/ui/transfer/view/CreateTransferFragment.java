@@ -18,6 +18,7 @@ package com.hyperwallet.android.ui.transfer.view;
 
 import static android.app.Activity.RESULT_OK;
 
+import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TOKEN;
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_COUNTRY;
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_CURRENCY;
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TYPE;
@@ -142,7 +143,8 @@ public class CreateTransferFragment extends Fragment {
                 HyperwalletTransferMethod activeDestination =
                         mCreateTransferViewModel.getTransferDestination().getValue();
                 Intent intent = new Intent(requireContext(), ListTransferDestinationActivity.class);
-                intent.putExtra(ListTransferDestinationActivity.EXTRA_SELECTED_DESTINATION, activeDestination);
+                intent.putExtra(ListTransferDestinationActivity.EXTRA_SELECTED_DESTINATION_TOKEN,
+                        activeDestination.getField(TOKEN));
                 startActivityForResult(intent, SELECT_TRANSFER_DESTINATION_RESULT_CODE);
             }
         });
@@ -174,7 +176,7 @@ public class CreateTransferFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK && requestCode == SELECT_TRANSFER_DESTINATION_RESULT_CODE && data != null) {
             HyperwalletTransferMethod selectedTransferMethod = data.getParcelableExtra(
-                    ListTransferDestinationActivity.EXTRA_SELECTED_DESTINATION);
+                    ListTransferDestinationActivity.EXTRA_SELECTED_DESTINATION_TOKEN);
             mCreateTransferViewModel.setTransferDestination(selectedTransferMethod);
         }
     }

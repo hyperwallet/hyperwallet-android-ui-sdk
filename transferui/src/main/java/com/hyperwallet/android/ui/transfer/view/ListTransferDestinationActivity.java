@@ -20,6 +20,7 @@ package com.hyperwallet.android.ui.transfer.view;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
@@ -45,7 +46,7 @@ import java.util.List;
 
 public class ListTransferDestinationActivity extends AppCompatActivity {
 
-    public static final String EXTRA_SELECTED_DESTINATION = "SELECTED_DESTINATION";
+    public static final String EXTRA_SELECTED_DESTINATION_TOKEN = "SELECTED_DESTINATION_TOKEN";
 
     private ListTransferDestinationViewModel mListTransferDestinationViewModel;
 
@@ -54,10 +55,10 @@ public class ListTransferDestinationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_transfer_destination);
 
-        HyperwalletTransferMethod selectedDestination = getIntent().getParcelableExtra(EXTRA_SELECTED_DESTINATION);
-        if (selectedDestination == null) {
+        String transferToken = getIntent().getStringExtra(EXTRA_SELECTED_DESTINATION_TOKEN);
+        if (TextUtils.isEmpty(transferToken)) {
             throw new IllegalArgumentException(
-                    "EXTRA_SELECTED_DESTINATION intent data is needed to start this activity");
+                    "EXTRA_SELECTED_DESTINATION_TOKEN intent data is needed to start this activity");
         }
 
         mListTransferDestinationViewModel = ViewModelProviders.of(this,
@@ -67,7 +68,7 @@ public class ListTransferDestinationActivity extends AppCompatActivity {
         registerObservers();
 
         if (savedInstanceState == null) {
-            initFragment(ListTransferDestinationFragment.newInstance(selectedDestination));
+            initFragment(ListTransferDestinationFragment.newInstance(transferToken));
         }
     }
 
@@ -99,7 +100,7 @@ public class ListTransferDestinationActivity extends AppCompatActivity {
                     @Override
                     public void onChanged(Event<HyperwalletTransferMethod> destination) {
                         Intent intent = new Intent();
-                        intent.putExtra(EXTRA_SELECTED_DESTINATION, destination.getContent());
+                        intent.putExtra(EXTRA_SELECTED_DESTINATION_TOKEN, destination.getContent());
                         setResult(Activity.RESULT_OK, intent);
                         finish();
                     }

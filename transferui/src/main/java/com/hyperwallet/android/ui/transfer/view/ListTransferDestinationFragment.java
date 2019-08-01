@@ -48,7 +48,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
-import com.hyperwallet.android.ui.common.view.OnItemClickListener;
 import com.hyperwallet.android.ui.transfer.R;
 import com.hyperwallet.android.ui.transfer.viewmodel.ListTransferDestinationViewModel;
 
@@ -60,27 +59,27 @@ import java.util.Objects;
 public class ListTransferDestinationFragment extends DialogFragment {
 
     public static final String TAG = "HW:" + ListTransferDestinationFragment.class.getSimpleName();
-    public static final String ARGUMENT_SELECTED_TRANSFER = "SELECTED_TRANSFER";
+    public static final String ARGUMENT_SELECTED_TRANSFER_TOKEN = "SELECTED_TRANSFER_TOKEN";
 
     private ListTransferDestinationViewModel mListTransferDestinationViewModel;
     private RecyclerView mRecyclerView;
     private ListTransferDestinationAdapter mListTransferDestinationAdapter;
     private View mProgressBar;
-    private HyperwalletTransferMethod mTransferDestination;
+    private String mActiveTransferToken;
 
     /**
      * Please don't use this constructor this is reserved for Android Core Framework
      *
-     * @see #newInstance(HyperwalletTransferMethod)
+     * @see #newInstance(String)
      */
     public ListTransferDestinationFragment() {
     }
 
-    static ListTransferDestinationFragment newInstance(@NonNull final HyperwalletTransferMethod transferMethod) {
+    static ListTransferDestinationFragment newInstance(@NonNull final String activeTransferToken) {
         Bundle bundle = new Bundle();
-        bundle.putParcelable(ARGUMENT_SELECTED_TRANSFER, transferMethod);
+        bundle.putString(ARGUMENT_SELECTED_TRANSFER_TOKEN, activeTransferToken);
         ListTransferDestinationFragment fragment = new ListTransferDestinationFragment();
-        fragment.mTransferDestination = transferMethod;
+        fragment.mActiveTransferToken = activeTransferToken;
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -132,8 +131,8 @@ public class ListTransferDestinationFragment extends DialogFragment {
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
 
-        mTransferDestination = getArguments().getParcelable(ARGUMENT_SELECTED_TRANSFER);
-        mListTransferDestinationAdapter = new ListTransferDestinationAdapter(mTransferDestination,
+        mActiveTransferToken = getArguments().getString(ARGUMENT_SELECTED_TRANSFER_TOKEN);
+        mListTransferDestinationAdapter = new ListTransferDestinationAdapter(mActiveTransferToken,
                 mListTransferDestinationViewModel);
         mRecyclerView.setAdapter(mListTransferDestinationAdapter);
     }
@@ -161,20 +160,20 @@ public class ListTransferDestinationFragment extends DialogFragment {
         });
     }
 
-    void hideSoftKey(@NonNull View focusedView) {
+    private void hideSoftKey(@NonNull View focusedView) {
         InputMethodManager inputMethodManager = (InputMethodManager) focusedView.getContext().getSystemService(
                 Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(focusedView.getWindowToken(), 0);
     }
 
-    void onClose() {
+    private void onClose() {
         requireActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         requireActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         requireActivity().getWindow().setStatusBarColor(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark));
         requireActivity().getWindow().getDecorView().setSystemUiVisibility(0);
     }
 
-    void onView() {
+    private void onView() {
         requireActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         requireActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -184,14 +183,13 @@ public class ListTransferDestinationFragment extends DialogFragment {
         }
     }
 
-    private class ListTransferDestinationAdapter extends RecyclerView.Adapter<TransferDestinationViewHolder> implements
-            OnItemClickListener {
+    private class ListTransferDestinationAdapter extends RecyclerView.Adapter<TransferDestinationViewHolder> {
 
         private final List<HyperwalletTransferMethod> mTransferDestinations = new ArrayList<>();
         private final ListTransferDestinationViewModel mViewModel;
-        private final HyperwalletTransferMethod mSelectedDestination;
+        private final String mSelectedDestination;
 
-        ListTransferDestinationAdapter(@NonNull final HyperwalletTransferMethod selectedDestination,
+        ListTransferDestinationAdapter(@NonNull final String selectedDestination,
                 @NonNull final ListTransferDestinationViewModel viewModel) {
             mSelectedDestination = selectedDestination;
             mViewModel = viewModel;
@@ -204,13 +202,13 @@ public class ListTransferDestinationFragment extends DialogFragment {
             LayoutInflater layoutInflater = LayoutInflater.from(context);
             View itemCurrencyView = layoutInflater.inflate(R.layout.item_transfer_destination, parent, false);
 
-            return new TransferDestinationViewHolder(itemCurrencyView, this);
+            return new TransferDestinationViewHolder(itemCurrencyView, mViewModel);
         }
 
         @Override
         public void onBindViewHolder(@NonNull TransferDestinationViewHolder holder, int position) {
             HyperwalletTransferMethod destination = mTransferDestinations.get(position);
-            holder.bind(destination, Objects.equals(destination.getField(TOKEN), mSelectedDestination.getField(TOKEN)));
+            holder.bind(destination, Objects.equals(destination.getField(TOKEN), mSelectedDestination));
         }
 
         @Override
@@ -223,12 +221,7 @@ public class ListTransferDestinationFragment extends DialogFragment {
             holder.recycle();
         }
 
-        @Override
-        public void onItemClick(int position) {
-            mViewModel.selectedTransferDestination(mTransferDestinations.get(position));
-        }
-
-        void replaceData(List<HyperwalletTransferMethod> destinations) {
+        void replaceData(@NonNull final List<HyperwalletTransferMethod> destinations) {
             mTransferDestinations.clear();
             mTransferDestinations.addAll(destinations);
             notifyDataSetChanged();
@@ -241,11 +234,11 @@ public class ListTransferDestinationFragment extends DialogFragment {
         private final TextView mTransferDestinationCountry;
         private final TextView mTransferDestinationIdentification;
         private final ImageView mSelectedIcon;
-        private final OnItemClickListener mOnItemClickListener;
-
+        private final ListTransferDestinationViewModel mViewModel;
+        private HyperwalletTransferMethod mTransferMethod;
 
         TransferDestinationViewHolder(@NonNull final View itemView,
-                @NonNull final OnItemClickListener itemClickListener) {
+                @NonNull final ListTransferDestinationViewModel viewModel) {
             super(itemView);
             itemView.setOnClickListener(this);
 
@@ -254,16 +247,16 @@ public class ListTransferDestinationFragment extends DialogFragment {
             mTransferDestinationCountry = itemView.findViewById(R.id.description_1);
             mTransferDestinationIdentification = itemView.findViewById(R.id.description_2);
             mSelectedIcon = itemView.findViewById(R.id.item_selected_image);
-            mOnItemClickListener = itemClickListener;
+            mViewModel = viewModel;
         }
 
         @Override
         public void onClick(View v) {
-            int position = getAdapterPosition();
-            mOnItemClickListener.onItemClick(position);
+            mViewModel.selectedTransferDestination(mTransferMethod);
         }
 
         void bind(HyperwalletTransferMethod destination, boolean selected) {
+            mTransferMethod = destination;
             String type = destination.getField(TYPE);
             Locale locale = new Locale.Builder().setRegion(destination.getField(TRANSFER_METHOD_COUNTRY)).build();
             String transferId = getTransferMethodDetail(mTitle.getContext(), destination, type);
