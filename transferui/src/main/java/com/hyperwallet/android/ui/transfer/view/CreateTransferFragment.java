@@ -64,7 +64,6 @@ public class CreateTransferFragment extends Fragment {
     public static final short SELECT_TRANSFER_DESTINATION_RESULT_CODE = 101;
 
     private static final String EMPTY_STRING = "";
-    private static final String ZERO_AMOUNT = "0.00";
     private View mProgressBar;
     private CreateTransferViewModel mCreateTransferViewModel;
     private EditText mTransferAmount;
@@ -106,16 +105,11 @@ public class CreateTransferFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         mProgressBar = view.findViewById(R.id.progress_bar);
+        mTransferAllFundsSummary = view.findViewById(R.id.transfer_summary);
+        mTransferNextButtonProgress = view.findViewById(R.id.transfer_action_button_progress_bar);
 
         mTransferCurrency = view.findViewById(R.id.transfer_amount_currency);
         mTransferCurrency.setText(EMPTY_STRING);
-
-        mTransferAllFundsSummary = view.findViewById(R.id.transfer_summary);
-        final String defaultSummary = requireContext().getString(R.string.transfer_summary_label, ZERO_AMOUNT,
-                EMPTY_STRING);
-        mTransferAllFundsSummary.setText(defaultSummary);
-
-        mTransferNextButtonProgress = view.findViewById(R.id.transfer_action_button_progress_bar);
 
         // next button
         mTransferNextButton = view.findViewById(R.id.transfer_action_button);
@@ -279,6 +273,7 @@ public class CreateTransferFragment extends Fragment {
                     String summary = requireContext().getString(R.string.transfer_summary_label,
                             transfer.getDestinationAmount(), transfer.getDestinationCurrency());
                     mTransferAllFundsSummary.setText(summary);
+                    mTransferAllFundsSummary.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -363,9 +358,11 @@ public class CreateTransferFragment extends Fragment {
     }
 
     private void enableNextButton() {
-        mTransferNextButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-        mTransferNextButton.setTextColor(getResources().getColor(R.color.regularColorPrimary));
-        mTransferNextButton.setEnabled(true);
+        if (mCreateTransferViewModel.getTransferDestination().getValue() != null) {
+            mTransferNextButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            mTransferNextButton.setTextColor(getResources().getColor(R.color.regularColorPrimary));
+            mTransferNextButton.setEnabled(true);
+        }
     }
 
     private void disableNextButton() {
