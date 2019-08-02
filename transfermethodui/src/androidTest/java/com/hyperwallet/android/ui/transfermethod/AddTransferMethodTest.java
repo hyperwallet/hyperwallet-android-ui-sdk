@@ -22,7 +22,7 @@ import static java.net.HttpURLConnection.HTTP_BAD_REQUEST;
 import static java.net.HttpURLConnection.HTTP_OK;
 
 import static com.hyperwallet.android.ui.common.view.error.DefaultErrorDialogFragment.RESULT_ERROR;
-import static com.hyperwallet.android.ui.transfermethod.util.EspressoUtils.nestedScrollTo;
+import static com.hyperwallet.android.ui.testutils.util.EspressoUtils.nestedScrollTo;
 
 import android.app.Instrumentation;
 import android.content.Intent;
@@ -38,10 +38,10 @@ import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
 import com.hyperwallet.android.ui.common.view.error.DefaultErrorDialogFragment;
+import com.hyperwallet.android.ui.testutils.TestAuthenticationProvider;
+import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
+import com.hyperwallet.android.ui.testutils.rule.HyperwalletMockWebServer;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
-import com.hyperwallet.android.ui.transfermethod.rule.HyperwalletExternalResourceManager;
-import com.hyperwallet.android.ui.transfermethod.rule.HyperwalletMockWebServer;
-import com.hyperwallet.android.ui.transfermethod.util.TestAuthenticationProvider;
 import com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity;
 
 import org.junit.After;

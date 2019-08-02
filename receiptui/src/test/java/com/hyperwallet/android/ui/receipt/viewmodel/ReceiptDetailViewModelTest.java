@@ -14,8 +14,8 @@ import androidx.lifecycle.ViewModelProviders;
 import com.hyperwallet.android.exception.HyperwalletException;
 import com.hyperwallet.android.model.paging.HyperwalletPageList;
 import com.hyperwallet.android.model.receipt.Receipt;
-import com.hyperwallet.android.ui.receipt.rule.HyperwalletExternalResourceManager;
 import com.hyperwallet.android.ui.receipt.view.ReceiptDetailActivity;
+import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
