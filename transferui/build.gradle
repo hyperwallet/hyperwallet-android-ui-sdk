@@ -2,6 +2,7 @@ project.ext {
     mavenName = 'Hyperwallet Android Transfer UI SDK'
     fileFilter = ['**/BuildConfig.*',
                   '**/com/hyperwallet/android/ui/transfer/view/*.*',
+                  '**/com/hyperwallet/android/ui/transfer/HyperwalletTransferUi.*',
                   '**/com/hyperwallet/android/ui/transfer/viewmodel/*.*'
     ]
 }
@@ -21,4 +22,5 @@ dependencies {
 
     testImplementation "org.robolectric:robolectric:$robolectricVersion"
     testImplementation "com.squareup.okhttp3:mockwebserver:$mockWebServerVersion"
+    testImplementation project(':testutils')
 }

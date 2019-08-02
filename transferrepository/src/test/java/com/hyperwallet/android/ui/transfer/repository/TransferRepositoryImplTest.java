@@ -21,7 +21,7 @@ import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.StatusTransition;
 import com.hyperwallet.android.model.TypeReference;
 import com.hyperwallet.android.model.transfer.Transfer;
-import com.hyperwallet.android.ui.transfer.rule.HyperwalletExternalResourceManager;
+import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
 import com.hyperwallet.android.util.JsonUtils;
 
 import org.hamcrest.Matchers;

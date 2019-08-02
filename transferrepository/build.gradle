@@ -11,4 +11,5 @@ dependencies {
     api project(':commonrepository')
 
     testImplementation "org.robolectric:robolectric:$robolectricVersion"
+    testImplementation project(':testutils')
 }
