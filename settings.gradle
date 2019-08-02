@@ -6,4 +6,5 @@ include ':commonui',
         ':transfermethodui',
         ':transferrepository',
         ':transferui',
-        ':userrepository'
+        ':userrepository',
+        ':testutils'

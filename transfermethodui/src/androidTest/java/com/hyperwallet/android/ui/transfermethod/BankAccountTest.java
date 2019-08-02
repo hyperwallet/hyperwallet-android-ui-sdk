@@ -24,11 +24,11 @@ import static java.net.HttpURLConnection.HTTP_OK;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 import static com.hyperwallet.android.model.transfermethod.HyperwalletBankAccount.Purpose.SAVINGS;
-import static com.hyperwallet.android.ui.transfermethod.util.EspressoUtils.hasEmptyText;
-import static com.hyperwallet.android.ui.transfermethod.util.EspressoUtils.hasErrorText;
-import static com.hyperwallet.android.ui.transfermethod.util.EspressoUtils.hasNoErrorText;
-import static com.hyperwallet.android.ui.transfermethod.util.EspressoUtils.nestedScrollTo;
-import static com.hyperwallet.android.ui.transfermethod.util.EspressoUtils.withHint;
+import static com.hyperwallet.android.ui.testutils.util.EspressoUtils.hasEmptyText;
+import static com.hyperwallet.android.ui.testutils.util.EspressoUtils.hasErrorText;
+import static com.hyperwallet.android.ui.testutils.util.EspressoUtils.hasNoErrorText;
+import static com.hyperwallet.android.ui.testutils.util.EspressoUtils.nestedScrollTo;
+import static com.hyperwallet.android.ui.testutils.util.EspressoUtils.withHint;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -48,11 +48,11 @@ import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
+import com.hyperwallet.android.ui.testutils.TestAuthenticationProvider;
+import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
+import com.hyperwallet.android.ui.testutils.rule.HyperwalletMockWebServer;
+import com.hyperwallet.android.ui.testutils.util.RecyclerViewCountAssertion;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
-import com.hyperwallet.android.ui.transfermethod.rule.HyperwalletExternalResourceManager;
-import com.hyperwallet.android.ui.transfermethod.rule.HyperwalletMockWebServer;
-import com.hyperwallet.android.ui.transfermethod.util.RecyclerViewCountAssertion;
-import com.hyperwallet.android.ui.transfermethod.util.TestAuthenticationProvider;
 import com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity;
 
 import org.junit.After;
