@@ -1,6 +1,6 @@
 <resources>
     <string name="title_activity_create_transfer">Transfer Funds</string>
-    <string name="destination_header_label">Destination</string>
+    <string name="transfer_destination">Destination</string>
     <string name="transfer_header_label">Transfer</string>
     <string name="transfer_amount_hint">Amount</string>
     <string name="transfer_currency_placeholder">USD</string>
@@ -15,4 +15,10 @@
     <string name="add_transfer_description_1">An account hasn\'t been setup yet,</string>
     <string name="add_transfer_description_2">please add an account first.</string>
     <string name="transfer_destination_selection_description">Transfer method selection</string>
+    <string name="destination_item_description">Destination item</string>
+
+    <string name="transfer_item_icon_placeholder">\uE000</string>
+    <string name="transfer_item_title_placeholder">Transfer Type</string>
+    <string name="transfer_item_country_placeholder">Country Name</string>
+    <string name="transfer_item_identification_placeholder">Editing on XXXX</string>
 </resources>

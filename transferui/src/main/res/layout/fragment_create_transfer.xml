@@ -48,7 +48,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="@dimen/grid_margin_left"
                     android:layout_marginTop="@dimen/grid_margin_top"
-                    android:text="@string/destination_header_label"
+                    android:text="@string/transfer_destination"
                     android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"/>
             </LinearLayout>
 
@@ -137,6 +137,7 @@
 
                 <Switch
                     android:id="@+id/switchButton"
+                    android:theme="@style/Widget.Hyperwallet.Switch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:enabled="false"
@@ -150,6 +151,7 @@
                 <TextView
                     android:id="@+id/transfer_summary"
                     android:layout_width="wrap_content"
+                    android:visibility="invisible"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/grid_margin_left"
                     android:layout_marginTop="@dimen/grid_margin_top"
@@ -216,7 +218,6 @@
                 <Button
                     android:id="@+id/transfer_action_button"
                     style="@style/Widget.Hyperwallet.Button"
-                    android:enabled="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|center"
