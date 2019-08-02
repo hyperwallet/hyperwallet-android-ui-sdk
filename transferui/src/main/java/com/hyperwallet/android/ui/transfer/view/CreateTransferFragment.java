@@ -358,7 +358,8 @@ public class CreateTransferFragment extends Fragment {
     }
 
     private void enableNextButton() {
-        if (mCreateTransferViewModel.getTransferDestination().getValue() != null) {
+        if (mCreateTransferViewModel.getTransferDestination().getValue() != null
+                && mCreateTransferViewModel.getQuoteAvailableFunds().getValue() != null) {
             mTransferNextButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
             mTransferNextButton.setTextColor(getResources().getColor(R.color.regularColorPrimary));
             mTransferNextButton.setEnabled(true);
