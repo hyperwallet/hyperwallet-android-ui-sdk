@@ -1,0 +1,25 @@
+{
+  "token": "trf-66b53896-c648-4fb6-bb27-de6eec5d7bf1",
+  "status": "QUOTED",
+  "createdOn": "2019-08-01T22:36:34",
+  "clientTransferId": "EJXmJmPDcM6wPy7nYn7NGLFkyFxTQfXf",
+  "sourceToken": "usr-f07d1849-e1c1-4d94-a3b0-c66f924ab349",
+  "sourceAmount": "100.00",
+  "sourceCurrency": "USD",
+  "destinationToken": "trm-f3f3d205-b7fb-4292-bd40-fbe814c7efd3",
+  "destinationAmount": "100.00",
+  "destinationFeeAmount": "0.00",
+  "destinationCurrency": "USD",
+  "notes": "QA Automation Test",
+  "memo": "Transfer",
+  "purpose": "OTHER",
+  "expiresOn": "2019-08-01T22:38:34",
+  "links": [
+    {
+      "params": {
+        "rel": "self"
+      },
+      "href": "https://api.sandbox.hyperwallet.com/rest/v3/transfers/trf-66b53896-c648-4fb6-bb27-de6eec5d7bf1"
+    }
+  ]
+}
