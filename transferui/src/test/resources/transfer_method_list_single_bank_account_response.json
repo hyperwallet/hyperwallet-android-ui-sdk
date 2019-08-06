@@ -1,0 +1,51 @@
+{
+  "count": 1,
+  "offset": 0,
+  "limit": 1,
+  "data": [
+    {
+      "token": "trm-56b43aaa-87e0-4c8d-b500-81e25e59f1f5",
+      "type": "BANK_ACCOUNT",
+      "status": "ACTIVATED",
+      "verificationStatus": "NOT_REQUIRED",
+      "createdOn": "2019-08-01T22:36:17",
+      "transferMethodCountry": "US",
+      "transferMethodCurrency": "USD",
+      "branchId": "021000021",
+      "bankAccountId": "38017267",
+      "bankAccountRelationship": "SELF",
+      "bankAccountPurpose": "SAVINGS",
+      "profileType": "INDIVIDUAL",
+      "firstName": "Hu",
+      "lastName": "Dale",
+      "dateOfBirth": "2000-01-01",
+      "countryOfBirth": "US",
+      "countryOfNationality": "CA",
+      "gender": "MALE",
+      "phoneNumber": "+1 604 6666666",
+      "mobileNumber": "604 666 6666",
+      "governmentId": "987654321",
+      "addressLine1": "950 Granville Street",
+      "city": "Vancouver",
+      "stateProvince": "BC",
+      "country": "CA",
+      "postalCode": "V6Z1L2",
+      "links": [
+        {
+          "params": {
+            "rel": "self"
+          },
+          "href": "https://api.sandbox.hyperwallet.com/rest/v3/users/usr-f07d1849-e1c1-4d94-a3b0-c66f924ab349/transfer-methods/trm-56b43aaa-87e0-4c8d-b500-81e25e59f1f5"
+        }
+      ]
+    }
+  ],
+  "links": [
+    {
+      "params": {
+        "rel": "self"
+      },
+      "href": "https://api.sandbox.hyperwallet.com/rest/v3/users/usr-f07d1849-e1c1-4d94-a3b0-c66f924ab349/transfer-methods?offset=0&limit=1&sortBy=-createdOn"
+    }
+  ]
+}
