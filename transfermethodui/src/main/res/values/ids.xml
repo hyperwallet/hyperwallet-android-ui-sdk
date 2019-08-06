@@ -79,7 +79,9 @@
     <item name="mobileNumber" type="id"/>
     <item name="mobileNumberLabel" type="id"/>
     <item name="governmentId" type="id"/>
+    <item name="governmentIdLabel" type="id"/>
     <item name="governmentIdType" type="id"/>
+    <item name="governmentIdTypeLabel" type="id"/>
     <item name="passportId" type="id"/>
     <item name="passportIdLabel" type="id"/>
     <item name="driversLicenseId" type="id"/>
