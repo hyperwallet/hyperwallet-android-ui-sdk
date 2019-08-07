@@ -33,6 +33,7 @@ import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.ui.common.repository.Event;
 import com.hyperwallet.android.ui.common.view.error.DefaultErrorDialogFragment;
+import com.hyperwallet.android.ui.common.view.error.OnNetworkErrorCallback;
 import com.hyperwallet.android.ui.transfer.R;
 import com.hyperwallet.android.ui.transfer.repository.TransferRepositoryFactory;
 import com.hyperwallet.android.ui.transfer.viewmodel.CreateTransferViewModel;
@@ -44,7 +45,7 @@ import java.util.List;
 /**
  * Create Transfer Activity
  */
-public class CreateTransferActivity extends AppCompatActivity {
+public class CreateTransferActivity extends AppCompatActivity implements OnNetworkErrorCallback {
 
     public static final String EXTRA_TRANSFER_SOURCE_TOKEN = "TRANSFER_SOURCE_TOKEN";
 
@@ -84,28 +85,23 @@ public class CreateTransferActivity extends AppCompatActivity {
         }
 
         mCreateTransferViewModel = ViewModelProviders.of(this, factory).get(CreateTransferViewModel.class);
-        mCreateTransferViewModel.getLoadErrorEvent().observe(this, new Observer<Event<HyperwalletErrors>>() {
-            @Override
-            public void onChanged(Event<HyperwalletErrors> event) {
-                if (event != null && !event.isContentConsumed()) {
-                    showErrorOnLoadCreateTransfer(event.getContent().getErrors());
-                }
-            }
-        });
-
-        //TODO temporarily display dialog on all quote transfer error
-        mCreateTransferViewModel.getCreateTransferErrors().observe(this, new Observer<Event<HyperwalletErrors>>() {
-            @Override
-            public void onChanged(Event<HyperwalletErrors> event) {
-                if (event != null && !event.isContentConsumed()) {
-                    showErrorOnLoadCreateTransfer(event.getContent().getErrors());
-                }
-            }
-        });
+        registerErrorObservers();
 
         if (savedInstanceState == null) {
             initFragment(CreateTransferFragment.newInstance());
         }
+    }
+
+    @Override
+    public void retry() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        CreateTransferFragment fragment = (CreateTransferFragment)
+                fragmentManager.findFragmentById(R.id.create_transfer_fragment);
+
+        if (fragment == null) {
+            fragment = CreateTransferFragment.newInstance();
+        }
+        fragment.retry();
     }
 
     @Override
@@ -116,13 +112,33 @@ public class CreateTransferActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
+    private void registerErrorObservers() {
+        mCreateTransferViewModel.getLoadTransferRequiredDataErrors().observe(this,
+                new Observer<Event<HyperwalletErrors>>() {
+                    @Override
+                    public void onChanged(Event<HyperwalletErrors> event) {
+                        if (event != null && !event.isContentConsumed()) {
+                            showErrorOnLoadCreateTransfer(event.getContent().getErrors());
+                        }
+                    }
+                });
+
+        mCreateTransferViewModel.getCreateTransferError().observe(this, new Observer<Event<HyperwalletErrors>>() {
+            @Override
+            public void onChanged(Event<HyperwalletErrors> event) {
+                if (event != null && !event.isContentConsumed()) {
+                    showErrorOnLoadCreateTransfer(event.getContent().getErrors());
+                }
+            }
+        });
+    }
+
     private void initFragment(@NonNull final Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.create_transfer_fragment, fragment);
         fragmentTransaction.commit();
     }
-
 
     private void showErrorOnLoadCreateTransfer(@NonNull final List<HyperwalletError> errors) {
         FragmentManager fragmentManager = getSupportFragmentManager();

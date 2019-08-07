@@ -269,7 +269,7 @@ public class CreateTransferViewModelTest {
         // test
         viewModel.createTransfer();
 
-        assertThat(viewModel.getCreateTransferErrors().getValue(), is(nullValue()));
+        assertThat(viewModel.getCreateTransferError().getValue(), is(nullValue()));
         assertThat(viewModel.getCreateTransfer().getValue(), is(notNullValue()));
         assertThat(viewModel.getCreateTransfer().getValue().getSourceToken(), is(mTransfer.getSourceToken()));
         assertThat(viewModel.getCreateTransfer().getValue().getToken(), is(mTransfer.getToken()));
@@ -324,12 +324,12 @@ public class CreateTransferViewModelTest {
         // test
         viewModel.createTransfer();
 
-        assertThat(viewModel.getCreateTransferErrors().getValue(), is(notNullValue()));
-        assertThat(viewModel.getCreateTransferErrors().getValue().getContent().getErrors(),
+        assertThat(viewModel.getCreateTransferError().getValue(), is(notNullValue()));
+        assertThat(viewModel.getCreateTransferError().getValue().getContent().getErrors(),
                 Matchers.<HyperwalletError>hasSize(1));
-        assertThat(viewModel.getCreateTransferErrors().getValue().getContent().getErrors().get(0).getMessage(),
+        assertThat(viewModel.getCreateTransferError().getValue().getContent().getErrors().get(0).getMessage(),
                 is("The source token you provided doesn’t exist or is not a valid source."));
-        assertThat(viewModel.getCreateTransferErrors().getValue().getContent().getErrors().get(0).getCode(),
+        assertThat(viewModel.getCreateTransferError().getValue().getContent().getErrors().get(0).getCode(),
                 is("INVALID_SOURCE_TOKEN"));
     }
 
