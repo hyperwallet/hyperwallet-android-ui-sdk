@@ -12,7 +12,7 @@
         android:id="@+id/progress_bar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <ProgressBar
             android:id="@+id/progress"
@@ -68,16 +68,42 @@
             </RelativeLayout>
 
             <LinearLayout
+                android:id="@+id/transfer_header_container_with_error"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/transfer_header_container_with_error_label"
+                android:orientation="vertical"
+                android:background="@drawable/view_border_top_bottom">
+
+                <TextView
+                    android:id="@+id/transfer_destination_error"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/grid_margin_left"
+                    android:layout_marginTop="@dimen/grid_margin_top"
+                    android:text="@string/transfer_destination_required_error"
+                    android:textAppearance="@style/TextAppearance.Hyperwallet.Body2.Error"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/grid_margin_left"
+                    android:layout_marginTop="@dimen/grid_margin_top"
+                    android:text="@string/transfer_header_label"
+                    android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"/>
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/transfer_header_container"
+                android:visibility="visible"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/section_header_height"
                 android:background="@drawable/view_border_top_bottom"
                 android:paddingTop="@dimen/grid_padding_top">
 
                 <TextView
-                    android:id="@+id/transfer_header"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/grid_margin_left"
                     android:layout_marginTop="@dimen/grid_margin_top"
                     android:text="@string/transfer_header_label"

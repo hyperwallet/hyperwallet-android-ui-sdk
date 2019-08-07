@@ -79,6 +79,9 @@ public class CreateTransferFragment extends Fragment {
     private View mAddTransferDestination;
     private Switch mTransferAllSwitch;
     private TextInputLayout mTransferAmountLayout;
+    private View mTransferHeaderContainerError;
+    private View mTransferHeaderContainer;
+    private TextView mTransferDestinationError;
 
     /**
      * Please don't use this constructor this is reserved for Android Core Framework
@@ -135,6 +138,7 @@ public class CreateTransferFragment extends Fragment {
         prepareTransferNotes();
 
         // transfer destination
+        mTransferHeaderContainer = view.findViewById(R.id.transfer_header_container);
         mTransferDestination = view.findViewById(R.id.transfer_destination);
         mTransferDestination.setOnClickListener(new OneClickListener() {
             @Override
@@ -149,6 +153,8 @@ public class CreateTransferFragment extends Fragment {
         });
 
         // add transfer destination
+        mTransferDestinationError = view.findViewById(R.id.transfer_destination_error);
+        mTransferHeaderContainerError = view.findViewById(R.id.transfer_header_container_with_error);
         mAddTransferDestination = view.findViewById(R.id.add_transfer_destination);
         mAddTransferDestination.setOnClickListener(new OneClickListener() {
             @Override
@@ -261,7 +267,11 @@ public class CreateTransferFragment extends Fragment {
                 new Observer<Event<HyperwalletError>>() {
                     @Override
                     public void onChanged(@NonNull final Event<HyperwalletError> event) {
-                        // TODO highlight transfer destination? how does it look like?
+                        if (!event.isContentConsumed()) {
+                            mTransferHeaderContainer.setVisibility(View.GONE);
+                            mTransferHeaderContainerError.setVisibility(View.VISIBLE);
+                            mTransferDestinationError.setText(event.getContent().getMessage());
+                        }
                     }
                 });
     }
@@ -285,11 +295,17 @@ public class CreateTransferFragment extends Fragment {
                     @Override
                     public void onChanged(final HyperwalletTransferMethod transferMethod) {
                         if (transferMethod != null) {
+                            mTransferDestination.setVisibility(View.VISIBLE);
+                            mTransferHeaderContainer.setVisibility(View.VISIBLE);
+                            mAddTransferDestination.setVisibility(View.GONE);
+                            mTransferHeaderContainerError.setVisibility(View.GONE);
                             showTransferDestination(transferMethod);
                             enableInputControls();
                         } else {
-                            mAddTransferDestination.setVisibility(View.VISIBLE);
                             mTransferDestination.setVisibility(View.GONE);
+                            mTransferHeaderContainer.setVisibility(View.GONE);
+                            mAddTransferDestination.setVisibility(View.VISIBLE);
+                            mTransferHeaderContainerError.setVisibility(View.VISIBLE);
                             disableInputControls();
                         }
                     }
