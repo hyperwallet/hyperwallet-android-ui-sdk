@@ -377,19 +377,6 @@ public class CreateTransferFragment extends Fragment {
                 }
             }
         });
-
-        mCreateTransferViewModel.getCreateTransfer().observe(getViewLifecycleOwner(), new Observer<Transfer>() {
-            @Override
-            public void onChanged(Transfer transfer) {
-                // TODO create intent to call next Transfer confirmation screen with parcelable payload of Transfer
-                try {
-                    Snackbar.make(mTransferNextButton, transfer.toJsonString(), Snackbar.LENGTH_SHORT).show();
-                } catch (Exception e) {
-                    Snackbar.make(mTransferNextButton, "Exception occurred! Transfer conversion",
-                            Snackbar.LENGTH_SHORT).show();
-                }
-            }
-        });
     }
 
     private void disableInputControls() {

@@ -16,6 +16,7 @@
  */
 package com.hyperwallet.android.ui.transfer.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -31,9 +32,11 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.HyperwalletErrors;
+import com.hyperwallet.android.model.transfer.Transfer;
 import com.hyperwallet.android.ui.common.repository.Event;
 import com.hyperwallet.android.ui.common.view.error.DefaultErrorDialogFragment;
 import com.hyperwallet.android.ui.common.view.error.OnNetworkErrorCallback;
+import com.hyperwallet.android.ui.common.viewmodel.Navigator;
 import com.hyperwallet.android.ui.transfer.R;
 import com.hyperwallet.android.ui.transfer.repository.TransferRepositoryFactory;
 import com.hyperwallet.android.ui.transfer.viewmodel.CreateTransferViewModel;
@@ -45,7 +48,8 @@ import java.util.List;
 /**
  * Create Transfer Activity
  */
-public class CreateTransferActivity extends AppCompatActivity implements OnNetworkErrorCallback {
+public class CreateTransferActivity extends AppCompatActivity implements OnNetworkErrorCallback,
+        Navigator<Event<Transfer>> {
 
     public static final String EXTRA_TRANSFER_SOURCE_TOKEN = "TRANSFER_SOURCE_TOKEN";
 
@@ -104,6 +108,18 @@ public class CreateTransferActivity extends AppCompatActivity implements OnNetwo
         fragment.retry();
     }
 
+
+    @Override
+    public void navigate(@NonNull final Event<Transfer> event) {
+        if (!event.isContentConsumed()) {
+            Intent intent = new Intent(this, ScheduleTransferActivity.class);
+            intent.putExtra(ScheduleTransferActivity.EXTRA_TRANSFER, event.getContent());
+            intent.putExtra(ScheduleTransferActivity.EXTRA_TRANSFER_METHOD,
+                    mCreateTransferViewModel.getTransferDestination().getValue());
+            startActivity(intent);
+        }
+    }
+
     @Override
     protected void onDestroy() {
         TransferRepositoryFactory.clearInstance();
@@ -129,6 +145,13 @@ public class CreateTransferActivity extends AppCompatActivity implements OnNetwo
                 if (event != null && !event.isContentConsumed()) {
                     showErrorOnLoadCreateTransfer(event.getContent().getErrors());
                 }
+            }
+        });
+
+        mCreateTransferViewModel.getCreateTransfer().observe(this, new Observer<Transfer>() {
+            @Override
+            public void onChanged(final Transfer transfer) {
+                navigate(new Event<>(transfer));
             }
         });
     }

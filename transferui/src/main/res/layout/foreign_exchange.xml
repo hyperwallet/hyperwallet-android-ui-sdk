@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/regularColorPrimary"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/sell_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/sell_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/grid_margin_left"
+            android:layout_marginTop="@dimen/grid_margin_top"
+            android:layout_marginBottom="@dimen/grid_margin_bottom"
+            android:text="@string/foreign_exchange_sell_label"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/sell_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/sell_label"
+            android:layout_marginTop="@dimen/grid_margin_top"
+            android:layout_marginEnd="@dimen/grid_margin_right"
+            android:layout_marginBottom="@dimen/grid_margin_bottom"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/foreign_exchange_sell_placeholder"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider_height"
+            android:background="?android:attr/listDivider"
+            android:layout_marginTop="@dimen/divider_padding_top"
+            android:layout_marginStart="@dimen/grid_margin_left"
+            android:layout_marginEnd="@dimen/grid_margin_right"
+            app:layout_constraintStart_toStartOf="@+id/sell_label"
+            app:layout_constraintTop_toBottomOf="@+id/sell_value"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/buy_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/buy_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/grid_margin_left"
+            android:layout_marginTop="@dimen/grid_margin_top"
+            android:layout_marginBottom="@dimen/grid_margin_bottom"
+            android:text="@string/foreign_exchange_buy_label"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/buy_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/buy_label"
+            android:layout_marginTop="@dimen/grid_margin_top"
+            android:layout_marginEnd="@dimen/grid_margin_right"
+            android:layout_marginBottom="@dimen/grid_margin_bottom"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/foreign_exchange_buy_placeholder"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider_height"
+            android:background="?android:attr/listDivider"
+            android:layout_marginTop="@dimen/divider_padding_top"
+            android:layout_marginStart="@dimen/grid_margin_left"
+            android:layout_marginEnd="@dimen/grid_margin_right"
+            app:layout_constraintStart_toStartOf="@+id/buy_label"
+            app:layout_constraintTop_toBottomOf="@+id/buy_value"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/exchange_rate_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/exchange_rate_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/grid_margin_left"
+            android:layout_marginTop="@dimen/grid_margin_top"
+            android:layout_marginBottom="@dimen/grid_margin_bottom"
+            android:text="@string/foreign_exchange_rate_label"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/exchange_rate_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/exchange_rate_label"
+            android:layout_marginTop="@dimen/grid_margin_top"
+            android:layout_marginEnd="@dimen/grid_margin_right"
+            android:layout_marginBottom="@dimen/grid_margin_bottom"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/foreign_exchange_rate_placeholder"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider_height"
+            android:background="?android:attr/listDivider"
+            android:layout_marginTop="@dimen/divider_padding_top"
+            android:layout_marginStart="@dimen/grid_margin_left"
+            android:layout_marginEnd="@dimen/grid_margin_right"
+            app:layout_constraintStart_toStartOf="@+id/exchange_rate_label"
+            app:layout_constraintTop_toBottomOf="@+id/exchange_rate_value"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

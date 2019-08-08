@@ -36,7 +36,7 @@ import com.hyperwallet.android.model.receipt.Receipt;
 import com.hyperwallet.android.ui.common.repository.Event;
 import com.hyperwallet.android.ui.common.view.error.DefaultErrorDialogFragment;
 import com.hyperwallet.android.ui.common.view.error.OnNetworkErrorCallback;
-import com.hyperwallet.android.ui.common.viewmodel.ListDetailNavigator;
+import com.hyperwallet.android.ui.common.viewmodel.Navigator;
 import com.hyperwallet.android.ui.receipt.R;
 import com.hyperwallet.android.ui.receipt.repository.PrepaidCardReceiptRepositoryImpl;
 import com.hyperwallet.android.ui.receipt.viewmodel.ListPrepaidCardReceiptViewModel;
@@ -45,7 +45,7 @@ import com.hyperwallet.android.ui.receipt.viewmodel.ReceiptViewModel;
 import java.util.List;
 
 public class ListPrepaidCardReceiptActivity extends AppCompatActivity implements OnNetworkErrorCallback,
-        ListDetailNavigator<Event<Receipt>> {
+        Navigator<Event<Receipt>> {
 
     public static final String EXTRA_PREPAID_CARD_TOKEN = "PREPAID_CARD_TOKEN";
 

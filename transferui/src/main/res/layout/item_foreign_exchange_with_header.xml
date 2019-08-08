@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/foreign_exchange_header_container"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/section_header_height"
+        android:background="@drawable/view_border_top_bottom"
+        android:paddingTop="@dimen/grid_padding_top">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/grid_margin_left"
+            android:layout_marginTop="@dimen/grid_margin_top"
+            android:text="@string/transfer_foreign_exchange"
+            android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"/>
+    </LinearLayout>
+
+    <include layout="@layout/foreign_exchange"/>
+
+</LinearLayout>
