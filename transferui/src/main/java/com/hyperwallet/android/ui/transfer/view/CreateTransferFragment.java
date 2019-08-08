@@ -64,7 +64,7 @@ import java.util.Locale;
  */
 public class CreateTransferFragment extends Fragment {
 
-    public static final short SELECT_TRANSFER_DESTINATION_RESULT_CODE = 101;
+    public static final short SELECT_TRANSFER_DESTINATION_REQUEST_CODE = 101;
 
     private static final String EMPTY_STRING = "";
     private View mProgressBar;
@@ -148,7 +148,7 @@ public class CreateTransferFragment extends Fragment {
                 Intent intent = new Intent(requireContext(), ListTransferDestinationActivity.class);
                 intent.putExtra(ListTransferDestinationActivity.EXTRA_SELECTED_DESTINATION_TOKEN,
                         activeDestination.getField(TOKEN));
-                startActivityForResult(intent, SELECT_TRANSFER_DESTINATION_RESULT_CODE);
+                startActivityForResult(intent, SELECT_TRANSFER_DESTINATION_REQUEST_CODE);
             }
         });
 
@@ -180,7 +180,7 @@ public class CreateTransferFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK && requestCode == SELECT_TRANSFER_DESTINATION_RESULT_CODE && data != null) {
+        if (resultCode == RESULT_OK && requestCode == SELECT_TRANSFER_DESTINATION_REQUEST_CODE && data != null) {
             HyperwalletTransferMethod selectedTransferMethod = data.getParcelableExtra(
                     ListTransferDestinationActivity.EXTRA_SELECTED_DESTINATION_TOKEN);
             mCreateTransferViewModel.setTransferDestination(selectedTransferMethod);

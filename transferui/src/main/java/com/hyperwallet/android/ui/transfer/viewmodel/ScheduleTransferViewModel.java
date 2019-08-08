@@ -58,6 +58,7 @@ public class ScheduleTransferViewModel extends ViewModel {
 
             @Override
             public void onError(@NonNull HyperwalletErrors errors) {
+                mTransferStatusTransitionError.postValue(new Event<>(errors));
                 mIsScheduleTransferLoading.postValue(Boolean.FALSE);
             }
         });

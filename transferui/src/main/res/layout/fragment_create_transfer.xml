@@ -112,19 +112,18 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/transfer_amount_container"
-                android:layout_marginStart="@dimen/grid_margin_left"
-                android:layout_marginEnd="@dimen/grid_margin_right"
-                android:layout_marginTop="@dimen/grid_margin_top"
+                android:background="@color/regularColorPrimary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/transfer_amount_layout"
+                    android:layout_marginStart="@dimen/grid_margin_left"
+                    android:layout_marginEnd="@dimen/grid_margin_right"
+                    android:layout_marginTop="@dimen/grid_margin_top"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:theme="@style/Widget.Hyperwallet.TextInputLayout"
-                    android:layout_marginStart="@dimen/edit_text_margin"
-                    android:layout_marginEnd="@dimen/edit_text_margin"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -153,8 +152,8 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/transfer_all_funds_data_container"
+                android:background="@color/regularColorPrimary"
                 android:layout_width="match_parent"
-                android:layout_marginBottom="@dimen/grid_margin_bottom"
                 android:layout_height="wrap_content">
 
                 <TextView
@@ -186,14 +185,15 @@
                 <TextView
                     android:id="@+id/transfer_summary"
                     android:layout_width="wrap_content"
-                    android:visibility="invisible"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/grid_margin_left"
-                    android:layout_marginTop="@dimen/grid_margin_top"
-                    tools:text="@string/transfer_summary_label"
+                    android:layout_marginTop="@dimen/item_vertical_padding"
+                    android:layout_marginBottom="@dimen/grid_margin_bottom"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/transfer_all_funds_label"/>
+                    app:layout_constraintTop_toBottomOf="@+id/transfer_all_funds_label"
+                    tools:text="@string/transfer_summary_placeholder"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout

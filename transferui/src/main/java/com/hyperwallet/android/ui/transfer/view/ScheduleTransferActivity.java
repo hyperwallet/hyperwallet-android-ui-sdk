@@ -16,6 +16,8 @@
  */
 package com.hyperwallet.android.ui.transfer.view;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.View;
@@ -28,6 +30,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.HyperwalletErrors;
@@ -37,6 +40,7 @@ import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.ui.common.repository.Event;
 import com.hyperwallet.android.ui.common.view.error.DefaultErrorDialogFragment;
 import com.hyperwallet.android.ui.common.view.error.OnNetworkErrorCallback;
+import com.hyperwallet.android.ui.transfer.HyperwalletTransferLocalBroadcast;
 import com.hyperwallet.android.ui.transfer.R;
 import com.hyperwallet.android.ui.transfer.repository.TransferRepositoryFactory;
 import com.hyperwallet.android.ui.transfer.viewmodel.ScheduleTransferViewModel;
@@ -48,6 +52,7 @@ import java.util.List;
  */
 public class ScheduleTransferActivity extends AppCompatActivity implements OnNetworkErrorCallback {
 
+    public static final short SCHEDULE_TRANSFER_REQUEST_CODE = 103;
     public static final String EXTRA_TRANSFER = "TRANSFER";
     public static final String EXTRA_TRANSFER_METHOD = "TRANSFER_METHOD";
 
@@ -66,6 +71,7 @@ public class ScheduleTransferActivity extends AppCompatActivity implements OnNet
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setResult(Activity.RESULT_OK);
                 finish();
             }
         });
@@ -110,6 +116,7 @@ public class ScheduleTransferActivity extends AppCompatActivity implements OnNet
                     public void onChanged(final Event<HyperwalletErrors> event) {
                         if (event != null && !event.isContentConsumed()) {
                             showErrorScheduleTransfer(event.getContent().getErrors());
+                            setResult(Activity.RESULT_OK);
                         }
                     }
                 });
@@ -117,7 +124,11 @@ public class ScheduleTransferActivity extends AppCompatActivity implements OnNet
         mScheduleTransferViewModel.getTransferStatusTransition().observe(this, new Observer<StatusTransition>() {
             @Override
             public void onChanged(final StatusTransition statusTransition) {
-                //TODO broadcast status transition result
+                Intent intent = HyperwalletTransferLocalBroadcast.createBroadcastIntentTransferScheduled(
+                        statusTransition);
+                LocalBroadcastManager.getInstance(ScheduleTransferActivity.this).sendBroadcast(intent);
+                setResult(Activity.RESULT_OK, intent);
+                finish();
             }
         });
     }

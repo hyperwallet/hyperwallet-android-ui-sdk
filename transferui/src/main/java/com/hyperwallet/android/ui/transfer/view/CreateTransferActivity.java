@@ -16,12 +16,14 @@
  */
 package com.hyperwallet.android.ui.transfer.view;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -49,7 +51,7 @@ import java.util.List;
  * Create Transfer Activity
  */
 public class CreateTransferActivity extends AppCompatActivity implements OnNetworkErrorCallback,
-        Navigator<Event<Transfer>> {
+        Navigator<Transfer> {
 
     public static final String EXTRA_TRANSFER_SOURCE_TOKEN = "TRANSFER_SOURCE_TOKEN";
 
@@ -110,13 +112,22 @@ public class CreateTransferActivity extends AppCompatActivity implements OnNetwo
 
 
     @Override
-    public void navigate(@NonNull final Event<Transfer> event) {
-        if (!event.isContentConsumed()) {
-            Intent intent = new Intent(this, ScheduleTransferActivity.class);
-            intent.putExtra(ScheduleTransferActivity.EXTRA_TRANSFER, event.getContent());
-            intent.putExtra(ScheduleTransferActivity.EXTRA_TRANSFER_METHOD,
-                    mCreateTransferViewModel.getTransferDestination().getValue());
-            startActivity(intent);
+    public void navigate(@NonNull final Transfer transfer) {
+        Intent intent = new Intent(this, ScheduleTransferActivity.class);
+        intent.putExtra(ScheduleTransferActivity.EXTRA_TRANSFER, transfer);
+        intent.putExtra(ScheduleTransferActivity.EXTRA_TRANSFER_METHOD,
+                mCreateTransferViewModel.getTransferDestination().getValue());
+        startActivityForResult(intent, ScheduleTransferActivity.SCHEDULE_TRANSFER_REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == ScheduleTransferActivity.SCHEDULE_TRANSFER_REQUEST_CODE
+                && resultCode == Activity.RESULT_OK && data != null) {
+            setResult(Activity.RESULT_OK, data);
+            finish();
         }
     }
 
@@ -151,7 +162,7 @@ public class CreateTransferActivity extends AppCompatActivity implements OnNetwo
         mCreateTransferViewModel.getCreateTransfer().observe(this, new Observer<Transfer>() {
             @Override
             public void onChanged(final Transfer transfer) {
-                navigate(new Event<>(transfer));
+                navigate(transfer);
             }
         });
     }

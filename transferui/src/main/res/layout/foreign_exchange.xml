@@ -122,15 +122,5 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="@string/foreign_exchange_rate_placeholder"/>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/divider_height"
-            android:background="?android:attr/listDivider"
-            android:layout_marginTop="@dimen/divider_padding_top"
-            android:layout_marginStart="@dimen/grid_margin_left"
-            android:layout_marginEnd="@dimen/grid_margin_right"
-            app:layout_constraintStart_toStartOf="@+id/exchange_rate_label"
-            app:layout_constraintTop_toBottomOf="@+id/exchange_rate_value"/>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>
