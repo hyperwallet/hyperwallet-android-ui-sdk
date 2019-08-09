@@ -2,8 +2,7 @@ project.ext {
     mavenName = 'Hyperwallet Android Transfer UI SDK'
     fileFilter = ['**/BuildConfig.*',
                   '**/com/hyperwallet/android/ui/transfer/view/*.*',
-                  '**/com/hyperwallet/android/ui/transfer/HyperwalletTransferUi.*',
-                  '**/com/hyperwallet/android/ui/transfer/viewmodel/*.*'
+                  '**/com/hyperwallet/android/ui/transfer/HyperwalletTransferUi.*'
     ]
 }
 description = 'Hyperwallet Transfer UI SDK for Android to integrate with the Hyperwallet Platform'

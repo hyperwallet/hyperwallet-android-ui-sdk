@@ -1,0 +1,9 @@
+{
+  "errors": [
+    {
+      "fieldName": "destinationAmount",
+      "message": "Invalid amount.",
+      "code": "INVALID_AMOUNT"
+    }
+  ]
+}

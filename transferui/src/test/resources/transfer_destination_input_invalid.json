@@ -1,0 +1,9 @@
+{
+  "errors": [
+    {
+      "fieldName": "destinationToken",
+      "message": "Invalid transfer destination.",
+      "code": "INVALID_DESTINATION"
+    }
+  ]
+}
