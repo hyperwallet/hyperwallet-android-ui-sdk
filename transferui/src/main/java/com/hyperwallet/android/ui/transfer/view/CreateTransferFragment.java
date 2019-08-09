@@ -172,9 +172,9 @@ public class CreateTransferFragment extends Fragment {
                 mCreateTransferViewModel.setTransferAllAvailableFunds(isChecked);
             }
         });
-        registerTransferDestinationObserver();
+        registerTransferDestinationObservers();
         registerAvailableFundsObserver();
-        registerTransferAmountObserver();
+        registerTransferAmountObservers();
         registerErrorObservers();
     }
 
@@ -276,7 +276,7 @@ public class CreateTransferFragment extends Fragment {
                 });
     }
 
-    private void registerTransferDestinationObserver() {
+    private void registerTransferDestinationObservers() {
         mCreateTransferViewModel.isLoading().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(final Boolean loading) {
@@ -328,7 +328,7 @@ public class CreateTransferFragment extends Fragment {
         });
     }
 
-    private void registerTransferAmountObserver() {
+    private void registerTransferAmountObservers() {
         mCreateTransferViewModel.isTransferAllAvailableFunds().observe(getViewLifecycleOwner(),
                 new Observer<Boolean>() {
                     @Override

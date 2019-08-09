@@ -210,31 +210,19 @@ public class CreateTransferViewModel extends ViewModel {
             }
 
             @Override
-            public void onError(@NonNull HyperwalletErrors errors) {
-                if (errors.containsInputError()) {
-                    HyperwalletError error = errors.getErrors().get(0);
-                    if (Objects.equals(error.getFieldName(), DESTINATION_AMOUNT_INPUT_FIELD)) {
-                        mInvalidAmountError.postValue(new Event<>(error));
-                    } else if (Objects.equals(error.getFieldName(), DESTINATION_TOKEN_INPUT_FIELD)) {
-                        mInvalidDestinationError.postValue(new Event<>(error));
-                    } else {
-                        mCreateTransferError.postValue(new Event<>(errors));
-                    }
-                } else {
-                    mCreateTransferError.postValue(new Event<>(errors));
-                }
-
+            public void onError(@NonNull final HyperwalletErrors errors) {
+                processCreateTransferError(errors);
                 mIsCreateQuoteLoading.postValue(Boolean.FALSE);
             }
         });
     }
 
     public void retry() {
-        if (!isTransferSourceTokenKnown()) {
+        if (isTransferSourceTokenUnknown()) {
             loadTransferSource();
-        } else if (!isTransferDestinationKnown()) {
+        } else if (isTransferDestinationUnknown()) {
             loadTransferDestination(mSourceToken);
-        } else if (!isQuoteValid()) {
+        } else if (isQuoteInvalid()) {
             quoteAvailableTransferFunds(mSourceToken, mTransferDestination.getValue());
         } else if (isTransferAmountKnown()) {
             createTransfer();
@@ -246,20 +234,38 @@ public class CreateTransferViewModel extends ViewModel {
         super.onCleared();
     }
 
-    private boolean isTransferSourceTokenKnown() {
-        return !TextUtils.isEmpty(mSourceToken);
+    private void processCreateTransferError(@NonNull final HyperwalletErrors errors) {
+        if (errors.containsInputError()) {
+            HyperwalletError error = errors.getErrors().get(0);
+            if (Objects.equals(error.getFieldName(), DESTINATION_AMOUNT_INPUT_FIELD)) {
+                mInvalidAmountError.postValue(new Event<>(error));
+            } else if (Objects.equals(error.getFieldName(), DESTINATION_TOKEN_INPUT_FIELD)) {
+                mInvalidDestinationError.postValue(new Event<>(error));
+            } else {
+                mCreateTransferError.postValue(new Event<>(errors));
+            }
+        } else {
+            mCreateTransferError.postValue(new Event<>(errors));
+        }
     }
 
-    private boolean isTransferDestinationKnown() {
-        return mTransferDestination.getValue() != null;
+    private boolean isTransferSourceTokenUnknown() {
+        return TextUtils.isEmpty(mSourceToken);
+    }
+
+    private boolean isTransferDestinationUnknown() {
+        return mTransferDestination.getValue() == null;
     }
 
     private boolean isTransferAmountKnown() {
         return !TextUtils.isEmpty(mTransferAmount.getValue());
     }
 
-    private boolean isQuoteValid() {
-        return mQuoteAvailableFunds.getValue() != null;
+    private boolean isQuoteInvalid() {
+        return mQuoteAvailableFunds.getValue() == null
+                || !Objects.equals(mQuoteAvailableFunds.getValue().getSourceToken(), mSourceToken)
+                || !Objects.equals(mQuoteAvailableFunds.getValue().getDestinationToken(),
+                mTransferDestination.getValue().getField(TOKEN));
     }
 
     private void loadTransferSource() {
