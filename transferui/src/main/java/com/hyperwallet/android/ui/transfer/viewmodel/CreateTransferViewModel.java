@@ -59,7 +59,7 @@ public class CreateTransferViewModel extends ViewModel {
     private final MutableLiveData<Boolean> mIsLoading = new MutableLiveData<>();
     private final MutableLiveData<Boolean> mIsCreateQuoteLoading = new MutableLiveData<>();
     private final MutableLiveData<Transfer> mQuoteAvailableFunds = new MutableLiveData<>();
-    private final MutableLiveData<Transfer> mCreateTransfer = new MutableLiveData<>();
+    private final MutableLiveData<Event<Transfer>> mCreateTransfer = new MutableLiveData<>();
     private final MutableLiveData<String> mTransferAmount = new MutableLiveData<>();
     private final MutableLiveData<String> mTransferNotes = new MutableLiveData<>();
 
@@ -167,7 +167,7 @@ public class CreateTransferViewModel extends ViewModel {
         return mLoadTransferRequiredDataErrors;
     }
 
-    public LiveData<Transfer> getCreateTransfer() {
+    public LiveData<Event<Transfer>> getCreateTransfer() {
         return mCreateTransfer;
     }
 
@@ -205,7 +205,7 @@ public class CreateTransferViewModel extends ViewModel {
         mTransferRepository.createTransfer(transfer, new TransferRepository.CreateTransferCallback() {
             @Override
             public void onTransferCreated(@Nullable Transfer transfer) {
-                mCreateTransfer.postValue(transfer);
+                mCreateTransfer.postValue(new Event<>(transfer));
                 mIsCreateQuoteLoading.postValue(Boolean.FALSE);
             }
 

@@ -120,9 +120,9 @@ public class CreateTransferFragment extends Fragment {
 
         // next button
         mTransferNextButton = view.findViewById(R.id.transfer_action_button);
-        mTransferNextButton.setOnClickListener(new View.OnClickListener() {
+        mTransferNextButton.setOnClickListener(new OneClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onOneClick(View v) {
                 mCreateTransferViewModel.createTransfer();
             }
         });

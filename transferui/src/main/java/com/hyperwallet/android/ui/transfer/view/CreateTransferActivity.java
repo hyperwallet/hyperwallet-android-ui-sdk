@@ -51,7 +51,7 @@ import java.util.List;
  * Create Transfer Activity
  */
 public class CreateTransferActivity extends AppCompatActivity implements OnNetworkErrorCallback,
-        Navigator<Transfer> {
+        Navigator<Event<Transfer>> {
 
     public static final String EXTRA_TRANSFER_SOURCE_TOKEN = "TRANSFER_SOURCE_TOKEN";
 
@@ -112,12 +112,14 @@ public class CreateTransferActivity extends AppCompatActivity implements OnNetwo
 
 
     @Override
-    public void navigate(@NonNull final Transfer transfer) {
-        Intent intent = new Intent(this, ScheduleTransferActivity.class);
-        intent.putExtra(ScheduleTransferActivity.EXTRA_TRANSFER, transfer);
-        intent.putExtra(ScheduleTransferActivity.EXTRA_TRANSFER_METHOD,
-                mCreateTransferViewModel.getTransferDestination().getValue());
-        startActivityForResult(intent, ScheduleTransferActivity.SCHEDULE_TRANSFER_REQUEST_CODE);
+    public void navigate(@NonNull final Event<Transfer> event) {
+        if (!event.isContentConsumed()) {
+            Intent intent = new Intent(this, ScheduleTransferActivity.class);
+            intent.putExtra(ScheduleTransferActivity.EXTRA_TRANSFER, event.getContent());
+            intent.putExtra(ScheduleTransferActivity.EXTRA_TRANSFER_METHOD,
+                    mCreateTransferViewModel.getTransferDestination().getValue());
+            startActivityForResult(intent, ScheduleTransferActivity.SCHEDULE_TRANSFER_REQUEST_CODE);
+        }
     }
 
     @Override
@@ -159,9 +161,9 @@ public class CreateTransferActivity extends AppCompatActivity implements OnNetwo
             }
         });
 
-        mCreateTransferViewModel.getCreateTransfer().observe(this, new Observer<Transfer>() {
+        mCreateTransferViewModel.getCreateTransfer().observe(this, new Observer<Event<Transfer>>() {
             @Override
-            public void onChanged(final Transfer transfer) {
+            public void onChanged(final Event<Transfer> transfer) {
                 navigate(transfer);
             }
         });

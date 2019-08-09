@@ -4,5 +4,6 @@
     <dimen name="edit_text_currency_end">4dp</dimen>
     <dimen name="transfer_currency_top">13dp</dimen>
     <dimen name="transfer_currency_end">4dp</dimen>
+    <dimen name="transfer_amount_layout_offset">11dp</dimen>
     <dimen name="transfer_header_container_with_error_label">82dp</dimen>
 </resources>

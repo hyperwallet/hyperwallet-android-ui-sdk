@@ -23,6 +23,7 @@ import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getStri
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getTransferMethodDetail;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -149,12 +150,17 @@ public class ScheduleTransferFragment extends Fragment {
         TextView amount = getView().findViewById(R.id.amount_value);
         TextView fee = getView().findViewById(R.id.fee_value);
         TextView transferAmount = getView().findViewById(R.id.transfer_value);
+        View feeContainer = getView().findViewById(R.id.fee_container);
 
         amount.setText(requireContext().getString(R.string.amount_currency_format,
                 transfer.getSourceAmount(), transfer.getSourceCurrency()));
-        // TODO seems like [destinationFeeAmount] is missing in Transfer model?
-        fee.setText(requireContext().getString(R.string.amount_currency_format,
-                "0.00", transfer.getDestinationCurrency()));
+        if (!TextUtils.isEmpty(transfer.getDestinationFeeAmount())) {
+            feeContainer.setVisibility(View.VISIBLE);
+            fee.setText(requireContext().getString(R.string.amount_currency_format,
+                    transfer.getDestinationFeeAmount(), transfer.getDestinationCurrency()));
+        } else {
+            feeContainer.setVisibility(View.GONE);
+        }
         transferAmount.setText(requireContext().getString(R.string.amount_currency_format,
                 transfer.getDestinationAmount(), transfer.getDestinationCurrency()));
     }

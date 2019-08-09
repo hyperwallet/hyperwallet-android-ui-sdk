@@ -118,7 +118,7 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/transfer_amount_layout"
-                    android:layout_marginStart="@dimen/grid_margin_left"
+                    android:layout_marginStart="@dimen/transfer_amount_layout_offset"
                     android:layout_marginEnd="@dimen/grid_margin_right"
                     android:layout_marginTop="@dimen/grid_margin_top"
                     android:layout_width="match_parent"
