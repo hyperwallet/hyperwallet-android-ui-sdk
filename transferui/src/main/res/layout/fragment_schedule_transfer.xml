@@ -82,7 +82,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/regularColorPrimary"
+                android:background="@drawable/content_border_bottom"
                 android:orientation="vertical">
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/amount_container"
@@ -221,7 +221,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/regularColorPrimary"
+                    android:background="@drawable/content_border_bottom"
                     android:orientation="vertical">
                     <TextView
                         android:id="@+id/notes_value"

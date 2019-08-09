@@ -86,6 +86,7 @@ public class ScheduleTransferFragment extends Fragment {
         // foreign exchange
         if (mScheduleTransferViewModel.getTransfer().getForeignExchanges() != null
                 && !mScheduleTransferViewModel.getTransfer().getForeignExchanges().isEmpty()) {
+            mForeignExchangeView.setNestedScrollingEnabled(false);
             mForeignExchangeView.setHasFixedSize(true);
             mForeignExchangeView.setLayoutManager(new LinearLayoutManager(getActivity()));
             mForeignExchangeView.setAdapter(
@@ -152,20 +153,27 @@ public class ScheduleTransferFragment extends Fragment {
     private void showSummary(@NonNull final Transfer transfer) {
         TextView amount = getView().findViewById(R.id.amount_value);
         TextView fee = getView().findViewById(R.id.fee_value);
-        TextView transferAmount = getView().findViewById(R.id.transfer_value);
+        TextView receiveAmount = getView().findViewById(R.id.transfer_value);
         View feeContainer = getView().findViewById(R.id.fee_container);
+        View receiveAmountContainer = getView().findViewById(R.id.transfer_container);
 
-        amount.setText(requireContext().getString(R.string.amount_currency_format,
-                transfer.getSourceAmount(), transfer.getSourceCurrency()));
         if (!TextUtils.isEmpty(transfer.getDestinationFeeAmount())) {
             feeContainer.setVisibility(View.VISIBLE);
             fee.setText(requireContext().getString(R.string.amount_currency_format,
                     transfer.getDestinationFeeAmount(), transfer.getDestinationCurrency()));
+
+            //TODO if fee exist we need another field in the API
+            amount.setText(requireContext().getString(R.string.amount_currency_format,
+                    transfer.getDestinationAmount(), transfer.getDestinationCurrency()));
+
+            receiveAmount.setText(requireContext().getString(R.string.amount_currency_format,
+                    transfer.getDestinationAmount(), transfer.getDestinationCurrency()));
         } else {
             feeContainer.setVisibility(View.GONE);
+            receiveAmountContainer.setVisibility(View.GONE);
+            amount.setText(requireContext().getString(R.string.amount_currency_format,
+                    transfer.getDestinationAmount(), transfer.getDestinationCurrency()));
         }
-        transferAmount.setText(requireContext().getString(R.string.amount_currency_format,
-                transfer.getDestinationAmount(), transfer.getDestinationCurrency()));
     }
 
     private void showNotes(@Nullable final String notes) {
