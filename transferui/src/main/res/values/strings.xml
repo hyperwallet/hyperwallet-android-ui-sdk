@@ -36,6 +36,7 @@
     <string name="summary_amount_transfer_label">You will receive:</string>
 
     <string name="transfer_summary_placeholder">Available for Transfer: 2,422.90 CAD</string>
+    <string name="transfer_notes_placeholder">Partial transfer</string>
     <string name="transfer_item_icon_placeholder">\uE000</string>
     <string name="transfer_item_title_placeholder">Transfer Type</string>
     <string name="transfer_item_country_placeholder">Country Name</string>

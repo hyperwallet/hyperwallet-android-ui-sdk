@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -54,8 +54,8 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/content_border_bottom">
                 <include android:id="@+id/transfer_destination"
-                         android:visibility="visible"
-                         layout="@layout/widget_transfer_destination_view"/>
+                         layout="@layout/widget_transfer_destination_view"
+                         android:visibility="visible"/>
             </RelativeLayout>
 
             <androidx.recyclerview.widget.RecyclerView
@@ -80,10 +80,10 @@
             </LinearLayout>
 
             <LinearLayout
-                android:orientation="vertical"
-                android:background="@color/regularColorPrimary"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="@color/regularColorPrimary"
+                android:orientation="vertical">
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/amount_container"
                     android:layout_width="match_parent"
@@ -117,10 +117,10 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/divider_height"
-                        android:background="?android:attr/listDivider"
-                        android:layout_marginTop="@dimen/divider_padding_top"
                         android:layout_marginStart="@dimen/grid_margin_left"
+                        android:layout_marginTop="@dimen/divider_padding_top"
                         android:layout_marginEnd="@dimen/grid_margin_right"
+                        android:background="?android:attr/listDivider"
                         app:layout_constraintStart_toStartOf="@+id/amount_label"
                         app:layout_constraintTop_toBottomOf="@+id/amount_value"/>
 
@@ -158,10 +158,10 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/divider_height"
-                        android:background="?android:attr/listDivider"
-                        android:layout_marginTop="@dimen/divider_padding_top"
                         android:layout_marginStart="@dimen/grid_margin_left"
+                        android:layout_marginTop="@dimen/divider_padding_top"
                         android:layout_marginEnd="@dimen/grid_margin_right"
+                        android:background="?android:attr/listDivider"
                         app:layout_constraintStart_toStartOf="@+id/fee_label"
                         app:layout_constraintTop_toBottomOf="@+id/fee_value"/>
 
@@ -195,55 +195,83 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:text="@string/summary_amount_transfer_placeholder"/>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/divider_height"
-                        android:background="?android:attr/listDivider"
-                        android:layout_marginTop="@dimen/divider_padding_top"
-                        android:layout_marginStart="@dimen/grid_margin_left"
-                        android:layout_marginEnd="@dimen/grid_margin_right"
-                        app:layout_constraintStart_toStartOf="@+id/transfer_label"
-                        app:layout_constraintTop_toBottomOf="@+id/transfer_value"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
 
-                <RelativeLayout
-                    android:id="@+id/transfer_confirm_container"
+            <LinearLayout
+                android:id="@+id/notes_container"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:id="@+id/notes_header_container"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal|bottom"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/transfer_confirm_button"
-                        style="@style/Widget.Hyperwallet.Button"
+                    android:layout_height="@dimen/section_header_height"
+                    android:background="@drawable/view_border_top_bottom"
+                    android:paddingTop="@dimen/grid_padding_top">
+                    <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal|center"
-                        android:layout_marginStart="@dimen/button_left_margin"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/grid_margin_left"
                         android:layout_marginTop="@dimen/grid_margin_top"
-                        android:layout_marginEnd="@dimen/button_right_margin"
-                        android:layout_marginBottom="@dimen/button_bottom_margin"
-                        android:maxWidth="@dimen/create_button_max_width"
-                        android:text="@string/transfer_confirm_action_label"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
+                        android:text="@string/transfer_notes_header_label"
+                        android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"/>
+                </LinearLayout>
 
-                    <ProgressBar
-                        android:id="@+id/transfer_confirm_button_progress_bar"
-                        style="?android:attr/progressBarStyle"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/regularColorPrimary"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/notes_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignTop="@+id/transfer_confirm_button"
-                        android:layout_alignBottom="@+id/transfer_confirm_button"
-                        android:layout_centerHorizontal="true"
-                        android:indeterminate="true"
-                        android:theme="@style/Widget.Hyperwallet.ProgressBar.CreateButton"
-                        android:visibility="gone"/>
-                </RelativeLayout>
+                        android:maxLines="3"
+                        tools:text="@string/transfer_notes_placeholder"
+                        android:layout_marginStart="@dimen/grid_margin_left"
+                        android:layout_marginTop="@dimen/grid_margin_top"
+                        android:layout_marginEnd="@dimen/grid_margin_right"
+                        android:layout_marginBottom="@dimen/grid_margin_bottom"/>
+                </LinearLayout>
             </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/transfer_confirm_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal|bottom"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/transfer_confirm_button"
+                    style="@style/Widget.Hyperwallet.Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|center"
+                    android:layout_marginStart="@dimen/button_left_margin"
+                    android:layout_marginTop="@dimen/grid_margin_top"
+                    android:layout_marginEnd="@dimen/button_right_margin"
+                    android:layout_marginBottom="@dimen/button_bottom_margin"
+                    android:maxWidth="@dimen/create_button_max_width"
+                    android:text="@string/transfer_confirm_action_label"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <ProgressBar
+                    android:id="@+id/transfer_confirm_button_progress_bar"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/transfer_confirm_button"
+                    android:layout_alignBottom="@+id/transfer_confirm_button"
+                    android:layout_centerHorizontal="true"
+                    android:indeterminate="true"
+                    android:theme="@style/Widget.Hyperwallet.ProgressBar.CreateButton"
+                    android:visibility="gone"/>
+            </RelativeLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>

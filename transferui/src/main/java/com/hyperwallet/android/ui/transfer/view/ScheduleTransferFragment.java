@@ -97,6 +97,9 @@ public class ScheduleTransferFragment extends Fragment {
         // summary
         showSummary(mScheduleTransferViewModel.getTransfer());
 
+        // notes
+        showNotes(mScheduleTransferViewModel.getTransfer().getNotes());
+
         // transfer confirm button
         mTransferConfirmButtonProgress = view.findViewById(R.id.transfer_confirm_button_progress_bar);
         mTransferConfirmButton = view.findViewById(R.id.transfer_confirm_button);
@@ -163,6 +166,18 @@ public class ScheduleTransferFragment extends Fragment {
         }
         transferAmount.setText(requireContext().getString(R.string.amount_currency_format,
                 transfer.getDestinationAmount(), transfer.getDestinationCurrency()));
+    }
+
+    private void showNotes(@Nullable final String notes) {
+        View notesContainer = getView().findViewById(R.id.notes_container);
+        TextView notesView = getView().findViewById(R.id.notes_value);
+
+        if (TextUtils.isEmpty(notes)) {
+            notesContainer.setVisibility(View.GONE);
+        } else {
+            notesContainer.setVisibility(View.VISIBLE);
+            notesView.setText(notes);
+        }
     }
 
     private static class ForeignExchangeListAdapter extends
