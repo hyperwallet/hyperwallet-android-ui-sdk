@@ -24,6 +24,9 @@
     <string name="amount_currency_format">%s %s</string>
     <string name="exchange_rate_format">1 %s = %s %s</string>
 
+    <string name="validation_amount_required">Amount is required.</string>
+    <string name="validation_destination_required">Destination account is required.</string>
+
     <string name="foreign_exchange_sell_label">You sell:</string>
     <string name="foreign_exchange_buy_label">You buy:</string>
     <string name="foreign_exchange_rate_label">Exchange Rate:</string>

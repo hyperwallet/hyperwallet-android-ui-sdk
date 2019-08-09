@@ -123,10 +123,11 @@ public class CreateTransferFragment extends Fragment {
         mTransferNextButton.setOnClickListener(new OneClickListener() {
             @Override
             public void onOneClick(View v) {
-                mCreateTransferViewModel.createTransfer();
+                if (isCreateTransferValid()) {
+                    mCreateTransferViewModel.createTransfer();
+                }
             }
         });
-        disableNextButton();
 
         // transfer amount
         mTransferAmountLayout = view.findViewById(R.id.transfer_amount_layout);
@@ -191,6 +192,22 @@ public class CreateTransferFragment extends Fragment {
         mCreateTransferViewModel.retry();
     }
 
+    private boolean isCreateTransferValid() {
+        if (TextUtils.isEmpty(mCreateTransferViewModel.getTransferAmount().getValue())) {
+            mTransferAmountLayout.setError(requireContext().getString(R.string.validation_amount_required));
+            return false;
+        }
+
+        if (mCreateTransferViewModel.isTransferDestinationUnknown()) {
+            mTransferHeaderContainer.setVisibility(View.GONE);
+            mTransferHeaderContainerError.setVisibility(View.VISIBLE);
+            mTransferDestinationError.setText(requireContext().getString(R.string.validation_destination_required));
+            return false;
+        }
+
+        return true;
+    }
+
     private void prepareTransferAmount() {
         mTransferAmount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -210,12 +227,6 @@ public class CreateTransferFragment extends Fragment {
                 if (before != count) {
                     mCreateTransferViewModel.setTransferAmount(s.toString());
                     mTransferAmountLayout.setError(null);
-                }
-
-                if (TextUtils.isEmpty(mTransferAmount.getText())) {
-                    disableNextButton();
-                } else {
-                    enableNextButton();
                 }
             }
 
@@ -296,16 +307,13 @@ public class CreateTransferFragment extends Fragment {
                     public void onChanged(final HyperwalletTransferMethod transferMethod) {
                         if (transferMethod != null) {
                             mTransferDestination.setVisibility(View.VISIBLE);
-                            mTransferHeaderContainer.setVisibility(View.VISIBLE);
                             mAddTransferDestination.setVisibility(View.GONE);
                             mTransferHeaderContainerError.setVisibility(View.GONE);
                             showTransferDestination(transferMethod);
                             enableInputControls();
                         } else {
                             mTransferDestination.setVisibility(View.GONE);
-                            mTransferHeaderContainer.setVisibility(View.GONE);
                             mAddTransferDestination.setVisibility(View.VISIBLE);
-                            mTransferHeaderContainerError.setVisibility(View.VISIBLE);
                             disableInputControls();
                         }
                     }
@@ -391,21 +399,6 @@ public class CreateTransferFragment extends Fragment {
         mTransferAmount.setEnabled(true);
         mTransferNotes.setEnabled(true);
         mTransferAllSwitch.setEnabled(true);
-    }
-
-    private void enableNextButton() {
-        if (mCreateTransferViewModel.getTransferDestination().getValue() != null
-                && mCreateTransferViewModel.getQuoteAvailableFunds().getValue() != null) {
-            mTransferNextButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-            mTransferNextButton.setTextColor(getResources().getColor(R.color.regularColorPrimary));
-            mTransferNextButton.setEnabled(true);
-        }
-    }
-
-    private void disableNextButton() {
-        mTransferNextButton.setBackgroundColor(getResources().getColor(R.color.colorSecondary));
-        mTransferNextButton.setTextColor(getResources().getColor(R.color.colorSecondaryDark));
-        mTransferNextButton.setEnabled(false);
     }
 
     private void showTransferDestination(@NonNull final HyperwalletTransferMethod transferMethod) {

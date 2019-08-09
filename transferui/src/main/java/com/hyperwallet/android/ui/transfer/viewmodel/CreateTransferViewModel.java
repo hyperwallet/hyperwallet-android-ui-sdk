@@ -234,6 +234,10 @@ public class CreateTransferViewModel extends ViewModel {
         super.onCleared();
     }
 
+    public boolean isTransferDestinationUnknown() {
+        return mTransferDestination.getValue() == null;
+    }
+
     private void processCreateTransferError(@NonNull final HyperwalletErrors errors) {
         if (errors.containsInputError()) {
             HyperwalletError error = errors.getErrors().get(0);
@@ -251,10 +255,6 @@ public class CreateTransferViewModel extends ViewModel {
 
     private boolean isTransferSourceTokenUnknown() {
         return TextUtils.isEmpty(mSourceToken);
-    }
-
-    private boolean isTransferDestinationUnknown() {
-        return mTransferDestination.getValue() == null;
     }
 
     private boolean isTransferAmountKnown() {
