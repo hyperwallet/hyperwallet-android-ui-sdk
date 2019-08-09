@@ -297,17 +297,16 @@ public class CreateTransferViewModelTest {
         transferMethod.setField(TOKEN, "trm-bank-token");
         transferMethod.setField(TRANSFER_METHOD_CURRENCY, "CAD");
 
+        CreateTransferViewModel.CreateTransferViewModelFactory factory =
+                new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
+                        mTransferMethodRepository, mUserRepository);
+
+        CreateTransferViewModel viewModel = factory.create(CreateTransferViewModel.class);
+        viewModel.setTransferAllAvailableFunds(true);
+
         doAnswer(new Answer() {
-            private int call = 0;
             @Override
             public Object answer(InvocationOnMock invocation) {
-                if (++call == 1) { // 1st call
-                    TransferRepository.CreateTransferCallback callback = invocation.getArgument(1);
-                    callback.onTransferCreated(mTransfer);
-                    return callback;
-                }
-
-                // 2nd call
                 TransferRepository.CreateTransferCallback callback = invocation.getArgument(1);
                 callback.onError(errors);
                 return callback;
@@ -315,13 +314,6 @@ public class CreateTransferViewModelTest {
             }
         }).when(mTransferRepository).createTransfer(any(Transfer.class),
                 any(TransferRepository.CreateTransferCallback.class));
-
-        CreateTransferViewModel.CreateTransferViewModelFactory factory =
-                new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
-                        mTransferMethodRepository, mUserRepository);
-
-        CreateTransferViewModel viewModel = factory.create(CreateTransferViewModel.class);
-        viewModel.setTransferAllAvailableFunds(true);
 
         // test
         viewModel.createTransfer();
@@ -346,18 +338,16 @@ public class CreateTransferViewModelTest {
         transferMethod.setField(TOKEN, "trm-bank-token");
         transferMethod.setField(TRANSFER_METHOD_CURRENCY, "CAD");
 
-        doAnswer(new Answer() {
-            private int call = 0;
+        CreateTransferViewModel.CreateTransferViewModelFactory factory =
+                new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
+                        mTransferMethodRepository, mUserRepository);
 
+        CreateTransferViewModel viewModel = factory.create(CreateTransferViewModel.class);
+        viewModel.setTransferAllAvailableFunds(true);
+
+        doAnswer(new Answer() {
             @Override
             public Object answer(InvocationOnMock invocation) {
-                if (++call == 1) { // 1st call
-                    TransferRepository.CreateTransferCallback callback = invocation.getArgument(1);
-                    callback.onTransferCreated(mTransfer);
-                    return callback;
-                }
-
-                // 2nd call
                 TransferRepository.CreateTransferCallback callback = invocation.getArgument(1);
                 callback.onError(errors);
                 return callback;
@@ -365,13 +355,6 @@ public class CreateTransferViewModelTest {
             }
         }).when(mTransferRepository).createTransfer(any(Transfer.class),
                 any(TransferRepository.CreateTransferCallback.class));
-
-        CreateTransferViewModel.CreateTransferViewModelFactory factory =
-                new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
-                        mTransferMethodRepository, mUserRepository);
-
-        CreateTransferViewModel viewModel = factory.create(CreateTransferViewModel.class);
-        viewModel.setTransferAllAvailableFunds(true);
 
         // test
         viewModel.createTransfer();
@@ -444,7 +427,7 @@ public class CreateTransferViewModelTest {
     }
 
     @Test
-    public void testRetry_isTransferDestinationUnknown() {
+    public void testRetry_isTransferDestinationUnknownOnError() {
         CreateTransferViewModel.CreateTransferViewModelFactory factory =
                 new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
                         mTransferMethodRepository, mUserRepository);
@@ -454,6 +437,31 @@ public class CreateTransferViewModelTest {
             public Object answer(InvocationOnMock invocation) {
                 TransferMethodRepository.LoadTransferMethodCallback callback = invocation.getArgument(0);
                 callback.onError(null);
+                return callback;
+            }
+        }).when(mTransferMethodRepository).loadLatestTransferMethod(any(TransferMethodRepository
+                .LoadTransferMethodCallback.class));
+
+        // test
+        CreateTransferViewModel viewModel = factory.create(CreateTransferViewModel.class);
+        viewModel.retry();
+
+        verify(mUserRepository, times(1)).loadUser(any(UserRepository.LoadUserCallback.class));
+        verify(mTransferMethodRepository, times(2)).loadLatestTransferMethod(any(TransferMethodRepository
+                .LoadTransferMethodCallback.class));
+    }
+
+    @Test
+    public void testRetry_isTransferDestinationUnknownNotFound() {
+        CreateTransferViewModel.CreateTransferViewModelFactory factory =
+                new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
+                        mTransferMethodRepository, mUserRepository);
+
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                TransferMethodRepository.LoadTransferMethodCallback callback = invocation.getArgument(0);
+                callback.onTransferMethodLoaded(null);
                 return callback;
             }
         }).when(mTransferMethodRepository).loadLatestTransferMethod(any(TransferMethodRepository
