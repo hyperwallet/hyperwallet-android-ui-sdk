@@ -3,6 +3,7 @@ project.ext {
     fileFilter = ['**/BuildConfig.*',
                   '**/com/hyperwallet/android/ui/common/view/error/DefaultErrorDialogFragment.*',
                   '**/com/hyperwallet/android/ui/common/view/HorizontalDividerItemDecorator.*',
+                  '**/com/hyperwallet/android/ui/common/view/TransferMethodUtils.*',
                   '**/com/hyperwallet/android/ui/common/view/OneClickListener.*'
     ]
 }
@@ -13,4 +14,8 @@ apply from: "$rootProject.projectDir/publish.gradle"
 
 dependencies {
     implementation project(':commonrepository')
+
+    testImplementation "org.robolectric:robolectric:$robolectricVersion"
+
+    testImplementation project(':testutils')
 }

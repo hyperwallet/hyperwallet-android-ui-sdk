@@ -50,6 +50,9 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
         return Hyperwallet.getDefault();
     }
 
+    /**
+     * @see TransferMethodRepository#createTransferMethod(HyperwalletTransferMethod, LoadTransferMethodCallback)
+     */
     @Override
     public void createTransferMethod(@NonNull final HyperwalletTransferMethod transferMethod,
             LoadTransferMethodCallback callback) {
@@ -68,6 +71,9 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
         }
     }
 
+    /**
+     * @see TransferMethodRepository#loadLatestTransferMethod(LoadTransferMethodCallback)
+     */
     @Override
     public void loadTransferMethods(@NonNull final LoadTransferMethodListCallback callback) {
 
@@ -93,6 +99,37 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
                 });
     }
 
+    /**
+     * @see TransferMethodRepository#loadLatestTransferMethod(LoadTransferMethodCallback)
+     */
+    @Override
+    public void loadLatestTransferMethod(@NonNull final LoadTransferMethodCallback callback) {
+        HyperwalletTransferMethodQueryParam queryParam = new HyperwalletTransferMethodQueryParam.Builder()
+                .limit(1)
+                .status(ACTIVATED)
+                .build();
+        getHyperwallet().listTransferMethods(queryParam,
+                new HyperwalletListener<HyperwalletPageList<HyperwalletTransferMethod>>() {
+                    @Override
+                    public void onSuccess(@Nullable HyperwalletPageList<HyperwalletTransferMethod> result) {
+                        callback.onTransferMethodLoaded(result != null ? result.getDataList().get(0) : null);
+                    }
+
+                    @Override
+                    public void onFailure(HyperwalletException exception) {
+                        callback.onError(exception.getHyperwalletErrors());
+                    }
+
+                    @Override
+                    public Handler getHandler() {
+                        return mHandler;
+                    }
+                });
+    }
+
+    /**
+     * @see TransferMethodRepository#deactivateTransferMethod(HyperwalletTransferMethod, DeactivateTransferMethodCallback)
+     */
     @Override
     public void deactivateTransferMethod(@NonNull final HyperwalletTransferMethod transferMethod,
             @NonNull final DeactivateTransferMethodCallback callback) {

@@ -2,6 +2,7 @@ project.ext {
     mavenName = 'Hyperwallet Android Transfer UI SDK'
     fileFilter = ['**/BuildConfig.*',
                   '**/com/hyperwallet/android/ui/transfer/view/*.*',
+                  '**/com/hyperwallet/android/ui/transfer/HyperwalletTransferUi.*',
                   '**/com/hyperwallet/android/ui/transfer/viewmodel/*.*'
     ]
 }
@@ -13,4 +14,21 @@ apply from: "$rootProject.projectDir/publish.gradle"
 dependencies {
     implementation project(":transferrepository")
     implementation project(":transfermethodrepository")
+    implementation project(":userrepository")
+    implementation project(":commonui")
+    implementation "androidx.constraintlayout:constraintlayout:$constraintlayoutVersion"
+    implementation "androidx.legacy:legacy-support-v4:$legacySupportV4Version"
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleExtensionsVersion"
+
+    androidTestImplementation "androidx.test:rules:$testRulesVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:$espressoVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-intents:$espressoVersion"
+    androidTestImplementation "com.squareup.okhttp3:mockwebserver:$mockServerVersion"
+    androidTestImplementation "com.squareup.leakcanary:leakcanary-android-instrumentation:$leakcanaryVersion"
+    androidTestImplementation "com.squareup.leakcanary:leakcanary-support-fragment:$leakcanaryVersion"
+    androidTestImplementation project(":testutils")
+
+    testImplementation "org.robolectric:robolectric:$robolectricVersion"
+    testImplementation "com.squareup.okhttp3:mockwebserver:$mockWebServerVersion"
+    testImplementation project(':testutils')
 }

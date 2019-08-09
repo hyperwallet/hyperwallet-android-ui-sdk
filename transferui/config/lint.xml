@@ -4,4 +4,12 @@
     <issue id="RtlEnabled">
         <ignore regexp="(AndroidManifest).xml"/>
     </issue>
+    <issue id="Autofill">
+        <ignore regexp="(fragment_create_transfer).xml"/>
+    </issue>
+    <issue id="Overdraw">
+        <ignore regexp="(widget_add_transfer_destination).xml"/>
+        <ignore regexp="(widget_transfer_destination).xml"/>
+        <ignore regexp="(item_transfer_destination).xml"/>
+    </issue>
 </lint>

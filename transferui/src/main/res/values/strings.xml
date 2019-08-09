@@ -1,0 +1,24 @@
+<resources>
+    <string name="title_activity_create_transfer">Transfer Funds</string>
+    <string name="transfer_destination">Destination</string>
+    <string name="transfer_header_label">Transfer</string>
+    <string name="transfer_amount_hint">Amount</string>
+    <string name="transfer_currency_placeholder">USD</string>
+    <string name="transfer_all_funds_label">Transfer all Funds</string>
+    <string name="transfer_summary_label">Available for Transfer: %s %s</string>
+    <string name="transfer_notes_header_label">Notes</string>
+    <string name="transfer_notes_label">Description</string>
+    <string name="transfer_notes_additional_info_label">Description is optional</string>
+    <string name="transfer_next_action_label">Next</string>
+    <string name="add_text">+</string>
+    <string name="add_transfer_label">Add Account</string>
+    <string name="add_transfer_description_1">An account hasn\'t been setup yet,</string>
+    <string name="add_transfer_description_2">please add an account first.</string>
+    <string name="transfer_destination_selection_description">Transfer method selection</string>
+    <string name="destination_item_description">Destination item</string>
+
+    <string name="transfer_item_icon_placeholder">\uE000</string>
+    <string name="transfer_item_title_placeholder">Transfer Type</string>
+    <string name="transfer_item_country_placeholder">Country Name</string>
+    <string name="transfer_item_identification_placeholder">Editing on XXXX</string>
+</resources>

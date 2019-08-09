@@ -44,4 +44,3 @@ public abstract class OneClickListener implements View.OnClickListener {
      */
     public abstract void onOneClick(View v);
 }
-

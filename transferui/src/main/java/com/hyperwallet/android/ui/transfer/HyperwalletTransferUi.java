@@ -17,10 +17,14 @@
 
 package com.hyperwallet.android.ui.transfer;
 
+import android.content.Context;
+import android.content.Intent;
+
 import androidx.annotation.NonNull;
 
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.HyperwalletAuthenticationTokenProvider;
+import com.hyperwallet.android.ui.transfer.view.CreateTransferActivity;
 
 /* Class responsible for initializing the Hyperwallet Transfer UI SDK. It contains methods to interact with the
  * activities and fragments used to interact with the Hyperwallet platform
@@ -47,5 +51,14 @@ public final class HyperwalletTransferUi {
         return sInstance;
     }
 
-    //todo: Add outer methods here
+    public Intent getIntentCreateTransfer(@NonNull final Context context) {
+        Intent intent = new Intent(context, CreateTransferActivity.class);
+        return intent;
+    }
+
+    public Intent getIntentCreateTransfer(@NonNull final Context context, @NonNull final String sourceToken) {
+        Intent intent = new Intent(context, CreateTransferActivity.class);
+        intent.putExtra(CreateTransferActivity.EXTRA_TRANSFER_SOURCE_TOKEN, sourceToken);
+        return intent;
+    }
 }

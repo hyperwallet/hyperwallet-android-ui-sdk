@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="?android:attr/selectableItemBackground"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/add_transfer_destination_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/grid_margin_left"
+        android:layout_marginTop="@dimen/grid_margin_top"
+        android:background="@drawable/circle"
+        android:gravity="center"
+        android:text="@string/add_text"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/font_default_icon_size"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/add_transfer_destination_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/grid_margin_left"
+        android:layout_marginTop="@dimen/grid_margin_top"
+        android:text="@string/add_transfer_label"
+        android:textAppearance="@style/TextAppearance.Hyperwallet.Subtitle1"
+        app:layout_constraintLeft_toRightOf="@+id/add_transfer_destination_icon"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/add_transfer_destination_description_1"
+        android:layout_width="@dimen/description_max_layout_width"
+        android:layout_height="wrap_content"
+        android:text="@string/add_transfer_description_1"
+        android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"
+        app:layout_constraintLeft_toLeftOf="@+id/add_transfer_destination_title"
+        app:layout_constraintTop_toBottomOf="@+id/add_transfer_destination_title"/>
+
+    <TextView
+        android:id="@+id/add_transfer_destination_description_2"
+        android:layout_width="@dimen/description_max_layout_width"
+        android:layout_height="wrap_content"
+        android:text="@string/add_transfer_description_2"
+        android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"
+        app:layout_constraintLeft_toLeftOf="@+id/add_transfer_destination_title"
+        app:layout_constraintTop_toBottomOf="@+id/add_transfer_destination_description_1"/>
+
+    <View
+        android:id="@+id/add_transfer_divider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_height"
+        android:layout_marginTop="@dimen/divider_padding_top"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/add_transfer_destination_title"
+        app:layout_constraintTop_toBottomOf="@+id/add_transfer_destination_description_2"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
