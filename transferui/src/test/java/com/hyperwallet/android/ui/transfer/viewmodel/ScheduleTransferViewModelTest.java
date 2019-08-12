@@ -62,6 +62,7 @@ public class ScheduleTransferViewModelTest {
         // setting defaults
         Transfer transfer = new Transfer.Builder()
                 .token("trf-transfer-token")
+                .status(QUOTED)
                 .createdOn(new Date())
                 .clientTransferID("ClientId1234122")
                 .sourceToken("usr-source-token")
@@ -89,6 +90,7 @@ public class ScheduleTransferViewModelTest {
         assertThat(mScheduleTransferViewModel.getTransfer(), is(notNullValue()));
         assertThat(mScheduleTransferViewModel.getTransfer().getToken(), is("trf-transfer-token"));
         assertThat(mScheduleTransferViewModel.getTransfer().getClientTransferId(), is("ClientId1234122"));
+        assertThat(mScheduleTransferViewModel.getTransfer().getStatus(), is(QUOTED));
     }
 
     @Test
@@ -142,7 +144,7 @@ public class ScheduleTransferViewModelTest {
 
     @Test
     public void testScheduleTransfer_unsuccessful() throws Exception {
-        String errorResponse = mResourceManager.getResourceContent("transfer_amount_input_invalid.json");
+        String errorResponse = mResourceManager.getResourceContent("commit_transfer_timeout.json");
         final HyperwalletErrors errors = JsonUtils.fromJsonString(errorResponse,
                 new TypeReference<HyperwalletErrors>() {
                 });
@@ -164,9 +166,11 @@ public class ScheduleTransferViewModelTest {
         assertThat(mScheduleTransferViewModel.getTransferStatusTransitionError().getValue().getContent().getErrors(),
                 Matchers.<HyperwalletError>hasSize(1));
         assertThat(mScheduleTransferViewModel.getTransferStatusTransitionError().getValue().getContent()
-                .getErrors().get(0).getCode(), is("INVALID_AMOUNT"));
+                .getErrors().get(0).getCode(), is("EXPIRED_TRANSFER"));
         assertThat(mScheduleTransferViewModel.getTransferStatusTransitionError().getValue().getContent()
-                .getErrors().get(0).getMessage(), is("Invalid amount."));
+                        .getErrors().get(0).getMessage(),
+                is("The transfer request has expired on Mon Aug 12 16:33:10 PDT 2019. Please create a new transfer "
+                        + "and commit it before 120 seconds."));
     }
 
     @Test
