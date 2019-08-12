@@ -116,14 +116,14 @@ public class ScheduleTransferFragment extends Fragment {
             }
         });
 
-        registerObservers();
+        registerObserver();
     }
 
     void retry() {
         mScheduleTransferViewModel.scheduleTransfer();
     }
 
-    private void registerObservers() {
+    private void registerObserver() {
         mScheduleTransferViewModel.isScheduleTransferLoading().observe(getViewLifecycleOwner(),
                 new Observer<Boolean>() {
                     @Override
