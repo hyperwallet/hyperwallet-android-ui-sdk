@@ -115,6 +115,7 @@
                         tools:text="@string/summary_amount_placeholder"/>
 
                     <View
+                        android:id="@+id/amount_horizontal_bar"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/divider_height"
                         android:layout_marginStart="@dimen/grid_margin_left"

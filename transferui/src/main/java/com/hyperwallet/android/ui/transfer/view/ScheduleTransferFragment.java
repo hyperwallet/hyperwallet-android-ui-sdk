@@ -45,6 +45,8 @@ import com.hyperwallet.android.ui.common.view.OneClickListener;
 import com.hyperwallet.android.ui.transfer.R;
 import com.hyperwallet.android.ui.transfer.viewmodel.ScheduleTransferViewModel;
 
+import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
 
@@ -52,6 +54,9 @@ import java.util.Locale;
  * Schedule Transfer Fragment
  */
 public class ScheduleTransferFragment extends Fragment {
+
+    private static final String CURRENCY_NUMERIC_SEPARATOR = ",";
+    private static final String EMPTY_STRING = "";
 
     private RecyclerView mForeignExchangeView;
     private ScheduleTransferViewModel mScheduleTransferViewModel;
@@ -156,24 +161,49 @@ public class ScheduleTransferFragment extends Fragment {
         TextView receiveAmount = getView().findViewById(R.id.transfer_value);
         View feeContainer = getView().findViewById(R.id.fee_container);
         View receiveAmountContainer = getView().findViewById(R.id.transfer_container);
+        View amountHorizontalBar = getView().findViewById(R.id.amount_horizontal_bar);
 
-        if (!TextUtils.isEmpty(transfer.getDestinationFeeAmount())) {
+        if (isFeeAvailable(transfer.getDestinationFeeAmount())) {
             feeContainer.setVisibility(View.VISIBLE);
+            receiveAmountContainer.setVisibility(View.VISIBLE);
+            amountHorizontalBar.setVisibility(View.VISIBLE);
             fee.setText(requireContext().getString(R.string.amount_currency_format,
                     transfer.getDestinationFeeAmount(), transfer.getDestinationCurrency()));
 
-            //TODO if fee exist we need another field in the API
+            //TODO this is temporarily adding fee + amount but this is not final we will wait on
+            // Platform to add new field
             amount.setText(requireContext().getString(R.string.amount_currency_format,
-                    transfer.getDestinationAmount(), transfer.getDestinationCurrency()));
-
+                    getTotalAmount(transfer.getDestinationAmount(), transfer.getDestinationFeeAmount()),
+                    transfer.getDestinationCurrency()));
             receiveAmount.setText(requireContext().getString(R.string.amount_currency_format,
                     transfer.getDestinationAmount(), transfer.getDestinationCurrency()));
         } else {
             feeContainer.setVisibility(View.GONE);
             receiveAmountContainer.setVisibility(View.GONE);
+            amountHorizontalBar.setVisibility(View.GONE);
             amount.setText(requireContext().getString(R.string.amount_currency_format,
                     transfer.getDestinationAmount(), transfer.getDestinationCurrency()));
         }
+    }
+
+    private boolean isFeeAvailable(@Nullable final String feeAmount) {
+        if (!TextUtils.isEmpty(feeAmount)) {
+            BigDecimal fee = new BigDecimal(feeAmount.replace(CURRENCY_NUMERIC_SEPARATOR, EMPTY_STRING));
+            return fee.doubleValue() != 0;
+        }
+        return false;
+    }
+
+    // TODO this will be removed when Platform can return the total amount field
+    private String getTotalAmount(@NonNull final String amount, @NonNull final String fee) {
+        // normalize
+        BigDecimal normalizedAmount = new BigDecimal(amount.replace(CURRENCY_NUMERIC_SEPARATOR, EMPTY_STRING));
+        BigDecimal normalizedFee = new BigDecimal(fee.replace(CURRENCY_NUMERIC_SEPARATOR, EMPTY_STRING));
+
+        BigDecimal totalAmount = normalizedAmount.add(normalizedFee);
+
+        // format in normal locale US this will change when we have formatting enabled
+        return NumberFormat.getInstance(Locale.US).format(totalAmount);
     }
 
     private void showNotes(@Nullable final String notes) {
