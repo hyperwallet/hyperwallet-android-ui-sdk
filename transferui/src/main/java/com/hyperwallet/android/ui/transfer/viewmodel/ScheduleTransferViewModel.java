@@ -103,7 +103,11 @@ public class ScheduleTransferViewModel extends ViewModel {
         @NonNull
         @Override
         public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-            return (T) new ScheduleTransferViewModel(transferRepository);
+            if (modelClass.isAssignableFrom(ScheduleTransferViewModel.class)) {
+                return (T) new ScheduleTransferViewModel(transferRepository);
+            }
+            throw new IllegalArgumentException(
+                    "Expecting ViewModel class: " + ScheduleTransferViewModel.class.getName());
         }
     }
 }

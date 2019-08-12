@@ -85,7 +85,7 @@ public class ScheduleTransferActivity extends AppCompatActivity implements OnNet
                     .get(ScheduleTransferViewModel.class);
             mScheduleTransferViewModel.setTransfer((Transfer) transferParcel);
             mScheduleTransferViewModel.setTransferDestination((HyperwalletTransferMethod) transferMethodParcel);
-            registerObserver();
+            registerObservers();
         } else {
             throw new IllegalArgumentException("Required extra arguments are invalid for "
                     + ScheduleTransferActivity.class.getName()
@@ -109,7 +109,7 @@ public class ScheduleTransferActivity extends AppCompatActivity implements OnNet
         fragment.retry();
     }
 
-    private void registerObserver() {
+    private void registerObservers() {
         mScheduleTransferViewModel.getTransferStatusTransitionError().observe(this,
                 new Observer<Event<HyperwalletErrors>>() {
                     @Override
