@@ -142,7 +142,8 @@ public class ScheduleTransferViewModelTest {
 
     @Test
     public void testScheduleTransfer_unsuccessful() throws Exception {
-        String errorResponse = mResourceManager.getResourceContent("transfer_amount_input_invalid.json");
+        String errorResponse = mResourceManager.getResourceContent(
+                "errors/create_transfer_error_invalid_amount_response.json");
         final HyperwalletErrors errors = JsonUtils.fromJsonString(errorResponse,
                 new TypeReference<HyperwalletErrors>() {
                 });

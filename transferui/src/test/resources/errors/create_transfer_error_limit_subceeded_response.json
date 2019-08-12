@@ -1,0 +1,8 @@
+{
+  "errors": [
+    {
+      "message": "Requested transfer amount $0.01, is below the transaction limit of $1.00.",
+      "code": "LIMIT_SUBCEEDED"
+    }
+  ]
+}

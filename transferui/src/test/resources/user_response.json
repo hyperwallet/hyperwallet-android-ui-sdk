@@ -20,7 +20,7 @@
       "params": {
         "rel": "self"
       },
-      "href": "https://api.sandbox.hyperwallet.com/rest/v3/users/usr-f9154016-94e8-4686-a840-075688ac07b5"
+      "href": "https://localhost/rest/v3/users/usr-f9154016-94e8-4686-a840-075688ac07b5"
     }
   ]
 }

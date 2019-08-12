@@ -333,7 +333,8 @@ public class CreateTransferViewModelTest {
 
     @Test
     public void testCreateQuoteTransfer_hasInvalidAmountError() throws Exception {
-        String errorResponse = mResourceManager.getResourceContent("transfer_amount_input_invalid.json");
+        String errorResponse = mResourceManager.getResourceContent(
+                "errors/create_transfer_error_invalid_amount_response.json");
         final HyperwalletErrors errors = JsonUtils.fromJsonString(errorResponse,
                 new TypeReference<HyperwalletErrors>() {
                 });
@@ -371,7 +372,7 @@ public class CreateTransferViewModelTest {
 
     @Test
     public void testCreateQuoteTransfer_hasInvalidDestinationError() throws Exception {
-        String errorResponse = mResourceManager.getResourceContent("transfer_destination_input_invalid.json");
+        String errorResponse = mResourceManager.getResourceContent("errors/transfer_destination_input_invalid.json");
         final HyperwalletErrors errors = JsonUtils.fromJsonString(errorResponse,
                 new TypeReference<HyperwalletErrors>() {
                 });
