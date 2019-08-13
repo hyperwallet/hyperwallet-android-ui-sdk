@@ -40,7 +40,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
 import com.hyperwallet.android.Hyperwallet;
-import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
+import com.hyperwallet.android.model.StatusTransition;
 import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
 import com.hyperwallet.android.ui.testutils.TestAuthenticationProvider;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
@@ -174,10 +174,14 @@ public class TransferUserFundsTest {
             public void onReceive(Context context, Intent intent) {
                 gate.countDown();
 
-                HyperwalletTransferMethod transferMethod = intent.getParcelableExtra(
+                StatusTransition transition = intent.getParcelableExtra(
                         "hyperwallet-local-broadcast-payload");
-//                assertThat("Bank Account Id is incorrect", transferMethod.getField(
-//                        HyperwalletTransferMethod.TransferMethodFields.BANK_ACCOUNT_ID), is(ACCOUNT_NUMBER));
+                assertThat("Token is incorrect", transition.getToken(), is("sts-2157d925-90c9-407b-a9d6-24a0d9dacfb6"));
+                assertThat("To Status is incorrect", transition.getToStatus(), is("SCHEDULED"));
+                assertThat("From Status is incorrect", transition.getFromStatus(), is("QUOTED"));
+                assertThat("Transition is incorrect", transition.getTransition(), is("SCHEDULED"));
+                assertThat("Created on is incorrect", transition.getCreatedOn(), is("2019-08-12T17:39:35"));
+
             }
         };
 
@@ -214,7 +218,7 @@ public class TransferUserFundsTest {
                 matches(atPosition(0,
                         hasDescendant(allOf(withId(R.id.exchange_rate_value), withText("1 USD = 1.291253 CAD"))))));
         onView(withId(R.id.amount_label)).check(matches(withText(R.string.summary_amount_label)));
-//        onView(withId(R.id.amount_value)).check(matches(withText("152.20 CAD")));
+        onView(withId(R.id.amount_value)).check(matches(withText("152.20 CAD")));
         onView(withId(R.id.fee_label)).check(matches(withText(R.string.summary_amount_fee_label)));
         onView(withId(R.id.fee_value)).check(matches(withText("2.20 CAD")));
         onView(withId(R.id.transfer_label)).check(matches(withText(R.string.summary_amount_transfer_label)));
@@ -252,10 +256,13 @@ public class TransferUserFundsTest {
             public void onReceive(Context context, Intent intent) {
                 gate.countDown();
 
-                HyperwalletTransferMethod transferMethod = intent.getParcelableExtra(
+                StatusTransition transition = intent.getParcelableExtra(
                         "hyperwallet-local-broadcast-payload");
-//                assertThat("Bank Account Id is incorrect", transferMethod.getField(
-//                        HyperwalletTransferMethod.TransferMethodFields.BANK_ACCOUNT_ID), is(ACCOUNT_NUMBER));
+                assertThat("Token is incorrect", transition.getToken(), is("sts-2157d925-90c9-407b-a9d6-24a0d9dacfb6"));
+                assertThat("To Status is incorrect", transition.getToStatus(), is("SCHEDULED"));
+                assertThat("From Status is incorrect", transition.getFromStatus(), is("QUOTED"));
+                assertThat("Transition is incorrect", transition.getTransition(), is("SCHEDULED"));
+                assertThat("Created on is incorrect", transition.getCreatedOn(), is("2019-08-12T17:39:35"));
             }
         };
 
@@ -275,7 +282,7 @@ public class TransferUserFundsTest {
 
         onView(withId(R.id.list_foreign_exchange)).check(matches(not(isDisplayed())));
         onView(withId(R.id.amount_label)).check(matches(withText(R.string.summary_amount_label)));
-//        onView(withId(R.id.amount_value)).check(matches(withText("102.00 USD")));
+        onView(withId(R.id.amount_value)).check(matches(withText("102.00 USD")));
         onView(withId(R.id.fee_label)).check(matches(withText(R.string.summary_amount_fee_label)));
         onView(withId(R.id.fee_value)).check(matches(withText("2.00 USD")));
         onView(withId(R.id.transfer_label)).check(matches(withText(R.string.summary_amount_transfer_label)));
@@ -313,10 +320,13 @@ public class TransferUserFundsTest {
             public void onReceive(Context context, Intent intent) {
                 gate.countDown();
 
-                HyperwalletTransferMethod transferMethod = intent.getParcelableExtra(
+                StatusTransition transition = intent.getParcelableExtra(
                         "hyperwallet-local-broadcast-payload");
-//                assertThat("Bank Account Id is incorrect", transferMethod.getField(
-//                        HyperwalletTransferMethod.TransferMethodFields.BANK_ACCOUNT_ID), is(ACCOUNT_NUMBER));
+                assertThat("Token is incorrect", transition.getToken(), is("sts-2157d925-90c9-407b-a9d6-24a0d9dacfb6"));
+                assertThat("To Status is incorrect", transition.getToStatus(), is("SCHEDULED"));
+                assertThat("From Status is incorrect", transition.getFromStatus(), is("QUOTED"));
+                assertThat("Transition is incorrect", transition.getTransition(), is("SCHEDULED"));
+                assertThat("Created on is incorrect", transition.getCreatedOn(), is("2019-08-12T17:39:35"));
             }
         };
 
@@ -338,7 +348,7 @@ public class TransferUserFundsTest {
 
         onView(withId(R.id.list_foreign_exchange)).check(matches(not(isDisplayed())));
         onView(withId(R.id.amount_label)).check(matches(withText(R.string.summary_amount_label)));
-//        onView(withId(R.id.amount_value)).check(matches(withText("102.00 USD")));
+        onView(withId(R.id.amount_value)).check(matches(withText("102.00 USD")));
         onView(withId(R.id.fee_label)).check(matches(withText(R.string.summary_amount_fee_label)));
         onView(withId(R.id.fee_value)).check(matches(withText("2.00 USD")));
         onView(withId(R.id.transfer_label)).check(matches(withText(R.string.summary_amount_transfer_label)));
@@ -376,10 +386,13 @@ public class TransferUserFundsTest {
             public void onReceive(Context context, Intent intent) {
                 gate.countDown();
 
-                HyperwalletTransferMethod transferMethod = intent.getParcelableExtra(
+                StatusTransition transition = intent.getParcelableExtra(
                         "hyperwallet-local-broadcast-payload");
-//                assertThat("Bank Account Id is incorrect", transferMethod.getField(
-//                        HyperwalletTransferMethod.TransferMethodFields.BANK_ACCOUNT_ID), is(ACCOUNT_NUMBER));
+                assertThat("Token is incorrect", transition.getToken(), is("sts-2157d925-90c9-407b-a9d6-24a0d9dacfb6"));
+                assertThat("To Status is incorrect", transition.getToStatus(), is("SCHEDULED"));
+                assertThat("From Status is incorrect", transition.getFromStatus(), is("QUOTED"));
+                assertThat("Transition is incorrect", transition.getTransition(), is("SCHEDULED"));
+                assertThat("Created on is incorrect", transition.getCreatedOn(), is("2019-08-12T17:39:35"));
             }
         };
 
@@ -401,7 +414,7 @@ public class TransferUserFundsTest {
 
         onView(withId(R.id.list_foreign_exchange)).check(matches(not(isDisplayed())));
         onView(withId(R.id.amount_label)).check(matches(withText(R.string.summary_amount_label)));
-//        onView(withId(R.id.amount_value)).check(matches(withText("102.00 USD")));
+        onView(withId(R.id.amount_value)).check(matches(withText("100.00 USD")));
         onView(withId(R.id.fee_label)).check(matches(not(isDisplayed())));
         onView(withId(R.id.fee_value)).check(matches(not(isDisplayed())));
         onView(withId(R.id.transfer_label)).check(matches(not(isDisplayed())));
@@ -439,10 +452,13 @@ public class TransferUserFundsTest {
             public void onReceive(Context context, Intent intent) {
                 gate.countDown();
 
-                HyperwalletTransferMethod transferMethod = intent.getParcelableExtra(
+                StatusTransition transition = intent.getParcelableExtra(
                         "hyperwallet-local-broadcast-payload");
-//                assertThat("Bank Account Id is incorrect", transferMethod.getField(
-//                        HyperwalletTransferMethod.TransferMethodFields.BANK_ACCOUNT_ID), is(ACCOUNT_NUMBER));
+                assertThat("Token is incorrect", transition.getToken(), is("sts-2157d925-90c9-407b-a9d6-24a0d9dacfb6"));
+                assertThat("To Status is incorrect", transition.getToStatus(), is("SCHEDULED"));
+                assertThat("From Status is incorrect", transition.getFromStatus(), is("QUOTED"));
+                assertThat("Transition is incorrect", transition.getTransition(), is("SCHEDULED"));
+                assertThat("Created on is incorrect", transition.getCreatedOn(), is("2019-08-12T17:39:35"));
             }
         };
 
@@ -501,7 +517,7 @@ public class TransferUserFundsTest {
                         hasDescendant(allOf(withId(R.id.exchange_rate_value), withText("1 EUR = 1.126100 USD"))))));
 
         onView(withId(R.id.amount_label)).check(matches(withText(R.string.summary_amount_label)));
-//        onView(withId(R.id.amount_value)).check(matches(withText("290.05 USD")));
+        onView(withId(R.id.amount_value)).check(matches(withText("290.05 USD")));
         onView(withId(R.id.fee_label)).check(matches(withText(R.string.summary_amount_fee_label)));
         onView(withId(R.id.fee_value)).check(matches(withText("2.00 USD")));
         onView(withId(R.id.transfer_label)).check(matches(withText(R.string.summary_amount_transfer_label)));
@@ -684,7 +700,7 @@ public class TransferUserFundsTest {
         // Verify confirmation details after retrying
         onView(withId(R.id.list_foreign_exchange)).check(matches(not(isDisplayed())));
         onView(withId(R.id.amount_label)).check(matches(withText(R.string.summary_amount_label)));
-//        onView(withId(R.id.amount_value)).check(matches(withText("102.00 USD")));
+        onView(withId(R.id.amount_value)).check(matches(withText("102.00 USD")));
         onView(withId(R.id.fee_label)).check(matches(withText(R.string.summary_amount_fee_label)));
         onView(withId(R.id.fee_value)).check(matches(withText("2.00 USD")));
         onView(withId(R.id.transfer_label)).check(matches(withText(R.string.summary_amount_transfer_label)));

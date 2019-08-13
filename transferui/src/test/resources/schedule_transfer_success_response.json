@@ -4,7 +4,6 @@
   "transition": "SCHEDULED",
   "fromStatus": "QUOTED",
   "toStatus": "SCHEDULED",
-  "notes": "Transfer funds test",
   "links": [
     {
       "params": {
