@@ -2,6 +2,7 @@
     <string name="title_activity_create_transfer">Transfer Funds</string>
     <string name="transfer_destination">Destination</string>
     <string name="transfer_header_label">Transfer</string>
+    <string name="transfer_destination_required_error">Destination account required</string>
     <string name="transfer_amount_hint">Amount</string>
     <string name="transfer_currency_placeholder">USD</string>
     <string name="transfer_all_funds_label">Transfer all Funds</string>

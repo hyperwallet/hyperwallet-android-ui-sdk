@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
@@ -16,12 +17,18 @@ import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodReposi
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryImpl;
 
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentMatchers;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 import org.robolectric.RobolectricTestRunner;
+
+import java.util.ArrayList;
 
 @RunWith(RobolectricTestRunner.class)
 public class ListTransferDestinationViewModelTest {
@@ -39,12 +46,45 @@ public class ListTransferDestinationViewModelTest {
         ListTransferDestinationViewModel.ListTransferDestinationViewModelFactory factory =
                 new ListTransferDestinationViewModel.ListTransferDestinationViewModelFactory(transferMethodRepository);
 
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                TransferMethodRepository.LoadTransferMethodListCallback callback = invocation.getArgument(0);
+                callback.onTransferMethodListLoaded(new ArrayList<HyperwalletTransferMethod>());
+                return callback;
+            }
+        }).when(transferMethodRepository).loadTransferMethods(ArgumentMatchers.any(
+                TransferMethodRepository.LoadTransferMethodListCallback.class));
+
         mModelToTest = factory.create(ListTransferDestinationViewModel.class);
     }
 
     @Test
     public void testGetTransferDestinationList_returnsLiveData() {
         assertThat(mModelToTest.getTransferDestinationList(), is(notNullValue()));
+        assertThat(mModelToTest.getTransferDestinationList().getValue(),
+                Matchers.<HyperwalletTransferMethod>hasSize(0));
+    }
+
+    @Test
+    public void testGetTransferDestinationList_returnsLiveDataNotFound() {
+        ListTransferDestinationViewModel.ListTransferDestinationViewModelFactory factory =
+                new ListTransferDestinationViewModel.ListTransferDestinationViewModelFactory(transferMethodRepository);
+
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                TransferMethodRepository.LoadTransferMethodListCallback callback = invocation.getArgument(0);
+                callback.onTransferMethodListLoaded(null);
+                return callback;
+            }
+        }).when(transferMethodRepository).loadTransferMethods(ArgumentMatchers.any(
+                TransferMethodRepository.LoadTransferMethodListCallback.class));
+
+        ListTransferDestinationViewModel viewModel = factory.create(ListTransferDestinationViewModel.class);
+
+        assertThat(viewModel.getTransferDestinationList(), is(notNullValue()));
+        assertThat(viewModel.getTransferDestinationList().getValue(), Matchers.<HyperwalletTransferMethod>hasSize(0));
     }
 
     @Test

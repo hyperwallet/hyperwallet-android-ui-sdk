@@ -12,7 +12,7 @@
         android:id="@+id/progress_bar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <ProgressBar
             android:id="@+id/progress"
@@ -68,53 +68,88 @@
             </RelativeLayout>
 
             <LinearLayout
-                android:id="@+id/transfer_header_container"
+                android:id="@+id/transfer_header_container_with_error"
+                android:visibility="gone"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/section_header_height"
-                android:background="@drawable/view_border_top_bottom"
-                android:paddingTop="@dimen/grid_padding_top">
+                android:layout_height="@dimen/transfer_header_container_with_error_label"
+                android:orientation="vertical"
+                android:background="@drawable/view_border_top_bottom">
 
                 <TextView
-                    android:id="@+id/transfer_header"
+                    android:id="@+id/transfer_destination_error"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/grid_margin_left"
+                    android:layout_marginTop="@dimen/grid_margin_top"
+                    android:text="@string/transfer_destination_required_error"
+                    android:textAppearance="@style/TextAppearance.Hyperwallet.Body2.Error"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/grid_margin_left"
                     android:layout_marginTop="@dimen/grid_margin_top"
                     android:text="@string/transfer_header_label"
                     android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"/>
             </LinearLayout>
 
-            <RelativeLayout
+            <LinearLayout
+                android:id="@+id/transfer_header_container"
+                android:visibility="visible"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/section_header_height"
+                android:background="@drawable/view_border_top_bottom"
+                android:paddingTop="@dimen/grid_padding_top">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/grid_margin_left"
+                    android:layout_marginTop="@dimen/grid_margin_top"
+                    android:text="@string/transfer_header_label"
+                    android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"/>
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/transfer_amount_container"
                 android:layout_marginStart="@dimen/grid_margin_left"
                 android:layout_marginEnd="@dimen/grid_margin_right"
                 android:layout_marginTop="@dimen/grid_margin_top"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <EditText
-                    android:id="@+id/transfer_amount"
-                    android:theme="@style/Widget.Hyperwallet.Transfer.EditText"
-                    android:inputType="numberDecimal"
-                    android:maxLines="1"
-                    android:enabled="false"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/transfer_amount_layout"
                     android:layout_width="match_parent"
-                    android:hint="@string/transfer_amount_hint"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/Widget.Hyperwallet.TextInputLayout"
                     android:layout_marginStart="@dimen/edit_text_margin"
                     android:layout_marginEnd="@dimen/edit_text_margin"
-                    android:layout_height="wrap_content"/>
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+                    <EditText
+                        android:id="@+id/transfer_amount"
+                        android:theme="@style/Widget.Hyperwallet.Transfer.EditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:inputType="numberDecimal"
+                        android:maxLines="1"
+                        android:hint="@string/transfer_amount_hint"/>
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
                     android:id="@+id/transfer_amount_currency"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/transfer_amount"
-                    android:layout_alignEnd="@+id/transfer_amount"
-                    android:layout_alignBottom="@+id/transfer_amount"
-                    android:layout_marginTop="@dimen/transfer_currency_top"
-                    android:layout_marginEnd="@dimen/transfer_currency_end"
-                    android:layout_marginBottom="0dp"
+                    android:layout_marginEnd="@dimen/edit_text_currency_end"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/transfer_amount_layout"
+                    app:layout_constraintTop_toTopOf="@+id/transfer_amount_layout"
                     tools:text="@string/transfer_currency_placeholder"/>
-            </RelativeLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/transfer_all_funds_data_container"
@@ -189,17 +224,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <EditText
-                    android:id="@+id/transfer_notes"
-                    android:theme="@style/Widget.Hyperwallet.Transfer.EditText"
-                    android:inputType="text"
-                    android:maxLines="3"
-                    android:enabled="false"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/transfer_notes_layout"
+                    android:theme="@style/Widget.Hyperwallet.TextInputLayout"
                     android:layout_width="match_parent"
-                    android:hint="@string/transfer_notes_label"
-                    android:layout_marginStart="@dimen/edit_text_margin"
-                    android:layout_marginEnd="@dimen/edit_text_margin"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:id="@+id/transfer_notes"
+                        android:theme="@style/Widget.Hyperwallet.Transfer.EditText"
+                        android:inputType="text"
+                        android:maxLines="3"
+                        android:enabled="false"
+                        android:layout_width="match_parent"
+                        android:hint="@string/transfer_notes_label"
+                        android:layout_marginStart="@dimen/edit_text_margin"
+                        android:layout_marginEnd="@dimen/edit_text_margin"
+                        android:layout_height="wrap_content"/>
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
