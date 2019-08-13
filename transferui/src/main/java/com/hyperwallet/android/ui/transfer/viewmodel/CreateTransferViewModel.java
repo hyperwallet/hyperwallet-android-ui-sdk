@@ -185,22 +185,17 @@ public class CreateTransferViewModel extends ViewModel {
 
     public void createTransfer() {
         mIsCreateQuoteLoading.postValue(Boolean.TRUE);
-        Transfer transfer = mTransferAvailableFunds.getValue() ?
-                new Transfer.Builder()
-                        .clientTransferID(CLIENT_IDENTIFICATION_PREFIX + UUID.randomUUID().toString())
-                        .sourceToken(mSourceToken)
-                        .destinationToken(mTransferDestination.getValue().getField(TOKEN))
-                        .destinationCurrency(mTransferDestination.getValue().getField(TRANSFER_METHOD_CURRENCY))
-                        .notes(mTransferNotes.getValue())
-                        .build() :
-                new Transfer.Builder()
-                        .clientTransferID(CLIENT_IDENTIFICATION_PREFIX + UUID.randomUUID().toString())
-                        .sourceToken(mSourceToken)
-                        .destinationToken(mTransferDestination.getValue().getField(TOKEN))
-                        .destinationCurrency(mTransferDestination.getValue().getField(TRANSFER_METHOD_CURRENCY))
-                        .notes(mTransferNotes.getValue())
-                        .destinationAmount(mTransferAmount.getValue())
-                        .build();
+        String amount = mTransferAvailableFunds.getValue() ?
+                mQuoteAvailableFunds.getValue().getDestinationAmount() : mTransferAmount.getValue();
+
+        Transfer transfer = new Transfer.Builder()
+                .clientTransferID(CLIENT_IDENTIFICATION_PREFIX + UUID.randomUUID().toString())
+                .sourceToken(mSourceToken)
+                .destinationToken(mTransferDestination.getValue().getField(TOKEN))
+                .destinationCurrency(mTransferDestination.getValue().getField(TRANSFER_METHOD_CURRENCY))
+                .notes(mTransferNotes.getValue())
+                .destinationAmount(amount)
+                .build();
 
         mTransferRepository.createTransfer(transfer, new TransferRepository.CreateTransferCallback() {
             @Override
