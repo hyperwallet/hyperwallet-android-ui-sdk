@@ -116,7 +116,6 @@ public class ScheduleTransferActivity extends AppCompatActivity implements OnNet
                     public void onChanged(final Event<HyperwalletErrors> event) {
                         if (event != null && !event.isContentConsumed()) {
                             showErrorScheduleTransfer(event.getContent().getErrors());
-                            setResult(Activity.RESULT_OK);
                         }
                     }
                 });
