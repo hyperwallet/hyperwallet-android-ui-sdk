@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="edit_text_margin">-4dp</dimen>
+    <dimen name="edit_text_currency_end">4dp</dimen>
     <dimen name="transfer_currency_top">13dp</dimen>
     <dimen name="transfer_currency_end">4dp</dimen>
+    <dimen name="transfer_header_container_with_error_label">82dp</dimen>
 </resources>

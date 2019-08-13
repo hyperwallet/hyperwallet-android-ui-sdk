@@ -47,8 +47,11 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputLayout;
+import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.transfer.Transfer;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
+import com.hyperwallet.android.ui.common.repository.Event;
 import com.hyperwallet.android.ui.common.view.OneClickListener;
 import com.hyperwallet.android.ui.transfer.R;
 import com.hyperwallet.android.ui.transfer.viewmodel.CreateTransferViewModel;
@@ -75,6 +78,10 @@ public class CreateTransferFragment extends Fragment {
     private View mTransferDestination;
     private View mAddTransferDestination;
     private Switch mTransferAllSwitch;
+    private TextInputLayout mTransferAmountLayout;
+    private View mTransferHeaderContainerError;
+    private View mTransferHeaderContainer;
+    private TextView mTransferDestinationError;
 
     /**
      * Please don't use this constructor this is reserved for Android Core Framework
@@ -122,6 +129,7 @@ public class CreateTransferFragment extends Fragment {
         disableNextButton();
 
         // transfer amount
+        mTransferAmountLayout = view.findViewById(R.id.transfer_amount_layout);
         mTransferAmount = view.findViewById(R.id.transfer_amount);
         prepareTransferAmount();
 
@@ -130,6 +138,7 @@ public class CreateTransferFragment extends Fragment {
         prepareTransferNotes();
 
         // transfer destination
+        mTransferHeaderContainer = view.findViewById(R.id.transfer_header_container);
         mTransferDestination = view.findViewById(R.id.transfer_destination);
         mTransferDestination.setOnClickListener(new OneClickListener() {
             @Override
@@ -144,6 +153,8 @@ public class CreateTransferFragment extends Fragment {
         });
 
         // add transfer destination
+        mTransferDestinationError = view.findViewById(R.id.transfer_destination_error);
+        mTransferHeaderContainerError = view.findViewById(R.id.transfer_header_container_with_error);
         mAddTransferDestination = view.findViewById(R.id.add_transfer_destination);
         mAddTransferDestination.setOnClickListener(new OneClickListener() {
             @Override
@@ -161,9 +172,10 @@ public class CreateTransferFragment extends Fragment {
                 mCreateTransferViewModel.setTransferAllAvailableFunds(isChecked);
             }
         });
-        registerTransferDestinationObserver();
+        registerTransferDestinationObservers();
         registerAvailableFundsObserver();
-        registerTransferAmountObserver();
+        registerTransferAmountObservers();
+        registerErrorObservers();
     }
 
     @Override
@@ -173,6 +185,10 @@ public class CreateTransferFragment extends Fragment {
                     ListTransferDestinationActivity.EXTRA_SELECTED_DESTINATION_TOKEN);
             mCreateTransferViewModel.setTransferDestination(selectedTransferMethod);
         }
+    }
+
+    void retry() {
+        mCreateTransferViewModel.retry();
     }
 
     private void prepareTransferAmount() {
@@ -193,6 +209,7 @@ public class CreateTransferFragment extends Fragment {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (before != count) {
                     mCreateTransferViewModel.setTransferAmount(s.toString());
+                    mTransferAmountLayout.setError(null);
                 }
 
                 if (TextUtils.isEmpty(mTransferAmount.getText())) {
@@ -235,7 +252,31 @@ public class CreateTransferFragment extends Fragment {
         });
     }
 
-    private void registerTransferDestinationObserver() {
+    private void registerErrorObservers() {
+        mCreateTransferViewModel.getInvalidAmountError().observe(getViewLifecycleOwner(),
+                new Observer<Event<HyperwalletError>>() {
+                    @Override
+                    public void onChanged(@NonNull final Event<HyperwalletError> event) {
+                        if (!event.isContentConsumed()) {
+                            mTransferAmountLayout.setError(event.getContent().getMessage());
+                        }
+                    }
+                });
+
+        mCreateTransferViewModel.getInvalidDestinationError().observe(getViewLifecycleOwner(),
+                new Observer<Event<HyperwalletError>>() {
+                    @Override
+                    public void onChanged(@NonNull final Event<HyperwalletError> event) {
+                        if (!event.isContentConsumed()) {
+                            mTransferHeaderContainer.setVisibility(View.GONE);
+                            mTransferHeaderContainerError.setVisibility(View.VISIBLE);
+                            mTransferDestinationError.setText(event.getContent().getMessage());
+                        }
+                    }
+                });
+    }
+
+    private void registerTransferDestinationObservers() {
         mCreateTransferViewModel.isLoading().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(final Boolean loading) {
@@ -254,11 +295,17 @@ public class CreateTransferFragment extends Fragment {
                     @Override
                     public void onChanged(final HyperwalletTransferMethod transferMethod) {
                         if (transferMethod != null) {
+                            mTransferDestination.setVisibility(View.VISIBLE);
+                            mTransferHeaderContainer.setVisibility(View.VISIBLE);
+                            mAddTransferDestination.setVisibility(View.GONE);
+                            mTransferHeaderContainerError.setVisibility(View.GONE);
                             showTransferDestination(transferMethod);
                             enableInputControls();
                         } else {
-                            mAddTransferDestination.setVisibility(View.VISIBLE);
                             mTransferDestination.setVisibility(View.GONE);
+                            mTransferHeaderContainer.setVisibility(View.GONE);
+                            mAddTransferDestination.setVisibility(View.VISIBLE);
+                            mTransferHeaderContainerError.setVisibility(View.VISIBLE);
                             disableInputControls();
                         }
                     }
@@ -274,12 +321,14 @@ public class CreateTransferFragment extends Fragment {
                             transfer.getDestinationAmount(), transfer.getDestinationCurrency());
                     mTransferAllFundsSummary.setText(summary);
                     mTransferAllFundsSummary.setVisibility(View.VISIBLE);
+                } else {
+                    mTransferAllFundsSummary.setVisibility(View.GONE);
                 }
             }
         });
     }
 
-    private void registerTransferAmountObserver() {
+    private void registerTransferAmountObservers() {
         mCreateTransferViewModel.isTransferAllAvailableFunds().observe(getViewLifecycleOwner(),
                 new Observer<Boolean>() {
                     @Override
