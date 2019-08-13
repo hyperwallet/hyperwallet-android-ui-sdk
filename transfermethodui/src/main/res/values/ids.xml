@@ -100,4 +100,8 @@
     <item name="countryLabel" type="id"/>
     <item name="postalCode" type="id"/>
     <item name="postalCodeLabel" type="id"/>
+    <item name="taxReasonId" type="id"/>
+    <item name="taxReasonIdLabel" type="id"/>
+    <item name="taxId" type="id"/>
+    <item name="taxIdLabel" type="id"/>
 </resources>
