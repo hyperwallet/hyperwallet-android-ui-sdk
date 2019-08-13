@@ -174,6 +174,19 @@ public class ScheduleTransferViewModelTest {
     }
 
     @Test
+    public void testGetTotalAmount_returnsTotalAmount() throws JSONException {
+        String quoteResponse = mResourceManager.getResourceContent("create_transfer_quote_response.json");
+        Transfer transfer = new Transfer(new JSONObject(quoteResponse));
+
+        ScheduleTransferViewModel.ScheduleTransferViewModelFactory factory =
+                new ScheduleTransferViewModel.ScheduleTransferViewModelFactory(mTransferRepository);
+        ScheduleTransferViewModel viewModel = factory.create(ScheduleTransferViewModel.class);
+        viewModel.setTransfer(transfer);
+
+        assertThat(viewModel.getTransferTotalAmount(), is("100.00"));
+    }
+
+    @Test
     public void testCreate_createScheduleTransferViewModelSuccess() {
         ScheduleTransferViewModel.ScheduleTransferViewModelFactory factory =
                 new ScheduleTransferViewModel.ScheduleTransferViewModelFactory(mTransferRepository);
