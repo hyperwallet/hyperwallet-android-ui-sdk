@@ -23,7 +23,6 @@ import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getStri
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getTransferMethodDetail;
 
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,14 +38,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hyperwallet.android.model.transfer.ForeignExchange;
-import com.hyperwallet.android.model.transfer.Transfer;
-import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.ui.common.view.OneClickListener;
 import com.hyperwallet.android.ui.transfer.R;
 import com.hyperwallet.android.ui.transfer.viewmodel.ScheduleTransferViewModel;
 
-import java.math.BigDecimal;
-import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
 
@@ -55,12 +50,7 @@ import java.util.Locale;
  */
 public class ScheduleTransferFragment extends Fragment {
 
-    private static final String CURRENCY_NUMERIC_SEPARATOR = ",";
-    private static final String EMPTY_STRING = "";
-
-    private RecyclerView mForeignExchangeView;
     private ScheduleTransferViewModel mScheduleTransferViewModel;
-    private Button mTransferConfirmButton;
     private View mTransferConfirmButtonProgress;
 
     public ScheduleTransferFragment() {
@@ -83,38 +73,11 @@ public class ScheduleTransferFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        mForeignExchangeView = view.findViewById(R.id.list_foreign_exchange);
-
-        // transfer destination
-        showTransferDestination(mScheduleTransferViewModel.getTransferDestination());
-
-        // foreign exchange
-        if (mScheduleTransferViewModel.getTransfer().getForeignExchanges() != null
-                && !mScheduleTransferViewModel.getTransfer().getForeignExchanges().isEmpty()) {
-            mForeignExchangeView.setNestedScrollingEnabled(false);
-            mForeignExchangeView.setHasFixedSize(true);
-            mForeignExchangeView.setLayoutManager(new LinearLayoutManager(getActivity()));
-            mForeignExchangeView.setAdapter(
-                    new ForeignExchangeListAdapter(mScheduleTransferViewModel.getTransfer().getForeignExchanges()));
-        } else {
-            mForeignExchangeView.setVisibility(View.GONE);
-        }
-
-        // summary
-        showSummary(mScheduleTransferViewModel.getTransfer());
-
-        // notes
-        showNotes(mScheduleTransferViewModel.getTransfer().getNotes());
-
-        // transfer confirm button
-        mTransferConfirmButtonProgress = view.findViewById(R.id.transfer_confirm_button_progress_bar);
-        mTransferConfirmButton = view.findViewById(R.id.transfer_confirm_button);
-        mTransferConfirmButton.setOnClickListener(new OneClickListener() {
-            @Override
-            public void onOneClick(View v) {
-                mScheduleTransferViewModel.scheduleTransfer();
-            }
-        });
+        showTransferDestination();
+        showForeignExchange();
+        showSummary();
+        showNotes();
+        showConfirmButton();
 
         registerObserver();
     }
@@ -137,17 +100,17 @@ public class ScheduleTransferFragment extends Fragment {
                 });
     }
 
-    private void showTransferDestination(@NonNull final HyperwalletTransferMethod transferMethod) {
+    private void showTransferDestination() {
         TextView transferIcon = getView().findViewById(R.id.transfer_destination_icon);
         TextView transferTitle = getView().findViewById(R.id.transfer_destination_title);
         TextView transferCountry = getView().findViewById(R.id.transfer_destination_description_1);
         TextView transferIdentifier = getView().findViewById(R.id.transfer_destination_description_2);
 
-        String type = transferMethod.getField(TYPE);
-        String transferMethodIdentification = getTransferMethodDetail(transferIdentifier.getContext(), transferMethod,
-                type);
+        String type = mScheduleTransferViewModel.getTransferDestination().getField(TYPE);
+        String transferMethodIdentification = getTransferMethodDetail(transferIdentifier.getContext(),
+                mScheduleTransferViewModel.getTransferDestination(), type);
         Locale locale = new Locale.Builder().setRegion(
-                transferMethod.getField(TRANSFER_METHOD_COUNTRY)).build();
+                mScheduleTransferViewModel.getTransferDestination().getField(TRANSFER_METHOD_COUNTRY)).build();
 
         transferIdentifier.setText(transferMethodIdentification);
         transferTitle.setText(getStringResourceByName(transferTitle.getContext(), type));
@@ -155,7 +118,20 @@ public class ScheduleTransferFragment extends Fragment {
         transferCountry.setText(locale.getDisplayName());
     }
 
-    private void showSummary(@NonNull final Transfer transfer) {
+    private void showForeignExchange() {
+        RecyclerView recyclerView = getView().findViewById(R.id.list_foreign_exchange);
+        if (mScheduleTransferViewModel.getTransfer().hasForeignExchange()) {
+            recyclerView.setNestedScrollingEnabled(false);
+            recyclerView.setHasFixedSize(true);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+            recyclerView.setAdapter(
+                    new ForeignExchangeListAdapter(mScheduleTransferViewModel.getTransfer().getForeignExchanges()));
+        } else {
+            recyclerView.setVisibility(View.GONE);
+        }
+    }
+
+    private void showSummary() {
         TextView amount = getView().findViewById(R.id.amount_value);
         TextView fee = getView().findViewById(R.id.fee_value);
         TextView receiveAmount = getView().findViewById(R.id.transfer_value);
@@ -163,59 +139,51 @@ public class ScheduleTransferFragment extends Fragment {
         View receiveAmountContainer = getView().findViewById(R.id.transfer_container);
         View amountHorizontalBar = getView().findViewById(R.id.amount_horizontal_bar);
 
-        if (isFeeAvailable(transfer.getDestinationFeeAmount())) {
+        if (mScheduleTransferViewModel.getTransfer().hasFee()) {
             feeContainer.setVisibility(View.VISIBLE);
             receiveAmountContainer.setVisibility(View.VISIBLE);
             amountHorizontalBar.setVisibility(View.VISIBLE);
             fee.setText(requireContext().getString(R.string.amount_currency_format,
-                    transfer.getDestinationFeeAmount(), transfer.getDestinationCurrency()));
-
-            //TODO this is temporarily adding fee + amount but this is not final we will wait on
-            // Platform to add new field
+                    mScheduleTransferViewModel.getTransfer().getDestinationFeeAmount(),
+                    mScheduleTransferViewModel.getTransfer().getDestinationCurrency()));
             amount.setText(requireContext().getString(R.string.amount_currency_format,
-                    getTotalAmount(transfer.getDestinationAmount(), transfer.getDestinationFeeAmount()),
-                    transfer.getDestinationCurrency()));
+                    mScheduleTransferViewModel.getTransferTotalAmount(),
+                    mScheduleTransferViewModel.getTransfer().getDestinationCurrency()));
             receiveAmount.setText(requireContext().getString(R.string.amount_currency_format,
-                    transfer.getDestinationAmount(), transfer.getDestinationCurrency()));
+                    mScheduleTransferViewModel.getTransfer().getDestinationAmount(),
+                    mScheduleTransferViewModel.getTransfer().getDestinationCurrency()));
         } else {
             feeContainer.setVisibility(View.GONE);
             receiveAmountContainer.setVisibility(View.GONE);
             amountHorizontalBar.setVisibility(View.GONE);
             amount.setText(requireContext().getString(R.string.amount_currency_format,
-                    transfer.getDestinationAmount(), transfer.getDestinationCurrency()));
+                    mScheduleTransferViewModel.getTransfer().getDestinationAmount(),
+                    mScheduleTransferViewModel.getTransfer().getDestinationCurrency()));
         }
     }
 
-    private boolean isFeeAvailable(@Nullable final String feeAmount) {
-        if (!TextUtils.isEmpty(feeAmount)) {
-            BigDecimal fee = new BigDecimal(feeAmount.replace(CURRENCY_NUMERIC_SEPARATOR, EMPTY_STRING));
-            return fee.doubleValue() != 0;
-        }
-        return false;
-    }
-
-    // TODO this will be removed when Platform can return the total amount field
-    private String getTotalAmount(@NonNull final String amount, @NonNull final String fee) {
-        // normalize
-        BigDecimal normalizedAmount = new BigDecimal(amount.replace(CURRENCY_NUMERIC_SEPARATOR, EMPTY_STRING));
-        BigDecimal normalizedFee = new BigDecimal(fee.replace(CURRENCY_NUMERIC_SEPARATOR, EMPTY_STRING));
-
-        BigDecimal totalAmount = normalizedAmount.add(normalizedFee);
-
-        // format in normal locale US this will change when we have formatting enabled
-        return NumberFormat.getInstance(Locale.US).format(totalAmount);
-    }
-
-    private void showNotes(@Nullable final String notes) {
+    private void showNotes() {
         View notesContainer = getView().findViewById(R.id.notes_container);
         TextView notesView = getView().findViewById(R.id.notes_value);
 
-        if (TextUtils.isEmpty(notes)) {
-            notesContainer.setVisibility(View.GONE);
-        } else {
+        if (mScheduleTransferViewModel.getTransfer().hasNotes()) {
             notesContainer.setVisibility(View.VISIBLE);
-            notesView.setText(notes);
+            notesView.setText(mScheduleTransferViewModel.getTransfer().getNotes());
+        } else {
+            notesContainer.setVisibility(View.GONE);
         }
+    }
+
+    private void showConfirmButton() {
+        // transfer confirm button
+        mTransferConfirmButtonProgress = getView().findViewById(R.id.transfer_confirm_button_progress_bar);
+        Button button = getView().findViewById(R.id.transfer_confirm_button);
+        button.setOnClickListener(new OneClickListener() {
+            @Override
+            public void onOneClick(View v) {
+                mScheduleTransferViewModel.scheduleTransfer();
+            }
+        });
     }
 
     private static class ForeignExchangeListAdapter extends

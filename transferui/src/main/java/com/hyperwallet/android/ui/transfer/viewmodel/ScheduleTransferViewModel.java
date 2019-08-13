@@ -16,6 +16,9 @@
  */
 package com.hyperwallet.android.ui.transfer.viewmodel;
 
+import static com.hyperwallet.android.model.transfer.Transfer.CURRENCY_NUMERIC_SEPARATOR;
+import static com.hyperwallet.android.model.transfer.Transfer.EMPTY_STRING;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
@@ -29,6 +32,12 @@ import com.hyperwallet.android.model.transfer.Transfer;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.ui.common.repository.Event;
 import com.hyperwallet.android.ui.transfer.repository.TransferRepository;
+
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 /**
  * Schedule Transfer View Model
@@ -90,6 +99,24 @@ public class ScheduleTransferViewModel extends ViewModel {
 
     public LiveData<Boolean> isScheduleTransferLoading() {
         return mIsScheduleTransferLoading;
+    }
+
+    // TODO this will be removed when Platform can return the total amount field
+    public String getTransferTotalAmount() {
+        // normalize
+        BigDecimal normalizedAmount = new BigDecimal(mTransfer.getDestinationAmount()
+                .replace(CURRENCY_NUMERIC_SEPARATOR, EMPTY_STRING));
+        BigDecimal normalizedFee = new BigDecimal(mTransfer.getDestinationFeeAmount()
+                .replace(CURRENCY_NUMERIC_SEPARATOR, EMPTY_STRING));
+
+        BigDecimal totalAmount = normalizedAmount.add(normalizedFee);
+
+        // format in normal locale US this will change when we have formatting enabled
+        DecimalFormat decimalFormat = (DecimalFormat) NumberFormat.getCurrencyInstance(Locale.US);
+        DecimalFormatSymbols decimalFormatSymbols = decimalFormat.getDecimalFormatSymbols();
+        decimalFormatSymbols.setCurrencySymbol(EMPTY_STRING);
+        decimalFormat.setDecimalFormatSymbols(decimalFormatSymbols);
+        return decimalFormat.format(totalAmount);
     }
 
     public static class ScheduleTransferViewModelFactory implements ViewModelProvider.Factory {

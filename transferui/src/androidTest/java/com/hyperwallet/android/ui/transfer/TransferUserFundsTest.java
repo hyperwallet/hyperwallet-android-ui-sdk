@@ -3,6 +3,7 @@ package com.hyperwallet.android.ui.transfer;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.replaceText;
+import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.RootMatchers.isDialog;
 import static androidx.test.espresso.matcher.ViewMatchers.hasDescendant;
@@ -57,6 +58,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.mockwebserver.MockResponse;
 
 @RunWith(AndroidJUnit4.class)
 public class TransferUserFundsTest {
@@ -354,6 +358,69 @@ public class TransferUserFundsTest {
     }
 
     @Test
+    public void testTransferFunds_createTransferWithEmptyFees() throws InterruptedException {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("create_transfer_quote_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("create_transfer_no_fees_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("schedule_transfer_success_response.json")).mock();
+
+        mActivityTestRule.launchActivity(null);
+
+        final CountDownLatch gate = new CountDownLatch(1);
+        final BroadcastReceiver br = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                gate.countDown();
+
+                HyperwalletTransferMethod transferMethod = intent.getParcelableExtra(
+                        "hyperwallet-local-broadcast-payload");
+//                assertThat("Bank Account Id is incorrect", transferMethod.getField(
+//                        HyperwalletTransferMethod.TransferMethodFields.BANK_ACCOUNT_ID), is(ACCOUNT_NUMBER));
+            }
+        };
+
+        LocalBroadcastManager.getInstance(mActivityTestRule.getActivity().getApplicationContext())
+                .registerReceiver(br, new IntentFilter("ACTION_HYPERWALLET_TRANSFER_CREATED"));
+
+        onView(withId(R.id.add_transfer_destination)).check(matches(not(isDisplayed())));
+        onView(withId(R.id.transfer_destination)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_destination_icon)).check(matches(withText(R.string.bank_account_font_icon)));
+        onView(withId(R.id.transfer_destination_title)).check(matches(withText(R.string.bank_account)));
+        onView(withId(R.id.transfer_destination_selection)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_destination_description_1)).check(matches(withText("United States")));
+        onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("Ending on 0616")));
+
+        onView(withId(R.id.transfer_amount)).perform(replaceText("100.00"));
+        onView(withId(R.id.transfer_notes)).perform(replaceText("QA Automation Test"));
+
+        onView(withId(R.id.transfer_action_button)).perform(nestedScrollTo(), click());
+
+        onView(withId(R.id.list_foreign_exchange)).check(matches(not(isDisplayed())));
+        onView(withId(R.id.amount_label)).check(matches(withText(R.string.summary_amount_label)));
+//        onView(withId(R.id.amount_value)).check(matches(withText("102.00 USD")));
+        onView(withId(R.id.fee_label)).check(matches(not(isDisplayed())));
+        onView(withId(R.id.fee_value)).check(matches(not(isDisplayed())));
+        onView(withId(R.id.transfer_label)).check(matches(not(isDisplayed())));
+        onView(withId(R.id.transfer_value)).check(matches(not(isDisplayed())));
+        onView(withId(R.id.notes_container)).check(matches(not(isDisplayed())));
+        onView(withId(R.id.notes_value)).check(matches(not(isDisplayed())));
+
+        onView(withId(R.id.transfer_confirm_button)).perform(nestedScrollTo(), click());
+
+        assertThat("Result code is incorrect",
+                mActivityTestRule.getActivityResult().getResultCode(), is(Activity.RESULT_OK));
+
+        gate.await(5, SECONDS);
+        LocalBroadcastManager.getInstance(mActivityTestRule.getActivity().getApplicationContext()).unregisterReceiver(
+                br);
+        assertThat("Action is not broadcasted", gate.getCount(), is(0L));
+    }
+
+    @Test
     public void testTransferFunds_createTransferWithAllFunds() throws InterruptedException {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
@@ -591,37 +658,37 @@ public class TransferUserFundsTest {
 
     @Test
     public void testTransferFunds_createTransferConnectionError() {
-//        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-//                .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
-//        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-//                .getResourceContent("create_transfer_quote_response.json")).mock();
-//        mMockWebServer.getServer().enqueue(new MockResponse().setResponseCode(HTTP_OK).setBody(sResourceManager
-//                .getResourceContent("create_transfer_no_fx_response.json")).setBodyDelay(10500, TimeUnit
-//                .MILLISECONDS));
-//        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-//                .getResourceContent("create_transfer_no_fx_response.json")).mock();
-//
-//        mActivityTestRule.launchActivity(null);
-//
-//        onView(withId(R.id.transfer_amount)).perform(replaceText("100.00"));
-//        onView(withId(R.id.transfer_action_button)).perform(nestedScrollTo(), click());
-//
-//        onView(withText(R.string.error_dialog_connectivity_title)).check(matches(isDisplayed()));
-//        onView(withText(R.string.io_exception)).check(matches(isDisplayed()));
-//        onView(withId(android.R.id.button1)).check(matches(withText(R.string.try_again_button_label)));
-//        onView(withId(android.R.id.button2)).check(matches(withText(R.string.cancel_button_label)));
-//
-//        onView(withId(android.R.id.button1)).perform(click());
-//        onView(withText(R.string.error_dialog_connectivity_title)).check(doesNotExist());
-//
-//        // Verify confirmation details after retrying
-//        onView(withId(R.id.list_foreign_exchange)).check(matches(not(isDisplayed())));
-//        onView(withId(R.id.amount_label)).check(matches(withText(R.string.summary_amount_label)));
-////        onView(withId(R.id.amount_value)).check(matches(withText("102.00 USD")));
-//        onView(withId(R.id.fee_label)).check(matches(withText(R.string.summary_amount_fee_label)));
-//        onView(withId(R.id.fee_value)).check(matches(withText("2.00 USD")));
-//        onView(withId(R.id.transfer_label)).check(matches(withText(R.string.summary_amount_transfer_label)));
-//        onView(withId(R.id.transfer_value)).check(matches(withText("100.00 USD")));
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("create_transfer_quote_response.json")).mock();
+        mMockWebServer.getServer().enqueue(new MockResponse().setResponseCode(HTTP_OK).setBody(sResourceManager
+                .getResourceContent("create_transfer_no_fx_response.json")).setBodyDelay(10500, TimeUnit
+                .MILLISECONDS));
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("create_transfer_no_fx_response.json")).mock();
+
+        mActivityTestRule.launchActivity(null);
+
+        onView(withId(R.id.transfer_amount)).perform(replaceText("100.00"));
+        onView(withId(R.id.transfer_action_button)).perform(nestedScrollTo(), click());
+
+        onView(withText(R.string.error_dialog_connectivity_title)).check(matches(isDisplayed()));
+        onView(withText(R.string.io_exception)).check(matches(isDisplayed()));
+        onView(withId(android.R.id.button1)).check(matches(withText(R.string.try_again_button_label)));
+        onView(withId(android.R.id.button2)).check(matches(withText(R.string.cancel_button_label)));
+
+        onView(withId(android.R.id.button1)).perform(click());
+        onView(withText(R.string.error_dialog_connectivity_title)).check(doesNotExist());
+
+        // Verify confirmation details after retrying
+        onView(withId(R.id.list_foreign_exchange)).check(matches(not(isDisplayed())));
+        onView(withId(R.id.amount_label)).check(matches(withText(R.string.summary_amount_label)));
+//        onView(withId(R.id.amount_value)).check(matches(withText("102.00 USD")));
+        onView(withId(R.id.fee_label)).check(matches(withText(R.string.summary_amount_fee_label)));
+        onView(withId(R.id.fee_value)).check(matches(withText("2.00 USD")));
+        onView(withId(R.id.transfer_label)).check(matches(withText(R.string.summary_amount_transfer_label)));
+        onView(withId(R.id.transfer_value)).check(matches(withText("100.00 USD")));
     }
 
 }

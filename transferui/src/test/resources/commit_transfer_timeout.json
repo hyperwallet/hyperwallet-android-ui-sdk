@@ -1,0 +1,8 @@
+{
+  "errors": [
+    {
+      "message": "The transfer request has expired on Mon Aug 12 16:33:10 PDT 2019. Please create a new transfer and commit it before 120 seconds.",
+      "code": "EXPIRED_TRANSFER"
+    }
+  ]
+}
