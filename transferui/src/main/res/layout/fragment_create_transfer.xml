@@ -55,6 +55,7 @@
             <RelativeLayout
                 android:id="@+id/destination_data_container"
                 android:layout_width="match_parent"
+                android:background="@color/regularColorPrimary"
                 android:layout_height="wrap_content">
 
                 <include android:id="@+id/transfer_destination"
