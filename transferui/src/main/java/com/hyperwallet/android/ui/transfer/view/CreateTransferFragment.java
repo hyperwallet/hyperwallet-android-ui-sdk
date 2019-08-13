@@ -184,12 +184,21 @@ public class CreateTransferFragment extends Fragment {
         if (resultCode == RESULT_OK && requestCode == SELECT_TRANSFER_DESTINATION_REQUEST_CODE && data != null) {
             HyperwalletTransferMethod selectedTransferMethod = data.getParcelableExtra(
                     ListTransferDestinationActivity.EXTRA_SELECTED_DESTINATION_TOKEN);
+            mCreateTransferViewModel.setTransferAmount(null);
+            mCreateTransferViewModel.setTransferAllAvailableFunds(Boolean.FALSE);
             mCreateTransferViewModel.setTransferDestination(selectedTransferMethod);
         }
     }
 
     void retry() {
         mCreateTransferViewModel.retry();
+    }
+
+    void reApplyFieldRules() {
+        if (mCreateTransferViewModel.isTransferAllAvailableFunds().getValue()) {
+            mTransferAmount.setEnabled(false);
+            mTransferCurrency.setTextColor(getResources().getColor(R.color.colorButtonTextDisabled));
+        }
     }
 
     private boolean isCreateTransferValid() {
@@ -353,6 +362,7 @@ public class CreateTransferFragment extends Fragment {
                             mTransferCurrency.setTextColor(getResources().getColor(R.color.colorSecondaryDark));
                             mTransferAmount.setEnabled(true);
                             mTransferAmount.setText(null);
+                            mTransferAllSwitch.setChecked(false);
                         }
                     }
                 });
