@@ -291,7 +291,7 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
         intent.putExtra(AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_CURRENCY, currency);
         intent.putExtra(AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_TYPE, transferMethodType);
         intent.putExtra(AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_PROFILE_TYPE, profileType);
-        getActivity().startActivityForResult(intent, AddTransferMethodActivity.REQUEST_CODE);
+        getActivity().startActivityForResult(intent, AddTransferMethodActivity.ADD_TRANSFER_METHOD_REQUEST_CODE);
     }
 
     @Override
