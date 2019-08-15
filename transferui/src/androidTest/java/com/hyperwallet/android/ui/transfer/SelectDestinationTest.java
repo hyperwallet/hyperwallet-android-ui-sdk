@@ -6,7 +6,6 @@ import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.isSelected;
-import static androidx.test.espresso.matcher.ViewMatchers.withHint;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
@@ -201,7 +200,7 @@ public class SelectDestinationTest {
         onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("honey.thigpen@ukbuilder.com")));
 
         onView(withId(R.id.transfer_amount)).check(matches(isDisplayed()));
-        onView(withId(R.id.transfer_amount)).check(matches(withHint("Amount")));
+        onView(withId(R.id.transfer_amount)).check(matches(withText("")));
         onView(withId(R.id.transfer_amount_currency)).check(matches(withText("USD")));
 
         //Check that the toggle is disabled by default
@@ -209,6 +208,9 @@ public class SelectDestinationTest {
         onView(withId(R.id.switchButton)).check(matches(not(isSelected())));
         onView(withId(R.id.transfer_summary)).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_summary)).check(matches(withText("Available for Transfer: 100.00 USD")));
+
+        onView(withId(R.id.transfer_notes)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_notes)).check(matches(withText("")));
     }
 
 }
