@@ -178,7 +178,7 @@ public class SelectDestinationTest {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("create_transfer_paypal_quote_response.json")).mock();
+                .getResourceContent("create_transfer_quote_paypal_response.json")).mock();
 
         mActivityTestRule.launchActivity(null);
 
