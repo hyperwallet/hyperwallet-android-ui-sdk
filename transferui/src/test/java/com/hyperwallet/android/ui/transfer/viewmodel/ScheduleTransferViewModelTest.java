@@ -183,7 +183,7 @@ public class ScheduleTransferViewModelTest {
         ScheduleTransferViewModel viewModel = factory.create(ScheduleTransferViewModel.class);
         viewModel.setTransfer(transfer);
 
-        assertThat(viewModel.getTransferTotalAmount(), is("100.00"));
+        assertThat(viewModel.getTransferTotalAmount(), is("1,000.00"));
     }
 
     @Test

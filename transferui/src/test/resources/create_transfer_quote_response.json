@@ -2,24 +2,21 @@
   "token": "trf-66b53896-c648-4fb6-bb27-de6eec5d7bf1",
   "status": "QUOTED",
   "createdOn": "2019-08-01T22:36:34",
-  "clientTransferId": "EJXmJmPDcM6wPy7nYn7NGLFkyFxTQfXf",
-  "sourceToken": "usr-f07d1849-e1c1-4d94-a3b0-c66f924ab349",
-  "sourceAmount": "100.00",
+  "clientTransferId": "HW-ANDROID-10378f4f-a160-4017-9361-4e0c7dd4b1ee",
+  "sourceToken": "usr-00995baf-eb51-4565-a9cd-2547fd7c1bc6",
+  "sourceAmount": "1,000.00",
   "sourceCurrency": "USD",
-  "destinationToken": "trm-56b43aaa-87e0-4c8d-b500-81e25e59f1f5",
-  "destinationAmount": "98.00",
+  "destinationToken": "trm-00b89487-89c7-4fec-af66-9e669dd33bcf",
+  "destinationAmount": "998.00",
   "destinationFeeAmount": "2.00",
   "destinationCurrency": "USD",
-  "notes": "QA Automation Test",
-  "memo": "Transfer",
-  "purpose": "OTHER",
-  "expiresOn": "2019-08-01T22:38:34",
+  "expiresOn": "2019-08-12T20:40:36",
   "links": [
     {
       "params": {
         "rel": "self"
       },
-      "href": "https://api.sandbox.hyperwallet.com/rest/v3/transfers/trf-66b53896-c648-4fb6-bb27-de6eec5d7bf1"
+      "href": "https://localhost/rest/v3/transfers/trf-66b53896-c648-4fb6-bb27-de6eec5d7bf1"
     }
   ]
 }

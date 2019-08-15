@@ -1,0 +1,8 @@
+{
+  "errors": [
+    {
+      "message": "The account status does not allow the requested action.",
+      "code": "INVALID_WALLET_STATUS"
+    }
+  ]
+}

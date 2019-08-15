@@ -19,7 +19,7 @@
       "params": {
         "rel": "self"
       },
-      "href": "https://api.sandbox.hyperwallet.com/rest/v3/transfers/trf-66b53896-c648-4fb6-bb27-de6eec5d7bf1"
+      "href": "https://localhost/rest/v3/transfers/trf-66b53896-c648-4fb6-bb27-de6eec5d7bf1"
     }
   ]
 }
