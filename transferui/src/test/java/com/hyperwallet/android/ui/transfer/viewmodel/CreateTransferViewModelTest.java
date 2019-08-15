@@ -292,7 +292,7 @@ public class CreateTransferViewModelTest {
 
     @Test
     public void testCreateQuoteTransfer_hasGenericError() throws Exception {
-        String errorResponse = mResourceManager.getResourceContent("transfer_error_response.json");
+        String errorResponse = mResourceManager.getResourceContent("errors/transfer_error_response.json");
         final HyperwalletErrors errors = JsonUtils.fromJsonString(errorResponse,
                 new TypeReference<HyperwalletErrors>() {
                 });
