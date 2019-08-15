@@ -160,7 +160,7 @@ public class TransferUserFundsTest {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_single_bank_account_cad_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("create_transfer_quote_response.json")).mock();
+                .getResourceContent("create_transfer_quote_fx_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("create_transfer_fx_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
@@ -186,7 +186,7 @@ public class TransferUserFundsTest {
         };
 
         LocalBroadcastManager.getInstance(mActivityTestRule.getActivity().getApplicationContext())
-                .registerReceiver(br, new IntentFilter("ACTION_HYPERWALLET_TRANSFER_CREATED"));
+                .registerReceiver(br, new IntentFilter("ACTION_HYPERWALLET_TRANSFER_SCHEDULED"));
 
         onView(withId(R.id.add_transfer_destination)).check(matches(not(isDisplayed())));
         onView(withId(R.id.transfer_destination)).check(matches(isDisplayed()));
@@ -195,6 +195,9 @@ public class TransferUserFundsTest {
         onView(withId(R.id.transfer_destination_selection)).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_description_1)).check(matches(withText("Canada")));
         onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("Ending on 5121")));
+
+        onView(withId(R.id.transfer_summary)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_summary)).check(matches(withText("Available for Transfer: 1,157.40 CAD")));
 
         onView(withId(R.id.transfer_amount)).perform(replaceText("150.00"));
         onView(withId(R.id.transfer_action_button)).perform(nestedScrollTo(), click());
@@ -267,7 +270,7 @@ public class TransferUserFundsTest {
         };
 
         LocalBroadcastManager.getInstance(mActivityTestRule.getActivity().getApplicationContext())
-                .registerReceiver(br, new IntentFilter("ACTION_HYPERWALLET_TRANSFER_CREATED"));
+                .registerReceiver(br, new IntentFilter("ACTION_HYPERWALLET_TRANSFER_SCHEDULED"));
 
         onView(withId(R.id.add_transfer_destination)).check(matches(not(isDisplayed())));
         onView(withId(R.id.transfer_destination)).check(matches(isDisplayed()));
@@ -331,7 +334,7 @@ public class TransferUserFundsTest {
         };
 
         LocalBroadcastManager.getInstance(mActivityTestRule.getActivity().getApplicationContext())
-                .registerReceiver(br, new IntentFilter("ACTION_HYPERWALLET_TRANSFER_CREATED"));
+                .registerReceiver(br, new IntentFilter("ACTION_HYPERWALLET_TRANSFER_SCHEDULED"));
 
         onView(withId(R.id.add_transfer_destination)).check(matches(not(isDisplayed())));
         onView(withId(R.id.transfer_destination)).check(matches(isDisplayed()));
@@ -397,7 +400,7 @@ public class TransferUserFundsTest {
         };
 
         LocalBroadcastManager.getInstance(mActivityTestRule.getActivity().getApplicationContext())
-                .registerReceiver(br, new IntentFilter("ACTION_HYPERWALLET_TRANSFER_CREATED"));
+                .registerReceiver(br, new IntentFilter("ACTION_HYPERWALLET_TRANSFER_SCHEDULED"));
 
         onView(withId(R.id.add_transfer_destination)).check(matches(not(isDisplayed())));
         onView(withId(R.id.transfer_destination)).check(matches(isDisplayed()));
@@ -463,7 +466,7 @@ public class TransferUserFundsTest {
         };
 
         LocalBroadcastManager.getInstance(mActivityTestRule.getActivity().getApplicationContext())
-                .registerReceiver(br, new IntentFilter("ACTION_HYPERWALLET_TRANSFER_CREATED"));
+                .registerReceiver(br, new IntentFilter("ACTION_HYPERWALLET_TRANSFER_SCHEDULED"));
 
         onView(withId(R.id.add_transfer_destination)).check(matches(not(isDisplayed())));
         onView(withId(R.id.transfer_destination)).check(matches(isDisplayed()));
@@ -740,7 +743,7 @@ public class TransferUserFundsTest {
         };
 
         LocalBroadcastManager.getInstance(mActivityTestRule.getActivity().getApplicationContext())
-                .registerReceiver(br, new IntentFilter("ACTION_HYPERWALLET_TRANSFER_CREATED"));
+                .registerReceiver(br, new IntentFilter("ACTION_HYPERWALLET_TRANSFER_SCHEDULED"));
 
         onView(withId(R.id.transfer_amount)).perform(replaceText("100.00"));
         onView(withId(R.id.transfer_action_button)).perform(nestedScrollTo(), click());

@@ -97,7 +97,7 @@ public class SelectDestinationTest {
         onView(withId(R.id.transfer_destination_title)).check(matches(withText(R.string.bank_account)));
         onView(withId(R.id.transfer_destination_selection)).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_description_1)).check(matches(withText("United States")));
-        onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("Ending on 7267")));
+        onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("Ending on 0616")));
 
         onView(withId(R.id.transfer_destination_title)).perform(click());
 
@@ -188,7 +188,7 @@ public class SelectDestinationTest {
         onView(withId(R.id.transfer_destination_title)).check(matches(withText(R.string.bank_account)));
         onView(withId(R.id.transfer_destination_selection)).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_description_1)).check(matches(withText("United States")));
-        onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("Ending on 7267")));
+        onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("Ending on 0616")));
 
         onView(withId(R.id.transfer_destination_title)).perform(click());
 

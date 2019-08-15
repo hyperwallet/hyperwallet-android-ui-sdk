@@ -26,7 +26,7 @@
       "params": {
         "rel": "self"
       },
-      "href": "https://qamaster-hyperwallet.aws.paylution.net/rest/v3/transfers/trf-ac099673-eb77-4046-92fa-e99171817855"
+      "href": "https://localhost/rest/v3/transfers/trf-ac099673-eb77-4046-92fa-e99171817855"
     }
   ]
 }
