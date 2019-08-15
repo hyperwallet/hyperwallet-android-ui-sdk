@@ -25,6 +25,7 @@ import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMe
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getStringFontIcon;
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getStringResourceByName;
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getTransferMethodDetail;
+import static com.hyperwallet.android.ui.transfer.view.ListTransferDestinationActivity.SELECT_TRANSFER_DESTINATION_REQUEST_CODE;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -63,8 +64,6 @@ import java.util.Locale;
  * Create Transfer Fragment
  */
 public class CreateTransferFragment extends Fragment {
-
-    public static final short SELECT_TRANSFER_DESTINATION_REQUEST_CODE = 101;
 
     private static final String EMPTY_STRING = "";
     private View mProgressBar;

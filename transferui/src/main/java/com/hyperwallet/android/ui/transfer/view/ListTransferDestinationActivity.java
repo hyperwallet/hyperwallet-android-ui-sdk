@@ -46,6 +46,7 @@ import java.util.List;
 
 public class ListTransferDestinationActivity extends AppCompatActivity {
 
+    public static final short SELECT_TRANSFER_DESTINATION_REQUEST_CODE = 101;
     public static final String EXTRA_SELECTED_DESTINATION_TOKEN = "SELECTED_DESTINATION_TOKEN";
 
     private ListTransferDestinationViewModel mListTransferDestinationViewModel;
