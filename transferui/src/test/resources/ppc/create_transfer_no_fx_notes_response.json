@@ -1,0 +1,24 @@
+{
+  "token": "trf-480d85f0-de7b-46b2-a9b9-0e386ddc12da",
+  "status": "QUOTED",
+  "createdOn": "2019-08-14T21:11:48",
+  "clientTransferId": "HW-ANDROID-d09114df-a14d-4821-a40b-7cfc23eef227",
+  "sourceToken": "trm-2beee55a-f2af-4cd3-a952-2375fb871597",
+  "sourceAmount": "102.00",
+  "sourceFeeAmount": "0.00",
+  "sourceCurrency": "USD",
+  "destinationToken": "trm-5f3f19ba-a1a4-4566-98ce-cefc6d58bc45",
+  "destinationAmount": "100.00",
+  "destinationFeeAmount": "2.00",
+  "destinationCurrency": "USD",
+  "notes": "Transfer funds test",
+  "expiresOn": "2019-08-14T21:13:48",
+  "links": [
+    {
+      "params": {
+        "rel": "self"
+      },
+      "href": "https://localhost/rest/v3/transfers/trf-480d85f0-de7b-46b2-a9b9-0e386ddc12da"
+    }
+  ]
+}

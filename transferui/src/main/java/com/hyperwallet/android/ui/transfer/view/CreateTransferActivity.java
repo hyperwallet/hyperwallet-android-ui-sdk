@@ -16,11 +16,14 @@
  */
 package com.hyperwallet.android.ui.transfer.view;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -31,9 +34,11 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.HyperwalletErrors;
+import com.hyperwallet.android.model.transfer.Transfer;
 import com.hyperwallet.android.ui.common.repository.Event;
 import com.hyperwallet.android.ui.common.view.error.DefaultErrorDialogFragment;
 import com.hyperwallet.android.ui.common.view.error.OnNetworkErrorCallback;
+import com.hyperwallet.android.ui.common.viewmodel.Navigator;
 import com.hyperwallet.android.ui.transfer.R;
 import com.hyperwallet.android.ui.transfer.repository.TransferRepositoryFactory;
 import com.hyperwallet.android.ui.transfer.viewmodel.CreateTransferViewModel;
@@ -45,7 +50,8 @@ import java.util.List;
 /**
  * Create Transfer Activity
  */
-public class CreateTransferActivity extends AppCompatActivity implements OnNetworkErrorCallback {
+public class CreateTransferActivity extends AppCompatActivity implements OnNetworkErrorCallback,
+        Navigator<Event<Transfer>> {
 
     public static final String EXTRA_TRANSFER_SOURCE_TOKEN = "TRANSFER_SOURCE_TOKEN";
 
@@ -104,6 +110,39 @@ public class CreateTransferActivity extends AppCompatActivity implements OnNetwo
         fragment.retry();
     }
 
+
+    @Override
+    public void navigate(@NonNull final Event<Transfer> event) {
+        if (!event.isContentConsumed()) {
+            Intent intent = new Intent(this, ScheduleTransferActivity.class);
+            intent.putExtra(ScheduleTransferActivity.EXTRA_TRANSFER, event.getContent());
+            intent.putExtra(ScheduleTransferActivity.EXTRA_TRANSFER_METHOD,
+                    mCreateTransferViewModel.getTransferDestination().getValue());
+            startActivityForResult(intent, ScheduleTransferActivity.SCHEDULE_TRANSFER_REQUEST_CODE);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == ScheduleTransferActivity.SCHEDULE_TRANSFER_REQUEST_CODE
+                && resultCode == Activity.RESULT_OK && data != null) {
+            setResult(Activity.RESULT_OK, data);
+            finish();
+        } else if (requestCode == ScheduleTransferActivity.SCHEDULE_TRANSFER_REQUEST_CODE) {
+            // back button
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            CreateTransferFragment fragment = (CreateTransferFragment)
+                    fragmentManager.findFragmentById(R.id.create_transfer_fragment);
+
+            if (fragment == null) {
+                fragment = CreateTransferFragment.newInstance();
+            }
+            fragment.reApplyFieldRules();
+        }
+    }
+
     @Override
     protected void onDestroy() {
         TransferRepositoryFactory.clearInstance();
@@ -129,6 +168,13 @@ public class CreateTransferActivity extends AppCompatActivity implements OnNetwo
                 if (event != null && !event.isContentConsumed()) {
                     showErrorOnLoadCreateTransfer(event.getContent().getErrors());
                 }
+            }
+        });
+
+        mCreateTransferViewModel.getCreateTransfer().observe(this, new Observer<Event<Transfer>>() {
+            @Override
+            public void onChanged(final Event<Transfer> transfer) {
+                navigate(transfer);
             }
         });
     }

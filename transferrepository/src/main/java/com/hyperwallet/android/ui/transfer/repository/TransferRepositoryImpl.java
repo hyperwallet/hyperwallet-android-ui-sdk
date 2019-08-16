@@ -36,6 +36,7 @@ import com.hyperwallet.android.exception.HyperwalletException;
 import com.hyperwallet.android.listener.HyperwalletListener;
 import com.hyperwallet.android.model.StatusTransition;
 import com.hyperwallet.android.model.transfer.Transfer;
+import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
 
 /**
  * Transfer Repository Implementation
@@ -49,15 +50,18 @@ public class TransferRepositoryImpl implements TransferRepository {
      */
     @Override
     public void createTransfer(@NonNull final Transfer transfer, @NonNull final CreateTransferCallback callback) {
+        EspressoIdlingResource.increment();
         getHyperwallet().createTransfer(transfer, new HyperwalletListener<Transfer>() {
             @Override
             public void onSuccess(@Nullable Transfer result) {
                 callback.onTransferCreated(result);
+                EspressoIdlingResource.decrement();
             }
 
             @Override
             public void onFailure(HyperwalletException exception) {
                 callback.onError(exception.getHyperwalletErrors());
+                EspressoIdlingResource.decrement();
             }
 
             @Override
@@ -72,16 +76,19 @@ public class TransferRepositoryImpl implements TransferRepository {
      */
     @Override
     public void scheduleTransfer(@NonNull final Transfer transfer, @NonNull final ScheduleTransferCallback callback) {
+        EspressoIdlingResource.increment();
         getHyperwallet().scheduleTransfer(transfer.getToken(), transfer.getNotes(),
                 new HyperwalletListener<StatusTransition>() {
                     @Override
                     public void onSuccess(@Nullable StatusTransition result) {
                         callback.onTransferScheduled(result);
+                        EspressoIdlingResource.decrement();
                     }
 
                     @Override
                     public void onFailure(HyperwalletException exception) {
                         callback.onError(exception.getHyperwalletErrors());
+                        EspressoIdlingResource.decrement();
                     }
 
                     @Override

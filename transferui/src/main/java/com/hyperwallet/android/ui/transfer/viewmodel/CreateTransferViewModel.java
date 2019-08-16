@@ -59,7 +59,7 @@ public class CreateTransferViewModel extends ViewModel {
     private final MutableLiveData<Boolean> mIsLoading = new MutableLiveData<>();
     private final MutableLiveData<Boolean> mIsCreateQuoteLoading = new MutableLiveData<>();
     private final MutableLiveData<Transfer> mQuoteAvailableFunds = new MutableLiveData<>();
-    private final MutableLiveData<Transfer> mCreateTransfer = new MutableLiveData<>();
+    private final MutableLiveData<Event<Transfer>> mCreateTransfer = new MutableLiveData<>();
     private final MutableLiveData<String> mTransferAmount = new MutableLiveData<>();
     private final MutableLiveData<String> mTransferNotes = new MutableLiveData<>();
 
@@ -167,7 +167,7 @@ public class CreateTransferViewModel extends ViewModel {
         return mLoadTransferRequiredDataErrors;
     }
 
-    public LiveData<Transfer> getCreateTransfer() {
+    public LiveData<Event<Transfer>> getCreateTransfer() {
         return mCreateTransfer;
     }
 
@@ -185,27 +185,22 @@ public class CreateTransferViewModel extends ViewModel {
 
     public void createTransfer() {
         mIsCreateQuoteLoading.postValue(Boolean.TRUE);
-        Transfer transfer = mTransferAvailableFunds.getValue() ?
-                new Transfer.Builder()
-                        .clientTransferID(CLIENT_IDENTIFICATION_PREFIX + UUID.randomUUID().toString())
-                        .sourceToken(mSourceToken)
-                        .destinationToken(mTransferDestination.getValue().getField(TOKEN))
-                        .destinationCurrency(mTransferDestination.getValue().getField(TRANSFER_METHOD_CURRENCY))
-                        .notes(mTransferNotes.getValue())
-                        .build() :
-                new Transfer.Builder()
-                        .clientTransferID(CLIENT_IDENTIFICATION_PREFIX + UUID.randomUUID().toString())
-                        .sourceToken(mSourceToken)
-                        .destinationToken(mTransferDestination.getValue().getField(TOKEN))
-                        .destinationCurrency(mTransferDestination.getValue().getField(TRANSFER_METHOD_CURRENCY))
-                        .notes(mTransferNotes.getValue())
-                        .destinationAmount(mTransferAmount.getValue())
-                        .build();
+        String amount = mTransferAvailableFunds.getValue() ?
+                mQuoteAvailableFunds.getValue().getDestinationAmount() : mTransferAmount.getValue();
+
+        Transfer transfer = new Transfer.Builder()
+                .clientTransferID(CLIENT_IDENTIFICATION_PREFIX + UUID.randomUUID().toString())
+                .sourceToken(mSourceToken)
+                .destinationToken(mTransferDestination.getValue().getField(TOKEN))
+                .destinationCurrency(mTransferDestination.getValue().getField(TRANSFER_METHOD_CURRENCY))
+                .notes(mTransferNotes.getValue())
+                .destinationAmount(amount)
+                .build();
 
         mTransferRepository.createTransfer(transfer, new TransferRepository.CreateTransferCallback() {
             @Override
             public void onTransferCreated(@Nullable Transfer transfer) {
-                mCreateTransfer.postValue(transfer);
+                mCreateTransfer.postValue(new Event<>(transfer));
                 mIsCreateQuoteLoading.postValue(Boolean.FALSE);
             }
 
@@ -234,6 +229,10 @@ public class CreateTransferViewModel extends ViewModel {
         super.onCleared();
     }
 
+    public boolean isTransferDestinationUnknown() {
+        return mTransferDestination.getValue() == null;
+    }
+
     private void processCreateTransferError(@NonNull final HyperwalletErrors errors) {
         if (errors.containsInputError()) {
             HyperwalletError error = errors.getErrors().get(0);
@@ -251,10 +250,6 @@ public class CreateTransferViewModel extends ViewModel {
 
     private boolean isTransferSourceTokenUnknown() {
         return TextUtils.isEmpty(mSourceToken);
-    }
-
-    private boolean isTransferDestinationUnknown() {
-        return mTransferDestination.getValue() == null;
     }
 
     private boolean isTransferAmountKnown() {

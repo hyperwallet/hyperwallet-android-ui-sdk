@@ -17,9 +17,9 @@
 package com.hyperwallet.android.ui.common.viewmodel;
 
 /**
- * Detail interface for having a list UI with detail information through navigation
+ * Navigation action with specified T payload
  */
-public interface ListDetailNavigator<T> {
+public interface Navigator<T> {
 
     /**
      * Navigate action

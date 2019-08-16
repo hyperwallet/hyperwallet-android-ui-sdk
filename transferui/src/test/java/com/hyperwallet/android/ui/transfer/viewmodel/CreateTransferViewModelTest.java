@@ -273,22 +273,26 @@ public class CreateTransferViewModelTest {
 
         assertThat(viewModel.getCreateTransferError().getValue(), is(nullValue()));
         assertThat(viewModel.getCreateTransfer().getValue(), is(notNullValue()));
-        assertThat(viewModel.getCreateTransfer().getValue().getSourceToken(), is(mTransfer.getSourceToken()));
-        assertThat(viewModel.getCreateTransfer().getValue().getToken(), is(mTransfer.getToken()));
-        assertThat(viewModel.getCreateTransfer().getValue().getCreatedOn(), is(mTransfer.getCreatedOn()));
-        assertThat(viewModel.getCreateTransfer().getValue().getClientTransferId(), is(mTransfer.getClientTransferId()));
-        assertThat(viewModel.getCreateTransfer().getValue().getSourceCurrency(), is(mTransfer.getSourceCurrency()));
-        assertThat(viewModel.getCreateTransfer().getValue().getDestinationToken(), is(mTransfer.getDestinationToken()));
-        assertThat(viewModel.getCreateTransfer().getValue().getDestinationAmount(),
+        assertThat(viewModel.getCreateTransfer().getValue().getContent().getSourceToken(),
+                is(mTransfer.getSourceToken()));
+        assertThat(viewModel.getCreateTransfer().getValue().getContent().getToken(), is(mTransfer.getToken()));
+        assertThat(viewModel.getCreateTransfer().getValue().getContent().getCreatedOn(), is(mTransfer.getCreatedOn()));
+        assertThat(viewModel.getCreateTransfer().getValue().getContent().getClientTransferId(),
+                is(mTransfer.getClientTransferId()));
+        assertThat(viewModel.getCreateTransfer().getValue().getContent().getSourceCurrency(),
+                is(mTransfer.getSourceCurrency()));
+        assertThat(viewModel.getCreateTransfer().getValue().getContent().getDestinationToken(),
+                is(mTransfer.getDestinationToken()));
+        assertThat(viewModel.getCreateTransfer().getValue().getContent().getDestinationAmount(),
                 is(mTransfer.getDestinationAmount()));
-        assertThat(viewModel.getCreateTransfer().getValue().getDestinationCurrency(),
+        assertThat(viewModel.getCreateTransfer().getValue().getContent().getDestinationCurrency(),
                 is(mTransfer.getDestinationCurrency()));
-        assertThat(viewModel.getCreateTransfer().getValue().getMemo(), is(mTransfer.getMemo()));
+        assertThat(viewModel.getCreateTransfer().getValue().getContent().getMemo(), is(mTransfer.getMemo()));
     }
 
     @Test
     public void testCreateQuoteTransfer_hasGenericError() throws Exception {
-        String errorResponse = mResourceManager.getResourceContent("transfer_error_response.json");
+        String errorResponse = mResourceManager.getResourceContent("errors/transfer_error_response.json");
         final HyperwalletErrors errors = JsonUtils.fromJsonString(errorResponse,
                 new TypeReference<HyperwalletErrors>() {
                 });
@@ -329,7 +333,8 @@ public class CreateTransferViewModelTest {
 
     @Test
     public void testCreateQuoteTransfer_hasInvalidAmountError() throws Exception {
-        String errorResponse = mResourceManager.getResourceContent("transfer_amount_input_invalid.json");
+        String errorResponse = mResourceManager.getResourceContent(
+                "errors/create_transfer_error_invalid_amount_response.json");
         final HyperwalletErrors errors = JsonUtils.fromJsonString(errorResponse,
                 new TypeReference<HyperwalletErrors>() {
                 });
@@ -367,7 +372,7 @@ public class CreateTransferViewModelTest {
 
     @Test
     public void testCreateQuoteTransfer_hasInvalidDestinationError() throws Exception {
-        String errorResponse = mResourceManager.getResourceContent("transfer_destination_input_invalid.json");
+        String errorResponse = mResourceManager.getResourceContent("errors/transfer_destination_input_invalid.json");
         final HyperwalletErrors errors = JsonUtils.fromJsonString(errorResponse,
                 new TypeReference<HyperwalletErrors>() {
                 });

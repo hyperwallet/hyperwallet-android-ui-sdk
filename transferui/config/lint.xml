@@ -11,5 +11,6 @@
         <ignore regexp="(widget_add_transfer_destination).xml"/>
         <ignore regexp="(widget_transfer_destination).xml"/>
         <ignore regexp="(item_transfer_destination).xml"/>
+        <ignore regexp="(foreign_exchange).xml"/>
     </issue>
 </lint>

@@ -25,6 +25,7 @@ import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMe
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getStringFontIcon;
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getStringResourceByName;
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getTransferMethodDetail;
+import static com.hyperwallet.android.ui.transfer.view.ListTransferDestinationActivity.SELECT_TRANSFER_DESTINATION_REQUEST_CODE;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -63,8 +64,6 @@ import java.util.Locale;
  * Create Transfer Fragment
  */
 public class CreateTransferFragment extends Fragment {
-
-    public static final short SELECT_TRANSFER_DESTINATION_RESULT_CODE = 101;
 
     private static final String EMPTY_STRING = "";
     private View mProgressBar;
@@ -120,13 +119,14 @@ public class CreateTransferFragment extends Fragment {
 
         // next button
         mTransferNextButton = view.findViewById(R.id.transfer_action_button);
-        mTransferNextButton.setOnClickListener(new View.OnClickListener() {
+        mTransferNextButton.setOnClickListener(new OneClickListener() {
             @Override
-            public void onClick(View v) {
-                mCreateTransferViewModel.createTransfer();
+            public void onOneClick(View v) {
+                if (isCreateTransferValid()) {
+                    mCreateTransferViewModel.createTransfer();
+                }
             }
         });
-        disableNextButton();
 
         // transfer amount
         mTransferAmountLayout = view.findViewById(R.id.transfer_amount_layout);
@@ -148,7 +148,7 @@ public class CreateTransferFragment extends Fragment {
                 Intent intent = new Intent(requireContext(), ListTransferDestinationActivity.class);
                 intent.putExtra(ListTransferDestinationActivity.EXTRA_SELECTED_DESTINATION_TOKEN,
                         activeDestination.getField(TOKEN));
-                startActivityForResult(intent, SELECT_TRANSFER_DESTINATION_RESULT_CODE);
+                startActivityForResult(intent, SELECT_TRANSFER_DESTINATION_REQUEST_CODE);
             }
         });
 
@@ -180,15 +180,41 @@ public class CreateTransferFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK && requestCode == SELECT_TRANSFER_DESTINATION_RESULT_CODE && data != null) {
+        if (resultCode == RESULT_OK && requestCode == SELECT_TRANSFER_DESTINATION_REQUEST_CODE && data != null) {
             HyperwalletTransferMethod selectedTransferMethod = data.getParcelableExtra(
                     ListTransferDestinationActivity.EXTRA_SELECTED_DESTINATION_TOKEN);
+            mCreateTransferViewModel.setTransferAmount(null);
+            mCreateTransferViewModel.setTransferNotes(null);
+            mCreateTransferViewModel.setTransferAllAvailableFunds(Boolean.FALSE);
             mCreateTransferViewModel.setTransferDestination(selectedTransferMethod);
         }
     }
 
     void retry() {
         mCreateTransferViewModel.retry();
+    }
+
+    void reApplyFieldRules() {
+        if (mCreateTransferViewModel.isTransferAllAvailableFunds().getValue()) {
+            mTransferAmount.setEnabled(false);
+            mTransferCurrency.setTextColor(getResources().getColor(R.color.colorButtonTextDisabled));
+        }
+    }
+
+    private boolean isCreateTransferValid() {
+        if (TextUtils.isEmpty(mCreateTransferViewModel.getTransferAmount().getValue())) {
+            mTransferAmountLayout.setError(requireContext().getString(R.string.validation_amount_required));
+            return false;
+        }
+
+        if (mCreateTransferViewModel.isTransferDestinationUnknown()) {
+            mTransferHeaderContainer.setVisibility(View.GONE);
+            mTransferHeaderContainerError.setVisibility(View.VISIBLE);
+            mTransferDestinationError.setText(requireContext().getString(R.string.validation_destination_required));
+            return false;
+        }
+
+        return true;
     }
 
     private void prepareTransferAmount() {
@@ -210,12 +236,6 @@ public class CreateTransferFragment extends Fragment {
                 if (before != count) {
                     mCreateTransferViewModel.setTransferAmount(s.toString());
                     mTransferAmountLayout.setError(null);
-                }
-
-                if (TextUtils.isEmpty(mTransferAmount.getText())) {
-                    disableNextButton();
-                } else {
-                    enableNextButton();
                 }
             }
 
@@ -296,16 +316,13 @@ public class CreateTransferFragment extends Fragment {
                     public void onChanged(final HyperwalletTransferMethod transferMethod) {
                         if (transferMethod != null) {
                             mTransferDestination.setVisibility(View.VISIBLE);
-                            mTransferHeaderContainer.setVisibility(View.VISIBLE);
                             mAddTransferDestination.setVisibility(View.GONE);
                             mTransferHeaderContainerError.setVisibility(View.GONE);
                             showTransferDestination(transferMethod);
                             enableInputControls();
                         } else {
                             mTransferDestination.setVisibility(View.GONE);
-                            mTransferHeaderContainer.setVisibility(View.GONE);
                             mAddTransferDestination.setVisibility(View.VISIBLE);
-                            mTransferHeaderContainerError.setVisibility(View.VISIBLE);
                             disableInputControls();
                         }
                     }
@@ -345,6 +362,7 @@ public class CreateTransferFragment extends Fragment {
                             mTransferCurrency.setTextColor(getResources().getColor(R.color.colorSecondaryDark));
                             mTransferAmount.setEnabled(true);
                             mTransferAmount.setText(null);
+                            mTransferAllSwitch.setChecked(false);
                         }
                     }
                 });
@@ -377,19 +395,6 @@ public class CreateTransferFragment extends Fragment {
                 }
             }
         });
-
-        mCreateTransferViewModel.getCreateTransfer().observe(getViewLifecycleOwner(), new Observer<Transfer>() {
-            @Override
-            public void onChanged(Transfer transfer) {
-                // TODO create intent to call next Transfer confirmation screen with parcelable payload of Transfer
-                try {
-                    Snackbar.make(mTransferNextButton, transfer.toJsonString(), Snackbar.LENGTH_SHORT).show();
-                } catch (Exception e) {
-                    Snackbar.make(mTransferNextButton, "Exception occurred! Transfer conversion",
-                            Snackbar.LENGTH_SHORT).show();
-                }
-            }
-        });
     }
 
     private void disableInputControls() {
@@ -404,21 +409,6 @@ public class CreateTransferFragment extends Fragment {
         mTransferAmount.setEnabled(true);
         mTransferNotes.setEnabled(true);
         mTransferAllSwitch.setEnabled(true);
-    }
-
-    private void enableNextButton() {
-        if (mCreateTransferViewModel.getTransferDestination().getValue() != null
-                && mCreateTransferViewModel.getQuoteAvailableFunds().getValue() != null) {
-            mTransferNextButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-            mTransferNextButton.setTextColor(getResources().getColor(R.color.regularColorPrimary));
-            mTransferNextButton.setEnabled(true);
-        }
-    }
-
-    private void disableNextButton() {
-        mTransferNextButton.setBackgroundColor(getResources().getColor(R.color.colorSecondary));
-        mTransferNextButton.setTextColor(getResources().getColor(R.color.colorSecondaryDark));
-        mTransferNextButton.setEnabled(false);
     }
 
     private void showTransferDestination(@NonNull final HyperwalletTransferMethod transferMethod) {

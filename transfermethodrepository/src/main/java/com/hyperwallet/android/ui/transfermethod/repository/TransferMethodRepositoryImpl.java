@@ -40,6 +40,7 @@ import com.hyperwallet.android.model.transfermethod.HyperwalletBankCard;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethodQueryParam;
 import com.hyperwallet.android.model.transfermethod.PayPalAccount;
+import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
 
 public class TransferMethodRepositoryImpl implements TransferMethodRepository {
 
@@ -80,15 +81,18 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
         HyperwalletTransferMethodQueryParam queryParam = new HyperwalletTransferMethodQueryParam.Builder()
                 .status(ACTIVATED)
                 .build();
+        EspressoIdlingResource.increment();
         getHyperwallet().listTransferMethods(queryParam,
                 new HyperwalletListener<HyperwalletPageList<HyperwalletTransferMethod>>() {
                     @Override
                     public void onSuccess(@Nullable HyperwalletPageList<HyperwalletTransferMethod> result) {
+                        EspressoIdlingResource.decrement();
                         callback.onTransferMethodListLoaded(result != null ? result.getDataList() : null);
                     }
 
                     @Override
                     public void onFailure(HyperwalletException exception) {
+                        EspressoIdlingResource.decrement();
                         callback.onError(exception.getHyperwalletErrors());
                     }
 
@@ -108,15 +112,18 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
                 .limit(1)
                 .status(ACTIVATED)
                 .build();
+        EspressoIdlingResource.increment();
         getHyperwallet().listTransferMethods(queryParam,
                 new HyperwalletListener<HyperwalletPageList<HyperwalletTransferMethod>>() {
                     @Override
                     public void onSuccess(@Nullable HyperwalletPageList<HyperwalletTransferMethod> result) {
+                        EspressoIdlingResource.decrement();
                         callback.onTransferMethodLoaded(result != null ? result.getDataList().get(0) : null);
                     }
 
                     @Override
                     public void onFailure(HyperwalletException exception) {
+                        EspressoIdlingResource.decrement();
                         callback.onError(exception.getHyperwalletErrors());
                     }
 

@@ -35,6 +35,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.IdlingRegistry;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
@@ -59,11 +60,12 @@ import org.junit.runner.RunWith;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import okhttp3.mockwebserver.MockResponse;
 
 @RunWith(AndroidJUnit4.class)
-public class TransferUserFundsTest {
+public class TransferPPCFundsTest {
 
     @ClassRule
     public static HyperwalletExternalResourceManager sResourceManager = new HyperwalletExternalResourceManager();
@@ -71,7 +73,15 @@ public class TransferUserFundsTest {
     public HyperwalletMockWebServer mMockWebServer = new HyperwalletMockWebServer(8080);
     @Rule
     public ActivityTestRule<CreateTransferActivity> mActivityTestRule =
-            new ActivityTestRule<>(CreateTransferActivity.class, true, false);
+            new ActivityTestRule<CreateTransferActivity>(CreateTransferActivity.class, true, false) {
+                @Override
+                protected Intent getActivityIntent() {
+                    Intent intent = new Intent(ApplicationProvider.getApplicationContext(),
+                            CreateTransferActivity.class);
+                    intent.putExtra("TRANSFER_SOURCE_TOKEN", "trm-2beee55a-f2af-4cd3-a952-2375fb871597");
+                    return intent;
+                }
+            };
 
     @Before
     public void setup() {
@@ -79,8 +89,6 @@ public class TransferUserFundsTest {
 
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("authentication_token_response.json")).mock();
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("user_response.json")).mock();
     }
 
     @After
@@ -104,7 +112,7 @@ public class TransferUserFundsTest {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("create_transfer_quote_response.json")).mock();
+                .getResourceContent("ppc/create_transfer_quote_response.json")).mock();
 
         mActivityTestRule.launchActivity(null);
 
@@ -160,9 +168,9 @@ public class TransferUserFundsTest {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_single_bank_account_cad_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("create_transfer_quote_fx_response.json")).mock();
+                .getResourceContent("ppc/create_transfer_quote_fx_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("create_transfer_fx_response.json")).mock();
+                .getResourceContent("ppc/create_transfer_fx_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("schedule_transfer_success_response.json")).mock();
 
@@ -245,9 +253,9 @@ public class TransferUserFundsTest {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("create_transfer_quote_response.json")).mock();
+                .getResourceContent("ppc/create_transfer_quote_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("create_transfer_no_fx_response.json")).mock();
+                .getResourceContent("ppc/create_transfer_no_fx_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("schedule_transfer_success_response.json")).mock();
 
@@ -279,6 +287,9 @@ public class TransferUserFundsTest {
         onView(withId(R.id.transfer_destination_selection)).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_description_1)).check(matches(withText("United States")));
         onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("Ending on 0616")));
+
+        onView(withId(R.id.transfer_summary)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_summary)).check(matches(withText("Available for Transfer: 998.00 USD")));
 
         onView(withId(R.id.transfer_amount)).perform(replaceText("100.00"));
         onView(withId(R.id.transfer_action_button)).perform(nestedScrollTo(), click());
@@ -309,9 +320,9 @@ public class TransferUserFundsTest {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("create_transfer_quote_response.json")).mock();
+                .getResourceContent("ppc/create_transfer_quote_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("create_transfer_no_fx_notes_response.json")).mock();
+                .getResourceContent("ppc/create_transfer_no_fx_notes_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("schedule_transfer_success_response.json")).mock();
 
@@ -343,6 +354,9 @@ public class TransferUserFundsTest {
         onView(withId(R.id.transfer_destination_selection)).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_description_1)).check(matches(withText("United States")));
         onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("Ending on 0616")));
+
+        onView(withId(R.id.transfer_summary)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_summary)).check(matches(withText("Available for Transfer: 998.00 USD")));
 
         onView(withId(R.id.transfer_amount)).perform(replaceText("100.00"));
         onView(withId(R.id.transfer_notes)).perform(replaceText("QA Automation Test"));
@@ -375,9 +389,9 @@ public class TransferUserFundsTest {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("create_transfer_quote_response.json")).mock();
+                .getResourceContent("ppc/create_transfer_quote_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("create_transfer_no_fees_response.json")).mock();
+                .getResourceContent("ppc/create_transfer_no_fees_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("schedule_transfer_success_response.json")).mock();
 
@@ -410,6 +424,9 @@ public class TransferUserFundsTest {
         onView(withId(R.id.transfer_destination_description_1)).check(matches(withText("United States")));
         onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("Ending on 0616")));
 
+        onView(withId(R.id.transfer_summary)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_summary)).check(matches(withText("Available for Transfer: 998.00 USD")));
+
         onView(withId(R.id.transfer_amount)).perform(replaceText("100.00"));
         onView(withId(R.id.transfer_notes)).perform(replaceText("QA Automation Test"));
 
@@ -441,9 +458,9 @@ public class TransferUserFundsTest {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("create_transfer_quote_all_funds_response.json")).mock();
+                .getResourceContent("ppc/create_transfer_quote_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("create_transfer_all_funds_response.json")).mock();
+                .getResourceContent("ppc/create_transfer_all_funds_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("schedule_transfer_success_response.json")).mock();
 
@@ -477,54 +494,20 @@ public class TransferUserFundsTest {
         onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("Ending on 0616")));
 
         onView(withId(R.id.switchButton)).perform(nestedScrollTo(), click());
-        onView(withId(R.id.transfer_amount)).check(matches(withText("288.05")));
+        onView(withId(R.id.transfer_amount)).check(matches(withText("998.00")));
         onView(withId(R.id.transfer_amount)).check(matches(not(isEnabled())));
         onView(withId(R.id.transfer_notes)).perform(replaceText("Transfer all funds test"));
 
         onView(withId(R.id.transfer_action_button)).perform(nestedScrollTo(), click());
 
-        onView(withId(R.id.list_foreign_exchange)).check(matches(isDisplayed()));
-        onView(withId(R.id.list_foreign_exchange)).check(new RecyclerViewCountAssertion(2));
-        onView(withId(R.id.list_foreign_exchange)).check(
-                matches(atPosition(0, hasDescendant(
-                        allOf(withId(R.id.sell_label), withText(R.string.foreign_exchange_sell_label))))));
-        onView(withId(R.id.list_foreign_exchange)).check(
-                matches(atPosition(0, hasDescendant(allOf(withId(R.id.sell_value), withText("100.00 CAD"))))));
-        onView(withId(R.id.list_foreign_exchange)).check(
-                matches(atPosition(0,
-                        hasDescendant(allOf(withId(R.id.buy_label), withText(R.string.foreign_exchange_buy_label))))));
-        onView(withId(R.id.list_foreign_exchange)).check(
-                matches(atPosition(0, hasDescendant(allOf(withId(R.id.buy_value), withText("77.44 USD"))))));
-        onView(withId(R.id.list_foreign_exchange)).check(
-                matches(atPosition(0, hasDescendant(
-                        allOf(withId(R.id.exchange_rate_label), withText(R.string.foreign_exchange_rate_label))))));
-        onView(withId(R.id.list_foreign_exchange)).check(
-                matches(atPosition(0,
-                        hasDescendant(allOf(withId(R.id.exchange_rate_value), withText("1 CAD = 0.774400 USD"))))));
-
-        onView(withId(R.id.list_foreign_exchange)).check(
-                matches(atPosition(1, hasDescendant(
-                        allOf(withId(R.id.sell_label), withText(R.string.foreign_exchange_sell_label))))));
-        onView(withId(R.id.list_foreign_exchange)).check(
-                matches(atPosition(1, hasDescendant(allOf(withId(R.id.sell_value), withText("100.00 EUR"))))));
-        onView(withId(R.id.list_foreign_exchange)).check(
-                matches(atPosition(1,
-                        hasDescendant(allOf(withId(R.id.buy_label), withText(R.string.foreign_exchange_buy_label))))));
-        onView(withId(R.id.list_foreign_exchange)).check(
-                matches(atPosition(1, hasDescendant(allOf(withId(R.id.buy_value), withText("112.61 USD"))))));
-        onView(withId(R.id.list_foreign_exchange)).check(
-                matches(atPosition(1, hasDescendant(
-                        allOf(withId(R.id.exchange_rate_label), withText(R.string.foreign_exchange_rate_label))))));
-        onView(withId(R.id.list_foreign_exchange)).check(
-                matches(atPosition(1,
-                        hasDescendant(allOf(withId(R.id.exchange_rate_value), withText("1 EUR = 1.126100 USD"))))));
+        onView(withId(R.id.list_foreign_exchange)).check(matches(not(isDisplayed())));
 
         onView(withId(R.id.amount_label)).check(matches(withText(R.string.summary_amount_label)));
-        onView(withId(R.id.amount_value)).check(matches(withText("290.05 USD")));
+        onView(withId(R.id.amount_value)).check(matches(withText("1,000.00 USD")));
         onView(withId(R.id.fee_label)).check(matches(withText(R.string.summary_amount_fee_label)));
         onView(withId(R.id.fee_value)).check(matches(withText("2.00 USD")));
         onView(withId(R.id.transfer_label)).check(matches(withText(R.string.summary_amount_transfer_label)));
-        onView(withId(R.id.transfer_value)).check(matches(withText("288.05 USD")));
+        onView(withId(R.id.transfer_value)).check(matches(withText("998.00 USD")));
 
         onView(withId(R.id.notes_container)).perform(nestedScrollTo());
         onView(withId(R.id.notes_container)).check(matches(isDisplayed()));
@@ -546,7 +529,7 @@ public class TransferUserFundsTest {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("create_transfer_quote_response.json")).mock();
+                .getResourceContent("ppc/create_transfer_quote_response.json")).mock();
 
         mActivityTestRule.launchActivity(null);
 
@@ -559,7 +542,7 @@ public class TransferUserFundsTest {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("create_transfer_quote_response.json")).mock();
+                .getResourceContent("ppc/create_transfer_quote_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_BAD_REQUEST).withBody(sResourceManager
                 .getResourceContent("errors/create_transfer_error_invalid_amount_response.json")).mock();
 
@@ -590,7 +573,7 @@ public class TransferUserFundsTest {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("create_transfer_quote_response.json")).mock();
+                .getResourceContent("ppc/create_transfer_quote_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_BAD_REQUEST).withBody(sResourceManager
                 .getResourceContent("errors/create_transfer_error_limit_exceeded_response.json")).mock();
 
@@ -602,7 +585,8 @@ public class TransferUserFundsTest {
         onView(withId(R.id.alertTitle)).inRoot(isDialog()).check(matches(isDisplayed()));
         onView(withId(R.id.alertTitle)).check(matches(withText(R.string.error_dialog_title)));
         onView(withText(
-                "Your attempted transaction has exceeded the approved payout limit; please contact HyperWallet Pay for further assistance."))
+                "Your attempted transaction has exceeded the approved payout limit; please contact HyperWallet Pay "
+                        + "for further assistance."))
                 .inRoot(isDialog()).check(matches(isDisplayed()));
         onView(withId(android.R.id.button1)).check(matches(withText(R.string.close_button_label)));
         onView(withId(android.R.id.button1)).perform(click());
@@ -613,7 +597,7 @@ public class TransferUserFundsTest {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("create_transfer_quote_response.json")).mock();
+                .getResourceContent("ppc/create_transfer_quote_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_BAD_REQUEST).withBody(sResourceManager
                 .getResourceContent("errors/create_transfer_error_insufficient_funds_response.json")).mock();
 
@@ -635,7 +619,7 @@ public class TransferUserFundsTest {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("create_transfer_quote_response.json")).mock();
+                .getResourceContent("ppc/create_transfer_quote_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_BAD_REQUEST).withBody(sResourceManager
                 .getResourceContent("errors/create_transfer_error_limit_subceeded_response.json")).mock();
 
@@ -658,7 +642,7 @@ public class TransferUserFundsTest {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("create_transfer_quote_response.json")).mock();
+                .getResourceContent("ppc/create_transfer_quote_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_BAD_REQUEST).withBody(sResourceManager
                 .getResourceContent("errors/create_transfer_error_invalid_wallet_status_response.json")).mock();
 
@@ -676,16 +660,16 @@ public class TransferUserFundsTest {
     }
 
     @Test
-    public void testTransferFunds_createTransferConnectionError() {
+    public void testTransferFunds_createTransferConnectionError() throws TimeoutException, InterruptedException {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("create_transfer_quote_response.json")).mock();
+                .getResourceContent("ppc/create_transfer_quote_response.json")).mock();
         mMockWebServer.getServer().enqueue(new MockResponse().setResponseCode(HTTP_OK).setBody(sResourceManager
-                .getResourceContent("create_transfer_no_fx_response.json")).setBodyDelay(10500, TimeUnit
+                .getResourceContent("ppc/create_transfer_no_fx_response.json")).setBodyDelay(10500, TimeUnit
                 .MILLISECONDS));
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("create_transfer_no_fx_response.json")).mock();
+                .getResourceContent("ppc/create_transfer_no_fx_response.json")).mock();
 
         mActivityTestRule.launchActivity(null);
 
@@ -700,8 +684,6 @@ public class TransferUserFundsTest {
         onView(withId(android.R.id.button1)).perform(click());
         onView(withText(R.string.error_dialog_connectivity_title)).check(doesNotExist());
 
-        // Verify confirmation details after retrying
-        onView(withId(R.id.list_foreign_exchange)).check(matches(not(isDisplayed())));
         onView(withId(R.id.amount_label)).check(matches(withText(R.string.summary_amount_label)));
         onView(withId(R.id.amount_value)).check(matches(withText("102.00 USD")));
         onView(withId(R.id.fee_label)).check(matches(withText(R.string.summary_amount_fee_label)));
@@ -711,13 +693,14 @@ public class TransferUserFundsTest {
     }
 
     @Test
-    public void testTransferFunds_createTransferConfirmationConnectionError() throws InterruptedException {
+    public void testTransferFunds_createTransferConfirmationConnectionError()
+            throws InterruptedException, TimeoutException {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("create_transfer_quote_response.json")).mock();
+                .getResourceContent("ppc/create_transfer_quote_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("create_transfer_no_fx_response.json")).mock();
+                .getResourceContent("ppc/create_transfer_no_fx_response.json")).mock();
         mMockWebServer.getServer().enqueue(new MockResponse().setResponseCode(HTTP_OK).setBody(sResourceManager
                 .getResourceContent("schedule_transfer_success_response.json")).setBodyDelay(10500, TimeUnit
                 .MILLISECONDS));
@@ -748,7 +731,6 @@ public class TransferUserFundsTest {
         onView(withId(R.id.transfer_amount)).perform(replaceText("100.00"));
         onView(withId(R.id.transfer_action_button)).perform(nestedScrollTo(), click());
 
-        onView(withId(R.id.list_foreign_exchange)).check(matches(not(isDisplayed())));
         onView(withId(R.id.amount_label)).check(matches(withText(R.string.summary_amount_label)));
         onView(withId(R.id.amount_value)).check(matches(withText("102.00 USD")));
         onView(withId(R.id.fee_label)).check(matches(withText(R.string.summary_amount_fee_label)));
