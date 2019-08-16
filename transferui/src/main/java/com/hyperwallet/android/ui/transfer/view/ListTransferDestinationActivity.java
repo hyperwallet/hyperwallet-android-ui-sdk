@@ -38,13 +38,14 @@ import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.ui.common.repository.Event;
 import com.hyperwallet.android.ui.common.view.error.DefaultErrorDialogFragment;
+import com.hyperwallet.android.ui.common.view.error.OnNetworkErrorCallback;
 import com.hyperwallet.android.ui.transfer.R;
 import com.hyperwallet.android.ui.transfer.viewmodel.ListTransferDestinationViewModel;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
 
 import java.util.List;
 
-public class ListTransferDestinationActivity extends AppCompatActivity {
+public class ListTransferDestinationActivity extends AppCompatActivity implements OnNetworkErrorCallback {
 
     public static final short SELECT_TRANSFER_DESTINATION_REQUEST_CODE = 101;
     public static final String EXTRA_SELECTED_DESTINATION_TOKEN = "SELECTED_DESTINATION_TOKEN";
@@ -86,6 +87,11 @@ public class ListTransferDestinationActivity extends AppCompatActivity {
         getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
         getWindow().getDecorView().setSystemUiVisibility(0);
         super.onBackPressed();
+    }
+
+    @Override
+    public void retry() {
+        mListTransferDestinationViewModel.loadTransferDestinationList();
     }
 
     private void initFragment(Fragment fragment) {
