@@ -208,7 +208,7 @@
                     android:id="@+id/notes_header_container"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/section_header_height"
-                    android:background="@drawable/view_border_top_bottom"
+                    android:background="@drawable/view_header_bottom_border"
                     android:paddingTop="@dimen/grid_padding_top">
                     <TextView
                         android:layout_width="match_parent"
