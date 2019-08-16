@@ -184,6 +184,7 @@ public class CreateTransferFragment extends Fragment {
             HyperwalletTransferMethod selectedTransferMethod = data.getParcelableExtra(
                     ListTransferDestinationActivity.EXTRA_SELECTED_DESTINATION_TOKEN);
             mCreateTransferViewModel.setTransferAmount(null);
+            mCreateTransferViewModel.setTransferNotes(null);
             mCreateTransferViewModel.setTransferAllAvailableFunds(Boolean.FALSE);
             mCreateTransferViewModel.setTransferDestination(selectedTransferMethod);
         }
