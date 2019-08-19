@@ -33,6 +33,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.ui.R;
+import com.hyperwallet.android.ui.common.intent.HyperwalletIntent;
 import com.hyperwallet.android.ui.common.view.OneClickListener;
 import com.hyperwallet.android.ui.common.view.error.DefaultErrorDialogFragment;
 import com.hyperwallet.android.ui.common.view.error.OnNetworkErrorCallback;
@@ -129,9 +130,13 @@ public class ListTransferMethodActivity extends AppCompatActivity implements
 
     @Override
     public void showSelectTransferMethodView() {
-        Intent myIntent = new Intent(ListTransferMethodActivity.this, SelectTransferMethodActivity.class);
-        myIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        startActivityForResult(myIntent, SELECT_TRANSFER_METHOD_REQUEST_CODE);
+        Intent intent = new Intent();
+        intent.setAction(HyperwalletIntent.ACTION_SELECT_TRANSFER_METHOD);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(intent, SELECT_TRANSFER_METHOD_REQUEST_CODE);
+        } else {
+            // TODO show error?
+        }
     }
 
     @Override
