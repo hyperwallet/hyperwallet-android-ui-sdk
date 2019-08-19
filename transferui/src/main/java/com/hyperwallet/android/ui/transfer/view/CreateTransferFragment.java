@@ -167,7 +167,7 @@ public class CreateTransferFragment extends Fragment {
                 if (intent.resolveActivity(requireContext().getPackageManager()) != null) {
                     startActivityForResult(intent, ADD_TRANSFER_METHOD_REQUEST_CODE);
                 } else {
-                    // TODO show error?
+                    mCreateTransferViewModel.notifyModuleUnavailable();
                 }
             }
         });
@@ -197,7 +197,7 @@ public class CreateTransferFragment extends Fragment {
                 mCreateTransferViewModel.setTransferAllAvailableFunds(Boolean.FALSE);
                 mCreateTransferViewModel.setTransferDestination(selectedTransferMethod);
             } else if (requestCode == ADD_TRANSFER_METHOD_REQUEST_CODE) {
-                mCreateTransferViewModel.retry();
+                mCreateTransferViewModel.refreshTransferDestination();
             }
         }
     }

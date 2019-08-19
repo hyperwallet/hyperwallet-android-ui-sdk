@@ -68,6 +68,15 @@ public class ListTransferDestinationActivity extends AppCompatActivity implement
                     "EXTRA_SELECTED_DESTINATION_TOKEN intent data is needed to start this activity");
         }
 
+        mListTransferDestinationViewModel = ViewModelProviders.of(this,
+                new ListTransferDestinationViewModel.ListTransferDestinationViewModelFactory(
+                        TransferMethodRepositoryFactory.getInstance().getTransferMethodRepository()))
+                .get(ListTransferDestinationViewModel.class);
+
+        if (savedInstanceState == null) {
+            initFragment(ListTransferDestinationFragment.newInstance(transferToken));
+        }
+
         FloatingActionButton button = findViewById(R.id.create_transfer_method_fab);
         button.setOnClickListener(new OneClickListener() {
             @Override
@@ -79,20 +88,12 @@ public class ListTransferDestinationActivity extends AppCompatActivity implement
                 if (intent.resolveActivity(getPackageManager()) != null) {
                     startActivityForResult(intent, ADD_TRANSFER_METHOD_REQUEST_CODE);
                 } else {
-                    // TODO show error?
+                    mListTransferDestinationViewModel.notifyModuleUnavailable();
                 }
             }
         });
 
-        mListTransferDestinationViewModel = ViewModelProviders.of(this,
-                new ListTransferDestinationViewModel.ListTransferDestinationViewModelFactory(
-                        TransferMethodRepositoryFactory.getInstance().getTransferMethodRepository()))
-                .get(ListTransferDestinationViewModel.class);
         registerObservers();
-
-        if (savedInstanceState == null) {
-            initFragment(ListTransferDestinationFragment.newInstance(transferToken));
-        }
     }
 
     @Override
@@ -149,6 +150,16 @@ public class ListTransferDestinationActivity extends AppCompatActivity implement
                     public void onChanged(Event<HyperwalletErrors> errorsEvent) {
                         if (!errorsEvent.isContentConsumed()) {
                             showError(errorsEvent.getContent().getErrors());
+                        }
+                    }
+                });
+
+        mListTransferDestinationViewModel.getModuleUnavailableError().observe(this,
+                new Observer<Event<HyperwalletErrors>>() {
+                    @Override
+                    public void onChanged(Event<HyperwalletErrors> event) {
+                        if (!event.isContentConsumed()) {
+                            showError(event.getContent().getErrors());
                         }
                     }
                 });

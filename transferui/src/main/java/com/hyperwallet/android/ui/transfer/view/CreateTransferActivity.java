@@ -157,7 +157,7 @@ public class CreateTransferActivity extends AppCompatActivity implements OnNetwo
                     @Override
                     public void onChanged(Event<HyperwalletErrors> event) {
                         if (event != null && !event.isContentConsumed()) {
-                            showErrorOnLoadCreateTransfer(event.getContent().getErrors());
+                            showError(event.getContent().getErrors());
                         }
                     }
                 });
@@ -166,7 +166,7 @@ public class CreateTransferActivity extends AppCompatActivity implements OnNetwo
             @Override
             public void onChanged(Event<HyperwalletErrors> event) {
                 if (event != null && !event.isContentConsumed()) {
-                    showErrorOnLoadCreateTransfer(event.getContent().getErrors());
+                    showError(event.getContent().getErrors());
                 }
             }
         });
@@ -175,6 +175,15 @@ public class CreateTransferActivity extends AppCompatActivity implements OnNetwo
             @Override
             public void onChanged(final Event<Transfer> transfer) {
                 navigate(transfer);
+            }
+        });
+
+        mCreateTransferViewModel.getModuleUnavailableError().observe(this, new Observer<Event<HyperwalletErrors>>() {
+            @Override
+            public void onChanged(Event<HyperwalletErrors> event) {
+                if (!event.isContentConsumed()) {
+                    showError(event.getContent().getErrors());
+                }
             }
         });
     }
@@ -186,7 +195,7 @@ public class CreateTransferActivity extends AppCompatActivity implements OnNetwo
         fragmentTransaction.commit();
     }
 
-    private void showErrorOnLoadCreateTransfer(@NonNull final List<HyperwalletError> errors) {
+    private void showError(@NonNull final List<HyperwalletError> errors) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         DefaultErrorDialogFragment fragment = (DefaultErrorDialogFragment)
                 fragmentManager.findFragmentByTag(DefaultErrorDialogFragment.TAG);
