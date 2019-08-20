@@ -135,7 +135,8 @@ public class ListTransferMethodActivity extends AppCompatActivity implements
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(intent, SELECT_TRANSFER_METHOD_REQUEST_CODE);
         } else {
-            // TODO show error?
+            FloatingActionButton fab = findViewById(R.id.fab);
+            fab.hide();
         }
     }
 
