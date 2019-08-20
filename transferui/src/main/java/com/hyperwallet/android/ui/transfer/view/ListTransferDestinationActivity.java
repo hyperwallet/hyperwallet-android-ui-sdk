@@ -78,20 +78,20 @@ public class ListTransferDestinationActivity extends AppCompatActivity implement
         }
 
         FloatingActionButton button = findViewById(R.id.create_transfer_method_fab);
-        button.setOnClickListener(new OneClickListener() {
-            @Override
-            public void onOneClick(View v) {
-                Intent intent = new Intent();
-                intent.setAction(HyperwalletIntent.ACTION_SELECT_TRANSFER_METHOD);
-                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        final Intent intent = new Intent();
+        intent.setAction(HyperwalletIntent.ACTION_SELECT_TRANSFER_METHOD);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
-                if (intent.resolveActivity(getPackageManager()) != null) {
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            button.setOnClickListener(new OneClickListener() {
+                @Override
+                public void onOneClick(View v) {
                     startActivityForResult(intent, ADD_TRANSFER_METHOD_REQUEST_CODE);
-                } else {
-                    mListTransferDestinationViewModel.notifyModuleUnavailable();
                 }
-            }
-        });
+            });
+        } else {
+            button.hide();
+        }
 
         registerObservers();
     }
@@ -150,16 +150,6 @@ public class ListTransferDestinationActivity extends AppCompatActivity implement
                     public void onChanged(Event<HyperwalletErrors> errorsEvent) {
                         if (!errorsEvent.isContentConsumed()) {
                             showError(errorsEvent.getContent().getErrors());
-                        }
-                    }
-                });
-
-        mListTransferDestinationViewModel.getModuleUnavailableError().observe(this,
-                new Observer<Event<HyperwalletErrors>>() {
-                    @Override
-                    public void onChanged(Event<HyperwalletErrors> event) {
-                        if (!event.isContentConsumed()) {
-                            showError(event.getContent().getErrors());
                         }
                     }
                 });

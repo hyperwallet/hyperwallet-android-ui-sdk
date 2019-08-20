@@ -16,23 +16,18 @@
  */
 package com.hyperwallet.android.ui.transfer.viewmodel;
 
-import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.ERROR_SDK_MODULE_UNAVAILABLE;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.ui.common.repository.Event;
-import com.hyperwallet.android.ui.transfer.R;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepository;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -45,7 +40,6 @@ public class ListTransferDestinationViewModel extends ViewModel {
     private final MutableLiveData<Event<HyperwalletTransferMethod>> mSelectedTransferDestination =
             new MutableLiveData<>();
     private final MutableLiveData<Event<HyperwalletErrors>> mTransferDestinationError = new MutableLiveData<>();
-    private final MutableLiveData<Event<HyperwalletErrors>> mModuleUnavailableError = new MutableLiveData<>();
     private final TransferMethodRepository mTransferMethodRepository;
 
     ListTransferDestinationViewModel(@NonNull final TransferMethodRepository repository) {
@@ -92,16 +86,6 @@ public class ListTransferDestinationViewModel extends ViewModel {
                 mTransferDestinationError.postValue(new Event<>(errors));
             }
         });
-    }
-
-    public void notifyModuleUnavailable() {
-        HyperwalletError error = new HyperwalletError(R.string.module_unavailable_error, ERROR_SDK_MODULE_UNAVAILABLE);
-        HyperwalletErrors errors = new HyperwalletErrors(Arrays.asList(error));
-        mModuleUnavailableError.postValue(new Event<>(errors));
-    }
-
-    public LiveData<Event<HyperwalletErrors>> getModuleUnavailableError() {
-        return mModuleUnavailableError;
     }
 
     public static class ListTransferDestinationViewModelFactory implements ViewModelProvider.Factory {
