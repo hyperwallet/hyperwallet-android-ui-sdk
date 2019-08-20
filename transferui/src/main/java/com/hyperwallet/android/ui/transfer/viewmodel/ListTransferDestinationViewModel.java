@@ -16,13 +16,14 @@
  */
 package com.hyperwallet.android.ui.transfer.viewmodel;
 
+import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.ERROR_SDK_MODULE_UNAVAILABLE;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.hyperwallet.android.ExceptionMapper;
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
@@ -94,8 +95,7 @@ public class ListTransferDestinationViewModel extends ViewModel {
     }
 
     public void notifyModuleUnavailable() {
-        HyperwalletError error = new HyperwalletError(R.string.module_unavailable_error,
-                ExceptionMapper.EC_UNEXPECTED_EXCEPTION);
+        HyperwalletError error = new HyperwalletError(R.string.module_unavailable_error, ERROR_SDK_MODULE_UNAVAILABLE);
         HyperwalletErrors errors = new HyperwalletErrors(Arrays.asList(error));
         mModuleUnavailableError.postValue(new Event<>(errors));
     }

@@ -18,9 +18,14 @@
 package com.hyperwallet.android.ui.common.intent;
 
 /**
- * Customized Hyperwallet Intents used for inter SDK communication
+ * Hyperwallet Intents used for inter SDK communication
  */
 public class HyperwalletIntent {
+
+    /**
+     * SDK Error unavailable constant
+     */
+    public static final String ERROR_SDK_MODULE_UNAVAILABLE = "ERROR_SDK_MODULE_UNAVAILABLE";
 
     /**
      * Action for SELECT TRANSFER METHOD UI SDK
