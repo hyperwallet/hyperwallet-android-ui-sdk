@@ -186,6 +186,7 @@
                     android:id="@+id/transfer_summary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:layout_marginStart="@dimen/grid_margin_left"
                     android:layout_marginTop="@dimen/item_vertical_padding"
                     android:layout_marginBottom="@dimen/grid_margin_bottom"
