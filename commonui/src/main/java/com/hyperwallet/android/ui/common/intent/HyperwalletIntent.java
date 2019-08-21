@@ -23,6 +23,11 @@ package com.hyperwallet.android.ui.common.intent;
 public class HyperwalletIntent {
 
     /**
+     * SDK Broadcast Payload Key
+     */
+    public static final String HYPERWALLET_LOCAL_BROADCAST_PAYLOAD_KEY = "hyperwallet-local-broadcast-payload";
+
+    /**
      * SDK Error unavailable constant
      */
     public static final String ERROR_SDK_MODULE_UNAVAILABLE = "ERROR_SDK_MODULE_UNAVAILABLE";

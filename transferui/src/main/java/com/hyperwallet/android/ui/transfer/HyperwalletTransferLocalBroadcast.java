@@ -16,6 +16,8 @@
  */
 package com.hyperwallet.android.ui.transfer;
 
+import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.HYPERWALLET_LOCAL_BROADCAST_PAYLOAD_KEY;
+
 import android.content.Intent;
 
 import androidx.annotation.NonNull;
@@ -24,7 +26,6 @@ import com.hyperwallet.android.model.StatusTransition;
 
 public class HyperwalletTransferLocalBroadcast {
 
-    private static final String HYPERWALLET_LOCAL_BROADCAST_PAYLOAD_KEY = "hyperwallet-local-broadcast-payload";
     private static final String ACTION_HYPERWALLET_TRANSFER_SCHEDULED = "ACTION_HYPERWALLET_TRANSFER_SCHEDULED";
 
     public static Intent createBroadcastIntentTransferScheduled(@NonNull final StatusTransition statusTransition) {

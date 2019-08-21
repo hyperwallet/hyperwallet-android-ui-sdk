@@ -17,6 +17,8 @@
  */
 package com.hyperwallet.android.ui.transfer.view;
 
+import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.HYPERWALLET_LOCAL_BROADCAST_PAYLOAD_KEY;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -100,7 +102,10 @@ public class ListTransferDestinationActivity extends AppCompatActivity implement
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == ADD_TRANSFER_METHOD_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+        if (requestCode == ADD_TRANSFER_METHOD_REQUEST_CODE
+                && resultCode == Activity.RESULT_OK && data != null) {
+            HyperwalletTransferMethod transferMethod = data.getParcelableExtra(HYPERWALLET_LOCAL_BROADCAST_PAYLOAD_KEY);
+            mListTransferDestinationViewModel.selectedTransferDestination(transferMethod);
             mListTransferDestinationViewModel.loadTransferDestinationList();
         }
     }

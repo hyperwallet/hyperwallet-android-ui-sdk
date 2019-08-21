@@ -122,8 +122,8 @@ public class SelectTransferMethodActivity extends AppCompatActivity implements
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == AddTransferMethodActivity.ADD_TRANSFER_METHOD_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                setResult(RESULT_OK);
+            if (resultCode == RESULT_OK && data != null) {
+                setResult(RESULT_OK, data);
                 finish();
             }
         }
