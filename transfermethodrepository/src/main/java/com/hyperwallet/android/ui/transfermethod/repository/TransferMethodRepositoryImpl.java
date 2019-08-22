@@ -79,7 +79,9 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
     public void loadTransferMethods(@NonNull final LoadTransferMethodListCallback callback) {
 
         HyperwalletTransferMethodQueryParam queryParam = new HyperwalletTransferMethodQueryParam.Builder()
+                .limit(100)
                 .status(ACTIVATED)
+                .sortByCreatedOnDesc()
                 .build();
         EspressoIdlingResource.increment();
         getHyperwallet().listTransferMethods(queryParam,
