@@ -16,6 +16,7 @@
  */
 package com.hyperwallet.android.ui.transfermethod.view;
 
+import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.SELECT_TRANSFER_METHOD_REQUEST_CODE;
 import static com.hyperwallet.android.ui.transfermethod.view.ListTransferMethodFragment.ARGUMENT_IS_TRANSFER_METHODS_RELOAD_NEEDED;
 
 import android.content.Intent;
@@ -33,7 +34,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.ui.R;
-import com.hyperwallet.android.ui.common.intent.HyperwalletIntent;
 import com.hyperwallet.android.ui.common.view.OneClickListener;
 import com.hyperwallet.android.ui.common.view.error.DefaultErrorDialogFragment;
 import com.hyperwallet.android.ui.common.view.error.OnNetworkErrorCallback;
@@ -47,7 +47,6 @@ public class ListTransferMethodActivity extends AppCompatActivity implements
         ListTransferMethodFragment.OnTransferMethodContextMenuDeletionSelected,
         OnTransferMethodDeactivateCallback, OnNetworkErrorCallback {
 
-    public static final int SELECT_TRANSFER_METHOD_REQUEST_CODE = 50;
     private static final String ARGUMENT_RETRY_ACTION = "ARGUMENT_RETRY_ACTION";
     private static final String ARGUMENT_TRANSFER_METHOD = "ARGUMENT_TRANSFER_METHOD";
     private static final short RETRY_CONFIRM_DEACTIVATE_TRANSFER_METHOD = 102;
@@ -130,14 +129,9 @@ public class ListTransferMethodActivity extends AppCompatActivity implements
 
     @Override
     public void showSelectTransferMethodView() {
-        Intent intent = new Intent();
-        intent.setAction(HyperwalletIntent.ACTION_SELECT_TRANSFER_METHOD);
-        if (intent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(intent, SELECT_TRANSFER_METHOD_REQUEST_CODE);
-        } else {
-            FloatingActionButton fab = findViewById(R.id.fab);
-            fab.hide();
-        }
+        Intent myIntent = new Intent(ListTransferMethodActivity.this, SelectTransferMethodActivity.class);
+        myIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivityForResult(myIntent, SELECT_TRANSFER_METHOD_REQUEST_CODE);
     }
 
     @Override

@@ -16,6 +16,8 @@
  */
 package com.hyperwallet.android.ui.transfer.view;
 
+import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.SCHEDULE_TRANSFER_REQUEST_CODE;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -118,7 +120,7 @@ public class CreateTransferActivity extends AppCompatActivity implements OnNetwo
             intent.putExtra(ScheduleTransferActivity.EXTRA_TRANSFER, event.getContent());
             intent.putExtra(ScheduleTransferActivity.EXTRA_TRANSFER_METHOD,
                     mCreateTransferViewModel.getTransferDestination().getValue());
-            startActivityForResult(intent, ScheduleTransferActivity.SCHEDULE_TRANSFER_REQUEST_CODE);
+            startActivityForResult(intent, SCHEDULE_TRANSFER_REQUEST_CODE);
         }
     }
 
@@ -126,11 +128,11 @@ public class CreateTransferActivity extends AppCompatActivity implements OnNetwo
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == ScheduleTransferActivity.SCHEDULE_TRANSFER_REQUEST_CODE
+        if (requestCode == SCHEDULE_TRANSFER_REQUEST_CODE
                 && resultCode == Activity.RESULT_OK && data != null) {
             setResult(Activity.RESULT_OK, data);
             finish();
-        } else if (requestCode == ScheduleTransferActivity.SCHEDULE_TRANSFER_REQUEST_CODE) {
+        } else if (requestCode == SCHEDULE_TRANSFER_REQUEST_CODE) {
             // back button
             FragmentManager fragmentManager = getSupportFragmentManager();
             CreateTransferFragment fragment = (CreateTransferFragment)

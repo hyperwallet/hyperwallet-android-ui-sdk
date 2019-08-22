@@ -22,11 +22,11 @@ import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMe
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_COUNTRY;
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_CURRENCY;
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TYPE;
+import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.ADD_TRANSFER_METHOD_REQUEST_CODE;
+import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.SELECT_TRANSFER_DESTINATION_REQUEST_CODE;
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getStringFontIcon;
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getStringResourceByName;
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getTransferMethodDetail;
-import static com.hyperwallet.android.ui.transfer.view.ListTransferDestinationActivity.ADD_TRANSFER_METHOD_REQUEST_CODE;
-import static com.hyperwallet.android.ui.transfer.view.ListTransferDestinationActivity.SELECT_TRANSFER_DESTINATION_REQUEST_CODE;
 
 import android.content.Intent;
 import android.os.Bundle;

@@ -17,6 +17,8 @@
  */
 package com.hyperwallet.android.ui.transfermethod.view;
 
+import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.ADD_TRANSFER_METHOD_REQUEST_CODE;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -121,7 +123,7 @@ public class SelectTransferMethodActivity extends AppCompatActivity implements
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == AddTransferMethodActivity.ADD_TRANSFER_METHOD_REQUEST_CODE) {
+        if (requestCode == ADD_TRANSFER_METHOD_REQUEST_CODE) {
             if (resultCode == RESULT_OK && data != null) {
                 setResult(RESULT_OK, data);
                 finish();

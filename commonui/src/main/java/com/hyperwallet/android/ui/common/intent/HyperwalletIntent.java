@@ -20,7 +20,10 @@ package com.hyperwallet.android.ui.common.intent;
 /**
  * Hyperwallet Intents used for inter SDK communication
  */
-public class HyperwalletIntent {
+public final class HyperwalletIntent {
+
+    private HyperwalletIntent() {
+    }
 
     /**
      * SDK Broadcast Payload Key
@@ -36,4 +39,24 @@ public class HyperwalletIntent {
      * Action for SELECT TRANSFER METHOD UI SDK
      */
     public static final String ACTION_SELECT_TRANSFER_METHOD = "com.hyperwallet.intent.action.SELECT_TRANSFER_METHOD";
+
+    /**
+     * Select Transfer method request code
+     */
+    public static final short SELECT_TRANSFER_METHOD_REQUEST_CODE = 100;
+
+    /**
+     * Add Transfer method request code
+     */
+    public static final short ADD_TRANSFER_METHOD_REQUEST_CODE = 101;
+
+    /**
+     * Select transfer destination request code
+     */
+    public static final short SELECT_TRANSFER_DESTINATION_REQUEST_CODE = 102;
+
+    /**
+     * Schedule transfer
+     */
+    public static final short SCHEDULE_TRANSFER_REQUEST_CODE = 103;
 }

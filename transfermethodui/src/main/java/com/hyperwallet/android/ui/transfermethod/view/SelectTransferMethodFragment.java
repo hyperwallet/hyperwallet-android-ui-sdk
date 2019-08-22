@@ -18,6 +18,7 @@
 
 package com.hyperwallet.android.ui.transfermethod.view;
 
+import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.ADD_TRANSFER_METHOD_REQUEST_CODE;
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getStringFontIcon;
 
 import android.annotation.SuppressLint;
@@ -291,7 +292,7 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
         intent.putExtra(AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_CURRENCY, currency);
         intent.putExtra(AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_TYPE, transferMethodType);
         intent.putExtra(AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_PROFILE_TYPE, profileType);
-        getActivity().startActivityForResult(intent, AddTransferMethodActivity.ADD_TRANSFER_METHOD_REQUEST_CODE);
+        getActivity().startActivityForResult(intent, ADD_TRANSFER_METHOD_REQUEST_CODE);
     }
 
     @Override

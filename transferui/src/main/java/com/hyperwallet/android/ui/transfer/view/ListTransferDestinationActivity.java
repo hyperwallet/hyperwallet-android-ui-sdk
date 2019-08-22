@@ -17,6 +17,7 @@
  */
 package com.hyperwallet.android.ui.transfer.view;
 
+import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.ADD_TRANSFER_METHOD_REQUEST_CODE;
 import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.HYPERWALLET_LOCAL_BROADCAST_PAYLOAD_KEY;
 
 import android.app.Activity;
@@ -53,8 +54,6 @@ import java.util.List;
 
 public class ListTransferDestinationActivity extends AppCompatActivity implements OnNetworkErrorCallback {
 
-    public static final short SELECT_TRANSFER_DESTINATION_REQUEST_CODE = 101;
-    public static final short ADD_TRANSFER_METHOD_REQUEST_CODE = 102;
     public static final String EXTRA_SELECTED_DESTINATION_TOKEN = "SELECTED_DESTINATION_TOKEN";
 
     private ListTransferDestinationViewModel mListTransferDestinationViewModel;
