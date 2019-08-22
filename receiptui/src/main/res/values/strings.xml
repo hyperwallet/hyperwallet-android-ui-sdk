@@ -114,6 +114,8 @@
     <string name="payment_return">Payment Return</string>
     <string name="transfer_to_program_account">Transfer to Program</string>
     <string name="transfer_to_user">Transfer to User</string>
+    <string name="transfer_to_paypal_account">PayPal</string>
+    <string name="transfer_to_bank_card">Debit Card</string>
     <!---->
     <!--Virtual incentive types-->
     <string name="virtual_incentive_cancellation">Promo Cancellation</string>
