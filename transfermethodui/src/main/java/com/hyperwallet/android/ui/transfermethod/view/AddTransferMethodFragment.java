@@ -296,7 +296,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
         Intent intent = HyperwalletTransferMethodLocalBroadcast.createBroadcastIntentTransferMethodAdded(
                 transferMethod);
         LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
-        getActivity().setResult(Activity.RESULT_OK, intent);
+        getActivity().setResult(Activity.RESULT_OK);
         getActivity().finish();
     }
 
