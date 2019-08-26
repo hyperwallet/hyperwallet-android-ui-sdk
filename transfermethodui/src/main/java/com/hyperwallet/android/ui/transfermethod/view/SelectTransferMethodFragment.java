@@ -179,7 +179,7 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
         mRecyclerView.setAdapter(mTransferMethodTypesAdapter);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mRecyclerView.addItemDecoration(new HorizontalDividerItemDecorator(requireContext(), true));
+        mRecyclerView.addItemDecoration(new HorizontalDividerItemDecorator(requireContext()));
     }
 
     @Override
