@@ -462,7 +462,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
             }
         }
 
-        if (errorFieldSet.isEmpty()) {
+        if (errorFieldSet.isEmpty() && !errors.isEmpty()) {
             List<HyperwalletError> errorList = new ArrayList<HyperwalletError>() {{
                 add(new HyperwalletError(requireContext().getString(R.string.error_unmapped_field,
                         errors.get(0).getFieldName()), ERROR_UNMAPPED_FIELD));
@@ -540,7 +540,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
         }
     }
 
-    protected void onWidgetSelectionItemClicked(@NonNull final String selectedValue, @NonNull final String fieldName) {
+    void onWidgetSelectionItemClicked(@NonNull final String selectedValue, @NonNull final String fieldName) {
         for (int i = 0; i < mDynamicContainer.getChildCount(); i++) {
             View view = mDynamicContainer.getChildAt(i);
             if (view.getTag() instanceof WidgetSelectionDialogFragment.WidgetSelectionItemType) {
