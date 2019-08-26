@@ -465,5 +465,13 @@ public class ListTransferMethodTest {
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(0, hasDescendant(withDrawable(R.drawable.ic_three_dots_16dp)))));
     }
+    public void testListTransferMethod_checkListCountAboveTen() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_list_response_list_count_check.json")).mock();
 
+        mActivityTestRule.launchActivity(null);
+
+        onView(withId(R.id.list_transfer_method_item)).check(new RecyclerViewCountAssertion(12));
+
+    }
 }
