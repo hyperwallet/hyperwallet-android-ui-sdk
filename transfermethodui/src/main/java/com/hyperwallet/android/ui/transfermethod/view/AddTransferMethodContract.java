@@ -53,7 +53,7 @@ public interface AddTransferMethodContract {
 
         void hideProgressBar();
 
-        void showInputErrors(List<HyperwalletError> errors);
+        void showInputErrors(@NonNull final List<HyperwalletError> errors);
 
         /**
          * Check the state of a View
@@ -72,9 +72,9 @@ public interface AddTransferMethodContract {
         void createTransferMethod(@NonNull HyperwalletTransferMethod transferMethod);
 
         void loadTransferMethodConfigurationFields(boolean forceUpdate,
-                @NonNull String country,
-                @NonNull String currency,
-                @NonNull String transferMethodType,
-                @NonNull String transferMethodProfileType);
+                @NonNull final String country,
+                @NonNull final String currency,
+                @NonNull final String transferMethodType,
+                @NonNull final String transferMethodProfileType);
     }
 }
