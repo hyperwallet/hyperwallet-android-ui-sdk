@@ -4,6 +4,7 @@ import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.Intents.intending;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasAction;
 import static androidx.test.espresso.matcher.ViewMatchers.hasDescendant;
@@ -234,15 +235,14 @@ public class SelectDestinationTest {
 
         Instrumentation.ActivityResult result =
                 new Instrumentation.ActivityResult(Activity.RESULT_OK, null);
-
         intending(hasAction(ACTION_SELECT_TRANSFER_METHOD)).respondWith(result);
 
         onView(withId(R.id.transfer_destination_title)).perform(click());
-
         onView(allOf(instanceOf(TextView.class),
                 withParent(withId(R.id.transfer_destination_selection_toolbar)))).check(
                 matches(withText(R.string.transfer_destination)));
         onView(withId(R.id.create_transfer_method_fab)).perform(click());
+        intended(hasAction(ACTION_SELECT_TRANSFER_METHOD));
 
         onView(withId(R.id.add_transfer_destination)).check(matches(not(isDisplayed())));
         onView(withId(R.id.transfer_destination)).check(matches(isDisplayed()));

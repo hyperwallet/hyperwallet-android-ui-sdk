@@ -186,7 +186,6 @@ public class TransferUserFundsTest {
                 matches(withText(R.string.add_transfer_description_2)));
 
         onView(withId(R.id.add_transfer_destination)).perform(click());
-
         intended(hasAction(ACTION_SELECT_TRANSFER_METHOD));
 
         onView(withId(R.id.add_transfer_destination)).check(matches(not(isDisplayed())));
