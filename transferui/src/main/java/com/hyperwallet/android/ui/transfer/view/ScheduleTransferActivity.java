@@ -22,30 +22,24 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.View;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.StatusTransition;
 import com.hyperwallet.android.model.transfer.Transfer;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.ui.common.repository.Event;
-import com.hyperwallet.android.ui.common.view.error.DefaultErrorDialogFragment;
+import com.hyperwallet.android.ui.common.view.ActivityUtils;
 import com.hyperwallet.android.ui.common.view.error.OnNetworkErrorCallback;
 import com.hyperwallet.android.ui.transfer.HyperwalletTransferLocalBroadcast;
 import com.hyperwallet.android.ui.transfer.R;
 import com.hyperwallet.android.ui.transfer.repository.TransferRepositoryFactory;
 import com.hyperwallet.android.ui.transfer.viewmodel.ScheduleTransferViewModel;
-
-import java.util.List;
 
 /**
  * Schedule Transfer Activity
@@ -93,7 +87,7 @@ public class ScheduleTransferActivity extends AppCompatActivity implements OnNet
         }
 
         if (savedInstanceState == null) {
-            initFragment(ScheduleTransferFragment.newInstance());
+            ActivityUtils.initFragment(this, ScheduleTransferFragment.newInstance(), R.id.schedule_transfer_fragment);
         }
     }
 
@@ -115,7 +109,7 @@ public class ScheduleTransferActivity extends AppCompatActivity implements OnNet
                     @Override
                     public void onChanged(final Event<HyperwalletErrors> event) {
                         if (event != null && !event.isContentConsumed()) {
-                            showErrorScheduleTransfer(event.getContent().getErrors());
+                            ActivityUtils.showError(ScheduleTransferActivity.this,event.getContent().getErrors());
                         }
                     }
                 });
@@ -132,24 +126,4 @@ public class ScheduleTransferActivity extends AppCompatActivity implements OnNet
         });
     }
 
-    private void showErrorScheduleTransfer(@NonNull final List<HyperwalletError> errors) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        DefaultErrorDialogFragment fragment = (DefaultErrorDialogFragment)
-                fragmentManager.findFragmentByTag(DefaultErrorDialogFragment.TAG);
-
-        if (fragment == null) {
-            fragment = DefaultErrorDialogFragment.newInstance(errors);
-        }
-
-        if (!fragment.isAdded()) {
-            fragment.show(fragmentManager);
-        }
-    }
-
-    private void initFragment(@NonNull final Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.schedule_transfer_fragment, fragment);
-        fragmentTransaction.commit();
-    }
 }

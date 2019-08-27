@@ -16,8 +16,6 @@
  */
 package com.hyperwallet.android.ui.transfermethod.view;
 
-import static com.hyperwallet.android.ui.transfermethod.view.ListTransferMethodFragment.ARGUMENT_IS_TRANSFER_METHODS_RELOAD_NEEDED;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -27,17 +25,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.ui.R;
+import com.hyperwallet.android.ui.common.view.ActivityUtils;
 import com.hyperwallet.android.ui.common.view.OneClickListener;
-import com.hyperwallet.android.ui.common.view.error.DefaultErrorDialogFragment;
 import com.hyperwallet.android.ui.common.view.error.OnNetworkErrorCallback;
 
 import java.util.List;
+
+import static com.hyperwallet.android.ui.transfermethod.view.ListTransferMethodFragment.ARGUMENT_IS_TRANSFER_METHODS_RELOAD_NEEDED;
 
 public class ListTransferMethodActivity extends AppCompatActivity implements
         ListTransferMethodFragment.OnAddNewTransferMethodSelected,
@@ -56,6 +55,7 @@ public class ListTransferMethodActivity extends AppCompatActivity implements
 
     private short mRetryCode;
     private HyperwalletTransferMethod mTransferMethod;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +83,7 @@ public class ListTransferMethodActivity extends AppCompatActivity implements
         });
 
         if (savedInstanceState == null) {
-            initFragment(ListTransferMethodFragment.newInstance());
+            ActivityUtils.initFragment(this, ListTransferMethodFragment.newInstance(), R.id.list_transfer_method_fragment);
         } else {
             mRetryCode = savedInstanceState.getShort(ARGUMENT_RETRY_ACTION);
             mTransferMethod = savedInstanceState.getParcelable(ARGUMENT_TRANSFER_METHOD);
@@ -105,13 +105,6 @@ public class ListTransferMethodActivity extends AppCompatActivity implements
             mRetryCode = savedInstanceState.getShort(ARGUMENT_RETRY_ACTION);
             mTransferMethod = savedInstanceState.getParcelable(ARGUMENT_TRANSFER_METHOD);
         }
-    }
-
-    private void initFragment(Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.list_transfer_method_fragment, fragment);
-        fragmentTransaction.commit();
     }
 
     @Override
@@ -137,13 +130,13 @@ public class ListTransferMethodActivity extends AppCompatActivity implements
     @Override
     public void showErrorsDeactivateTransferMethod(@NonNull final List<HyperwalletError> errors) {
         mRetryCode = RETRY_DEACTIVATE_TRANSFER_METHOD;
-        showError(errors);
+        ActivityUtils.showError(this, errors);
     }
 
     @Override
     public void showErrorsLoadTransferMethods(@NonNull final List<HyperwalletError> errors) {
         mRetryCode = RETRY_LOAD_TRANSFER_METHOD;
-        showError(errors);
+        ActivityUtils.showError(this, errors);
     }
 
     @Override
@@ -191,20 +184,6 @@ public class ListTransferMethodActivity extends AppCompatActivity implements
                 retryDeactivateTransferMethod();
                 break;
             default: // no default action
-        }
-    }
-
-    private void showError(@NonNull final List<HyperwalletError> errors) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        DefaultErrorDialogFragment fragment = (DefaultErrorDialogFragment)
-                fragmentManager.findFragmentByTag(DefaultErrorDialogFragment.TAG);
-
-        if (fragment == null) {
-            fragment = DefaultErrorDialogFragment.newInstance(errors);
-        }
-
-        if (!fragment.isAdded()) {
-            fragment.show(fragmentManager);
         }
     }
 

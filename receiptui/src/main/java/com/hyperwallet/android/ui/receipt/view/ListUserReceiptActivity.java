@@ -24,25 +24,20 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.receipt.Receipt;
 import com.hyperwallet.android.ui.common.repository.Event;
-import com.hyperwallet.android.ui.common.view.error.DefaultErrorDialogFragment;
+import com.hyperwallet.android.ui.common.view.ActivityUtils;
 import com.hyperwallet.android.ui.common.view.error.OnNetworkErrorCallback;
 import com.hyperwallet.android.ui.common.viewmodel.Navigator;
 import com.hyperwallet.android.ui.receipt.R;
 import com.hyperwallet.android.ui.receipt.repository.UserReceiptRepositoryImpl;
 import com.hyperwallet.android.ui.receipt.viewmodel.ListUserReceiptViewModel;
 import com.hyperwallet.android.ui.receipt.viewmodel.ReceiptViewModel;
-
-import java.util.List;
 
 public class ListUserReceiptActivity extends AppCompatActivity implements OnNetworkErrorCallback,
         Navigator<Event<Receipt>> {
@@ -74,7 +69,7 @@ public class ListUserReceiptActivity extends AppCompatActivity implements OnNetw
             @Override
             public void onChanged(Event<HyperwalletErrors> event) {
                 if (event != null && !event.isContentConsumed()) {
-                    showErrorOnLoadReceipt(event.getContent().getErrors());
+                    ActivityUtils.showError(ListUserReceiptActivity.this, event.getContent().getErrors());
                 }
             }
         });
@@ -87,7 +82,7 @@ public class ListUserReceiptActivity extends AppCompatActivity implements OnNetw
         });
 
         if (savedInstanceState == null) {
-            initFragment(ListReceiptFragment.newInstance());
+            ActivityUtils.initFragment(this, ListReceiptFragment.newInstance(), R.id.list_receipt_fragment);
         }
     }
 
@@ -102,13 +97,6 @@ public class ListUserReceiptActivity extends AppCompatActivity implements OnNetw
         return true;
     }
 
-    private void initFragment(@NonNull final Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.list_receipt_fragment, fragment);
-        fragmentTransaction.commit();
-    }
-
     @Override
     public void retry() {
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -119,20 +107,6 @@ public class ListUserReceiptActivity extends AppCompatActivity implements OnNetw
             fragment = ListReceiptFragment.newInstance();
         }
         fragment.retry();
-    }
-
-    private void showErrorOnLoadReceipt(@NonNull final List<HyperwalletError> errors) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        DefaultErrorDialogFragment fragment = (DefaultErrorDialogFragment)
-                fragmentManager.findFragmentByTag(DefaultErrorDialogFragment.TAG);
-
-        if (fragment == null) {
-            fragment = DefaultErrorDialogFragment.newInstance(errors);
-        }
-
-        if (!fragment.isAdded()) {
-            fragment.show(fragmentManager);
-        }
     }
 
     @Override

@@ -27,13 +27,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.ui.R;
-import com.hyperwallet.android.ui.common.view.error.DefaultErrorDialogFragment;
+import com.hyperwallet.android.ui.common.view.ActivityUtils;
 import com.hyperwallet.android.ui.common.view.error.OnNetworkErrorCallback;
 
 import java.util.List;
@@ -76,7 +74,7 @@ public class SelectTransferMethodActivity extends AppCompatActivity implements
         });
 
         if (savedInstanceState == null) {
-            initFragment(SelectTransferMethodFragment.newInstance());
+            ActivityUtils.initFragment(this,SelectTransferMethodFragment.newInstance(),R.id.select_transfer_method_fragment);
         } else {
             mRetryCode = savedInstanceState.getShort(ARGUMENT_RETRY_ACTION);
         }
@@ -110,13 +108,6 @@ public class SelectTransferMethodActivity extends AppCompatActivity implements
         getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
         getWindow().getDecorView().setSystemUiVisibility(0);
         super.onBackPressed();
-    }
-
-    private void initFragment(Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.add(R.id.select_transfer_method_fragment, fragment);
-        transaction.commit();
     }
 
     @Override
@@ -158,31 +149,31 @@ public class SelectTransferMethodActivity extends AppCompatActivity implements
     @Override
     public void showErrorsLoadTransferMethodConfigurationKeys(@NonNull final List<HyperwalletError> errors) {
         mRetryCode = RETRY_LOAD_TRANSFER_METHOD_CONFIGURATION_KEYS;
-        showError(errors);
+        ActivityUtils.showError(this, errors);
     }
 
     @Override
     public void showErrorsLoadCurrencyConfiguration(@NonNull final List<HyperwalletError> errors) {
         mRetryCode = RETRY_LOAD_CURRENCY_CONFIGURATION;
-        showError(errors);
+        ActivityUtils.showError(this, errors);
     }
 
     @Override
     public void showErrorsLoadTransferMethodTypes(@NonNull final List<HyperwalletError> errors) {
         mRetryCode = RETRY_LOAD_TRANSFER_METHOD_TYPES;
-        showError(errors);
+        ActivityUtils.showError(this, errors);
     }
 
     @Override
     public void showErrorsLoadCountrySelection(@NonNull final List<HyperwalletError> errors) {
         mRetryCode = RETRY_LOAD_COUNTRY_SELECTION;
-        showError(errors);
+        ActivityUtils.showError(this, errors);
     }
 
     @Override
     public void showErrorsLoadCurrencySelection(@NonNull final List<HyperwalletError> errors) {
         mRetryCode = RETRY_LOAD_CURRENCY_SELECTION;
-        showError(errors);
+        ActivityUtils.showError(this, errors);
     }
 
     @Override
@@ -216,19 +207,5 @@ public class SelectTransferMethodActivity extends AppCompatActivity implements
             fragment = SelectTransferMethodFragment.newInstance();
         }
         return fragment;
-    }
-
-    private void showError(@NonNull List<HyperwalletError> errors) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        DefaultErrorDialogFragment fragment = (DefaultErrorDialogFragment)
-                fragmentManager.findFragmentByTag(DefaultErrorDialogFragment.TAG);
-
-        if (fragment == null) {
-            fragment = DefaultErrorDialogFragment.newInstance(errors);
-        }
-
-        if (!fragment.isAdded()) {
-            fragment.show(fragmentManager);
-        }
     }
 }

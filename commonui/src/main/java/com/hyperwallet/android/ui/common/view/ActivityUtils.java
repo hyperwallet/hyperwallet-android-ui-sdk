@@ -1,4 +1,4 @@
-package com.hyperwallet.android.ui.common.util;
+package com.hyperwallet.android.ui.common.view;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

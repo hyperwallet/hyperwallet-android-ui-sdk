@@ -23,27 +23,20 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.WindowManager;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.ui.common.repository.Event;
-import com.hyperwallet.android.ui.common.view.error.DefaultErrorDialogFragment;
+import com.hyperwallet.android.ui.common.view.ActivityUtils;
 import com.hyperwallet.android.ui.common.view.error.OnNetworkErrorCallback;
 import com.hyperwallet.android.ui.transfer.R;
 import com.hyperwallet.android.ui.transfer.viewmodel.ListTransferDestinationViewModel;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
-
-import java.util.List;
 
 public class ListTransferDestinationActivity extends AppCompatActivity implements OnNetworkErrorCallback {
 
@@ -70,7 +63,7 @@ public class ListTransferDestinationActivity extends AppCompatActivity implement
         registerObservers();
 
         if (savedInstanceState == null) {
-            initFragment(ListTransferDestinationFragment.newInstance(transferToken));
+            ActivityUtils.initFragment(this, ListTransferDestinationFragment.newInstance(transferToken), R.id.list_destination_fragment);
         }
     }
 
@@ -94,13 +87,6 @@ public class ListTransferDestinationActivity extends AppCompatActivity implement
         mListTransferDestinationViewModel.loadTransferDestinationList();
     }
 
-    private void initFragment(Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.add(R.id.list_destination_fragment, fragment);
-        transaction.commit();
-    }
-
     private void registerObservers() {
         mListTransferDestinationViewModel.getSelectedTransferDestination().observe(this,
                 new Observer<Event<HyperwalletTransferMethod>>() {
@@ -118,23 +104,9 @@ public class ListTransferDestinationActivity extends AppCompatActivity implement
                     @Override
                     public void onChanged(Event<HyperwalletErrors> errorsEvent) {
                         if (!errorsEvent.isContentConsumed()) {
-                            showError(errorsEvent.getContent().getErrors());
+                            ActivityUtils.showError(ListTransferDestinationActivity.this, errorsEvent.getContent().getErrors());
                         }
                     }
                 });
-    }
-
-    private void showError(@NonNull List<HyperwalletError> errors) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        DefaultErrorDialogFragment fragment = (DefaultErrorDialogFragment)
-                fragmentManager.findFragmentByTag(DefaultErrorDialogFragment.TAG);
-
-        if (fragment == null) {
-            fragment = DefaultErrorDialogFragment.newInstance(errors);
-        }
-
-        if (!fragment.isAdded()) {
-            fragment.show(fragmentManager);
-        }
     }
 }

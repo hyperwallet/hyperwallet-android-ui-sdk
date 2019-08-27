@@ -26,17 +26,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.transfer.Transfer;
 import com.hyperwallet.android.ui.common.repository.Event;
-import com.hyperwallet.android.ui.common.view.error.DefaultErrorDialogFragment;
+import com.hyperwallet.android.ui.common.view.ActivityUtils;
 import com.hyperwallet.android.ui.common.view.error.OnNetworkErrorCallback;
 import com.hyperwallet.android.ui.common.viewmodel.Navigator;
 import com.hyperwallet.android.ui.transfer.R;
@@ -44,8 +41,6 @@ import com.hyperwallet.android.ui.transfer.repository.TransferRepositoryFactory;
 import com.hyperwallet.android.ui.transfer.viewmodel.CreateTransferViewModel;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
 import com.hyperwallet.android.ui.user.repository.UserRepositoryFactory;
-
-import java.util.List;
 
 /**
  * Create Transfer Activity
@@ -94,7 +89,7 @@ public class CreateTransferActivity extends AppCompatActivity implements OnNetwo
         registerErrorObservers();
 
         if (savedInstanceState == null) {
-            initFragment(CreateTransferFragment.newInstance());
+            ActivityUtils.initFragment(this, CreateTransferFragment.newInstance(), R.id.create_transfer_fragment);
         }
     }
 
@@ -157,7 +152,7 @@ public class CreateTransferActivity extends AppCompatActivity implements OnNetwo
                     @Override
                     public void onChanged(Event<HyperwalletErrors> event) {
                         if (event != null && !event.isContentConsumed()) {
-                            showErrorOnLoadCreateTransfer(event.getContent().getErrors());
+                            ActivityUtils.showError(CreateTransferActivity.this, event.getContent().getErrors());
                         }
                     }
                 });
@@ -166,7 +161,7 @@ public class CreateTransferActivity extends AppCompatActivity implements OnNetwo
             @Override
             public void onChanged(Event<HyperwalletErrors> event) {
                 if (event != null && !event.isContentConsumed()) {
-                    showErrorOnLoadCreateTransfer(event.getContent().getErrors());
+                    ActivityUtils.showError(CreateTransferActivity.this, event.getContent().getErrors());
                 }
             }
         });
@@ -179,24 +174,4 @@ public class CreateTransferActivity extends AppCompatActivity implements OnNetwo
         });
     }
 
-    private void initFragment(@NonNull final Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.create_transfer_fragment, fragment);
-        fragmentTransaction.commit();
-    }
-
-    private void showErrorOnLoadCreateTransfer(@NonNull final List<HyperwalletError> errors) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        DefaultErrorDialogFragment fragment = (DefaultErrorDialogFragment)
-                fragmentManager.findFragmentByTag(DefaultErrorDialogFragment.TAG);
-
-        if (fragment == null) {
-            fragment = DefaultErrorDialogFragment.newInstance(errors);
-        }
-
-        if (!fragment.isAdded()) {
-            fragment.show(fragmentManager);
-        }
-    }
 }
