@@ -402,6 +402,8 @@ public class CreateTransferFragment extends Fragment {
         mTransferAmount.setEnabled(false);
         mTransferNotes.setEnabled(false);
         mTransferAllSwitch.setEnabled(false);
+        mTransferDestination.setEnabled(false);
+        mAddTransferDestination.setEnabled(false);
     }
 
     private void enableInputControls() {
@@ -409,6 +411,8 @@ public class CreateTransferFragment extends Fragment {
         mTransferAmount.setEnabled(true);
         mTransferNotes.setEnabled(true);
         mTransferAllSwitch.setEnabled(true);
+        mTransferDestination.setEnabled(true);
+        mAddTransferDestination.setEnabled(true);
     }
 
     private void showTransferDestination(@NonNull final HyperwalletTransferMethod transferMethod) {
