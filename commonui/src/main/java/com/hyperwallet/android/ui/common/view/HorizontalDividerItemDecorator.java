@@ -30,18 +30,12 @@ import com.hyperwallet.android.ui.common.R;
 
 public class HorizontalDividerItemDecorator extends RecyclerView.ItemDecoration {
 
-    protected final Drawable mHorizontalItemDivider;
-    protected final int mDefaultPadding;
+    private static final short DEFAULT_PADDING = 0;
 
-    public HorizontalDividerItemDecorator(@NonNull final Context context, final boolean withHeaderDivider) {
+    protected final Drawable mHorizontalItemDivider;
+
+    public HorizontalDividerItemDecorator(@NonNull final Context context) {
         mHorizontalItemDivider = context.getResources().getDrawable(R.drawable.horizontal_divider, null);
-        // get dp from dimension configuration
-        if (withHeaderDivider) {
-            mDefaultPadding = (int) (context.getResources().getDimension(R.dimen.default_padding)
-                    / context.getResources().getDisplayMetrics().density) * 2;
-        } else {
-            mDefaultPadding = 0;
-        }
     }
 
     @Override
@@ -59,7 +53,7 @@ public class HorizontalDividerItemDecorator extends RecyclerView.ItemDecoration 
         }
 
         if (itemPosition == 0) { // first item
-            outRect.set(view.getPaddingLeft(), mDefaultPadding, view.getPaddingRight(), view.getPaddingBottom());
+            outRect.set(view.getPaddingLeft(), DEFAULT_PADDING, view.getPaddingRight(), view.getPaddingBottom());
         } else if (itemCount > 0 && itemPosition == itemCount - 1) { // last item
             outRect.set(view.getPaddingLeft(), view.getPaddingTop(), view.getPaddingRight(), view.getPaddingBottom());
         } else { // middle items
