@@ -327,9 +327,10 @@ public class CreateTransferFragment extends Fragment {
                     @Override
                     public void onChanged(final HyperwalletTransferMethod transferMethod) {
                         if (transferMethod != null) {
-                            mTransferDestination.setVisibility(View.VISIBLE);
                             mAddTransferDestination.setVisibility(View.GONE);
                             mTransferHeaderContainerError.setVisibility(View.GONE);
+                            mTransferHeaderContainer.setVisibility(View.VISIBLE);
+                            mTransferDestination.setVisibility(View.VISIBLE);
                             showTransferDestination(transferMethod);
                             enableInputControls();
                         } else {
