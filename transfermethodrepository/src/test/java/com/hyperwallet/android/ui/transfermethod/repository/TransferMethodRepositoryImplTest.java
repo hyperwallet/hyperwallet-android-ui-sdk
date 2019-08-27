@@ -719,7 +719,7 @@ public class TransferMethodRepositoryImplTest {
     }
 
     @Test
-    public void testListTransferMethod_checkListCountAboveTen() {
+    public void testLoadTransferMethod_verifyDefaultQueryParams() {
             HyperwalletBankAccount bankAccount = new HyperwalletBankAccount
                     .Builder("CA", "CAD", "3423423432")
                     .build();
