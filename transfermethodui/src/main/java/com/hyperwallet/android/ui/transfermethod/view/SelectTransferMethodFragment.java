@@ -68,6 +68,8 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
     private OnLoadTransferMethodTypeNetworkErrorCallback mOnLoadTransferMethodTypeNetworkErrorCallback;
     private SelectTransferMethodContract.Presenter mPresenter;
     private View mProgressBar;
+    private View mCountrySelectionContainer;
+    private View mCurrencySelectionContainer;
     private RecyclerView mRecyclerView;
     private String mSelectedCountryCode;
     private String mSelectedCurrencyCode;
@@ -149,18 +151,18 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
         mCountryValue = view.findViewById(R.id.select_transfer_method_country_value);
         mCurrencyValue = view.findViewById(R.id.select_transfer_method_currency_value);
 
-        View countrySelectionContainer = view.findViewById(R.id.select_transfer_method_country_container);
-        countrySelectionContainer.setOnClickListener(new View.OnClickListener() {
+        mCountrySelectionContainer = view.findViewById(R.id.select_transfer_method_country_container);
+        mCountrySelectionContainer.setOnClickListener(new OneClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onOneClick(View v) {
                 mPresenter.loadCountrySelection(mSelectedCountryCode);
             }
         });
 
-        View currencySelectionContainer = view.findViewById(R.id.select_transfer_method_currency_container);
-        currencySelectionContainer.setOnClickListener(new View.OnClickListener() {
+        mCurrencySelectionContainer = view.findViewById(R.id.select_transfer_method_currency_container);
+        mCurrencySelectionContainer.setOnClickListener(new OneClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onOneClick(View v) {
                 mPresenter.loadCurrencySelection(mSelectedCountryCode, mSelectedCurrencyCode);
             }
         });
@@ -246,12 +248,16 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
     public void showProgressBar() {
         mRecyclerView.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.VISIBLE);
+        mCurrencySelectionContainer.setEnabled(false);
+        mCountrySelectionContainer.setEnabled(false);
     }
 
     @Override
     public void hideProgressBar() {
         mRecyclerView.setVisibility(View.VISIBLE);
         mProgressBar.setVisibility(View.GONE);
+        mCurrencySelectionContainer.setEnabled(true);
+        mCountrySelectionContainer.setEnabled(true);
     }
 
     @Override
