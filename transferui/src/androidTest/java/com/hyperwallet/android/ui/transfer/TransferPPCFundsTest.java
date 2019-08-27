@@ -5,6 +5,9 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.intent.Intents.intended;
+import static androidx.test.espresso.intent.Intents.intending;
+import static androidx.test.espresso.intent.matcher.IntentMatchers.hasAction;
 import static androidx.test.espresso.matcher.RootMatchers.isDialog;
 import static androidx.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -23,12 +26,14 @@ import static java.net.HttpURLConnection.HTTP_NO_CONTENT;
 import static java.net.HttpURLConnection.HTTP_OK;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
+import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.ACTION_SELECT_TRANSFER_METHOD;
 import static com.hyperwallet.android.ui.testutils.util.EspressoUtils.atPosition;
 import static com.hyperwallet.android.ui.testutils.util.EspressoUtils.hasErrorText;
 import static com.hyperwallet.android.ui.testutils.util.EspressoUtils.nestedScrollTo;
 import static com.hyperwallet.android.ui.testutils.util.EspressoUtils.withHint;
 
 import android.app.Activity;
+import android.app.Instrumentation;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -37,6 +42,7 @@ import android.content.IntentFilter;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.IdlingRegistry;
+import androidx.test.espresso.intent.rule.IntentsTestRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
@@ -74,6 +80,17 @@ public class TransferPPCFundsTest {
     @Rule
     public ActivityTestRule<CreateTransferActivity> mActivityTestRule =
             new ActivityTestRule<CreateTransferActivity>(CreateTransferActivity.class, true, false) {
+                @Override
+                protected Intent getActivityIntent() {
+                    Intent intent = new Intent(ApplicationProvider.getApplicationContext(),
+                            CreateTransferActivity.class);
+                    intent.putExtra("TRANSFER_SOURCE_TOKEN", "trm-2beee55a-f2af-4cd3-a952-2375fb871597");
+                    return intent;
+                }
+            };
+    @Rule
+    public IntentsTestRule<CreateTransferActivity> mActivityIntentsTestRule =
+            new IntentsTestRule<CreateTransferActivity>(CreateTransferActivity.class, true, false) {
                 @Override
                 protected Intent getActivityIntent() {
                     Intent intent = new Intent(ApplicationProvider.getApplicationContext(),
@@ -141,6 +158,53 @@ public class TransferPPCFundsTest {
         onView(withText(R.string.transfer_notes_additional_info_label)).check(matches(isDisplayed()));
 
         onView(withId(R.id.transfer_action_button)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_action_button)).check(matches(isEnabled()));
+    }
+
+    @Test
+    public void testTransferFunds_verifyDestinationUpdatedAfterAddingNewExternalAccount() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("create_transfer_quote_response.json")).mock();
+
+        mActivityIntentsTestRule.launchActivity(null);
+
+        Instrumentation.ActivityResult result = new Instrumentation.ActivityResult(Activity.RESULT_OK, null);
+        intending(hasAction(ACTION_SELECT_TRANSFER_METHOD)).respondWith(result);
+
+        onView(withId(R.id.add_transfer_destination)).check(matches(isDisplayed()));
+        onView(withId(R.id.add_transfer_destination_icon)).check(matches(withText(R.string.add_text)));
+        onView(withId(R.id.add_transfer_destination_title)).check(matches(withText(R.string.add_transfer_label)));
+        onView(withId(R.id.add_transfer_destination_description_1)).check(
+                matches(withText(R.string.add_transfer_description_1)));
+        onView(withId(R.id.add_transfer_destination_description_2)).check(
+                matches(withText(R.string.add_transfer_description_2)));
+
+        onView(withId(R.id.add_transfer_destination)).perform(click());
+        intended(hasAction(ACTION_SELECT_TRANSFER_METHOD));
+
+        onView(withId(R.id.add_transfer_destination)).check(matches(not(isDisplayed())));
+        onView(withId(R.id.transfer_destination)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_destination_icon)).check(matches(withText(R.string.bank_account_font_icon)));
+        onView(withId(R.id.transfer_destination_title)).check(matches(withText(R.string.bank_account)));
+        onView(withId(R.id.transfer_destination_selection)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_destination_description_1)).check(matches(withText("United States")));
+        onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("Ending on 0616")));
+
+        onView(withId(R.id.transfer_amount)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_amount_layout)).check(matches(withHint("Amount")));
+        onView(withId(R.id.transfer_amount_currency)).check(matches(withText("USD")));
+        onView(withId(R.id.transfer_all_funds_label)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_all_funds_label)).check(matches(withText(R.string.transfer_all_funds_label)));
+
+        //Check that the toggle is disabled by default
+        onView(withId(R.id.switchButton)).check(matches(isDisplayed()));
+        onView(withId(R.id.switchButton)).check(matches(not(isSelected())));
+        onView(withId(R.id.transfer_summary)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_summary)).check(matches(withText("Available for Transfer: 998.00 USD")));
+
         onView(withId(R.id.transfer_action_button)).check(matches(isEnabled()));
     }
 
