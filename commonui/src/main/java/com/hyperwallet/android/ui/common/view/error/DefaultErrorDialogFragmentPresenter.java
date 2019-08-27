@@ -62,7 +62,7 @@ public class DefaultErrorDialogFragmentPresenter implements DefaultErrorDialogFr
                 break;
 
             default:
-                message = error.getMessage();
+                message = error.getMessageFromResourceWhenAvailable(resources);
         }
 
         return message;

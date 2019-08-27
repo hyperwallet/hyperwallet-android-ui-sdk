@@ -65,12 +65,9 @@ import com.hyperwallet.android.ui.transfermethod.view.widget.WidgetEventListener
 import com.hyperwallet.android.ui.transfermethod.view.widget.WidgetFactory;
 import com.hyperwallet.android.ui.transfermethod.view.widget.WidgetInputState;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 import java.util.TreeMap;
 
 public class AddTransferMethodFragment extends Fragment implements WidgetEventListener, AddTransferMethodContract.View {
@@ -83,7 +80,6 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     private static final String ARGUMENT_SHOW_CREATE_PROGRESS_BAR = "ARGUMENT_SHOW_CREATE_PROGRESS_BAR";
     private static final String ARGUMENT_TRANSFER_METHOD = "ARGUMENT_TRANSFER_METHOD";
     private static final String ARGUMENT_WIDGET_STATE_MAP = "ARGUMENT_WIDGET_STATE_MAP";
-    private static final String ERROR_UNMAPPED_FIELD = "ERROR_UNMAPPED_FIELD";
     private static final boolean FORCE_UPDATE = false;
     private String mCountry;
     private View mCreateButtonProgressBar;
@@ -441,14 +437,12 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     @Override
     public void showInputErrors(@NonNull final List<HyperwalletError> errors) {
         boolean focusSet = false;
-        Set<String> errorFieldSet = new HashSet<>();
         for (HyperwalletError error : errors) {
             for (int i = 0; i < mDynamicContainer.getChildCount(); i++) {
                 View view = mDynamicContainer.getChildAt(i);
                 if (view.getTag() instanceof AbstractWidget) {
                     AbstractWidget widget = (AbstractWidget) view.getTag();
                     if (widget.getName().equals(error.getFieldName())) {
-                        errorFieldSet.add(widget.getName());
                         if (!focusSet) {
                             widget.getView(mDynamicContainer).requestFocus();
                             focusSet = true;
@@ -462,13 +456,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
             }
         }
 
-        if (errorFieldSet.isEmpty() && !errors.isEmpty()) {
-            List<HyperwalletError> errorList = new ArrayList<HyperwalletError>() {{
-                add(new HyperwalletError(requireContext().getString(R.string.error_unmapped_field,
-                        errors.get(0).getFieldName()), ERROR_UNMAPPED_FIELD));
-            }};
-            mOnAddTransferMethodNetworkErrorCallback.showErrorsAddTransferMethod(errorList);
-        }
+        mPresenter.handleUnmappedFieldError(mWidgetInputStateHashMap, errors);
     }
 
     @Override
