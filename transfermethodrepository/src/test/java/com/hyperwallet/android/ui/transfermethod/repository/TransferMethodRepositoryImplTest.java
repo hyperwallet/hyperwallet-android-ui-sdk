@@ -84,7 +84,8 @@ public class TransferMethodRepositoryImplTest {
     private ArgumentCaptor<StatusTransition> mStatusTransitionArgumentCaptor;
     @Captor
     private ArgumentCaptor<List<HyperwalletTransferMethod>> mListTransferMethodCaptor;
-
+    @Captor
+    private ArgumentCaptor<HyperwalletTransferMethodQueryParam> mQueryParamCaptor;
     @Before
     public void setup() {
         doReturn(mHyperwallet).when(mTransferMethodRepository).getHyperwallet();
@@ -717,4 +718,28 @@ public class TransferMethodRepositoryImplTest {
         assertThat(statusTransition.getNotes(), is("Closing this account."));
     }
 
+    @Test
+    public void testListTransferMethod_checkListCountAboveTen() {
+            HyperwalletBankAccount bankAccount = new HyperwalletBankAccount
+                    .Builder("CA", "CAD", "3423423432")
+                    .build();
+            List<HyperwalletBankAccount> accounts = new ArrayList<>();
+            accounts.add(bankAccount);
+            final HyperwalletPageList<HyperwalletBankAccount> pageList = new HyperwalletPageList<>(accounts);
+            doAnswer(new Answer() {
+                @Override
+                public Object answer(InvocationOnMock invocation) {
+                    HyperwalletListener listener = (HyperwalletListener) invocation.getArguments()[1];
+                    listener.onSuccess(pageList);
+                    return listener;
+                }
+            }).when(mHyperwallet).listTransferMethods(mQueryParamCaptor.capture(),
+                    ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<HyperwalletTransferMethod>>>any());
+
+        // test
+            mTransferMethodRepository.loadTransferMethods(mLoadTransferMethodListCallback);
+            assertThat(mQueryParamCaptor.getValue().getLimit(), is(100));
+            assertThat(mQueryParamCaptor.getValue().getStatus(), is(ACTIVATED));
+            assertThat(mQueryParamCaptor.getValue().getSortBy(), is("-createdOn"));
+        }
 }
