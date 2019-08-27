@@ -1,9 +1,5 @@
 package com.hyperwallet.android.ui.receipt.viewmodel;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 import com.hyperwallet.android.ui.receipt.repository.PrepaidCardReceiptRepository;
 import com.hyperwallet.android.ui.receipt.repository.PrepaidCardReceiptRepositoryImpl;
 
@@ -12,20 +8,22 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 @RunWith(RobolectricTestRunner.class)
 public class ListPrepaidCardReceiptViewModelTest {
 
     private ReceiptViewModel mReceiptViewModelToTest;
+    ListPrepaidCardReceiptViewModel.ListPrepaidCardReceiptViewModelFactory mListPrepaidCardReceiptViewModelFactoryToTest;
 
     @Before
     public void initializedViewModel() {
         PrepaidCardReceiptRepository prepaidCardReceiptRepository = new PrepaidCardReceiptRepositoryImpl(
                 "trm-ppc-token");
-        ListPrepaidCardReceiptViewModel.ListPrepaidCardReceiptViewModelFactory factory =
-                new ListPrepaidCardReceiptViewModel.ListPrepaidCardReceiptViewModelFactory(
-                        prepaidCardReceiptRepository);
-
-        mReceiptViewModelToTest = factory.create(ReceiptViewModel.class);
+        mListPrepaidCardReceiptViewModelFactoryToTest = new ListPrepaidCardReceiptViewModel.ListPrepaidCardReceiptViewModelFactory(prepaidCardReceiptRepository);
+        mReceiptViewModelToTest = mListPrepaidCardReceiptViewModelFactoryToTest.create(ReceiptViewModel.class);
     }
 
     @Test
@@ -46,5 +44,10 @@ public class ListPrepaidCardReceiptViewModelTest {
     @Test
     public void testGetDetailNavigation_returnsLiveData() {
         assertThat(mReceiptViewModelToTest.getDetailNavigation(), is(notNullValue()));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testListPrepaidCardReceiptViewModelFactory_exception(){
+        mListPrepaidCardReceiptViewModelFactoryToTest.create(ReceiptDetailViewModel.class);
     }
 }

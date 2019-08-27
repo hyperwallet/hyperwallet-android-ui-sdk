@@ -1,9 +1,5 @@
 package com.hyperwallet.android.ui.receipt.viewmodel;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 import com.hyperwallet.android.ui.receipt.repository.UserReceiptRepository;
 import com.hyperwallet.android.ui.receipt.repository.UserReceiptRepositoryImpl;
 
@@ -12,18 +8,21 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 @RunWith(RobolectricTestRunner.class)
 public class ListUserReceiptViewModelTest {
 
     private ReceiptViewModel mReceiptViewModelToTest;
+    ListUserReceiptViewModel.ListReceiptViewModelFactory mListReceiptViewModelfactoryToTest;
 
     @Before
     public void initializedViewModel() {
         UserReceiptRepository userReceiptRepository = new UserReceiptRepositoryImpl();
-        ListUserReceiptViewModel.ListReceiptViewModelFactory factory =
-                new ListUserReceiptViewModel.ListReceiptViewModelFactory(userReceiptRepository);
-
-        mReceiptViewModelToTest = factory.create(ReceiptViewModel.class);
+        mListReceiptViewModelfactoryToTest = new ListUserReceiptViewModel.ListReceiptViewModelFactory(userReceiptRepository);
+        mReceiptViewModelToTest = mListReceiptViewModelfactoryToTest.create(ReceiptViewModel.class);
     }
 
     @Test
@@ -44,5 +43,10 @@ public class ListUserReceiptViewModelTest {
     @Test
     public void testGetDetailNavigation_returnsLiveData() {
         assertThat(mReceiptViewModelToTest.getDetailNavigation(), is(notNullValue()));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testListReceiptViewModelFactory_exception(){
+        mListReceiptViewModelfactoryToTest.create(ListPrepaidCardReceiptViewModel.class);
     }
 }
