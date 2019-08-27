@@ -13,6 +13,9 @@ import java.util.List;
 
 public final class ActivityUtils {
 
+    private ActivityUtils() {
+    }
+    
     /**
      * Initialize the fragment for Activity
      *
