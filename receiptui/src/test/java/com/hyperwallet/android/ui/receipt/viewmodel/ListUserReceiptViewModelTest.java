@@ -16,12 +16,13 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class ListUserReceiptViewModelTest {
 
     private ReceiptViewModel mReceiptViewModelToTest;
-    ListUserReceiptViewModel.ListReceiptViewModelFactory mListReceiptViewModelfactoryToTest;
+    private ListUserReceiptViewModel.ListReceiptViewModelFactory mListReceiptViewModelfactoryToTest;
 
     @Before
     public void initializedViewModel() {
         UserReceiptRepository userReceiptRepository = new UserReceiptRepositoryImpl();
-        mListReceiptViewModelfactoryToTest = new ListUserReceiptViewModel.ListReceiptViewModelFactory(userReceiptRepository);
+        mListReceiptViewModelfactoryToTest = new ListUserReceiptViewModel.
+                ListReceiptViewModelFactory(userReceiptRepository);
         mReceiptViewModelToTest = mListReceiptViewModelfactoryToTest.create(ReceiptViewModel.class);
     }
 
@@ -46,7 +47,7 @@ public class ListUserReceiptViewModelTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testListReceiptViewModelFactory_exception(){
+    public void testListReceiptViewModelFactory_throwsExceptionOnInvalidClassArgument() {
         mListReceiptViewModelfactoryToTest.create(ListPrepaidCardReceiptViewModel.class);
     }
 }

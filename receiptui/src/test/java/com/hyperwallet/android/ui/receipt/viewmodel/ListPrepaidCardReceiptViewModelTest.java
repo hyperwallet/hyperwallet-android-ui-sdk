@@ -16,13 +16,15 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class ListPrepaidCardReceiptViewModelTest {
 
     private ReceiptViewModel mReceiptViewModelToTest;
-    ListPrepaidCardReceiptViewModel.ListPrepaidCardReceiptViewModelFactory mListPrepaidCardReceiptViewModelFactoryToTest;
+    private ListPrepaidCardReceiptViewModel.ListPrepaidCardReceiptViewModelFactory
+            mListPrepaidCardReceiptViewModelFactoryToTest;
 
     @Before
     public void initializedViewModel() {
         PrepaidCardReceiptRepository prepaidCardReceiptRepository = new PrepaidCardReceiptRepositoryImpl(
                 "trm-ppc-token");
-        mListPrepaidCardReceiptViewModelFactoryToTest = new ListPrepaidCardReceiptViewModel.ListPrepaidCardReceiptViewModelFactory(prepaidCardReceiptRepository);
+        mListPrepaidCardReceiptViewModelFactoryToTest = new ListPrepaidCardReceiptViewModel.
+                ListPrepaidCardReceiptViewModelFactory(prepaidCardReceiptRepository);
         mReceiptViewModelToTest = mListPrepaidCardReceiptViewModelFactoryToTest.create(ReceiptViewModel.class);
     }
 
@@ -47,7 +49,7 @@ public class ListPrepaidCardReceiptViewModelTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testListPrepaidCardReceiptViewModelFactory_exception(){
+    public void testListPrepaidCardReceiptViewModelFactory_throwsExceptionOnInvalidClassArgument() {
         mListPrepaidCardReceiptViewModelFactoryToTest.create(ReceiptDetailViewModel.class);
     }
 }
