@@ -16,6 +16,7 @@
  */
 package com.hyperwallet.android.ui.transfermethod;
 
+import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.HYPERWALLET_LOCAL_BROADCAST_PAYLOAD_KEY;
 import static com.hyperwallet.android.ui.transfermethod.HyperwalletTransferMethodLocalBroadcast.HyperwalletLocalBroadcastAction.ACTION_HYPERWALLET_TRANSFER_METHOD_ADDED;
 import static com.hyperwallet.android.ui.transfermethod.HyperwalletTransferMethodLocalBroadcast.HyperwalletLocalBroadcastAction.ACTION_HYPERWALLET_TRANSFER_METHOD_DEACTIVATED;
 
@@ -32,8 +33,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 public class HyperwalletTransferMethodLocalBroadcast {
-
-    private static final String HYPERWALLET_LOCAL_BROADCAST_PAYLOAD_KEY = "hyperwallet-local-broadcast-payload";
 
     public static Intent createBroadcastIntentTransferMethodAdded(
             @NonNull final HyperwalletTransferMethod transferMethod) {

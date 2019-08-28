@@ -2,16 +2,24 @@ package com.hyperwallet.android.ui.transfer.viewmodel;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
+import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TOKEN;
+import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_COUNTRY;
+import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_CURRENCY;
+
 import androidx.lifecycle.ViewModel;
 
+import com.google.common.collect.Lists;
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.HyperwalletAuthenticationTokenProvider;
+import com.hyperwallet.android.model.HyperwalletError;
+import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepository;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
@@ -132,5 +140,147 @@ public class ListTransferDestinationViewModelTest {
                         TransferMethodRepositoryFactory.getInstance().getTransferMethodRepository());
         ListTransferDestinationViewModel viewModel = factory.create(ListTransferDestinationViewModel.class);
         assertThat(viewModel, is(notNullValue()));
+    }
+
+    @Test
+    public void testLoadNewlyAddedTransferDestination_loadsNewlyAddedTransferDestinationAndSetItAsSelected() {
+        final HyperwalletTransferMethod transferMethod = new HyperwalletTransferMethod();
+        transferMethod.setField(TOKEN, "trm-bank-test-token");
+        transferMethod.setField(TRANSFER_METHOD_CURRENCY, "CAD");
+        transferMethod.setField(TRANSFER_METHOD_COUNTRY, "CA");
+
+        TransferMethodRepository repository = mock(TransferMethodRepositoryImpl.class);
+        ListTransferDestinationViewModel.ListTransferDestinationViewModelFactory factory =
+                new ListTransferDestinationViewModel.ListTransferDestinationViewModelFactory(repository);
+
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                TransferMethodRepository.LoadTransferMethodListCallback callback = invocation.getArgument(0);
+                callback.onTransferMethodListLoaded(Lists.newArrayList(transferMethod));
+                return callback;
+            }
+        }).when(repository).loadTransferMethods(ArgumentMatchers.any(
+                TransferMethodRepository.LoadTransferMethodListCallback.class));
+
+        ListTransferDestinationViewModel viewModel = factory.create(ListTransferDestinationViewModel.class);
+
+        // no selection
+        assertThat(viewModel.getSelectedTransferDestination().getValue(), is(nullValue()));
+
+        // test
+        viewModel.loadNewlyAddedTransferDestination();
+
+        assertThat(viewModel.getSelectedTransferDestination().getValue(), is(notNullValue()));
+        assertThat(viewModel.getSelectedTransferDestination().getValue().getContent().getField(TOKEN),
+                is("trm-bank-test-token"));
+        assertThat(
+                viewModel.getSelectedTransferDestination().getValue().getContent().getField(TRANSFER_METHOD_CURRENCY),
+                is("CAD"));
+        assertThat(viewModel.getSelectedTransferDestination().getValue().getContent().getField(TRANSFER_METHOD_COUNTRY),
+                is("CA"));
+
+        assertThat(viewModel.getTransferDestinationList().getValue(), Matchers.<HyperwalletTransferMethod>hasSize(1));
+    }
+
+    @Test
+    public void testLoadNewlyAddedTransferDestination_loadsEmptyTransferDestination() {
+        TransferMethodRepository repository = mock(TransferMethodRepositoryImpl.class);
+        ListTransferDestinationViewModel.ListTransferDestinationViewModelFactory factory =
+                new ListTransferDestinationViewModel.ListTransferDestinationViewModelFactory(repository);
+
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                TransferMethodRepository.LoadTransferMethodListCallback callback = invocation.getArgument(0);
+                callback.onTransferMethodListLoaded(new ArrayList<HyperwalletTransferMethod>());
+                return callback;
+            }
+        }).when(repository).loadTransferMethods(ArgumentMatchers.any(
+                TransferMethodRepository.LoadTransferMethodListCallback.class));
+
+        ListTransferDestinationViewModel viewModel = factory.create(ListTransferDestinationViewModel.class);
+
+        // no selection
+        assertThat(viewModel.getSelectedTransferDestination().getValue(), is(nullValue()));
+
+        // test
+        viewModel.loadNewlyAddedTransferDestination();
+
+        // no selection
+        assertThat(viewModel.getSelectedTransferDestination().getValue(), is(nullValue()));
+        assertThat(viewModel.getTransferDestinationList().getValue(), Matchers.<HyperwalletTransferMethod>hasSize(0));
+    }
+
+    @Test
+    public void testLoadNewlyAddedTransferDestination_errorOnLoadingTransferDestinationList() {
+
+        TransferMethodRepository repository = mock(TransferMethodRepositoryImpl.class);
+        ListTransferDestinationViewModel.ListTransferDestinationViewModelFactory factory =
+                new ListTransferDestinationViewModel.ListTransferDestinationViewModelFactory(repository);
+
+        doAnswer(new Answer() {
+            short execution = 0;
+
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                TransferMethodRepository.LoadTransferMethodListCallback callback = invocation.getArgument(0);
+                if (execution++ == 1) {
+                    HyperwalletError error = new HyperwalletError("test error", "TEST_ERROR_CODE");
+                    HyperwalletErrors errors = new HyperwalletErrors(Lists.newArrayList(error));
+                    callback.onError(errors);
+                    return callback;
+                }
+                callback.onTransferMethodListLoaded(new ArrayList<HyperwalletTransferMethod>());
+                return callback;
+            }
+        }).when(repository).loadTransferMethods(ArgumentMatchers.any(
+                TransferMethodRepository.LoadTransferMethodListCallback.class));
+
+        // during creation of view model `loadTransferDestinationList` is called first
+        ListTransferDestinationViewModel viewModel = factory.create(ListTransferDestinationViewModel.class);
+        // no selection
+        assertThat(viewModel.getSelectedTransferDestination().getValue(), is(nullValue()));
+        // no error
+        assertThat(viewModel.getTransferDestinationError().getValue(), is(nullValue()));
+
+        // test
+        viewModel.loadNewlyAddedTransferDestination();
+
+        assertThat(viewModel.getTransferDestinationError().getValue(), is(notNullValue()));
+        assertThat(viewModel.getTransferDestinationError().getValue().getContent().getErrors(),
+                Matchers.<HyperwalletError>hasSize(1));
+        assertThat(viewModel.getTransferDestinationError().getValue().getContent().getErrors().get(0).getCode(),
+                is("TEST_ERROR_CODE"));
+        assertThat(viewModel.getTransferDestinationError().getValue().getContent().getErrors().get(0).getMessage(),
+                is("test error"));
+        assertThat(viewModel.getSelectedTransferDestination().getValue(), is(nullValue()));
+        assertThat(viewModel.getTransferDestinationList().getValue(), Matchers.<HyperwalletTransferMethod>hasSize(0));
+        assertThat(viewModel.isLoading().getValue(), is(false));
+    }
+
+    @Test
+    public void testLoadTransferDestinationList_errorOnLoadingTransferDestinationList() {
+        TransferMethodRepository repository = mock(TransferMethodRepositoryImpl.class);
+        ListTransferDestinationViewModel.ListTransferDestinationViewModelFactory factory =
+                new ListTransferDestinationViewModel.ListTransferDestinationViewModelFactory(repository);
+
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                TransferMethodRepository.LoadTransferMethodListCallback callback = invocation.getArgument(0);
+                HyperwalletError error = new HyperwalletError("test error", "TEST_ERROR_CODE");
+                HyperwalletErrors errors = new HyperwalletErrors(Lists.newArrayList(error));
+                callback.onError(errors);
+                return callback;
+            }
+        }).when(repository).loadTransferMethods(ArgumentMatchers.any(
+                TransferMethodRepository.LoadTransferMethodListCallback.class));
+
+        ListTransferDestinationViewModel viewModel = factory.create(ListTransferDestinationViewModel.class);
+
+        assertThat(viewModel.getSelectedTransferDestination().getValue(), is(nullValue()));
+        assertThat(viewModel.getTransferDestinationList().getValue(), is(nullValue()));
+        assertThat(viewModel.isLoading().getValue(), is(false));
     }
 }
