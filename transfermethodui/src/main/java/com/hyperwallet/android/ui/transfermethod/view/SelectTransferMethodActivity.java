@@ -74,7 +74,7 @@ public class SelectTransferMethodActivity extends AppCompatActivity implements
         });
 
         if (savedInstanceState == null) {
-            ActivityUtils.initFragment(this,SelectTransferMethodFragment.newInstance(),
+            ActivityUtils.initFragment(this, SelectTransferMethodFragment.newInstance(),
                     R.id.select_transfer_method_fragment);
         } else {
             mRetryCode = savedInstanceState.getShort(ARGUMENT_RETRY_ACTION);

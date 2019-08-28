@@ -71,12 +71,12 @@ public class AddTransferMethodActivity extends AppCompatActivity implements
         });
 
         if (savedInstanceState == null) {
-            ActivityUtils.initFragment(this,AddTransferMethodFragment.newInstance(
+            ActivityUtils.initFragment(this, AddTransferMethodFragment.newInstance(
                     getIntent().getStringExtra(EXTRA_TRANSFER_METHOD_COUNTRY),
                     getIntent().getStringExtra(EXTRA_TRANSFER_METHOD_CURRENCY),
                     getIntent().getStringExtra(EXTRA_TRANSFER_METHOD_TYPE),
                     getIntent().getStringExtra(EXTRA_TRANSFER_METHOD_PROFILE_TYPE)
-            ),R.id.add_transfer_method_fragment);
+            ), R.id.add_transfer_method_fragment);
         } else {
             mRetryCode = savedInstanceState.getShort(ARGUMENT_RETRY_ACTION);
         }
@@ -129,13 +129,13 @@ public class AddTransferMethodActivity extends AppCompatActivity implements
     @Override
     public void showErrorsAddTransferMethod(@NonNull final List<HyperwalletError> errors) {
         mRetryCode = RETRY_SHOW_ERROR_ADD_TRANSFER_METHOD;
-        ActivityUtils.showError(this,errors);
+        ActivityUtils.showError(this, errors);
     }
 
     @Override
     public void showErrorsLoadTransferMethodConfigurationFields(@NonNull final List<HyperwalletError> errors) {
         mRetryCode = RETRY_SHOW_ERROR_LOAD_TMC_FIELDS;
-        ActivityUtils.showError(this,errors);
+        ActivityUtils.showError(this, errors);
     }
 
     @Override

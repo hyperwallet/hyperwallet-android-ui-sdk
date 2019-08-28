@@ -37,6 +37,7 @@ import com.hyperwallet.android.ui.common.view.error.OnNetworkErrorCallback;
 import java.util.List;
 
 import static com.hyperwallet.android.ui.transfermethod.view.ListTransferMethodFragment.ARGUMENT_IS_TRANSFER_METHODS_RELOAD_NEEDED;
+
 public class ListTransferMethodActivity extends AppCompatActivity implements
         ListTransferMethodFragment.OnAddNewTransferMethodSelected,
         ListTransferMethodFragment.OnDeactivateTransferMethodNetworkErrorCallback,
