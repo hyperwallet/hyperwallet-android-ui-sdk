@@ -67,6 +67,28 @@ public class ListTransferDestinationViewModel extends ViewModel {
         return mIsLoading;
     }
 
+    public void loadNewlyAddedTransferDestination() {
+        mIsLoading.postValue(Boolean.TRUE);
+        mTransferMethodRepository.loadTransferMethods(new TransferMethodRepository.LoadTransferMethodListCallback() {
+            @Override
+            public void onTransferMethodListLoaded(List<HyperwalletTransferMethod> transferMethods) {
+                if (transferMethods != null && !transferMethods.isEmpty()) {
+                    mTransferDestinationList.postValue(transferMethods);
+                    mSelectedTransferDestination.postValue(new Event<>(transferMethods.get(0)));
+                } else {
+                    mTransferDestinationList.setValue(new ArrayList<HyperwalletTransferMethod>());
+                }
+                mIsLoading.postValue(Boolean.FALSE);
+            }
+
+            @Override
+            public void onError(HyperwalletErrors errors) {
+                mIsLoading.postValue(Boolean.FALSE);
+                mTransferDestinationError.postValue(new Event<>(errors));
+            }
+        });
+    }
+
     public void loadTransferDestinationList() {
         mIsLoading.postValue(Boolean.TRUE);
         mTransferMethodRepository.loadTransferMethods(new TransferMethodRepository.LoadTransferMethodListCallback() {

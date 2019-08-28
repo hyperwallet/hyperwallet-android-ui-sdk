@@ -14,6 +14,7 @@ import static java.net.HttpURLConnection.HTTP_OK;
 
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TOKEN;
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_CURRENCY;
+import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.ERROR_SDK_MODULE_UNAVAILABLE;
 
 import android.content.Intent;
 
@@ -604,6 +605,21 @@ public class CreateTransferViewModelTest {
                 .LoadTransferMethodCallback.class));
         verify(mTransferRepository, times(2)).createTransfer(any(Transfer.class),
                 any(TransferRepository.CreateTransferCallback.class));
+    }
+
+    @Test
+    public void testNotifyModuleUnavailable_hasModuleUnavailableError() {
+        CreateTransferActivity activity = Robolectric.buildActivity(CreateTransferActivity.class).setup().get();
+        CreateTransferViewModel viewModel = spy(ViewModelProviders.of(activity).get(CreateTransferViewModel.class));
+
+        // test
+        viewModel.notifyModuleUnavailable();
+
+        assertThat(viewModel.getModuleUnavailableError().getValue(), is(notNullValue()));
+        assertThat(viewModel.getModuleUnavailableError().getValue().getContent().getErrors(),
+                Matchers.<HyperwalletError>hasSize(1));
+        assertThat(viewModel.getModuleUnavailableError().getValue().getContent().getErrors().get(0).getCode(),
+                is(ERROR_SDK_MODULE_UNAVAILABLE));
     }
 
     @Test

@@ -50,21 +50,26 @@ public class DefaultErrorDialogFragmentPresenter implements DefaultErrorDialogFr
                 message = resources.getString(R.string.unexpected_exception);
                 break;
             case EC_IO_EXCEPTION:
-                StringBuilder messageBuilder = new StringBuilder();
-                Iterator<HyperwalletError> iterator = errors.iterator();
-                while (iterator.hasNext()) {
-                    messageBuilder.append(iterator.next().getMessageFromResourceWhenAvailable(resources));
-                    if (iterator.hasNext()) {
-                        messageBuilder.append("\n");
-                    }
-                }
-                message = messageBuilder.toString();
+                message = getMessageFromResources(errors, resources);
                 break;
-
             default:
-                message = error.getMessage();
+                message = error.getMessageFromResourceWhenAvailable(resources);
         }
 
         return message;
+    }
+
+    private String getMessageFromResources(@NonNull final List<HyperwalletError> errors,
+            @NonNull final Resources resources) {
+        StringBuilder messageBuilder = new StringBuilder();
+        Iterator<HyperwalletError> iterator = errors.iterator();
+        while (iterator.hasNext()) {
+            messageBuilder.append(iterator.next().getMessageFromResourceWhenAvailable(resources));
+            if (iterator.hasNext()) {
+                messageBuilder.append("\n");
+            }
+        }
+
+        return messageBuilder.toString();
     }
 }
