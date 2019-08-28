@@ -2,6 +2,8 @@ package com.hyperwallet.android.ui.transfermethod.repository.poc.analytics;
 
 import androidx.annotation.NonNull;
 
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 

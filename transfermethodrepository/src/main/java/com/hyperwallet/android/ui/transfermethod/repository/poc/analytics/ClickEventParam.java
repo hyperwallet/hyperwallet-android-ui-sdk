@@ -1,21 +1,20 @@
 package com.hyperwallet.android.ui.transfermethod.repository.poc.analytics;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ClickEventParam extends EventParam {
 
-    private JSONObject mClickEventParams;
+    private Map<String, Object> mEventParams = new HashMap<>();
 
-    public ClickEventParam() throws JSONException {
-        mClickEventParams = new JSONObject();
-        mClickEventParams.put("t", "cl");
+    public ClickEventParam() {
+        mEventParams.put("t", "cl");
     }
 
 
     @Override
-    public JSONObject getEventParams() {
-        return mClickEventParams;
+    public Map<String, Object> getEventParams() {
+        return null;
     }
 
 }

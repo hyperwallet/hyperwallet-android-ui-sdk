@@ -9,7 +9,10 @@ import com.hyperwallet.android.model.HyperwalletError;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ErrorEventParam {
+import java.util.HashMap;
+import java.util.Map;
+
+public class ErrorEventParam extends EventParam {
 
 
     private static final String ERFD = "erfd";
@@ -53,6 +56,14 @@ public class ErrorEventParam {
 
     //we could return the eventParam object too
     public JSONObject toJsonObject() throws JSONException {
+
         return new JSONObject(eventParam.toString());
     }
+
+
+    @Override
+    public JSONObject getEventParams() {
+        return eventParam;
+    }
+
 }
