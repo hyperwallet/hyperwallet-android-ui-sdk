@@ -80,4 +80,6 @@
     <string name="transfer_method_context_button_description">Context menu button</string>
     <string name="item_select_description">Selected item</string>
 
+    <string name="error_unmapped_field">Unmapped field, Please contact support.</string>
+
 </resources>
