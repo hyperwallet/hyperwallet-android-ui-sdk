@@ -87,7 +87,8 @@ public class ScheduleTransferActivity extends AppCompatActivity implements OnNet
         }
 
         if (savedInstanceState == null) {
-            ActivityUtils.initFragment(this, ScheduleTransferFragment.newInstance(), R.id.schedule_transfer_fragment);
+            ActivityUtils.initFragment(this, ScheduleTransferFragment.newInstance(),
+                    R.id.schedule_transfer_fragment);
         }
     }
 
@@ -109,7 +110,8 @@ public class ScheduleTransferActivity extends AppCompatActivity implements OnNet
                     @Override
                     public void onChanged(final Event<HyperwalletErrors> event) {
                         if (event != null && !event.isContentConsumed()) {
-                            ActivityUtils.showError(ScheduleTransferActivity.this,event.getContent().getErrors());
+                            ActivityUtils.showError(ScheduleTransferActivity.this,
+                                    event.getContent().getErrors());
                         }
                     }
                 });

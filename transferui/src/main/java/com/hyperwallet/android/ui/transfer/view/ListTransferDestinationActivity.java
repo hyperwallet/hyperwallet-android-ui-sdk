@@ -63,7 +63,8 @@ public class ListTransferDestinationActivity extends AppCompatActivity implement
         registerObservers();
 
         if (savedInstanceState == null) {
-            ActivityUtils.initFragment(this, ListTransferDestinationFragment.newInstance(transferToken), R.id.list_destination_fragment);
+            ActivityUtils.initFragment(this, ListTransferDestinationFragment.newInstance(transferToken),
+                    R.id.list_destination_fragment);
         }
     }
 
@@ -104,7 +105,8 @@ public class ListTransferDestinationActivity extends AppCompatActivity implement
                     @Override
                     public void onChanged(Event<HyperwalletErrors> errorsEvent) {
                         if (!errorsEvent.isContentConsumed()) {
-                            ActivityUtils.showError(ListTransferDestinationActivity.this, errorsEvent.getContent().getErrors());
+                            ActivityUtils.showError(ListTransferDestinationActivity.this,
+                                    errorsEvent.getContent().getErrors());
                         }
                     }
                 });

@@ -23,7 +23,8 @@ public final class ActivityUtils {
      * @param fragment specify desired fragment
      * @param layout specify desired layout
      */
-    public static void initFragment(@NonNull final FragmentActivity fragmentActivity, @NonNull final Fragment fragment, final int layout){
+    public static void initFragment(@NonNull final FragmentActivity fragmentActivity, @NonNull final Fragment fragment,
+                                    final int layout){
         FragmentManager fragmentManager = fragmentActivity.getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(layout, fragment);
@@ -36,7 +37,8 @@ public final class ActivityUtils {
      * @param fragmentActivity specify context of the Fragment
      * @param errors specify the errors
      */
-    public static void showError(@NonNull final FragmentActivity fragmentActivity,@NonNull final List<HyperwalletError> errors){
+    public static void showError(@NonNull final FragmentActivity fragmentActivity,
+                                 @NonNull final List<HyperwalletError> errors){
         FragmentManager fragmentManager = fragmentActivity.getSupportFragmentManager();
         DefaultErrorDialogFragment fragment = (DefaultErrorDialogFragment)
                 fragmentManager.findFragmentByTag(DefaultErrorDialogFragment.TAG);

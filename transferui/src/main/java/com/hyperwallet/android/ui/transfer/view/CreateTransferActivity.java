@@ -89,7 +89,8 @@ public class CreateTransferActivity extends AppCompatActivity implements OnNetwo
         registerErrorObservers();
 
         if (savedInstanceState == null) {
-            ActivityUtils.initFragment(this, CreateTransferFragment.newInstance(), R.id.create_transfer_fragment);
+            ActivityUtils.initFragment(this, CreateTransferFragment.newInstance(),
+                    R.id.create_transfer_fragment);
         }
     }
 
@@ -152,7 +153,8 @@ public class CreateTransferActivity extends AppCompatActivity implements OnNetwo
                     @Override
                     public void onChanged(Event<HyperwalletErrors> event) {
                         if (event != null && !event.isContentConsumed()) {
-                            ActivityUtils.showError(CreateTransferActivity.this, event.getContent().getErrors());
+                            ActivityUtils.showError(CreateTransferActivity.this,
+                                    event.getContent().getErrors());
                         }
                     }
                 });

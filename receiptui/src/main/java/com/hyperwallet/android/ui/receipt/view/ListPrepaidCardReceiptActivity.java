@@ -77,7 +77,8 @@ public class ListPrepaidCardReceiptActivity extends AppCompatActivity implements
             @Override
             public void onChanged(Event<HyperwalletErrors> event) {
                 if (event != null && !event.isContentConsumed()) {
-                    ActivityUtils.showError(ListPrepaidCardReceiptActivity.this, event.getContent().getErrors());
+                    ActivityUtils.showError(ListPrepaidCardReceiptActivity.this,
+                            event.getContent().getErrors());
                 }
             }
         });
@@ -90,7 +91,8 @@ public class ListPrepaidCardReceiptActivity extends AppCompatActivity implements
         });
 
         if (savedInstanceState == null) {
-            ActivityUtils.initFragment(this, ListReceiptFragment.newInstance(), R.id.list_receipt_fragment);
+            ActivityUtils.initFragment(this, ListReceiptFragment.newInstance(),
+                    R.id.list_receipt_fragment);
         }
     }
 

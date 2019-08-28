@@ -69,7 +69,8 @@ public class ListUserReceiptActivity extends AppCompatActivity implements OnNetw
             @Override
             public void onChanged(Event<HyperwalletErrors> event) {
                 if (event != null && !event.isContentConsumed()) {
-                    ActivityUtils.showError(ListUserReceiptActivity.this, event.getContent().getErrors());
+                    ActivityUtils.showError(ListUserReceiptActivity.this,
+                            event.getContent().getErrors());
                 }
             }
         });
@@ -82,7 +83,8 @@ public class ListUserReceiptActivity extends AppCompatActivity implements OnNetw
         });
 
         if (savedInstanceState == null) {
-            ActivityUtils.initFragment(this, ListReceiptFragment.newInstance(), R.id.list_receipt_fragment);
+            ActivityUtils.initFragment(this, ListReceiptFragment.newInstance(),
+                    R.id.list_receipt_fragment);
         }
     }
 

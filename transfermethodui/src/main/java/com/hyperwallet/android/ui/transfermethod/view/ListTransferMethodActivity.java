@@ -81,7 +81,8 @@ public class ListTransferMethodActivity extends AppCompatActivity implements
         });
 
         if (savedInstanceState == null) {
-            ActivityUtils.initFragment(this, ListTransferMethodFragment.newInstance(), R.id.list_transfer_method_fragment);
+            ActivityUtils.initFragment(this, ListTransferMethodFragment.newInstance(),
+                    R.id.list_transfer_method_fragment);
         } else {
             mRetryCode = savedInstanceState.getShort(ARGUMENT_RETRY_ACTION);
             mTransferMethod = savedInstanceState.getParcelable(ARGUMENT_TRANSFER_METHOD);
