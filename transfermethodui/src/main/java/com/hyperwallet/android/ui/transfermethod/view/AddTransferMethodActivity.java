@@ -44,7 +44,6 @@ public class AddTransferMethodActivity extends AppCompatActivity implements
     public static final String EXTRA_TRANSFER_METHOD_CURRENCY = "TRANSFER_METHOD_CURRENCY";
     public static final String EXTRA_TRANSFER_METHOD_TYPE = "TRANSFER_METHOD_TYPE";
     public static final String EXTRA_TRANSFER_METHOD_PROFILE_TYPE = "TRANSFER_METHOD_PROFILE_TYPE";
-    public static final int ADD_TRANSFER_METHOD_REQUEST_CODE = 100;
     private static final String ARGUMENT_RETRY_ACTION = "ARGUMENT_RETRY_ACTION";
     private static final short RETRY_SHOW_ERROR_ADD_TRANSFER_METHOD = 100;
     private static final short RETRY_SHOW_ERROR_LOAD_TMC_FIELDS = 101;

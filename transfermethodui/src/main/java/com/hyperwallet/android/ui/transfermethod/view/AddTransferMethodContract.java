@@ -26,6 +26,7 @@ import com.hyperwallet.android.model.graphql.field.HyperwalletFieldGroup;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * View and Presenter Contract for Adding Transfer Method
@@ -53,7 +54,7 @@ public interface AddTransferMethodContract {
 
         void hideProgressBar();
 
-        void showInputErrors(List<HyperwalletError> errors);
+        void showInputErrors(@NonNull final List<HyperwalletError> errors);
 
         /**
          * Check the state of a View
@@ -72,9 +73,12 @@ public interface AddTransferMethodContract {
         void createTransferMethod(@NonNull HyperwalletTransferMethod transferMethod);
 
         void loadTransferMethodConfigurationFields(boolean forceUpdate,
-                @NonNull String country,
-                @NonNull String currency,
-                @NonNull String transferMethodType,
-                @NonNull String transferMethodProfileType);
+                @NonNull final String country,
+                @NonNull final String currency,
+                @NonNull final String transferMethodType,
+                @NonNull final String transferMethodProfileType);
+
+        void handleUnmappedFieldError(@NonNull final Map<String, ?> fieldSet,
+                @NonNull final List<HyperwalletError> errors);
     }
 }

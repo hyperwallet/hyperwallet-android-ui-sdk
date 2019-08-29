@@ -4,6 +4,9 @@ import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.intent.Intents.intended;
+import static androidx.test.espresso.intent.Intents.intending;
+import static androidx.test.espresso.intent.matcher.IntentMatchers.hasAction;
 import static androidx.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.isSelected;
@@ -18,12 +21,16 @@ import static org.hamcrest.Matchers.not;
 
 import static java.net.HttpURLConnection.HTTP_OK;
 
+import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.ACTION_SELECT_TRANSFER_METHOD;
 import static com.hyperwallet.android.ui.testutils.util.EspressoUtils.atPosition;
 
+import android.app.Activity;
+import android.app.Instrumentation;
 import android.widget.TextView;
 
 import androidx.test.espresso.IdlingRegistry;
 import androidx.test.espresso.contrib.RecyclerViewActions;
+import androidx.test.espresso.intent.rule.IntentsTestRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
@@ -58,6 +65,9 @@ public class SelectDestinationTest {
     @Rule
     public ActivityTestRule<CreateTransferActivity> mActivityTestRule =
             new ActivityTestRule<>(CreateTransferActivity.class, true, false);
+    @Rule
+    public IntentsTestRule<CreateTransferActivity> mIntentsTestRule =
+            new IntentsTestRule<>(CreateTransferActivity.class, true, false);
 
     @Before
     public void setup() {
@@ -210,6 +220,41 @@ public class SelectDestinationTest {
 
     @Test
     public void testSelectDestination_verifyDestinationUpdatedUponAddingNewExternalAccount() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("create_transfer_quote_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_list_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_list_added_bank_account_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("create_transfer_quote_fx_response.json")).mock();
+
+        mIntentsTestRule.launchActivity(null);
+
+        Instrumentation.ActivityResult result =
+                new Instrumentation.ActivityResult(Activity.RESULT_OK, null);
+        intending(hasAction(ACTION_SELECT_TRANSFER_METHOD)).respondWith(result);
+
+        onView(withId(R.id.transfer_destination_title)).perform(click());
+        onView(allOf(instanceOf(TextView.class),
+                withParent(withId(R.id.transfer_destination_selection_toolbar)))).check(
+                matches(withText(R.string.transfer_destination)));
+        onView(withId(R.id.create_transfer_method_fab)).perform(click());
+        intended(hasAction(ACTION_SELECT_TRANSFER_METHOD));
+
+        onView(withId(R.id.add_transfer_destination)).check(matches(not(isDisplayed())));
+        onView(withId(R.id.transfer_destination)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_destination_icon)).check(matches(withText(R.string.bank_account_font_icon)));
+        onView(withId(R.id.transfer_destination_title)).check(matches(withText(R.string.bank_account)));
+        onView(withId(R.id.transfer_destination_selection)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_destination_description_1)).check(matches(withText("Canada")));
+        onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("Ending on 5121")));
+
+        onView(withId(R.id.transfer_summary)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_summary)).check(matches(withText("Available for Transfer: 1,157.40 CAD")));
+
     }
 
     @Test

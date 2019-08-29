@@ -46,7 +46,6 @@ import com.hyperwallet.android.ui.transfer.viewmodel.ScheduleTransferViewModel;
  */
 public class ScheduleTransferActivity extends AppCompatActivity implements OnNetworkErrorCallback {
 
-    public static final short SCHEDULE_TRANSFER_REQUEST_CODE = 103;
     public static final String EXTRA_TRANSFER = "TRANSFER";
     public static final String EXTRA_TRANSFER_METHOD = "TRANSFER_METHOD";
 

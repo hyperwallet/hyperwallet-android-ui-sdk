@@ -17,10 +17,13 @@
  */
 package com.hyperwallet.android.ui.transfer.view;
 
+import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.ADD_TRANSFER_METHOD_REQUEST_CODE;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.view.WindowManager;
 
 import androidx.annotation.Nullable;
@@ -29,9 +32,14 @@ import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
+import com.hyperwallet.android.ui.common.intent.HyperwalletIntent;
 import com.hyperwallet.android.ui.common.repository.Event;
+import com.hyperwallet.android.ui.common.view.OneClickListener;
+import com.hyperwallet.android.ui.common.view.error.DefaultErrorDialogFragment;
 import com.hyperwallet.android.ui.common.view.ActivityUtils;
 import com.hyperwallet.android.ui.common.view.error.OnNetworkErrorCallback;
 import com.hyperwallet.android.ui.transfer.R;
@@ -40,7 +48,6 @@ import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodReposi
 
 public class ListTransferDestinationActivity extends AppCompatActivity implements OnNetworkErrorCallback {
 
-    public static final short SELECT_TRANSFER_DESTINATION_REQUEST_CODE = 101;
     public static final String EXTRA_SELECTED_DESTINATION_TOKEN = "SELECTED_DESTINATION_TOKEN";
 
     private ListTransferDestinationViewModel mListTransferDestinationViewModel;
@@ -60,11 +67,37 @@ public class ListTransferDestinationActivity extends AppCompatActivity implement
                 new ListTransferDestinationViewModel.ListTransferDestinationViewModelFactory(
                         TransferMethodRepositoryFactory.getInstance().getTransferMethodRepository()))
                 .get(ListTransferDestinationViewModel.class);
-        registerObservers();
 
         if (savedInstanceState == null) {
             ActivityUtils.initFragment(this, ListTransferDestinationFragment.newInstance(transferToken),
                     R.id.list_destination_fragment);
+        }
+
+        FloatingActionButton button = findViewById(R.id.create_transfer_method_fab);
+        final Intent intent = new Intent();
+        intent.setAction(HyperwalletIntent.ACTION_SELECT_TRANSFER_METHOD);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            button.setOnClickListener(new OneClickListener() {
+                @Override
+                public void onOneClick(View v) {
+                    startActivityForResult(intent, ADD_TRANSFER_METHOD_REQUEST_CODE);
+                }
+            });
+        } else {
+            button.hide();
+        }
+
+        registerObservers();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == ADD_TRANSFER_METHOD_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            mListTransferDestinationViewModel.loadNewlyAddedTransferDestination();
         }
     }
 

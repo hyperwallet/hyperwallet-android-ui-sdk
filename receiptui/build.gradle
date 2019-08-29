@@ -2,8 +2,7 @@ project.ext {
     mavenName = 'Hyperwallet Android Receipt UI SDK'
     fileFilter = ['**/BuildConfig.*',
                   '**/com/hyperwallet/android/ui/receipt/HyperwalletReceiptUi.*',
-                  '**/com/hyperwallet/android/ui/receipt/view/*.*',
-                  '**/com/hyperwallet/android/ui/receipt/viewmodel/*.*'
+                  '**/com/hyperwallet/android/ui/receipt/view/*.*'
     ]
 }
 description = 'Hyperwallet Receipt UI SDK for Android to integrate with the Hyperwallet Platform'

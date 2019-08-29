@@ -24,6 +24,9 @@
     <string name="amount_currency_format">%s %s</string>
     <string name="exchange_rate_format">1 %s = %s %s</string>
 
+    <string name="module_unavailable_error">SDK module is unavailable. Please ensure, module is
+        installed.
+    </string>
     <string name="validation_amount_required">Amount is required.</string>
     <string name="validation_destination_required">Destination account is required.</string>
 

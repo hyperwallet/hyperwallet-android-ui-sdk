@@ -16,6 +16,7 @@
  */
 package com.hyperwallet.android.ui.transfermethod.view;
 
+import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.SELECT_TRANSFER_METHOD_REQUEST_CODE;
 import static com.hyperwallet.android.ui.transfermethod.view.ListTransferMethodFragment.ARGUMENT_IS_TRANSFER_METHODS_RELOAD_NEEDED;
 
 import android.content.Intent;
@@ -45,7 +46,6 @@ public class ListTransferMethodActivity extends AppCompatActivity implements
         ListTransferMethodFragment.OnTransferMethodContextMenuDeletionSelected,
         OnTransferMethodDeactivateCallback, OnNetworkErrorCallback {
 
-    public static final int SELECT_TRANSFER_METHOD_REQUEST_CODE = 50;
     private static final String ARGUMENT_RETRY_ACTION = "ARGUMENT_RETRY_ACTION";
     private static final String ARGUMENT_TRANSFER_METHOD = "ARGUMENT_TRANSFER_METHOD";
     private static final short RETRY_CONFIRM_DEACTIVATE_TRANSFER_METHOD = 102;
