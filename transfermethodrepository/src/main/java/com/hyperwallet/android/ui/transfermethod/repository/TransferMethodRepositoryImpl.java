@@ -46,8 +46,9 @@ import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
 public class TransferMethodRepositoryImpl implements TransferMethodRepository {
 
     private static final short QUERY_SINGLE_RESULT = 1;
-    private Handler mHandler = new Handler();
     private static final int DEFAULT_LIMIT = 100;
+    private Handler mHandler = new Handler();
+
     @VisibleForTesting
     Hyperwallet getHyperwallet() {
         return Hyperwallet.getDefault();
