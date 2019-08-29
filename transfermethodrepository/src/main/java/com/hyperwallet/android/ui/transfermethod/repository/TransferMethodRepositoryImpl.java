@@ -16,7 +16,6 @@
  */
 package com.hyperwallet.android.ui.transfermethod.repository;
 
-
 import static com.hyperwallet.android.model.StatusTransition.StatusDefinition.ACTIVATED;
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TOKEN;
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TYPE;
