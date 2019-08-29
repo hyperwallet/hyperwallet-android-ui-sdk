@@ -44,6 +44,7 @@ import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
 
 public class TransferMethodRepositoryImpl implements TransferMethodRepository {
 
+    private static final short QUERY_SINGLE_RESULT = 1;
     private Handler mHandler = new Handler();
 
     @VisibleForTesting
@@ -79,6 +80,7 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
     public void loadTransferMethods(@NonNull final LoadTransferMethodListCallback callback) {
 
         HyperwalletTransferMethodQueryParam queryParam = new HyperwalletTransferMethodQueryParam.Builder()
+                .sortByCreatedOnDesc()
                 .status(ACTIVATED)
                 .build();
         EspressoIdlingResource.increment();
@@ -109,7 +111,8 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
     @Override
     public void loadLatestTransferMethod(@NonNull final LoadTransferMethodCallback callback) {
         HyperwalletTransferMethodQueryParam queryParam = new HyperwalletTransferMethodQueryParam.Builder()
-                .limit(1)
+                .sortByCreatedOnDesc()
+                .limit(QUERY_SINGLE_RESULT)
                 .status(ACTIVATED)
                 .build();
         EspressoIdlingResource.increment();

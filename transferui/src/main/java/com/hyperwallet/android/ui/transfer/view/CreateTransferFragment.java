@@ -22,10 +22,11 @@ import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMe
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_COUNTRY;
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_CURRENCY;
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TYPE;
+import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.ADD_TRANSFER_METHOD_REQUEST_CODE;
+import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.SELECT_TRANSFER_DESTINATION_REQUEST_CODE;
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getStringFontIcon;
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getStringResourceByName;
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getTransferMethodDetail;
-import static com.hyperwallet.android.ui.transfer.view.ListTransferDestinationActivity.SELECT_TRANSFER_DESTINATION_REQUEST_CODE;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -47,11 +48,11 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.transfer.Transfer;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
+import com.hyperwallet.android.ui.common.intent.HyperwalletIntent;
 import com.hyperwallet.android.ui.common.repository.Event;
 import com.hyperwallet.android.ui.common.view.OneClickListener;
 import com.hyperwallet.android.ui.transfer.R;
@@ -159,8 +160,15 @@ public class CreateTransferFragment extends Fragment {
         mAddTransferDestination.setOnClickListener(new OneClickListener() {
             @Override
             public void onOneClick(View v) {
-                //TODO temporary action for transfer destination clicked; it should open up add transfer method UI
-                Snackbar.make(mAddTransferDestination, "ADD Transfer clicked", Snackbar.LENGTH_SHORT).show();
+                Intent intent = new Intent();
+                intent.setAction(HyperwalletIntent.ACTION_SELECT_TRANSFER_METHOD);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+                if (intent.resolveActivity(requireContext().getPackageManager()) != null) {
+                    startActivityForResult(intent, ADD_TRANSFER_METHOD_REQUEST_CODE);
+                } else {
+                    mCreateTransferViewModel.notifyModuleUnavailable();
+                }
             }
         });
 
@@ -180,13 +188,17 @@ public class CreateTransferFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK && requestCode == SELECT_TRANSFER_DESTINATION_REQUEST_CODE && data != null) {
-            HyperwalletTransferMethod selectedTransferMethod = data.getParcelableExtra(
-                    ListTransferDestinationActivity.EXTRA_SELECTED_DESTINATION_TOKEN);
-            mCreateTransferViewModel.setTransferAmount(null);
-            mCreateTransferViewModel.setTransferNotes(null);
-            mCreateTransferViewModel.setTransferAllAvailableFunds(Boolean.FALSE);
-            mCreateTransferViewModel.setTransferDestination(selectedTransferMethod);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == SELECT_TRANSFER_DESTINATION_REQUEST_CODE && data != null) {
+                HyperwalletTransferMethod selectedTransferMethod = data.getParcelableExtra(
+                        ListTransferDestinationActivity.EXTRA_SELECTED_DESTINATION_TOKEN);
+                mCreateTransferViewModel.setTransferAmount(null);
+                mCreateTransferViewModel.setTransferNotes(null);
+                mCreateTransferViewModel.setTransferAllAvailableFunds(Boolean.FALSE);
+                mCreateTransferViewModel.setTransferDestination(selectedTransferMethod);
+            } else if (requestCode == ADD_TRANSFER_METHOD_REQUEST_CODE) {
+                mCreateTransferViewModel.refreshTransferDestination();
+            }
         }
     }
 
@@ -315,9 +327,10 @@ public class CreateTransferFragment extends Fragment {
                     @Override
                     public void onChanged(final HyperwalletTransferMethod transferMethod) {
                         if (transferMethod != null) {
-                            mTransferDestination.setVisibility(View.VISIBLE);
                             mAddTransferDestination.setVisibility(View.GONE);
                             mTransferHeaderContainerError.setVisibility(View.GONE);
+                            mTransferHeaderContainer.setVisibility(View.VISIBLE);
+                            mTransferDestination.setVisibility(View.VISIBLE);
                             showTransferDestination(transferMethod);
                             enableInputControls();
                         } else {
@@ -402,6 +415,8 @@ public class CreateTransferFragment extends Fragment {
         mTransferAmount.setEnabled(false);
         mTransferNotes.setEnabled(false);
         mTransferAllSwitch.setEnabled(false);
+        mTransferDestination.setEnabled(false);
+        mAddTransferDestination.setEnabled(false);
     }
 
     private void enableInputControls() {
@@ -409,6 +424,8 @@ public class CreateTransferFragment extends Fragment {
         mTransferAmount.setEnabled(true);
         mTransferNotes.setEnabled(true);
         mTransferAllSwitch.setEnabled(true);
+        mTransferDestination.setEnabled(true);
+        mAddTransferDestination.setEnabled(true);
     }
 
     private void showTransferDestination(@NonNull final HyperwalletTransferMethod transferMethod) {
