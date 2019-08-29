@@ -16,7 +16,6 @@
  */
 package com.hyperwallet.android.ui.transfermethod.repository;
 
-
 import static com.hyperwallet.android.model.StatusTransition.StatusDefinition.ACTIVATED;
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TOKEN;
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TYPE;
@@ -45,8 +44,9 @@ import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
 
 public class TransferMethodRepositoryImpl implements TransferMethodRepository {
 
-    private Handler mHandler = new Handler();
     private static final int DEFAULT_LIMIT = 100;
+    private Handler mHandler = new Handler();
+
     @VisibleForTesting
     Hyperwallet getHyperwallet() {
         return Hyperwallet.getDefault();
