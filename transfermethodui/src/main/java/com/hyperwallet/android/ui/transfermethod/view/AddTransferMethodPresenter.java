@@ -18,15 +18,21 @@ package com.hyperwallet.android.ui.transfermethod.view;
 
 import androidx.annotation.NonNull;
 
+import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.graphql.HyperwalletTransferMethodConfigurationField;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
+import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodConfigurationRepository;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepository;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 public class AddTransferMethodPresenter implements AddTransferMethodContract.Presenter {
 
-    private static final String TAG = AddTransferMethodContract.class.getName();
+    private static final String ERROR_UNMAPPED_FIELD = "ERROR_UNMAPPED_FIELD";
     private final TransferMethodConfigurationRepository mTransferMethodConfigurationRepository;
     private final TransferMethodRepository mTransferMethodRepository;
     private final AddTransferMethodContract.View mView;
@@ -104,5 +110,19 @@ public class AddTransferMethodPresenter implements AddTransferMethodContract.Pre
                         mView.showErrorLoadTransferMethodConfigurationFields(errors.getErrors());
                     }
                 });
+    }
+
+    @Override
+    public void handleUnmappedFieldError(@NonNull final Map<String, ?> fieldSet,
+            @NonNull final List<HyperwalletError> errors) {
+        for (HyperwalletError error : errors) {
+            if (fieldSet.get(error.getFieldName()) == null) {
+                List<HyperwalletError> errorList = new ArrayList<HyperwalletError>() {{
+                    add(new HyperwalletError(R.string.error_unmapped_field, ERROR_UNMAPPED_FIELD));
+                }};
+                mView.showErrorAddTransferMethod(errorList);
+                return;
+            }
+        }
     }
 }

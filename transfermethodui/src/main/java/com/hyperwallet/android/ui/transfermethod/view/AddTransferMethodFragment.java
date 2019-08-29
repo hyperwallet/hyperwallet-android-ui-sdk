@@ -60,7 +60,6 @@ import com.hyperwallet.android.ui.transfermethod.HyperwalletTransferMethodLocalB
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
 import com.hyperwallet.android.ui.transfermethod.view.widget.AbstractWidget;
 import com.hyperwallet.android.ui.transfermethod.view.widget.DateChangedListener;
-import com.hyperwallet.android.ui.transfermethod.view.widget.DateUtils;
 import com.hyperwallet.android.ui.transfermethod.view.widget.DateWidget;
 import com.hyperwallet.android.ui.transfermethod.view.widget.WidgetEventListener;
 import com.hyperwallet.android.ui.transfermethod.view.widget.WidgetFactory;
@@ -82,7 +81,6 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     private static final String ARGUMENT_TRANSFER_METHOD = "ARGUMENT_TRANSFER_METHOD";
     private static final String ARGUMENT_WIDGET_STATE_MAP = "ARGUMENT_WIDGET_STATE_MAP";
     private static final boolean FORCE_UPDATE = false;
-    private final DateUtils mDateUtils = new DateUtils();
     private String mCountry;
     private View mCreateButtonProgressBar;
     private Button mCreateTransferMethodButton;
@@ -437,7 +435,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     }
 
     @Override
-    public void showInputErrors(List<HyperwalletError> errors) {
+    public void showInputErrors(@NonNull final List<HyperwalletError> errors) {
         boolean focusSet = false;
         for (HyperwalletError error : errors) {
             for (int i = 0; i < mDynamicContainer.getChildCount(); i++) {
@@ -457,6 +455,8 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                 }
             }
         }
+
+        mPresenter.handleUnmappedFieldError(mWidgetInputStateHashMap, errors);
     }
 
     @Override
@@ -528,7 +528,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
         }
     }
 
-    protected void onWidgetSelectionItemClicked(@NonNull final String selectedValue, @NonNull final String fieldName) {
+    void onWidgetSelectionItemClicked(@NonNull final String selectedValue, @NonNull final String fieldName) {
         for (int i = 0; i < mDynamicContainer.getChildCount(); i++) {
             View view = mDynamicContainer.getChildAt(i);
             if (view.getTag() instanceof WidgetSelectionDialogFragment.WidgetSelectionItemType) {
