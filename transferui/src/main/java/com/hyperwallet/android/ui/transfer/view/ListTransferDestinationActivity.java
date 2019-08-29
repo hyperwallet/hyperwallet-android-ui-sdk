@@ -33,14 +33,12 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.ui.common.intent.HyperwalletIntent;
 import com.hyperwallet.android.ui.common.repository.Event;
-import com.hyperwallet.android.ui.common.view.OneClickListener;
-import com.hyperwallet.android.ui.common.view.error.DefaultErrorDialogFragment;
 import com.hyperwallet.android.ui.common.view.ActivityUtils;
+import com.hyperwallet.android.ui.common.view.OneClickListener;
 import com.hyperwallet.android.ui.common.view.error.OnNetworkErrorCallback;
 import com.hyperwallet.android.ui.transfer.R;
 import com.hyperwallet.android.ui.transfer.viewmodel.ListTransferDestinationViewModel;

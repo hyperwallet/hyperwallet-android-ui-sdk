@@ -180,7 +180,7 @@ public class CreateTransferActivity extends AppCompatActivity implements OnNetwo
             @Override
             public void onChanged(Event<HyperwalletErrors> event) {
                 if (!event.isContentConsumed()) {
-                    showError(event.getContent().getErrors());
+                    ActivityUtils.showError(CreateTransferActivity.this, event.getContent().getErrors());
                 }
             }
         });
