@@ -23,8 +23,9 @@ public class ListPrepaidCardReceiptViewModelTest {
     public void initializedViewModel() {
         PrepaidCardReceiptRepository prepaidCardReceiptRepository = new PrepaidCardReceiptRepositoryImpl(
                 "trm-ppc-token");
-        mListPrepaidCardReceiptViewModelFactoryToTest = new ListPrepaidCardReceiptViewModel.
-                ListPrepaidCardReceiptViewModelFactory(prepaidCardReceiptRepository);
+        mListPrepaidCardReceiptViewModelFactoryToTest =
+                new ListPrepaidCardReceiptViewModel.ListPrepaidCardReceiptViewModelFactory(
+                        prepaidCardReceiptRepository);
         mReceiptViewModelToTest = mListPrepaidCardReceiptViewModelFactoryToTest.create(ReceiptViewModel.class);
     }
 

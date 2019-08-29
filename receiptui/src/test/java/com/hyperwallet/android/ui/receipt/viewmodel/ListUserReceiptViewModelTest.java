@@ -21,8 +21,8 @@ public class ListUserReceiptViewModelTest {
     @Before
     public void initializedViewModel() {
         UserReceiptRepository userReceiptRepository = new UserReceiptRepositoryImpl();
-        mListReceiptViewModelfactoryToTest = new ListUserReceiptViewModel.
-                ListReceiptViewModelFactory(userReceiptRepository);
+        mListReceiptViewModelfactoryToTest = new ListUserReceiptViewModel.ListReceiptViewModelFactory(
+                userReceiptRepository);
         mReceiptViewModelToTest = mListReceiptViewModelfactoryToTest.create(ReceiptViewModel.class);
     }
 
