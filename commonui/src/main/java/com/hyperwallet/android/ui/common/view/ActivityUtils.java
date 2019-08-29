@@ -40,8 +40,8 @@ public final class ActivityUtils {
     public static void showError(@NonNull final FragmentActivity fragmentActivity,
             @NonNull final List<HyperwalletError> errors) {
         FragmentManager fragmentManager = fragmentActivity.getSupportFragmentManager();
-        DefaultErrorDialogFragment fragment = (DefaultErrorDialogFragment)
-                fragmentManager.findFragmentByTag(DefaultErrorDialogFragment.TAG);
+        DefaultErrorDialogFragment fragment = (DefaultErrorDialogFragment) fragmentManager.findFragmentByTag(
+                DefaultErrorDialogFragment.TAG);
 
         if (fragment == null) {
             fragment = DefaultErrorDialogFragment.newInstance(errors);

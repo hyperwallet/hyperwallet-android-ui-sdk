@@ -89,8 +89,7 @@ public class CreateTransferActivity extends AppCompatActivity implements OnNetwo
         registerErrorObservers();
 
         if (savedInstanceState == null) {
-            ActivityUtils.initFragment(this, CreateTransferFragment.newInstance(),
-                    R.id.create_transfer_fragment);
+            ActivityUtils.initFragment(this, CreateTransferFragment.newInstance(), R.id.create_transfer_fragment);
         }
     }
 

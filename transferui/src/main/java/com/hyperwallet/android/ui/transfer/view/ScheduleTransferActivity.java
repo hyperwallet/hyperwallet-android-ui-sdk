@@ -87,8 +87,7 @@ public class ScheduleTransferActivity extends AppCompatActivity implements OnNet
         }
 
         if (savedInstanceState == null) {
-            ActivityUtils.initFragment(this, ScheduleTransferFragment.newInstance(),
-                    R.id.schedule_transfer_fragment);
+            ActivityUtils.initFragment(this, ScheduleTransferFragment.newInstance(), R.id.schedule_transfer_fragment);
         }
     }
 

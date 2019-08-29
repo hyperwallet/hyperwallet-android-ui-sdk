@@ -61,8 +61,7 @@ public class ReceiptDetailActivity extends AppCompatActivity {
         }
 
         if (savedInstanceState == null) {
-            ActivityUtils.initFragment(this, ReceiptDetailFragment.newInstance(),
-                    R.id.receipt_detail_fragment);
+            ActivityUtils.initFragment(this, ReceiptDetailFragment.newInstance(), R.id.receipt_detail_fragment);
 
         }
     }
