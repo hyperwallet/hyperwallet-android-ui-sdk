@@ -16,16 +16,17 @@ import org.robolectric.RobolectricTestRunner;
 public class ListPrepaidCardReceiptViewModelTest {
 
     private ReceiptViewModel mReceiptViewModelToTest;
+    private ListPrepaidCardReceiptViewModel.ListPrepaidCardReceiptViewModelFactory
+            mListPrepaidCardReceiptViewModelFactoryToTest;
 
     @Before
     public void initializedViewModel() {
         PrepaidCardReceiptRepository prepaidCardReceiptRepository = new PrepaidCardReceiptRepositoryImpl(
                 "trm-ppc-token");
-        ListPrepaidCardReceiptViewModel.ListPrepaidCardReceiptViewModelFactory factory =
+        mListPrepaidCardReceiptViewModelFactoryToTest =
                 new ListPrepaidCardReceiptViewModel.ListPrepaidCardReceiptViewModelFactory(
                         prepaidCardReceiptRepository);
-
-        mReceiptViewModelToTest = factory.create(ReceiptViewModel.class);
+        mReceiptViewModelToTest = mListPrepaidCardReceiptViewModelFactoryToTest.create(ReceiptViewModel.class);
     }
 
     @Test
@@ -46,5 +47,10 @@ public class ListPrepaidCardReceiptViewModelTest {
     @Test
     public void testGetDetailNavigation_returnsLiveData() {
         assertThat(mReceiptViewModelToTest.getDetailNavigation(), is(notNullValue()));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testListPrepaidCardReceiptViewModelFactory_throwsExceptionOnInvalidClassArgument() {
+        mListPrepaidCardReceiptViewModelFactoryToTest.create(ReceiptDetailViewModel.class);
     }
 }
