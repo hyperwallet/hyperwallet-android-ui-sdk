@@ -51,8 +51,12 @@ class ExpireDateUtils {
      * @return <code>true<code/>if input data is invalid
      */
     boolean isInvalidDate(@NonNull final String inputDate) {
-        Calendar inputCalendar = getInputDate(inputDate);
-        return !mUpperValidDate.after(inputCalendar) || !Calendar.getInstance().before(inputCalendar);
+        try {
+            Calendar inputCalendar = getInputDate(inputDate);
+            return !mUpperValidDate.after(inputCalendar) || !Calendar.getInstance().before(inputCalendar);
+        } catch (IllegalArgumentException e) {
+            return true;
+        }
     }
 
     /**
@@ -61,7 +65,7 @@ class ExpireDateUtils {
      * @param inputDate Card Expire Date from view
      * @return date in the server format (yyyy-MM)
      */
-    String convertDateToServerFormat(@NonNull String inputDate) {
+    String convertDateToServerFormat(@NonNull final String inputDate) {
         if (inputDate == null || inputDate.isEmpty()) {
             return "";
         }
@@ -111,7 +115,7 @@ class ExpireDateUtils {
     }
 
     @NonNull
-    String[] getDateParts(@NonNull @Size(max = 4) String input) {
+    String[] getDateParts(@NonNull @Size(max = 4) final String input) {
         String[] parts = new String[2];
         if (input.length() >= 2) {
             parts[0] = input.substring(0, 2);
@@ -123,7 +127,7 @@ class ExpireDateUtils {
         return parts;
     }
 
-    boolean isValidMonth(@Nullable String monthString) {
+    boolean isValidMonth(@Nullable final String monthString) {
         if (monthString == null) {
             return false;
         }
@@ -137,7 +141,7 @@ class ExpireDateUtils {
     }
 
     // create Date from input to compare with current Date
-    private Calendar getInputDate(@NonNull final String input) {
+    private Calendar getInputDate(@NonNull final String input) throws IllegalArgumentException {
         Calendar inputCalendar = Calendar.getInstance();
         inputCalendar.set(Calendar.MONTH, getInputMonth(input));
         inputCalendar.set(Calendar.YEAR, getInputYear(input));
@@ -145,8 +149,12 @@ class ExpireDateUtils {
     }
 
     // get month from input Date
-    private Integer getInputMonth(String input) {
-        return Integer.valueOf(input.substring(6, 7)) - 1;
+    private int getInputMonth(@NonNull final String input) throws IllegalArgumentException {
+        String monthString = input.substring(5);
+        if (isValidMonth(monthString)) {
+            return Integer.valueOf(monthString) - 1;
+        }
+        throw new IllegalArgumentException("Invalid month input:"+input);
     }
 
     // get year from input Date
