@@ -45,6 +45,7 @@ import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
 public class TransferMethodRepositoryImpl implements TransferMethodRepository {
 
     private static final short QUERY_SINGLE_RESULT = 1;
+    private static final int DEFAULT_LIMIT = 100;
     private Handler mHandler = new Handler();
 
     @VisibleForTesting
@@ -80,6 +81,7 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
     public void loadTransferMethods(@NonNull final LoadTransferMethodListCallback callback) {
 
         HyperwalletTransferMethodQueryParam queryParam = new HyperwalletTransferMethodQueryParam.Builder()
+                .limit(DEFAULT_LIMIT)
                 .sortByCreatedOnDesc()
                 .status(ACTIVATED)
                 .build();
