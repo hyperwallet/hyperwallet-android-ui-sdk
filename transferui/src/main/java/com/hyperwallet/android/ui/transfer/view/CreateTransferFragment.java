@@ -188,6 +188,7 @@ public class CreateTransferFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == SELECT_TRANSFER_DESTINATION_REQUEST_CODE && data != null) {
                 HyperwalletTransferMethod selectedTransferMethod = data.getParcelableExtra(
