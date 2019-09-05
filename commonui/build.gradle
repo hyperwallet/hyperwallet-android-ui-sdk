@@ -2,9 +2,7 @@ project.ext {
     mavenName = 'Hyperwallet Android Common UI SDK'
     fileFilter = ['**/BuildConfig.*',
                   '**/com/hyperwallet/android/ui/common/view/error/DefaultErrorDialogFragment.*',
-                  '**/com/hyperwallet/android/ui/common/view/HorizontalDividerItemDecorator.*',
-                  '**/com/hyperwallet/android/ui/common/view/TransferMethodUtils.*',
-                  '**/com/hyperwallet/android/ui/common/view/OneClickListener.*'
+                  '**/com/hyperwallet/android/ui/common/view/*'
     ]
 }
 description = 'Hyperwallet Common UI SDK for Android to integrate with the Hyperwallet Platform'
