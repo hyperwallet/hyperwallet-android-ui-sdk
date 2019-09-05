@@ -21,7 +21,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.Size;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Class is used for manage and convert card expire date {@link ExpiryDateWidget}
@@ -33,11 +36,11 @@ class ExpireDateUtils {
     static final String SEPARATOR = "/";
     static final char ZERO_CHAR = '0';
     private static final int VALID_PERIOD_IN_YEARS = 10;
+    private static final SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM");
     private static final String SERVER_DATE_FORMAT = "20%s-%s";
     private static final String SERVER_SEPARATOR = "-";
     private static final String VIEW_DATE_FORMAT = "%s/%s";
     private static final String ZERO = "0";
-
     private final Calendar mUpperValidDate = Calendar.getInstance();
 
     ExpireDateUtils() {
@@ -45,7 +48,7 @@ class ExpireDateUtils {
     }
 
     /**
-     * Check if input is invalid date
+     * Check if input is invalid date based on the internal value (the value that's actually sent to the server)
      *
      * @param inputDate date
      * @return <code>true<code/>if input data is invalid
@@ -54,7 +57,7 @@ class ExpireDateUtils {
         try {
             Calendar inputCalendar = getInputDate(inputDate);
             return !mUpperValidDate.after(inputCalendar) || !Calendar.getInstance().before(inputCalendar);
-        } catch (IllegalArgumentException e) {
+        } catch (ParseException e) {
             return true;
         }
     }
@@ -141,25 +144,11 @@ class ExpireDateUtils {
     }
 
     // create Date from input to compare with current Date
-    private Calendar getInputDate(@NonNull final String input) throws IllegalArgumentException {
+    private Calendar getInputDate(@NonNull final String input) throws ParseException {
+        Date date = sDateFormat.parse(input);
         Calendar inputCalendar = Calendar.getInstance();
-        inputCalendar.set(Calendar.MONTH, getInputMonth(input));
-        inputCalendar.set(Calendar.YEAR, getInputYear(input));
+        inputCalendar.setTime(date);
         return inputCalendar;
-    }
-
-    // get month from input Date
-    private int getInputMonth(@NonNull final String input) throws IllegalArgumentException {
-        String monthString = input.substring(5);
-        if (isValidMonth(monthString)) {
-            return Integer.valueOf(monthString) - 1;
-        }
-        throw new IllegalArgumentException("Invalid month input:"+input);
-    }
-
-    // get year from input Date
-    private int getInputYear(String input) {
-        return Integer.valueOf(input.substring(0, 4));
     }
 
     //get month from server month part
