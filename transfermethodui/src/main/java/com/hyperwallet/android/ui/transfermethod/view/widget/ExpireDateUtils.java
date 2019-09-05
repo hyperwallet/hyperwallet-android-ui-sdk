@@ -25,6 +25,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Class is used for manage and convert card expire date {@link ExpiryDateWidget}
@@ -36,7 +37,7 @@ class ExpireDateUtils {
     static final String SEPARATOR = "/";
     static final char ZERO_CHAR = '0';
     private static final int VALID_PERIOD_IN_YEARS = 10;
-    private static final SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM");
+    private static final SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM", Locale.US);
     private static final String SERVER_DATE_FORMAT = "20%s-%s";
     private static final String SERVER_SEPARATOR = "-";
     private static final String VIEW_DATE_FORMAT = "%s/%s";
