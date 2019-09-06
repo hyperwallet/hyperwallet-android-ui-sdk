@@ -3,6 +3,7 @@ package com.hyperwallet.android.ui.transfer;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.replaceText;
+import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.intent.Intents.intended;
@@ -153,6 +154,7 @@ public class TransferPPCFundsTest {
         onView(withId(R.id.transfer_summary)).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_summary)).check(matches(withText("Available for Transfer: 998.00 USD")));
 
+        onView(withId(R.id.transfer_action_button)).perform(nestedScrollTo());
         onView(withId(R.id.transfer_notes)).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_notes_layout)).check(matches(withHint("Description")));
         onView(withText(R.string.transfer_notes_additional_info_label)).check(matches(isDisplayed()));
@@ -223,6 +225,7 @@ public class TransferPPCFundsTest {
                 matches(withText(R.string.add_transfer_description_2)));
 
         onView(withId(R.id.transfer_summary)).check(matches(not(isDisplayed())));
+        onView(withId(R.id.transfer_action_button)).perform(nestedScrollTo());
         onView(withId(R.id.transfer_action_button)).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_action_button)).check(matches(isEnabled()));
     }

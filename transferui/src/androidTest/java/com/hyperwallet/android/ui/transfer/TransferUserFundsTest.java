@@ -137,6 +137,7 @@ public class TransferUserFundsTest {
         onView(withId(R.id.transfer_summary)).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_summary)).check(matches(withText("Available for Transfer: 998.00 USD")));
 
+        onView(withId(R.id.transfer_action_button)).perform(nestedScrollTo());
         onView(withId(R.id.transfer_notes)).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_notes_layout)).check(matches(withHint("Description")));
         onView(withText(R.string.transfer_notes_additional_info_label)).check(matches(isDisplayed()));
@@ -159,6 +160,7 @@ public class TransferUserFundsTest {
         onView(withId(R.id.add_transfer_destination_description_2)).check(
                 matches(withText(R.string.add_transfer_description_2)));
 
+        onView(withId(R.id.transfer_action_button)).perform(nestedScrollTo());
         onView(withId(R.id.transfer_summary)).check(matches(not(isDisplayed())));
         onView(withId(R.id.transfer_action_button)).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_action_button)).check(matches(isEnabled()));
