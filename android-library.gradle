@@ -33,7 +33,7 @@ android {
 
     lintOptions {
         abortOnError true
-        warningsAsErrors true
+        warningsAsErrors false
         lintConfig file("config/lint.xml")
     }
 }

@@ -20,7 +20,7 @@ public class ExpireDateUtilsTest {
 
     @Test
     @Parameters(method = "parametersToTestValidDate")
-    public void testIsInvalidDate(String inputDate, Boolean isValid) {
+    public void testIsInvalidDate(String inputDate, boolean isValid) {
         assertThat(helper.isInvalidDate(inputDate), is(isValid));
     }
 
