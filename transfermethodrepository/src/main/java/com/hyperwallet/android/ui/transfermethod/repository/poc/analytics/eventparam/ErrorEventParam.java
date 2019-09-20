@@ -1,4 +1,4 @@
-package com.hyperwallet.android.ui.transfermethod.repository.poc.analytics;
+package com.hyperwallet.android.ui.transfermethod.repository.poc.analytics.eventparam;
 
 import android.text.TextUtils;
 
@@ -19,15 +19,13 @@ public class ErrorEventParam extends EventParam {
     private static final String ERROR_CODE = "error_code";
     private static final String ERROR_MESSAGE = "error_message";
     private static final String ERROR_TYPE = "error_type";
-
-
     private static final String ERROR_TYPE_FORM = "FORM";
     private static final String ERROR_TYPE_API = "API";
 
-    private JSONObject eventParam = new JSONObject();
+    private Map<String, Object> eventParam = new HashMap<>();
 
 
-    public ErrorEventParam(@NonNull final HyperwalletError error) throws JSONException {
+    public ErrorEventParam(@NonNull final HyperwalletError error) {
         if (!TextUtils.isEmpty(error.getFieldName())) {
             eventParam.put(ERFD, error.getFieldName());
         }
@@ -39,14 +37,15 @@ public class ErrorEventParam extends EventParam {
         }
 
         //TODO expose a method to get stack trace -> if stack trace present, then we have error EXCEPTION
-        eventParam.put(ERROR_TYPE, ERROR_TYPE_API);
+        eventParam.put(ERROR_TYPE, ERROR_TYPE_API); // where should this come from? - I think we should discuss this
+
 
 
     }
 
 
     public ErrorEventParam(@NonNull final String field, @NonNull final String errorCode,
-            @NonNull final String errorMessage) throws JSONException {
+            @NonNull final String errorMessage) {
         eventParam.put(ERFD, field);
         eventParam.put(ERROR_CODE, errorCode);
         eventParam.put(ERROR_MESSAGE, errorMessage);
@@ -62,7 +61,7 @@ public class ErrorEventParam extends EventParam {
 
 
     @Override
-    public JSONObject getEventParams() {
+    public Map<String, Object> getEventParams() {
         return eventParam;
     }
 

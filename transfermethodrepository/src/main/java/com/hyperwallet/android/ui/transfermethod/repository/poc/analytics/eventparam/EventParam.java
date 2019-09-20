@@ -1,4 +1,4 @@
-package com.hyperwallet.android.ui.transfermethod.repository.poc.analytics;
+package com.hyperwallet.android.ui.transfermethod.repository.poc.analytics.eventparam;
 
 import java.util.Map;
 

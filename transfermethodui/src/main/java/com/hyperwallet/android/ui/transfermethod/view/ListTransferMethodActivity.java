@@ -36,6 +36,7 @@ import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.common.view.OneClickListener;
 import com.hyperwallet.android.ui.common.view.error.DefaultErrorDialogFragment;
 import com.hyperwallet.android.ui.common.view.error.OnNetworkErrorCallback;
+import com.hyperwallet.android.ui.transfermethod.repository.poc.analytics.lifecycle.InsightLifecycleListener;
 
 import java.util.List;
 
@@ -56,6 +57,8 @@ public class ListTransferMethodActivity extends AppCompatActivity implements
 
     private short mRetryCode;
     private HyperwalletTransferMethod mTransferMethod;
+
+    private InsightLifecycleListener mInsightLifecycleListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +91,8 @@ public class ListTransferMethodActivity extends AppCompatActivity implements
             mRetryCode = savedInstanceState.getShort(ARGUMENT_RETRY_ACTION);
             mTransferMethod = savedInstanceState.getParcelable(ARGUMENT_TRANSFER_METHOD);
         }
+        mInsightLifecycleListener = new InsightLifecycleListener(this);
+        getLifecycle().addObserver(mInsightLifecycleListener);
     }
 
     @Override
@@ -105,6 +110,13 @@ public class ListTransferMethodActivity extends AppCompatActivity implements
             mRetryCode = savedInstanceState.getShort(ARGUMENT_RETRY_ACTION);
             mTransferMethod = savedInstanceState.getParcelable(ARGUMENT_TRANSFER_METHOD);
         }
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        getLifecycle().removeObserver(mInsightLifecycleListener);
     }
 
     private void initFragment(Fragment fragment) {
