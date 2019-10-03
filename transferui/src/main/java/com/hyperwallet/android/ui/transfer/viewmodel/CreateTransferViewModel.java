@@ -65,6 +65,7 @@ public class CreateTransferViewModel extends ViewModel {
     private final MutableLiveData<Event<Transfer>> mCreateTransfer = new MutableLiveData<>();
     private final MutableLiveData<String> mTransferAmount = new MutableLiveData<>();
     private final MutableLiveData<String> mTransferNotes = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> mShowFxRateChange = new MutableLiveData<>();
 
     private final MutableLiveData<Event<HyperwalletErrors>> mLoadTransferRequiredDataErrors = new MutableLiveData<>();
     private final MutableLiveData<Event<HyperwalletErrors>> mCreateTransferError = new MutableLiveData<>();
@@ -96,6 +97,7 @@ public class CreateTransferViewModel extends ViewModel {
         mTransferAvailableFunds.setValue(Boolean.FALSE);
         mIsLoading.postValue(Boolean.TRUE);
         mIsCreateQuoteLoading.setValue(Boolean.FALSE);
+        mShowFxRateChange.setValue(Boolean.FALSE);
         loadTransferDestination(sourceToken);
     }
 
@@ -118,6 +120,7 @@ public class CreateTransferViewModel extends ViewModel {
         mTransferAvailableFunds.setValue(Boolean.FALSE);
         mIsLoading.postValue(Boolean.TRUE);
         mIsCreateQuoteLoading.setValue(Boolean.FALSE);
+        mShowFxRateChange.setValue(Boolean.FALSE);
         loadTransferSource();
     }
 
@@ -187,20 +190,23 @@ public class CreateTransferViewModel extends ViewModel {
         return mInvalidDestinationError;
     }
 
+    public LiveData<Event<HyperwalletErrors>> getModuleUnavailableError() {
+        return mModuleUnavailableError;
+    }
+
+    public LiveData<Boolean> getShowFxRateChange() {
+        return mShowFxRateChange;
+    }
+
     public void notifyModuleUnavailable() {
         HyperwalletError error = new HyperwalletError(R.string.module_unavailable_error, ERROR_SDK_MODULE_UNAVAILABLE);
         HyperwalletErrors errors = new HyperwalletErrors(Arrays.asList(error));
         mModuleUnavailableError.postValue(new Event<>(errors));
     }
 
-    public LiveData<Event<HyperwalletErrors>> getModuleUnavailableError() {
-        return mModuleUnavailableError;
-    }
-
     public void createTransfer() {
         mIsCreateQuoteLoading.postValue(Boolean.TRUE);
-        String amount = mTransferAvailableFunds.getValue() ?
-                mQuoteAvailableFunds.getValue().getDestinationAmount() : mTransferAmount.getValue();
+        String amount = mTransferAvailableFunds.getValue() ? null : mTransferAmount.getValue();
 
         Transfer transfer = new Transfer.Builder()
                 .clientTransferID(CLIENT_IDENTIFICATION_PREFIX + UUID.randomUUID().toString())
@@ -214,6 +220,7 @@ public class CreateTransferViewModel extends ViewModel {
         mTransferRepository.createTransfer(transfer, new TransferRepository.CreateTransferCallback() {
             @Override
             public void onTransferCreated(@Nullable Transfer transfer) {
+                mShowFxRateChange.setValue(hasTransferAmountChanged(transfer));
                 mCreateTransfer.postValue(new Event<>(transfer));
                 mIsCreateQuoteLoading.postValue(Boolean.FALSE);
             }
@@ -346,6 +353,13 @@ public class CreateTransferViewModel extends ViewModel {
             }
         });
     }
+
+
+    private boolean hasTransferAmountChanged(@Nullable final Transfer transfer) {
+        return mTransferAvailableFunds.getValue() && transfer != null && !TextUtils.equals(
+                transfer.getDestinationAmount(), mTransferAmount.getValue());
+    }
+
 
     public static class CreateTransferViewModelFactory implements ViewModelProvider.Factory {
 

@@ -115,6 +115,8 @@ public class CreateTransferActivity extends AppCompatActivity implements OnNetwo
             intent.putExtra(ScheduleTransferActivity.EXTRA_TRANSFER, event.getContent());
             intent.putExtra(ScheduleTransferActivity.EXTRA_TRANSFER_METHOD,
                     mCreateTransferViewModel.getTransferDestination().getValue());
+            intent.putExtra(ScheduleTransferActivity.EXTRA_SHOW_FX_CHANGE_WARNING,
+                    mCreateTransferViewModel.getShowFxRateChange().getValue());
             startActivityForResult(intent, SCHEDULE_TRANSFER_REQUEST_CODE);
         }
     }
