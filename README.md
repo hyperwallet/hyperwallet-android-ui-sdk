@@ -86,37 +86,73 @@ public class TestAuthenticationProvider implements HyperwalletAuthenticationToke
 ## Usage
 The functions in UI SDK are available to use once the authentication is done.
 
-### Using ```getIntentListTransferMethodActivity```
+### Declare and initialize the UI SDK components as necessary
+```java
+private HyperwalletReceiptUi mHyperwalletReceiptUi;
+private HyperwalletTransferMethodUi mHyperwalletTransferMethodUi;
+private HyperwalletTransferUi mHyperwalletTransferUi;
 
-```
 @Override
-public void onClick(View view) {
-    Intent it = mHyperwalletTransferMethodUi.getIntentListTransferMethodActivity(MainActivity.this);
-    startActivity(it);
+protected void onCreate(Bundle savedInstanceState) {
+    mHyperwalletReceiptUi = HyperwalletReceiptUi.getInstance(hyperwalletAuthenticationTokenProvider);
+    mHyperwalletTransferMethodUi = HyperwalletTransferMethodUi.getInstance(hyperwalletAuthenticationTokenProvider);
+    mHyperwalletTransferUi = HyperwalletTransferUi.getInstance(hyperwalletAuthenticationTokenProvider);
 }
 ```
 
-### Using ```getIntentSelectTransferMethodActivity```
-
-```
+### List the user's transfer methods
+```java
 @Override
 public void onClick(View view) {
-    Intent it = mHyperwalletTransferMethodUi.getIntentSelectTransferMethodActivity(MainActivity.this);
-    startActivity(it);
+    Intent intent = mHyperwalletTransferMethodUi.getIntentListTransferMethodActivity(MainActivity.this);
+    startActivity(intent);
 }
 ```
 
-### Using ```getIntentAddTransferMethodActivity```
-```
+
+### Select a transfer method type available by country and currency
+```java
 @Override
 public void onClick(View view) {
-    Intent it = mHyperwalletTransferMethodUi.getIntentAddTransferMethodActivity(MainActivity.this, 
-                                                                  "US", 
-                                                                  "USD", 
-                                                                  "BANK_ACCOUNT");
-    startActivity(it);
+    Intent intent = mHyperwalletTransferMethodUi.getIntentSelectTransferMethodActivity(MainActivity.this);
+    startActivity(intent);
 }
+```
 
+### Create/Add a transfer method
+The form fields are based on the country, currency, user's profile type, and transfer method type should be passed to this Activity to create a new Transfer Method for those values.
+```java
+@Override
+public void onClick(View view) {
+    Intent intent = mHyperwalletTransferMethodUi.getIntentAddTransferMethodActivity(
+            MainActivity.this,
+            "US",
+            "USD",
+            "BANK_ACCOUNT",
+            "INDIVIDUAL");
+    startActivity(intent);
+}
+```
+
+### Lists the user's receipts
+```java
+public void onClick(View view) {
+    Intent intent = mHyperwalletReceiptUi.getIntentListUserReceiptActivity(MainActivity.this);
+    startActivity(intent);
+}
+```
+
+### Lists the prepaid card's receipts
+```java
+public void onClick(View view) {
+    Intent intent = mHyperwalletReceiptUi.getIntentListPrepaidCardReceiptActivity(MainActivity.this, "trm-12345");
+    startActivity(intent);
+}
+```
+
+## NotificationCenter Events
+```java
+// TODO: 2019-10-03  
 ```
 
 ## License
