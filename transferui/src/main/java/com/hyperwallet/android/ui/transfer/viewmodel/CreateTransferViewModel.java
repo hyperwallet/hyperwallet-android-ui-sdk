@@ -199,7 +199,8 @@ public class CreateTransferViewModel extends ViewModel {
     }
 
     public void notifyModuleUnavailable() {
-        HyperwalletError error = new HyperwalletError(R.string.module_unavailable_error, ERROR_SDK_MODULE_UNAVAILABLE);
+        HyperwalletError error = new HyperwalletError(R.string.module_transfermethodui_unavailable_error,
+                ERROR_SDK_MODULE_UNAVAILABLE);
         HyperwalletErrors errors = new HyperwalletErrors(Arrays.asList(error));
         mModuleUnavailableError.postValue(new Event<>(errors));
     }
