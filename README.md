@@ -155,5 +155,22 @@ public void onClick(View view) {
 // TODO: 2019-10-03  
 ```
 
+
+
+## Error Handling
+In Hyperwallet UI SDK, we categorize HyperwalletException into three groups:
+* Unexpected Error
+* Connectivity Issue (network errors)
+* Business Errors (invalid input) 
+
+### Unexpected Error
+On `Unexpected Error`, a DialogFragment that only contains the `OK` button will be shown in the UI.
+
+### Connectivity Issue (network errors)
+On `Connectivity Issue`, a DialogFragment containing `Cancel` and `Try Again` will be shown on the UI. Network errors can happen due to connectivity issues for reasons including (but not limited to) poor-quality network connection and request timeouts from the server.
+
+### Business Errors (invalid input)
+Business errors happen when the Hyperwallet platform has found invalid information or some business restriction related to the data submitted and requires action from the user.
+
 ## License
 The Hyperwallet Android UI SDK is open source and available under the [MIT](https://github.com/hyperwallet/hyperwallet-android-ui-sdk/blob/master/LICENSE) license.
