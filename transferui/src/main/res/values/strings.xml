@@ -36,6 +36,9 @@
     <string name="summary_amount_label">Amount:</string>
     <string name="summary_amount_fee_label">Fee:</string>
     <string name="summary_amount_transfer_label">You will receive:</string>
+    <string name="exchange_rate_change_warning">Due to changes in the FX rate,
+        you will now receive %1$s %2$s.</string>
+
 
     <string name="transfer_summary_placeholder">Available for Transfer: 2,422.90 CAD</string>
     <string name="transfer_notes_placeholder">Partial transfer</string>
@@ -49,4 +52,6 @@
     <string name="summary_amount_placeholder">10.00 CAD</string>
     <string name="summary_amount_fee_placeholder">0.25 CAD</string>
     <string name="summary_amount_transfer_placeholder">9.75 CAD</string>
+    <string name="exchange_rate_change_warning_placeholder">Due to changes in the FX rate,
+        you will now receive 10.00 CAD.</string>
 </resources>

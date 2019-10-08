@@ -188,6 +188,7 @@ public class CreateTransferViewModelTest {
                 is(mTransfer.getDestinationCurrency()));
         assertThat(viewModel.getQuoteAvailableFunds().getValue().getMemo(), is(mTransfer.getMemo()));
         assertThat(viewModel.getCreateTransfer().getValue(), is(nullValue()));
+        assertThat(viewModel.getShowFxRateChange().getValue(), is(false));
     }
 
     @Test
@@ -220,6 +221,7 @@ public class CreateTransferViewModelTest {
                 is(mTransfer.getDestinationCurrency()));
         assertThat(viewModel.getQuoteAvailableFunds().getValue().getMemo(), is(mTransfer.getMemo()));
         assertThat(viewModel.getCreateTransfer().getValue(), is(nullValue()));
+        assertThat(viewModel.getShowFxRateChange().getValue(), is(false));
     }
 
     @Test
@@ -289,6 +291,43 @@ public class CreateTransferViewModelTest {
         assertThat(viewModel.getCreateTransfer().getValue().getContent().getDestinationCurrency(),
                 is(mTransfer.getDestinationCurrency()));
         assertThat(viewModel.getCreateTransfer().getValue().getContent().getMemo(), is(mTransfer.getMemo()));
+        assertThat(viewModel.getShowFxRateChange().getValue(), is(false));
+    }
+
+
+    @Test
+    public void testCreateQuoteTransfer_isSuccessfulWithAllAvailableFunds() {
+        CreateTransferViewModel.CreateTransferViewModelFactory factory =
+                new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
+                        mTransferMethodRepository, mUserRepository);
+
+        CreateTransferViewModel viewModel = factory.create(CreateTransferViewModel.class);
+
+        viewModel.setTransferNotes("Create quote test notes");
+        viewModel.setTransferAllAvailableFunds(true);
+        viewModel.setTransferAmount("124.23");
+
+        // test
+        viewModel.createTransfer();
+
+        assertThat(viewModel.getCreateTransferError().getValue(), is(nullValue()));
+        assertThat(viewModel.getCreateTransfer().getValue(), is(notNullValue()));
+        assertThat(viewModel.getCreateTransfer().getValue().getContent().getSourceToken(),
+                is(mTransfer.getSourceToken()));
+        assertThat(viewModel.getCreateTransfer().getValue().getContent().getToken(), is(mTransfer.getToken()));
+        assertThat(viewModel.getCreateTransfer().getValue().getContent().getCreatedOn(), is(mTransfer.getCreatedOn()));
+        assertThat(viewModel.getCreateTransfer().getValue().getContent().getClientTransferId(),
+                is(mTransfer.getClientTransferId()));
+        assertThat(viewModel.getCreateTransfer().getValue().getContent().getSourceCurrency(),
+                is(mTransfer.getSourceCurrency()));
+        assertThat(viewModel.getCreateTransfer().getValue().getContent().getDestinationToken(),
+                is(mTransfer.getDestinationToken()));
+        assertThat(viewModel.getCreateTransfer().getValue().getContent().getDestinationAmount(),
+                is(mTransfer.getDestinationAmount()));
+        assertThat(viewModel.getCreateTransfer().getValue().getContent().getDestinationCurrency(),
+                is(mTransfer.getDestinationCurrency()));
+        assertThat(viewModel.getCreateTransfer().getValue().getContent().getMemo(), is(mTransfer.getMemo()));
+        assertThat(viewModel.getShowFxRateChange().getValue(), is(true));
     }
 
     @Test
