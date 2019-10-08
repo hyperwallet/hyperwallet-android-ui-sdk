@@ -155,7 +155,75 @@ public void onClick(View view) {
 // TODO: 2019-10-03  
 ```
 
+## Customize the visual style
 
+UI SDK leverages the `res/values` folder for styling. Simply add your own `.xml` file in your project with the same name and override values inside of it as you see fit.
+All the `.xml` from the SDK are listed below for your convenience:
+
+**Common UI**
+* commonui/res/values/colors.xml
+* commonui/res/values/dimens.xml
+* commonui/res/values/strings.xml
+* commonui/res/values/styles.xml
+
+**Receipt UI**
+* receiptui/res/values/colors.xml
+* receiptui/res/values/dimens.xml
+* receiptui/res/values/strings.xml
+* receiptui/res/values/styles.xml
+
+**Transfer Method UI**
+* transfermethodui/res/values/ic_launcher_background.xml
+* transfermethodui/res/values/dimens.xml
+* transfermethodui/res/values/strings.xml
+* transfermethodui/res/values/styles.xml
+
+### Custom Hyperwallet Styles
+To create consistency, several components are packaged in their own theme. These all have the word `Hyperwallet` and need to be overriden if you want a component to have its own theme.
+Listed below are the names of these styles:
+
+**commonui/res/values/styles.xml**
+
+| Style Name | Parent Style |
+|:----------|:------------|
+| Widget.Hyperwallet.ProgressBar | @style/Widget.AppCompat.ProgressBar |
+| Widget.Hyperwallet.ProgressBar.CreateButton | @style/Widget.AppCompat.ProgressBar |
+| TextAppearance.Hyperwallet.Headline4 | @style/TextAppearance.MaterialComponents.Headline4 |
+| ThemeOverlay.Hyperwallet.Selector.ActionBar | @style/ThemeOverlay.AppCompat.ActionBar |
+| "Base.Hyperwallet.RecyclerView | @style/Widget.AppCompat.ListView |
+| Selector.Hyperwallet.RecyclerView | @style/Base.Hyperwallet.RecyclerView |
+| Widget.Hyperwallet.CollapsingToolbar | @style/Widget.Design.CollapsingToolbar |
+| Widget.Hyperwallet.FloatingActionButton | @style/Widget.MaterialComponents.FloatingActionButton |
+| TextAppearance.Hyperwallet.Body2 | @style/Base.TextAppearance.Hyperwallet.Body2 |
+| TextAppearance.Hyperwallet.Subtitle2 | @style/TextAppearance.MaterialComponents.Subtitle2 |
+| Base.TextAppearance.Hyperwallet.Body2 | @style/TextAppearance.MaterialComponents.Body2 |
+| Widget.Hyperwallet.Button | @style/Widget.AppCompat.Button |
+| Widget.Hyperwallet.Text.Button | @style/Widget.Hyperwallet.Button |
+| TextAppearance.Hyperwallet.Headline6 | @style/TextAppearance.MaterialComponents.Headline6 |
+| Widget.Hyperwallet.TextInputLayout | Base.Widget.MaterialComponents.TextInputLayout |
+| Widget.Hyperwallet.TextInputLayout.Disabled | Widget.Hyperwallet.TextInputLayout |
+| Widget.Hyperwallet.TextInputEditText | Base.Widget.MaterialComponents.TextInputEditText |
+| Theme.Hyperwallet.Confirmation.Dialog | Base.Theme.MaterialComponents.Light |
+| Widget.Hyperwallet.Confirmation.Dialog.Alert | Base.Theme.MaterialComponents.Light.Dialog |
+| Widget.Hyperwallet.Confirmation.Button.Negative | Widget.MaterialComponents.Button.TextButton |
+| Widget.Hyperwallet.Confirmation.Button.Positive | Widget.MaterialComponents.Button.TextButton |
+| Theme.Hyperwallet.Alert | Base.Theme.MaterialComponents.Light |
+| Widget.Hyperwallet.Dialog.Alert | Base.Theme.MaterialComponents.Light.Dialog |
+| Widget.Hyperwallet.Button.Negative | Widget.MaterialComponents.Button.TextButton.Dialog |
+| Widget.Hyperwallet.Button.Positive | Widget.MaterialComponents.Button.TextButton.Dialog |
+| TextAppearance.Hyperwallet.Dialog.Alert.Title | TextAppearance.MaterialComponents.Headline6 |
+| TextAppearance.Hyperwallet.Dialog.Alert.Body | TextAppearance.MaterialComponents.Body1 |
+| Widget.Hyperwallet.DatePicker | Theme.AppCompat.Light.Dialog |
+| TextAppearance.Hyperwallet.Subtitle1 | @style/TextAppearance.MaterialComponents.Subtitle1 |
+| Widget.Hyperwallet.Switch | Theme.AppCompat.Light |
+
+**receiptui/res/values/styles.xml**
+
+| Style Name | Parent Style |
+|:----------|:------------|
+| Widget.Hyperwallet.ProgressBar.Receipts | @style/Widget.AppCompat.ProgressBar |
+| TextAppearance.Hyperwallet.Positive | TextAppearance.MaterialComponents.Subtitle1 |
+| TextAppearance.Hyperwallet.Negative | TextAppearance.MaterialComponents.Subtitle1 |
 
 ## Error Handling
 In Hyperwallet UI SDK, we categorize HyperwalletException into three groups:
