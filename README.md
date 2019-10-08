@@ -150,9 +150,51 @@ public void onClick(View view) {
 }
 ```
 
-## NotificationCenter Events
+## Broadcast Receiver
+We currently have types of broadevents that you can register for:
+
+HyperwalletTransferMethodLocalBroadcast.HyperwalletTransferMethodLocalBroadcastAction.ACTION_HYPERWALLET_TRANSFER_METHOD_ADDED
+* Posted when a new transfer method (bank account, bank card, PayPal account, prepaid card, paper check) has been created. 
+
+HyperwalletTransferMethodLocalBroadcast.HyperwalletTransferMethodLocalBroadcastAction.ACTION_HYPERWALLET_TRANSFER_METHOD_DEACTIVATED
+* Posted when a transfer method (bank account, bank card, PayPal account, prepaid card, paper check) has been deactivated.
+
+HyperwalletTransferLocalBroadcast.HyperwalletTransferLocalBroadcastAction.ACTION_HYPERWALLET_TRANSFER_SCHEDULED
+* Posted when a transfer has been scheduled.
+
+### Usage
 ```java
-// TODO: 2019-10-03  
+// create receiver
+private final BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        ...
+    }
+};
+```
+```java
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    ...
+
+    // register receiver
+    IntentFilter filter = new IntentFilter();
+    filter.addAction(HyperwalletTransferMethodLocalBroadcast.HyperwalletTransferMethodLocalBroadcastAction.ACTION_HYPERWALLET_TRANSFER_METHOD_ADDED);
+    filter.addAction(HyperwalletTransferMethodLocalBroadcast.HyperwalletTransferMethodLocalBroadcastAction.ACTION_HYPERWALLET_TRANSFER_METHOD_DEACTIVATED);
+    filter.addAction(HyperwalletTransferLocalBroadcast.HyperwalletTransferLocalBroadcastAction.ACTION_HYPERWALLET_TRANSFER_SCHEDULED);
+    
+    LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(mBroadcastReceiver, filter);
+}
+```
+
+```java
+@Override
+protected void onDestroy() {
+    super.onDestroy();
+    ...
+    // unregister receiver
+    LocalBroadcastManager.getInstance(this).unregisterReceiver(mBroadcastReceiver);
+} 
 ```
 
 ## Customize the visual style
