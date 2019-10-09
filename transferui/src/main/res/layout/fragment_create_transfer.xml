@@ -144,6 +144,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/edit_text_currency_end"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/transfer_amount_layout"
                     app:layout_constraintTop_toTopOf="@+id/transfer_amount_layout"
