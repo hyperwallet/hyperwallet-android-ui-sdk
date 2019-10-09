@@ -240,7 +240,6 @@ public class ListTransferDestinationFragment extends DialogFragment {
         TransferDestinationViewHolder(@NonNull final View itemView,
                 @NonNull final ListTransferDestinationViewModel viewModel) {
             super(itemView);
-            itemView.setOnClickListener(this);
 
             mIcon = itemView.findViewById(R.id.icon);
             mTitle = itemView.findViewById(R.id.title);
@@ -271,6 +270,7 @@ public class ListTransferDestinationFragment extends DialogFragment {
             } else {
                 mSelectedIcon.setVisibility(View.GONE);
             }
+            itemView.setOnClickListener(this);
         }
 
         void recycle() {

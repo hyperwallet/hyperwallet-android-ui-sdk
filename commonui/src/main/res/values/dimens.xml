@@ -46,6 +46,7 @@
     <!-- short hand -->
     <dimen name="button_margin">32dp</dimen>
     <dimen name="create_button_max_width">330dp</dimen>
+    <dimen name="text_max_width">330dp</dimen>
 
     <!-- widget -->
     <dimen name="widget_default_margin">8dp</dimen>

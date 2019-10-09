@@ -370,6 +370,7 @@ public class CreateTransferFragment extends Fragment {
                                 mTransferCurrency.setTextColor(
                                         getResources().getColor(R.color.colorButtonTextDisabled));
                                 mTransferAmount.setEnabled(false);
+                                mTransferAmount.getText().clear();
                                 mTransferAmount.setText(transfer.getDestinationAmount());
                             }
                         } else {

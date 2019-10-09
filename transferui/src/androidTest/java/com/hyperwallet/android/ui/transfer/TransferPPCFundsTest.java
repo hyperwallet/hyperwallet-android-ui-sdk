@@ -301,6 +301,8 @@ public class TransferPPCFundsTest {
         onView(withId(R.id.fee_value)).check(matches(withText("2.20 CAD")));
         onView(withId(R.id.transfer_label)).check(matches(withText(R.string.summary_amount_transfer_label)));
         onView(withId(R.id.transfer_value)).check(matches(withText("150.00 CAD")));
+        onView(withId(R.id.exchange_rate_warning_container)).check(matches(not(isDisplayed())));
+        onView(withId(R.id.exchange_rate_warning)).check(matches(not(isDisplayed())));
         onView(withId(R.id.notes_container)).check(matches(not(isDisplayed())));
         onView(withId(R.id.notes_value)).check(matches(not(isDisplayed())));
 
@@ -368,6 +370,8 @@ public class TransferPPCFundsTest {
         onView(withId(R.id.fee_value)).check(matches(withText("2.00 USD")));
         onView(withId(R.id.transfer_label)).check(matches(withText(R.string.summary_amount_transfer_label)));
         onView(withId(R.id.transfer_value)).check(matches(withText("100.00 USD")));
+        onView(withId(R.id.exchange_rate_warning_container)).check(matches(not(isDisplayed())));
+        onView(withId(R.id.exchange_rate_warning)).check(matches(not(isDisplayed())));
         onView(withId(R.id.notes_container)).check(matches(not(isDisplayed())));
         onView(withId(R.id.notes_value)).check(matches(not(isDisplayed())));
 
@@ -437,6 +441,8 @@ public class TransferPPCFundsTest {
         onView(withId(R.id.fee_value)).check(matches(withText("2.00 USD")));
         onView(withId(R.id.transfer_label)).check(matches(withText(R.string.summary_amount_transfer_label)));
         onView(withId(R.id.transfer_value)).check(matches(withText("100.00 USD")));
+        onView(withId(R.id.exchange_rate_warning_container)).check(matches(not(isDisplayed())));
+        onView(withId(R.id.exchange_rate_warning)).check(matches(not(isDisplayed())));
         onView(withId(R.id.notes_container)).check(matches(isDisplayed()));
         onView(withId(R.id.notes_value)).check(matches(withText("Transfer funds test")));
 
@@ -506,6 +512,8 @@ public class TransferPPCFundsTest {
         onView(withId(R.id.fee_value)).check(matches(not(isDisplayed())));
         onView(withId(R.id.transfer_label)).check(matches(not(isDisplayed())));
         onView(withId(R.id.transfer_value)).check(matches(not(isDisplayed())));
+        onView(withId(R.id.exchange_rate_warning_container)).check(matches(not(isDisplayed())));
+        onView(withId(R.id.exchange_rate_warning)).check(matches(not(isDisplayed())));
         onView(withId(R.id.notes_container)).check(matches(not(isDisplayed())));
         onView(withId(R.id.notes_value)).check(matches(not(isDisplayed())));
 
@@ -575,7 +583,8 @@ public class TransferPPCFundsTest {
         onView(withId(R.id.fee_value)).check(matches(withText("2.00 USD")));
         onView(withId(R.id.transfer_label)).check(matches(withText(R.string.summary_amount_transfer_label)));
         onView(withId(R.id.transfer_value)).check(matches(withText("998.00 USD")));
-
+        onView(withId(R.id.exchange_rate_warning_container)).check(matches(not(isDisplayed())));
+        onView(withId(R.id.exchange_rate_warning)).check(matches(not(isDisplayed())));
         onView(withId(R.id.notes_container)).perform(nestedScrollTo());
         onView(withId(R.id.notes_container)).check(matches(isDisplayed()));
         onView(withId(R.id.notes_value)).check(matches(withText("Transfer funds test")));
@@ -727,7 +736,7 @@ public class TransferPPCFundsTest {
     }
 
     @Test
-    public void testTransferFunds_createTransferConnectionError() throws TimeoutException, InterruptedException {
+    public void testTransferFunds_createTransferConnectionError() {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
@@ -760,8 +769,7 @@ public class TransferPPCFundsTest {
     }
 
     @Test
-    public void testTransferFunds_createTransferConfirmationConnectionError()
-            throws InterruptedException, TimeoutException {
+    public void testTransferFunds_createTransferConfirmationConnectionError() throws InterruptedException {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
