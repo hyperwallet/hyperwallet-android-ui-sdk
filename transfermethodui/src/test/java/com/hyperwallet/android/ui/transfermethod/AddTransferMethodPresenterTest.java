@@ -24,9 +24,9 @@ import com.hyperwallet.android.model.graphql.field.HyperwalletFieldGroup;
 import com.hyperwallet.android.model.graphql.field.HyperwalletTransferMethodConfiguration;
 import com.hyperwallet.android.model.transfermethod.HyperwalletBankAccount;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
+import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodConfigurationRepository;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepository;
-import com.hyperwallet.android.ui.transfermethod.rule.HyperwalletExternalResourceManager;
 import com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodContract;
 import com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodPresenter;
 
@@ -46,7 +46,9 @@ import org.mockito.stubbing.Answer;
 import org.robolectric.RobolectricTestRunner;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -299,6 +301,35 @@ public class AddTransferMethodPresenterTest {
         verify(view, never()).showInputErrors(ArgumentMatchers.<HyperwalletError>anyList());
         verify(view, never()).showErrorLoadTransferMethodConfigurationFields(
                 ArgumentMatchers.<HyperwalletError>anyList());
+        verify(view, never()).showErrorAddTransferMethod(ArgumentMatchers.<HyperwalletError>anyList());
+    }
+
+    @Test
+    public void testHandleUnmappedFieldError_hasFieldErrorUnmapped() {
+        Map<String, Object> widgetState = new HashMap<>();
+        widgetState.put("fieldOne", new Object());
+        List<HyperwalletError> errorList = new ArrayList<HyperwalletError>() {{
+            add(new HyperwalletError("Test Error", "fieldTwo", "ERROR_UNMAPPED_FIELD"));
+            add(new HyperwalletError("Test Error", "fieldThree", "ERROR_UNMAPPED_FIELD"));
+        }};
+
+        // test
+        presenter.handleUnmappedFieldError(widgetState, errorList);
+
+        verify(view, atLeastOnce()).showErrorAddTransferMethod(ArgumentMatchers.<HyperwalletError>anyList());
+    }
+
+    @Test
+    public void testHandleUnmappedFieldError_fieldsAreMapped() {
+        Map<String, Object> widgetState = new HashMap<>();
+        widgetState.put("fieldOne", new Object());
+        List<HyperwalletError> errorList = new ArrayList<HyperwalletError>() {{
+            add(new HyperwalletError("Test Error", "fieldOne", "ERROR_UNMAPPED_FIELD"));
+        }};
+
+        // test
+        presenter.handleUnmappedFieldError(widgetState, errorList);
+
         verify(view, never()).showErrorAddTransferMethod(ArgumentMatchers.<HyperwalletError>anyList());
     }
 

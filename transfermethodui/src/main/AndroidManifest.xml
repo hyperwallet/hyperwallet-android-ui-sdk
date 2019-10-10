@@ -19,6 +19,10 @@
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable"/>
+            <intent-filter>
+                <action android:name="com.hyperwallet.intent.action.SELECT_TRANSFER_METHOD"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
         </activity>
 
         <activity

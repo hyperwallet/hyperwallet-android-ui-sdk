@@ -17,9 +17,10 @@
 package com.hyperwallet.android.ui.transfermethod.repository;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.hyperwallet.android.model.HyperwalletErrors;
-import com.hyperwallet.android.model.HyperwalletStatusTransition;
+import com.hyperwallet.android.model.StatusTransition;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 
 import java.util.List;
@@ -39,11 +40,18 @@ public interface TransferMethodRepository {
             @NonNull LoadTransferMethodCallback callback);
 
     /**
-     * Load transfer methods available associated with current context
+     * Load transfer methods available, associated with current context
      *
      * @param callback @see {@link LoadTransferMethodListCallback}
      */
     void loadTransferMethods(@NonNull LoadTransferMethodListCallback callback);
+
+    /**
+     * Load latest transfer methods available, associated with current context
+     *
+     * @param callback @see {@link LoadTransferMethodListCallback}
+     */
+    void loadLatestTransferMethod(@NonNull LoadTransferMethodCallback callback);
 
     /**
      * Deactivate transfer method specified.
@@ -65,7 +73,7 @@ public interface TransferMethodRepository {
      */
     interface LoadTransferMethodCallback {
 
-        void onTransferMethodLoaded(HyperwalletTransferMethod transferMethod);
+        void onTransferMethodLoaded(@Nullable HyperwalletTransferMethod transferMethod);
 
         void onError(HyperwalletErrors errors);
     }
@@ -76,7 +84,7 @@ public interface TransferMethodRepository {
      */
     interface LoadTransferMethodListCallback {
 
-        void onTransferMethodListLoaded(List<HyperwalletTransferMethod> transferMethods);
+        void onTransferMethodListLoaded(@Nullable List<HyperwalletTransferMethod> transferMethods);
 
         void onError(HyperwalletErrors errors);
     }
@@ -87,7 +95,7 @@ public interface TransferMethodRepository {
      */
     interface DeactivateTransferMethodCallback {
 
-        void onTransferMethodDeactivated(final @NonNull HyperwalletStatusTransition statusTransition);
+        void onTransferMethodDeactivated(final @NonNull StatusTransition statusTransition);
 
         void onError(HyperwalletErrors errors);
     }

@@ -1,8 +1,13 @@
-apply from: "$rootProject.projectDir/android-library.gradle"
-description = 'Hyperwallet Receipt UI SDK for Android to integrate with the Hyperwallet Platform'
 project.ext {
     mavenName = 'Hyperwallet Android Receipt UI SDK'
+    fileFilter = ['**/BuildConfig.*',
+                  '**/com/hyperwallet/android/ui/receipt/HyperwalletReceiptUi.*',
+                  '**/com/hyperwallet/android/ui/receipt/view/*.*'
+    ]
 }
+description = 'Hyperwallet Receipt UI SDK for Android to integrate with the Hyperwallet Platform'
+
+apply from: "$rootProject.projectDir/android-library.gradle"
 apply from: "$rootProject.projectDir/publish.gradle"
 
 dependencies {
@@ -16,10 +21,14 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleExtensionsVersion"
     implementation "androidx.paging:paging-runtime:$pagingRuntimeVersion"
 
+    testImplementation "org.robolectric:robolectric:$robolectricVersion"
+    testImplementation project(':testutils')
+
     androidTestImplementation "androidx.test:rules:$testRulesVersion"
     androidTestImplementation "androidx.test.espresso:espresso-contrib:$espressoVersion"
     androidTestImplementation "androidx.test.espresso:espresso-intents:$espressoVersion"
     androidTestImplementation "com.squareup.okhttp3:mockwebserver:$mockServerVersion"
     androidTestImplementation "com.squareup.leakcanary:leakcanary-android-instrumentation:$leakcanaryVersion"
     androidTestImplementation "com.squareup.leakcanary:leakcanary-support-fragment:$leakcanaryVersion"
+    androidTestImplementation project(':testutils')
 }

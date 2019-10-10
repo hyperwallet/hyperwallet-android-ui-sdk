@@ -1,0 +1,62 @@
+{
+  "count": 2,
+  "offset": 0,
+  "limit": 1,
+  "data": [
+    {
+      "token": "trm-254d6bfe-b84d-419b-bbea-c1eaef5090ca",
+      "type": "BANK_ACCOUNT",
+      "status": "ACTIVATED",
+      "verificationStatus": "NOT_REQUIRED",
+      "createdOn": "2019-08-12T17:28:59",
+      "transferMethodCountry": "CA",
+      "transferMethodCurrency": "CAD",
+      "bankId": "010",
+      "branchId": "00600",
+      "bankAccountId": "12345121",
+      "profileType": "INDIVIDUAL",
+      "firstName": "Myles",
+      "lastName": "Tobias",
+      "dateOfBirth": "2000-01-01",
+      "countryOfBirth": "US",
+      "countryOfNationality": "CA",
+      "gender": "MALE",
+      "phoneNumber": "+1 604 6666666",
+      "mobileNumber": "604 666 6666",
+      "governmentId": "987654321",
+      "addressLine1": "950 Granville Street",
+      "city": "Vancouver",
+      "stateProvince": "BC",
+      "country": "CA",
+      "postalCode": "V6Z1L2",
+      "links": [
+        {
+          "params": {
+            "rel": "self"
+          },
+          "href": "https://localhost/rest/v3/users/usr-00995baf-eb51-4565-a9cd-2547fd7c1bc6/transfer-methods/trm-254d6bfe-b84d-419b-bbea-c1eaef5090ca"
+        }
+      ]
+    }
+  ],
+  "links": [
+    {
+      "params": {
+        "rel": "self"
+      },
+      "href": "https://localhost/rest/v3/users/usr-00995baf-eb51-4565-a9cd-2547fd7c1bc6/transfer-methods?offset=0&limit=1&status=ACTIVATED"
+    },
+    {
+      "params": {
+        "rel": "next"
+      },
+      "href": "https://localhost/rest/v3/users/usr-00995baf-eb51-4565-a9cd-2547fd7c1bc6/transfer-methods?offset=1&limit=1&status=ACTIVATED"
+    },
+    {
+      "params": {
+        "rel": "last"
+      },
+      "href": "https://localhost/rest/v3/users/usr-00995baf-eb51-4565-a9cd-2547fd7c1bc6/transfer-methods?offset=1&limit=1&status=ACTIVATED"
+    }
+  ]
+}

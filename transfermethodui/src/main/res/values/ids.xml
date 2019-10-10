@@ -79,7 +79,9 @@
     <item name="mobileNumber" type="id"/>
     <item name="mobileNumberLabel" type="id"/>
     <item name="governmentId" type="id"/>
+    <item name="governmentIdLabel" type="id"/>
     <item name="governmentIdType" type="id"/>
+    <item name="governmentIdTypeLabel" type="id"/>
     <item name="passportId" type="id"/>
     <item name="passportIdLabel" type="id"/>
     <item name="driversLicenseId" type="id"/>
@@ -98,4 +100,8 @@
     <item name="countryLabel" type="id"/>
     <item name="postalCode" type="id"/>
     <item name="postalCodeLabel" type="id"/>
+    <item name="taxReasonId" type="id"/>
+    <item name="taxReasonIdLabel" type="id"/>
+    <item name="taxId" type="id"/>
+    <item name="taxIdLabel" type="id"/>
 </resources>

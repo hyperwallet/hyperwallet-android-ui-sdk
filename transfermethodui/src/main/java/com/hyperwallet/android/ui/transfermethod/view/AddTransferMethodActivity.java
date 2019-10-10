@@ -24,13 +24,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.ui.R;
-import com.hyperwallet.android.ui.common.view.error.DefaultErrorDialogFragment;
+import com.hyperwallet.android.ui.common.view.ActivityUtils;
+import com.hyperwallet.android.ui.common.view.TransferMethodUtils;
 import com.hyperwallet.android.ui.common.view.error.OnNetworkErrorCallback;
 
 import java.util.List;
@@ -45,7 +44,6 @@ public class AddTransferMethodActivity extends AppCompatActivity implements
     public static final String EXTRA_TRANSFER_METHOD_CURRENCY = "TRANSFER_METHOD_CURRENCY";
     public static final String EXTRA_TRANSFER_METHOD_TYPE = "TRANSFER_METHOD_TYPE";
     public static final String EXTRA_TRANSFER_METHOD_PROFILE_TYPE = "TRANSFER_METHOD_PROFILE_TYPE";
-    public static final int REQUEST_CODE = 100;
     private static final String ARGUMENT_RETRY_ACTION = "ARGUMENT_RETRY_ACTION";
     private static final short RETRY_SHOW_ERROR_ADD_TRANSFER_METHOD = 100;
     private static final short RETRY_SHOW_ERROR_LOAD_TMC_FIELDS = 101;
@@ -72,12 +70,12 @@ public class AddTransferMethodActivity extends AppCompatActivity implements
         });
 
         if (savedInstanceState == null) {
-            initFragment(AddTransferMethodFragment.newInstance(
+            ActivityUtils.initFragment(this, AddTransferMethodFragment.newInstance(
                     getIntent().getStringExtra(EXTRA_TRANSFER_METHOD_COUNTRY),
                     getIntent().getStringExtra(EXTRA_TRANSFER_METHOD_CURRENCY),
                     getIntent().getStringExtra(EXTRA_TRANSFER_METHOD_TYPE),
                     getIntent().getStringExtra(EXTRA_TRANSFER_METHOD_PROFILE_TYPE)
-            ));
+            ), R.id.add_transfer_method_fragment);
         } else {
             mRetryCode = savedInstanceState.getShort(ARGUMENT_RETRY_ACTION);
         }
@@ -113,13 +111,6 @@ public class AddTransferMethodActivity extends AppCompatActivity implements
         super.onBackPressed();
     }
 
-    private void initFragment(Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.add_transfer_method_fragment, fragment);
-        fragmentTransaction.commit();
-    }
-
     @Override
     public void onWidgetSelectionItemClicked(@NonNull final String selectedValue, @NonNull final String fieldName) {
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -137,13 +128,13 @@ public class AddTransferMethodActivity extends AppCompatActivity implements
     @Override
     public void showErrorsAddTransferMethod(@NonNull final List<HyperwalletError> errors) {
         mRetryCode = RETRY_SHOW_ERROR_ADD_TRANSFER_METHOD;
-        showError(errors);
+        ActivityUtils.showError(this, errors);
     }
 
     @Override
     public void showErrorsLoadTransferMethodConfigurationFields(@NonNull final List<HyperwalletError> errors) {
         mRetryCode = RETRY_SHOW_ERROR_LOAD_TMC_FIELDS;
-        showError(errors);
+        ActivityUtils.showError(this, errors);
     }
 
     @Override
@@ -157,20 +148,6 @@ public class AddTransferMethodActivity extends AppCompatActivity implements
                 fragment.reloadTransferMethodConfigurationFields();
                 break;
             default: // no default action
-        }
-    }
-
-    private void showError(@NonNull final List<HyperwalletError> errors) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        DefaultErrorDialogFragment fragment = (DefaultErrorDialogFragment)
-                fragmentManager.findFragmentByTag(DefaultErrorDialogFragment.TAG);
-
-        if (fragment == null) {
-            fragment = DefaultErrorDialogFragment.newInstance(errors);
-        }
-
-        if (!fragment.isAdded()) {
-            fragment.show(fragmentManager);
         }
     }
 

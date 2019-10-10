@@ -24,7 +24,7 @@ allprojects {
 
     }
 
-    project.version = "1.0.0-beta03"
+    project.version = "1.0.0-beta04-SNAPSHOT"
 
 }
 
@@ -38,7 +38,7 @@ subprojects {
         targetVersion = 28
         codeVersion = 1
 
-        hyperwalletCoreVersion = '1.0.0-beta03'
+        hyperwalletCoreVersion = '1.0.0-beta04'
         //
         androidMaterialVersion = '1.0.0'
         appcompatVersion = '1.0.2'
@@ -58,6 +58,9 @@ subprojects {
         junitParamsVersion = '1.1.1'
         robolectricVersion = '4.1'
         mockWebServerVersion = '3.11.0'
+        //
+        jacocoVersion = "0.8.2"
+        fileFilter = ['**/BuildConfig.*']
     }
 
 }

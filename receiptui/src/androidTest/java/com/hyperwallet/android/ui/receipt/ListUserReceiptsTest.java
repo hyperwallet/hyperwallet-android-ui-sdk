@@ -24,7 +24,7 @@ import static org.hamcrest.Matchers.instanceOf;
 import static java.net.HttpURLConnection.HTTP_NO_CONTENT;
 import static java.net.HttpURLConnection.HTTP_OK;
 
-import static com.hyperwallet.android.ui.receipt.util.EspressoUtils.atPosition;
+import static com.hyperwallet.android.ui.testutils.util.EspressoUtils.atPosition;
 
 import android.content.Context;
 import android.content.res.Configuration;
@@ -41,11 +41,11 @@ import androidx.test.rule.ActivityTestRule;
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
 import com.hyperwallet.android.ui.common.util.DateUtils;
-import com.hyperwallet.android.ui.receipt.rule.HyperwalletExternalResourceManager;
-import com.hyperwallet.android.ui.receipt.rule.HyperwalletMockWebServer;
-import com.hyperwallet.android.ui.receipt.util.RecyclerViewCountAssertion;
-import com.hyperwallet.android.ui.receipt.util.TestAuthenticationProvider;
 import com.hyperwallet.android.ui.receipt.view.ListUserReceiptActivity;
+import com.hyperwallet.android.ui.testutils.TestAuthenticationProvider;
+import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
+import com.hyperwallet.android.ui.testutils.rule.HyperwalletMockWebServer;
+import com.hyperwallet.android.ui.testutils.util.RecyclerViewCountAssertion;
 
 import org.junit.After;
 import org.junit.Before;
@@ -424,7 +424,6 @@ public class ListUserReceiptsTest {
 
         mActivityTestRule.launchActivity(null);
 
-        // assert error dialog information exist in portrait mode
         onView(withText(R.string.error_dialog_connectivity_title)).check(matches(isDisplayed()));
         onView(withText(R.string.io_exception)).check(matches(isDisplayed()));
         onView(withId(android.R.id.button1)).check(matches(withText(R.string.try_again_button_label)));

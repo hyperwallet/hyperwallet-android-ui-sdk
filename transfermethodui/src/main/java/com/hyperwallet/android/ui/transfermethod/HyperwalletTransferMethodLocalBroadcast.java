@@ -16,8 +16,9 @@
  */
 package com.hyperwallet.android.ui.transfermethod;
 
-import static com.hyperwallet.android.ui.transfermethod.HyperwalletTransferMethodLocalBroadcast.HyperwalletLocalBroadcastAction.ACTION_HYPERWALLET_TRANSFER_METHOD_ADDED;
-import static com.hyperwallet.android.ui.transfermethod.HyperwalletTransferMethodLocalBroadcast.HyperwalletLocalBroadcastAction.ACTION_HYPERWALLET_TRANSFER_METHOD_DEACTIVATED;
+import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.HYPERWALLET_LOCAL_BROADCAST_PAYLOAD_KEY;
+import static com.hyperwallet.android.ui.transfermethod.HyperwalletTransferMethodLocalBroadcast.HyperwalletTransferMethodLocalBroadcastAction.ACTION_HYPERWALLET_TRANSFER_METHOD_ADDED;
+import static com.hyperwallet.android.ui.transfermethod.HyperwalletTransferMethodLocalBroadcast.HyperwalletTransferMethodLocalBroadcastAction.ACTION_HYPERWALLET_TRANSFER_METHOD_DEACTIVATED;
 
 import android.content.Intent;
 import android.os.Parcelable;
@@ -25,15 +26,13 @@ import android.os.Parcelable;
 import androidx.annotation.NonNull;
 import androidx.annotation.StringDef;
 
-import com.hyperwallet.android.model.HyperwalletStatusTransition;
+import com.hyperwallet.android.model.StatusTransition;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 public class HyperwalletTransferMethodLocalBroadcast {
-
-    private static final String HYPERWALLET_LOCAL_BROADCAST_PAYLOAD_KEY = "hyperwallet-local-broadcast-payload";
 
     public static Intent createBroadcastIntentTransferMethodAdded(
             @NonNull final HyperwalletTransferMethod transferMethod) {
@@ -42,13 +41,13 @@ public class HyperwalletTransferMethodLocalBroadcast {
     }
 
     public static Intent createBroadcastIntentTransferMethodDeactivated(
-            @NonNull final HyperwalletStatusTransition hyperwalletStatusTransition) {
-        return createBroadcastIntent(hyperwalletStatusTransition,
+            @NonNull final StatusTransition StatusTransition) {
+        return createBroadcastIntent(StatusTransition,
                 ACTION_HYPERWALLET_TRANSFER_METHOD_DEACTIVATED);
     }
 
     private static Intent createBroadcastIntent(@NonNull final Parcelable parcelable,
-            @NonNull final @HyperwalletLocalBroadcastActionType String action) {
+            @NonNull final @HyperwalletTransferMethodLocalBroadcastActionType String action) {
         final Intent intent = new Intent();
         intent.setAction(action);
         intent.putExtra(HYPERWALLET_LOCAL_BROADCAST_PAYLOAD_KEY, parcelable);
@@ -60,10 +59,12 @@ public class HyperwalletTransferMethodLocalBroadcast {
             ACTION_HYPERWALLET_TRANSFER_METHOD_ADDED,
             ACTION_HYPERWALLET_TRANSFER_METHOD_DEACTIVATED
     })
-    public @interface HyperwalletLocalBroadcastActionType {
+    public @interface HyperwalletTransferMethodLocalBroadcastActionType {
     }
 
-    public final class HyperwalletLocalBroadcastAction {
+    public final class HyperwalletTransferMethodLocalBroadcastAction {
+
+        private HyperwalletTransferMethodLocalBroadcastAction() {}
         public static final String ACTION_HYPERWALLET_TRANSFER_METHOD_ADDED =
                 "ACTION_HYPERWALLET_TRANSFER_METHOD_ADDED";
         public static final String ACTION_HYPERWALLET_TRANSFER_METHOD_DEACTIVATED =

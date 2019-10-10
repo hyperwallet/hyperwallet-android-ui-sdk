@@ -1,0 +1,32 @@
+{
+  "token": "trf-ac099673-eb77-4046-92fa-e99171817855",
+  "status": "QUOTED",
+  "createdOn": "2019-08-14T21:25:20",
+  "clientTransferId": "HW-ANDROID-a689b8bc-e863-4c15-a63d-75081be3770b",
+  "sourceToken": "trm-2beee55a-f2af-4cd3-a952-2375fb871597",
+  "sourceAmount": "1,159.60",
+  "sourceFeeAmount": "0.00",
+  "sourceCurrency": "CAD",
+  "destinationToken": "trm-a39aeff6-7d2d-434f-8169-9ede76e6c0f1",
+  "destinationAmount": "1,157.40",
+  "destinationFeeAmount": "2.20",
+  "destinationCurrency": "CAD",
+  "foreignExchanges": [
+    {
+      "sourceCurrency": "USD",
+      "sourceAmount": "898.00",
+      "destinationCurrency": "CAD",
+      "destinationAmount": "1,159.60",
+      "rate": "1.291314"
+    }
+  ],
+  "expiresOn": "2019-08-14T21:27:20",
+  "links": [
+    {
+      "params": {
+        "rel": "self"
+      },
+      "href": "https://localhost/rest/v3/transfers/trf-ac099673-eb77-4046-92fa-e99171817855"
+    }
+  ]
+}

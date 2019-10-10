@@ -16,7 +16,7 @@
  */
 package com.hyperwallet.android.ui.transfermethod.repository;
 
-import static com.hyperwallet.android.model.HyperwalletStatusTransition.StatusDefinition.ACTIVATED;
+import static com.hyperwallet.android.model.StatusTransition.StatusDefinition.ACTIVATED;
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TOKEN;
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TYPE;
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.BANK_ACCOUNT;
@@ -33,16 +33,19 @@ import androidx.annotation.VisibleForTesting;
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.exception.HyperwalletException;
 import com.hyperwallet.android.listener.HyperwalletListener;
-import com.hyperwallet.android.model.HyperwalletStatusTransition;
+import com.hyperwallet.android.model.StatusTransition;
 import com.hyperwallet.android.model.paging.HyperwalletPageList;
 import com.hyperwallet.android.model.transfermethod.HyperwalletBankAccount;
 import com.hyperwallet.android.model.transfermethod.HyperwalletBankCard;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethodQueryParam;
 import com.hyperwallet.android.model.transfermethod.PayPalAccount;
+import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
 
 public class TransferMethodRepositoryImpl implements TransferMethodRepository {
 
+    private static final short QUERY_SINGLE_RESULT = 1;
+    private static final int DEFAULT_LIMIT = 100;
     private Handler mHandler = new Handler();
 
     @VisibleForTesting
@@ -50,6 +53,9 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
         return Hyperwallet.getDefault();
     }
 
+    /**
+     * @see TransferMethodRepository#createTransferMethod(HyperwalletTransferMethod, LoadTransferMethodCallback)
+     */
     @Override
     public void createTransferMethod(@NonNull final HyperwalletTransferMethod transferMethod,
             LoadTransferMethodCallback callback) {
@@ -68,21 +74,29 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
         }
     }
 
+    /**
+     * @see TransferMethodRepository#loadLatestTransferMethod(LoadTransferMethodCallback)
+     */
     @Override
     public void loadTransferMethods(@NonNull final LoadTransferMethodListCallback callback) {
 
         HyperwalletTransferMethodQueryParam queryParam = new HyperwalletTransferMethodQueryParam.Builder()
+                .limit(DEFAULT_LIMIT)
+                .sortByCreatedOnDesc()
                 .status(ACTIVATED)
                 .build();
+        EspressoIdlingResource.increment();
         getHyperwallet().listTransferMethods(queryParam,
                 new HyperwalletListener<HyperwalletPageList<HyperwalletTransferMethod>>() {
                     @Override
                     public void onSuccess(@Nullable HyperwalletPageList<HyperwalletTransferMethod> result) {
+                        EspressoIdlingResource.decrement();
                         callback.onTransferMethodListLoaded(result != null ? result.getDataList() : null);
                     }
 
                     @Override
                     public void onFailure(HyperwalletException exception) {
+                        EspressoIdlingResource.decrement();
                         callback.onError(exception.getHyperwalletErrors());
                     }
 
@@ -93,6 +107,41 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
                 });
     }
 
+    /**
+     * @see TransferMethodRepository#loadLatestTransferMethod(LoadTransferMethodCallback)
+     */
+    @Override
+    public void loadLatestTransferMethod(@NonNull final LoadTransferMethodCallback callback) {
+        HyperwalletTransferMethodQueryParam queryParam = new HyperwalletTransferMethodQueryParam.Builder()
+                .sortByCreatedOnDesc()
+                .limit(QUERY_SINGLE_RESULT)
+                .status(ACTIVATED)
+                .build();
+        EspressoIdlingResource.increment();
+        getHyperwallet().listTransferMethods(queryParam,
+                new HyperwalletListener<HyperwalletPageList<HyperwalletTransferMethod>>() {
+                    @Override
+                    public void onSuccess(@Nullable HyperwalletPageList<HyperwalletTransferMethod> result) {
+                        EspressoIdlingResource.decrement();
+                        callback.onTransferMethodLoaded(result != null ? result.getDataList().get(0) : null);
+                    }
+
+                    @Override
+                    public void onFailure(HyperwalletException exception) {
+                        EspressoIdlingResource.decrement();
+                        callback.onError(exception.getHyperwalletErrors());
+                    }
+
+                    @Override
+                    public Handler getHandler() {
+                        return mHandler;
+                    }
+                });
+    }
+
+    /**
+     * @see TransferMethodRepository#deactivateTransferMethod(HyperwalletTransferMethod, DeactivateTransferMethodCallback)
+     */
     @Override
     public void deactivateTransferMethod(@NonNull final HyperwalletTransferMethod transferMethod,
             @NonNull final DeactivateTransferMethodCallback callback) {
@@ -114,9 +163,9 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
     private void deactivateBankAccount(@NonNull final HyperwalletTransferMethod transferMethod,
             @NonNull final DeactivateTransferMethodCallback callback) {
         getHyperwallet().deactivateBankAccount(transferMethod.getField(TOKEN), null,
-                new HyperwalletListener<HyperwalletStatusTransition>() {
+                new HyperwalletListener<StatusTransition>() {
                     @Override
-                    public void onSuccess(@Nullable HyperwalletStatusTransition result) {
+                    public void onSuccess(@Nullable StatusTransition result) {
                         callback.onTransferMethodDeactivated(result);
                     }
 
@@ -135,9 +184,9 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
     private void deactivateBankCardAccount(@NonNull final HyperwalletTransferMethod transferMethod,
             @NonNull final DeactivateTransferMethodCallback callback) {
         getHyperwallet().deactivateBankCard(transferMethod.getField(TOKEN), null,
-                new HyperwalletListener<HyperwalletStatusTransition>() {
+                new HyperwalletListener<StatusTransition>() {
                     @Override
-                    public void onSuccess(@Nullable HyperwalletStatusTransition result) {
+                    public void onSuccess(@Nullable StatusTransition result) {
                         callback.onTransferMethodDeactivated(result);
                     }
 
@@ -156,9 +205,9 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
     private void deactivatePayPalAccount(@NonNull final HyperwalletTransferMethod transferMethod,
             @NonNull final DeactivateTransferMethodCallback callback) {
         getHyperwallet().deactivatePayPalAccount(transferMethod.getField(TOKEN), null,
-                new HyperwalletListener<HyperwalletStatusTransition>() {
+                new HyperwalletListener<StatusTransition>() {
                     @Override
-                    public void onSuccess(@Nullable HyperwalletStatusTransition result) {
+                    public void onSuccess(@Nullable StatusTransition result) {
                         callback.onTransferMethodDeactivated(result);
                     }
 

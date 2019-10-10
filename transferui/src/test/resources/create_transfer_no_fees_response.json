@@ -1,0 +1,22 @@
+{
+  "token": "trf-65d76804-a652-402a-821a-b3b9384bc57b",
+  "status": "QUOTED",
+  "createdOn": "2019-08-12T17:39:30",
+  "clientTransferId": "HW-ANDROID-e9a1fc10-c5ca-4d48-9135-bf32482ee02e",
+  "sourceToken": "usr-00995baf-eb51-4565-a9cd-2547fd7c1bc6",
+  "sourceAmount": "100.00",
+  "sourceCurrency": "USD",
+  "destinationToken": "trm-00b89487-89c7-4fec-af66-9e669dd33bcf",
+  "destinationAmount": "100.00",
+  "destinationFeeAmount": "0.00",
+  "destinationCurrency": "USD",
+  "expiresOn": "2019-08-12T17:41:30",
+  "links": [
+    {
+      "params": {
+        "rel": "self"
+      },
+      "href": "https://localhost/rest/v3/transfers/trf-65d76804-a652-402a-821a-b3b9384bc57b"
+    }
+  ]
+}

@@ -29,9 +29,9 @@ import androidx.annotation.NonNull;
 
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.HyperwalletAuthenticationTokenProvider;
+import com.hyperwallet.android.ui.common.intent.HyperwalletIntent;
 import com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity;
 import com.hyperwallet.android.ui.transfermethod.view.ListTransferMethodActivity;
-import com.hyperwallet.android.ui.transfermethod.view.SelectTransferMethodActivity;
 
 /**
  * Class responsible for initializing the Hyperwallet UI SDK. It contains methods to interact with the activities and
@@ -70,10 +70,13 @@ public final class HyperwalletTransferMethodUi {
 
     /**
      * @param context A Context of the application consuming this Intent.
-     * @return an Intent with the data necessary to launch the {@link SelectTransferMethodActivity}
+     * @return an Intent with Action specified to start implicit activity
+     * {@link HyperwalletIntent#ACTION_SELECT_TRANSFER_METHOD}
      */
     public Intent getIntentSelectTransferMethodActivity(@NonNull final Context context) {
-        return new Intent(context, SelectTransferMethodActivity.class);
+        Intent intent = new Intent();
+        intent.setAction(HyperwalletIntent.ACTION_SELECT_TRANSFER_METHOD);
+        return intent;
     }
 
     /**
@@ -81,10 +84,6 @@ public final class HyperwalletTransferMethodUi {
      * @param country            The transfer method country code. ISO 3166-1 alpha-2 format.
      * @param currency           The transfer method currency code. ISO 4217 format.
      * @param transferMethodType The type of transfer method. For a complete list of transfer methods, see {@link
-     *
-     *
-     *
-     *
      *                       com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes}
      * @param profileType        The type of the account holder profile. For a complete list of options, see
      *                           {@link com.hyperwallet.android.model.user.HyperwalletUser.ProfileTypes}

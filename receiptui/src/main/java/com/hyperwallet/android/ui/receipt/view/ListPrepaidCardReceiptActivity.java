@@ -24,28 +24,23 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.receipt.Receipt;
 import com.hyperwallet.android.ui.common.repository.Event;
-import com.hyperwallet.android.ui.common.view.error.DefaultErrorDialogFragment;
+import com.hyperwallet.android.ui.common.view.ActivityUtils;
 import com.hyperwallet.android.ui.common.view.error.OnNetworkErrorCallback;
-import com.hyperwallet.android.ui.common.viewmodel.ListDetailNavigator;
+import com.hyperwallet.android.ui.common.viewmodel.Navigator;
 import com.hyperwallet.android.ui.receipt.R;
 import com.hyperwallet.android.ui.receipt.repository.PrepaidCardReceiptRepositoryImpl;
 import com.hyperwallet.android.ui.receipt.viewmodel.ListPrepaidCardReceiptViewModel;
 import com.hyperwallet.android.ui.receipt.viewmodel.ReceiptViewModel;
 
-import java.util.List;
-
 public class ListPrepaidCardReceiptActivity extends AppCompatActivity implements OnNetworkErrorCallback,
-        ListDetailNavigator<Event<Receipt>> {
+        Navigator<Event<Receipt>> {
 
     public static final String EXTRA_PREPAID_CARD_TOKEN = "PREPAID_CARD_TOKEN";
 
@@ -82,7 +77,7 @@ public class ListPrepaidCardReceiptActivity extends AppCompatActivity implements
             @Override
             public void onChanged(Event<HyperwalletErrors> event) {
                 if (event != null && !event.isContentConsumed()) {
-                    showErrorOnLoadReceipt(event.getContent().getErrors());
+                    ActivityUtils.showError(ListPrepaidCardReceiptActivity.this, event.getContent().getErrors());
                 }
             }
         });
@@ -95,7 +90,7 @@ public class ListPrepaidCardReceiptActivity extends AppCompatActivity implements
         });
 
         if (savedInstanceState == null) {
-            initFragment(ListReceiptFragment.newInstance());
+            ActivityUtils.initFragment(this, ListReceiptFragment.newInstance(), R.id.list_receipt_fragment);
         }
     }
 
@@ -117,27 +112,6 @@ public class ListPrepaidCardReceiptActivity extends AppCompatActivity implements
             Intent intent = new Intent(this, ReceiptDetailActivity.class);
             intent.putExtra(ReceiptDetailActivity.EXTRA_RECEIPT, event.getContent());
             startActivity(intent);
-        }
-    }
-
-    private void initFragment(@NonNull final Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.list_receipt_fragment, fragment);
-        fragmentTransaction.commit();
-    }
-
-    private void showErrorOnLoadReceipt(@NonNull final List<HyperwalletError> errors) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        DefaultErrorDialogFragment fragment = (DefaultErrorDialogFragment)
-                fragmentManager.findFragmentByTag(DefaultErrorDialogFragment.TAG);
-
-        if (fragment == null) {
-            fragment = DefaultErrorDialogFragment.newInstance(errors);
-        }
-
-        if (!fragment.isAdded()) {
-            fragment.show(fragmentManager);
         }
     }
 }

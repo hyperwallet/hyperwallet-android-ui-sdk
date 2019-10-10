@@ -18,9 +18,9 @@ package com.hyperwallet.android.ui.transfermethod.view;
 
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_COUNTRY;
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TYPE;
-import static com.hyperwallet.android.ui.transfermethod.view.TransferMethodUtils.getStringFontIcon;
-import static com.hyperwallet.android.ui.transfermethod.view.TransferMethodUtils.getStringResourceByName;
-import static com.hyperwallet.android.ui.transfermethod.view.TransferMethodUtils.getTransferMethodDetail;
+import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getStringFontIcon;
+import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getStringResourceByName;
+import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getTransferMethodDetail;
 
 import android.content.Context;
 import android.content.Intent;
@@ -44,7 +44,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hyperwallet.android.model.HyperwalletError;
-import com.hyperwallet.android.model.HyperwalletStatusTransition;
+import com.hyperwallet.android.model.StatusTransition;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.common.view.HorizontalDividerItemDecorator;
@@ -173,7 +173,7 @@ public class ListTransferMethodFragment extends Fragment implements ListTransfer
         recyclerView = view.findViewById(R.id.list_transfer_method_item);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.addItemDecoration(new HorizontalDividerItemDecorator(requireContext(), false));
+        recyclerView.addItemDecoration(new HorizontalDividerItemDecorator(requireContext()));
     }
 
     @Override
@@ -223,7 +223,7 @@ public class ListTransferMethodFragment extends Fragment implements ListTransfer
 
     @Override
     public void notifyTransferMethodDeactivated(
-            @NonNull final HyperwalletStatusTransition statusTransition) {
+            @NonNull final StatusTransition statusTransition) {
         Intent intent = HyperwalletTransferMethodLocalBroadcast.createBroadcastIntentTransferMethodDeactivated(
                 statusTransition);
         LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
