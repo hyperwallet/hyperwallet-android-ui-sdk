@@ -119,6 +119,23 @@ public void onClick(View view) {
 }
 ```
 
+### Create a transfer using the logged in user as the source of funds
+```java
+public void onClick(View view) {
+    Intent intent = mHyperwalletTransferUi.getIntentCreateTransfer(MainActivity.this);
+    startActivity(intent);
+}
+```
+### Create a transfer from a specific account as the source of funds
+The two argument version allows you to choose the source of funds, typically used for EA to EA transfers or PPC to EA transfers.
+Your configuration must support this as not all banks and currencies are compatible with each other.
+```java
+public void onClick(View view) {
+    Intent intent = mHyperwalletTransferUi.getIntentCreateTransfer(MainActivity.this, "trm-12345");
+    startActivity(intent);
+}
+```
+
 ### Create/Add a transfer method
 The form fields are based on the country, currency, user's profile type, and transfer method type should be passed to this Activity to create a new Transfer Method for those values.
 ```java
@@ -134,7 +151,7 @@ public void onClick(View view) {
 }
 ```
 
-### Lists the user's receipts
+### List the user's receipts
 ```java
 public void onClick(View view) {
     Intent intent = mHyperwalletReceiptUi.getIntentListUserReceiptActivity(MainActivity.this);
@@ -142,7 +159,7 @@ public void onClick(View view) {
 }
 ```
 
-### Lists the prepaid card's receipts
+### List the prepaid card's receipts
 ```java
 public void onClick(View view) {
     Intent intent = mHyperwalletReceiptUi.getIntentListPrepaidCardReceiptActivity(MainActivity.this, "trm-12345");
