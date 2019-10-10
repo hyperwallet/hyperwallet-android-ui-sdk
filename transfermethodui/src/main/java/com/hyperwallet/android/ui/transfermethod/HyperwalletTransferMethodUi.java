@@ -84,10 +84,6 @@ public final class HyperwalletTransferMethodUi {
      * @param country            The transfer method country code. ISO 3166-1 alpha-2 format.
      * @param currency           The transfer method currency code. ISO 4217 format.
      * @param transferMethodType The type of transfer method. For a complete list of transfer methods, see {@link
-     *
-     *
-     *
-     *
      *                       com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes}
      * @param profileType        The type of the account holder profile. For a complete list of options, see
      *                           {@link com.hyperwallet.android.model.user.HyperwalletUser.ProfileTypes}
