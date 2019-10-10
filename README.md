@@ -1,5 +1,7 @@
 # Hyperwallet Android UI SDK
 
+**NOTE: This is a beta product available for use in your mobile app. If you are interested in using this product, please notify your Relationship Manager and / or Project Manager to support you during the integration process.**
+
 Welcome to Hyperwallet's Android UI SDK. This out-of-the-box library will help you create transfer methods in your Android app, such as bank account, PayPal account, etc.
 
 Note that this SDK is geared towards those who need both backend data and UI features. Please refer to [Hyperwallet Android Core SDK](https://github.com/hyperwallet/hyperwallet-android-sdk) if you decide to build your own UI.
