@@ -8,7 +8,6 @@
             <solid android:color="@color/colorInputFormBackground" />
         </shape>
     </item>
-
     <item
         android:bottom="1dp"
         android:top="1dp">
@@ -18,5 +17,4 @@
                 android:color="@color/colorInputFormBackground" />
         </shape>
     </item>
-
 </layer-list>

@@ -8,7 +8,6 @@
             <solid android:color="@color/regularColorPrimary"/>
         </shape>
     </item>
-
     <item android:bottom="1dp">
         <shape android:shape="rectangle">
             <stroke
@@ -16,5 +15,4 @@
                 android:color="@color/regularColorPrimary"/>
         </shape>
     </item>
-
 </layer-list>
