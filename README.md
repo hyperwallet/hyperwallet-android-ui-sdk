@@ -20,6 +20,7 @@ To install Hyperwallet UI SDK, you just need to add the dependencies into your b
 ```bash
 api 'com.hyperwallet.android.ui:transfermethodui:1.0.0-beta03'
 api 'com.hyperwallet.android.ui:receiptui:1.0.0-beta03'
+api 'com.hyperwallet.android.ui:transferui:1.0.0-beta03'
 ```
 
 ## Initialization
