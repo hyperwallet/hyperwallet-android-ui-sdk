@@ -46,10 +46,12 @@ public class ScheduleTransferViewModel extends ViewModel {
 
     private Transfer mTransfer;
     private HyperwalletTransferMethod mTransferDestination;
+    private boolean mShowFxChangeWarning;
     private TransferRepository mTransferRepository;
     private MutableLiveData<StatusTransition> mTransferStatusTransition = new MutableLiveData<>();
     private MutableLiveData<Event<HyperwalletErrors>> mTransferStatusTransitionError = new MutableLiveData<>();
     private MutableLiveData<Boolean> mIsScheduleTransferLoading = new MutableLiveData<>();
+
 
     ScheduleTransferViewModel(@NonNull final TransferRepository transferRepository) {
         mTransferRepository = transferRepository;
@@ -99,6 +101,14 @@ public class ScheduleTransferViewModel extends ViewModel {
 
     public LiveData<Boolean> isScheduleTransferLoading() {
         return mIsScheduleTransferLoading;
+    }
+
+    public void setShowFxChangeWarning(final boolean showFxChangeWarning) {
+        mShowFxChangeWarning = showFxChangeWarning;
+    }
+
+    public boolean getShowFxChangeWarning() {
+        return mShowFxChangeWarning;
     }
 
     // TODO this will be removed when Platform can return the total amount field

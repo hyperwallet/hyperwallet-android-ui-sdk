@@ -48,6 +48,7 @@ public class ScheduleTransferActivity extends AppCompatActivity implements OnNet
 
     public static final String EXTRA_TRANSFER = "TRANSFER";
     public static final String EXTRA_TRANSFER_METHOD = "TRANSFER_METHOD";
+    public static final String EXTRA_SHOW_FX_CHANGE_WARNING = "SHOW_FX_CHANGE_WARNING";
 
     private ScheduleTransferViewModel mScheduleTransferViewModel;
 
@@ -71,6 +72,7 @@ public class ScheduleTransferActivity extends AppCompatActivity implements OnNet
 
         Parcelable transferParcel = getIntent().getParcelableExtra(EXTRA_TRANSFER);
         Parcelable transferMethodParcel = getIntent().getParcelableExtra(EXTRA_TRANSFER_METHOD);
+        boolean showFxRateChangeWarningParcel = getIntent().getBooleanExtra(EXTRA_SHOW_FX_CHANGE_WARNING, false);
         if (transferParcel instanceof Transfer && transferMethodParcel instanceof HyperwalletTransferMethod) {
             mScheduleTransferViewModel = ViewModelProviders.of(this,
                     new ScheduleTransferViewModel.ScheduleTransferViewModelFactory(
@@ -78,6 +80,7 @@ public class ScheduleTransferActivity extends AppCompatActivity implements OnNet
                     .get(ScheduleTransferViewModel.class);
             mScheduleTransferViewModel.setTransfer((Transfer) transferParcel);
             mScheduleTransferViewModel.setTransferDestination((HyperwalletTransferMethod) transferMethodParcel);
+            mScheduleTransferViewModel.setShowFxChangeWarning(showFxRateChangeWarningParcel);
             registerObservers();
         } else {
             throw new IllegalArgumentException("Required extra arguments are invalid for "

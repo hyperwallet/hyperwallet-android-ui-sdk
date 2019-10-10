@@ -160,7 +160,18 @@ public class ScheduleTransferFragment extends Fragment {
                     mScheduleTransferViewModel.getTransfer().getDestinationAmount(),
                     mScheduleTransferViewModel.getTransfer().getDestinationCurrency()));
         }
+
+        if (mScheduleTransferViewModel.getShowFxChangeWarning()) {
+            View view = getView().findViewById(R.id.exchange_rate_warning_container);
+            view.setVisibility(View.VISIBLE);
+            TextView exchangeRateChangeWarning = getView().findViewById(R.id.exchange_rate_warning);
+            exchangeRateChangeWarning.setText(requireContext().getString(R.string.exchange_rate_change_warning,
+                    mScheduleTransferViewModel.getTransfer().getDestinationAmount(),
+                    mScheduleTransferViewModel.getTransfer().getDestinationCurrency()));
+
+        }
     }
+
 
     private void showNotes() {
         View notesContainer = getView().findViewById(R.id.notes_container);
