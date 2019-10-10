@@ -24,7 +24,7 @@ allprojects {
 
     }
 
-    project.version = "1.0.0-beta04-SNAPSHOT"
+    project.version = "1.0.0-beta05-SNAPSHOT"
 
 }
 
@@ -38,7 +38,7 @@ subprojects {
         targetVersion = 28
         codeVersion = 1
 
-        hyperwalletCoreVersion = '1.0.0-beta04'
+        hyperwalletCoreVersion = '1.0.0-beta05-SNAPSHOT'
         //
         androidMaterialVersion = '1.0.0'
         appcompatVersion = '1.0.2'
