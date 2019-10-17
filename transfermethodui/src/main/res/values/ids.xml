@@ -104,6 +104,6 @@
     <item name="taxReasonIdLabel" type="id"/>
     <item name="taxId" type="id"/>
     <item name="taxIdLabel" type="id"/>
-    <item name="residenceId" type="id"/>
+    <item name="residence" type="id"/>
     <item name="residenceLabel" type="id"/>
 </resources>
