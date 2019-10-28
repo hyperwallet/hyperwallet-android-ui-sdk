@@ -32,7 +32,7 @@ public class HyperwalletInsight {
     private HyperwalletInsight() {
     }
 
-    public static HyperwalletInsight getInstance() {
+    public static synchronized HyperwalletInsight getInstance() {
         if (sHyperwalletInsight == null) {
             sHyperwalletInsight = new HyperwalletInsight();
         }
