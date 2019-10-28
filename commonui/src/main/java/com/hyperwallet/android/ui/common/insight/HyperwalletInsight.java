@@ -40,8 +40,7 @@ public class HyperwalletInsight {
     }
 
     public void trackClick(@NonNull final Context context, @NonNull final String pageName,
-            @NonNull final String pageGroup, String link,
-            Map<String, String> params) {
+            @NonNull final String pageGroup, String link, Map<String, String> params) {
 
     }
 
