@@ -17,6 +17,7 @@
 package com.hyperwallet.android.ui.transfermethod.view.widget;
 
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -38,11 +39,13 @@ public class NumberWidget extends AbstractWidget {
     private ViewGroup mContainer;
     private TextInputLayout mTextInputLayout;
     private String mValue;
+    private InputFilter[] mInputFilter;
 
     public NumberWidget(@NonNull HyperwalletField field, @NonNull WidgetEventListener listener,
             @Nullable String defaultValue, @NonNull View defaultFocusView) {
         super(field, listener, defaultValue, defaultFocusView);
         mValue = defaultValue;
+        mInputFilter = new InputFilter[]{new WidgetInputFilter(mField.getHyperwalletMaskField())};
     }
 
     @Override
@@ -67,7 +70,7 @@ public class NumberWidget extends AbstractWidget {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
                     if (!hasFocus) {
-                        mValue = ((EditText) v).getText().toString();
+                        mValue = scrubValue(((EditText) v).getText().toString());
                         mListener.valueChanged();
                     } else {
                         mListener.widgetFocused(NumberWidget.this.getName());
@@ -82,7 +85,7 @@ public class NumberWidget extends AbstractWidget {
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     if (before != count) {
-                        mValue = s.toString();
+                        mValue = scrubValue(s.toString());
                         mListener.saveTextChanged(getName(), getValue());
                     }
                 }
@@ -92,8 +95,9 @@ public class NumberWidget extends AbstractWidget {
                 }
             });
 
-            editText.setText(TextUtils.isEmpty(mDefaultValue) ? mField.getValue() : mDefaultValue);
-            editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+            editText.setFilters(mInputFilter);
+            editText.setText(formatDefaultValue(TextUtils.isEmpty(mDefaultValue) ? mField.getValue() : mDefaultValue));
+            editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_CLASS_NUMBER);
             editText.setOnKeyListener(new DefaultKeyListener(mDefaultFocusView, editText));
             editText.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI | EditorInfo.IME_ACTION_NEXT);
             mTextInputLayout.addView(editText);
