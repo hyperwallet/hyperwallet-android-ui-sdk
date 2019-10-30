@@ -24,8 +24,13 @@ public class WidgetInputFilter implements InputFilter {
             String textToFormat = dest.toString().trim().isEmpty() ? input.toString() : dest.toString();
             String formatPattern = WidgetInputUtil.getFormatTemplate(textToFormat, mHyperwalletMaskField);
 
+            String displayed = input.toString() + dest.toString();
             if (dest.length() < formatPattern.length()) {
-                return WidgetInputUtil.getInputFormat(input.toString(), formatPattern, dend);
+                if (!WidgetInputUtil.isValueFormatted(displayed, formatPattern)) {
+                    return WidgetInputUtil.getInputFormat(input.toString(), formatPattern, dend);
+                } else {
+                    return input;
+                }
             }
         }
         return "";

@@ -26,6 +26,10 @@ final class WidgetInputUtil {
         StringBuilder formattedValue = new StringBuilder();
         int valueIndex = 0;
         for (int i = 0; i < formatTemplate.length(); i++) {
+            if (valueIndex == value.length()) {
+                break;
+            }
+
             char token = formatTemplate.charAt(i);
             switch (token) {
                 case NUMBER_TOKEN:
@@ -45,6 +49,37 @@ final class WidgetInputUtil {
             }
         }
         return formattedValue.toString();
+    }
+
+    static boolean isValueFormatted(@NonNull final String value, @NonNull final String template) {
+        int valueIndex = 0;
+        for (int i = 0; i < template.length(); i++) {
+            if (valueIndex == value.length()) {
+                break;
+            }
+
+            char token = template.charAt(i);
+            switch (token) {
+                case NUMBER_TOKEN:
+                    if (!Character.isDigit(value.charAt(valueIndex))) {
+                        return false;
+                    }
+                    valueIndex++;
+                    break;
+                case TEXT_TOKEN:
+                    if (!Character.isLetter(value.charAt(valueIndex))) {
+                        return false;
+                    }
+                    valueIndex++;
+                    break;
+                default: // append token
+                    if (value.charAt(valueIndex) != token) {
+                        return false;
+                    }
+                    valueIndex++;
+            }
+        }
+        return true;
     }
 
     static String getInputFormat(@NonNull final String value,
