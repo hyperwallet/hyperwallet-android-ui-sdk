@@ -100,6 +100,7 @@ public class NumberWidget extends AbstractWidget {
             editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_CLASS_NUMBER);
             editText.setOnKeyListener(new DefaultKeyListener(mDefaultFocusView, editText));
             editText.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI | EditorInfo.IME_ACTION_NEXT);
+            editText.setLongClickable(false);
             mTextInputLayout.addView(editText);
             appendLayout(mTextInputLayout, true);
             mContainer.addView(mTextInputLayout);
