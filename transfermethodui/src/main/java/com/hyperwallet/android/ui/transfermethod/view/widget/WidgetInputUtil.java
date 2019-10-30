@@ -86,7 +86,10 @@ final class WidgetInputUtil {
         int indexToInsert = insertIndex;
         int valueIndex = 0;
         for (int i = 0; i < formatTemplate.length(); i++) {
-            if (valueIndex == value.length()) {
+            if (valueIndex == value.length()
+                    || indexToInsert == formatTemplate.length()
+                    || !isValidCharacter(value.charAt(valueIndex),
+                    formatTemplate.charAt(indexToInsert))) {
                 break;
             }
 
@@ -110,5 +113,9 @@ final class WidgetInputUtil {
             indexToInsert++;
         }
         return formattedStringBuilder.toString();
+    }
+
+    static boolean isValidCharacter(final char c, final char token) {
+        return Character.isLetter(c) || Character.isDigit(c) || c == token;
     }
 }
