@@ -20,7 +20,7 @@ public class WidgetInputFilter implements InputFilter {
 
     @Override
     public CharSequence filter(CharSequence input, int start, int end, Spanned dest, int dstart, int dend) {
-        if (!TextUtils.isEmpty(input) && hasMasking) {
+        if (!TextUtils.isEmpty(input.toString().trim()) && hasMasking) {
             String textToFormat = dest.toString().trim().isEmpty() ? input.toString() : dest.toString();
             String formatPattern = WidgetInputUtil.getFormatTemplate(textToFormat, mHyperwalletMaskField);
 
