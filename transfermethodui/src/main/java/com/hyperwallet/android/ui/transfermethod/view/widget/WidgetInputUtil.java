@@ -52,32 +52,30 @@ final class WidgetInputUtil {
     }
 
     static boolean isValueFormatted(@NonNull final String value, @NonNull final String template) {
-        int valueIndex = 0;
+        int candidateFormattedValueIndex = 0;
         for (int i = 0; i < template.length(); i++) {
-            if (valueIndex == value.length()) {
+            if (candidateFormattedValueIndex == value.length()) {
                 break;
             }
 
             char token = template.charAt(i);
             switch (token) {
                 case NUMBER_TOKEN:
-                    if (!Character.isDigit(value.charAt(valueIndex))) {
+                    if (!Character.isDigit(value.charAt(candidateFormattedValueIndex))) {
                         return false;
                     }
-                    valueIndex++;
                     break;
                 case TEXT_TOKEN:
-                    if (!Character.isLetter(value.charAt(valueIndex))) {
+                    if (!Character.isLetter(value.charAt(candidateFormattedValueIndex))) {
                         return false;
                     }
-                    valueIndex++;
                     break;
                 default: // append token
-                    if (value.charAt(valueIndex) != token) {
+                    if (value.charAt(candidateFormattedValueIndex) != token) {
                         return false;
                     }
-                    valueIndex++;
             }
+            candidateFormattedValueIndex++;
         }
         return true;
     }
