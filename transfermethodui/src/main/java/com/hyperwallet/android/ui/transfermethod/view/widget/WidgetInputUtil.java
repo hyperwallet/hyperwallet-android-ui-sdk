@@ -85,17 +85,21 @@ final class WidgetInputUtil {
         StringBuilder formattedStringBuilder = new StringBuilder();
         int indexToInsert = insertIndex;
         int valueIndex = 0;
-        for (int i = 0; i < value.length(); i++) {
+        for (int i = 0; i < formatTemplate.length(); i++) {
+            if (valueIndex == value.length()) {
+                break;
+            }
+
             char token = formatTemplate.charAt(indexToInsert);
             switch (token) {
                 case NUMBER_TOKEN:
-                    if (Character.isDigit(value.charAt(i))) {
+                    if (Character.isDigit(value.charAt(valueIndex))) {
                         formattedStringBuilder.append(value.charAt(valueIndex));
                         valueIndex++;
                     }
                     break;
                 case TEXT_TOKEN:
-                    if (Character.isLetter(value.charAt(i))) {
+                    if (Character.isLetter(value.charAt(valueIndex))) {
                         formattedStringBuilder.append(value.charAt(valueIndex));
                         valueIndex++;
                     }
