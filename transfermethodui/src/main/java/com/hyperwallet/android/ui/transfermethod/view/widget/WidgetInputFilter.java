@@ -30,7 +30,8 @@ public class WidgetInputFilter implements InputFilter {
                     if (!WidgetInputUtil.isValueFormatted(displayed, formatPattern)) {
                         return WidgetInputUtil.getInputFormat(input.toString(), formatPattern, dend);
                     } else {
-                        return input;
+                        return input.length() > formatPattern.length() ?
+                                input.subSequence(0, formatPattern.length()) : input;
                     }
                 }
             }
