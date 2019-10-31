@@ -82,4 +82,6 @@
 
     <string name="error_unmapped_field">Unmapped field, Please contact support.</string>
 
+    <string name="tag_group_transfer_method">transfer-method</string>
+
 </resources>

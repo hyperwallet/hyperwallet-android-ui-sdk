@@ -41,23 +41,26 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.ui.R;
+import com.hyperwallet.android.ui.common.insight.HyperwalletInsight;
 import com.hyperwallet.android.ui.common.view.HorizontalDividerItemDecorator;
 import com.hyperwallet.android.ui.common.view.OneClickListener;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
 import com.hyperwallet.android.ui.user.repository.UserRepositoryFactory;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.TreeMap;
 
 public class SelectTransferMethodFragment extends Fragment implements SelectTransferMethodContract.View {
 
+    protected static final String TAG = "transfer-method:add:select-transfer-method";
+    protected static final String LINK = "select-transfer-method";
     private static final String ARGUMENT_COUNTRY_CODE_SELECTED = "ARGUMENT_COUNTRY_CODE_SELECTED";
     private static final String ARGUMENT_CURRENCY_CODE_SELECTED = "ARGUMENT_CURRENCY_CODE_SELECTED";
     private static final boolean FORCE_UPDATE = false;
-    private static final String TAG = SelectTransferMethodFragment.class.getName();
-
     private TextView mCountryValue;
     private TextView mCurrencyValue;
     private OnLoadCountrySelectionNetworkErrorCallback mOnLoadCountrySelectionNetworkErrorCallback;
@@ -293,6 +296,13 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
     @Override
     public void showAddTransferMethod(@NonNull final String country, @NonNull final String currency,
             @NonNull final String transferMethodType, @NonNull final String profileType) {
+        Map<String, String> params = new HashMap<>();
+        params.put("hyperwallet_ea_country", country);
+        params.put("hyperwallet_ea_currency", currency);
+        params.put("hyperwallet_ea_type", transferMethodType);
+        HyperwalletInsight.getInstance().trackClick(getContext(), TAG,
+                getResources().getString(R.string.tag_group_transfer_method), LINK, params);
+
         Intent intent = new Intent(getActivity(), AddTransferMethodActivity.class);
         intent.putExtra(AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_COUNTRY, country);
         intent.putExtra(AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_CURRENCY, currency);
