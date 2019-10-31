@@ -57,7 +57,7 @@ import java.util.TreeMap;
 public class SelectTransferMethodFragment extends Fragment implements SelectTransferMethodContract.View {
 
     protected static final String TAG = "transfer-method:add:select-transfer-method";
-    protected static final String LINK = "select-transfer-method";
+    private static final String LINK = "select-transfer-method";
     private static final String ARGUMENT_COUNTRY_CODE_SELECTED = "ARGUMENT_COUNTRY_CODE_SELECTED";
     private static final String ARGUMENT_CURRENCY_CODE_SELECTED = "ARGUMENT_CURRENCY_CODE_SELECTED";
     private static final boolean FORCE_UPDATE = false;
