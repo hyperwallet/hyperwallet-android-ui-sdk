@@ -41,22 +41,25 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.ui.R;
+import com.hyperwallet.android.ui.common.insight.HyperwalletInsight;
 import com.hyperwallet.android.ui.common.view.HorizontalDividerItemDecorator;
 import com.hyperwallet.android.ui.common.view.OneClickListener;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
 import com.hyperwallet.android.ui.user.repository.UserRepositoryFactory;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.TreeMap;
 
 public class SelectTransferMethodFragment extends Fragment implements SelectTransferMethodContract.View {
 
+    protected static final String TAG = "transfer-method:add:select-transfer-method";
     private static final String ARGUMENT_COUNTRY_CODE_SELECTED = "ARGUMENT_COUNTRY_CODE_SELECTED";
     private static final String ARGUMENT_CURRENCY_CODE_SELECTED = "ARGUMENT_CURRENCY_CODE_SELECTED";
     private static final boolean FORCE_UPDATE = false;
-    private static final String TAG = SelectTransferMethodFragment.class.getName();
 
     private TextView mCountryValue;
     private TextView mCurrencyValue;
@@ -231,6 +234,12 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
 
     @Override
     public void showTransferMethodTypes(@NonNull List<TransferMethodSelectionItem> transferMethodTypes) {
+        Map<String, String> params = new HashMap<>();
+        params.put("hyperwallet_ea_country", mSelectedCountryCode);
+        params.put("hyperwallet_ea_currency", mSelectedCurrencyCode);
+        HyperwalletInsight.getInstance().trackImpression(getContext(), TAG,
+                getString(R.string.tag_group_transfer_method), params);
+
         mTransferMethodTypesAdapter.replaceData(transferMethodTypes);
     }
 
