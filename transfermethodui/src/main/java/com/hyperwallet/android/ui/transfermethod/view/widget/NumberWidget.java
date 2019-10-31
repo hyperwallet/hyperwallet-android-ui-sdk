@@ -40,12 +40,13 @@ public class NumberWidget extends AbstractWidget {
     private TextInputLayout mTextInputLayout;
     private String mValue;
     private InputFilter[] mInputFilter;
+    private final boolean hasMasking;
 
     public NumberWidget(@NonNull HyperwalletField field, @NonNull WidgetEventListener listener,
             @Nullable String defaultValue, @NonNull View defaultFocusView) {
         super(field, listener, defaultValue, defaultFocusView);
         mValue = defaultValue;
-        mInputFilter = new InputFilter[]{new WidgetInputFilter(mField.getHyperwalletMaskField())};
+        hasMasking = field.getHyperwalletMaskField() != null;
     }
 
     @Override
@@ -70,7 +71,8 @@ public class NumberWidget extends AbstractWidget {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
                     if (!hasFocus) {
-                        mValue = scrubValue(((EditText) v).getText().toString());
+                        String input = ((EditText) v).getText().toString();
+                        mValue = hasMasking ? scrubValue(input) : input;
                         mListener.valueChanged();
                     } else {
                         mListener.widgetFocused(NumberWidget.this.getName());
@@ -85,7 +87,7 @@ public class NumberWidget extends AbstractWidget {
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     if (before != count) {
-                        mValue = scrubValue(s.toString());
+                        mValue = hasMasking ? scrubValue(s.toString()) : s.toString();
                         mListener.saveTextChanged(getName(), getValue());
                     }
                 }
@@ -95,10 +97,16 @@ public class NumberWidget extends AbstractWidget {
                 }
             });
 
-            editText.setFilters(mInputFilter);
-            editText.setText(formatDefaultValue(TextUtils.isEmpty(mDefaultValue) ? mField.getValue() : mDefaultValue));
-            editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_CLASS_NUMBER);
-//            editText.setLongClickable(false);
+            if (hasMasking) {
+                mInputFilter = new InputFilter[]{new WidgetInputFilter(mField.getHyperwalletMaskField())};
+                editText.setText(
+                        formatDefaultValue(TextUtils.isEmpty(mDefaultValue) ? mField.getValue() : mDefaultValue));
+                editText.setFilters(mInputFilter);
+                editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_CLASS_NUMBER);
+            } else {
+                editText.setText(TextUtils.isEmpty(mDefaultValue) ? mField.getValue() : mDefaultValue);
+                editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+            }
 
             editText.setOnKeyListener(new DefaultKeyListener(mDefaultFocusView, editText));
             editText.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI | EditorInfo.IME_ACTION_NEXT);

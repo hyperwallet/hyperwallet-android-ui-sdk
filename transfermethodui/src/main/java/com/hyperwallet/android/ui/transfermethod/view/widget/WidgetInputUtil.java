@@ -83,17 +83,16 @@ final class WidgetInputUtil {
     static String getInputFormat(@NonNull final String value,
             @NonNull final String formatTemplate, final int insertIndex) {
         StringBuilder formattedStringBuilder = new StringBuilder();
-        int indexToInsert = insertIndex;
         int valueIndex = 0;
-        for (int i = 0; i < formatTemplate.length(); i++) {
+        for (int i = insertIndex; i <= formatTemplate.length(); i++) {
             if (valueIndex == value.length()
-                    || indexToInsert == formatTemplate.length()
+                    || i == formatTemplate.length()
                     || !isValidCharacter(value.charAt(valueIndex),
-                    formatTemplate.charAt(indexToInsert))) {
+                    formatTemplate.charAt(i))) {
                 break;
             }
 
-            char token = formatTemplate.charAt(indexToInsert);
+            char token = formatTemplate.charAt(i);
             switch (token) {
                 case NUMBER_TOKEN:
                     if (Character.isDigit(value.charAt(valueIndex))) {
@@ -110,7 +109,6 @@ final class WidgetInputUtil {
                 default: // append token
                     formattedStringBuilder.append(token);
             }
-            indexToInsert++;
         }
         return formattedStringBuilder.toString();
     }
