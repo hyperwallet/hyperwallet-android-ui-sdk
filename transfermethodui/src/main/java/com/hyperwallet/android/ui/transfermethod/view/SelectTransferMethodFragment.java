@@ -47,6 +47,7 @@ import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodReposi
 import com.hyperwallet.android.ui.user.repository.UserRepositoryFactory;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.TreeMap;

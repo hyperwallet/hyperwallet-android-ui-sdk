@@ -18,20 +18,38 @@
 package com.hyperwallet.android.ui.common.insight;
 
 import android.content.Context;
+import android.os.Handler;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
+import com.hyperwallet.android.Configuration;
+import com.hyperwallet.android.Hyperwallet;
+import com.hyperwallet.android.exception.HyperwalletException;
+import com.hyperwallet.android.insight.collect.ErrorInfo;
+import com.hyperwallet.android.insight.collect.Insight;
+import com.hyperwallet.android.listener.HyperwalletListener;
+
+import java.text.MessageFormat;
 import java.util.Map;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 /**
  * Used for gathering the data necessary for the Insights analytics.
  */
 public class HyperwalletInsight {
     private static HyperwalletInsight sHyperwalletInsight;
+    private Executor mExecutor = Executors.newSingleThreadExecutor();
 
     private HyperwalletInsight() {
     }
 
+    /**
+     * Returns instance of  HyperwalletInsight or initializes it if it is null.
+     *
+     * @return singleton instance of HyperwalletInsight
+     */
     public static synchronized HyperwalletInsight getInstance() {
         if (sHyperwalletInsight == null) {
             sHyperwalletInsight = new HyperwalletInsight();
@@ -39,13 +57,163 @@ public class HyperwalletInsight {
         return sHyperwalletInsight;
     }
 
-    public void trackClick(@NonNull final Context context, @NonNull final String pageName,
-            @NonNull final String pageGroup, String link, Map<String, String> params) {
-
+    /**
+     * Initializes the Insight library using the given parameters.
+     *
+     * @param context      the context using Insight
+     * @param environment  the application's environment, ie. QA, UAT, PROD
+     * @param programToken the user's program token
+     * @param sdkVersion   the application's Hyperwallet SDK version
+     * @param apiUrl       the URL of the Insight server to send the data to
+     * @param userToken    the user's payee token
+     */
+    public void initializeInsight(final Context context, final String environment, final String programToken,
+            final String sdkVersion, final String apiUrl, final String userToken) {
+        Insight.initialize(context, apiUrl, userToken, environment, programToken, sdkVersion);
     }
 
+    /**
+     * Used to track an impression by a user. Typical example is when a user lands on a specific page.
+     *
+     * @param context   Context where the tracking is happening
+     * @param pageName  an arbituary pageName the user is currently viewing as defined by the app
+     * @param pageGroup an arbituary pageGroup the user is currently viewing as defined by the app
+     * @param params    additional information that can be added to make the tracking event more useful
+     */
     public void trackImpression(@NonNull final Context context, @NonNull final String pageName,
             @NonNull final String pageGroup, @NonNull final Map<String, String> params) {
 
+        if (Insight.getInsightTracker().isInitialized()) {
+            Insight.getInsightTracker().trackImpression(context, pageName, pageGroup, params);
+
+        } else {
+            mExecutor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    Hyperwallet.getDefault().getConfiguration(new HyperwalletListener<Configuration>() {
+                        @Override
+                        public void onSuccess(@Nullable Configuration result) {
+                            if (result != null) {
+                                onGetConfigurationSuccess(context, result);
+                                Insight.getInsightTracker().trackImpression(context, pageName, pageGroup, params);
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(HyperwalletException exception) {
+                            // TODO unsure what to log here
+                            final String logMessage = MessageFormat.format(
+                                    "Unable to find Configuration using default token provider: {0}", exception);
+                        }
+
+                        @Override
+                        public Handler getHandler() {
+                            return null;
+                        }
+                    });
+                }
+            });
+        }
+    }
+
+    /**
+     * Used to track an intentional interaction by the user. Typically for interacting with a UI element such as Buttons
+     * and Spinners
+     *
+     * @param context   Context where the tracking is happening
+     * @param pageName  an arbituary pageName the user is currently viewing as defined by the app
+     * @param pageGroup an arbituary pageGroup the user is currently viewing as defined by the app
+     * @param link      the link the user is currently viewing as defined by the app
+     * @param params    additional information that can be added to make the tracking event more useful
+     */
+    public void trackClick(@NonNull final Context context, @NonNull final String pageName,
+            @NonNull final String pageGroup, @NonNull final String link, @NonNull final Map<String, String> params) {
+
+        if (Insight.getInsightTracker().isInitialized()) {
+            Insight.getInsightTracker().trackImpression(context, pageName, pageGroup, params);
+
+        } else {
+            mExecutor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    Hyperwallet.getDefault().getConfiguration(new HyperwalletListener<Configuration>() {
+                        @Override
+                        public void onSuccess(@Nullable Configuration result) {
+                            if (result != null) {
+                                onGetConfigurationSuccess(context, result);
+                                Insight.getInsightTracker().trackImpression(context, pageName, pageGroup, params);
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(HyperwalletException exception) {
+                            // TODO unsure what to log here
+                            final String logMessage = MessageFormat.format(
+                                    "Unable to find Configuration using default token provider: {0}", exception);
+                        }
+
+                        @Override
+                        public Handler getHandler() {
+                            return null;
+                        }
+                    });
+                }
+            });
+        }
+    }
+
+    /**
+     * Used to track an error received by the user. This can be used for, and not limited to: system errors, caught
+     * exceptions, or validation input errors.
+     *
+     * @param context   Context where the tracking is happening
+     * @param pageName  an arbituary pageName the user is currently viewing as defined by the app
+     * @param pageGroup an arbituary pageGroup the user is currently viewing as defined by the app
+     * @param errorInfo additional error information that can be added to make the tracking event more useful
+     */
+    public void trackError(@NonNull final Context context, @NonNull final String pageName,
+            @NonNull final String pageGroup, @NonNull final ErrorInfo errorInfo) {
+
+        if (Insight.getInsightTracker().isInitialized()) {
+            Insight.getInsightTracker().trackError(context, pageName, pageGroup, errorInfo);
+
+        } else {
+            mExecutor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    Hyperwallet.getDefault().getConfiguration(new HyperwalletListener<Configuration>() {
+                        @Override
+                        public void onSuccess(@Nullable Configuration result) {
+                            if (result != null) {
+                                onGetConfigurationSuccess(context, result);
+                                Insight.getInsightTracker().trackError(context, pageName, pageGroup, errorInfo);
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(HyperwalletException exception) {
+                            // TODO unsure what to log here
+                            final String logMessage = MessageFormat.format(
+                                    "Unable to find Configuration using default token provider: {0}", exception);
+                        }
+
+                        @Override
+                        public Handler getHandler() {
+                            return null;
+                        }
+                    });
+                }
+            });
+        }
+    }
+
+    private void onGetConfigurationSuccess(Context context, Configuration configuration) {
+        // TODO check if BuildConfig.DEBUG is needed
+        String environment = context.getString(com.hyperwallet.android.ui.common.R.string.environment);
+        String sdkVersion = com.hyperwallet.android.ui.common.BuildConfig.VERSION_NAME;
+
+        HyperwalletInsight.getInstance().initializeInsight(context, environment,
+                configuration.getProgramToken(), sdkVersion, configuration.getInsightApiUrl(),
+                configuration.getUserToken());
     }
 }
