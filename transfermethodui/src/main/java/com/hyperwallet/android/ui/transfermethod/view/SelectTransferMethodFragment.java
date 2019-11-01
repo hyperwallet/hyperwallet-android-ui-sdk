@@ -237,7 +237,7 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
         Map<String, String> params = new HashMap<>();
         params.put("hyperwallet_ea_country", mSelectedCountryCode);
         params.put("hyperwallet_ea_currency", mSelectedCurrencyCode);
-        HyperwalletInsight.getInstance().trackImpression(getContext(), TAG,
+        HyperwalletInsight.getInstance().trackImpression(requireContext(), TAG,
                 getString(R.string.tag_group_transfer_method), params);
 
         mTransferMethodTypesAdapter.replaceData(transferMethodTypes);
