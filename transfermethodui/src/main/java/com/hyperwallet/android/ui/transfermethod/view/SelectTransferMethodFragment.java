@@ -240,7 +240,7 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
     public void showCountryCode(final String countryCode) {
         Map<String, String> params = new HashMap<>();
         params.put("hyperwallet_ea_country", countryCode);
-        HyperwalletInsight.getInstance().trackClick(getContext(), TAG,
+        HyperwalletInsight.getInstance().trackClick(requireContext(), TAG,
                 getResources().getString(R.string.tag_group_transfer_method), LINK, params);
 
         mSelectedCountryCode = countryCode;
