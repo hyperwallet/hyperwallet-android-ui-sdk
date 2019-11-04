@@ -27,8 +27,8 @@ import androidx.annotation.VisibleForTesting;
 import com.hyperwallet.android.Configuration;
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.exception.HyperwalletException;
+import com.hyperwallet.android.insight.Insight;
 import com.hyperwallet.android.insight.collect.ErrorInfo;
-import com.hyperwallet.android.insight.collect.Insight;
 import com.hyperwallet.android.listener.HyperwalletListener;
 
 import java.util.Map;
