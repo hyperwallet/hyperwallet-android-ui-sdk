@@ -21,6 +21,7 @@ import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.text.method.DigitsKeyListener;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -97,15 +98,19 @@ public class NumberWidget extends AbstractWidget {
                 }
             });
 
+            editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+
             if (hasMasking) {
                 mInputFilter = new InputFilter[]{new WidgetInputFilter(mField.getHyperwalletMaskField())};
                 editText.setText(
                         formatDefaultValue(TextUtils.isEmpty(mDefaultValue) ? mField.getValue() : mDefaultValue));
                 editText.setFilters(mInputFilter);
-                editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_CLASS_NUMBER);
+                DigitsKeyListener digitsKeyListener = DigitsKeyListener
+                        .getInstance(viewGroup.getContext().getResources()
+                                .getString(R.string.number_widget_valid_characters));
+                editText.setKeyListener(digitsKeyListener);
             } else {
                 editText.setText(TextUtils.isEmpty(mDefaultValue) ? mField.getValue() : mDefaultValue);
-                editText.setInputType(InputType.TYPE_CLASS_NUMBER);
             }
 
             editText.setOnKeyListener(new DefaultKeyListener(mDefaultFocusView, editText));
