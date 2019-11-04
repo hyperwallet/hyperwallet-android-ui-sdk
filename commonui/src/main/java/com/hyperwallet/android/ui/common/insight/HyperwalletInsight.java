@@ -22,6 +22,7 @@ import android.os.Handler;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 
 import com.hyperwallet.android.Configuration;
 import com.hyperwallet.android.Hyperwallet;
@@ -30,7 +31,6 @@ import com.hyperwallet.android.insight.collect.ErrorInfo;
 import com.hyperwallet.android.insight.collect.Insight;
 import com.hyperwallet.android.listener.HyperwalletListener;
 
-import java.text.MessageFormat;
 import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -46,7 +46,7 @@ public class HyperwalletInsight {
     }
 
     /**
-     * Returns instance of  HyperwalletInsight or initializes it if it is null.
+     * Returns instance of HyperwalletInsight or initializes it if it is null.
      *
      * @return singleton instance of HyperwalletInsight
      */
@@ -57,19 +57,24 @@ public class HyperwalletInsight {
         return sHyperwalletInsight;
     }
 
+    @VisibleForTesting
+    public void setInstance(HyperwalletInsight hyperwalletInsight) {
+        sHyperwalletInsight = hyperwalletInsight;
+    }
+
     /**
      * Initializes the Insight library using the given parameters.
      *
      * @param context      the context using Insight
-     * @param environment  the application's environment, ie. QA, UAT, PROD
-     * @param programToken the user's program token
-     * @param sdkVersion   the application's Hyperwallet SDK version
-     * @param apiUrl       the URL of the Insight server to send the data to
-     * @param userToken    the user's payee token
+     * @param configuration Configuration object containing information about the session
      */
-    public void initializeInsight(final Context context, final String environment, final String programToken,
-            final String sdkVersion, final String apiUrl, final String userToken) {
-        Insight.initialize(context, apiUrl, userToken, environment, programToken, sdkVersion);
+    public void initializeInsight(@NonNull final Context context, @NonNull final Configuration configuration) {
+        // TODO check if BuildConfig.DEBUG is needed
+        String environment = context.getString(com.hyperwallet.android.ui.common.R.string.environment);
+        String sdkVersion = com.hyperwallet.android.ui.common.BuildConfig.VERSION_NAME;
+
+        Insight.initialize(context, configuration.getInsightApiUrl(), configuration.getUserToken(), environment,
+                configuration.getProgramToken(), sdkVersion);
     }
 
     /**
@@ -92,18 +97,16 @@ public class HyperwalletInsight {
                 public void run() {
                     Hyperwallet.getDefault().getConfiguration(new HyperwalletListener<Configuration>() {
                         @Override
-                        public void onSuccess(@Nullable Configuration result) {
-                            if (result != null) {
-                                onGetConfigurationSuccess(context, result);
+                        public void onSuccess(@Nullable Configuration configuration) {
+                            if (configuration != null) {
+                                HyperwalletInsight.getInstance().initializeInsight(context, configuration);
                                 Insight.getInsightTracker().trackImpression(context, pageName, pageGroup, params);
                             }
                         }
 
                         @Override
                         public void onFailure(HyperwalletException exception) {
-                            // TODO unsure what to log here
-                            final String logMessage = MessageFormat.format(
-                                    "Unable to find Configuration using default token provider: {0}", exception);
+                            // do nothing
                         }
 
                         @Override
@@ -138,18 +141,16 @@ public class HyperwalletInsight {
                 public void run() {
                     Hyperwallet.getDefault().getConfiguration(new HyperwalletListener<Configuration>() {
                         @Override
-                        public void onSuccess(@Nullable Configuration result) {
-                            if (result != null) {
-                                onGetConfigurationSuccess(context, result);
+                        public void onSuccess(@Nullable Configuration configuration) {
+                            if (configuration != null) {
+                                HyperwalletInsight.getInstance().initializeInsight(context, configuration);
                                 Insight.getInsightTracker().trackImpression(context, pageName, pageGroup, params);
                             }
                         }
 
                         @Override
                         public void onFailure(HyperwalletException exception) {
-                            // TODO unsure what to log here
-                            final String logMessage = MessageFormat.format(
-                                    "Unable to find Configuration using default token provider: {0}", exception);
+                            // do nothing
                         }
 
                         @Override
@@ -183,18 +184,16 @@ public class HyperwalletInsight {
                 public void run() {
                     Hyperwallet.getDefault().getConfiguration(new HyperwalletListener<Configuration>() {
                         @Override
-                        public void onSuccess(@Nullable Configuration result) {
-                            if (result != null) {
-                                onGetConfigurationSuccess(context, result);
+                        public void onSuccess(@Nullable Configuration configuration) {
+                            if (configuration != null) {
+                                HyperwalletInsight.getInstance().initializeInsight(context, configuration);
                                 Insight.getInsightTracker().trackError(context, pageName, pageGroup, errorInfo);
                             }
                         }
 
                         @Override
                         public void onFailure(HyperwalletException exception) {
-                            // TODO unsure what to log here
-                            final String logMessage = MessageFormat.format(
-                                    "Unable to find Configuration using default token provider: {0}", exception);
+                            // do nothing
                         }
 
                         @Override
@@ -205,15 +204,5 @@ public class HyperwalletInsight {
                 }
             });
         }
-    }
-
-    private void onGetConfigurationSuccess(Context context, Configuration configuration) {
-        // TODO check if BuildConfig.DEBUG is needed
-        String environment = context.getString(com.hyperwallet.android.ui.common.R.string.environment);
-        String sdkVersion = com.hyperwallet.android.ui.common.BuildConfig.VERSION_NAME;
-
-        HyperwalletInsight.getInstance().initializeInsight(context, environment,
-                configuration.getProgramToken(), sdkVersion, configuration.getInsightApiUrl(),
-                configuration.getUserToken());
     }
 }

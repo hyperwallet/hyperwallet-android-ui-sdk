@@ -34,14 +34,11 @@ import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.HyperwalletAuthenticationTokenProvider;
 import com.hyperwallet.android.exception.HyperwalletException;
 import com.hyperwallet.android.listener.HyperwalletListener;
-import com.hyperwallet.android.ui.BuildConfig;
-import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.common.insight.HyperwalletInsight;
 import com.hyperwallet.android.ui.common.intent.HyperwalletIntent;
 import com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity;
 import com.hyperwallet.android.ui.transfermethod.view.ListTransferMethodActivity;
 
-import java.text.MessageFormat;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -89,23 +86,15 @@ public final class HyperwalletTransferMethodUi {
                 Hyperwallet.getInstance(authenticationTokenProvider, new HyperwalletListener<Configuration>() {
 
                     @Override
-                    public void onSuccess(@Nullable Configuration result) {
-                        if (result != null) {
-                            // TODO check if BuildConfig.DEBUG ?
-                            String environment = context.getString(R.string.environment);
-                            String sdkVersion = BuildConfig.VERSION_NAME;
-
-                            HyperwalletInsight.getInstance().initializeInsight(context, environment,
-                                    result.getProgramToken(), sdkVersion, result.getInsightApiUrl(),
-                                    result.getUserToken());
+                    public void onSuccess(@Nullable Configuration configuration) {
+                        if (configuration != null) {
+                            HyperwalletInsight.getInstance().initializeInsight(context, configuration);
                         }
                     }
 
                     @Override
                     public void onFailure(HyperwalletException exception) {
-                        // TODO unsure what to log here
-                        final String logMessage = MessageFormat.format(
-                                "Unable to find Configuration using default token provider: {0}", exception);
+                        // do nothing
                     }
 
                     @Override
