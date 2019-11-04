@@ -84,12 +84,15 @@ final class WidgetInputUtil {
             @NonNull final String formatTemplate, final int insertIndex) {
         StringBuilder formattedStringBuilder = new StringBuilder();
         int valueIndex = 0;
-        for (int i = insertIndex; i <= formatTemplate.length(); i++) {
-            if (valueIndex == value.length()
-                    || i == formatTemplate.length()
-                    || !isValidCharacter(value.charAt(valueIndex),
-                    formatTemplate.charAt(i))) {
+        for (int i = insertIndex; i < formatTemplate.length(); i++) {
+            if (valueIndex == value.length()) {
                 break;
+            }
+
+            if (!isValidCharacter(value.charAt(valueIndex), formatTemplate.charAt(i))) {
+                valueIndex++; //skip value
+                --i; //reset template back
+                continue;
             }
 
             char token = formatTemplate.charAt(i);
