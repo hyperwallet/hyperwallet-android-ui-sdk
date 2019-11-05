@@ -26,10 +26,12 @@ import androidx.annotation.VisibleForTesting;
 
 import com.hyperwallet.android.Configuration;
 import com.hyperwallet.android.Hyperwallet;
+import com.hyperwallet.android.HyperwalletAuthenticationTokenProvider;
 import com.hyperwallet.android.exception.HyperwalletException;
 import com.hyperwallet.android.insight.Insight;
 import com.hyperwallet.android.insight.collect.ErrorInfo;
 import com.hyperwallet.android.listener.HyperwalletListener;
+import com.hyperwallet.android.ui.common.R;
 
 import java.util.Map;
 import java.util.concurrent.Executor;
@@ -39,10 +41,13 @@ import java.util.concurrent.Executors;
  * Used for gathering the data necessary for the Insights analytics.
  */
 public class HyperwalletInsight {
+
     private static HyperwalletInsight sHyperwalletInsight;
-    private Executor mExecutor = Executors.newSingleThreadExecutor();
+    private static final int MAX_THREAD_POOL = 2;
+    private final Executor mExecutor;
 
     private HyperwalletInsight() {
+        mExecutor = Executors.newFixedThreadPool(MAX_THREAD_POOL);
     }
 
     /**
@@ -68,13 +73,52 @@ public class HyperwalletInsight {
      * @param context      the context using Insight
      * @param configuration Configuration object containing information about the session
      */
-    public void initializeInsight(@NonNull final Context context, @NonNull final Configuration configuration) {
-        // TODO check if BuildConfig.DEBUG is needed
-        String environment = context.getString(com.hyperwallet.android.ui.common.R.string.environment);
-        String sdkVersion = com.hyperwallet.android.ui.common.BuildConfig.VERSION_NAME;
+    public void initialize(@NonNull final Context context, @NonNull final Configuration configuration) {
+        final String environment = com.hyperwallet.android.ui.common.BuildConfig.BUILD_TYPE.equals("release") ?
+                context.getString(R.string.environment_prod) : context.getString(R.string.environment_uat);
+        final String sdkVersion = com.hyperwallet.android.ui.common.BuildConfig.VERSION_NAME;
 
         Insight.initialize(context, configuration.getInsightApiUrl(), configuration.getUserToken(), environment,
                 configuration.getProgramToken(), sdkVersion);
+    }
+
+    /**
+     * Initialize insight in BG mode
+     *
+     * @param context  Application context
+     * @param provider Hyperwallet authentication provider
+     */
+    public void initialize(@NonNull final Context context,
+            @NonNull final HyperwalletAuthenticationTokenProvider provider) {
+        final String environment = com.hyperwallet.android.ui.common.BuildConfig.BUILD_TYPE.equals("release") ?
+                context.getString(R.string.environment_prod) : context.getString(R.string.environment_uat);
+        final String sdkVersion = com.hyperwallet.android.ui.common.BuildConfig.VERSION_NAME;
+
+        mExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                Hyperwallet.getInstance(provider, new HyperwalletListener<Configuration>() {
+                    @Override
+                    public void onSuccess(@Nullable Configuration configuration) {
+                        if (configuration != null) {
+                            Insight.initialize(context, configuration.getInsightApiUrl(),
+                                    configuration.getUserToken(), environment,
+                                    configuration.getProgramToken(), sdkVersion);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(HyperwalletException exception) {
+                        // do nothing
+                    }
+
+                    @Override
+                    public Handler getHandler() {
+                        return null;
+                    }
+                });
+            }
+        });
     }
 
     /**
@@ -99,7 +143,7 @@ public class HyperwalletInsight {
                         @Override
                         public void onSuccess(@Nullable Configuration configuration) {
                             if (configuration != null) {
-                                HyperwalletInsight.getInstance().initializeInsight(context, configuration);
+                                HyperwalletInsight.getInstance().initialize(context, configuration);
                                 Insight.getInsightTracker().trackImpression(context, pageName, pageGroup, params);
                             }
                         }
@@ -143,7 +187,7 @@ public class HyperwalletInsight {
                         @Override
                         public void onSuccess(@Nullable Configuration configuration) {
                             if (configuration != null) {
-                                HyperwalletInsight.getInstance().initializeInsight(context, configuration);
+                                HyperwalletInsight.getInstance().initialize(context, configuration);
                                 Insight.getInsightTracker().trackImpression(context, pageName, pageGroup, params);
                             }
                         }
@@ -186,7 +230,7 @@ public class HyperwalletInsight {
                         @Override
                         public void onSuccess(@Nullable Configuration configuration) {
                             if (configuration != null) {
-                                HyperwalletInsight.getInstance().initializeInsight(context, configuration);
+                                HyperwalletInsight.getInstance().initialize(context, configuration);
                                 Insight.getInsightTracker().trackError(context, pageName, pageGroup, errorInfo);
                             }
                         }

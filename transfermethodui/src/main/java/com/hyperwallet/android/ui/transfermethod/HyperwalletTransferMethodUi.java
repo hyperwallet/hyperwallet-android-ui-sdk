@@ -24,23 +24,15 @@ import static com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodAc
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
-import com.hyperwallet.android.Configuration;
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.HyperwalletAuthenticationTokenProvider;
-import com.hyperwallet.android.exception.HyperwalletException;
-import com.hyperwallet.android.listener.HyperwalletListener;
 import com.hyperwallet.android.ui.common.insight.HyperwalletInsight;
 import com.hyperwallet.android.ui.common.intent.HyperwalletIntent;
 import com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity;
 import com.hyperwallet.android.ui.transfermethod.view.ListTransferMethodActivity;
-
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 /**
  * Class responsible for initializing the Hyperwallet UI SDK. It contains methods to interact with the activities and
@@ -79,31 +71,9 @@ public final class HyperwalletTransferMethodUi {
         if (sInstance == null) {
             sInstance = new HyperwalletTransferMethodUi();
         }
-        Executor executor = Executors.newSingleThreadExecutor();
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                Hyperwallet.getInstance(authenticationTokenProvider, new HyperwalletListener<Configuration>() {
 
-                    @Override
-                    public void onSuccess(@Nullable Configuration configuration) {
-                        if (configuration != null) {
-                            HyperwalletInsight.getInstance().initializeInsight(context, configuration);
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(HyperwalletException exception) {
-                        // do nothing
-                    }
-
-                    @Override
-                    public Handler getHandler() {
-                        return null;
-                    }
-                });
-            }
-        });
+        // initialize insight
+        HyperwalletInsight.getInstance().initialize(context, authenticationTokenProvider);
         return sInstance;
     }
 
