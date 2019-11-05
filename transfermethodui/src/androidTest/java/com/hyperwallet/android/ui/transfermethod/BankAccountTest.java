@@ -17,6 +17,10 @@ import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.atLeast;
+import static org.mockito.Mockito.verify;
 
 import static java.net.HttpURLConnection.HTTP_BAD_REQUEST;
 import static java.net.HttpURLConnection.HTTP_CREATED;
@@ -47,6 +51,7 @@ import androidx.test.rule.ActivityTestRule;
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.ui.R;
+import com.hyperwallet.android.ui.common.insight.HyperwalletInsight;
 import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
 import com.hyperwallet.android.ui.testutils.TestAuthenticationProvider;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
@@ -61,6 +66,10 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentMatchers;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
 
 import java.util.concurrent.CountDownLatch;
 
@@ -73,6 +82,8 @@ public class BankAccountTest {
 
     @ClassRule
     public static HyperwalletExternalResourceManager sResourceManager = new HyperwalletExternalResourceManager();
+    @Rule
+    public MockitoRule mMockito = MockitoJUnit.rule();
     @Rule
     public HyperwalletMockWebServer mMockWebServer = new HyperwalletMockWebServer(8080);
     @Rule
@@ -90,9 +101,14 @@ public class BankAccountTest {
                 }
             };
 
+
+    @Mock
+    private HyperwalletInsight mHyperwalletInsight;
+
     @Before
     public void setup() {
         Hyperwallet.getInstance(new TestAuthenticationProvider());
+        HyperwalletInsight.setInstance(mHyperwalletInsight);
 
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("authentication_token_response.json")).mock();
@@ -263,6 +279,9 @@ public class BankAccountTest {
             @Override
             public void onReceive(Context context, Intent intent) {
                 gate.countDown();
+
+                verify(mHyperwalletInsight, atLeast(2)).trackImpression(any(Context.class), anyString(), anyString(),
+                        ArgumentMatchers.<String, String>anyMap());
 
                 HyperwalletTransferMethod transferMethod = intent.getParcelableExtra(
                         "hyperwallet-local-broadcast-payload");

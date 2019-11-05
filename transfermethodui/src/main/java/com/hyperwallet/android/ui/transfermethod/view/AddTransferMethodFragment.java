@@ -56,6 +56,7 @@ import com.hyperwallet.android.model.transfermethod.HyperwalletBankCard;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.model.transfermethod.PayPalAccount;
 import com.hyperwallet.android.ui.R;
+import com.hyperwallet.android.ui.common.insight.HyperwalletInsight;
 import com.hyperwallet.android.ui.transfermethod.HyperwalletTransferMethodLocalBroadcast;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
 import com.hyperwallet.android.ui.transfermethod.view.widget.AbstractWidget;
@@ -68,6 +69,7 @@ import com.hyperwallet.android.ui.transfermethod.view.widget.WidgetInputState;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.TreeMap;
 
 public class AddTransferMethodFragment extends Fragment implements WidgetEventListener, AddTransferMethodContract.View {
@@ -291,6 +293,10 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
 
     @Override
     public void notifyTransferMethodAdded(@NonNull final HyperwalletTransferMethod transferMethod) {
+        Map<String, String> test = new HashMap<>();
+
+        HyperwalletInsight.getInstance().trackImpression(getContext(), "test", "test", test);
+
         Intent intent = HyperwalletTransferMethodLocalBroadcast.createBroadcastIntentTransferMethodAdded(
                 transferMethod);
         LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
