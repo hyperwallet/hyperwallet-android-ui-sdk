@@ -39,6 +39,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.hyperwallet.android.insight.InsightEventTag;
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.common.insight.HyperwalletInsight;
@@ -57,6 +58,7 @@ import java.util.TreeMap;
 public class SelectTransferMethodFragment extends Fragment implements SelectTransferMethodContract.View {
 
     protected static final String TAG = "transfer-method:add:select-transfer-method";
+    private static final String LINK = "select-transfer-method";
     private static final String ARGUMENT_COUNTRY_CODE_SELECTED = "ARGUMENT_COUNTRY_CODE_SELECTED";
     private static final String ARGUMENT_CURRENCY_CODE_SELECTED = "ARGUMENT_CURRENCY_CODE_SELECTED";
     private static final boolean FORCE_UPDATE = false;
@@ -235,8 +237,8 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
     @Override
     public void showTransferMethodTypes(@NonNull List<TransferMethodSelectionItem> transferMethodTypes) {
         Map<String, String> params = new HashMap<>();
-        params.put("hyperwallet_ea_country", mSelectedCountryCode);
-        params.put("hyperwallet_ea_currency", mSelectedCurrencyCode);
+        params.put(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_COUNTRY, mSelectedCountryCode);
+        params.put(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_CURRENCY, mSelectedCurrencyCode);
         HyperwalletInsight.getInstance().trackImpression(requireContext(), TAG,
                 getString(R.string.tag_group_transfer_method), params);
 
@@ -302,6 +304,13 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
     @Override
     public void showAddTransferMethod(@NonNull final String country, @NonNull final String currency,
             @NonNull final String transferMethodType, @NonNull final String profileType) {
+        Map<String, String> params = new HashMap<>();
+        params.put(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_COUNTRY, country);
+        params.put(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_CURRENCY, currency);
+        params.put(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_TYPE, transferMethodType);
+        HyperwalletInsight.getInstance().trackClick(requireContext(), TAG,
+                getString(R.string.tag_group_transfer_method), LINK, params);
+
         Intent intent = new Intent(getActivity(), AddTransferMethodActivity.class);
         intent.putExtra(AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_COUNTRY, country);
         intent.putExtra(AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_CURRENCY, currency);
