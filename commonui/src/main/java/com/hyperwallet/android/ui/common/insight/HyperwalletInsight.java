@@ -31,7 +31,6 @@ import com.hyperwallet.android.exception.HyperwalletException;
 import com.hyperwallet.android.insight.Insight;
 import com.hyperwallet.android.insight.collect.ErrorInfo;
 import com.hyperwallet.android.listener.HyperwalletListener;
-import com.hyperwallet.android.ui.common.R;
 
 import java.util.Map;
 import java.util.concurrent.Executor;
@@ -74,12 +73,10 @@ public class HyperwalletInsight {
      * @param configuration Configuration object containing information about the session
      */
     public void initialize(@NonNull final Context context, @NonNull final Configuration configuration) {
-        final String environment = com.hyperwallet.android.ui.common.BuildConfig.BUILD_TYPE.equals("release") ?
-                context.getString(R.string.environment_prod) : context.getString(R.string.environment_uat);
         final String sdkVersion = com.hyperwallet.android.ui.common.BuildConfig.VERSION_NAME;
 
-        Insight.initialize(context, configuration.getInsightApiUrl(), configuration.getUserToken(), environment,
-                configuration.getProgramToken(), sdkVersion);
+        Insight.initialize(context, configuration.getEnvironment(), configuration.getProgramToken(), sdkVersion,
+                configuration.getInsightApiUrl(), configuration.getUserToken());
     }
 
     /**
@@ -90,8 +87,6 @@ public class HyperwalletInsight {
      */
     public void initialize(@NonNull final Context context,
             @NonNull final HyperwalletAuthenticationTokenProvider provider) {
-        final String environment = com.hyperwallet.android.ui.common.BuildConfig.BUILD_TYPE.equals("release") ?
-                context.getString(R.string.environment_prod) : context.getString(R.string.environment_uat);
         final String sdkVersion = com.hyperwallet.android.ui.common.BuildConfig.VERSION_NAME;
 
         mExecutor.execute(new Runnable() {
@@ -101,9 +96,8 @@ public class HyperwalletInsight {
                     @Override
                     public void onSuccess(@Nullable Configuration configuration) {
                         if (configuration != null) {
-                            Insight.initialize(context, configuration.getInsightApiUrl(),
-                                    configuration.getUserToken(), environment,
-                                    configuration.getProgramToken(), sdkVersion);
+                            Insight.initialize(context, configuration.getEnvironment(), configuration.getProgramToken(),
+                                    sdkVersion, configuration.getInsightApiUrl(), configuration.getUserToken());
                         }
                     }
 
