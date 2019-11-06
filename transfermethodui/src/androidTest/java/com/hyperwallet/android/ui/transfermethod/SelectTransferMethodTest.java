@@ -2,6 +2,8 @@ package com.hyperwallet.android.ui.transfermethod;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.doubleClick;
+import static androidx.test.espresso.action.ViewActions.longClick;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
@@ -18,6 +20,11 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.instanceOf;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.atMost;
+import static org.mockito.Mockito.verify;
 
 import static java.net.HttpURLConnection.HTTP_OK;
 
@@ -32,6 +39,7 @@ import static com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodAc
 import static com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_PROFILE_TYPE;
 import static com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_TYPE;
 
+import android.content.Context;
 import android.widget.TextView;
 
 import androidx.test.espresso.IdlingRegistry;
@@ -39,10 +47,13 @@ import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.espresso.intent.rule.IntentsTestRule;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
+import androidx.test.uiautomator.UiDevice;
 
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.ui.R;
+import com.hyperwallet.android.ui.common.insight.HyperwalletInsight;
 import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
 import com.hyperwallet.android.ui.testutils.TestAuthenticationProvider;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
@@ -58,12 +69,18 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentMatchers;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
 
 @RunWith(AndroidJUnit4.class)
 public class SelectTransferMethodTest {
 
     @ClassRule
     public static HyperwalletExternalResourceManager sResourceManager = new HyperwalletExternalResourceManager();
+    @Rule
+    public MockitoRule mMockito = MockitoJUnit.rule();
     @Rule
     public HyperwalletMockWebServer mMockWebServer = new HyperwalletMockWebServer(8080);
     @Rule
@@ -73,9 +90,13 @@ public class SelectTransferMethodTest {
     public IntentsTestRule<SelectTransferMethodActivity> mIntentsTestRule =
             new IntentsTestRule<>(SelectTransferMethodActivity.class, true, false);
 
+    @Mock
+    private HyperwalletInsight mHyperwalletInsight;
+
     @Before
     public void setup() {
         Hyperwallet.getInstance(new TestAuthenticationProvider());
+        HyperwalletInsight.setInstance(mHyperwalletInsight);
 
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("authentication_token_response.json")).mock();
@@ -105,6 +126,9 @@ public class SelectTransferMethodTest {
                 .getResourceContent("successful_tmc_keys_response.json")).mock();
 
         mActivityTestRule.launchActivity(null);
+
+        verify(mHyperwalletInsight, atLeastOnce()).trackImpression(any(Context.class), anyString(), anyString(),
+                ArgumentMatchers.<String, String>anyMap());
 
         onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
         onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar)))).check(
@@ -150,6 +174,9 @@ public class SelectTransferMethodTest {
 
         onView(allOf(withId(R.id.country_name), withText("Canada"))).perform(click());
         onView(withId(R.id.select_transfer_method_country_value)).check(matches(withText("Canada")));
+
+        verify(mHyperwalletInsight, atLeastOnce()).trackImpression(any(Context.class), anyString(), anyString(),
+                ArgumentMatchers.<String, String>anyMap());
     }
 
     @Test
@@ -198,6 +225,9 @@ public class SelectTransferMethodTest {
 
         onView(allOf(withId(R.id.currency_name), withText("United States Dollar"))).perform(click());
         onView(withId(R.id.select_transfer_method_currency_value)).check(matches(withText("USD")));
+
+        verify(mHyperwalletInsight, atLeastOnce()).trackImpression(any(Context.class), anyString(), anyString(),
+                ArgumentMatchers.<String, String>anyMap());
     }
 
     @Test
@@ -389,6 +419,9 @@ public class SelectTransferMethodTest {
                 .perform(RecyclerViewActions.actionOnItem(withChild(withText(R.string.bank_account)), click()));
         onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar)))).check(
                 matches(withText(R.string.title_add_bank_account)));
+
+        verify(mHyperwalletInsight, atLeastOnce()).trackClick(any(Context.class), anyString(), anyString(), anyString(),
+                ArgumentMatchers.<String, String>anyMap());
     }
 
     @Test
@@ -406,6 +439,9 @@ public class SelectTransferMethodTest {
                 .perform(RecyclerViewActions.actionOnItem(withChild(withText(R.string.bank_card)), click()));
         onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar)))).check(
                 matches(withText(R.string.title_add_bank_card)));
+
+        verify(mHyperwalletInsight, atLeastOnce()).trackClick(any(Context.class), anyString(), anyString(), anyString(),
+                ArgumentMatchers.<String, String>anyMap());
     }
 
     @Test
@@ -445,5 +481,119 @@ public class SelectTransferMethodTest {
 
         onView(withId(R.id.select_transfer_method_country_value)).check(matches(withText("United States")));
         onView(withId(R.id.select_transfer_method_currency_value)).check(matches(withText("USD")));
+    }
+
+    @Test
+    public void testSelectTransferMethod_verifySendEventWhenUserClicksOnCountrySelectionButNavigationBack() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("user_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_keys_large_response.json")).mock();
+
+        mActivityTestRule.launchActivity(null);
+
+        onView(withId(R.id.select_transfer_method_country_container)).perform(click());
+        UiDevice mDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
+        mDevice.pressBack();
+
+        verify(mHyperwalletInsight, atMost(1)).trackImpression(any(Context.class), anyString(), anyString(),
+                ArgumentMatchers.<String, String>anyMap());
+    }
+
+    @Test
+    public void testSelectTransferMethod_verifySendEventWhenUserClicksOnCurrencySelectionButNavigationBack() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("user_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_keys_large_response.json")).mock();
+
+        mActivityTestRule.launchActivity(null);
+
+        onView(withId(R.id.select_transfer_method_currency_container)).perform(click());
+        UiDevice mDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
+        mDevice.pressBack();
+
+        verify(mHyperwalletInsight, atMost(1)).trackImpression(any(Context.class), anyString(), anyString(),
+                ArgumentMatchers.<String, String>anyMap());
+    }
+
+    @Test
+    public void testSelectTransferMethod_verifyClickEventCreatedWhenUserMakesWireTransferMethodSelection() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("user_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_keys_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_fields_bank_card_response.json")).mock();
+
+        mActivityTestRule.launchActivity(null);
+
+        onView(withId(R.id.select_transfer_method_types_list))
+                .perform(RecyclerViewActions.actionOnItem(withChild(withText(R.string.wire_account)), click()));
+        onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar)))).check(
+                matches(withText("Wire Transfer")));
+
+        verify(mHyperwalletInsight, atLeastOnce()).trackClick(any(Context.class), anyString(), anyString(), anyString(),
+                ArgumentMatchers.<String, String>anyMap());
+    }
+
+    @Test
+    public void testSelectTransferMethod_verifyClickEventCreatedWhenUserMakesPayPalTransferMethodSelection() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("user_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_keys_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_fields_bank_card_response.json")).mock();
+
+        mActivityTestRule.launchActivity(null);
+
+        onView(withId(R.id.select_transfer_method_types_list))
+                .perform(RecyclerViewActions.actionOnItem(withChild(withText("PayPal Account")), click()));
+        onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar)))).check(
+                matches(withText("PayPal Account")));
+
+        verify(mHyperwalletInsight, atLeastOnce()).trackClick(any(Context.class), anyString(), anyString(), anyString(),
+                ArgumentMatchers.<String, String>anyMap());
+    }
+
+    @Test
+    public void testSelectTransferMethod_verifyClickEventCreatedWhenUserMakesLongClickOnTransferMethod() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("user_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_keys_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_fields_bank_card_response.json")).mock();
+
+        mActivityTestRule.launchActivity(null);
+
+        onView(withId(R.id.select_transfer_method_types_list))
+                .perform(RecyclerViewActions.actionOnItem(withChild(withText(R.string.bank_account)), longClick()));
+        onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar)))).check(
+                matches(withText(R.string.title_add_bank_account)));
+
+        verify(mHyperwalletInsight, atLeastOnce()).trackClick(any(Context.class), anyString(), anyString(), anyString(),
+                ArgumentMatchers.<String, String>anyMap());
+    }
+
+    @Test
+    public void testSelectTransferMethod_verifyClickEventCreatedWhenUserMakesDoubleClickOnTransferMethod() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("user_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_keys_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_fields_bank_card_response.json")).mock();
+
+        mActivityTestRule.launchActivity(null);
+
+        onView(withId(R.id.select_transfer_method_types_list))
+                .perform(RecyclerViewActions.actionOnItem(withChild(withText(R.string.bank_account)), doubleClick()));
+        onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar)))).check(
+                matches(withText(R.string.title_add_bank_account)));
+
+        verify(mHyperwalletInsight, atLeastOnce()).trackClick(any(Context.class), anyString(), anyString(), anyString(),
+                ArgumentMatchers.<String, String>anyMap());
     }
 }

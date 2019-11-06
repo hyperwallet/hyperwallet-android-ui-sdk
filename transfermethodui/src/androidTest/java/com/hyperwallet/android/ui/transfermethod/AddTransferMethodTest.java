@@ -17,6 +17,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.verify;
 
 import static java.net.HttpURLConnection.HTTP_BAD_REQUEST;
 import static java.net.HttpURLConnection.HTTP_OK;
@@ -25,6 +29,7 @@ import static com.hyperwallet.android.ui.common.view.error.DefaultErrorDialogFra
 import static com.hyperwallet.android.ui.testutils.util.EspressoUtils.nestedScrollTo;
 
 import android.app.Instrumentation;
+import android.content.Context;
 import android.content.Intent;
 import android.widget.TextView;
 
@@ -36,6 +41,7 @@ import androidx.test.rule.ActivityTestRule;
 
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.ui.R;
+import com.hyperwallet.android.ui.common.insight.HyperwalletInsight;
 import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
 import com.hyperwallet.android.ui.common.view.error.DefaultErrorDialogFragment;
 import com.hyperwallet.android.ui.testutils.TestAuthenticationProvider;
@@ -50,6 +56,10 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentMatchers;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
 
 import java.io.IOException;
 
@@ -61,6 +71,8 @@ public class AddTransferMethodTest {
 
     @ClassRule
     public static HyperwalletExternalResourceManager sResourceManager = new HyperwalletExternalResourceManager();
+    @Rule
+    public MockitoRule mMockito = MockitoJUnit.rule();
     @Rule
     public HyperwalletMockWebServer mMockWebServer = new HyperwalletMockWebServer(8080);
     @Rule
@@ -77,9 +89,13 @@ public class AddTransferMethodTest {
                 }
             };
 
+    @Mock
+    private HyperwalletInsight mHyperwalletInsight;
+
     @Before
     public void setup() {
         Hyperwallet.getInstance(new TestAuthenticationProvider());
+        HyperwalletInsight.setInstance(mHyperwalletInsight);
 
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("authentication_token_response.json")).mock();
@@ -134,6 +150,9 @@ public class AddTransferMethodTest {
         onView(withId(R.id.bankAccountPurpose)).perform(nestedScrollTo(), click());
         onView(allOf(withId(R.id.select_name), withText("Savings"))).perform(click());
         onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo(), click());
+
+        verify(mHyperwalletInsight, atLeastOnce()).trackClick(any(Context.class), anyString(), anyString(), anyString(),
+                ArgumentMatchers.<String, String>anyMap());
 
         // check dialog content
         onView(withText(R.string.error_dialog_title)).inRoot(isDialog()).check(matches(isDisplayed()));
