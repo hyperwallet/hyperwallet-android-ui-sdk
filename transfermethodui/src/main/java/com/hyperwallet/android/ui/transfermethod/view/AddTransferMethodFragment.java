@@ -46,6 +46,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.hyperwallet.android.exception.HyperwalletException;
+import com.hyperwallet.android.insight.InsightEventTag;
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.graphql.HyperwalletFee;
 import com.hyperwallet.android.model.graphql.ProcessingTime;
@@ -56,6 +57,7 @@ import com.hyperwallet.android.model.transfermethod.HyperwalletBankCard;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.model.transfermethod.PayPalAccount;
 import com.hyperwallet.android.ui.R;
+import com.hyperwallet.android.ui.common.insight.HyperwalletInsight;
 import com.hyperwallet.android.ui.transfermethod.HyperwalletTransferMethodLocalBroadcast;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
 import com.hyperwallet.android.ui.transfermethod.view.widget.AbstractWidget;
@@ -68,11 +70,14 @@ import com.hyperwallet.android.ui.transfermethod.view.widget.WidgetInputState;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.TreeMap;
 
 public class AddTransferMethodFragment extends Fragment implements WidgetEventListener, AddTransferMethodContract.View {
 
-    public static final String TAG = AddTransferMethodFragment.class.getName();
+    protected static final String TAG = "transfer-method:add:collect-transfer-method-information";
+    protected static final String TAG_ADDED = "transfer-method:add:transfer-method-created";
+    private static final String GOAL = "transfer-method-created";
     private static final String ARGUMENT_TRANSFER_METHOD_COUNTRY = "ARGUMENT_TRANSFER_METHOD_COUNTRY";
     private static final String ARGUMENT_TRANSFER_METHOD_CURRENCY = "ARGUMENT_TRANSFER_METHOD_CURRENCY";
     private static final String ARGUMENT_TRANSFER_METHOD_TYPE = "ARGUMENT_TRANSFER_METHOD_TYPE";
@@ -177,6 +182,14 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Map<String, String> params = new HashMap<>();
+        params.put(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_COUNTRY, mCountry);
+        params.put(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_CURRENCY, mCurrency);
+        params.put(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_TYPE, mTransferMethodType);
+        params.put(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_PROFILE_TYPE, mTransferMethodProfileType);
+        HyperwalletInsight.getInstance().trackImpression(requireContext(), TAG,
+                getResources().getString(R.string.tag_group_transfer_method), params);
+
         mDynamicContainer = view.findViewById(R.id.add_transfer_method_dynamic_container);
 
         mCreateButtonProgressBar = view.findViewById(R.id.add_transfer_method_create_button_progress_bar);
@@ -291,6 +304,15 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
 
     @Override
     public void notifyTransferMethodAdded(@NonNull final HyperwalletTransferMethod transferMethod) {
+        Map<String, String> params = new HashMap<>();
+        params.put(InsightEventTag.InsightEventTagEventParams.GOAL, GOAL);
+        params.put(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_COUNTRY, mCountry);
+        params.put(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_CURRENCY, mCurrency);
+        params.put(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_TYPE, mTransferMethodType);
+        params.put(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_PROFILE_TYPE, mTransferMethodProfileType);
+        HyperwalletInsight.getInstance().trackImpression(requireContext(), TAG_ADDED,
+                getResources().getString(R.string.tag_group_transfer_method), params);
+
         Intent intent = HyperwalletTransferMethodLocalBroadcast.createBroadcastIntentTransferMethodAdded(
                 transferMethod);
         LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);

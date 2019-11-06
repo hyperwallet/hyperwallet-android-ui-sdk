@@ -39,6 +39,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.hyperwallet.android.insight.InsightEventTag;
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.common.insight.HyperwalletInsight;
@@ -239,7 +240,7 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
 
     public void showCountryCode(final String countryCode) {
         Map<String, String> params = new HashMap<>();
-        params.put("hyperwallet_ea_country", countryCode);
+        params.put(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_COUNTRY, countryCode);
         HyperwalletInsight.getInstance().trackClick(requireContext(), TAG,
                 getResources().getString(R.string.tag_group_transfer_method), LINK, params);
 
