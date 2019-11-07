@@ -198,8 +198,8 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                 params.put(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_TYPE, mTransferMethodType);
                 params.put(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_PROFILE_TYPE,
                         mTransferMethodProfileType);
-                HyperwalletInsight.getInstance().trackClick(requireContext(), TAG, LINK,
-                        getString(R.string.tag_group_transfer_method), params);
+                HyperwalletInsight.getInstance().trackClick(requireContext(), TAG,
+                        getString(R.string.tag_group_transfer_method), LINK, params);
 
                 triggerSubmit();
             }
