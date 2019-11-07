@@ -12,13 +12,14 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
+import static junit.framework.TestCase.assertEquals;
+
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
 
@@ -40,6 +41,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
 import com.hyperwallet.android.Hyperwallet;
+import com.hyperwallet.android.insight.InsightEventTag;
 import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.common.insight.HyperwalletInsight;
 import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
@@ -56,12 +58,14 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentMatchers;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
 import java.io.IOException;
+import java.util.Map;
 
 @RunWith(AndroidJUnit4.class)
 public class AddTransferMethodTest {
@@ -85,9 +89,19 @@ public class AddTransferMethodTest {
                     intent.putExtra("TRANSFER_METHOD_TYPE", "BANK_ACCOUNT");
                     intent.putExtra("TRANSFER_METHOD_COUNTRY", "US");
                     intent.putExtra("TRANSFER_METHOD_CURRENCY", "USD");
+                    intent.putExtra("TRANSFER_METHOD_PROFILE_TYPE", "INDIVIDUAL");
                     return intent;
                 }
             };
+
+    @Captor
+    ArgumentCaptor<String> pageNameCaptor;
+    @Captor
+    ArgumentCaptor<String> pageGroupCaptor;
+    @Captor
+    ArgumentCaptor<String> linkCaptor;
+    @Captor
+    ArgumentCaptor<Map<String, String>> mapClickCaptor;
 
     @Mock
     private HyperwalletInsight mHyperwalletInsight;
@@ -151,8 +165,23 @@ public class AddTransferMethodTest {
         onView(allOf(withId(R.id.select_name), withText("Savings"))).perform(click());
         onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo(), click());
 
-        verify(mHyperwalletInsight, atLeastOnce()).trackClick(any(Context.class), anyString(), anyString(), anyString(),
-                ArgumentMatchers.<String, String>anyMap());
+        verify(mHyperwalletInsight, atLeastOnce()).trackClick(any(Context.class), pageNameCaptor.capture(),
+                pageGroupCaptor.capture(), linkCaptor.capture(),
+                mapClickCaptor.capture());
+
+        assertEquals("transfer-method:add:collect-transfer-method-information", pageNameCaptor.getValue());
+        assertEquals("transfer-method", pageGroupCaptor.getValue());
+        assertEquals("create-transfer-method", linkCaptor.getValue());
+        assertEquals(4, mapClickCaptor.getAllValues().get(0).size());
+        assertEquals("US", mapClickCaptor.getAllValues().get(0).get(
+                InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_COUNTRY));
+        assertEquals("USD", mapClickCaptor.getAllValues().get(0).get(
+                InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_CURRENCY));
+        assertEquals("INDIVIDUAL",
+                mapClickCaptor.getAllValues().get(0).get(
+                        InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_PROFILE_TYPE));
+        assertEquals("BANK_ACCOUNT", mapClickCaptor.getAllValues().get(0).get(
+                InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_TYPE));
 
         // check dialog content
         onView(withText(R.string.error_dialog_title)).inRoot(isDialog()).check(matches(isDisplayed()));

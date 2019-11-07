@@ -2,8 +2,6 @@ package com.hyperwallet.android.ui.transfermethod;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.action.ViewActions.doubleClick;
-import static androidx.test.espresso.action.ViewActions.longClick;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
@@ -18,10 +16,12 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
+import static junit.framework.TestCase.assertEquals;
+
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.atMost;
 import static org.mockito.Mockito.verify;
@@ -52,6 +52,7 @@ import androidx.test.rule.ActivityTestRule;
 import androidx.test.uiautomator.UiDevice;
 
 import com.hyperwallet.android.Hyperwallet;
+import com.hyperwallet.android.insight.InsightEventTag;
 import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.common.insight.HyperwalletInsight;
 import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
@@ -69,10 +70,13 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentMatchers;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
+
+import java.util.Map;
 
 @RunWith(AndroidJUnit4.class)
 public class SelectTransferMethodTest {
@@ -89,6 +93,17 @@ public class SelectTransferMethodTest {
     @Rule
     public IntentsTestRule<SelectTransferMethodActivity> mIntentsTestRule =
             new IntentsTestRule<>(SelectTransferMethodActivity.class, true, false);
+
+    @Captor
+    ArgumentCaptor<String> pageNameCaptor;
+    @Captor
+    ArgumentCaptor<String> pageGroupCaptor;
+    @Captor
+    ArgumentCaptor<String> linkCaptor;
+    @Captor
+    ArgumentCaptor<Map<String, String>> mapImpressionCaptor;
+    @Captor
+    ArgumentCaptor<Map<String, String>> mapClickCaptor;
 
     @Mock
     private HyperwalletInsight mHyperwalletInsight;
@@ -127,9 +142,6 @@ public class SelectTransferMethodTest {
 
         mActivityTestRule.launchActivity(null);
 
-        verify(mHyperwalletInsight, atLeastOnce()).trackImpression(any(Context.class), anyString(), anyString(),
-                ArgumentMatchers.<String, String>anyMap());
-
         onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
         onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar)))).check(
                 matches(withText(R.string.activity_select_transfer_method_title)));
@@ -146,6 +158,17 @@ public class SelectTransferMethodTest {
         onView(allOf(hasSibling(withId(R.id.select_transfer_method_currency_value)),
                 withDrawable(R.drawable.ic_keyboard_arrow_right_12dp))).check(matches(isDisplayed()));
 
+        verify(mHyperwalletInsight, atLeastOnce()).trackImpression(any(Context.class), pageNameCaptor.capture(),
+                pageGroupCaptor.capture(),
+                mapImpressionCaptor.capture());
+
+        assertEquals("transfer-method:add:select-transfer-method", pageNameCaptor.getValue());
+        assertEquals("transfer-method", pageGroupCaptor.getValue());
+        assertEquals(2, mapImpressionCaptor.getValue().size());
+        assertEquals("US",
+                mapImpressionCaptor.getValue().get(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_COUNTRY));
+        assertEquals("USD", mapImpressionCaptor.getValue().get(
+                InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_CURRENCY));
     }
 
     @Test
@@ -175,8 +198,17 @@ public class SelectTransferMethodTest {
         onView(allOf(withId(R.id.country_name), withText("Canada"))).perform(click());
         onView(withId(R.id.select_transfer_method_country_value)).check(matches(withText("Canada")));
 
-        verify(mHyperwalletInsight, atLeastOnce()).trackImpression(any(Context.class), anyString(), anyString(),
-                ArgumentMatchers.<String, String>anyMap());
+        verify(mHyperwalletInsight, atLeast(2)).trackImpression(any(Context.class), pageNameCaptor.capture(),
+                pageGroupCaptor.capture(),
+                mapImpressionCaptor.capture());
+
+        assertEquals("transfer-method:add:select-transfer-method", pageNameCaptor.getValue());
+        assertEquals("transfer-method", pageGroupCaptor.getValue());
+        assertEquals(2, mapImpressionCaptor.getAllValues().get(1).size());
+        assertEquals("CA", mapImpressionCaptor.getAllValues().get(1).get(
+                InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_COUNTRY));
+        assertEquals("CAD", mapImpressionCaptor.getAllValues().get(1).get(
+                InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_CURRENCY));
     }
 
     @Test
@@ -226,8 +258,18 @@ public class SelectTransferMethodTest {
         onView(allOf(withId(R.id.currency_name), withText("United States Dollar"))).perform(click());
         onView(withId(R.id.select_transfer_method_currency_value)).check(matches(withText("USD")));
 
-        verify(mHyperwalletInsight, atLeastOnce()).trackImpression(any(Context.class), anyString(), anyString(),
-                ArgumentMatchers.<String, String>anyMap());
+        verify(mHyperwalletInsight, atLeast(3)).trackImpression(any(Context.class), pageNameCaptor.capture(),
+                pageGroupCaptor.capture(),
+                mapImpressionCaptor.capture());
+
+        assertEquals("transfer-method:add:select-transfer-method", pageNameCaptor.getValue());
+        assertEquals("transfer-method", pageGroupCaptor.getValue());
+        assertEquals(2, mapImpressionCaptor.getAllValues().get(2).size());
+        assertEquals("US", mapImpressionCaptor.getAllValues().get(2).get(
+                InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_COUNTRY));
+        assertEquals("USD", mapImpressionCaptor.getAllValues().get(2).get(
+                InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_CURRENCY));
+
     }
 
     @Test
@@ -420,8 +462,20 @@ public class SelectTransferMethodTest {
         onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar)))).check(
                 matches(withText(R.string.title_add_bank_account)));
 
-        verify(mHyperwalletInsight, atLeastOnce()).trackClick(any(Context.class), anyString(), anyString(), anyString(),
-                ArgumentMatchers.<String, String>anyMap());
+        verify(mHyperwalletInsight, atLeastOnce()).trackClick(any(Context.class), pageNameCaptor.capture(),
+                pageGroupCaptor.capture(), linkCaptor.capture(),
+                mapClickCaptor.capture());
+
+        assertEquals("transfer-method:add:select-transfer-method", pageNameCaptor.getValue());
+        assertEquals("transfer-method", pageGroupCaptor.getValue());
+        assertEquals("select-transfer-method", linkCaptor.getValue());
+        assertEquals(3, mapClickCaptor.getAllValues().get(0).size());
+        assertEquals("US", mapClickCaptor.getAllValues().get(0).get(
+                InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_COUNTRY));
+        assertEquals("USD", mapClickCaptor.getAllValues().get(0).get(
+                InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_CURRENCY));
+        assertEquals("BANK_ACCOUNT", mapClickCaptor.getAllValues().get(0).get(
+                InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_TYPE));
     }
 
     @Test
@@ -440,8 +494,21 @@ public class SelectTransferMethodTest {
         onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar)))).check(
                 matches(withText(R.string.title_add_bank_card)));
 
-        verify(mHyperwalletInsight, atLeastOnce()).trackClick(any(Context.class), anyString(), anyString(), anyString(),
-                ArgumentMatchers.<String, String>anyMap());
+        verify(mHyperwalletInsight, atLeastOnce()).trackClick(any(Context.class), pageNameCaptor.capture(),
+                pageGroupCaptor.capture(), linkCaptor.capture(),
+                mapClickCaptor.capture());
+
+        assertEquals("transfer-method:add:select-transfer-method", pageNameCaptor.getValue());
+        assertEquals("transfer-method", pageGroupCaptor.getValue());
+        assertEquals("select-transfer-method", linkCaptor.getValue());
+        assertEquals(3, mapClickCaptor.getAllValues().get(0).size());
+        assertEquals("US", mapClickCaptor.getAllValues().get(0).get(
+                InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_COUNTRY));
+        assertEquals("USD", mapClickCaptor.getAllValues().get(0).get(
+                InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_CURRENCY));
+        assertEquals("BANK_CARD", mapClickCaptor.getAllValues().get(0).get(
+                InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_TYPE));
+
     }
 
     @Test
@@ -496,8 +563,17 @@ public class SelectTransferMethodTest {
         UiDevice mDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
         mDevice.pressBack();
 
-        verify(mHyperwalletInsight, atMost(1)).trackImpression(any(Context.class), anyString(), anyString(),
-                ArgumentMatchers.<String, String>anyMap());
+        verify(mHyperwalletInsight, atMost(1)).trackImpression(any(Context.class), pageNameCaptor.capture(),
+                pageGroupCaptor.capture(),
+                mapImpressionCaptor.capture());
+
+        assertEquals("transfer-method:add:select-transfer-method", pageNameCaptor.getValue());
+        assertEquals("transfer-method", pageGroupCaptor.getValue());
+        assertEquals(2, mapImpressionCaptor.getValue().size());
+        assertEquals("US",
+                mapImpressionCaptor.getValue().get(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_COUNTRY));
+        assertEquals("CAD", mapImpressionCaptor.getValue().get(
+                InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_CURRENCY));
     }
 
     @Test
@@ -513,8 +589,17 @@ public class SelectTransferMethodTest {
         UiDevice mDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
         mDevice.pressBack();
 
-        verify(mHyperwalletInsight, atMost(1)).trackImpression(any(Context.class), anyString(), anyString(),
-                ArgumentMatchers.<String, String>anyMap());
+        verify(mHyperwalletInsight, atMost(1)).trackImpression(any(Context.class), pageNameCaptor.capture(),
+                pageGroupCaptor.capture(),
+                mapImpressionCaptor.capture());
+
+        assertEquals("transfer-method:add:select-transfer-method", pageNameCaptor.getValue());
+        assertEquals("transfer-method", pageGroupCaptor.getValue());
+        assertEquals(2, mapImpressionCaptor.getValue().size());
+        assertEquals("US",
+                mapImpressionCaptor.getValue().get(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_COUNTRY));
+        assertEquals("CAD", mapImpressionCaptor.getValue().get(
+                InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_CURRENCY));
     }
 
     @Test
@@ -533,8 +618,20 @@ public class SelectTransferMethodTest {
         onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar)))).check(
                 matches(withText("Wire Transfer")));
 
-        verify(mHyperwalletInsight, atLeastOnce()).trackClick(any(Context.class), anyString(), anyString(), anyString(),
-                ArgumentMatchers.<String, String>anyMap());
+        verify(mHyperwalletInsight, atLeastOnce()).trackClick(any(Context.class), pageNameCaptor.capture(),
+                pageGroupCaptor.capture(), linkCaptor.capture(),
+                mapClickCaptor.capture());
+
+        assertEquals("transfer-method:add:select-transfer-method", pageNameCaptor.getValue());
+        assertEquals("transfer-method", pageGroupCaptor.getValue());
+        assertEquals("select-transfer-method", linkCaptor.getValue());
+        assertEquals(3, mapClickCaptor.getAllValues().get(0).size());
+        assertEquals("US", mapClickCaptor.getAllValues().get(0).get(
+                InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_COUNTRY));
+        assertEquals("USD", mapClickCaptor.getAllValues().get(0).get(
+                InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_CURRENCY));
+        assertEquals("WIRE_ACCOUNT", mapClickCaptor.getAllValues().get(0).get(
+                InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_TYPE));
     }
 
     @Test
@@ -553,47 +650,19 @@ public class SelectTransferMethodTest {
         onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar)))).check(
                 matches(withText("PayPal Account")));
 
-        verify(mHyperwalletInsight, atLeastOnce()).trackClick(any(Context.class), anyString(), anyString(), anyString(),
-                ArgumentMatchers.<String, String>anyMap());
-    }
+        verify(mHyperwalletInsight, atLeastOnce()).trackClick(any(Context.class), pageNameCaptor.capture(),
+                pageGroupCaptor.capture(), linkCaptor.capture(),
+                mapClickCaptor.capture());
 
-    @Test
-    public void testSelectTransferMethod_verifyClickEventCreatedWhenUserMakesLongClickOnTransferMethod() {
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("user_response.json")).mock();
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("successful_tmc_keys_response.json")).mock();
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("successful_tmc_fields_bank_card_response.json")).mock();
-
-        mActivityTestRule.launchActivity(null);
-
-        onView(withId(R.id.select_transfer_method_types_list))
-                .perform(RecyclerViewActions.actionOnItem(withChild(withText(R.string.bank_account)), longClick()));
-        onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar)))).check(
-                matches(withText(R.string.title_add_bank_account)));
-
-        verify(mHyperwalletInsight, atLeastOnce()).trackClick(any(Context.class), anyString(), anyString(), anyString(),
-                ArgumentMatchers.<String, String>anyMap());
-    }
-
-    @Test
-    public void testSelectTransferMethod_verifyClickEventCreatedWhenUserMakesDoubleClickOnTransferMethod() {
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("user_response.json")).mock();
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("successful_tmc_keys_response.json")).mock();
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("successful_tmc_fields_bank_card_response.json")).mock();
-
-        mActivityTestRule.launchActivity(null);
-
-        onView(withId(R.id.select_transfer_method_types_list))
-                .perform(RecyclerViewActions.actionOnItem(withChild(withText(R.string.bank_account)), doubleClick()));
-        onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar)))).check(
-                matches(withText(R.string.title_add_bank_account)));
-
-        verify(mHyperwalletInsight, atLeastOnce()).trackClick(any(Context.class), anyString(), anyString(), anyString(),
-                ArgumentMatchers.<String, String>anyMap());
+        assertEquals("transfer-method:add:select-transfer-method", pageNameCaptor.getValue());
+        assertEquals("transfer-method", pageGroupCaptor.getValue());
+        assertEquals("select-transfer-method", linkCaptor.getValue());
+        assertEquals(3, mapClickCaptor.getAllValues().get(0).size());
+        assertEquals("US", mapClickCaptor.getAllValues().get(0).get(
+                InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_COUNTRY));
+        assertEquals("USD", mapClickCaptor.getAllValues().get(0).get(
+                InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_CURRENCY));
+        assertEquals("PAYPAL_ACCOUNT", mapClickCaptor.getAllValues().get(0).get(
+                InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_TYPE));
     }
 }
