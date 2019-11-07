@@ -12,11 +12,16 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
+import static junit.framework.TestCase.assertEquals;
+
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.verify;
 
 import static java.net.HttpURLConnection.HTTP_BAD_REQUEST;
 import static java.net.HttpURLConnection.HTTP_OK;
@@ -25,6 +30,7 @@ import static com.hyperwallet.android.ui.common.view.error.DefaultErrorDialogFra
 import static com.hyperwallet.android.ui.testutils.util.EspressoUtils.nestedScrollTo;
 
 import android.app.Instrumentation;
+import android.content.Context;
 import android.content.Intent;
 import android.widget.TextView;
 
@@ -35,7 +41,9 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
 import com.hyperwallet.android.Hyperwallet;
+import com.hyperwallet.android.insight.InsightEventTag;
 import com.hyperwallet.android.ui.R;
+import com.hyperwallet.android.ui.common.insight.HyperwalletInsight;
 import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
 import com.hyperwallet.android.ui.common.view.error.DefaultErrorDialogFragment;
 import com.hyperwallet.android.ui.testutils.TestAuthenticationProvider;
@@ -50,8 +58,14 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
 
 import java.io.IOException;
+import java.util.Map;
 
 @RunWith(AndroidJUnit4.class)
 public class AddTransferMethodTest {
@@ -61,6 +75,8 @@ public class AddTransferMethodTest {
 
     @ClassRule
     public static HyperwalletExternalResourceManager sResourceManager = new HyperwalletExternalResourceManager();
+    @Rule
+    public MockitoRule mMockito = MockitoJUnit.rule();
     @Rule
     public HyperwalletMockWebServer mMockWebServer = new HyperwalletMockWebServer(8080);
     @Rule
@@ -73,13 +89,29 @@ public class AddTransferMethodTest {
                     intent.putExtra("TRANSFER_METHOD_TYPE", "BANK_ACCOUNT");
                     intent.putExtra("TRANSFER_METHOD_COUNTRY", "US");
                     intent.putExtra("TRANSFER_METHOD_CURRENCY", "USD");
+                    intent.putExtra("TRANSFER_METHOD_PROFILE_TYPE", "INDIVIDUAL");
                     return intent;
                 }
             };
 
+    @Captor
+    ArgumentCaptor<String> pageNameCaptor;
+    @Captor
+    ArgumentCaptor<String> pageGroupCaptor;
+    @Captor
+    ArgumentCaptor<String> linkCaptor;
+    @Captor
+    ArgumentCaptor<Map<String, String>> mapImpressionCaptor;
+    @Captor
+    ArgumentCaptor<Map<String, String>> mapClickCaptor;
+
+    @Mock
+    private HyperwalletInsight mHyperwalletInsight;
+
     @Before
     public void setup() {
         Hyperwallet.getInstance(new TestAuthenticationProvider());
+        HyperwalletInsight.setInstance(mHyperwalletInsight);
 
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("authentication_token_response.json")).mock();
@@ -160,6 +192,22 @@ public class AddTransferMethodTest {
                 .getResourceContent("invalid_json_response.json")).mock();
 
         mActivityTestRule.launchActivity(null);
+
+        verify(mHyperwalletInsight, atLeastOnce()).trackImpression(any(Context.class), pageNameCaptor.capture(),
+                pageGroupCaptor.capture(),
+                mapImpressionCaptor.capture());
+
+        assertEquals("transfer-method:add:collect-transfer-method-information", pageNameCaptor.getValue());
+        assertEquals("transfer-method", pageGroupCaptor.getValue());
+        assertEquals(4, mapImpressionCaptor.getValue().size());
+        assertEquals("US",
+                mapImpressionCaptor.getValue().get(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_COUNTRY));
+        assertEquals("USD", mapImpressionCaptor.getValue().get(
+                InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_CURRENCY));
+        assertEquals("BANK_ACCOUNT",
+                mapImpressionCaptor.getValue().get(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_TYPE));
+        assertEquals("INDIVIDUAL", mapImpressionCaptor.getValue().get(
+                InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_PROFILE_TYPE));
 
         onView(withId(R.id.branchId)).perform(nestedScrollTo(), replaceText(ROUTING_NUMBER));
         onView(withId(R.id.bankAccountId)).perform(nestedScrollTo(), replaceText(ACCOUNT_NUMBER));
