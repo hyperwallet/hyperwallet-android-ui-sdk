@@ -91,13 +91,13 @@ public class SelectTransferMethodTest {
             new IntentsTestRule<>(SelectTransferMethodActivity.class, true, false);
 
     @Captor
-    ArgumentCaptor<String> pageNameCaptor;
+    ArgumentCaptor<String> mPageNameCaptor;
     @Captor
-    ArgumentCaptor<String> pageGroupCaptor;
+    ArgumentCaptor<String> mPageGroupCaptor;
     @Captor
-    ArgumentCaptor<String> linkCaptor;
+    ArgumentCaptor<String> mLinkCaptor;
     @Captor
-    ArgumentCaptor<Map<String, String>> mapClickCaptor;
+    ArgumentCaptor<Map<String, String>> mMapClickCaptor;
 
     @Mock
     private HyperwalletInsight mHyperwalletInsight;
@@ -181,15 +181,15 @@ public class SelectTransferMethodTest {
         onView(allOf(withId(R.id.country_name), withText("Canada"))).perform(click());
         onView(withId(R.id.select_transfer_method_country_value)).check(matches(withText("Canada")));
 
-        verify(mHyperwalletInsight, atMost(1)).trackClick(any(Context.class), pageNameCaptor.capture(),
-                pageGroupCaptor.capture(), linkCaptor.capture(),
-                mapClickCaptor.capture());
+        verify(mHyperwalletInsight, atMost(1)).trackClick(any(Context.class), mPageNameCaptor.capture(),
+                mPageGroupCaptor.capture(), mLinkCaptor.capture(),
+                mMapClickCaptor.capture());
 
-        assertEquals("transfer-method:add:select-transfer-method", pageNameCaptor.getValue());
-        assertEquals("transfer-method", pageGroupCaptor.getValue());
-        assertEquals("select-country", linkCaptor.getValue());
-        assertEquals(1, mapClickCaptor.getAllValues().get(0).size());
-        assertEquals("CA", mapClickCaptor.getAllValues().get(0).get(
+        assertEquals("transfer-method:add:select-transfer-method", mPageNameCaptor.getValue());
+        assertEquals("transfer-method", mPageGroupCaptor.getValue());
+        assertEquals("select-country", mLinkCaptor.getValue());
+        assertEquals(1, mMapClickCaptor.getAllValues().get(0).size());
+        assertEquals("CA", mMapClickCaptor.getAllValues().get(0).get(
                 InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_COUNTRY));
     }
 

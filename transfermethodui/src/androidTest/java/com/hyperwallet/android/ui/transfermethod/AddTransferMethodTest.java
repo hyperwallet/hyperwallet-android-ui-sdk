@@ -91,11 +91,11 @@ public class AddTransferMethodTest {
             new ActivityTestRule<AddTransferMethodActivity>(AddTransferMethodActivity.class, true, false);
 
     @Captor
-    ArgumentCaptor<String> pageNameCaptor;
+    ArgumentCaptor<String> mPageNameCaptor;
     @Captor
-    ArgumentCaptor<String> pageGroupCaptor;
+    ArgumentCaptor<String> mPageGroupCaptor;
     @Captor
-    ArgumentCaptor<Map<String, String>> mapImpressionCaptor;
+    ArgumentCaptor<Map<String, String>> mMapImpressionCaptor;
 
     @Mock
     private HyperwalletInsight mHyperwalletInsight;
@@ -206,20 +206,21 @@ public class AddTransferMethodTest {
 
         mActivityTestRule.launchActivity(intent);
 
-        verify(mHyperwalletInsight, atLeastOnce()).trackImpression(any(Context.class), pageNameCaptor.capture(),
-                pageGroupCaptor.capture(),
-                mapImpressionCaptor.capture());
+        verify(mHyperwalletInsight, atLeastOnce()).trackImpression(any(Context.class), mPageNameCaptor.capture(),
+                mPageGroupCaptor.capture(),
+                mMapImpressionCaptor.capture());
 
-        assertEquals("transfer-method:add:collect-transfer-method-information", pageNameCaptor.getValue());
-        assertEquals("transfer-method", pageGroupCaptor.getValue());
-        assertEquals(4, mapImpressionCaptor.getValue().size());
+        assertEquals("transfer-method:add:collect-transfer-method-information", mPageNameCaptor.getValue());
+        assertEquals("transfer-method", mPageGroupCaptor.getValue());
+        assertEquals(4, mMapImpressionCaptor.getValue().size());
         assertEquals("US",
-                mapImpressionCaptor.getValue().get(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_COUNTRY));
-        assertEquals("USD", mapImpressionCaptor.getValue().get(
+                mMapImpressionCaptor.getValue().get(
+                        InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_COUNTRY));
+        assertEquals("USD", mMapImpressionCaptor.getValue().get(
                 InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_CURRENCY));
         assertEquals("BANK_ACCOUNT",
-                mapImpressionCaptor.getValue().get(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_TYPE));
-        assertEquals("INDIVIDUAL", mapImpressionCaptor.getValue().get(
+                mMapImpressionCaptor.getValue().get(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_TYPE));
+        assertEquals("INDIVIDUAL", mMapImpressionCaptor.getValue().get(
                 InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_PROFILE_TYPE));
 
         onView(withId(R.id.branchId)).perform(nestedScrollTo(), replaceText(ROUTING_NUMBER));
@@ -302,20 +303,21 @@ public class AddTransferMethodTest {
 
         mActivityTestRule.launchActivity(intent);
 
-        verify(mHyperwalletInsight, atLeastOnce()).trackImpression(any(Context.class), pageNameCaptor.capture(),
-                pageGroupCaptor.capture(),
-                mapImpressionCaptor.capture());
+        verify(mHyperwalletInsight, atLeastOnce()).trackImpression(any(Context.class), mPageNameCaptor.capture(),
+                mPageGroupCaptor.capture(),
+                mMapImpressionCaptor.capture());
 
-        assertEquals("transfer-method:add:collect-transfer-method-information", pageNameCaptor.getValue());
-        assertEquals("transfer-method", pageGroupCaptor.getValue());
-        assertEquals(4, mapImpressionCaptor.getValue().size());
+        assertEquals("transfer-method:add:collect-transfer-method-information", mPageNameCaptor.getValue());
+        assertEquals("transfer-method", mPageGroupCaptor.getValue());
+        assertEquals(4, mMapImpressionCaptor.getValue().size());
         assertEquals("US",
-                mapImpressionCaptor.getValue().get(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_COUNTRY));
-        assertEquals("USD", mapImpressionCaptor.getValue().get(
+                mMapImpressionCaptor.getValue().get(
+                        InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_COUNTRY));
+        assertEquals("USD", mMapImpressionCaptor.getValue().get(
                 InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_CURRENCY));
         assertEquals("PAYPAL_ACCOUNT",
-                mapImpressionCaptor.getValue().get(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_TYPE));
-        assertEquals("INDIVIDUAL", mapImpressionCaptor.getValue().get(
+                mMapImpressionCaptor.getValue().get(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_TYPE));
+        assertEquals("INDIVIDUAL", mMapImpressionCaptor.getValue().get(
                 InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_PROFILE_TYPE));
     }
 
@@ -333,20 +335,21 @@ public class AddTransferMethodTest {
 
         mActivityTestRule.launchActivity(intent);
 
-        verify(mHyperwalletInsight, atLeastOnce()).trackImpression(any(Context.class), pageNameCaptor.capture(),
-                pageGroupCaptor.capture(),
-                mapImpressionCaptor.capture());
+        verify(mHyperwalletInsight, atLeastOnce()).trackImpression(any(Context.class), mPageNameCaptor.capture(),
+                mPageGroupCaptor.capture(),
+                mMapImpressionCaptor.capture());
 
-        assertEquals("transfer-method:add:collect-transfer-method-information", pageNameCaptor.getValue());
-        assertEquals("transfer-method", pageGroupCaptor.getValue());
-        assertEquals(4, mapImpressionCaptor.getValue().size());
+        assertEquals("transfer-method:add:collect-transfer-method-information", mPageNameCaptor.getValue());
+        assertEquals("transfer-method", mPageGroupCaptor.getValue());
+        assertEquals(4, mMapImpressionCaptor.getValue().size());
         assertEquals("US",
-                mapImpressionCaptor.getValue().get(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_COUNTRY));
-        assertEquals("USD", mapImpressionCaptor.getValue().get(
+                mMapImpressionCaptor.getValue().get(
+                        InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_COUNTRY));
+        assertEquals("USD", mMapImpressionCaptor.getValue().get(
                 InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_CURRENCY));
         assertEquals("BANK_CARD",
-                mapImpressionCaptor.getValue().get(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_TYPE));
-        assertEquals("INDIVIDUAL", mapImpressionCaptor.getValue().get(
+                mMapImpressionCaptor.getValue().get(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_TYPE));
+        assertEquals("INDIVIDUAL", mMapImpressionCaptor.getValue().get(
                 InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_PROFILE_TYPE));
     }
 
@@ -364,20 +367,21 @@ public class AddTransferMethodTest {
 
         mActivityTestRule.launchActivity(intent);
 
-        verify(mHyperwalletInsight, atLeastOnce()).trackImpression(any(Context.class), pageNameCaptor.capture(),
-                pageGroupCaptor.capture(),
-                mapImpressionCaptor.capture());
+        verify(mHyperwalletInsight, atLeastOnce()).trackImpression(any(Context.class), mPageNameCaptor.capture(),
+                mPageGroupCaptor.capture(),
+                mMapImpressionCaptor.capture());
 
-        assertEquals("transfer-method:add:collect-transfer-method-information", pageNameCaptor.getValue());
-        assertEquals("transfer-method", pageGroupCaptor.getValue());
-        assertEquals(4, mapImpressionCaptor.getValue().size());
+        assertEquals("transfer-method:add:collect-transfer-method-information", mPageNameCaptor.getValue());
+        assertEquals("transfer-method", mPageGroupCaptor.getValue());
+        assertEquals(4, mMapImpressionCaptor.getValue().size());
         assertEquals("US",
-                mapImpressionCaptor.getValue().get(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_COUNTRY));
-        assertEquals("USD", mapImpressionCaptor.getValue().get(
+                mMapImpressionCaptor.getValue().get(
+                        InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_COUNTRY));
+        assertEquals("USD", mMapImpressionCaptor.getValue().get(
                 InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_CURRENCY));
         assertEquals("WIRE_ACCOUNT",
-                mapImpressionCaptor.getValue().get(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_TYPE));
-        assertEquals("INDIVIDUAL", mapImpressionCaptor.getValue().get(
+                mMapImpressionCaptor.getValue().get(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_TYPE));
+        assertEquals("INDIVIDUAL", mMapImpressionCaptor.getValue().get(
                 InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_PROFILE_TYPE));
     }
 }
