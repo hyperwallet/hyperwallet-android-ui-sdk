@@ -11,6 +11,7 @@ apply from: "$rootProject.projectDir/android-library.gradle"
 apply from: "$rootProject.projectDir/publish.gradle"
 
 dependencies {
+    api "com.hyperwallet.android:insight-sdk:$hyperwalletInsightVersion"
     implementation project(':commonrepository')
 
     testImplementation "org.robolectric:robolectric:$robolectricVersion"
