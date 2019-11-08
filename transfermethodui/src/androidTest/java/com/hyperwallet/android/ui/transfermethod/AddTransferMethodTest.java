@@ -95,13 +95,13 @@ public class AddTransferMethodTest {
             };
 
     @Captor
-    ArgumentCaptor<String> pageNameCaptor;
+    ArgumentCaptor<String> mPageNameCaptor;
     @Captor
-    ArgumentCaptor<String> pageGroupCaptor;
+    ArgumentCaptor<String> mPageGroupCaptor;
     @Captor
-    ArgumentCaptor<String> linkCaptor;
+    ArgumentCaptor<String> mLinkCaptor;
     @Captor
-    ArgumentCaptor<Map<String, String>> mapClickCaptor;
+    ArgumentCaptor<Map<String, String>> mMapClickCaptor;
 
     @Mock
     private HyperwalletInsight mHyperwalletInsight;
@@ -165,22 +165,22 @@ public class AddTransferMethodTest {
         onView(allOf(withId(R.id.select_name), withText("Savings"))).perform(click());
         onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo(), click());
 
-        verify(mHyperwalletInsight, atLeastOnce()).trackClick(any(Context.class), pageNameCaptor.capture(),
-                pageGroupCaptor.capture(), linkCaptor.capture(),
-                mapClickCaptor.capture());
+        verify(mHyperwalletInsight, atLeastOnce()).trackClick(any(Context.class), mPageNameCaptor.capture(),
+                mPageGroupCaptor.capture(), mLinkCaptor.capture(),
+                mMapClickCaptor.capture());
 
-        assertEquals("transfer-method:add:collect-transfer-method-information", pageNameCaptor.getValue());
-        assertEquals("transfer-method", pageGroupCaptor.getValue());
-        assertEquals("create-transfer-method", linkCaptor.getValue());
-        assertEquals(4, mapClickCaptor.getAllValues().get(0).size());
-        assertEquals("US", mapClickCaptor.getAllValues().get(0).get(
+        assertEquals("transfer-method:add:collect-transfer-method-information", mPageNameCaptor.getValue());
+        assertEquals("transfer-method", mPageGroupCaptor.getValue());
+        assertEquals("create-transfer-method", mLinkCaptor.getValue());
+        assertEquals(4, mMapClickCaptor.getAllValues().get(0).size());
+        assertEquals("US", mMapClickCaptor.getAllValues().get(0).get(
                 InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_COUNTRY));
-        assertEquals("USD", mapClickCaptor.getAllValues().get(0).get(
+        assertEquals("USD", mMapClickCaptor.getAllValues().get(0).get(
                 InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_CURRENCY));
         assertEquals("INDIVIDUAL",
-                mapClickCaptor.getAllValues().get(0).get(
+                mMapClickCaptor.getAllValues().get(0).get(
                         InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_PROFILE_TYPE));
-        assertEquals("BANK_ACCOUNT", mapClickCaptor.getAllValues().get(0).get(
+        assertEquals("BANK_ACCOUNT", mMapClickCaptor.getAllValues().get(0).get(
                 InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_TYPE));
 
         // check dialog content
@@ -243,6 +243,25 @@ public class AddTransferMethodTest {
         mMockWebServer.getServer().shutdown();
 
         onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo(), click());
+
+        verify(mHyperwalletInsight, atLeastOnce()).trackClick(any(Context.class), mPageNameCaptor.capture(),
+                mPageGroupCaptor.capture(), mLinkCaptor.capture(),
+                mMapClickCaptor.capture());
+
+        assertEquals("transfer-method:add:collect-transfer-method-information", mPageNameCaptor.getValue());
+        assertEquals("transfer-method", mPageGroupCaptor.getValue());
+        assertEquals("create-transfer-method", mLinkCaptor.getValue());
+        assertEquals(4, mMapClickCaptor.getAllValues().get(0).size());
+        assertEquals("US", mMapClickCaptor.getAllValues().get(0).get(
+                InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_COUNTRY));
+        assertEquals("USD", mMapClickCaptor.getAllValues().get(0).get(
+                InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_CURRENCY));
+        assertEquals("INDIVIDUAL",
+                mMapClickCaptor.getAllValues().get(0).get(
+                        InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_PROFILE_TYPE));
+        assertEquals("BANK_ACCOUNT", mMapClickCaptor.getAllValues().get(0).get(
+                InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_TYPE));
+
         // by default screen is in portrait mode
 
         // assert error dialog information exist in portrait mode
@@ -266,5 +285,33 @@ public class AddTransferMethodTest {
         Instrumentation.ActivityResult result = mActivityTestRule.getActivityResult();
         assertThat(result.getResultCode(), is(DefaultErrorDialogFragment.RESULT_ERROR));
         assertThat(mActivityTestRule.getActivity().isFinishing(), is(true));
+    }
+
+    @Test
+    public void testAddTransferMethod_VerifyClickEvenWhenUserClickOnCreateTransferMethodButton() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_fields_bank_account_response.json")).mock();
+
+        mActivityTestRule.launchActivity(null);
+
+        onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo(), click());
+
+        verify(mHyperwalletInsight, atLeastOnce()).trackClick(any(Context.class), mPageNameCaptor.capture(),
+                mPageGroupCaptor.capture(), mLinkCaptor.capture(),
+                mMapClickCaptor.capture());
+
+        assertEquals("transfer-method:add:collect-transfer-method-information", mPageNameCaptor.getValue());
+        assertEquals("transfer-method", mPageGroupCaptor.getValue());
+        assertEquals("create-transfer-method", mLinkCaptor.getValue());
+        assertEquals(4, mMapClickCaptor.getAllValues().get(0).size());
+        assertEquals("US", mMapClickCaptor.getAllValues().get(0).get(
+                InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_COUNTRY));
+        assertEquals("USD", mMapClickCaptor.getAllValues().get(0).get(
+                InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_CURRENCY));
+        assertEquals("INDIVIDUAL",
+                mMapClickCaptor.getAllValues().get(0).get(
+                        InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_PROFILE_TYPE));
+        assertEquals("BANK_ACCOUNT", mMapClickCaptor.getAllValues().get(0).get(
+                InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_TYPE));
     }
 }
