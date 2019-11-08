@@ -72,6 +72,13 @@ public class AddTransferMethodTest {
 
     private static final String ACCOUNT_NUMBER = "8017110254";
     private static final String ROUTING_NUMBER = "211179539";
+    private static final String TRANSFER_METHOD_BANK_TYPE = "BANK_ACCOUNT";
+    private static final String TRANSFER_METHOD_WIRE_TYPE = "WIRE_ACCOUNT";
+    private static final String TRANSFER_METHOD_PAYPAL_TYPE = "PAYPAL_ACCOUNT";
+    private static final String TRANSFER_METHOD_CARD_TYPE = "BANK_CARD";
+    private static final String TRANSFER_METHOD_COUNTRY = "US";
+    private static final String TRANSFER_METHOD_CURRENCY = "USD";
+    private static final String TRANSFER_METHOD_PROFILE_TYPE = "INDIVIDUAL";
 
     @ClassRule
     public static HyperwalletExternalResourceManager sResourceManager = new HyperwalletExternalResourceManager();
@@ -81,29 +88,14 @@ public class AddTransferMethodTest {
     public HyperwalletMockWebServer mMockWebServer = new HyperwalletMockWebServer(8080);
     @Rule
     public ActivityTestRule<AddTransferMethodActivity> mActivityTestRule =
-            new ActivityTestRule<AddTransferMethodActivity>(AddTransferMethodActivity.class, true, false) {
-                @Override
-                protected Intent getActivityIntent() {
-                    Intent intent = new Intent(ApplicationProvider.getApplicationContext(),
-                            AddTransferMethodActivity.class);
-                    intent.putExtra("TRANSFER_METHOD_TYPE", "BANK_ACCOUNT");
-                    intent.putExtra("TRANSFER_METHOD_COUNTRY", "US");
-                    intent.putExtra("TRANSFER_METHOD_CURRENCY", "USD");
-                    intent.putExtra("TRANSFER_METHOD_PROFILE_TYPE", "INDIVIDUAL");
-                    return intent;
-                }
-            };
+            new ActivityTestRule<AddTransferMethodActivity>(AddTransferMethodActivity.class, true, false);
 
     @Captor
     ArgumentCaptor<String> pageNameCaptor;
     @Captor
     ArgumentCaptor<String> pageGroupCaptor;
     @Captor
-    ArgumentCaptor<String> linkCaptor;
-    @Captor
     ArgumentCaptor<Map<String, String>> mapImpressionCaptor;
-    @Captor
-    ArgumentCaptor<Map<String, String>> mapClickCaptor;
 
     @Mock
     private HyperwalletInsight mHyperwalletInsight;
@@ -138,7 +130,14 @@ public class AddTransferMethodTest {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("successful_tmc_fields_empty_details_response.json")).mock();
 
-        mActivityTestRule.launchActivity(null);
+        Intent intent = new Intent(ApplicationProvider.getApplicationContext(),
+                AddTransferMethodActivity.class);
+        intent.putExtra("TRANSFER_METHOD_TYPE", TRANSFER_METHOD_BANK_TYPE);
+        intent.putExtra("TRANSFER_METHOD_COUNTRY", TRANSFER_METHOD_COUNTRY);
+        intent.putExtra("TRANSFER_METHOD_CURRENCY", TRANSFER_METHOD_CURRENCY);
+        intent.putExtra("TRANSFER_METHOD_PROFILE_TYPE", TRANSFER_METHOD_PROFILE_TYPE);
+
+        mActivityTestRule.launchActivity(intent);
 
         onView(withId(R.id.add_transfer_method_static_container)).check(
                 matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
@@ -159,7 +158,14 @@ public class AddTransferMethodTest {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_BAD_REQUEST).withBody(sResourceManager
                 .getResourceContent("bank_account_duplicate_routing_response.json")).mock();
 
-        mActivityTestRule.launchActivity(null);
+        Intent intent = new Intent(ApplicationProvider.getApplicationContext(),
+                AddTransferMethodActivity.class);
+        intent.putExtra("TRANSFER_METHOD_TYPE", TRANSFER_METHOD_BANK_TYPE);
+        intent.putExtra("TRANSFER_METHOD_COUNTRY", TRANSFER_METHOD_COUNTRY);
+        intent.putExtra("TRANSFER_METHOD_CURRENCY", TRANSFER_METHOD_CURRENCY);
+        intent.putExtra("TRANSFER_METHOD_PROFILE_TYPE", TRANSFER_METHOD_PROFILE_TYPE);
+
+        mActivityTestRule.launchActivity(intent);
 
         onView(withId(R.id.branchId)).perform(nestedScrollTo(), replaceText(ROUTING_NUMBER));
         onView(withId(R.id.bankAccountId)).perform(nestedScrollTo(), replaceText(ACCOUNT_NUMBER));
@@ -191,7 +197,14 @@ public class AddTransferMethodTest {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_BAD_REQUEST).withBody(sResourceManager
                 .getResourceContent("invalid_json_response.json")).mock();
 
-        mActivityTestRule.launchActivity(null);
+        Intent intent = new Intent(ApplicationProvider.getApplicationContext(),
+                AddTransferMethodActivity.class);
+        intent.putExtra("TRANSFER_METHOD_TYPE", TRANSFER_METHOD_BANK_TYPE);
+        intent.putExtra("TRANSFER_METHOD_COUNTRY", TRANSFER_METHOD_COUNTRY);
+        intent.putExtra("TRANSFER_METHOD_CURRENCY", TRANSFER_METHOD_CURRENCY);
+        intent.putExtra("TRANSFER_METHOD_PROFILE_TYPE", TRANSFER_METHOD_PROFILE_TYPE);
+
+        mActivityTestRule.launchActivity(intent);
 
         verify(mHyperwalletInsight, atLeastOnce()).trackImpression(any(Context.class), pageNameCaptor.capture(),
                 pageGroupCaptor.capture(),
@@ -232,7 +245,14 @@ public class AddTransferMethodTest {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("successful_tmc_fields_bank_account_response.json")).mock();
 
-        mActivityTestRule.launchActivity(null);
+        Intent intent = new Intent(ApplicationProvider.getApplicationContext(),
+                AddTransferMethodActivity.class);
+        intent.putExtra("TRANSFER_METHOD_TYPE", TRANSFER_METHOD_BANK_TYPE);
+        intent.putExtra("TRANSFER_METHOD_COUNTRY", TRANSFER_METHOD_COUNTRY);
+        intent.putExtra("TRANSFER_METHOD_CURRENCY", TRANSFER_METHOD_CURRENCY);
+        intent.putExtra("TRANSFER_METHOD_PROFILE_TYPE", TRANSFER_METHOD_PROFILE_TYPE);
+
+        mActivityTestRule.launchActivity(intent);
 
         onView(withId(R.id.branchId)).perform(nestedScrollTo(), replaceText(ROUTING_NUMBER));
         onView(withId(R.id.bankAccountId)).perform(nestedScrollTo(), replaceText(ACCOUNT_NUMBER));
@@ -266,5 +286,98 @@ public class AddTransferMethodTest {
         Instrumentation.ActivityResult result = mActivityTestRule.getActivityResult();
         assertThat(result.getResultCode(), is(DefaultErrorDialogFragment.RESULT_ERROR));
         assertThat(mActivityTestRule.getActivity().isFinishing(), is(true));
+    }
+
+    @Test
+    public void testAddTransferMethod_VerifyEventWhenTransferMethodScreenSuccessfullyLoadedForPayPalAccount() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_fields_paypal_response_for_insight_check.json")).mock();
+
+        Intent intent = new Intent(ApplicationProvider.getApplicationContext(),
+                AddTransferMethodActivity.class);
+        intent.putExtra("TRANSFER_METHOD_TYPE", TRANSFER_METHOD_PAYPAL_TYPE);
+        intent.putExtra("TRANSFER_METHOD_COUNTRY", TRANSFER_METHOD_COUNTRY);
+        intent.putExtra("TRANSFER_METHOD_CURRENCY", TRANSFER_METHOD_CURRENCY);
+        intent.putExtra("TRANSFER_METHOD_PROFILE_TYPE", TRANSFER_METHOD_PROFILE_TYPE);
+
+        mActivityTestRule.launchActivity(intent);
+
+        verify(mHyperwalletInsight, atLeastOnce()).trackImpression(any(Context.class), pageNameCaptor.capture(),
+                pageGroupCaptor.capture(),
+                mapImpressionCaptor.capture());
+
+        assertEquals("transfer-method:add:collect-transfer-method-information", pageNameCaptor.getValue());
+        assertEquals("transfer-method", pageGroupCaptor.getValue());
+        assertEquals(4, mapImpressionCaptor.getValue().size());
+        assertEquals("US",
+                mapImpressionCaptor.getValue().get(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_COUNTRY));
+        assertEquals("USD", mapImpressionCaptor.getValue().get(
+                InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_CURRENCY));
+        assertEquals("PAYPAL_ACCOUNT",
+                mapImpressionCaptor.getValue().get(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_TYPE));
+        assertEquals("INDIVIDUAL", mapImpressionCaptor.getValue().get(
+                InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_PROFILE_TYPE));
+    }
+
+    @Test
+    public void testAddTransferMethod_VerifyEventWhenTransferMethodScreenSuccessfullyLoadedForCardAccount() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_fields_bank_card_response_for_insight_Check.json")).mock();
+
+        Intent intent = new Intent(ApplicationProvider.getApplicationContext(),
+                AddTransferMethodActivity.class);
+        intent.putExtra("TRANSFER_METHOD_TYPE", TRANSFER_METHOD_CARD_TYPE);
+        intent.putExtra("TRANSFER_METHOD_COUNTRY", TRANSFER_METHOD_COUNTRY);
+        intent.putExtra("TRANSFER_METHOD_CURRENCY", TRANSFER_METHOD_CURRENCY);
+        intent.putExtra("TRANSFER_METHOD_PROFILE_TYPE", TRANSFER_METHOD_PROFILE_TYPE);
+
+        mActivityTestRule.launchActivity(intent);
+
+        verify(mHyperwalletInsight, atLeastOnce()).trackImpression(any(Context.class), pageNameCaptor.capture(),
+                pageGroupCaptor.capture(),
+                mapImpressionCaptor.capture());
+
+        assertEquals("transfer-method:add:collect-transfer-method-information", pageNameCaptor.getValue());
+        assertEquals("transfer-method", pageGroupCaptor.getValue());
+        assertEquals(4, mapImpressionCaptor.getValue().size());
+        assertEquals("US",
+                mapImpressionCaptor.getValue().get(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_COUNTRY));
+        assertEquals("USD", mapImpressionCaptor.getValue().get(
+                InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_CURRENCY));
+        assertEquals("BANK_CARD",
+                mapImpressionCaptor.getValue().get(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_TYPE));
+        assertEquals("INDIVIDUAL", mapImpressionCaptor.getValue().get(
+                InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_PROFILE_TYPE));
+    }
+
+    @Test
+    public void testAddTransferMethod_VerifyEventWhenTransferMethodScreenSuccessfullyLoadedForWireAccount() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_fields_wireaccount_response_for_insight_check.json")).mock();
+
+        Intent intent = new Intent(ApplicationProvider.getApplicationContext(),
+                AddTransferMethodActivity.class);
+        intent.putExtra("TRANSFER_METHOD_TYPE", TRANSFER_METHOD_WIRE_TYPE);
+        intent.putExtra("TRANSFER_METHOD_COUNTRY", TRANSFER_METHOD_COUNTRY);
+        intent.putExtra("TRANSFER_METHOD_CURRENCY", TRANSFER_METHOD_CURRENCY);
+        intent.putExtra("TRANSFER_METHOD_PROFILE_TYPE", TRANSFER_METHOD_PROFILE_TYPE);
+
+        mActivityTestRule.launchActivity(intent);
+
+        verify(mHyperwalletInsight, atLeastOnce()).trackImpression(any(Context.class), pageNameCaptor.capture(),
+                pageGroupCaptor.capture(),
+                mapImpressionCaptor.capture());
+
+        assertEquals("transfer-method:add:collect-transfer-method-information", pageNameCaptor.getValue());
+        assertEquals("transfer-method", pageGroupCaptor.getValue());
+        assertEquals(4, mapImpressionCaptor.getValue().size());
+        assertEquals("US",
+                mapImpressionCaptor.getValue().get(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_COUNTRY));
+        assertEquals("USD", mapImpressionCaptor.getValue().get(
+                InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_CURRENCY));
+        assertEquals("WIRE_ACCOUNT",
+                mapImpressionCaptor.getValue().get(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_TYPE));
+        assertEquals("INDIVIDUAL", mapImpressionCaptor.getValue().get(
+                InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_PROFILE_TYPE));
     }
 }

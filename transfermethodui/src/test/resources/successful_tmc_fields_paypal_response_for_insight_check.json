@@ -1,0 +1,60 @@
+{
+  "data": {
+    "transferMethodUIConfigurations": {
+      "nodes": [
+        {
+          "country": "US",
+          "currency": "USD",
+          "transferMethodType": "PAYPAL_ACCOUNT",
+          "profile": "INDIVIDUAL",
+          "fieldGroups": {
+            "nodes": [
+              {
+                "group": "CONTACT_INFORMATION",
+                "fields": [
+                  {
+                    "category": "ACCOUNT",
+                    "dataType": "TEXT",
+                    "isEditable": true,
+                    "label": "Email",
+                    "maxLength": 200,
+                    "minLength": 3,
+                    "name": "email",
+                    "placeholder": "",
+                    "regularExpression": "^(?:[a-zA-Z0-9]{1}|[a-zA-Z0-9]{1}[a-zA-Z0-9\\_\\-\\.+]{0,61}[a-zA-Z0-9\\_\\-+]{1})[@]{1}(?:[a-zA-Z0-9\\-]{1}|[a-zA-Z0-9\\-]{1}([a-zA-Z0-9\\-\\.](?!\\.\\.)){0,134}[a-zA-Z0-9\\-]{1})$",
+                    "isRequired": true,
+                    "validationMessage": {
+                      "length": "The minimum length of this field is 3 and maximum length is 200.",
+                      "pattern": "is invalid length or format.",
+                      "empty": "You must provide a value for this field"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "fees": {
+      "nodes": [
+        {
+          "value": "0.25",
+          "feeRateType": "FLAT",
+          "country": "US",
+          "currency": "USD"
+        }
+      ]
+    },
+    "processingTimes": {
+      "nodes": [
+        {
+          "country": "US",
+          "currency": "USD",
+          "transferMethodType": "PAYPAL_ACCOUNT",
+          "value": "IMMEDIATE"
+        }
+      ]
+    }
+  }
+}

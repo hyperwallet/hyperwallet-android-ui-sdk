@@ -1,0 +1,94 @@
+{
+  "data": {
+    "transferMethodUIConfigurations": {
+      "nodes": [
+        {
+          "country": "US",
+          "currency": "USD",
+          "transferMethodType": "BANK_CARD",
+          "profile": "INDIVIDUAL",
+          "fieldGroups": {
+            "nodes": [
+              {
+                "group": "ACCOUNT_INFORMATION",
+                "fields": [
+                  {
+                    "category": "ACCOUNT",
+                    "dataType": "NUMBER",
+                    "isEditable": true,
+                    "label": "Card Number",
+                    "maxLength": 19,
+                    "minLength": 13,
+                    "name": "cardNumber",
+                    "placeholder": "",
+                    "regularExpression": "^[0-9]{13,19}$",
+                    "isRequired": true,
+                    "validationMessage": {
+                      "length": "The minimum length of this field is 13 and maximum length is 19.",
+                      "pattern": "is invalid length or format.",
+                      "empty": "You must provide a value for this field"
+                    }
+                  },
+                  {
+                    "category": "ACCOUNT",
+                    "dataType": "EXPIRY_DATE",
+                    "isEditable": true,
+                    "label": "Expiration Date",
+                    "maxLength": 7,
+                    "minLength": 7,
+                    "name": "dateOfExpiry",
+                    "placeholder": "",
+                    "regularExpression": "^[0-9]{4}-(1[0-2]|0[1-9])$",
+                    "isRequired": true,
+                    "validationMessage": {
+                      "length": "The exact length of this field is 7.",
+                      "pattern": "is invalid length or format.",
+                      "empty": "You must provide a value for this field"
+                    }
+                  },
+                  {
+                    "category": "ACCOUNT",
+                    "dataType": "NUMBER",
+                    "isEditable": true,
+                    "label": "CVV (Card Security Code)",
+                    "maxLength": 4,
+                    "minLength": 3,
+                    "name": "cvv",
+                    "placeholder": "",
+                    "regularExpression": "^[0-9]{3,4}$",
+                    "isRequired": true,
+                    "validationMessage": {
+                      "length": "The minimum length of this field is 3 and maximum length is 4.",
+                      "pattern": "is invalid length or format.",
+                      "empty": "You must provide a value for this field"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "fees": {
+      "nodes": [
+        {
+          "value": "1.75",
+          "feeRateType": "FLAT",
+          "country": "US",
+          "currency": "USD"
+        }
+      ]
+    },
+    "processingTimes": {
+      "nodes": [
+        {
+          "country": "US",
+          "currency": "USD",
+          "transferMethodType": "BANK_CARD",
+          "value": "1 - 2 Business days"
+        }
+      ]
+    }
+  }
+}

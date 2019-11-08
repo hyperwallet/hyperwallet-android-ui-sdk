@@ -21,9 +21,7 @@ import static junit.framework.TestCase.assertEquals;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.atMost;
-import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 import static java.net.HttpURLConnection.HTTP_OK;
@@ -47,9 +45,7 @@ import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.espresso.intent.rule.IntentsTestRule;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
-import androidx.test.uiautomator.UiDevice;
 
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.insight.InsightEventTag;
@@ -71,7 +67,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
-import org.mockito.ArgumentMatchers;
 import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
@@ -491,46 +486,5 @@ public class SelectTransferMethodTest {
 
         onView(withId(R.id.select_transfer_method_country_value)).check(matches(withText("United States")));
         onView(withId(R.id.select_transfer_method_currency_value)).check(matches(withText("USD")));
-    }
-
-    @Test
-    public void testSelectTransferMethod_verifyClickEventOnSameCountrySelection() {
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("user_response.json")).mock();
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("successful_tmc_keys_response.json")).mock();
-
-        mActivityTestRule.launchActivity(null);
-
-        onView(withId(R.id.select_transfer_method_country_value)).perform(click());
-        onView(allOf(withId(R.id.country_name), withText("United States"))).perform(click());
-
-        verify(mHyperwalletInsight, atMost(1)).trackClick(any(Context.class), pageNameCaptor.capture(),
-                pageGroupCaptor.capture(), linkCaptor.capture(),
-                mapClickCaptor.capture());
-
-        assertEquals("transfer-method:add:select-transfer-method", pageNameCaptor.getValue());
-        assertEquals("transfer-method", pageGroupCaptor.getValue());
-        assertEquals("select-country", linkCaptor.getValue());
-        assertEquals(1, mapClickCaptor.getAllValues().get(0).size());
-        assertEquals("US", mapClickCaptor.getAllValues().get(0).get(
-                InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_COUNTRY));
-    }
-
-    @Test
-    public void testSelectTransferMethod_verifySendEventWhenUserClicksOnCountrySelectionButNavigationBack() {
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("user_response.json")).mock();
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("successful_tmc_keys_large_response.json")).mock();
-
-        mActivityTestRule.launchActivity(null);
-
-        onView(withId(R.id.select_transfer_method_country_container)).perform(click());
-        UiDevice mDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
-        mDevice.pressBack();
-
-        verify(mHyperwalletInsight, never()).trackClick(any(Context.class), anyString(),
-                anyString(), anyString(), ArgumentMatchers.<String, String>anyMap());
     }
 }
