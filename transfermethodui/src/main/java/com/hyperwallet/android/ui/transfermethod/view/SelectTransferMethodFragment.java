@@ -58,7 +58,7 @@ import java.util.TreeMap;
 public class SelectTransferMethodFragment extends Fragment implements SelectTransferMethodContract.View {
 
     protected static final String TAG = "transfer-method:add:select-transfer-method";
-    private static final String LINK = "select-country";
+    private static final String LINK_SELECT_COUNTRY = "select-country";
     private static final String ARGUMENT_COUNTRY_CODE_SELECTED = "ARGUMENT_COUNTRY_CODE_SELECTED";
     private static final String ARGUMENT_CURRENCY_CODE_SELECTED = "ARGUMENT_CURRENCY_CODE_SELECTED";
     private static final boolean FORCE_UPDATE = false;
@@ -242,7 +242,7 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
         Map<String, String> params = new HashMap<>();
         params.put(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_COUNTRY, countryCode);
         HyperwalletInsight.getInstance().trackClick(requireContext(), TAG,
-                getResources().getString(R.string.tag_group_transfer_method), LINK, params);
+                getResources().getString(R.string.tag_group_transfer_method), LINK_SELECT_COUNTRY, params);
 
         mSelectedCountryCode = countryCode;
         mPresenter.loadCurrency(FORCE_UPDATE, countryCode);

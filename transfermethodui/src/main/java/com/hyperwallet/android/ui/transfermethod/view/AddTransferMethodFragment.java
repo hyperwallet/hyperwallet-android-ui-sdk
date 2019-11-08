@@ -76,7 +76,7 @@ import java.util.TreeMap;
 public class AddTransferMethodFragment extends Fragment implements WidgetEventListener, AddTransferMethodContract.View {
 
     protected static final String TAG = "transfer-method:add:collect-transfer-method-information";
-    protected static final String TAG_ADDED = "transfer-method:add:transfer-method-created";
+    private static final String TAG_TRANSRFER_METHOD_ADDED = "transfer-method:add:transfer-method-created";
     private static final String GOAL = "transfer-method-created";
     private static final String ARGUMENT_TRANSFER_METHOD_COUNTRY = "ARGUMENT_TRANSFER_METHOD_COUNTRY";
     private static final String ARGUMENT_TRANSFER_METHOD_CURRENCY = "ARGUMENT_TRANSFER_METHOD_CURRENCY";
@@ -310,7 +310,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
         params.put(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_CURRENCY, mCurrency);
         params.put(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_TYPE, mTransferMethodType);
         params.put(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_PROFILE_TYPE, mTransferMethodProfileType);
-        HyperwalletInsight.getInstance().trackImpression(requireContext(), TAG_ADDED,
+        HyperwalletInsight.getInstance().trackImpression(requireContext(), TAG_TRANSRFER_METHOD_ADDED,
                 getResources().getString(R.string.tag_group_transfer_method), params);
 
         Intent intent = HyperwalletTransferMethodLocalBroadcast.createBroadcastIntentTransferMethodAdded(
