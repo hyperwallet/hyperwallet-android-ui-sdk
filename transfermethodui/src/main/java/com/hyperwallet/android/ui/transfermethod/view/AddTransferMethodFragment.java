@@ -46,7 +46,6 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.hyperwallet.android.exception.HyperwalletException;
-import com.hyperwallet.android.insight.InsightEventTag;
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.graphql.HyperwalletFee;
 import com.hyperwallet.android.model.graphql.ProcessingTime;
@@ -70,7 +69,6 @@ import com.hyperwallet.android.ui.transfermethod.view.widget.WidgetInputState;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.TreeMap;
 
 public class AddTransferMethodFragment extends Fragment implements WidgetEventListener, AddTransferMethodContract.View {
@@ -100,6 +98,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     private HyperwalletTransferMethod mTransferMethod;
     private String mTransferMethodProfileType;
     private HashMap<String, WidgetInputState> mWidgetInputStateHashMap;
+    private String mTransferMethodGroup;
 
     /**
      * Please do not use this to have instance of AddTransferMethodFragment this is reserved for android framework
@@ -148,6 +147,8 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     public void onAttach(Context context) {
         super.onAttach(context);
 
+        mTransferMethodGroup = getString(R.string.tag_group_transfer_method);
+
         try {
             mOnAddTransferMethodNetworkErrorCallback = (OnAddTransferMethodNetworkErrorCallback) context;
         } catch (ClassCastException e) {
@@ -192,14 +193,13 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
         mCreateTransferMethodButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Map<String, String> params = new HashMap<>();
-                params.put(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_COUNTRY, mCountry);
-                params.put(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_CURRENCY, mCurrency);
-                params.put(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_TYPE, mTransferMethodType);
-                params.put(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_PROFILE_TYPE,
-                        mTransferMethodProfileType);
-                HyperwalletInsight.getInstance().trackClick(requireContext(), TAG,
-                        getString(R.string.tag_group_transfer_method), LINK, params);
+                HyperwalletInsight.getInstance().trackClick(requireContext(), TAG, mTransferMethodGroup,
+                        LINK, new HyperwalletInsight.TransferParamsBuilder()
+                                .setTransferMethodCountry(mCountry)
+                                .setTransferMethodCurrency(mCurrency)
+                                .setTransferMethodType(mTransferMethodType)
+                                .setTransferMethodProfileType(mTransferMethodProfileType)
+                                .build());
 
                 triggerSubmit();
             }
