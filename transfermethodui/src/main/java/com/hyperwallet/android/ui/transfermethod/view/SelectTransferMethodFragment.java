@@ -75,6 +75,7 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
     private String mSelectedCountryCode;
     private String mSelectedCurrencyCode;
     private TransferMethodTypesAdapter mTransferMethodTypesAdapter;
+    private String mTransferMethodGroup;
 
     public SelectTransferMethodFragment() {
     }
@@ -92,6 +93,9 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+
+        mTransferMethodGroup = getString(R.string.tag_group_transfer_method);
+
         try {
             mOnLoadTransferMethodConfigurationKeysNetworkErrorCallback =
                     (OnLoadTransferMethodConfigurationKeysNetworkErrorCallback) context;
@@ -237,7 +241,7 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
 
     public void showCountryCode(final String countryCode) {
         HyperwalletInsight.getInstance().trackClick(requireContext(), TAG,
-                getResources().getString(R.string.tag_group_transfer_method), LINK_SELECT_COUNTRY,
+                mTransferMethodGroup, LINK_SELECT_COUNTRY,
                 new HyperwalletInsight.TransferParamsBuilder()
                         .setTransferMethodCountry(countryCode)
                         .build());

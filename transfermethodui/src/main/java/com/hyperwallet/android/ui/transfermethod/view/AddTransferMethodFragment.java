@@ -99,6 +99,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     private HyperwalletTransferMethod mTransferMethod;
     private String mTransferMethodProfileType;
     private HashMap<String, WidgetInputState> mWidgetInputStateHashMap;
+    private String mTransferMethodGroup;
 
     /**
      * Please do not use this to have instance of AddTransferMethodFragment this is reserved for android framework
@@ -147,6 +148,8 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     public void onAttach(Context context) {
         super.onAttach(context);
 
+        mTransferMethodGroup = getString(R.string.tag_group_transfer_method);
+
         try {
             mOnAddTransferMethodNetworkErrorCallback = (OnAddTransferMethodNetworkErrorCallback) context;
         } catch (ClassCastException e) {
@@ -181,7 +184,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         HyperwalletInsight.getInstance().trackImpression(requireContext(), TAG,
-                getResources().getString(R.string.tag_group_transfer_method),
+                mTransferMethodGroup,
                 new HyperwalletInsight.TransferParamsBuilder()
                         .setTransferMethodCountry(mCountry)
                         .setTransferMethodCurrency(mCurrency)
@@ -304,7 +307,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     @Override
     public void notifyTransferMethodAdded(@NonNull final HyperwalletTransferMethod transferMethod) {
         HyperwalletInsight.getInstance().trackImpression(requireContext(), TAG_TRANSRFER_METHOD_ADDED,
-                getResources().getString(R.string.tag_group_transfer_method),
+                mTransferMethodGroup,
                 new HyperwalletInsight.TransferParamsBuilder()
                         .setGoal(GOAL)
                         .setTransferMethodCountry(mCountry)
