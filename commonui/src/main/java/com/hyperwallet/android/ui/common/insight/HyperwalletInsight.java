@@ -43,6 +43,7 @@ import java.util.concurrent.Executors;
  * Used for gathering the data necessary for the Insights analytics.
  */
 public class HyperwalletInsight {
+    private static final String SDK_VERSION = com.hyperwallet.android.ui.common.BuildConfig.VERSION_NAME;
 
     private static final int MAX_THREAD_POOL = 2;
     private static HyperwalletInsight sHyperwalletInsight;
@@ -76,9 +77,7 @@ public class HyperwalletInsight {
      * @param configuration Configuration object containing information about the session
      */
     public void initialize(@NonNull final Context context, @NonNull final Configuration configuration) {
-        final String sdkVersion = com.hyperwallet.android.ui.common.BuildConfig.VERSION_NAME;
-
-        Insight.initialize(context, configuration.getEnvironment(), configuration.getProgramToken(), sdkVersion,
+        Insight.initialize(context, configuration.getEnvironment(), configuration.getProgramToken(), SDK_VERSION,
                 configuration.getInsightApiUrl(), configuration.getUserToken());
     }
 
@@ -90,8 +89,6 @@ public class HyperwalletInsight {
      */
     public void initialize(@NonNull final Context context,
             @NonNull final HyperwalletAuthenticationTokenProvider provider) {
-        final String sdkVersion = com.hyperwallet.android.ui.common.BuildConfig.VERSION_NAME;
-
         mExecutor.execute(new Runnable() {
             @Override
             public void run() {
@@ -100,7 +97,7 @@ public class HyperwalletInsight {
                     public void onSuccess(@Nullable Configuration configuration) {
                         if (configuration != null) {
                             Insight.initialize(context, configuration.getEnvironment(), configuration.getProgramToken(),
-                                    sdkVersion, configuration.getInsightApiUrl(), configuration.getUserToken());
+                                    SDK_VERSION, configuration.getInsightApiUrl(), configuration.getUserToken());
                         }
                     }
 
@@ -174,7 +171,7 @@ public class HyperwalletInsight {
             @NonNull final String pageGroup, @NonNull final String link, @NonNull final Map<String, String> params) {
 
         if (Insight.getInsightTracker().isInitialized()) {
-            Insight.getInsightTracker().trackImpression(context, pageName, pageGroup, params);
+            Insight.getInsightTracker().trackClick(context, pageName, pageGroup, link, params);
 
         } else {
             mExecutor.execute(new Runnable() {
@@ -185,7 +182,7 @@ public class HyperwalletInsight {
                         public void onSuccess(@Nullable Configuration configuration) {
                             if (configuration != null) {
                                 HyperwalletInsight.getInstance().initialize(context, configuration);
-                                Insight.getInsightTracker().trackImpression(context, pageName, pageGroup, params);
+                                Insight.getInsightTracker().trackClick(context, pageName, pageGroup, link, params);
                             }
                         }
 
