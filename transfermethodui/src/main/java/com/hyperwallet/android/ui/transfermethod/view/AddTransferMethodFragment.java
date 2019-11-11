@@ -183,8 +183,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        HyperwalletInsight.getInstance().trackImpression(requireContext(), TAG,
-                mTransferMethodGroup,
+        HyperwalletInsight.getInstance().trackImpression(requireContext(), TAG, mTransferMethodGroup,
                 new HyperwalletInsight.TransferParamsBuilder()
                         .setTransferMethodCountry(mCountry)
                         .setTransferMethodCurrency(mCurrency)
@@ -307,15 +306,13 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     @Override
     public void notifyTransferMethodAdded(@NonNull final HyperwalletTransferMethod transferMethod) {
         HyperwalletInsight.getInstance().trackImpression(requireContext(), TAG_TRANSRFER_METHOD_ADDED,
-                mTransferMethodGroup,
-                new HyperwalletInsight.TransferParamsBuilder()
+                mTransferMethodGroup, new HyperwalletInsight.TransferParamsBuilder()
                         .setGoal(GOAL)
                         .setTransferMethodCountry(mCountry)
                         .setTransferMethodCurrency(mCurrency)
                         .setTransferMethodType(mTransferMethodType)
                         .setTransferMethodProfileType(mTransferMethodProfileType)
                         .build());
-
 
         Intent intent = HyperwalletTransferMethodLocalBroadcast.createBroadcastIntentTransferMethodAdded(
                 transferMethod);
