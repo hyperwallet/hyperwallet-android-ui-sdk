@@ -251,6 +251,13 @@ public class HyperwalletInsight {
 
         private Map<String, String> mParams = new HashMap<>();
 
+        public TransferParamsBuilder setGoal(@NonNull final String goal) {
+            if (!TextUtils.isEmpty(goal)) {
+                mParams.put(InsightEventTag.InsightEventTagEventParams.GOAL, goal);
+            }
+            return this;
+        }
+
         public TransferParamsBuilder setTransferMethodType(@NonNull final String transferMethodType) {
             if (!TextUtils.isEmpty(transferMethodType)) {
                 mParams.put(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_TYPE, transferMethodType);

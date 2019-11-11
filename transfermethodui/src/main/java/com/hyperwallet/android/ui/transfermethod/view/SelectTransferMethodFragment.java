@@ -39,7 +39,6 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.hyperwallet.android.insight.InsightEventTag;
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.common.insight.HyperwalletInsight;
@@ -49,10 +48,8 @@ import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodReposi
 import com.hyperwallet.android.ui.user.repository.UserRepositoryFactory;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.TreeMap;
 
 public class SelectTransferMethodFragment extends Fragment implements SelectTransferMethodContract.View {
@@ -239,10 +236,11 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
     }
 
     public void showCountryCode(final String countryCode) {
-        Map<String, String> params = new HashMap<>();
-        params.put(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_COUNTRY, countryCode);
         HyperwalletInsight.getInstance().trackClick(requireContext(), TAG,
-                getResources().getString(R.string.tag_group_transfer_method), LINK_SELECT_COUNTRY, params);
+                getResources().getString(R.string.tag_group_transfer_method), LINK_SELECT_COUNTRY,
+                new HyperwalletInsight.TransferParamsBuilder()
+                        .setTransferMethodCountry(countryCode)
+                        .build());
 
         mSelectedCountryCode = countryCode;
         mPresenter.loadCurrency(FORCE_UPDATE, countryCode);
