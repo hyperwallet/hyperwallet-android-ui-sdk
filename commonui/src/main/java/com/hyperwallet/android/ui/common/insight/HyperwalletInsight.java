@@ -19,6 +19,7 @@ package com.hyperwallet.android.ui.common.insight;
 
 import android.content.Context;
 import android.os.Handler;
+import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,10 +30,11 @@ import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.HyperwalletAuthenticationTokenProvider;
 import com.hyperwallet.android.exception.HyperwalletException;
 import com.hyperwallet.android.insight.Insight;
+import com.hyperwallet.android.insight.InsightEventTag;
 import com.hyperwallet.android.insight.collect.ErrorInfo;
 import com.hyperwallet.android.listener.HyperwalletListener;
-import com.hyperwallet.android.ui.common.R;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -42,8 +44,8 @@ import java.util.concurrent.Executors;
  */
 public class HyperwalletInsight {
 
-    private static HyperwalletInsight sHyperwalletInsight;
     private static final int MAX_THREAD_POOL = 2;
+    private static HyperwalletInsight sHyperwalletInsight;
     private final Executor mExecutor;
 
     private HyperwalletInsight() {
@@ -70,16 +72,14 @@ public class HyperwalletInsight {
     /**
      * Initializes the Insight library using the given parameters.
      *
-     * @param context      the context using Insight
+     * @param context       the context using Insight
      * @param configuration Configuration object containing information about the session
      */
     public void initialize(@NonNull final Context context, @NonNull final Configuration configuration) {
-        final String environment = com.hyperwallet.android.ui.common.BuildConfig.BUILD_TYPE.equals("release") ?
-                context.getString(R.string.environment_prod) : context.getString(R.string.environment_uat);
         final String sdkVersion = com.hyperwallet.android.ui.common.BuildConfig.VERSION_NAME;
 
-        Insight.initialize(context, configuration.getInsightApiUrl(), configuration.getUserToken(), environment,
-                configuration.getProgramToken(), sdkVersion);
+        Insight.initialize(context, configuration.getEnvironment(), configuration.getProgramToken(), sdkVersion,
+                configuration.getInsightApiUrl(), configuration.getUserToken());
     }
 
     /**
@@ -90,8 +90,6 @@ public class HyperwalletInsight {
      */
     public void initialize(@NonNull final Context context,
             @NonNull final HyperwalletAuthenticationTokenProvider provider) {
-        final String environment = com.hyperwallet.android.ui.common.BuildConfig.BUILD_TYPE.equals("release") ?
-                context.getString(R.string.environment_prod) : context.getString(R.string.environment_uat);
         final String sdkVersion = com.hyperwallet.android.ui.common.BuildConfig.VERSION_NAME;
 
         mExecutor.execute(new Runnable() {
@@ -101,9 +99,8 @@ public class HyperwalletInsight {
                     @Override
                     public void onSuccess(@Nullable Configuration configuration) {
                         if (configuration != null) {
-                            Insight.initialize(context, configuration.getInsightApiUrl(),
-                                    configuration.getUserToken(), environment,
-                                    configuration.getProgramToken(), sdkVersion);
+                            Insight.initialize(context, configuration.getEnvironment(), configuration.getProgramToken(),
+                                    sdkVersion, configuration.getInsightApiUrl(), configuration.getUserToken());
                         }
                     }
 
@@ -247,6 +244,45 @@ public class HyperwalletInsight {
                     });
                 }
             });
+        }
+    }
+
+    public static class TransferParamsBuilder {
+
+        private Map<String, String> mParams = new HashMap<>();
+
+        public TransferParamsBuilder setTransferMethodType(@NonNull final String transferMethodType) {
+            if (!TextUtils.isEmpty(transferMethodType)) {
+                mParams.put(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_TYPE, transferMethodType);
+            }
+            return this;
+        }
+
+        public TransferParamsBuilder setTransferMethodProfileType(@NonNull final String transferMethodProfileType) {
+            if (!TextUtils.isEmpty(transferMethodProfileType)) {
+                mParams.put(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_PROFILE_TYPE,
+                        transferMethodProfileType);
+            }
+            return this;
+        }
+
+        public TransferParamsBuilder setTransferMethodCountry(@NonNull final String transferMethodCountry) {
+            if (!TextUtils.isEmpty(transferMethodCountry)) {
+                mParams.put(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_COUNTRY, transferMethodCountry);
+            }
+            return this;
+        }
+
+        public TransferParamsBuilder setTransferMethodCurrency(@NonNull final String transferMethodCurrency) {
+            if (!TextUtils.isEmpty(transferMethodCurrency)) {
+                mParams.put(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_CURRENCY,
+                        transferMethodCurrency);
+            }
+            return this;
+        }
+
+        public Map<String, String> build() {
+            return mParams;
         }
     }
 }
