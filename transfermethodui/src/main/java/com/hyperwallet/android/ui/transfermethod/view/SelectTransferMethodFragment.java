@@ -76,7 +76,6 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
     private String mSelectedCountryCode;
     private String mSelectedCurrencyCode;
     private TransferMethodTypesAdapter mTransferMethodTypesAdapter;
-    private String mTransferMethodGroup;
 
     public SelectTransferMethodFragment() {
     }
@@ -94,8 +93,6 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
-        mTransferMethodGroup = getString(R.string.tag_group_transfer_method);
 
         try {
             mOnLoadTransferMethodConfigurationKeysNetworkErrorCallback =
@@ -237,7 +234,8 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
 
     @Override
     public void showTransferMethodTypes(@NonNull List<TransferMethodSelectionItem> transferMethodTypes) {
-        HyperwalletInsight.getInstance().trackImpression(requireContext(), TAG, mTransferMethodGroup,
+        HyperwalletInsight.getInstance().trackImpression(requireContext(), TAG,
+                HyperwalletInsight.TRANSFER_METHOD_GROUP,
                 new HyperwalletInsight.TransferParamsBuilder()
                         .setTransferMethodCountry(mSelectedCountryCode)
                         .setTransferMethodCurrency(mSelectedCurrencyCode)
@@ -305,7 +303,7 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
     @Override
     public void showAddTransferMethod(@NonNull final String country, @NonNull final String currency,
             @NonNull final String transferMethodType, @NonNull final String profileType) {
-        HyperwalletInsight.getInstance().trackClick(requireContext(), TAG, mTransferMethodGroup,
+        HyperwalletInsight.getInstance().trackClick(requireContext(), TAG, HyperwalletInsight.TRANSFER_METHOD_GROUP,
                 LINK_SELECT_TRANSFER_METHOD, new HyperwalletInsight.TransferParamsBuilder()
                         .setTransferMethodCountry(country)
                         .setTransferMethodCurrency(currency)

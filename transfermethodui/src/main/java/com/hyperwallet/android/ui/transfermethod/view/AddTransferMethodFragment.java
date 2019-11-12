@@ -98,7 +98,6 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     private HyperwalletTransferMethod mTransferMethod;
     private String mTransferMethodProfileType;
     private HashMap<String, WidgetInputState> mWidgetInputStateHashMap;
-    private String mTransferMethodGroup;
 
     /**
      * Please do not use this to have instance of AddTransferMethodFragment this is reserved for android framework
@@ -147,8 +146,6 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        mTransferMethodGroup = getString(R.string.tag_group_transfer_method);
-
         try {
             mOnAddTransferMethodNetworkErrorCallback = (OnAddTransferMethodNetworkErrorCallback) context;
         } catch (ClassCastException e) {
@@ -193,7 +190,8 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
         mCreateTransferMethodButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HyperwalletInsight.getInstance().trackClick(requireContext(), TAG, mTransferMethodGroup,
+                HyperwalletInsight.getInstance().trackClick(requireContext(), TAG,
+                        HyperwalletInsight.TRANSFER_METHOD_GROUP,
                         LINK, new HyperwalletInsight.TransferParamsBuilder()
                                 .setTransferMethodCountry(mCountry)
                                 .setTransferMethodCurrency(mCurrency)
