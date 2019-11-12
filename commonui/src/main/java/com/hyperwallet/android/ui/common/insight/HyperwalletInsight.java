@@ -48,6 +48,7 @@ public class HyperwalletInsight {
     private static final int MAX_THREAD_POOL = 2;
     private static HyperwalletInsight sHyperwalletInsight;
     private final Executor mExecutor;
+    public static final String TRANSFER_METHOD_GROUP = "transfer-method";
 
     private HyperwalletInsight() {
         mExecutor = Executors.newFixedThreadPool(MAX_THREAD_POOL);

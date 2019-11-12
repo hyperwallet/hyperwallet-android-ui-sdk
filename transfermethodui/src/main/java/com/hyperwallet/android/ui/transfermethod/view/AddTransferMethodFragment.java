@@ -46,6 +46,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.hyperwallet.android.exception.HyperwalletException;
+import com.hyperwallet.android.insight.collect.ErrorInfo;
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.graphql.HyperwalletFee;
 import com.hyperwallet.android.model.graphql.ProcessingTime;
@@ -75,6 +76,8 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
 
     protected static final String TAG = "transfer-method:add:collect-transfer-method-information";
     private static final String TAG_TRANSRFER_METHOD_ADDED = "transfer-method:add:transfer-method-created";
+    private static final String TAG_EVENT_ERROR = "transfer-method:add:collect-account-information";
+    private static final String ERROR_TYPE_FORM = "FORM";
     private static final String GOAL = "transfer-method-created";
     private static final String ARGUMENT_TRANSFER_METHOD_COUNTRY = "ARGUMENT_TRANSFER_METHOD_COUNTRY";
     private static final String ARGUMENT_TRANSFER_METHOD_CURRENCY = "ARGUMENT_TRANSFER_METHOD_CURRENCY";
@@ -99,7 +102,6 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     private HyperwalletTransferMethod mTransferMethod;
     private String mTransferMethodProfileType;
     private HashMap<String, WidgetInputState> mWidgetInputStateHashMap;
-    private String mTransferMethodGroup;
 
     /**
      * Please do not use this to have instance of AddTransferMethodFragment this is reserved for android framework
@@ -148,8 +150,6 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        mTransferMethodGroup = getString(R.string.tag_group_transfer_method);
-
         try {
             mOnAddTransferMethodNetworkErrorCallback = (OnAddTransferMethodNetworkErrorCallback) context;
         } catch (ClassCastException e) {
@@ -183,7 +183,8 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        HyperwalletInsight.getInstance().trackImpression(requireContext(), TAG, mTransferMethodGroup,
+        HyperwalletInsight.getInstance().trackImpression(requireContext(), TAG,
+                HyperwalletInsight.TRANSFER_METHOD_GROUP,
                 new HyperwalletInsight.TransferParamsBuilder()
                         .setTransferMethodCountry(mCountry)
                         .setTransferMethodCurrency(mCurrency)
@@ -306,7 +307,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     @Override
     public void notifyTransferMethodAdded(@NonNull final HyperwalletTransferMethod transferMethod) {
         HyperwalletInsight.getInstance().trackImpression(requireContext(), TAG_TRANSRFER_METHOD_ADDED,
-                mTransferMethodGroup, new HyperwalletInsight.TransferParamsBuilder()
+                HyperwalletInsight.TRANSFER_METHOD_GROUP, new HyperwalletInsight.TransferParamsBuilder()
                         .setGoal(GOAL)
                         .setTransferMethodCountry(mCountry)
                         .setTransferMethodCurrency(mCurrency)
@@ -596,6 +597,18 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                         widget.showValidationError(widget.getErrorMessage());
                         widgetInputState.setErrorMessage(widget.getErrorMessage());
                         widgetInputState.setHasApiError(false);
+
+                        HyperwalletInsight.getInstance().trackError(requireContext(), TAG_EVENT_ERROR,
+                                HyperwalletInsight.TRANSFER_METHOD_GROUP, new ErrorInfo.ErrorInfoBuilder()
+                                        .type(ERROR_TYPE_FORM)
+                                        .message(widget.getErrorMessage())
+                                        .field(widget.getName())
+                                        .params(new HyperwalletInsight.TransferParamsBuilder()
+                                                .setTransferMethodCountry(mCountry)
+                                                .setTransferMethodCurrency(mCurrency)
+                                                .setTransferMethodType(mTransferMethodType)
+                                                .setTransferMethodProfileType(mTransferMethodProfileType)
+                                                .build()).build());
                     }
                 }
             }
