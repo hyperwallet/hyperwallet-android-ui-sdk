@@ -43,11 +43,13 @@ import java.util.concurrent.Executors;
  * Used for gathering the data necessary for the Insights analytics.
  */
 public class HyperwalletInsight {
+
     private static final String SDK_VERSION = com.hyperwallet.android.ui.common.BuildConfig.VERSION_NAME;
 
     private static final int MAX_THREAD_POOL = 2;
     private static HyperwalletInsight sHyperwalletInsight;
     private final Executor mExecutor;
+    public static final String TRANSFER_METHOD_GROUP = "transfer-method";
 
     private HyperwalletInsight() {
         mExecutor = Executors.newFixedThreadPool(MAX_THREAD_POOL);
