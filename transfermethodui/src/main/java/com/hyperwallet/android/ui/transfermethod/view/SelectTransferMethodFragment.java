@@ -54,8 +54,6 @@ import java.util.TreeMap;
 
 public class SelectTransferMethodFragment extends Fragment implements SelectTransferMethodContract.View {
 
-    protected static final String TAG = "transfer-method:add:select-transfer-method";
-    private static final String LINK_SELECT_TRANSFER_METHOD = "select-transfer-method";
     private static final String ARGUMENT_COUNTRY_CODE_SELECTED = "ARGUMENT_COUNTRY_CODE_SELECTED";
     private static final String ARGUMENT_CURRENCY_CODE_SELECTED = "ARGUMENT_CURRENCY_CODE_SELECTED";
     private static final boolean FORCE_UPDATE = false;
@@ -234,11 +232,12 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
 
     @Override
     public void showTransferMethodTypes(@NonNull List<TransferMethodSelectionItem> transferMethodTypes) {
-        HyperwalletInsight.getInstance().trackImpression(requireContext(), TAG,
+        HyperwalletInsight.getInstance().trackImpression(requireContext(),
+                HyperwalletInsight.PAGE_TRANSFER_METHOD_SELECT,
                 HyperwalletInsight.TRANSFER_METHOD_GROUP,
                 new HyperwalletInsight.TransferParamsBuilder()
-                        .setTransferMethodCountry(mSelectedCountryCode)
-                        .setTransferMethodCurrency(mSelectedCurrencyCode)
+                        .transferMethodCountry(mSelectedCountryCode)
+                        .transferMethodCurrency(mSelectedCurrencyCode)
                         .build());
 
         mTransferMethodTypesAdapter.replaceData(transferMethodTypes);
@@ -303,11 +302,12 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
     @Override
     public void showAddTransferMethod(@NonNull final String country, @NonNull final String currency,
             @NonNull final String transferMethodType, @NonNull final String profileType) {
-        HyperwalletInsight.getInstance().trackClick(requireContext(), TAG, HyperwalletInsight.TRANSFER_METHOD_GROUP,
-                LINK_SELECT_TRANSFER_METHOD, new HyperwalletInsight.TransferParamsBuilder()
-                        .setTransferMethodCountry(country)
-                        .setTransferMethodCurrency(currency)
-                        .setTransferMethodType(transferMethodType)
+        HyperwalletInsight.getInstance().trackClick(requireContext(), HyperwalletInsight.PAGE_TRANSFER_METHOD_SELECT,
+                HyperwalletInsight.TRANSFER_METHOD_GROUP, HyperwalletInsight.LINK_SELECT_TRANSFER_METHOD_SELECT,
+                new HyperwalletInsight.TransferParamsBuilder()
+                        .transferMethodCountry(country)
+                        .transferMethodCurrency(currency)
+                        .transferMethodType(transferMethodType)
                         .build());
 
         Intent intent = new Intent(getActivity(), AddTransferMethodActivity.class);
