@@ -56,6 +56,7 @@ import com.hyperwallet.android.model.transfermethod.HyperwalletBankCard;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.model.transfermethod.PayPalAccount;
 import com.hyperwallet.android.ui.R;
+import com.hyperwallet.android.ui.common.insight.HyperwalletInsight;
 import com.hyperwallet.android.ui.transfermethod.HyperwalletTransferMethodLocalBroadcast;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
 import com.hyperwallet.android.ui.transfermethod.view.widget.AbstractWidget;
@@ -72,7 +73,6 @@ import java.util.TreeMap;
 
 public class AddTransferMethodFragment extends Fragment implements WidgetEventListener, AddTransferMethodContract.View {
 
-    public static final String TAG = AddTransferMethodFragment.class.getName();
     private static final String ARGUMENT_TRANSFER_METHOD_COUNTRY = "ARGUMENT_TRANSFER_METHOD_COUNTRY";
     private static final String ARGUMENT_TRANSFER_METHOD_CURRENCY = "ARGUMENT_TRANSFER_METHOD_CURRENCY";
     private static final String ARGUMENT_TRANSFER_METHOD_TYPE = "ARGUMENT_TRANSFER_METHOD_TYPE";
@@ -188,6 +188,16 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
         mCreateTransferMethodButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                HyperwalletInsight.getInstance().trackClick(requireContext(),
+                        HyperwalletInsight.PAGE_TRANSFER_METHOD_COLLECT, HyperwalletInsight.TRANSFER_METHOD_GROUP,
+                        HyperwalletInsight.LINK_SELECT_TRANSFER_METHOD_CREATE,
+                        new HyperwalletInsight.TransferParamsBuilder()
+                                .transferMethodCountry(mCountry)
+                                .transferMethodCurrency(mCurrency)
+                                .transferMethodType(mTransferMethodType)
+                                .transferMethodProfileType(mTransferMethodProfileType)
+                                .build());
+
                 triggerSubmit();
             }
         });
