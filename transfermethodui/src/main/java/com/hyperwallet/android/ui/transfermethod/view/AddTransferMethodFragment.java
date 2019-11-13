@@ -74,11 +74,6 @@ import java.util.TreeMap;
 
 public class AddTransferMethodFragment extends Fragment implements WidgetEventListener, AddTransferMethodContract.View {
 
-    protected static final String TAG = "transfer-method:add:collect-transfer-method-information";
-    private static final String TAG_TRANSRFER_METHOD_ADDED = "transfer-method:add:transfer-method-created";
-    private static final String TAG_EVENT_ERROR = "transfer-method:add:collect-account-information";
-    private static final String ERROR_TYPE_FORM = "FORM";
-    private static final String GOAL = "transfer-method-created";
     private static final String ARGUMENT_TRANSFER_METHOD_COUNTRY = "ARGUMENT_TRANSFER_METHOD_COUNTRY";
     private static final String ARGUMENT_TRANSFER_METHOD_CURRENCY = "ARGUMENT_TRANSFER_METHOD_CURRENCY";
     private static final String ARGUMENT_TRANSFER_METHOD_TYPE = "ARGUMENT_TRANSFER_METHOD_TYPE";
@@ -183,13 +178,13 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        HyperwalletInsight.getInstance().trackImpression(requireContext(), TAG,
-                HyperwalletInsight.TRANSFER_METHOD_GROUP,
+        HyperwalletInsight.getInstance().trackImpression(requireContext(),
+                HyperwalletInsight.PAGE_TRANSFER_METHOD_COLLECT, HyperwalletInsight.TRANSFER_METHOD_GROUP,
                 new HyperwalletInsight.TransferParamsBuilder()
-                        .setTransferMethodCountry(mCountry)
-                        .setTransferMethodCurrency(mCurrency)
-                        .setTransferMethodType(mTransferMethodType)
-                        .setTransferMethodProfileType(mTransferMethodProfileType)
+                        .transferMethodCountry(mCountry)
+                        .transferMethodCurrency(mCurrency)
+                        .transferMethodType(mTransferMethodType)
+                        .transferMethodProfileType(mTransferMethodProfileType)
                         .build());
 
         mDynamicContainer = view.findViewById(R.id.add_transfer_method_dynamic_container);
@@ -306,13 +301,14 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
 
     @Override
     public void notifyTransferMethodAdded(@NonNull final HyperwalletTransferMethod transferMethod) {
-        HyperwalletInsight.getInstance().trackImpression(requireContext(), TAG_TRANSRFER_METHOD_ADDED,
-                HyperwalletInsight.TRANSFER_METHOD_GROUP, new HyperwalletInsight.TransferParamsBuilder()
-                        .setGoal(GOAL)
-                        .setTransferMethodCountry(mCountry)
-                        .setTransferMethodCurrency(mCurrency)
-                        .setTransferMethodType(mTransferMethodType)
-                        .setTransferMethodProfileType(mTransferMethodProfileType)
+        HyperwalletInsight.getInstance().trackImpression(requireContext(),
+                HyperwalletInsight.PAGE_TRANSRFER_METHOD_ADDED, HyperwalletInsight.TRANSFER_METHOD_GROUP,
+                new HyperwalletInsight.TransferParamsBuilder()
+                        .goal(HyperwalletInsight.GOAL)
+                        .transferMethodCountry(mCountry)
+                        .transferMethodCurrency(mCurrency)
+                        .transferMethodType(mTransferMethodType)
+                        .transferMethodProfileType(mTransferMethodProfileType)
                         .build());
 
         Intent intent = HyperwalletTransferMethodLocalBroadcast.createBroadcastIntentTransferMethodAdded(
@@ -593,22 +589,23 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                             widget.showValidationError(null);
                         }
                     } else {
+                        HyperwalletInsight.getInstance().trackError(requireContext(),
+                                HyperwalletInsight.PAGE_TRANSRFER_METHOD_COLLECT_ACCOUNT,
+                                HyperwalletInsight.TRANSFER_METHOD_GROUP, new ErrorInfo.ErrorInfoBuilder()
+                                        .type(HyperwalletInsight.ERROR_TYPE_FORM)
+                                        .message(widget.getErrorMessage())
+                                        .field(widget.getName())
+                                        .params(new HyperwalletInsight.TransferParamsBuilder()
+                                                .transferMethodCountry(mCountry)
+                                                .transferMethodCurrency(mCurrency)
+                                                .transferMethodType(mTransferMethodType)
+                                                .transferMethodProfileType(mTransferMethodProfileType)
+                                                .build()).build());
+
                         valid = false;
                         widget.showValidationError(widget.getErrorMessage());
                         widgetInputState.setErrorMessage(widget.getErrorMessage());
                         widgetInputState.setHasApiError(false);
-
-                        HyperwalletInsight.getInstance().trackError(requireContext(), TAG_EVENT_ERROR,
-                                HyperwalletInsight.TRANSFER_METHOD_GROUP, new ErrorInfo.ErrorInfoBuilder()
-                                        .type(ERROR_TYPE_FORM)
-                                        .message(widget.getErrorMessage())
-                                        .field(widget.getName())
-                                        .params(new HyperwalletInsight.TransferParamsBuilder()
-                                                .setTransferMethodCountry(mCountry)
-                                                .setTransferMethodCurrency(mCurrency)
-                                                .setTransferMethodType(mTransferMethodType)
-                                                .setTransferMethodProfileType(mTransferMethodProfileType)
-                                                .build()).build());
                     }
                 }
             }
