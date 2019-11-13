@@ -281,6 +281,8 @@ public class HyperwalletInsight {
         }
 
         public Map<String, String> build() {
+            mParams.put(InsightEventTag.InsightEventTagEventParams.PRODUCT, "hyperwallet-android-ui-sdk");
+            mParams.put(InsightEventTag.InsightEventTagEventParams.PAGE_TECHNOLOGY, "Java");
             return mParams;
         }
     }
