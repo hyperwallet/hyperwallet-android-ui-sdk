@@ -302,9 +302,9 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     @Override
     public void notifyTransferMethodAdded(@NonNull final HyperwalletTransferMethod transferMethod) {
         HyperwalletInsight.getInstance().trackImpression(requireContext(),
-                HyperwalletInsight.PAGE_TRANSRFER_METHOD_ADDED, HyperwalletInsight.TRANSFER_METHOD_GROUP,
+                HyperwalletInsight.PAGE_TRANSFER_METHOD_ADDED, HyperwalletInsight.TRANSFER_METHOD_GROUP,
                 new HyperwalletInsight.TransferParamsBuilder()
-                        .transferMethodGoal(HyperwalletInsight.TRANSRFER_METHOD_GOAL)
+                        .transferMethodGoal(HyperwalletInsight.TRANSFER_METHOD_GOAL)
                         .transferMethodCountry(mCountry)
                         .transferMethodCurrency(mCurrency)
                         .transferMethodType(mTransferMethodType)
@@ -590,7 +590,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                         }
                     } else {
                         HyperwalletInsight.getInstance().trackError(requireContext(),
-                                HyperwalletInsight.PAGE_TRANSRFER_METHOD_COLLECT_ACCOUNT,
+                                HyperwalletInsight.PAGE_TRANSFER_METHOD_COLLECT_ACCOUNT,
                                 HyperwalletInsight.TRANSFER_METHOD_GROUP, new ErrorInfo.ErrorInfoBuilder()
                                         .type(HyperwalletInsight.ERROR_TYPE_FORM)
                                         .message(widget.getErrorMessage())
