@@ -43,6 +43,8 @@ import java.util.concurrent.Executors;
  */
 public class HyperwalletInsight {
     private static final String SDK_VERSION = com.hyperwallet.android.ui.common.BuildConfig.VERSION_NAME;
+    private static final String PRODUCT_VALUE = "hyperwallet-android-ui-sdk";
+    private static final String PAGE_TECHNOLOGY_VALUE = "Java";
 
     public static final String TRANSFER_METHOD_GROUP = "transfer-method";
 
@@ -278,8 +280,8 @@ public class HyperwalletInsight {
         }
 
         public Map<String, String> build() {
-            mParams.put(InsightEventTag.InsightEventTagEventParams.PRODUCT, "hyperwallet-android-ui-sdk");
-            mParams.put(InsightEventTag.InsightEventTagEventParams.PAGE_TECHNOLOGY, "Java");
+            mParams.put(InsightEventTag.InsightEventTagEventParams.PRODUCT, PRODUCT_VALUE);
+            mParams.put(InsightEventTag.InsightEventTagEventParams.PAGE_TECHNOLOGY, PAGE_TECHNOLOGY_VALUE);
             return mParams;
         }
     }
