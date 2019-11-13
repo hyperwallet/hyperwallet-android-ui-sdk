@@ -46,6 +46,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.hyperwallet.android.exception.HyperwalletException;
+import com.hyperwallet.android.insight.collect.ErrorInfo;
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.graphql.HyperwalletFee;
 import com.hyperwallet.android.model.graphql.ProcessingTime;
@@ -457,6 +458,16 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                             widget.getView(mDynamicContainer).requestFocus();
                             focusSet = true;
                         }
+                        HyperwalletInsight.getInstance().trackError(requireContext(),
+                                HyperwalletInsight.PAGE_TRANSFER_METHOD_COLLECT_ACCOUNT,
+                                HyperwalletInsight.TRANSFER_METHOD_GROUP, new ErrorInfo.ErrorInfoBuilder().type(
+                                        HyperwalletInsight.ERROR_TYPE_API).code(error.getCode()).message(
+                                        error.getMessage()).field(error.getFieldName()).params(
+                                        new HyperwalletInsight.TransferParamsBuilder().transferMethodCountry(
+                                                mCountry).transferMethodCurrency(mCurrency).transferMethodType(
+                                                mTransferMethodType).transferMethodProfileType(
+                                                mTransferMethodProfileType).build()).build());
+
                         widget.showValidationError(error.getMessage());
                         WidgetInputState widgetInputState = mWidgetInputStateHashMap.get(widget.getName());
                         widgetInputState.setErrorMessage(error.getMessage());

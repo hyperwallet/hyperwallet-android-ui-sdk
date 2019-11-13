@@ -249,6 +249,10 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
     }
 
     public void showCurrencyCode(final String currencyCode) {
+        HyperwalletInsight.getInstance().trackClick(requireContext(), HyperwalletInsight.PAGE_TRANSFER_METHOD_SELECT,
+                HyperwalletInsight.TRANSFER_METHOD_GROUP, HyperwalletInsight.LINK_SELECT_CURRENCY,
+                new HyperwalletInsight.TransferParamsBuilder().transferMethodCurrency(currencyCode).build());
+
         mSelectedCurrencyCode = currencyCode;
         mPresenter.loadTransferMethodTypes(FORCE_UPDATE, mSelectedCountryCode, currencyCode);
     }
