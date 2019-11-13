@@ -6,6 +6,7 @@ import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.RootMatchers.isDialog;
+import static androidx.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
@@ -36,12 +37,14 @@ import android.widget.TextView;
 
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.IdlingRegistry;
+import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.insight.InsightEventTag;
+import com.hyperwallet.android.insight.collect.ErrorInfo;
 import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.common.insight.HyperwalletInsight;
 import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
@@ -102,6 +105,8 @@ public class AddTransferMethodTest {
     ArgumentCaptor<String> mLinkCaptor;
     @Captor
     ArgumentCaptor<Map<String, String>> mMapClickCaptor;
+    @Captor
+    ArgumentCaptor<ErrorInfo> mErrorInfoCaptor;
 
     @Mock
     private HyperwalletInsight mHyperwalletInsight;
@@ -313,5 +318,53 @@ public class AddTransferMethodTest {
                         InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_PROFILE_TYPE));
         assertEquals("BANK_ACCOUNT", mMapClickCaptor.getAllValues().get(0).get(
                 InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_TYPE));
+    }
+
+    @Test
+    public void testAddTransferMethod_VerifyAPIErrorEventWhenUserClickOnCreateTransferMethodButton() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_fields_bank_account_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_BAD_REQUEST).withBody(sResourceManager
+                .getResourceContent("error_api_bank_fields_response.json")).mock();
+
+        mActivityTestRule.launchActivity(null);
+
+        onView(withId(R.id.branchId))
+                .perform(nestedScrollTo())
+                .perform(replaceText("111111111"));
+        onView(withId(R.id.bankAccountId))
+                .perform(nestedScrollTo())
+                .perform(replaceText("1234"));
+        onView(withId(R.id.bankAccountPurpose))
+                .perform(nestedScrollTo())
+                .perform(click());
+        onView(withId(R.id.input_selection_list))
+                .perform(RecyclerViewActions.actionOnItem(
+                        hasDescendant(withText("Savings")), click()));
+
+        onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo(), click());
+
+        verify(mHyperwalletInsight, atLeastOnce()).trackError(any(Context.class), mPageNameCaptor.capture(),
+                mPageGroupCaptor.capture(), mErrorInfoCaptor.capture());
+
+        assertEquals("transfer-method:add:collect-account-information", mPageNameCaptor.getValue());
+        assertEquals("transfer-method", mPageGroupCaptor.getValue());
+        assertEquals("CONSTRAINT_VIOLATIONS", mErrorInfoCaptor.getAllValues().get(0).getCode());
+        assertEquals("Routing Number invalid.", mErrorInfoCaptor.getAllValues().get(0).getMessage());
+        assertEquals("branchId", mErrorInfoCaptor.getAllValues().get(0).getField());
+        assertEquals("API", mErrorInfoCaptor.getAllValues().get(0).getType());
+        assertEquals(6, mErrorInfoCaptor.getAllValues().get(0).getParams().size());
+        assertEquals("US", mErrorInfoCaptor.getAllValues().get(0).getParams().get(
+                InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_COUNTRY));
+        assertEquals("USD", mErrorInfoCaptor.getAllValues().get(0).getParams().get(
+                InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_CURRENCY));
+        assertEquals("INDIVIDUAL", mErrorInfoCaptor.getAllValues().get(0).getParams().get(
+                InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_PROFILE_TYPE));
+        assertEquals("BANK_ACCOUNT", mErrorInfoCaptor.getAllValues().get(0).getParams().get(
+                InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_TYPE));
+        assertEquals("hyperwallet-android-ui-sdk", mErrorInfoCaptor.getAllValues().get(0).getParams().get(
+                InsightEventTag.InsightEventTagEventParams.PRODUCT));
+        assertEquals("Java", mErrorInfoCaptor.getAllValues().get(0).getParams().get(
+                InsightEventTag.InsightEventTagEventParams.PAGE_TECHNOLOGY));
     }
 }
