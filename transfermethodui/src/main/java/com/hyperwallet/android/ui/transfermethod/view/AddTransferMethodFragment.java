@@ -191,7 +191,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                 HyperwalletInsight.getInstance().trackClick(requireContext(),
                         HyperwalletInsight.PAGE_TRANSFER_METHOD_COLLECT, HyperwalletInsight.TRANSFER_METHOD_GROUP,
                         HyperwalletInsight.LINK_SELECT_TRANSFER_METHOD_CREATE,
-                        new HyperwalletInsight.TransferParamsBuilder()
+                        new HyperwalletInsight.TransferMethodParamsBuilder()
                                 .transferMethodCountry(mCountry)
                                 .transferMethodCurrency(mCurrency)
                                 .transferMethodType(mTransferMethodType)
