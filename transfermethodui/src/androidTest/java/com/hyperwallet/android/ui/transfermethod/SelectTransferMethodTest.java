@@ -188,9 +188,13 @@ public class SelectTransferMethodTest {
         assertEquals("transfer-method:add:select-transfer-method", mPageNameCaptor.getValue());
         assertEquals("transfer-method", mPageGroupCaptor.getValue());
         assertEquals("select-country", mLinkCaptor.getValue());
-        assertEquals(1, mMapClickCaptor.getAllValues().get(0).size());
+        assertEquals(3, mMapClickCaptor.getAllValues().get(0).size());
         assertEquals("CA", mMapClickCaptor.getAllValues().get(0).get(
                 InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_COUNTRY));
+        assertEquals("hyperwallet-android-ui-sdk", mMapClickCaptor.getAllValues().get(0).get(
+                InsightEventTag.InsightEventTagEventParams.PRODUCT));
+        assertEquals("Java", mMapClickCaptor.getAllValues().get(0).get(
+                InsightEventTag.InsightEventTagEventParams.PAGE_TECHNOLOGY));
     }
 
     @Test

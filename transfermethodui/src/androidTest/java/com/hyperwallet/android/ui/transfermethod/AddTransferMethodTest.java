@@ -212,7 +212,7 @@ public class AddTransferMethodTest {
 
         assertEquals("transfer-method:add:collect-transfer-method-information", mPageNameCaptor.getValue());
         assertEquals("transfer-method", mPageGroupCaptor.getValue());
-        assertEquals(4, mMapImpressionCaptor.getValue().size());
+        assertEquals(6, mMapImpressionCaptor.getValue().size());
         assertEquals("US",
                 mMapImpressionCaptor.getValue().get(
                         InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_COUNTRY));
@@ -222,6 +222,10 @@ public class AddTransferMethodTest {
                 mMapImpressionCaptor.getValue().get(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_TYPE));
         assertEquals("INDIVIDUAL", mMapImpressionCaptor.getValue().get(
                 InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_PROFILE_TYPE));
+        assertEquals("hyperwallet-android-ui-sdk", mMapImpressionCaptor.getAllValues().get(0).get(
+                InsightEventTag.InsightEventTagEventParams.PRODUCT));
+        assertEquals("Java", mMapImpressionCaptor.getAllValues().get(0).get(
+                InsightEventTag.InsightEventTagEventParams.PAGE_TECHNOLOGY));
 
         onView(withId(R.id.branchId)).perform(nestedScrollTo(), replaceText(ROUTING_NUMBER));
         onView(withId(R.id.bankAccountId)).perform(nestedScrollTo(), replaceText(ACCOUNT_NUMBER));
@@ -309,7 +313,7 @@ public class AddTransferMethodTest {
 
         assertEquals("transfer-method:add:collect-transfer-method-information", mPageNameCaptor.getValue());
         assertEquals("transfer-method", mPageGroupCaptor.getValue());
-        assertEquals(4, mMapImpressionCaptor.getValue().size());
+        assertEquals(6, mMapImpressionCaptor.getValue().size());
         assertEquals("US",
                 mMapImpressionCaptor.getValue().get(
                         InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_COUNTRY));
@@ -319,6 +323,10 @@ public class AddTransferMethodTest {
                 mMapImpressionCaptor.getValue().get(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_TYPE));
         assertEquals("INDIVIDUAL", mMapImpressionCaptor.getValue().get(
                 InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_PROFILE_TYPE));
+        assertEquals("hyperwallet-android-ui-sdk", mMapImpressionCaptor.getAllValues().get(0).get(
+                InsightEventTag.InsightEventTagEventParams.PRODUCT));
+        assertEquals("Java", mMapImpressionCaptor.getAllValues().get(0).get(
+                InsightEventTag.InsightEventTagEventParams.PAGE_TECHNOLOGY));
     }
 
     @Test
@@ -341,7 +349,7 @@ public class AddTransferMethodTest {
 
         assertEquals("transfer-method:add:collect-transfer-method-information", mPageNameCaptor.getValue());
         assertEquals("transfer-method", mPageGroupCaptor.getValue());
-        assertEquals(4, mMapImpressionCaptor.getValue().size());
+        assertEquals(6, mMapImpressionCaptor.getValue().size());
         assertEquals("US",
                 mMapImpressionCaptor.getValue().get(
                         InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_COUNTRY));
@@ -351,6 +359,10 @@ public class AddTransferMethodTest {
                 mMapImpressionCaptor.getValue().get(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_TYPE));
         assertEquals("INDIVIDUAL", mMapImpressionCaptor.getValue().get(
                 InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_PROFILE_TYPE));
+        assertEquals("hyperwallet-android-ui-sdk", mMapImpressionCaptor.getAllValues().get(0).get(
+                InsightEventTag.InsightEventTagEventParams.PRODUCT));
+        assertEquals("Java", mMapImpressionCaptor.getAllValues().get(0).get(
+                InsightEventTag.InsightEventTagEventParams.PAGE_TECHNOLOGY));
     }
 
     @Test
@@ -373,7 +385,7 @@ public class AddTransferMethodTest {
 
         assertEquals("transfer-method:add:collect-transfer-method-information", mPageNameCaptor.getValue());
         assertEquals("transfer-method", mPageGroupCaptor.getValue());
-        assertEquals(4, mMapImpressionCaptor.getValue().size());
+        assertEquals(6, mMapImpressionCaptor.getValue().size());
         assertEquals("US",
                 mMapImpressionCaptor.getValue().get(
                         InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_COUNTRY));
@@ -383,5 +395,9 @@ public class AddTransferMethodTest {
                 mMapImpressionCaptor.getValue().get(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_TYPE));
         assertEquals("INDIVIDUAL", mMapImpressionCaptor.getValue().get(
                 InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_PROFILE_TYPE));
+        assertEquals("hyperwallet-android-ui-sdk", mMapImpressionCaptor.getAllValues().get(0).get(
+                InsightEventTag.InsightEventTagEventParams.PRODUCT));
+        assertEquals("Java", mMapImpressionCaptor.getAllValues().get(0).get(
+                InsightEventTag.InsightEventTagEventParams.PAGE_TECHNOLOGY));
     }
 }
