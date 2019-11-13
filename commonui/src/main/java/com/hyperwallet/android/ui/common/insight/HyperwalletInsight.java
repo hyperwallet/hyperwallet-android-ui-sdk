@@ -48,7 +48,7 @@ public class HyperwalletInsight {
     public static final String PAGE_TRANSFER_METHOD_COLLECT_ACCOUNT = "transfer-method:add:collect-account-information";
     public static final String LINK_SELECT_TRANSFER_METHOD_SELECT = "select-transfer-method";
     public static final String LINK_SELECT_TRANSFER_METHOD_CREATE = "create-transfer-method";
-    public static final String LINK_SELECT_CURRENCY = "select-currency";
+    public static final String LINK_SELECT_TRANSFER_METHOD_CURRENCY = "select-currency";
     public static final String ERROR_TYPE_API = "API";
     private static final String SDK_VERSION = com.hyperwallet.android.ui.common.BuildConfig.VERSION_NAME;
     private static final int MAX_THREAD_POOL = 2;
