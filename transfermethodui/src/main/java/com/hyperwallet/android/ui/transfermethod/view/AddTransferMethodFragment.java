@@ -460,13 +460,18 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                         }
                         HyperwalletInsight.getInstance().trackError(requireContext(),
                                 HyperwalletInsight.PAGE_TRANSFER_METHOD_COLLECT_ACCOUNT,
-                                HyperwalletInsight.TRANSFER_METHOD_GROUP, new ErrorInfo.ErrorInfoBuilder().type(
-                                        HyperwalletInsight.ERROR_TYPE_API).code(error.getCode()).message(
-                                        error.getMessage()).field(error.getFieldName()).params(
-                                        new HyperwalletInsight.TransferParamsBuilder().transferMethodCountry(
-                                                mCountry).transferMethodCurrency(mCurrency).transferMethodType(
-                                                mTransferMethodType).transferMethodProfileType(
-                                                mTransferMethodProfileType).build()).build());
+                                HyperwalletInsight.TRANSFER_METHOD_GROUP,
+                                new ErrorInfo.ErrorInfoBuilder().type(HyperwalletInsight.ERROR_TYPE_API)
+                                        .code(error.getCode())
+                                        .message(error.getMessage())
+                                        .field(error.getFieldName())
+                                        .params(new HyperwalletInsight.TransferParamsBuilder()
+                                                .transferMethodCountry(mCountry)
+                                                .transferMethodCurrency(mCurrency)
+                                                .transferMethodType(mTransferMethodType)
+                                                .transferMethodProfileType(mTransferMethodProfileType)
+                                                .build())
+                                        .build());
 
                         widget.showValidationError(error.getMessage());
                         WidgetInputState widgetInputState = mWidgetInputStateHashMap.get(widget.getName());
