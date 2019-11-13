@@ -19,7 +19,6 @@ package com.hyperwallet.android.ui.common.insight;
 
 import android.content.Context;
 import android.os.Handler;
-import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -44,6 +43,14 @@ import java.util.concurrent.Executors;
  */
 public class HyperwalletInsight {
     private static final String SDK_VERSION = com.hyperwallet.android.ui.common.BuildConfig.VERSION_NAME;
+
+    public static final String TRANSFER_METHOD_GROUP = "transfer-method";
+
+    public static final String PAGE_TRANSFER_METHOD_SELECT = "transfer-method:add:select-transfer-method";
+    public static final String PAGE_TRANSFER_METHOD_COLLECT = "transfer-method:add:collect-transfer-method-information";
+
+    public static final String LINK_SELECT_TRANSFER_METHOD_SELECT = "select-transfer-method";
+    public static final String LINK_SELECT_TRANSFER_METHOD_CREATE = "create-transfer-method";
 
     private static final int MAX_THREAD_POOL = 2;
     private static HyperwalletInsight sHyperwalletInsight;
@@ -248,37 +255,31 @@ public class HyperwalletInsight {
 
         private Map<String, String> mParams = new HashMap<>();
 
-        public TransferParamsBuilder setTransferMethodType(@NonNull final String transferMethodType) {
-            if (!TextUtils.isEmpty(transferMethodType)) {
-                mParams.put(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_TYPE, transferMethodType);
-            }
+        public TransferParamsBuilder transferMethodType(@NonNull final String transferMethodType) {
+            mParams.put(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_TYPE, transferMethodType);
             return this;
         }
 
-        public TransferParamsBuilder setTransferMethodProfileType(@NonNull final String transferMethodProfileType) {
-            if (!TextUtils.isEmpty(transferMethodProfileType)) {
-                mParams.put(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_PROFILE_TYPE,
-                        transferMethodProfileType);
-            }
+        public TransferParamsBuilder transferMethodProfileType(@NonNull final String transferMethodProfileType) {
+            mParams.put(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_PROFILE_TYPE,
+                    transferMethodProfileType);
             return this;
         }
 
-        public TransferParamsBuilder setTransferMethodCountry(@NonNull final String transferMethodCountry) {
-            if (!TextUtils.isEmpty(transferMethodCountry)) {
-                mParams.put(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_COUNTRY, transferMethodCountry);
-            }
+        public TransferParamsBuilder transferMethodCountry(@NonNull final String transferMethodCountry) {
+            mParams.put(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_COUNTRY, transferMethodCountry);
             return this;
         }
 
-        public TransferParamsBuilder setTransferMethodCurrency(@NonNull final String transferMethodCurrency) {
-            if (!TextUtils.isEmpty(transferMethodCurrency)) {
-                mParams.put(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_CURRENCY,
-                        transferMethodCurrency);
-            }
+        public TransferParamsBuilder transferMethodCurrency(@NonNull final String transferMethodCurrency) {
+            mParams.put(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_CURRENCY,
+                    transferMethodCurrency);
             return this;
         }
 
         public Map<String, String> build() {
+            mParams.put(InsightEventTag.InsightEventTagEventParams.PRODUCT, "hyperwallet-android-ui-sdk");
+            mParams.put(InsightEventTag.InsightEventTagEventParams.PAGE_TECHNOLOGY, "Java");
             return mParams;
         }
     }
