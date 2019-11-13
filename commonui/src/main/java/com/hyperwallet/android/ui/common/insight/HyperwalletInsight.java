@@ -72,7 +72,7 @@ public class HyperwalletInsight {
     }
 
     @VisibleForTesting
-    public void setInstance(HyperwalletInsight hyperwalletInsight) {
+    public static void setInstance(HyperwalletInsight hyperwalletInsight) {
         sHyperwalletInsight = hyperwalletInsight;
     }
 

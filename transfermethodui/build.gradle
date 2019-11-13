@@ -33,6 +33,7 @@ dependencies {
     androidTestImplementation "com.squareup.okhttp3:mockwebserver:$mockServerVersion"
     androidTestImplementation "com.squareup.leakcanary:leakcanary-android-instrumentation:$leakcanaryVersion"
     androidTestImplementation "com.squareup.leakcanary:leakcanary-support-fragment:$leakcanaryVersion"
+    androidTestImplementation 'org.mockito:mockito-android:2.27.0'
     androidTestImplementation project(":testutils")
 
     testImplementation "org.robolectric:robolectric:$robolectricVersion"

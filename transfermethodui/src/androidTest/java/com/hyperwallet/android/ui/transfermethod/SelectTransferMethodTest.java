@@ -16,8 +16,13 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
+import static junit.framework.TestCase.assertEquals;
+
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.instanceOf;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.atMost;
+import static org.mockito.Mockito.verify;
 
 import static java.net.HttpURLConnection.HTTP_OK;
 
@@ -32,6 +37,7 @@ import static com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodAc
 import static com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_PROFILE_TYPE;
 import static com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_TYPE;
 
+import android.content.Context;
 import android.widget.TextView;
 
 import androidx.test.espresso.IdlingRegistry;
@@ -42,7 +48,9 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
 import com.hyperwallet.android.Hyperwallet;
+import com.hyperwallet.android.insight.InsightEventTag;
 import com.hyperwallet.android.ui.R;
+import com.hyperwallet.android.ui.common.insight.HyperwalletInsight;
 import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
 import com.hyperwallet.android.ui.testutils.TestAuthenticationProvider;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
@@ -58,12 +66,21 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
+
+import java.util.Map;
 
 @RunWith(AndroidJUnit4.class)
 public class SelectTransferMethodTest {
 
     @ClassRule
     public static HyperwalletExternalResourceManager sResourceManager = new HyperwalletExternalResourceManager();
+    @Rule
+    public MockitoRule mMockito = MockitoJUnit.rule();
     @Rule
     public HyperwalletMockWebServer mMockWebServer = new HyperwalletMockWebServer(8080);
     @Rule
@@ -73,9 +90,22 @@ public class SelectTransferMethodTest {
     public IntentsTestRule<SelectTransferMethodActivity> mIntentsTestRule =
             new IntentsTestRule<>(SelectTransferMethodActivity.class, true, false);
 
+    @Captor
+    ArgumentCaptor<String> mPageNameCaptor;
+    @Captor
+    ArgumentCaptor<String> mPageGroupCaptor;
+    @Captor
+    ArgumentCaptor<String> mLinkCaptor;
+    @Captor
+    ArgumentCaptor<Map<String, String>> mMapClickCaptor;
+
+    @Mock
+    private HyperwalletInsight mHyperwalletInsight;
+
     @Before
     public void setup() {
         Hyperwallet.getInstance(new TestAuthenticationProvider());
+        HyperwalletInsight.setInstance(mHyperwalletInsight);
 
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("authentication_token_response.json")).mock();
@@ -198,6 +228,22 @@ public class SelectTransferMethodTest {
 
         onView(allOf(withId(R.id.currency_name), withText("United States Dollar"))).perform(click());
         onView(withId(R.id.select_transfer_method_currency_value)).check(matches(withText("USD")));
+
+        verify(mHyperwalletInsight, atMost(1)).trackClick(any(Context.class), mPageNameCaptor.capture(),
+                mPageGroupCaptor.capture(), mLinkCaptor.capture(),
+                mMapClickCaptor.capture());
+
+        assertEquals("transfer-method:add:select-transfer-method", mPageNameCaptor.getValue());
+        assertEquals("transfer-method", mPageGroupCaptor.getValue());
+        assertEquals("select-currency", mLinkCaptor.getValue());
+        assertEquals(3, mMapClickCaptor.getAllValues().get(0).size());
+        assertEquals("USD", mMapClickCaptor.getAllValues().get(0).get(
+                InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_CURRENCY));
+        assertEquals("hyperwallet-android-ui-sdk", mMapClickCaptor.getAllValues().get(0).get(
+                InsightEventTag.InsightEventTagEventParams.PRODUCT));
+        assertEquals("Java", mMapClickCaptor.getAllValues().get(0).get(
+                InsightEventTag.InsightEventTagEventParams.PAGE_TECHNOLOGY));
+
     }
 
     @Test

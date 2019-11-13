@@ -6,17 +6,23 @@ import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.RootMatchers.isDialog;
+import static androidx.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
+import static junit.framework.TestCase.assertEquals;
+
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.internal.verification.VerificationModeFactory.atLeastOnce;
 
 import static java.net.HttpURLConnection.HTTP_BAD_REQUEST;
 import static java.net.HttpURLConnection.HTTP_OK;
@@ -25,17 +31,22 @@ import static com.hyperwallet.android.ui.common.view.error.DefaultErrorDialogFra
 import static com.hyperwallet.android.ui.testutils.util.EspressoUtils.nestedScrollTo;
 
 import android.app.Instrumentation;
+import android.content.Context;
 import android.content.Intent;
 import android.widget.TextView;
 
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.IdlingRegistry;
+import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
 import com.hyperwallet.android.Hyperwallet;
+import com.hyperwallet.android.insight.InsightEventTag;
+import com.hyperwallet.android.insight.collect.ErrorInfo;
 import com.hyperwallet.android.ui.R;
+import com.hyperwallet.android.ui.common.insight.HyperwalletInsight;
 import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
 import com.hyperwallet.android.ui.common.view.error.DefaultErrorDialogFragment;
 import com.hyperwallet.android.ui.testutils.TestAuthenticationProvider;
@@ -50,6 +61,11 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
 
 import java.io.IOException;
 
@@ -62,6 +78,8 @@ public class AddTransferMethodTest {
     @ClassRule
     public static HyperwalletExternalResourceManager sResourceManager = new HyperwalletExternalResourceManager();
     @Rule
+    public MockitoRule mMockito = MockitoJUnit.rule();
+    @Rule
     public HyperwalletMockWebServer mMockWebServer = new HyperwalletMockWebServer(8080);
     @Rule
     public ActivityTestRule<AddTransferMethodActivity> mActivityTestRule =
@@ -73,13 +91,25 @@ public class AddTransferMethodTest {
                     intent.putExtra("TRANSFER_METHOD_TYPE", "BANK_ACCOUNT");
                     intent.putExtra("TRANSFER_METHOD_COUNTRY", "US");
                     intent.putExtra("TRANSFER_METHOD_CURRENCY", "USD");
+                    intent.putExtra("TRANSFER_METHOD_PROFILE_TYPE", "INDIVIDUAL");
                     return intent;
                 }
             };
 
+    @Captor
+    ArgumentCaptor<String> mPageNameCaptor;
+    @Captor
+    ArgumentCaptor<String> mPageGroupCaptor;
+    @Captor
+    ArgumentCaptor<ErrorInfo> mErrorInfoCaptor;
+
+    @Mock
+    private HyperwalletInsight mHyperwalletInsight;
+
     @Before
     public void setup() {
         Hyperwallet.getInstance(new TestAuthenticationProvider());
+        HyperwalletInsight.setInstance(mHyperwalletInsight);
 
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("authentication_token_response.json")).mock();
@@ -218,5 +248,53 @@ public class AddTransferMethodTest {
         Instrumentation.ActivityResult result = mActivityTestRule.getActivityResult();
         assertThat(result.getResultCode(), is(DefaultErrorDialogFragment.RESULT_ERROR));
         assertThat(mActivityTestRule.getActivity().isFinishing(), is(true));
+    }
+
+    @Test
+    public void testAddTransferMethod_VerifyAPIErrorEventWhenUserClickOnCreateTransferMethodButton() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_fields_bank_account_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_BAD_REQUEST).withBody(sResourceManager
+                .getResourceContent("error_api_bank_fields_response.json")).mock();
+
+        mActivityTestRule.launchActivity(null);
+
+        onView(withId(R.id.branchId))
+                .perform(nestedScrollTo())
+                .perform(replaceText("111111111"));
+        onView(withId(R.id.bankAccountId))
+                .perform(nestedScrollTo())
+                .perform(replaceText("1234"));
+        onView(withId(R.id.bankAccountPurpose))
+                .perform(nestedScrollTo())
+                .perform(click());
+        onView(withId(R.id.input_selection_list))
+                .perform(RecyclerViewActions.actionOnItem(
+                        hasDescendant(withText("Savings")), click()));
+
+        onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo(), click());
+
+        verify(mHyperwalletInsight, atLeastOnce()).trackError(any(Context.class), mPageNameCaptor.capture(),
+                mPageGroupCaptor.capture(), mErrorInfoCaptor.capture());
+
+        assertEquals("transfer-method:add:collect-account-information", mPageNameCaptor.getValue());
+        assertEquals("transfer-method", mPageGroupCaptor.getValue());
+        assertEquals("CONSTRAINT_VIOLATIONS", mErrorInfoCaptor.getAllValues().get(0).getCode());
+        assertEquals("Routing Number invalid.", mErrorInfoCaptor.getAllValues().get(0).getMessage());
+        assertEquals("branchId", mErrorInfoCaptor.getAllValues().get(0).getField());
+        assertEquals("API", mErrorInfoCaptor.getAllValues().get(0).getType());
+        assertEquals(6, mErrorInfoCaptor.getAllValues().get(0).getParams().size());
+        assertEquals("US", mErrorInfoCaptor.getAllValues().get(0).getParams().get(
+                InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_COUNTRY));
+        assertEquals("USD", mErrorInfoCaptor.getAllValues().get(0).getParams().get(
+                InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_CURRENCY));
+        assertEquals("INDIVIDUAL", mErrorInfoCaptor.getAllValues().get(0).getParams().get(
+                InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_PROFILE_TYPE));
+        assertEquals("BANK_ACCOUNT", mErrorInfoCaptor.getAllValues().get(0).getParams().get(
+                InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_TYPE));
+        assertEquals("hyperwallet-android-ui-sdk", mErrorInfoCaptor.getAllValues().get(0).getParams().get(
+                InsightEventTag.InsightEventTagEventParams.PRODUCT));
+        assertEquals("Java", mErrorInfoCaptor.getAllValues().get(0).getParams().get(
+                InsightEventTag.InsightEventTagEventParams.PAGE_TECHNOLOGY));
     }
 }
