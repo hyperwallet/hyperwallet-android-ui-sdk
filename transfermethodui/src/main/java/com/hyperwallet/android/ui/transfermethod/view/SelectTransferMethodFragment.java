@@ -236,7 +236,7 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
 
     public void showCountryCode(final String countryCode) {
         HyperwalletInsight.getInstance().trackClick(requireContext(), HyperwalletInsight.PAGE_TRANSFER_METHOD_SELECT,
-                HyperwalletInsight.TRANSFER_METHOD_GROUP, HyperwalletInsight.LINK_SELECT_COUNTRY,
+                HyperwalletInsight.TRANSFER_METHOD_GROUP, HyperwalletInsight.LINK_SELECT_TRANSRFER_METHOD_COUNTRY,
                 new HyperwalletInsight.TransferParamsBuilder()
                         .transferMethodCountry(countryCode)
                         .build());

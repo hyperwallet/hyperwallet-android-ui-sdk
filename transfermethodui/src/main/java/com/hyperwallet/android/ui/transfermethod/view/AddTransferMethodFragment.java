@@ -304,7 +304,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
         HyperwalletInsight.getInstance().trackImpression(requireContext(),
                 HyperwalletInsight.PAGE_TRANSRFER_METHOD_ADDED, HyperwalletInsight.TRANSFER_METHOD_GROUP,
                 new HyperwalletInsight.TransferParamsBuilder()
-                        .goal(HyperwalletInsight.GOAL)
+                        .goal(HyperwalletInsight.TRANSRFER_METHOD_GOAL)
                         .transferMethodCountry(mCountry)
                         .transferMethodCurrency(mCurrency)
                         .transferMethodType(mTransferMethodType)
@@ -600,7 +600,8 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                                                 .transferMethodCurrency(mCurrency)
                                                 .transferMethodType(mTransferMethodType)
                                                 .transferMethodProfileType(mTransferMethodProfileType)
-                                                .build()).build());
+                                                .build())
+                                        .build());
 
                         valid = false;
                         widget.showValidationError(widget.getErrorMessage());

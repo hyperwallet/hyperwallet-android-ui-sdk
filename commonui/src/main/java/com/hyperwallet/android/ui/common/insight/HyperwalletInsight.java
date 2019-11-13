@@ -50,9 +50,9 @@ public class HyperwalletInsight {
             "transfer-method:add:collect-account-information";
     public static final String LINK_SELECT_TRANSFER_METHOD_SELECT = "select-transfer-method";
     public static final String LINK_SELECT_TRANSFER_METHOD_CREATE = "create-transfer-method";
-    public static final String LINK_SELECT_COUNTRY = "select-country";
+    public static final String LINK_SELECT_TRANSRFER_METHOD_COUNTRY = "select-country";
     public static final String ERROR_TYPE_FORM = "FORM";
-    public static final String GOAL = "transfer-method-created";
+    public static final String TRANSRFER_METHOD_GOAL = "transfer-method-created";
     private static final String SDK_VERSION = com.hyperwallet.android.ui.common.BuildConfig.VERSION_NAME;
     private static final int MAX_THREAD_POOL = 2;
     private static HyperwalletInsight sHyperwalletInsight;
