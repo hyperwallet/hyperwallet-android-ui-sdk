@@ -172,7 +172,7 @@ public class AddTransferMethodTest {
         assertEquals("transfer-method:add:collect-transfer-method-information", mPageNameCaptor.getValue());
         assertEquals("transfer-method", mPageGroupCaptor.getValue());
         assertEquals("create-transfer-method", mLinkCaptor.getValue());
-        assertEquals(4, mMapClickCaptor.getAllValues().get(0).size());
+        assertEquals(6, mMapClickCaptor.getAllValues().get(0).size());
         assertEquals("US", mMapClickCaptor.getAllValues().get(0).get(
                 InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_COUNTRY));
         assertEquals("USD", mMapClickCaptor.getAllValues().get(0).get(
@@ -182,6 +182,10 @@ public class AddTransferMethodTest {
                         InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_PROFILE_TYPE));
         assertEquals("BANK_ACCOUNT", mMapClickCaptor.getAllValues().get(0).get(
                 InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_TYPE));
+        assertEquals("hyperwallet-android-ui-sdk", mMapClickCaptor.getAllValues().get(0).get(
+                InsightEventTag.InsightEventTagEventParams.PRODUCT));
+        assertEquals("Java", mMapClickCaptor.getAllValues().get(0).get(
+                InsightEventTag.InsightEventTagEventParams.PAGE_TECHNOLOGY));
 
         // check dialog content
         onView(withText(R.string.error_dialog_title)).inRoot(isDialog()).check(matches(isDisplayed()));
@@ -251,7 +255,7 @@ public class AddTransferMethodTest {
         assertEquals("transfer-method:add:collect-transfer-method-information", mPageNameCaptor.getValue());
         assertEquals("transfer-method", mPageGroupCaptor.getValue());
         assertEquals("create-transfer-method", mLinkCaptor.getValue());
-        assertEquals(4, mMapClickCaptor.getAllValues().get(0).size());
+        assertEquals(6, mMapClickCaptor.getAllValues().get(0).size());
         assertEquals("US", mMapClickCaptor.getAllValues().get(0).get(
                 InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_COUNTRY));
         assertEquals("USD", mMapClickCaptor.getAllValues().get(0).get(
@@ -261,6 +265,10 @@ public class AddTransferMethodTest {
                         InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_PROFILE_TYPE));
         assertEquals("BANK_ACCOUNT", mMapClickCaptor.getAllValues().get(0).get(
                 InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_TYPE));
+        assertEquals("hyperwallet-android-ui-sdk", mMapClickCaptor.getAllValues().get(0).get(
+                InsightEventTag.InsightEventTagEventParams.PRODUCT));
+        assertEquals("Java", mMapClickCaptor.getAllValues().get(0).get(
+                InsightEventTag.InsightEventTagEventParams.PAGE_TECHNOLOGY));
 
         // by default screen is in portrait mode
 
@@ -303,7 +311,7 @@ public class AddTransferMethodTest {
         assertEquals("transfer-method:add:collect-transfer-method-information", mPageNameCaptor.getValue());
         assertEquals("transfer-method", mPageGroupCaptor.getValue());
         assertEquals("create-transfer-method", mLinkCaptor.getValue());
-        assertEquals(4, mMapClickCaptor.getAllValues().get(0).size());
+        assertEquals(6, mMapClickCaptor.getAllValues().get(0).size());
         assertEquals("US", mMapClickCaptor.getAllValues().get(0).get(
                 InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_COUNTRY));
         assertEquals("USD", mMapClickCaptor.getAllValues().get(0).get(
@@ -313,5 +321,9 @@ public class AddTransferMethodTest {
                         InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_PROFILE_TYPE));
         assertEquals("BANK_ACCOUNT", mMapClickCaptor.getAllValues().get(0).get(
                 InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_TYPE));
+        assertEquals("hyperwallet-android-ui-sdk", mMapClickCaptor.getAllValues().get(0).get(
+                InsightEventTag.InsightEventTagEventParams.PRODUCT));
+        assertEquals("Java", mMapClickCaptor.getAllValues().get(0).get(
+                InsightEventTag.InsightEventTagEventParams.PAGE_TECHNOLOGY));
     }
 }
