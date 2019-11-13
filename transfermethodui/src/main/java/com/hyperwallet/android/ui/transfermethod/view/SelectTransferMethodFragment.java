@@ -39,7 +39,6 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.hyperwallet.android.insight.InsightEventTag;
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.common.insight.HyperwalletInsight;
@@ -49,16 +48,12 @@ import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodReposi
 import com.hyperwallet.android.ui.user.repository.UserRepositoryFactory;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.TreeMap;
 
 public class SelectTransferMethodFragment extends Fragment implements SelectTransferMethodContract.View {
 
-    protected static final String TAG = "transfer-method:add:select-transfer-method";
-    private static final String LINK = "select-country";
     private static final String ARGUMENT_COUNTRY_CODE_SELECTED = "ARGUMENT_COUNTRY_CODE_SELECTED";
     private static final String ARGUMENT_CURRENCY_CODE_SELECTED = "ARGUMENT_CURRENCY_CODE_SELECTED";
     private static final boolean FORCE_UPDATE = false;
@@ -95,6 +90,7 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+
         try {
             mOnLoadTransferMethodConfigurationKeysNetworkErrorCallback =
                     (OnLoadTransferMethodConfigurationKeysNetworkErrorCallback) context;
@@ -239,10 +235,11 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
     }
 
     public void showCountryCode(final String countryCode) {
-        Map<String, String> params = new HashMap<>();
-        params.put(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_COUNTRY, countryCode);
-        HyperwalletInsight.getInstance().trackClick(requireContext(), TAG,
-                getResources().getString(R.string.tag_group_transfer_method), LINK, params);
+        HyperwalletInsight.getInstance().trackClick(requireContext(), HyperwalletInsight.PAGE_TRANSFER_METHOD_SELECT,
+                HyperwalletInsight.TRANSFER_METHOD_GROUP, HyperwalletInsight.LINK_SELECT_COUNTRY,
+                new HyperwalletInsight.TransferParamsBuilder()
+                        .transferMethodCountry(countryCode)
+                        .build());
 
         mSelectedCountryCode = countryCode;
         mPresenter.loadCurrency(FORCE_UPDATE, countryCode);
