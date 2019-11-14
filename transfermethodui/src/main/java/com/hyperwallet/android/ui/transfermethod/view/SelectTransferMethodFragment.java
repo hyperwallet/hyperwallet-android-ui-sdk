@@ -235,7 +235,7 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
         HyperwalletInsight.getInstance().trackImpression(requireContext(),
                 HyperwalletInsight.PAGE_TRANSFER_METHOD_SELECT,
                 HyperwalletInsight.TRANSFER_METHOD_GROUP,
-                new HyperwalletInsight.TransferParamsBuilder()
+                new HyperwalletInsight.TransferMethodParamsBuilder()
                         .transferMethodCountry(mSelectedCountryCode)
                         .transferMethodCurrency(mSelectedCurrencyCode)
                         .build());
@@ -308,7 +308,7 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
             @NonNull final String transferMethodType, @NonNull final String profileType) {
         HyperwalletInsight.getInstance().trackClick(requireContext(), HyperwalletInsight.PAGE_TRANSFER_METHOD_SELECT,
                 HyperwalletInsight.TRANSFER_METHOD_GROUP, HyperwalletInsight.LINK_SELECT_TRANSFER_METHOD_SELECT,
-                new HyperwalletInsight.TransferParamsBuilder()
+                new HyperwalletInsight.TransferMethodParamsBuilder()
                         .transferMethodCountry(country)
                         .transferMethodCurrency(currency)
                         .transferMethodType(transferMethodType)
