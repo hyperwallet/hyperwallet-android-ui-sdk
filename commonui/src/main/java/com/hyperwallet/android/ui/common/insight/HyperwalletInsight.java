@@ -50,9 +50,13 @@ public class HyperwalletInsight {
 
     public static final String PAGE_TRANSFER_METHOD_SELECT = "transfer-method:add:select-transfer-method";
     public static final String PAGE_TRANSFER_METHOD_COLLECT = "transfer-method:add:collect-transfer-method-information";
+    public static final String PAGE_TRANSFER_METHOD_COLLECT_ACCOUNT = "transfer-method:add:collect-account-information";
 
     public static final String LINK_SELECT_TRANSFER_METHOD_SELECT = "select-transfer-method";
     public static final String LINK_SELECT_TRANSFER_METHOD_CREATE = "create-transfer-method";
+    public static final String LINK_SELECT_TRANSFER_METHOD_CURRENCY = "select-currency";
+
+    public static final String ERROR_TYPE_API = "API";
 
     private static final int MAX_THREAD_POOL = 2;
     private static HyperwalletInsight sHyperwalletInsight;

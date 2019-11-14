@@ -465,7 +465,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                                         .code(error.getCode())
                                         .message(error.getMessage())
                                         .field(error.getFieldName())
-                                        .params(new HyperwalletInsight.TransferParamsBuilder()
+                                        .params(new HyperwalletInsight.TransferMethodParamsBuilder()
                                                 .transferMethodCountry(mCountry)
                                                 .transferMethodCurrency(mCurrency)
                                                 .transferMethodType(mTransferMethodType)
