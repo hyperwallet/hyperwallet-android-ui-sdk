@@ -46,6 +46,7 @@ public class HyperwalletInsight {
     private static final String PRODUCT_VALUE = "hyperwallet-android-ui-sdk";
     private static final String PAGE_TECHNOLOGY_JAVA = "Java";
 
+    // TODO delete this, use com.hyperwallet.android.ui.common.util.PageGroups
     public static final String TRANSFER_METHOD_GROUP = "transfer-method";
 
     public static final String PAGE_TRANSFER_METHOD_SELECT = "transfer-method:add:select-transfer-method";

@@ -55,8 +55,8 @@ public final class ActivityUtils {
      * @param fragmentActivity specify context of the Fragment
      * @param errors           specify the errors
      */
-    public static void showError(@NonNull final FragmentActivity fragmentActivity,
-            @NonNull final List<HyperwalletError> errors) {
+    public static void showError(@NonNull final FragmentActivity fragmentActivity, @NonNull final String pageName,
+            @NonNull final String pageGroup, @NonNull final List<HyperwalletError> errors) {
         FragmentManager fragmentManager = fragmentActivity.getSupportFragmentManager();
         DefaultErrorDialogFragment fragment = (DefaultErrorDialogFragment) fragmentManager.findFragmentByTag(
                 DefaultErrorDialogFragment.TAG);
@@ -64,7 +64,7 @@ public final class ActivityUtils {
         if (fragment == null) {
             fragment = DefaultErrorDialogFragment.newInstance(errors);
         }
-        HyperwalletInsight.getInstance().trackError(fragmentActivity, "TODO pageNameArgument", "TODO pageGroupArgument",
+        HyperwalletInsight.getInstance().trackError(fragmentActivity, pageName, pageGroup,
                 new HyperwalletInsight.ErrorParamsBuilder()
                         .code(errors.get(0).getCode())
                         .message(errors.get(0).getMessage())
