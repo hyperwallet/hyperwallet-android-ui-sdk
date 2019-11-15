@@ -180,7 +180,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
         super.onViewCreated(view, savedInstanceState);
         HyperwalletInsight.getInstance().trackImpression(requireContext(),
                 HyperwalletInsight.PAGE_TRANSFER_METHOD_COLLECT, HyperwalletInsight.TRANSFER_METHOD_GROUP,
-                new HyperwalletInsight.TransferParamsBuilder()
+                new HyperwalletInsight.TransferMethodParamsBuilder()
                         .transferMethodCountry(mCountry)
                         .transferMethodCurrency(mCurrency)
                         .transferMethodType(mTransferMethodType)
@@ -313,7 +313,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     public void notifyTransferMethodAdded(@NonNull final HyperwalletTransferMethod transferMethod) {
         HyperwalletInsight.getInstance().trackImpression(requireContext(),
                 HyperwalletInsight.PAGE_TRANSFER_METHOD_ADDED, HyperwalletInsight.TRANSFER_METHOD_GROUP,
-                new HyperwalletInsight.TransferParamsBuilder()
+                new HyperwalletInsight.TransferMethodParamsBuilder()
                         .transferMethodGoal(HyperwalletInsight.TRANSFER_METHOD_GOAL)
                         .transferMethodCountry(mCountry)
                         .transferMethodCurrency(mCurrency)
@@ -605,12 +605,6 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                                         .type(HyperwalletInsight.ERROR_TYPE_FORM)
                                         .message(widget.getErrorMessage())
                                         .field(widget.getName())
-                                        .params(new HyperwalletInsight.TransferParamsBuilder()
-                                                .transferMethodCountry(mCountry)
-                                                .transferMethodCurrency(mCurrency)
-                                                .transferMethodType(mTransferMethodType)
-                                                .transferMethodProfileType(mTransferMethodProfileType)
-                                                .build())
                                         .build());
 
                         valid = false;

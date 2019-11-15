@@ -294,7 +294,7 @@ public class HyperwalletInsight {
             return this;
         }
 
-        public TransferParamsBuilder transferMethodGoal(@NonNull final String transferMethodGoal) {
+        public TransferMethodParamsBuilder transferMethodGoal(@NonNull final String transferMethodGoal) {
             mParams.put(InsightEventTag.InsightEventTagEventParams.GOAL, transferMethodGoal);
             return this;
         }
