@@ -86,7 +86,7 @@ public class SelectTransferMethodInsightTest {
         mActivityTestRule.launchActivity(null);
 
         verify(mHyperwalletInsightMockRule.getInsight(),
-                timeout(500).times(1)).trackImpression(any(Context.class),
+                timeout(5000).times(1)).trackImpression(any(Context.class),
                 eq(HyperwalletInsight.PAGE_TRANSFER_METHOD_SELECT),
                 eq(HyperwalletInsight.TRANSFER_METHOD_GROUP),
                 mParamsCaptor.capture());
@@ -117,7 +117,7 @@ public class SelectTransferMethodInsightTest {
         onView(allOf(withId(R.id.country_name), withText("Canada"))).perform(click());
 
         verify(mHyperwalletInsightMockRule.getInsight(),
-                timeout(500).times(2)).trackImpression(any(Context.class),
+                timeout(5000).times(2)).trackImpression(any(Context.class),
                 eq(HyperwalletInsight.PAGE_TRANSFER_METHOD_SELECT),
                 eq(HyperwalletInsight.TRANSFER_METHOD_GROUP),
                 mParamsCaptor.capture());
@@ -136,7 +136,7 @@ public class SelectTransferMethodInsightTest {
         mActivityTestRule.launchActivity(null);
 
         verify(mHyperwalletInsightMockRule.getInsight(),
-                timeout(500).times(1)).trackImpression(any(Context.class),
+                timeout(5000).times(1)).trackImpression(any(Context.class),
                 eq(HyperwalletInsight.PAGE_TRANSFER_METHOD_SELECT),
                 eq(HyperwalletInsight.TRANSFER_METHOD_GROUP),
                 mParamsCaptor.capture());
@@ -148,7 +148,7 @@ public class SelectTransferMethodInsightTest {
         onView(allOf(withId(R.id.currency_name), withText("United States Dollar"))).perform(click());
 
         verify(mHyperwalletInsightMockRule.getInsight(),
-                timeout(500).times(2)).trackImpression(any(Context.class),
+                timeout(5000).times(2)).trackImpression(any(Context.class),
                 eq(HyperwalletInsight.PAGE_TRANSFER_METHOD_SELECT),
                 eq(HyperwalletInsight.TRANSFER_METHOD_GROUP),
                 mParamsCaptor.capture());
