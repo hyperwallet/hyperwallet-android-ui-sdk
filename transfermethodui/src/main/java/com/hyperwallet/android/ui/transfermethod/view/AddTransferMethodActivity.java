@@ -28,6 +28,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.ui.R;
+import com.hyperwallet.android.ui.common.util.PageGroups;
 import com.hyperwallet.android.ui.common.view.ActivityUtils;
 import com.hyperwallet.android.ui.common.view.TransferMethodUtils;
 import com.hyperwallet.android.ui.common.view.error.OnNetworkErrorCallback;
@@ -39,6 +40,8 @@ public class AddTransferMethodActivity extends AppCompatActivity implements
         AddTransferMethodFragment.OnAddTransferMethodNetworkErrorCallback,
         AddTransferMethodFragment.OnLoadTransferMethodConfigurationFieldsNetworkErrorCallback,
         OnNetworkErrorCallback, WidgetDateDialogFragment.OnSelectedDateCallback {
+
+    public static final String TAG = "transfer-method:add:collect-account-information";
 
     public static final String EXTRA_TRANSFER_METHOD_COUNTRY = "TRANSFER_METHOD_COUNTRY";
     public static final String EXTRA_TRANSFER_METHOD_CURRENCY = "TRANSFER_METHOD_CURRENCY";
@@ -128,13 +131,13 @@ public class AddTransferMethodActivity extends AppCompatActivity implements
     @Override
     public void showErrorsAddTransferMethod(@NonNull final List<HyperwalletError> errors) {
         mRetryCode = RETRY_SHOW_ERROR_ADD_TRANSFER_METHOD;
-        ActivityUtils.showError(this, errors);
+        ActivityUtils.showError(this, TAG, PageGroups.TRANSFER_METHOD, errors);
     }
 
     @Override
     public void showErrorsLoadTransferMethodConfigurationFields(@NonNull final List<HyperwalletError> errors) {
         mRetryCode = RETRY_SHOW_ERROR_LOAD_TMC_FIELDS;
-        ActivityUtils.showError(this, errors);
+        ActivityUtils.showError(this, TAG, PageGroups.TRANSFER_METHOD, errors);
     }
 
     @Override

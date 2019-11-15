@@ -31,6 +31,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.receipt.Receipt;
 import com.hyperwallet.android.ui.common.repository.Event;
+import com.hyperwallet.android.ui.common.util.PageGroups;
 import com.hyperwallet.android.ui.common.view.ActivityUtils;
 import com.hyperwallet.android.ui.common.view.error.OnNetworkErrorCallback;
 import com.hyperwallet.android.ui.common.viewmodel.Navigator;
@@ -42,6 +43,7 @@ import com.hyperwallet.android.ui.receipt.viewmodel.ReceiptViewModel;
 public class ListPrepaidCardReceiptActivity extends AppCompatActivity implements OnNetworkErrorCallback,
         Navigator<Event<Receipt>> {
 
+    public static final String TAG = "receipts:prepaidcard:list-receipts";
     public static final String EXTRA_PREPAID_CARD_TOKEN = "PREPAID_CARD_TOKEN";
 
     private ReceiptViewModel mReceiptViewModel;
@@ -77,7 +79,8 @@ public class ListPrepaidCardReceiptActivity extends AppCompatActivity implements
             @Override
             public void onChanged(Event<HyperwalletErrors> event) {
                 if (event != null && !event.isContentConsumed()) {
-                    ActivityUtils.showError(ListPrepaidCardReceiptActivity.this, event.getContent().getErrors());
+                    ActivityUtils.showError(ListPrepaidCardReceiptActivity.this, TAG, PageGroups.RECEIPTS,
+                            event.getContent().getErrors());
                 }
             }
         });
