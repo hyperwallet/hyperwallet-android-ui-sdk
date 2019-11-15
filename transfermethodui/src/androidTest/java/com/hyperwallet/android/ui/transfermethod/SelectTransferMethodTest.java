@@ -18,7 +18,6 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.instanceOf;
-import static org.mockito.Mockito.mock;
 
 import static java.net.HttpURLConnection.HTTP_OK;
 
@@ -43,7 +42,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
 import com.hyperwallet.android.ui.R;
-import com.hyperwallet.android.ui.common.insight.HyperwalletInsight;
 import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletMockWebServer;
@@ -59,12 +57,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
-
-import java.util.Map;
 
 @RunWith(AndroidJUnit4.class)
 public class SelectTransferMethodTest {
@@ -82,18 +74,9 @@ public class SelectTransferMethodTest {
     @Rule
     public IntentsTestRule<SelectTransferMethodActivity> mIntentsTestRule =
             new IntentsTestRule<>(SelectTransferMethodActivity.class, true, false);
-    @Rule
-    public MockitoRule mMockito = MockitoJUnit.rule();
-    @Captor
-    private ArgumentCaptor<Map<String, String>> mParamsCaptor;
-
-    private HyperwalletInsight mHyperwalletInsight;
-
+    
     @Before
     public void setup() {
-        mHyperwalletInsight = mock(HyperwalletInsight.class);
-        HyperwalletInsight.setInstance(mHyperwalletInsight);
-
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("authentication_token_response.json")).mock();
     }
@@ -102,8 +85,6 @@ public class SelectTransferMethodTest {
     public void cleanup() {
         TransferMethodRepositoryFactory.clearInstance();
         UserRepositoryFactory.clearInstance();
-        mHyperwalletInsight = null;
-        HyperwalletInsight.setInstance(null);
     }
 
     @Before
