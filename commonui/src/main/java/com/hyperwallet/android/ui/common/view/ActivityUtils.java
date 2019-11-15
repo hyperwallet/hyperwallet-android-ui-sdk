@@ -23,6 +23,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.hyperwallet.android.model.HyperwalletError;
+import com.hyperwallet.android.ui.common.insight.HyperwalletInsight;
+import com.hyperwallet.android.ui.common.util.ErrorTypes;
 import com.hyperwallet.android.ui.common.view.error.DefaultErrorDialogFragment;
 
 import java.util.List;
@@ -62,6 +64,14 @@ public final class ActivityUtils {
         if (fragment == null) {
             fragment = DefaultErrorDialogFragment.newInstance(errors);
         }
+        HyperwalletInsight.getInstance().trackError(fragmentActivity, "TODO pageNameArgument", "TODO pageGroupArgument",
+                new HyperwalletInsight.ErrorParamsBuilder()
+                        .code(errors.get(0).getCode())
+                        .message(errors.get(0).getMessage())
+                        .fieldName(errors.get(0).getFieldName())
+                        .type(ErrorTypes.getErrorType(errors.get(0).getCode()))
+                        .description(ErrorTypes.getStackTrace())
+                        .build());
 
         if (!fragment.isAdded()) {
             fragment.show(fragmentManager);
