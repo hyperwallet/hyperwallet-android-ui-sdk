@@ -198,6 +198,16 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
         mCreateTransferMethodButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                HyperwalletInsight.getInstance().trackClick(requireContext(),
+                        HyperwalletInsight.PAGE_TRANSFER_METHOD_COLLECT, HyperwalletInsight.TRANSFER_METHOD_GROUP,
+                        HyperwalletInsight.LINK_SELECT_TRANSFER_METHOD_CREATE,
+                        new HyperwalletInsight.TransferMethodParamsBuilder()
+                                .transferMethodCountry(mCountry)
+                                .transferMethodCurrency(mCurrency)
+                                .transferMethodType(mTransferMethodType)
+                                .transferMethodProfileType(mTransferMethodProfileType)
+                                .build());
+
                 triggerSubmit();
             }
         });

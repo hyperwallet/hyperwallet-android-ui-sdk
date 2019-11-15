@@ -57,6 +57,7 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
     private static final String ARGUMENT_COUNTRY_CODE_SELECTED = "ARGUMENT_COUNTRY_CODE_SELECTED";
     private static final String ARGUMENT_CURRENCY_CODE_SELECTED = "ARGUMENT_CURRENCY_CODE_SELECTED";
     private static final boolean FORCE_UPDATE = false;
+
     private TextView mCountryValue;
     private TextView mCurrencyValue;
     private OnLoadCountrySelectionNetworkErrorCallback mOnLoadCountrySelectionNetworkErrorCallback;
@@ -231,6 +232,14 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
 
     @Override
     public void showTransferMethodTypes(@NonNull List<TransferMethodSelectionItem> transferMethodTypes) {
+        HyperwalletInsight.getInstance().trackImpression(requireContext(),
+                HyperwalletInsight.PAGE_TRANSFER_METHOD_SELECT,
+                HyperwalletInsight.TRANSFER_METHOD_GROUP,
+                new HyperwalletInsight.TransferMethodParamsBuilder()
+                        .transferMethodCountry(mSelectedCountryCode)
+                        .transferMethodCurrency(mSelectedCurrencyCode)
+                        .build());
+
         mTransferMethodTypesAdapter.replaceData(transferMethodTypes);
     }
 
@@ -299,6 +308,14 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
     @Override
     public void showAddTransferMethod(@NonNull final String country, @NonNull final String currency,
             @NonNull final String transferMethodType, @NonNull final String profileType) {
+        HyperwalletInsight.getInstance().trackClick(requireContext(), HyperwalletInsight.PAGE_TRANSFER_METHOD_SELECT,
+                HyperwalletInsight.TRANSFER_METHOD_GROUP, HyperwalletInsight.LINK_SELECT_TRANSFER_METHOD_SELECT,
+                new HyperwalletInsight.TransferMethodParamsBuilder()
+                        .transferMethodCountry(country)
+                        .transferMethodCurrency(currency)
+                        .transferMethodType(transferMethodType)
+                        .build());
+
         Intent intent = new Intent(getActivity(), AddTransferMethodActivity.class);
         intent.putExtra(AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_COUNTRY, country);
         intent.putExtra(AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_CURRENCY, currency);
