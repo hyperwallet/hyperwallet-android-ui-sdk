@@ -6,7 +6,7 @@ import com.hyperwallet.android.ui.testutils.TestAuthenticationProvider;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
 
-public class HyperwalletTestRule extends TestWatcher {
+public class HyperwalletSdkRule extends TestWatcher {
 
     @Override
     protected void starting(Description description) {

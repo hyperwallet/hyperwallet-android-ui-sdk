@@ -45,7 +45,7 @@ import com.hyperwallet.android.ui.common.util.DateUtils;
 import com.hyperwallet.android.ui.receipt.view.ListPrepaidCardReceiptActivity;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletMockWebServer;
-import com.hyperwallet.android.ui.testutils.rule.HyperwalletTestRule;
+import com.hyperwallet.android.ui.testutils.rule.HyperwalletSdkRule;
 import com.hyperwallet.android.ui.testutils.util.RecyclerViewCountAssertion;
 
 import org.junit.After;
@@ -67,7 +67,7 @@ public class ListPrepaidCardReceiptsTest {
     @ClassRule
     public static HyperwalletExternalResourceManager sResourceManager = new HyperwalletExternalResourceManager();
     @Rule
-    public HyperwalletTestRule mHyperwalletTestRule = new HyperwalletTestRule();
+    public HyperwalletSdkRule mHyperwalletSdkRule = new HyperwalletSdkRule();
     @Rule
     public HyperwalletMockWebServer mMockWebServer = new HyperwalletMockWebServer(8080);
     @Rule
@@ -88,15 +88,11 @@ public class ListPrepaidCardReceiptsTest {
                 .getResourceContent("authentication_token_response.json")).mock();
 
         setLocale(Locale.US);
-    }
-
-    @Before
-    public void registerIdlingResource() {
         IdlingRegistry.getInstance().register(EspressoIdlingResource.getIdlingResource());
     }
 
     @After
-    public void unregisterIdlingResource() {
+    public void cleanup() {
         IdlingRegistry.getInstance().unregister(EspressoIdlingResource.getIdlingResource());
     }
 

@@ -10,7 +10,7 @@ import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.timeout;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -26,8 +26,9 @@ import com.hyperwallet.android.ui.common.insight.HyperwalletInsight;
 import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletMockWebServer;
-import com.hyperwallet.android.ui.testutils.rule.HyperwalletTestRule;
+import com.hyperwallet.android.ui.testutils.rule.HyperwalletSdkRule;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
+import com.hyperwallet.android.ui.transfermethod.rule.HyperwalletInsightMockRule;
 import com.hyperwallet.android.ui.transfermethod.view.SelectTransferMethodActivity;
 import com.hyperwallet.android.ui.user.repository.UserRepositoryFactory;
 
@@ -48,7 +49,9 @@ public class SelectTransferMethodInsightTest {
     public static HyperwalletExternalResourceManager sResourceManager = new HyperwalletExternalResourceManager();
 
     @Rule
-    public HyperwalletTestRule mHyperwalletTestRule = new HyperwalletTestRule();
+    public HyperwalletSdkRule mHyperwalletSdkRule = new HyperwalletSdkRule();
+    @Rule
+    public HyperwalletInsightMockRule mHyperwalletInsightMockRule = new HyperwalletInsightMockRule();
     @Rule
     public HyperwalletMockWebServer mMockWebServer = new HyperwalletMockWebServer(8080);
     @Rule
@@ -59,32 +62,17 @@ public class SelectTransferMethodInsightTest {
     @Captor
     private ArgumentCaptor<Map<String, String>> mParamsCaptor;
 
-    private HyperwalletInsight mHyperwalletInsight;
-
     @Before
     public void setup() {
-        mHyperwalletInsight = mock(HyperwalletInsight.class);
-        HyperwalletInsight.setInstance(mHyperwalletInsight);
-
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("authentication_token_response.json")).mock();
+        IdlingRegistry.getInstance().register(EspressoIdlingResource.getIdlingResource());
     }
 
     @After
     public void cleanup() {
         TransferMethodRepositoryFactory.clearInstance();
         UserRepositoryFactory.clearInstance();
-        mHyperwalletInsight = null;
-        HyperwalletInsight.setInstance(null);
-    }
-
-    @Before
-    public void registerIdlingResource() {
-        IdlingRegistry.getInstance().register(EspressoIdlingResource.getIdlingResource());
-    }
-
-    @After
-    public void unregisterIdlingResource() {
         IdlingRegistry.getInstance().unregister(EspressoIdlingResource.getIdlingResource());
     }
 
@@ -97,7 +85,8 @@ public class SelectTransferMethodInsightTest {
 
         mActivityTestRule.launchActivity(null);
 
-        verify(mHyperwalletInsight, times(1)).trackImpression(any(Context.class),
+        verify(mHyperwalletInsightMockRule.getInsight(),
+                timeout(500).times(1)).trackImpression(any(Context.class),
                 eq(HyperwalletInsight.PAGE_TRANSFER_METHOD_SELECT),
                 eq(HyperwalletInsight.TRANSFER_METHOD_GROUP),
                 mParamsCaptor.capture());
@@ -115,7 +104,8 @@ public class SelectTransferMethodInsightTest {
 
         mActivityTestRule.launchActivity(null);
 
-        verify(mHyperwalletInsight, times(1)).trackImpression(any(Context.class),
+        verify(mHyperwalletInsightMockRule.getInsight(),
+                times(1)).trackImpression(any(Context.class),
                 eq(HyperwalletInsight.PAGE_TRANSFER_METHOD_SELECT),
                 eq(HyperwalletInsight.TRANSFER_METHOD_GROUP),
                 mParamsCaptor.capture());
@@ -126,7 +116,8 @@ public class SelectTransferMethodInsightTest {
         onView(withId(R.id.select_transfer_method_country_value)).perform(click());
         onView(allOf(withId(R.id.country_name), withText("Canada"))).perform(click());
 
-        verify(mHyperwalletInsight, times(2)).trackImpression(any(Context.class),
+        verify(mHyperwalletInsightMockRule.getInsight(),
+                timeout(500).times(2)).trackImpression(any(Context.class),
                 eq(HyperwalletInsight.PAGE_TRANSFER_METHOD_SELECT),
                 eq(HyperwalletInsight.TRANSFER_METHOD_GROUP),
                 mParamsCaptor.capture());
@@ -144,7 +135,8 @@ public class SelectTransferMethodInsightTest {
 
         mActivityTestRule.launchActivity(null);
 
-        verify(mHyperwalletInsight, times(1)).trackImpression(any(Context.class),
+        verify(mHyperwalletInsightMockRule.getInsight(),
+                timeout(500).times(1)).trackImpression(any(Context.class),
                 eq(HyperwalletInsight.PAGE_TRANSFER_METHOD_SELECT),
                 eq(HyperwalletInsight.TRANSFER_METHOD_GROUP),
                 mParamsCaptor.capture());
@@ -155,7 +147,8 @@ public class SelectTransferMethodInsightTest {
         onView(withId(R.id.select_transfer_method_currency_value)).perform(click());
         onView(allOf(withId(R.id.currency_name), withText("United States Dollar"))).perform(click());
 
-        verify(mHyperwalletInsight, times(2)).trackImpression(any(Context.class),
+        verify(mHyperwalletInsightMockRule.getInsight(),
+                timeout(500).times(2)).trackImpression(any(Context.class),
                 eq(HyperwalletInsight.PAGE_TRANSFER_METHOD_SELECT),
                 eq(HyperwalletInsight.TRANSFER_METHOD_GROUP),
                 mParamsCaptor.capture());

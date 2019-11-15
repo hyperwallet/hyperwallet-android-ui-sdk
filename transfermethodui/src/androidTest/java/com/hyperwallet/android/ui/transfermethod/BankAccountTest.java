@@ -49,7 +49,7 @@ import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletMockWebServer;
-import com.hyperwallet.android.ui.testutils.rule.HyperwalletTestRule;
+import com.hyperwallet.android.ui.testutils.rule.HyperwalletSdkRule;
 import com.hyperwallet.android.ui.testutils.util.RecyclerViewCountAssertion;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
 import com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity;
@@ -73,7 +73,7 @@ public class BankAccountTest {
     @ClassRule
     public static HyperwalletExternalResourceManager sResourceManager = new HyperwalletExternalResourceManager();
     @Rule
-    public HyperwalletTestRule mHyperwalletTestRule = new HyperwalletTestRule();
+    public HyperwalletSdkRule mHyperwalletSdkRule = new HyperwalletSdkRule();
     @Rule
     public HyperwalletMockWebServer mMockWebServer = new HyperwalletMockWebServer(8080);
     @Rule
@@ -97,22 +97,15 @@ public class BankAccountTest {
                 .getResourceContent("authentication_token_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("successful_tmc_fields_bank_account_response.json")).mock();
+        IdlingRegistry.getInstance().register(EspressoIdlingResource.getIdlingResource());
     }
 
     @After
     public void cleanup() {
         TransferMethodRepositoryFactory.clearInstance();
-    }
-
-    @Before
-    public void registerIdlingResource() {
-        IdlingRegistry.getInstance().register(EspressoIdlingResource.getIdlingResource());
-    }
-
-    @After
-    public void unregisterIdlingResource() {
         IdlingRegistry.getInstance().unregister(EspressoIdlingResource.getIdlingResource());
     }
+
 
     @Test
     public void testAddTransferMethod_displaysElementsOnTmcResponse() {
