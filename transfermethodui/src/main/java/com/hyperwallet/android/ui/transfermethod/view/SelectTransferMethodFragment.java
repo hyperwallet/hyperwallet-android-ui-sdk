@@ -238,8 +238,8 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
         HyperwalletInsight.getInstance().trackImpression(requireContext(),
                 TAG, PageGroups.TRANSFER_METHOD,
                 new HyperwalletInsight.TransferMethodParamsBuilder()
-                        .transferMethodCountry(mSelectedCountryCode)
-                        .transferMethodCurrency(mSelectedCurrencyCode)
+                        .country(mSelectedCountryCode)
+                        .currency(mSelectedCurrencyCode)
                         .build());
 
         mTransferMethodTypesAdapter.replaceData(transferMethodTypes);
@@ -250,7 +250,7 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
                 TAG, PageGroups.TRANSFER_METHOD,
                 HyperwalletInsight.LINK_SELECT_TRANSFER_METHOD_COUNTRY,
                 new HyperwalletInsight.TransferMethodParamsBuilder()
-                        .transferMethodCountry(countryCode)
+                        .country(countryCode)
                         .build());
 
         mSelectedCountryCode = countryCode;
@@ -261,7 +261,7 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
         HyperwalletInsight.getInstance().trackClick(requireContext(),
                 TAG, PageGroups.TRANSFER_METHOD,
                 HyperwalletInsight.LINK_SELECT_TRANSFER_METHOD_CURRENCY,
-                new HyperwalletInsight.TransferMethodParamsBuilder().transferMethodCurrency(currencyCode).build());
+                new HyperwalletInsight.TransferMethodParamsBuilder().currency(currencyCode).build());
 
         mSelectedCurrencyCode = currencyCode;
         mPresenter.loadTransferMethodTypes(FORCE_UPDATE, mSelectedCountryCode, currencyCode);
@@ -320,9 +320,9 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
                 TAG, PageGroups.TRANSFER_METHOD,
                 HyperwalletInsight.LINK_SELECT_TRANSFER_METHOD_SELECT,
                 new HyperwalletInsight.TransferMethodParamsBuilder()
-                        .transferMethodCountry(country)
-                        .transferMethodCurrency(currency)
-                        .transferMethodType(transferMethodType)
+                        .country(country)
+                        .currency(currency)
+                        .type(transferMethodType)
                         .build());
 
         Intent intent = new Intent(getActivity(), AddTransferMethodActivity.class);

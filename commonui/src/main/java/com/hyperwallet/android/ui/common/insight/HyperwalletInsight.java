@@ -269,23 +269,23 @@ public class HyperwalletInsight {
             mParams.put(InsightEventTag.InsightEventTagEventParams.PAGE_TECHNOLOGY, PAGE_TECHNOLOGY_JAVA);
         }
 
-        public TransferMethodParamsBuilder transferMethodType(@NonNull final String transferMethodType) {
+        public TransferMethodParamsBuilder type(@NonNull final String transferMethodType) {
             mParams.put(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_TYPE, transferMethodType);
             return this;
         }
 
-        public TransferMethodParamsBuilder transferMethodProfileType(@NonNull final String transferMethodProfileType) {
+        public TransferMethodParamsBuilder profileType(@NonNull final String transferMethodProfileType) {
             mParams.put(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_PROFILE_TYPE,
                     transferMethodProfileType);
             return this;
         }
 
-        public TransferMethodParamsBuilder transferMethodCountry(@NonNull final String transferMethodCountry) {
+        public TransferMethodParamsBuilder country(@NonNull final String transferMethodCountry) {
             mParams.put(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_COUNTRY, transferMethodCountry);
             return this;
         }
 
-        public TransferMethodParamsBuilder transferMethodCurrency(@NonNull final String transferMethodCurrency) {
+        public TransferMethodParamsBuilder currency(@NonNull final String transferMethodCurrency) {
             mParams.put(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_CURRENCY, transferMethodCurrency);
             return this;
         }
@@ -295,7 +295,7 @@ public class HyperwalletInsight {
             return this;
         }
 
-        public TransferMethodParamsBuilder transferMethodGoal(@NonNull final String transferMethodGoal) {
+        public TransferMethodParamsBuilder goal(@NonNull final String transferMethodGoal) {
             mParams.put(InsightEventTag.InsightEventTagEventParams.GOAL, transferMethodGoal);
             return this;
         }

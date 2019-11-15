@@ -184,10 +184,10 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
         HyperwalletInsight.getInstance().trackImpression(requireContext(),
                 TAG, PageGroups.TRANSFER_METHOD,
                 new HyperwalletInsight.TransferMethodParamsBuilder()
-                        .transferMethodCountry(mCountry)
-                        .transferMethodCurrency(mCurrency)
-                        .transferMethodType(mTransferMethodType)
-                        .transferMethodProfileType(mTransferMethodProfileType)
+                        .country(mCountry)
+                        .currency(mCurrency)
+                        .type(mTransferMethodType)
+                        .profileType(mTransferMethodProfileType)
                         .build());
 
         mDynamicContainer = view.findViewById(R.id.add_transfer_method_dynamic_container);
@@ -205,10 +205,10 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                         TAG, PageGroups.TRANSFER_METHOD,
                         HyperwalletInsight.LINK_SELECT_TRANSFER_METHOD_CREATE,
                         new HyperwalletInsight.TransferMethodParamsBuilder()
-                                .transferMethodCountry(mCountry)
-                                .transferMethodCurrency(mCurrency)
-                                .transferMethodType(mTransferMethodType)
-                                .transferMethodProfileType(mTransferMethodProfileType)
+                                .country(mCountry)
+                                .currency(mCurrency)
+                                .type(mTransferMethodType)
+                                .profileType(mTransferMethodProfileType)
                                 .build());
 
                 triggerSubmit();
@@ -317,11 +317,11 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
         HyperwalletInsight.getInstance().trackImpression(requireContext(),
                 TAG, PageGroups.TRANSFER_METHOD,
                 new HyperwalletInsight.TransferMethodParamsBuilder()
-                        .transferMethodGoal(HyperwalletInsight.TRANSFER_METHOD_GOAL)
-                        .transferMethodCountry(mCountry)
-                        .transferMethodCurrency(mCurrency)
-                        .transferMethodType(mTransferMethodType)
-                        .transferMethodProfileType(mTransferMethodProfileType)
+                        .goal(HyperwalletInsight.TRANSFER_METHOD_GOAL)
+                        .country(mCountry)
+                        .currency(mCurrency)
+                        .type(mTransferMethodType)
+                        .profileType(mTransferMethodProfileType)
                         .build());
 
         Intent intent = HyperwalletTransferMethodLocalBroadcast.createBroadcastIntentTransferMethodAdded(
