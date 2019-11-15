@@ -40,13 +40,12 @@ import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
-import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
 import com.hyperwallet.android.ui.common.util.DateUtils;
 import com.hyperwallet.android.ui.receipt.view.ListPrepaidCardReceiptActivity;
-import com.hyperwallet.android.ui.testutils.TestAuthenticationProvider;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletMockWebServer;
+import com.hyperwallet.android.ui.testutils.rule.HyperwalletTestRule;
 import com.hyperwallet.android.ui.testutils.util.RecyclerViewCountAssertion;
 
 import org.junit.After;
@@ -68,6 +67,8 @@ public class ListPrepaidCardReceiptsTest {
     @ClassRule
     public static HyperwalletExternalResourceManager sResourceManager = new HyperwalletExternalResourceManager();
     @Rule
+    public HyperwalletTestRule mHyperwalletTestRule = new HyperwalletTestRule();
+    @Rule
     public HyperwalletMockWebServer mMockWebServer = new HyperwalletMockWebServer(8080);
     @Rule
     public ActivityTestRule<ListPrepaidCardReceiptActivity> mActivityTestRule =
@@ -83,12 +84,14 @@ public class ListPrepaidCardReceiptsTest {
 
     @Before
     public void setup() {
-        Hyperwallet.getInstance(new TestAuthenticationProvider());
-
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("authentication_token_response.json")).mock();
 
         setLocale(Locale.US);
+    }
+
+    @Before
+    public void registerIdlingResource() {
         IdlingRegistry.getInstance().register(EspressoIdlingResource.getIdlingResource());
     }
 

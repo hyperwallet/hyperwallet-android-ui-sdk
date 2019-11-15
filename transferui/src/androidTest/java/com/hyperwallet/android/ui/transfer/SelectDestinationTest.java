@@ -35,11 +35,10 @@ import androidx.test.espresso.intent.rule.IntentsTestRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
-import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
-import com.hyperwallet.android.ui.testutils.TestAuthenticationProvider;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletMockWebServer;
+import com.hyperwallet.android.ui.testutils.rule.HyperwalletTestRule;
 import com.hyperwallet.android.ui.testutils.util.RecyclerViewCountAssertion;
 import com.hyperwallet.android.ui.transfer.repository.TransferRepositoryFactory;
 import com.hyperwallet.android.ui.transfer.view.CreateTransferActivity;
@@ -62,6 +61,8 @@ public class SelectDestinationTest {
     @ClassRule
     public static HyperwalletExternalResourceManager sResourceManager = new HyperwalletExternalResourceManager();
     @Rule
+    public HyperwalletTestRule mHyperwalletTestRule = new HyperwalletTestRule();
+    @Rule
     public HyperwalletMockWebServer mMockWebServer = new HyperwalletMockWebServer(8080);
     @Rule
     public ActivityTestRule<CreateTransferActivity> mActivityTestRule =
@@ -72,8 +73,6 @@ public class SelectDestinationTest {
 
     @Before
     public void setup() {
-        Hyperwallet.getInstance(new TestAuthenticationProvider());
-
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("authentication_token_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
