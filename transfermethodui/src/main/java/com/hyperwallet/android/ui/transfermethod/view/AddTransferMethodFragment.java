@@ -46,7 +46,6 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.hyperwallet.android.exception.HyperwalletException;
-import com.hyperwallet.android.insight.collect.ErrorInfo;
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.graphql.HyperwalletFee;
 import com.hyperwallet.android.model.graphql.ProcessingTime;
@@ -75,6 +74,7 @@ import java.util.Locale;
 import java.util.TreeMap;
 
 public class AddTransferMethodFragment extends Fragment implements WidgetEventListener, AddTransferMethodContract.View {
+
     public static final String TAG = AddTransferMethodActivity.TAG;
 
     private static final String ARGUMENT_TRANSFER_METHOD_COUNTRY = "ARGUMENT_TRANSFER_METHOD_COUNTRY";
@@ -182,7 +182,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         HyperwalletInsight.getInstance().trackImpression(requireContext(),
-                HyperwalletInsight.PAGE_TRANSFER_METHOD_COLLECT, HyperwalletInsight.TRANSFER_METHOD_GROUP,
+                TAG, PageGroups.TRANSFER_METHOD,
                 new HyperwalletInsight.TransferMethodParamsBuilder()
                         .transferMethodCountry(mCountry)
                         .transferMethodCurrency(mCurrency)
@@ -315,7 +315,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     @Override
     public void notifyTransferMethodAdded(@NonNull final HyperwalletTransferMethod transferMethod) {
         HyperwalletInsight.getInstance().trackImpression(requireContext(),
-                HyperwalletInsight.PAGE_TRANSFER_METHOD_ADDED, HyperwalletInsight.TRANSFER_METHOD_GROUP,
+                TAG, PageGroups.TRANSFER_METHOD,
                 new HyperwalletInsight.TransferMethodParamsBuilder()
                         .transferMethodGoal(HyperwalletInsight.TRANSFER_METHOD_GOAL)
                         .transferMethodCountry(mCountry)
@@ -486,7 +486,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                                         .code(error.getCode())
                                         .message(error.getMessage())
                                         .fieldName(error.getFieldName())
-                                        .type(ErrorTypes.getErrorType(error.getCode()))
+                                        .type(ErrorTypes.API_ERROR)
                                         .build());
 
                         widget.showValidationError(error.getMessage());
@@ -612,11 +612,11 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                         }
                     } else {
                         HyperwalletInsight.getInstance().trackError(requireContext(),
-                                HyperwalletInsight.PAGE_TRANSFER_METHOD_COLLECT_ACCOUNT,
-                                HyperwalletInsight.TRANSFER_METHOD_GROUP, new ErrorInfo.ErrorInfoBuilder()
-                                        .type(HyperwalletInsight.ERROR_TYPE_FORM)
+                                TAG, PageGroups.TRANSFER_METHOD,
+                                new HyperwalletInsight.ErrorParamsBuilder()
                                         .message(widget.getErrorMessage())
-                                        .field(widget.getName())
+                                        .fieldName(widget.getName())
+                                        .type(ErrorTypes.FORM_ERROR)
                                         .build());
 
                         valid = false;
