@@ -16,10 +16,6 @@
  */
 package com.hyperwallet.android.ui.common.view.error;
 
-import static com.hyperwallet.android.ExceptionMapper.EC_AUTHENTICATION_TOKEN_PROVIDER_EXCEPTION;
-import static com.hyperwallet.android.ExceptionMapper.EC_IO_EXCEPTION;
-import static com.hyperwallet.android.ExceptionMapper.EC_JSON_EXCEPTION;
-import static com.hyperwallet.android.ExceptionMapper.EC_JSON_PARSE_EXCEPTION;
 import static com.hyperwallet.android.ExceptionMapper.EC_UNEXPECTED_EXCEPTION;
 
 import android.app.Dialog;
@@ -35,6 +31,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.ui.common.R;
+import com.hyperwallet.android.ui.common.util.ErrorTypes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -120,11 +117,10 @@ public class DefaultErrorDialogFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(
                 new ContextThemeWrapper(requireContext(), R.style.Theme_Hyperwallet_Alert));
         builder.setMessage(message);
-        switch (errorCode) {
-            case EC_UNEXPECTED_EXCEPTION:
-            case EC_JSON_EXCEPTION:
-            case EC_JSON_PARSE_EXCEPTION:
-            case EC_AUTHENTICATION_TOKEN_PROVIDER_EXCEPTION:
+
+        String errorType = ErrorTypes.getErrorType(errorCode);
+        switch (errorType) {
+            case ErrorTypes.SDK_ERROR:
                 builder.setTitle(requireContext().getString(R.string.error_dialog_unexpected_title))
                         .setPositiveButton(getResources().getString(R.string.close_button_label),
                                 new DialogInterface.OnClickListener() {
@@ -135,7 +131,7 @@ public class DefaultErrorDialogFragment extends DialogFragment {
                                     }
                                 });
                 break;
-            case EC_IO_EXCEPTION: // connection error
+            case ErrorTypes.CONNECTION_ERROR:
                 builder.setTitle(requireContext().getString(R.string.error_dialog_connectivity_title))
                         .setNegativeButton(getResources().getString(R.string.cancel_button_label),
                                 new DialogInterface.OnClickListener() {

@@ -37,6 +37,7 @@ import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.ui.common.intent.HyperwalletIntent;
 import com.hyperwallet.android.ui.common.repository.Event;
+import com.hyperwallet.android.ui.common.util.PageGroups;
 import com.hyperwallet.android.ui.common.view.ActivityUtils;
 import com.hyperwallet.android.ui.common.view.OneClickListener;
 import com.hyperwallet.android.ui.common.view.error.OnNetworkErrorCallback;
@@ -46,6 +47,7 @@ import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodReposi
 
 public class ListTransferDestinationActivity extends AppCompatActivity implements OnNetworkErrorCallback {
 
+    public static final String TAG = "transfer-funds:create-transfer";
     public static final String EXTRA_SELECTED_DESTINATION_TOKEN = "SELECTED_DESTINATION_TOKEN";
 
     private ListTransferDestinationViewModel mListTransferDestinationViewModel;
@@ -136,8 +138,8 @@ public class ListTransferDestinationActivity extends AppCompatActivity implement
                     @Override
                     public void onChanged(Event<HyperwalletErrors> errorsEvent) {
                         if (!errorsEvent.isContentConsumed()) {
-                            ActivityUtils.showError(ListTransferDestinationActivity.this,
-                                    errorsEvent.getContent().getErrors());
+                            ActivityUtils.showError(ListTransferDestinationActivity.this, TAG,
+                                    PageGroups.TRANSFER_FUNDS, errorsEvent.getContent().getErrors());
                         }
                     }
                 });
