@@ -217,10 +217,18 @@ public class HyperwalletInsight {
      * @param context   Context where the tracking is happening
      * @param pageName  an arbituary pageName the user is currently viewing as defined by the app
      * @param pageGroup an arbituary pageGroup the user is currently viewing as defined by the app
-     * @param errorInfo additional error information that can be added to make the tracking event more useful
+     * @param errorInfoMap contains information regarding the error
      */
     public void trackError(@NonNull final Context context, @NonNull final String pageName,
-            @NonNull final String pageGroup, @NonNull final ErrorInfo errorInfo) {
+            @NonNull final String pageGroup, @NonNull final Map<String, String> errorInfoMap) {
+
+        final ErrorInfo errorInfo = new ErrorInfo.ErrorInfoBuilder()
+                .type(errorInfoMap.get(InsightEventTag.InsightEventTagEventParams.ERROR_TYPE))
+                .message(errorInfoMap.get(InsightEventTag.InsightEventTagEventParams.ERROR_MESSAGE))
+                .code(errorInfoMap.get(InsightEventTag.InsightEventTagEventParams.ERROR_CODE))
+                .field(errorInfoMap.get(InsightEventTag.InsightEventTagEventParams.ERROR_FIELD_NAME))
+                .description(errorInfoMap.get(InsightEventTag.InsightEventTagEventParams.ERROR_DESCRIPTION))
+                .build();
 
         if (Insight.getInsightTracker().isInitialized()) {
             Insight.getInsightTracker().trackError(context, pageName, pageGroup, errorInfo);
@@ -285,6 +293,39 @@ public class HyperwalletInsight {
 
         public TransferMethodParamsBuilder pageTechnology(@NonNull final String pageTechnology) {
             mParams.put(InsightEventTag.InsightEventTagEventParams.PAGE_TECHNOLOGY, pageTechnology);
+            return this;
+        }
+
+        public Map<String, String> build() {
+            return mParams;
+        }
+    }
+
+    public static final class ErrorParamsBuilder {
+        private Map<String, String> mParams = new HashMap<>(1);
+
+        public ErrorParamsBuilder code(@NonNull final String errorCode) {
+            mParams.put(InsightEventTag.InsightEventTagEventParams.ERROR_CODE, errorCode);
+            return this;
+        }
+
+        public ErrorParamsBuilder type(@NonNull final String errorType) {
+            mParams.put(InsightEventTag.InsightEventTagEventParams.ERROR_TYPE, errorType);
+            return this;
+        }
+
+        public ErrorParamsBuilder message(@NonNull final String errorMessage) {
+            mParams.put(InsightEventTag.InsightEventTagEventParams.ERROR_MESSAGE, errorMessage);
+            return this;
+        }
+
+        public ErrorParamsBuilder fieldName(@NonNull final String errorFieldName) {
+            mParams.put(InsightEventTag.InsightEventTagEventParams.ERROR_FIELD_NAME, errorFieldName);
+            return this;
+        }
+
+        public ErrorParamsBuilder description(@NonNull final String errorDescription) {
+            mParams.put(InsightEventTag.InsightEventTagEventParams.ERROR_DESCRIPTION, errorDescription);
             return this;
         }
 
