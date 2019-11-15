@@ -262,10 +262,10 @@ public class HyperwalletInsight {
     }
 
     public static final class TransferMethodParamsBuilder {
-
-        private Map<String, String> mParams = new HashMap<>(1);
+        final private Map<String, String> mParams;
 
         public TransferMethodParamsBuilder() {
+            mParams = new HashMap<>(2);
             mParams.put(InsightEventTag.InsightEventTagEventParams.PRODUCT, PRODUCT_VALUE);
             mParams.put(InsightEventTag.InsightEventTagEventParams.PAGE_TECHNOLOGY, PAGE_TECHNOLOGY_JAVA);
         }
@@ -302,7 +302,11 @@ public class HyperwalletInsight {
     }
 
     public static final class ErrorParamsBuilder {
-        private Map<String, String> mParams = new HashMap<>(1);
+        final private Map<String, String> mParams;
+
+        public ErrorParamsBuilder() {
+            mParams = new HashMap<>(1);
+        }
 
         public ErrorParamsBuilder code(@NonNull final String errorCode) {
             mParams.put(InsightEventTag.InsightEventTagEventParams.ERROR_CODE, errorCode);

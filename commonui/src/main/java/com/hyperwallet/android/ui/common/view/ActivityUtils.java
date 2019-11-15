@@ -64,8 +64,11 @@ public final class ActivityUtils {
         if (fragment == null) {
             fragment = DefaultErrorDialogFragment.newInstance(errors);
         }
-        HyperwalletInsight.getInstance().trackError(fragmentActivity.getBaseContext(), "", "",
+        HyperwalletInsight.getInstance().trackError(fragmentActivity, "TODO pageNameArgument", "TODO pageGroupArgument",
                 new HyperwalletInsight.ErrorParamsBuilder()
+                        .code(errors.get(0).getCode())
+                        .message(errors.get(0).getMessage())
+                        .fieldName(errors.get(0).getFieldName())
                         .type(ErrorTypes.getErrorType(errors.get(0).getCode()))
                         .description(ErrorTypes.getStackTrace())
                         .build());

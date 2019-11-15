@@ -10,13 +10,6 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 
 public class ErrorTypes {
-    // Error Tags
-    public static final String ERROR_CODE = "error_code";
-    public static final String ERROR_TYPE = "error_type";
-    public static final String ERROR_MESSAGE = "error_message";
-    public static final String ERROR_FIELD_NAME = "erfd";
-    public static final String ERROR_DESCRIPTION = "error_description";
-
     /**
      * SDK_ERROR indicates an unexpected error the component could not handle.
      */
