@@ -16,18 +16,13 @@
  */
 package com.hyperwallet.android.ui.common.view.error;
 
-import static com.hyperwallet.android.ExceptionMapper.EC_AUTHENTICATION_TOKEN_PROVIDER_EXCEPTION;
-import static com.hyperwallet.android.ExceptionMapper.EC_IO_EXCEPTION;
-import static com.hyperwallet.android.ExceptionMapper.EC_JSON_EXCEPTION;
-import static com.hyperwallet.android.ExceptionMapper.EC_JSON_PARSE_EXCEPTION;
-import static com.hyperwallet.android.ExceptionMapper.EC_UNEXPECTED_EXCEPTION;
-
 import android.content.res.Resources;
 
 import androidx.annotation.NonNull;
 
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.sdk.R;
+import com.hyperwallet.android.ui.common.util.ErrorTypes;
 
 import java.util.Iterator;
 import java.util.List;
@@ -42,20 +37,18 @@ public class DefaultErrorDialogFragmentPresenter implements DefaultErrorDialogFr
     public String buildDialogMessage(@NonNull List<HyperwalletError> errors, @NonNull Resources resources) {
         String message;
         HyperwalletError error = errors.get(0);
-        switch (error.getCode()) {
-            case EC_UNEXPECTED_EXCEPTION:
-            case EC_JSON_EXCEPTION:
-            case EC_JSON_PARSE_EXCEPTION:
-            case EC_AUTHENTICATION_TOKEN_PROVIDER_EXCEPTION:
+        String errorType = ErrorTypes.getErrorType(error.getCode());
+
+        switch (errorType) {
+            case ErrorTypes.SDK_ERROR:
                 message = resources.getString(R.string.unexpected_exception);
                 break;
-            case EC_IO_EXCEPTION:
+            case ErrorTypes.CONNECTION_ERROR:
                 message = getMessageFromResources(errors, resources);
                 break;
             default:
                 message = error.getMessageFromResourceWhenAvailable(resources);
         }
-
         return message;
     }
 

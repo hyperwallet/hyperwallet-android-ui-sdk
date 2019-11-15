@@ -58,6 +58,8 @@ import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.model.transfermethod.PayPalAccount;
 import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.common.insight.HyperwalletInsight;
+import com.hyperwallet.android.ui.common.util.ErrorTypes;
+import com.hyperwallet.android.ui.common.util.PageGroups;
 import com.hyperwallet.android.ui.transfermethod.HyperwalletTransferMethodLocalBroadcast;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
 import com.hyperwallet.android.ui.transfermethod.view.widget.AbstractWidget;
@@ -73,6 +75,7 @@ import java.util.Locale;
 import java.util.TreeMap;
 
 public class AddTransferMethodFragment extends Fragment implements WidgetEventListener, AddTransferMethodContract.View {
+    public static final String TAG = AddTransferMethodActivity.TAG;
 
     private static final String ARGUMENT_TRANSFER_METHOD_COUNTRY = "ARGUMENT_TRANSFER_METHOD_COUNTRY";
     private static final String ARGUMENT_TRANSFER_METHOD_CURRENCY = "ARGUMENT_TRANSFER_METHOD_CURRENCY";
@@ -199,7 +202,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
             @Override
             public void onClick(View v) {
                 HyperwalletInsight.getInstance().trackClick(requireContext(),
-                        HyperwalletInsight.PAGE_TRANSFER_METHOD_COLLECT, HyperwalletInsight.TRANSFER_METHOD_GROUP,
+                        TAG, PageGroups.TRANSFER_METHOD,
                         HyperwalletInsight.LINK_SELECT_TRANSFER_METHOD_CREATE,
                         new HyperwalletInsight.TransferMethodParamsBuilder()
                                 .transferMethodCountry(mCountry)
@@ -477,6 +480,15 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                             widget.getView(mDynamicContainer).requestFocus();
                             focusSet = true;
                         }
+                        HyperwalletInsight.getInstance().trackError(requireContext(),
+                                TAG, PageGroups.TRANSFER_METHOD,
+                                new HyperwalletInsight.ErrorParamsBuilder()
+                                        .code(error.getCode())
+                                        .message(error.getMessage())
+                                        .fieldName(error.getFieldName())
+                                        .type(ErrorTypes.getErrorType(error.getCode()))
+                                        .build());
+
                         widget.showValidationError(error.getMessage());
                         WidgetInputState widgetInputState = mWidgetInputStateHashMap.get(widget.getName());
                         widgetInputState.setErrorMessage(error.getMessage());

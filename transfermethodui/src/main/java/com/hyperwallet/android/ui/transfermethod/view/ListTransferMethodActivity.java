@@ -33,6 +33,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.ui.R;
+import com.hyperwallet.android.ui.common.util.PageGroups;
 import com.hyperwallet.android.ui.common.view.ActivityUtils;
 import com.hyperwallet.android.ui.common.view.OneClickListener;
 import com.hyperwallet.android.ui.common.view.error.OnNetworkErrorCallback;
@@ -45,6 +46,8 @@ public class ListTransferMethodActivity extends AppCompatActivity implements
         ListTransferMethodFragment.OnLoadTransferMethodNetworkErrorCallback,
         ListTransferMethodFragment.OnTransferMethodContextMenuDeletionSelected,
         OnTransferMethodDeactivateCallback, OnNetworkErrorCallback {
+
+    public static final String TAG = "transfer-method:list:list-transfer-methods";
 
     private static final String ARGUMENT_RETRY_ACTION = "ARGUMENT_RETRY_ACTION";
     private static final String ARGUMENT_TRANSFER_METHOD = "ARGUMENT_TRANSFER_METHOD";
@@ -130,13 +133,13 @@ public class ListTransferMethodActivity extends AppCompatActivity implements
     @Override
     public void showErrorsDeactivateTransferMethod(@NonNull final List<HyperwalletError> errors) {
         mRetryCode = RETRY_DEACTIVATE_TRANSFER_METHOD;
-        ActivityUtils.showError(this, errors);
+        ActivityUtils.showError(this, TAG, PageGroups.TRANSFER_METHOD, errors);
     }
 
     @Override
     public void showErrorsLoadTransferMethods(@NonNull final List<HyperwalletError> errors) {
         mRetryCode = RETRY_LOAD_TRANSFER_METHOD;
-        ActivityUtils.showError(this, errors);
+        ActivityUtils.showError(this, TAG, PageGroups.TRANSFER_METHOD, errors);
     }
 
     @Override

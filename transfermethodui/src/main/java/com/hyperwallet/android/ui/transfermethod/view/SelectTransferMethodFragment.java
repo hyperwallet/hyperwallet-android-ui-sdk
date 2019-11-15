@@ -42,6 +42,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.common.insight.HyperwalletInsight;
+import com.hyperwallet.android.ui.common.util.PageGroups;
 import com.hyperwallet.android.ui.common.view.HorizontalDividerItemDecorator;
 import com.hyperwallet.android.ui.common.view.OneClickListener;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
@@ -53,6 +54,7 @@ import java.util.Locale;
 import java.util.TreeMap;
 
 public class SelectTransferMethodFragment extends Fragment implements SelectTransferMethodContract.View {
+    public static final String TAG = SelectTransferMethodActivity.TAG;
 
     private static final String ARGUMENT_COUNTRY_CODE_SELECTED = "ARGUMENT_COUNTRY_CODE_SELECTED";
     private static final String ARGUMENT_CURRENCY_CODE_SELECTED = "ARGUMENT_CURRENCY_CODE_SELECTED";
@@ -233,8 +235,7 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
     @Override
     public void showTransferMethodTypes(@NonNull List<TransferMethodSelectionItem> transferMethodTypes) {
         HyperwalletInsight.getInstance().trackImpression(requireContext(),
-                HyperwalletInsight.PAGE_TRANSFER_METHOD_SELECT,
-                HyperwalletInsight.TRANSFER_METHOD_GROUP,
+                TAG, PageGroups.TRANSFER_METHOD,
                 new HyperwalletInsight.TransferMethodParamsBuilder()
                         .transferMethodCountry(mSelectedCountryCode)
                         .transferMethodCurrency(mSelectedCurrencyCode)
@@ -255,6 +256,11 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
     }
 
     public void showCurrencyCode(final String currencyCode) {
+        HyperwalletInsight.getInstance().trackClick(requireContext(),
+                TAG, PageGroups.TRANSFER_METHOD,
+                HyperwalletInsight.LINK_SELECT_TRANSFER_METHOD_CURRENCY,
+                new HyperwalletInsight.TransferMethodParamsBuilder().transferMethodCurrency(currencyCode).build());
+
         mSelectedCurrencyCode = currencyCode;
         mPresenter.loadTransferMethodTypes(FORCE_UPDATE, mSelectedCountryCode, currencyCode);
     }
@@ -308,8 +314,9 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
     @Override
     public void showAddTransferMethod(@NonNull final String country, @NonNull final String currency,
             @NonNull final String transferMethodType, @NonNull final String profileType) {
-        HyperwalletInsight.getInstance().trackClick(requireContext(), HyperwalletInsight.PAGE_TRANSFER_METHOD_SELECT,
-                HyperwalletInsight.TRANSFER_METHOD_GROUP, HyperwalletInsight.LINK_SELECT_TRANSFER_METHOD_SELECT,
+        HyperwalletInsight.getInstance().trackClick(requireContext(),
+                TAG, PageGroups.TRANSFER_METHOD,
+                HyperwalletInsight.LINK_SELECT_TRANSFER_METHOD_SELECT,
                 new HyperwalletInsight.TransferMethodParamsBuilder()
                         .transferMethodCountry(country)
                         .transferMethodCurrency(currency)

@@ -46,6 +46,11 @@ public class HyperwalletInsight {
     private static final String PRODUCT_VALUE = "hyperwallet-android-ui-sdk";
     private static final String PAGE_TECHNOLOGY_JAVA = "Java";
 
+    public static final String LINK_SELECT_TRANSFER_METHOD_SELECT = "select-transfer-method";
+    public static final String LINK_SELECT_TRANSFER_METHOD_CREATE = "create-transfer-method";
+    public static final String LINK_SELECT_TRANSFER_METHOD_CURRENCY = "select-currency";
+
+    // temporary start
     public static final String TRANSFER_METHOD_GROUP = "transfer-method";
 
     public static final String PAGE_TRANSFER_METHOD_SELECT = "transfer-method:add:select-transfer-method";
@@ -54,11 +59,10 @@ public class HyperwalletInsight {
     public static final String PAGE_TRANSFER_METHOD_COLLECT_ACCOUNT =
             "transfer-method:add:collect-account-information";
 
-    public static final String LINK_SELECT_TRANSFER_METHOD_SELECT = "select-transfer-method";
-    public static final String LINK_SELECT_TRANSFER_METHOD_CREATE = "create-transfer-method";
     public static final String LINK_SELECT_TRANSFER_METHOD_COUNTRY = "select-country";
     public static final String ERROR_TYPE_FORM = "FORM";
     public static final String TRANSFER_METHOD_GOAL = "transfer-method-created";
+    // temporary end
 
     private static final int MAX_THREAD_POOL = 2;
     private static HyperwalletInsight sHyperwalletInsight;
@@ -223,10 +227,18 @@ public class HyperwalletInsight {
      * @param context   Context where the tracking is happening
      * @param pageName  an arbituary pageName the user is currently viewing as defined by the app
      * @param pageGroup an arbituary pageGroup the user is currently viewing as defined by the app
-     * @param errorInfo additional error information that can be added to make the tracking event more useful
+     * @param errorInfoMap contains information regarding the error
      */
     public void trackError(@NonNull final Context context, @NonNull final String pageName,
-            @NonNull final String pageGroup, @NonNull final ErrorInfo errorInfo) {
+            @NonNull final String pageGroup, @NonNull final Map<String, String> errorInfoMap) {
+
+        final ErrorInfo errorInfo = new ErrorInfo.ErrorInfoBuilder()
+                .type(errorInfoMap.get(InsightEventTag.InsightEventTagEventParams.ERROR_TYPE))
+                .message(errorInfoMap.get(InsightEventTag.InsightEventTagEventParams.ERROR_MESSAGE))
+                .code(errorInfoMap.get(InsightEventTag.InsightEventTagEventParams.ERROR_CODE))
+                .field(errorInfoMap.get(InsightEventTag.InsightEventTagEventParams.ERROR_FIELD_NAME))
+                .description(errorInfoMap.get(InsightEventTag.InsightEventTagEventParams.ERROR_DESCRIPTION))
+                .build();
 
         if (Insight.getInsightTracker().isInitialized()) {
             Insight.getInsightTracker().trackError(context, pageName, pageGroup, errorInfo);
@@ -260,10 +272,10 @@ public class HyperwalletInsight {
     }
 
     public static final class TransferMethodParamsBuilder {
-
-        private Map<String, String> mParams = new HashMap<>(1);
+        final private Map<String, String> mParams;
 
         public TransferMethodParamsBuilder() {
+            mParams = new HashMap<>(2);
             mParams.put(InsightEventTag.InsightEventTagEventParams.PRODUCT, PRODUCT_VALUE);
             mParams.put(InsightEventTag.InsightEventTagEventParams.PAGE_TECHNOLOGY, PAGE_TECHNOLOGY_JAVA);
         }
@@ -296,6 +308,43 @@ public class HyperwalletInsight {
 
         public TransferMethodParamsBuilder transferMethodGoal(@NonNull final String transferMethodGoal) {
             mParams.put(InsightEventTag.InsightEventTagEventParams.GOAL, transferMethodGoal);
+            return this;
+        }
+
+        public Map<String, String> build() {
+            return mParams;
+        }
+    }
+
+    public static final class ErrorParamsBuilder {
+        final private Map<String, String> mParams;
+
+        public ErrorParamsBuilder() {
+            mParams = new HashMap<>(1);
+        }
+
+        public ErrorParamsBuilder code(@NonNull final String errorCode) {
+            mParams.put(InsightEventTag.InsightEventTagEventParams.ERROR_CODE, errorCode);
+            return this;
+        }
+
+        public ErrorParamsBuilder type(@NonNull final String errorType) {
+            mParams.put(InsightEventTag.InsightEventTagEventParams.ERROR_TYPE, errorType);
+            return this;
+        }
+
+        public ErrorParamsBuilder message(@NonNull final String errorMessage) {
+            mParams.put(InsightEventTag.InsightEventTagEventParams.ERROR_MESSAGE, errorMessage);
+            return this;
+        }
+
+        public ErrorParamsBuilder fieldName(@NonNull final String errorFieldName) {
+            mParams.put(InsightEventTag.InsightEventTagEventParams.ERROR_FIELD_NAME, errorFieldName);
+            return this;
+        }
+
+        public ErrorParamsBuilder description(@NonNull final String errorDescription) {
+            mParams.put(InsightEventTag.InsightEventTagEventParams.ERROR_DESCRIPTION, errorDescription);
             return this;
         }
 
