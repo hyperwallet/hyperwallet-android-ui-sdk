@@ -31,6 +31,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.receipt.Receipt;
 import com.hyperwallet.android.ui.common.repository.Event;
+import com.hyperwallet.android.ui.common.util.PageGroups;
 import com.hyperwallet.android.ui.common.view.ActivityUtils;
 import com.hyperwallet.android.ui.common.view.error.OnNetworkErrorCallback;
 import com.hyperwallet.android.ui.common.viewmodel.Navigator;
@@ -41,6 +42,8 @@ import com.hyperwallet.android.ui.receipt.viewmodel.ReceiptViewModel;
 
 public class ListUserReceiptActivity extends AppCompatActivity implements OnNetworkErrorCallback,
         Navigator<Event<Receipt>> {
+
+    public static final String TAG = "receipts:user:list-receipts";
 
     private ReceiptViewModel mReceiptViewModel;
 
@@ -69,7 +72,8 @@ public class ListUserReceiptActivity extends AppCompatActivity implements OnNetw
             @Override
             public void onChanged(Event<HyperwalletErrors> event) {
                 if (event != null && !event.isContentConsumed()) {
-                    ActivityUtils.showError(ListUserReceiptActivity.this, event.getContent().getErrors());
+                    ActivityUtils.showError(ListUserReceiptActivity.this, TAG, PageGroups.RECEIPTS,
+                            event.getContent().getErrors());
                 }
             }
         });

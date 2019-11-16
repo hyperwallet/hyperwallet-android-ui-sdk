@@ -46,13 +46,12 @@ public class HyperwalletInsight {
     private static final String PRODUCT_VALUE = "hyperwallet-android-ui-sdk";
     private static final String PAGE_TECHNOLOGY_JAVA = "Java";
 
-    public static final String TRANSFER_METHOD_GROUP = "transfer-method";
-
-    public static final String PAGE_TRANSFER_METHOD_SELECT = "transfer-method:add:select-transfer-method";
-    public static final String PAGE_TRANSFER_METHOD_COLLECT = "transfer-method:add:collect-transfer-method-information";
-
     public static final String LINK_SELECT_TRANSFER_METHOD_SELECT = "select-transfer-method";
     public static final String LINK_SELECT_TRANSFER_METHOD_CREATE = "create-transfer-method";
+    public static final String LINK_SELECT_TRANSFER_METHOD_CURRENCY = "select-currency";
+    public static final String LINK_SELECT_TRANSFER_METHOD_COUNTRY = "select-country";
+
+    public static final String TRANSFER_METHOD_GOAL = "transfer-method-created";
 
     private static final int MAX_THREAD_POOL = 2;
     private static HyperwalletInsight sHyperwalletInsight;
@@ -270,29 +269,34 @@ public class HyperwalletInsight {
             mParams.put(InsightEventTag.InsightEventTagEventParams.PAGE_TECHNOLOGY, PAGE_TECHNOLOGY_JAVA);
         }
 
-        public TransferMethodParamsBuilder transferMethodType(@NonNull final String transferMethodType) {
+        public TransferMethodParamsBuilder type(@NonNull final String transferMethodType) {
             mParams.put(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_TYPE, transferMethodType);
             return this;
         }
 
-        public TransferMethodParamsBuilder transferMethodProfileType(@NonNull final String transferMethodProfileType) {
+        public TransferMethodParamsBuilder profileType(@NonNull final String transferMethodProfileType) {
             mParams.put(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_PROFILE_TYPE,
                     transferMethodProfileType);
             return this;
         }
 
-        public TransferMethodParamsBuilder transferMethodCountry(@NonNull final String transferMethodCountry) {
+        public TransferMethodParamsBuilder country(@NonNull final String transferMethodCountry) {
             mParams.put(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_COUNTRY, transferMethodCountry);
             return this;
         }
 
-        public TransferMethodParamsBuilder transferMethodCurrency(@NonNull final String transferMethodCurrency) {
+        public TransferMethodParamsBuilder currency(@NonNull final String transferMethodCurrency) {
             mParams.put(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_CURRENCY, transferMethodCurrency);
             return this;
         }
 
         public TransferMethodParamsBuilder pageTechnology(@NonNull final String pageTechnology) {
             mParams.put(InsightEventTag.InsightEventTagEventParams.PAGE_TECHNOLOGY, pageTechnology);
+            return this;
+        }
+
+        public TransferMethodParamsBuilder goal(@NonNull final String transferMethodGoal) {
+            mParams.put(InsightEventTag.InsightEventTagEventParams.GOAL, transferMethodGoal);
             return this;
         }
 
