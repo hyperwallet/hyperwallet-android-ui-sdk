@@ -474,6 +474,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     @Override
     public void showInputErrors(@NonNull final List<HyperwalletError> errors) {
         boolean focusSet = false;
+        Context context = requireContext();
         for (HyperwalletError error : errors) {
             for (int i = 0; i < mDynamicContainer.getChildCount(); i++) {
                 View view = mDynamicContainer.getChildAt(i);
@@ -484,7 +485,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                             widget.getView(mDynamicContainer).requestFocus();
                             focusSet = true;
                         }
-                        HyperwalletInsight.getInstance().trackError(requireContext(),
+                        HyperwalletInsight.getInstance().trackError(context,
                                 TAG, PageGroups.TRANSFER_METHOD,
                                 new HyperwalletInsight.ErrorParamsBuilder()
                                         .code(error.getCode())
@@ -601,6 +602,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
         boolean valid = true;
         // this is added since some phones triggers the create button but the widgets are not yet initialized
         boolean hasWidget = false;
+        Context context = requireContext();
         for (int i = 0; i < mDynamicContainer.getChildCount(); i++) {
             View v = mDynamicContainer.getChildAt(i);
             if (v.getTag() instanceof AbstractWidget) {
@@ -615,7 +617,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                             widget.showValidationError(null);
                         }
                     } else {
-                        HyperwalletInsight.getInstance().trackError(requireContext(),
+                        HyperwalletInsight.getInstance().trackError(context,
                                 TAG, PageGroups.TRANSFER_METHOD,
                                 new HyperwalletInsight.ErrorParamsBuilder()
                                         .message(widget.getErrorMessage())
