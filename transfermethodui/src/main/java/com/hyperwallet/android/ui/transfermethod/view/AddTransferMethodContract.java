@@ -54,6 +54,8 @@ public interface AddTransferMethodContract {
 
         void hideProgressBar();
 
+        void sendImpression();
+
         void showInputErrors(@NonNull final List<HyperwalletError> errors);
 
         /**
