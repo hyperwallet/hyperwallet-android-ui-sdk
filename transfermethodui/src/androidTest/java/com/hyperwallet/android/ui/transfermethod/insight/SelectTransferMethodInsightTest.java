@@ -22,8 +22,8 @@ import androidx.test.espresso.IdlingRegistry;
 import androidx.test.rule.ActivityTestRule;
 
 import com.hyperwallet.android.ui.R;
-import com.hyperwallet.android.ui.common.insight.HyperwalletInsight;
 import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
+import com.hyperwallet.android.ui.common.util.PageGroups;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletMockWebServer;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletSdkRule;
@@ -87,8 +87,8 @@ public class SelectTransferMethodInsightTest {
 
         verify(mHyperwalletInsightMockRule.getInsight(),
                 timeout(5000).times(1)).trackImpression(any(Context.class),
-                eq(HyperwalletInsight.PAGE_TRANSFER_METHOD_SELECT),
-                eq(HyperwalletInsight.TRANSFER_METHOD_GROUP),
+                eq(SelectTransferMethodActivity.TAG),
+                eq(PageGroups.TRANSFER_METHOD),
                 mParamsCaptor.capture());
 
         assertThat(mParamsCaptor.getValue().get("hyperwallet_ea_country"), is("US"));
@@ -106,8 +106,8 @@ public class SelectTransferMethodInsightTest {
 
         verify(mHyperwalletInsightMockRule.getInsight(),
                 times(1)).trackImpression(any(Context.class),
-                eq(HyperwalletInsight.PAGE_TRANSFER_METHOD_SELECT),
-                eq(HyperwalletInsight.TRANSFER_METHOD_GROUP),
+                eq(SelectTransferMethodActivity.TAG),
+                eq(PageGroups.TRANSFER_METHOD),
                 mParamsCaptor.capture());
 
         assertThat(mParamsCaptor.getValue().get("hyperwallet_ea_country"), is("US"));
@@ -118,8 +118,8 @@ public class SelectTransferMethodInsightTest {
 
         verify(mHyperwalletInsightMockRule.getInsight(),
                 timeout(5000).times(2)).trackImpression(any(Context.class),
-                eq(HyperwalletInsight.PAGE_TRANSFER_METHOD_SELECT),
-                eq(HyperwalletInsight.TRANSFER_METHOD_GROUP),
+                eq(SelectTransferMethodActivity.TAG),
+                eq(PageGroups.TRANSFER_METHOD),
                 mParamsCaptor.capture());
 
         assertThat(mParamsCaptor.getValue().get("hyperwallet_ea_country"), is("CA"));
@@ -137,8 +137,8 @@ public class SelectTransferMethodInsightTest {
 
         verify(mHyperwalletInsightMockRule.getInsight(),
                 timeout(5000).times(1)).trackImpression(any(Context.class),
-                eq(HyperwalletInsight.PAGE_TRANSFER_METHOD_SELECT),
-                eq(HyperwalletInsight.TRANSFER_METHOD_GROUP),
+                eq(SelectTransferMethodActivity.TAG),
+                eq(PageGroups.TRANSFER_METHOD),
                 mParamsCaptor.capture());
 
         assertThat(mParamsCaptor.getValue().get("hyperwallet_ea_country"), is("US"));
@@ -149,8 +149,8 @@ public class SelectTransferMethodInsightTest {
 
         verify(mHyperwalletInsightMockRule.getInsight(),
                 timeout(5000).times(2)).trackImpression(any(Context.class),
-                eq(HyperwalletInsight.PAGE_TRANSFER_METHOD_SELECT),
-                eq(HyperwalletInsight.TRANSFER_METHOD_GROUP),
+                eq(SelectTransferMethodActivity.TAG),
+                eq(PageGroups.TRANSFER_METHOD),
                 mParamsCaptor.capture());
 
         assertThat(mParamsCaptor.getValue().get("hyperwallet_ea_country"), is("US"));
