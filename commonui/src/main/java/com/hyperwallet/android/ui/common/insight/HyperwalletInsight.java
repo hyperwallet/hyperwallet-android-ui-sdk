@@ -261,6 +261,11 @@ public class HyperwalletInsight {
     }
 
     public static final class TransferMethodParamsBuilder {
+        private static final String TRANSFER_METHOD_PROFILE_TYPE = "hyperwallet_ea_profile_type";
+        private static final String TRANSFER_METHOD_TYPE = "hyperwallet_ea_type";
+        private static final String TRANSFER_METHOD_CURRENCY = "hyperwallet_ea_currency";
+        private static final String TRANSFER_METHOD_COUNTRY = "hyperwallet_ea_country";
+
         final private Map<String, String> mParams;
 
         public TransferMethodParamsBuilder() {
@@ -270,23 +275,23 @@ public class HyperwalletInsight {
         }
 
         public TransferMethodParamsBuilder type(@NonNull final String transferMethodType) {
-            mParams.put(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_TYPE, transferMethodType);
+            mParams.put(TRANSFER_METHOD_TYPE, transferMethodType);
             return this;
         }
 
         public TransferMethodParamsBuilder profileType(@NonNull final String transferMethodProfileType) {
-            mParams.put(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_PROFILE_TYPE,
+            mParams.put(TRANSFER_METHOD_PROFILE_TYPE,
                     transferMethodProfileType);
             return this;
         }
 
         public TransferMethodParamsBuilder country(@NonNull final String transferMethodCountry) {
-            mParams.put(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_COUNTRY, transferMethodCountry);
+            mParams.put(TRANSFER_METHOD_COUNTRY, transferMethodCountry);
             return this;
         }
 
         public TransferMethodParamsBuilder currency(@NonNull final String transferMethodCurrency) {
-            mParams.put(InsightEventTag.InsightEventTagEventParams.TRANSFER_METHOD_CURRENCY, transferMethodCurrency);
+            mParams.put(TRANSFER_METHOD_CURRENCY, transferMethodCurrency);
             return this;
         }
 
