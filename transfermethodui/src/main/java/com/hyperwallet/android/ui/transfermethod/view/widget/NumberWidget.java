@@ -36,7 +36,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.hyperwallet.android.model.graphql.field.HyperwalletField;
 import com.hyperwallet.android.ui.R;
 
-public class NumberWidget extends AbstractWidget {
+public class NumberWidget extends AbstractMaskedInputWidget {
     private ViewGroup mContainer;
     private TextInputLayout mTextInputLayout;
     private String mValue;
@@ -73,7 +73,7 @@ public class NumberWidget extends AbstractWidget {
                 public void onFocusChange(View v, boolean hasFocus) {
                     if (!hasFocus) {
                         String input = ((EditText) v).getText().toString();
-                        mValue = hasMasking ? scrubValue(input) : input;
+                        mValue = hasMasking ? formatToApi(input) : input;
                         mListener.valueChanged();
                     } else {
                         mListener.widgetFocused(NumberWidget.this.getName());
@@ -88,7 +88,7 @@ public class NumberWidget extends AbstractWidget {
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     if (before != count) {
-                        mValue = hasMasking ? scrubValue(s.toString()) : s.toString();
+                        mValue = hasMasking ? formatToApi(s.toString()) : s.toString();
                         mListener.saveTextChanged(getName(), getValue());
                     }
                 }
@@ -101,10 +101,9 @@ public class NumberWidget extends AbstractWidget {
             editText.setInputType(InputType.TYPE_CLASS_NUMBER);
 
             if (hasMasking) {
-                mInputFilter = new InputFilter[]{new WidgetInputFilter(mField.getHyperwalletMaskField())};
                 editText.setText(
-                        formatDefaultValue(TextUtils.isEmpty(mDefaultValue) ? mField.getValue() : mDefaultValue));
-                editText.setFilters(mInputFilter);
+                        formatToDisplay(TextUtils.isEmpty(mDefaultValue) ? mField.getValue() : mDefaultValue));
+                editText.setFilters(getInputFilter());
                 DigitsKeyListener digitsKeyListener = DigitsKeyListener
                         .getInstance(viewGroup.getContext().getResources()
                                 .getString(R.string.number_widget_valid_characters));

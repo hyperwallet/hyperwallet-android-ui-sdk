@@ -116,25 +116,7 @@ public abstract class AbstractWidget {
         return null;
     }
 
-    protected String scrubValue(@NonNull final String value) {
-        if (mField.getHyperwalletMaskField() != null) {
-            return value.replaceAll(mField.getHyperwalletMaskField().getScrubRegex(), "");
-        }
-        return value;
-    }
 
-    protected String formatDefaultValue(@NonNull final String value) {
-        if (mField.getHyperwalletMaskField() != null && !value.trim().isEmpty()) {
-            // format
-            String formatTemplate = WidgetInputUtil.getFormatTemplate(value, mField.getHyperwalletMaskField());
-            if (!TextUtils.isEmpty(formatTemplate)) {
-                return WidgetInputUtil.getFormattedString(value, formatTemplate);
-            } else {
-                return value;
-            }
-        }
-        return value;
-    }
 
     protected void appendLayout(View v, boolean matchParentWidth) {
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
