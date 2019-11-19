@@ -201,7 +201,7 @@ public class AddTransferMethodInsightTest {
         onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo(), click());
 
         verify(mHyperwalletInsightMockRule.getInsight(),
-                timeout(5000).times(2)).trackImpression(any(Context.class),
+                timeout(7000).times(2)).trackImpression(any(Context.class),
                 eq(AddTransferMethodActivity.TAG),
                 eq(PageGroups.TRANSFER_METHOD),
                 mParamsCaptor.capture());
