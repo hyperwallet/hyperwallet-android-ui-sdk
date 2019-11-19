@@ -213,9 +213,9 @@ public class HyperwalletInsight {
      * Used to track an error received by the user. This can be used for, and not limited to: system errors, caught
      * exceptions, or validation input errors.
      *
-     * @param context   Context where the tracking is happening
-     * @param pageName  an arbituary pageName the user is currently viewing as defined by the app
-     * @param pageGroup an arbituary pageGroup the user is currently viewing as defined by the app
+     * @param context      Context where the tracking is happening
+     * @param pageName     an arbituary pageName the user is currently viewing as defined by the app
+     * @param pageGroup    an arbituary pageGroup the user is currently viewing as defined by the app
      * @param errorInfoMap contains information regarding the error
      */
     public void trackError(@NonNull final Context context, @NonNull final String pageName,
@@ -309,7 +309,9 @@ public class HyperwalletInsight {
         final private Map<String, String> mParams;
 
         public ErrorParamsBuilder() {
-            mParams = new HashMap<>(1);
+            mParams = new HashMap<>(2);
+            mParams.put(InsightEventTag.InsightEventTagEventParams.PRODUCT, PRODUCT_VALUE);
+            mParams.put(InsightEventTag.InsightEventTagEventParams.PAGE_TECHNOLOGY, PAGE_TECHNOLOGY_JAVA);
         }
 
         public ErrorParamsBuilder code(@NonNull final String errorCode) {
@@ -334,6 +336,11 @@ public class HyperwalletInsight {
 
         public ErrorParamsBuilder description(@NonNull final String errorDescription) {
             mParams.put(InsightEventTag.InsightEventTagEventParams.ERROR_DESCRIPTION, errorDescription);
+            return this;
+        }
+
+        public ErrorParamsBuilder pageTechnology(@NonNull final String pageTechnology) {
+            mParams.put(InsightEventTag.InsightEventTagEventParams.PAGE_TECHNOLOGY, pageTechnology);
             return this;
         }
 

@@ -22,8 +22,7 @@ import static com.hyperwallet.android.ExceptionMapper.EC_JSON_EXCEPTION;
 import static com.hyperwallet.android.ExceptionMapper.EC_JSON_PARSE_EXCEPTION;
 import static com.hyperwallet.android.ExceptionMapper.EC_UNEXPECTED_EXCEPTION;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import android.util.Log;
 
 public class ErrorTypes {
     /**
@@ -64,12 +63,6 @@ public class ErrorTypes {
     }
 
     public static String getStackTrace() {
-        StringWriter writer = new StringWriter();
-        PrintWriter printWriter = new PrintWriter(writer);
-        new Exception("Insights detected error").printStackTrace(printWriter);
-        String stacked = writer.toString();
-        printWriter.close();
-
-        return stacked;
+        return Log.getStackTraceString(new Exception("Insights detected error"));
     }
 }

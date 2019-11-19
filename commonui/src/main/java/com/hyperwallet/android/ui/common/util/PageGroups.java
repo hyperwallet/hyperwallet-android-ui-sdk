@@ -20,4 +20,7 @@ public final class PageGroups {
     public static final String TRANSFER_METHOD = "transfer-method";
     public static final String TRANSFER_FUNDS = "transfer-funds";
     public static final String RECEIPTS = "receipts";
+
+    private PageGroups() {
+    }
 }
