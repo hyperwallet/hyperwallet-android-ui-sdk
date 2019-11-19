@@ -3,6 +3,7 @@ package com.hyperwallet.android.ui.transfermethod.insight;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.matcher.ViewMatchers.assertThat;
+import static androidx.test.espresso.matcher.ViewMatchers.withChild;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
@@ -19,9 +20,11 @@ import static java.net.HttpURLConnection.HTTP_OK;
 import android.content.Context;
 
 import androidx.test.espresso.IdlingRegistry;
+import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.rule.ActivityTestRule;
 
 import com.hyperwallet.android.ui.R;
+import com.hyperwallet.android.ui.common.insight.HyperwalletInsight;
 import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
 import com.hyperwallet.android.ui.common.util.PageGroups;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
@@ -117,6 +120,15 @@ public class SelectTransferMethodInsightTest {
         onView(allOf(withId(R.id.country_name), withText("Canada"))).perform(click());
 
         verify(mHyperwalletInsightMockRule.getInsight(),
+                timeout(5000).times(1)).trackClick(any(Context.class),
+                eq(SelectTransferMethodActivity.TAG),
+                eq(PageGroups.TRANSFER_METHOD),
+                eq(HyperwalletInsight.LINK_SELECT_TRANSFER_METHOD_COUNTRY),
+                mParamsCaptor.capture());
+
+        assertThat(mParamsCaptor.getValue().get("hyperwallet_ea_country"), is("CA"));
+
+        verify(mHyperwalletInsightMockRule.getInsight(),
                 timeout(5000).times(2)).trackImpression(any(Context.class),
                 eq(SelectTransferMethodActivity.TAG),
                 eq(PageGroups.TRANSFER_METHOD),
@@ -148,6 +160,15 @@ public class SelectTransferMethodInsightTest {
         onView(allOf(withId(R.id.currency_name), withText("United States Dollar"))).perform(click());
 
         verify(mHyperwalletInsightMockRule.getInsight(),
+                timeout(5000).times(1)).trackClick(any(Context.class),
+                eq(SelectTransferMethodActivity.TAG),
+                eq(PageGroups.TRANSFER_METHOD),
+                eq(HyperwalletInsight.LINK_SELECT_TRANSFER_METHOD_CURRENCY),
+                mParamsCaptor.capture());
+
+        assertThat(mParamsCaptor.getValue().get("hyperwallet_ea_currency"), is("USD"));
+
+        verify(mHyperwalletInsightMockRule.getInsight(),
                 timeout(5000).times(2)).trackImpression(any(Context.class),
                 eq(SelectTransferMethodActivity.TAG),
                 eq(PageGroups.TRANSFER_METHOD),
@@ -155,5 +176,57 @@ public class SelectTransferMethodInsightTest {
 
         assertThat(mParamsCaptor.getValue().get("hyperwallet_ea_country"), is("US"));
         assertThat(mParamsCaptor.getValue().get("hyperwallet_ea_currency"), is("USD"));
+    }
+
+    @Test
+    public void testSelectTransferMethod_verifyInsightEventCreatedOnTransferMethodSelected() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("user_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_keys_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_fields_bank_account_response.json")).mock();
+
+        mActivityTestRule.launchActivity(null);
+
+        onView(withId(R.id.select_transfer_method_types_list))
+                .perform(RecyclerViewActions.actionOnItem(withChild(withText(R.string.bank_account)), click()));
+
+        verify(mHyperwalletInsightMockRule.getInsight(),
+                timeout(5000).times(1)).trackClick(any(Context.class),
+                eq(SelectTransferMethodActivity.TAG),
+                eq(PageGroups.TRANSFER_METHOD),
+                eq(HyperwalletInsight.LINK_SELECT_TRANSFER_METHOD_SELECT),
+                mParamsCaptor.capture());
+
+        assertThat(mParamsCaptor.getValue().get("hyperwallet_ea_country"), is("US"));
+        assertThat(mParamsCaptor.getValue().get("hyperwallet_ea_currency"), is("USD"));
+        assertThat(mParamsCaptor.getValue().get("hyperwallet_ea_type"), is("BANK_ACCOUNT"));
+    }
+
+    @Test
+    public void testSelectTransferMethod_verifyInsightEventCreatedOnTransferMethodSelectedPaypal() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("user_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_keys_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_fields_paypal_response.json")).mock();
+
+        mActivityTestRule.launchActivity(null);
+
+        onView(withId(R.id.select_transfer_method_types_list))
+                .perform(RecyclerViewActions.actionOnItem(withChild(withText(R.string.paypal_account)), click()));
+
+        verify(mHyperwalletInsightMockRule.getInsight(),
+                timeout(5000).times(1)).trackClick(any(Context.class),
+                eq(SelectTransferMethodActivity.TAG),
+                eq(PageGroups.TRANSFER_METHOD),
+                eq(HyperwalletInsight.LINK_SELECT_TRANSFER_METHOD_SELECT),
+                mParamsCaptor.capture());
+
+        assertThat(mParamsCaptor.getValue().get("hyperwallet_ea_country"), is("US"));
+        assertThat(mParamsCaptor.getValue().get("hyperwallet_ea_currency"), is("USD"));
+        assertThat(mParamsCaptor.getValue().get("hyperwallet_ea_type"), is("PAYPAL_ACCOUNT"));
     }
 }
