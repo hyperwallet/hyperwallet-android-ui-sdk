@@ -221,12 +221,19 @@ public class HyperwalletInsight {
     public void trackError(@NonNull final Context context, @NonNull final String pageName,
             @NonNull final String pageGroup, @NonNull final Map<String, String> errorInfoMap) {
 
+        HashMap<String, String> params = new HashMap<>(2);
+        params.put(InsightEventTag.InsightEventTagEventParams.PRODUCT,
+                errorInfoMap.get(InsightEventTag.InsightEventTagEventParams.PRODUCT));
+        params.put(InsightEventTag.InsightEventTagEventParams.PAGE_TECHNOLOGY,
+                errorInfoMap.get(InsightEventTag.InsightEventTagEventParams.PAGE_TECHNOLOGY));
+
         final ErrorInfo errorInfo = new ErrorInfo.ErrorInfoBuilder()
                 .type(errorInfoMap.get(InsightEventTag.InsightEventTagEventParams.ERROR_TYPE))
                 .message(errorInfoMap.get(InsightEventTag.InsightEventTagEventParams.ERROR_MESSAGE))
                 .code(errorInfoMap.get(InsightEventTag.InsightEventTagEventParams.ERROR_CODE))
                 .field(errorInfoMap.get(InsightEventTag.InsightEventTagEventParams.ERROR_FIELD_NAME))
                 .description(errorInfoMap.get(InsightEventTag.InsightEventTagEventParams.ERROR_DESCRIPTION))
+                .params(params)
                 .build();
 
         if (Insight.getInsightTracker().isInitialized()) {
