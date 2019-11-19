@@ -26,7 +26,6 @@ import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
 import com.hyperwallet.android.ui.common.util.PageGroups;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletMockWebServer;
-import com.hyperwallet.android.ui.testutils.rule.HyperwalletSdkRule;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
 import com.hyperwallet.android.ui.transfermethod.rule.HyperwalletInsightMockRule;
 import com.hyperwallet.android.ui.transfermethod.view.SelectTransferMethodActivity;
@@ -48,8 +47,6 @@ public class SelectTransferMethodInsightTest {
     @ClassRule
     public static HyperwalletExternalResourceManager sResourceManager = new HyperwalletExternalResourceManager();
 
-    @Rule
-    public HyperwalletSdkRule mHyperwalletSdkRule = new HyperwalletSdkRule();
     @Rule
     public HyperwalletInsightMockRule mHyperwalletInsightMockRule = new HyperwalletInsightMockRule();
     @Rule
