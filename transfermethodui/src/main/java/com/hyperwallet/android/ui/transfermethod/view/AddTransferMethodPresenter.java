@@ -99,7 +99,6 @@ public class AddTransferMethodPresenter implements AddTransferMethodContract.Pre
                         mView.showTransferMethodFields(field.getFields().getFieldGroups());
                         // there can be multiple fees when we have flat fee + percentage fees
                         mView.showTransactionInformation(field.getFees(), field.getProcessingTime());
-                        mView.sendImpression();
                     }
 
                     @Override
