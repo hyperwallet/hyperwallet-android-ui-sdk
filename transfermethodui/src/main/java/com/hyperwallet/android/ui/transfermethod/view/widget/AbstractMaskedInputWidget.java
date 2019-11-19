@@ -91,12 +91,12 @@ public abstract class AbstractMaskedInputWidget extends AbstractWidget {
 
 
 
-    private static class WidgetInputFilter implements InputFilter {
+    private static final class WidgetInputFilter implements InputFilter {
 
         private final HyperwalletMaskField mHyperwalletMaskField;
         private boolean hasMasking;
 
-        protected WidgetInputFilter(@Nullable final HyperwalletMaskField maskField) {
+        private WidgetInputFilter(@Nullable final HyperwalletMaskField maskField) {
             mHyperwalletMaskField = maskField;
             hasMasking = mHyperwalletMaskField != null;
         }
