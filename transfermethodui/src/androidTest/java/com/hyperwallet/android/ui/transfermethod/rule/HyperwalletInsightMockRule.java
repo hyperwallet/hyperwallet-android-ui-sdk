@@ -39,7 +39,6 @@ public class HyperwalletInsightMockRule extends TestWatcher {
                 return null;
             }
         });
-        Hyperwallet.getInstance(new TestAuthenticationProvider());
 
         mHyperwalletInsight = mock(HyperwalletInsight.class);
         HyperwalletInsight.setInstance(mHyperwalletInsight);

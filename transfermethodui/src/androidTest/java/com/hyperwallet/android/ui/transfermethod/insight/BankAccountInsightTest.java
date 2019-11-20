@@ -8,7 +8,9 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.timeout;
@@ -50,7 +52,7 @@ import org.mockito.junit.MockitoRule;
 import java.io.IOException;
 import java.util.Map;
 
-public class AddTransferMethodInsightTest {
+public class BankAccountInsightTest {
     private static final String ACCOUNT_NUMBER = "8017110254";
     private static final String ROUTING_NUMBER = "211179539";
 
@@ -133,9 +135,51 @@ public class AddTransferMethodInsightTest {
     }
 
     @Test
-    public void testAddTransferMethod_verifyInsightEventCreatedOnClickCreateTransferMethodWithBusinessError() {
+    public void testAddTransferMethod_verifyInsightEventCreatedOnValidationErrorText() {
+        mActivityTestRule.launchActivity(null);
+
+        onView(withId(R.id.branchId)).perform(nestedScrollTo(), replaceText("1"));
+        onView(withId(R.id.bankAccountId)).perform(nestedScrollTo(), replaceText(ACCOUNT_NUMBER));
+        onView(withId(R.id.bankAccountPurpose)).perform(nestedScrollTo(), click());
+        onView(allOf(withId(R.id.select_name), withText("Savings"))).perform(click());
+
+        onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo(), click());
+
+        verify(mHyperwalletInsightMockRule.getInsight(),
+                timeout(5000).times(1)).trackError(any(Context.class),
+                eq(AddTransferMethodActivity.TAG),
+                eq(PageGroups.TRANSFER_METHOD),
+                mParamsCaptor.capture());
+
+        assertThat(mParamsCaptor.getValue().get("error_type"), is("FORM"));
+        assertThat(mParamsCaptor.getValue().get("error_message"), is("The exact length of this field is 9."));
+        assertThat(mParamsCaptor.getValue().get("erfd"), is("branchId"));
+    }
+
+    @Test
+    public void testAddTransferMethod_verifyInsightEventCreatedOnValidationErrorSelect() {
+        mActivityTestRule.launchActivity(null);
+
+        onView(withId(R.id.branchId)).perform(nestedScrollTo(), replaceText(ROUTING_NUMBER));
+        onView(withId(R.id.bankAccountId)).perform(nestedScrollTo(), replaceText(ACCOUNT_NUMBER));
+
+        onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo(), click());
+
+        verify(mHyperwalletInsightMockRule.getInsight(),
+                timeout(5000).times(1)).trackError(any(Context.class),
+                eq(AddTransferMethodActivity.TAG),
+                eq(PageGroups.TRANSFER_METHOD),
+                mParamsCaptor.capture());
+
+        assertThat(mParamsCaptor.getValue().get("error_type"), is("FORM"));
+        assertThat(mParamsCaptor.getValue().get("error_message"), is("You must provide a value for this field"));
+        assertThat(mParamsCaptor.getValue().get("erfd"), is("bankAccountPurpose"));
+    }
+
+    @Test
+    public void testAddTransferMethod_verifyInsightEventCreatedOnApiError() {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_BAD_REQUEST).withBody(sResourceManager
-                .getResourceContent("bank_account_duplicate_routing_response.json")).mock();
+                .getResourceContent("bank_account_invalid_routing_response.json")).mock();
 
         mActivityTestRule.launchActivity(null);
 
@@ -147,16 +191,16 @@ public class AddTransferMethodInsightTest {
         onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo(), click());
 
         verify(mHyperwalletInsightMockRule.getInsight(),
-                timeout(5000).times(1)).trackClick(any(Context.class),
+                timeout(5000).times(1)).trackError(any(Context.class),
                 eq(AddTransferMethodActivity.TAG),
                 eq(PageGroups.TRANSFER_METHOD),
-                eq(HyperwalletInsight.LINK_SELECT_TRANSFER_METHOD_CREATE),
                 mParamsCaptor.capture());
 
-        assertThat(mParamsCaptor.getValue().get("hyperwallet_ea_country"), is("US"));
-        assertThat(mParamsCaptor.getValue().get("hyperwallet_ea_currency"), is("USD"));
-        assertThat(mParamsCaptor.getValue().get("hyperwallet_ea_type"), is("BANK_ACCOUNT"));
-        assertThat(mParamsCaptor.getValue().get("hyperwallet_ea_profile_type"), is("INDIVIDUAL"));
+        assertThat(mParamsCaptor.getValue().get("error_type"), is("API"));
+        assertThat(mParamsCaptor.getValue().get("error_code"), is("CONSTRAINT_VIOLATIONS"));
+        assertThat(mParamsCaptor.getValue().get("error_message"), is("Routing Number [211179531] is not valid. "
+                + "Please modify Routing Number to a valid ACH Routing Number of the branch of your bank."));
+        assertThat(mParamsCaptor.getValue().get("erfd"), is("branchId"));
     }
 
     @Test
@@ -174,16 +218,47 @@ public class AddTransferMethodInsightTest {
         onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo(), click());
 
         verify(mHyperwalletInsightMockRule.getInsight(),
-                timeout(5000).times(1)).trackClick(any(Context.class),
+                timeout(5000).times(1)).trackError(any(Context.class),
                 eq(AddTransferMethodActivity.TAG),
                 eq(PageGroups.TRANSFER_METHOD),
-                eq(HyperwalletInsight.LINK_SELECT_TRANSFER_METHOD_CREATE),
                 mParamsCaptor.capture());
 
-        assertThat(mParamsCaptor.getValue().get("hyperwallet_ea_country"), is("US"));
-        assertThat(mParamsCaptor.getValue().get("hyperwallet_ea_currency"), is("USD"));
-        assertThat(mParamsCaptor.getValue().get("hyperwallet_ea_type"), is("BANK_ACCOUNT"));
-        assertThat(mParamsCaptor.getValue().get("hyperwallet_ea_profile_type"), is("INDIVIDUAL"));
+        assertThat(mParamsCaptor.getValue().get("error_type"), is("CONNECTION"));
+        assertThat(mParamsCaptor.getValue().get("error_code"), is("EC_IO_EXCEPTION"));
+//        assertThat(mParamsCaptor.getValue().get("error_message"),
+//                is("We are encountering a problem processing the request. Please check your connectivity."));
+        assertThat(mParamsCaptor.getValue().get("error_description"),
+                containsString("Insights detected error"));
+        assertThat(mParamsCaptor.getValue().get("erfd"), nullValue());
+    }
+
+    @Test
+    public void testAddTransferMethod_verifyInsightEventCreatedOnGeneralError() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_BAD_REQUEST).withBody(sResourceManager
+                .getResourceContent("invalid_json_response.json")).mock();
+
+        mActivityTestRule.launchActivity(null);
+
+        onView(withId(R.id.branchId)).perform(nestedScrollTo(), replaceText(ROUTING_NUMBER));
+        onView(withId(R.id.bankAccountId)).perform(nestedScrollTo(), replaceText(ACCOUNT_NUMBER));
+        onView(withId(R.id.bankAccountPurpose)).perform(nestedScrollTo(), click());
+        onView(allOf(withId(R.id.select_name), withText("Savings"))).perform(click());
+
+        onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo(), click());
+
+        verify(mHyperwalletInsightMockRule.getInsight(),
+                timeout(5000).times(1)).trackError(any(Context.class),
+                eq(AddTransferMethodActivity.TAG),
+                eq(PageGroups.TRANSFER_METHOD),
+                mParamsCaptor.capture());
+
+        assertThat(mParamsCaptor.getValue().get("error_type"), is("EXCEPTION"));
+        assertThat(mParamsCaptor.getValue().get("error_code"), is("EC_UNEXPECTED_EXCEPTION"));
+//        assertThat(mParamsCaptor.getValue().get("error_message"),
+//                is("Oops... Something went wrong, please try again."));
+        assertThat(mParamsCaptor.getValue().get("error_description"),
+                containsString("Insights detected error"));
+        assertThat(mParamsCaptor.getValue().get("erfd"), nullValue());
     }
 
     @Test
@@ -206,6 +281,7 @@ public class AddTransferMethodInsightTest {
                 eq(PageGroups.TRANSFER_METHOD),
                 mParamsCaptor.capture());
 
+        assertThat(mParamsCaptor.getValue().get("goal"), is("transfer-method-created"));
         assertThat(mParamsCaptor.getValue().get("hyperwallet_ea_country"), is("US"));
         assertThat(mParamsCaptor.getValue().get("hyperwallet_ea_currency"), is("USD"));
         assertThat(mParamsCaptor.getValue().get("hyperwallet_ea_type"), is("BANK_ACCOUNT"));
