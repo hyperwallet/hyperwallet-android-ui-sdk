@@ -22,19 +22,25 @@ import androidx.annotation.NonNull;
 
 import com.hyperwallet.android.model.HyperwalletError;
 
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
 /**
- * Common HW-SDK UI Date Utility class, that will assist on safe presentation of date whatever the mobile device setting
- * is set Locale, Timezone and etc... that dictates how that dates are being presented
- *
- * Moreover all date string to {@link Date} object conversion is automatically converted from
- * GMT date string from API to locale Date set by the phone
+ * ErrorUtil provides methods to generate error messages.
  */
 public final class ErrorUtils {
 
+    private ErrorUtils() {
+    }
+
+    /**
+     * Returns an error message based on the errorType found from the list of errors.
+     * SDK_ERROR will return com.hyperwallet.android.sdk.R.string.unexpected_exception
+     * Otherwise the resource will return the message from the resource.
+     *
+     * @param errors    the list of errors com.hyperwallet.android.sdk.R.string.unexpected_exception
+     * @param resources the resource responsible for generating the string
+     */
     public static String getMessage(@NonNull List<HyperwalletError> errors, @NonNull Resources resources) {
         String message;
         HyperwalletError error = errors.get(0);
