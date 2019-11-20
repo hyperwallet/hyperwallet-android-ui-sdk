@@ -21,10 +21,8 @@ import android.content.res.Resources;
 import androidx.annotation.NonNull;
 
 import com.hyperwallet.android.model.HyperwalletError;
-import com.hyperwallet.android.sdk.R;
-import com.hyperwallet.android.ui.common.util.ErrorTypes;
+import com.hyperwallet.android.ui.common.util.ErrorUtils;
 
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -35,34 +33,6 @@ public class DefaultErrorDialogFragmentPresenter implements DefaultErrorDialogFr
     @NonNull
     @Override
     public String buildDialogMessage(@NonNull List<HyperwalletError> errors, @NonNull Resources resources) {
-        String message;
-        HyperwalletError error = errors.get(0);
-        String errorType = ErrorTypes.getErrorType(error.getCode());
-
-        switch (errorType) {
-            case ErrorTypes.SDK_ERROR:
-                message = resources.getString(R.string.unexpected_exception);
-                break;
-            case ErrorTypes.CONNECTION_ERROR:
-                message = getMessageFromResources(errors, resources);
-                break;
-            default:
-                message = error.getMessageFromResourceWhenAvailable(resources);
-        }
-        return message;
-    }
-
-    private String getMessageFromResources(@NonNull final List<HyperwalletError> errors,
-            @NonNull final Resources resources) {
-        StringBuilder messageBuilder = new StringBuilder();
-        Iterator<HyperwalletError> iterator = errors.iterator();
-        while (iterator.hasNext()) {
-            messageBuilder.append(iterator.next().getMessageFromResourceWhenAvailable(resources));
-            if (iterator.hasNext()) {
-                messageBuilder.append("\n");
-            }
-        }
-
-        return messageBuilder.toString();
+        return ErrorUtils.getMessage(errors, resources);
     }
 }

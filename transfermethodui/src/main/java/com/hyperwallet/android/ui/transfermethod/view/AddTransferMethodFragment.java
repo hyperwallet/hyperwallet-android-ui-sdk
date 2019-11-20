@@ -619,6 +619,11 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                                         .message(widget.getErrorMessage())
                                         .fieldName(widget.getName())
                                         .type(ErrorTypes.FORM_ERROR)
+                                        .transferMethod(new HyperwalletInsight.TransferMethodParamsBuilder()
+                                                .country(mCountry)
+                                                .currency(mCurrency)
+                                                .type(mTransferMethodType)
+                                                .profileType(mTransferMethodProfileType))
                                         .build());
 
                         valid = false;
