@@ -154,7 +154,7 @@ public class BankCardInsightTest {
     @Test
     public void testAddTransferMethod_verifyInsightEventCreatedOnAddTransferMethodSuccessful() {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("bank_account_response.json")).mock();
+                .getResourceContent("bank_card_response.json")).mock();
 
         mActivityTestRule.launchActivity(null);
 
