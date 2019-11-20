@@ -231,20 +231,13 @@ public class HyperwalletInsight {
     public void trackError(@NonNull final Context context, @NonNull final String pageName,
             @NonNull final String pageGroup, @NonNull final Map<String, String> errorInfoMap) {
 
-        HashMap<String, String> params = new HashMap<>(2);
-        for (Map.Entry<String, String> entry : errorInfoMap.entrySet()) {
-            if (!ERROR_VALUES.contains(entry.getKey())) {
-                params.put(entry.getKey(), entry.getValue());
-            }
-        }
-
         final ErrorInfo errorInfo = new ErrorInfo.ErrorInfoBuilder()
-                .type(errorInfoMap.get(InsightEventTag.InsightEventTagEventParams.ERROR_TYPE))
-                .message(errorInfoMap.get(InsightEventTag.InsightEventTagEventParams.ERROR_MESSAGE))
-                .code(errorInfoMap.get(InsightEventTag.InsightEventTagEventParams.ERROR_CODE))
-                .field(errorInfoMap.get(InsightEventTag.InsightEventTagEventParams.ERROR_FIELD_NAME))
-                .description(errorInfoMap.get(InsightEventTag.InsightEventTagEventParams.ERROR_DESCRIPTION))
-                .params(params)
+                .type(errorInfoMap.remove(InsightEventTag.InsightEventTagEventParams.ERROR_TYPE))
+                .message(errorInfoMap.remove(InsightEventTag.InsightEventTagEventParams.ERROR_MESSAGE))
+                .code(errorInfoMap.remove(InsightEventTag.InsightEventTagEventParams.ERROR_CODE))
+                .field(errorInfoMap.remove(InsightEventTag.InsightEventTagEventParams.ERROR_FIELD_NAME))
+                .description(errorInfoMap.remove(InsightEventTag.InsightEventTagEventParams.ERROR_DESCRIPTION))
+                .params(errorInfoMap)
                 .build();
 
         if (Insight.getInsightTracker().isInitialized()) {
