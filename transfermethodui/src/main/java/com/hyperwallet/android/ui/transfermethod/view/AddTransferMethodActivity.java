@@ -41,7 +41,7 @@ public class AddTransferMethodActivity extends AppCompatActivity implements
         AddTransferMethodFragment.OnLoadTransferMethodConfigurationFieldsNetworkErrorCallback,
         OnNetworkErrorCallback, WidgetDateDialogFragment.OnSelectedDateCallback {
 
-    public static final String TAG = "transfer-method:add:collect-account-information";
+    public static final String TAG = "transfer-method:add:collect-transfer-method-information";
 
     public static final String EXTRA_TRANSFER_METHOD_COUNTRY = "TRANSFER_METHOD_COUNTRY";
     public static final String EXTRA_TRANSFER_METHOD_CURRENCY = "TRANSFER_METHOD_CURRENCY";

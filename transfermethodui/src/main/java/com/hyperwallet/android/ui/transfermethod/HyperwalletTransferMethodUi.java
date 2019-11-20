@@ -27,7 +27,6 @@ import android.content.Intent;
 
 import androidx.annotation.NonNull;
 
-import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.HyperwalletAuthenticationTokenProvider;
 import com.hyperwallet.android.ui.common.insight.HyperwalletInsight;
 import com.hyperwallet.android.ui.common.intent.HyperwalletIntent;
@@ -43,23 +42,6 @@ public final class HyperwalletTransferMethodUi {
     private static HyperwalletTransferMethodUi sInstance;
 
     private HyperwalletTransferMethodUi() {
-    }
-
-    /**
-     * @deprecated use {@link #getInstance(Context, HyperwalletAuthenticationTokenProvider)}
-     *
-     * @param authenticationTokenProvider An implementation of the {@link HyperwalletAuthenticationTokenProvider}
-     * @return Returns a newly created HyperwalletTransferMethodUi that can be used to get Intents to launch different
-     * activities.
-     */
-    @Deprecated
-    public static synchronized HyperwalletTransferMethodUi getInstance(
-            @NonNull final HyperwalletAuthenticationTokenProvider authenticationTokenProvider) {
-        if (sInstance == null) {
-            sInstance = new HyperwalletTransferMethodUi();
-            Hyperwallet.getInstance(authenticationTokenProvider);
-        }
-        return sInstance;
     }
 
     /**

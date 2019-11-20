@@ -25,6 +25,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.ui.common.insight.HyperwalletInsight;
 import com.hyperwallet.android.ui.common.util.ErrorTypes;
+import com.hyperwallet.android.ui.common.util.ErrorUtils;
 import com.hyperwallet.android.ui.common.view.error.DefaultErrorDialogFragment;
 
 import java.util.List;
@@ -64,10 +65,15 @@ public final class ActivityUtils {
         if (fragment == null) {
             fragment = DefaultErrorDialogFragment.newInstance(errors);
         }
+
+        String errorMessage = errors.get(0).getMessage();
+        if (errorMessage == null || errorMessage.trim().length() == 0) {
+            errorMessage = ErrorUtils.getMessage(errors, fragmentActivity.getResources());
+        }
         HyperwalletInsight.getInstance().trackError(fragmentActivity, pageName, pageGroup,
                 new HyperwalletInsight.ErrorParamsBuilder()
                         .code(errors.get(0).getCode())
-                        .message(errors.get(0).getMessage())
+                        .message(errorMessage)
                         .fieldName(errors.get(0).getFieldName())
                         .type(ErrorTypes.getErrorType(errors.get(0).getCode()))
                         .description(ErrorTypes.getStackTrace())

@@ -1,4 +1,4 @@
-package com.hyperwallet.android.ui.common.view.error;
+package com.hyperwallet.android.ui.common.util;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -31,9 +31,7 @@ import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 
 @RunWith(JUnitParamsRunner.class)
-public class DefaultErrorDialogFragmentPresenterTest {
-
-    private final DefaultErrorDialogFragmentPresenter presenter = new DefaultErrorDialogFragmentPresenter();
+public class ErrorUtilsTest {
 
     @Test
     public void testBuildDialogMessage_buildIoExceptionMessage() {
@@ -41,7 +39,7 @@ public class DefaultErrorDialogFragmentPresenterTest {
         List<HyperwalletError> errors = new ArrayList<>(2);
         errors.add(new HyperwalletError(R.string.authentication_token_provider_exception, EC_IO_EXCEPTION));
         when(resources.getString(R.string.authentication_token_provider_exception)).thenReturn("My IO message");
-        String message = presenter.buildDialogMessage(errors, resources);
+        String message = ErrorUtils.getMessage(errors, resources);
 
         assertThat(message, is("My IO message"));
     }
@@ -53,7 +51,7 @@ public class DefaultErrorDialogFragmentPresenterTest {
         List<HyperwalletError> errors = new ArrayList<>(2);
         errors.add(new HyperwalletError(errorCode, errorCode));
         when(resources.getString(R.string.unexpected_exception)).thenReturn("Unexpected");
-        String message = presenter.buildDialogMessage(errors, resources);
+        String message = ErrorUtils.getMessage(errors, resources);
 
         assertThat(message, is("Unexpected"));
     }
@@ -63,7 +61,7 @@ public class DefaultErrorDialogFragmentPresenterTest {
         Resources resources = mock(Resources.class);
         List<HyperwalletError> errors = new ArrayList<>(2);
         errors.add(new HyperwalletError("My default message", "my error code"));
-        String message = presenter.buildDialogMessage(errors, resources);
+        String message = ErrorUtils.getMessage(errors, resources);
 
         verify(resources, never()).getString(ArgumentMatchers.anyInt());
         assertThat(message, is("My default message"));
