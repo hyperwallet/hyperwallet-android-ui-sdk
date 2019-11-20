@@ -32,6 +32,7 @@ import androidx.fragment.app.FragmentManager;
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.ui.common.R;
 import com.hyperwallet.android.ui.common.util.ErrorTypes;
+import com.hyperwallet.android.ui.common.util.ErrorUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,8 +43,6 @@ public class DefaultErrorDialogFragment extends DialogFragment {
     public static final String TAG = DefaultErrorDialogFragment.class.getName();
     private static final String ARGUMENT_ERROR_KEY =
             "Hyperwallet:" + DefaultErrorDialogFragment.class.getName() + ":Error:Key";
-
-    private DefaultErrorDialogFragmentContract.Presenter mPresenter;
 
     /**
      * Please do not use this to have instance of DefaultErrorDialogFragment this is reserved for android framework
@@ -69,8 +68,6 @@ public class DefaultErrorDialogFragment extends DialogFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        mPresenter = new DefaultErrorDialogFragmentPresenter();
     }
 
     @Override
@@ -108,7 +105,7 @@ public class DefaultErrorDialogFragment extends DialogFragment {
             errors.add(error);
         }
 
-        String message = mPresenter.buildDialogMessage(errors, getResources());
+        String message = ErrorUtils.getMessage(errors, getResources());
 
         return buildDialog(errors.get(0).getCode(), message);
     }

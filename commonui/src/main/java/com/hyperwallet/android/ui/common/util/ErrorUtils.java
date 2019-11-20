@@ -1,6 +1,6 @@
 /*
  * The MIT License (MIT)
- * Copyright (c) 2018 Hyperwallet Systems Inc.
+ * Copyright (c) 2019 Hyperwallet Systems Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -14,34 +14,41 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.hyperwallet.android.ui.common.view.error;
+package com.hyperwallet.android.ui.common.util;
 
 import android.content.res.Resources;
 
 import androidx.annotation.NonNull;
 
 import com.hyperwallet.android.model.HyperwalletError;
-import com.hyperwallet.android.sdk.R;
-import com.hyperwallet.android.ui.common.util.ErrorTypes;
 
 import java.util.Iterator;
 import java.util.List;
 
 /**
- * Implementation of the DefaultErrorDialogFragmentContract.Presenter
+ * ErrorUtil provides methods to generate error messages.
  */
-public class DefaultErrorDialogFragmentPresenter implements DefaultErrorDialogFragmentContract.Presenter {
+public final class ErrorUtils {
 
-    @NonNull
-    @Override
-    public String buildDialogMessage(@NonNull List<HyperwalletError> errors, @NonNull Resources resources) {
+    private ErrorUtils() {
+    }
+
+    /**
+     * Returns an error message based on the errorType found from the list of errors.
+     * SDK_ERROR will return com.hyperwallet.android.sdk.R.string.unexpected_exception
+     * Otherwise the resource will return the message from the resource.
+     *
+     * @param errors    the list of errors com.hyperwallet.android.sdk.R.string.unexpected_exception
+     * @param resources the resource responsible for generating the string
+     */
+    public static String getMessage(@NonNull List<HyperwalletError> errors, @NonNull Resources resources) {
         String message;
         HyperwalletError error = errors.get(0);
         String errorType = ErrorTypes.getErrorType(error.getCode());
 
         switch (errorType) {
             case ErrorTypes.SDK_ERROR:
-                message = resources.getString(R.string.unexpected_exception);
+                message = resources.getString(com.hyperwallet.android.sdk.R.string.unexpected_exception);
                 break;
             case ErrorTypes.CONNECTION_ERROR:
                 message = getMessageFromResources(errors, resources);
@@ -52,7 +59,7 @@ public class DefaultErrorDialogFragmentPresenter implements DefaultErrorDialogFr
         return message;
     }
 
-    private String getMessageFromResources(@NonNull final List<HyperwalletError> errors,
+    private static String getMessageFromResources(@NonNull final List<HyperwalletError> errors,
             @NonNull final Resources resources) {
         StringBuilder messageBuilder = new StringBuilder();
         Iterator<HyperwalletError> iterator = errors.iterator();
