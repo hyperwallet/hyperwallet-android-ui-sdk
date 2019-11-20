@@ -304,6 +304,16 @@ public class HyperwalletInsight {
             return this;
         }
 
+        public TransferMethodParamsBuilder add(@NonNull final String key, @NonNull final String value) {
+            mParams.put(key, value);
+            return this;
+        }
+
+        public TransferMethodParamsBuilder addAll(@NonNull final Map<String, String> params) {
+            mParams.putAll(params);
+            return this;
+        }
+
         public Map<String, String> build() {
             return mParams;
         }
@@ -348,8 +358,13 @@ public class HyperwalletInsight {
             return this;
         }
 
-        public ErrorParamsBuilder extraInfo(@NonNull final Map<String, String> extraInfo) {
-            mParams.putAll(extraInfo);
+        public ErrorParamsBuilder add(@NonNull final String key, @NonNull final String value) {
+            mParams.put(key, value);
+            return this;
+        }
+
+        public ErrorParamsBuilder addAll(@NonNull final Map<String, String> params) {
+            mParams.putAll(params);
             return this;
         }
 
