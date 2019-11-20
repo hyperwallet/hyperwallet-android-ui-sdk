@@ -33,11 +33,8 @@ import com.hyperwallet.android.insight.InsightEventTag;
 import com.hyperwallet.android.insight.collect.ErrorInfo;
 import com.hyperwallet.android.listener.HyperwalletListener;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -45,13 +42,6 @@ import java.util.concurrent.Executors;
  * Used for gathering the data necessary for the Insights analytics.
  */
 public class HyperwalletInsight {
-    private static final Set<String> ERROR_VALUES = new HashSet<>(
-            Arrays.asList(InsightEventTag.InsightEventTagEventParams.ERROR_CODE,
-                    InsightEventTag.InsightEventTagEventParams.ERROR_DESCRIPTION,
-                    InsightEventTag.InsightEventTagEventParams.ERROR_FIELD_NAME,
-                    InsightEventTag.InsightEventTagEventParams.ERROR_MESSAGE,
-                    InsightEventTag.InsightEventTagEventParams.ERROR_TYPE));
-
     private static final String SDK_VERSION = com.hyperwallet.android.ui.common.BuildConfig.VERSION_NAME;
     private static final String PRODUCT_VALUE = "hyperwallet-android-ui-sdk";
     private static final String PAGE_TECHNOLOGY_JAVA = "Java";
