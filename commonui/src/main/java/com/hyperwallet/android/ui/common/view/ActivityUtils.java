@@ -70,7 +70,7 @@ public final class ActivityUtils {
         if (errorMessage == null || errorMessage.trim().length() == 0) {
             errorMessage = ErrorUtils.getMessage(errors, fragmentActivity.getResources());
         }
-        HyperwalletInsight.getInstance().trackError(fragmentActivity, pageName, pageGroup,
+        HyperwalletInsight.getInstance().trackError(fragmentActivity, pageName, pageGroup, null,
                 new HyperwalletInsight.ErrorParamsBuilder()
                         .code(errors.get(0).getCode())
                         .message(errorMessage)
