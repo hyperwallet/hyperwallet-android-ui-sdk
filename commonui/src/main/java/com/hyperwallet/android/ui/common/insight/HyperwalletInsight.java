@@ -216,29 +216,21 @@ public class HyperwalletInsight {
      * @param context      Context where the tracking is happening
      * @param pageName     an arbituary pageName the user is currently viewing as defined by the app
      * @param pageGroup    an arbituary pageGroup the user is currently viewing as defined by the app
-     * @param params    additional information that can be added to make the tracking event more useful
-     * @param errorInfoMap contains information regarding the error
+     * @param params contains information regarding the error
      */
     public void trackError(@NonNull final Context context, @NonNull final String pageName,
-            @NonNull final String pageGroup, @Nullable final Map<String, String> params,
-            @NonNull final Map<String, String> errorInfoMap) {
+            @NonNull final String pageGroup, @NonNull final Map<String, String> params) {
 
         final ErrorInfo errorInfo = new ErrorInfo.ErrorInfoBuilder()
-                .type(errorInfoMap.remove(InsightEventTag.InsightEventTagEventParams.ERROR_TYPE))
-                .message(errorInfoMap.remove(InsightEventTag.InsightEventTagEventParams.ERROR_MESSAGE))
-                .code(errorInfoMap.remove(InsightEventTag.InsightEventTagEventParams.ERROR_CODE))
-                .field(errorInfoMap.remove(InsightEventTag.InsightEventTagEventParams.ERROR_FIELD_NAME))
-                .description(errorInfoMap.remove(InsightEventTag.InsightEventTagEventParams.ERROR_DESCRIPTION))
+                .type(params.remove(InsightEventTag.InsightEventTagEventParams.ERROR_TYPE))
+                .message(params.remove(InsightEventTag.InsightEventTagEventParams.ERROR_MESSAGE))
+                .code(params.remove(InsightEventTag.InsightEventTagEventParams.ERROR_CODE))
+                .field(params.remove(InsightEventTag.InsightEventTagEventParams.ERROR_FIELD_NAME))
+                .description(params.remove(InsightEventTag.InsightEventTagEventParams.ERROR_DESCRIPTION))
                 .build();
 
-        final Map<String, String> paramsForError = errorInfoMap;
-        if (params != null) {
-            paramsForError.putAll(params);
-        }
-
         if (Insight.getInsightTracker().isInitialized()) {
-            Insight.getInsightTracker().trackError(context, pageName, pageGroup, paramsForError, errorInfo);
-
+            Insight.getInsightTracker().trackError(context, pageName, pageGroup, params, errorInfo);
         } else {
             mExecutor.execute(new Runnable() {
                 @Override
@@ -248,8 +240,7 @@ public class HyperwalletInsight {
                         public void onSuccess(@Nullable Configuration configuration) {
                             if (configuration != null) {
                                 HyperwalletInsight.getInstance().initialize(context, configuration);
-                                Insight.getInsightTracker().trackError(context, pageName, pageGroup, paramsForError,
-                                        errorInfo);
+                                Insight.getInsightTracker().trackError(context, pageName, pageGroup, params, errorInfo);
                             }
                         }
 
@@ -354,6 +345,11 @@ public class HyperwalletInsight {
 
         public ErrorParamsBuilder pageTechnology(@NonNull final String pageTechnology) {
             mParams.put(InsightEventTag.InsightEventTagEventParams.PAGE_TECHNOLOGY, pageTechnology);
+            return this;
+        }
+
+        public ErrorParamsBuilder extraInfo(@NonNull final Map<String, String> extraInfo) {
+            mParams.putAll(extraInfo);
             return this;
         }
 

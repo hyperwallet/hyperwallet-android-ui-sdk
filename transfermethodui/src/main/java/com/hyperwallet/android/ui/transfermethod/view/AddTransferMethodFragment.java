@@ -482,7 +482,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                             focusSet = true;
                         }
                         HyperwalletInsight.getInstance().trackError(context,
-                                TAG, PageGroups.TRANSFER_METHOD, null,
+                                TAG, PageGroups.TRANSFER_METHOD,
                                 new HyperwalletInsight.ErrorParamsBuilder()
                                         .code(error.getCode())
                                         .message(error.getMessage())
@@ -615,15 +615,16 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                     } else {
                         HyperwalletInsight.getInstance().trackError(context,
                                 TAG, PageGroups.TRANSFER_METHOD,
-                                new HyperwalletInsight.TransferMethodParamsBuilder()
-                                        .country(mCountry)
-                                        .currency(mCurrency)
-                                        .type(mTransferMethodType)
-                                        .profileType(mTransferMethodProfileType).build(),
                                 new HyperwalletInsight.ErrorParamsBuilder()
                                         .message(widget.getErrorMessage())
                                         .fieldName(widget.getName())
                                         .type(ErrorTypes.FORM_ERROR)
+                                        .extraInfo(new HyperwalletInsight.TransferMethodParamsBuilder()
+                                                .country(mCountry)
+                                                .currency(mCurrency)
+                                                .type(mTransferMethodType)
+                                                .profileType(mTransferMethodProfileType)
+                                                .build())
                                         .build());
 
                         valid = false;
