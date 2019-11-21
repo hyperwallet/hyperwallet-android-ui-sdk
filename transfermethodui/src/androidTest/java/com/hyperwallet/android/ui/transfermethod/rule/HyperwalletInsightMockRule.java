@@ -39,6 +39,7 @@ public class HyperwalletInsightMockRule extends TestWatcher {
                 return null;
             }
         });
+
         mHyperwalletInsight = mock(HyperwalletInsight.class);
         HyperwalletInsight.setInstance(mHyperwalletInsight);
     }
