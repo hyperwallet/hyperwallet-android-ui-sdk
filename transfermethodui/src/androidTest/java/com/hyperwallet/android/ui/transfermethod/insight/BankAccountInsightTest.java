@@ -154,6 +154,10 @@ public class BankAccountInsightTest {
         assertThat(mParamsCaptor.getValue().get("error_type"), is("FORM"));
         assertThat(mParamsCaptor.getValue().get("error_message"), is("The exact length of this field is 9."));
         assertThat(mParamsCaptor.getValue().get("erfd"), is("branchId"));
+        assertThat(mParamsCaptor.getValue().get("hyperwallet_ea_country"), is("US"));
+        assertThat(mParamsCaptor.getValue().get("hyperwallet_ea_currency"), is("USD"));
+        assertThat(mParamsCaptor.getValue().get("hyperwallet_ea_type"), is("BANK_ACCOUNT"));
+        assertThat(mParamsCaptor.getValue().get("hyperwallet_ea_profile_type"), is("INDIVIDUAL"));
     }
 
     @Test
@@ -174,6 +178,10 @@ public class BankAccountInsightTest {
         assertThat(mParamsCaptor.getValue().get("error_type"), is("FORM"));
         assertThat(mParamsCaptor.getValue().get("error_message"), is("You must provide a value for this field"));
         assertThat(mParamsCaptor.getValue().get("erfd"), is("bankAccountPurpose"));
+        assertThat(mParamsCaptor.getValue().get("hyperwallet_ea_country"), is("US"));
+        assertThat(mParamsCaptor.getValue().get("hyperwallet_ea_currency"), is("USD"));
+        assertThat(mParamsCaptor.getValue().get("hyperwallet_ea_type"), is("BANK_ACCOUNT"));
+        assertThat(mParamsCaptor.getValue().get("hyperwallet_ea_profile_type"), is("INDIVIDUAL"));
     }
 
     @Test
@@ -225,8 +233,8 @@ public class BankAccountInsightTest {
 
         assertThat(mParamsCaptor.getValue().get("error_type"), is("CONNECTION"));
         assertThat(mParamsCaptor.getValue().get("error_code"), is("EC_IO_EXCEPTION"));
-//        assertThat(mParamsCaptor.getValue().get("error_message"),
-//                is("We are encountering a problem processing the request. Please check your connectivity."));
+        assertThat(mParamsCaptor.getValue().get("error_message"),
+                is("We are encountering a problem processing the request. Please check your connectivity."));
         assertThat(mParamsCaptor.getValue().get("error_description"),
                 containsString("Insights detected error"));
         assertThat(mParamsCaptor.getValue().get("erfd"), nullValue());
@@ -254,8 +262,8 @@ public class BankAccountInsightTest {
 
         assertThat(mParamsCaptor.getValue().get("error_type"), is("EXCEPTION"));
         assertThat(mParamsCaptor.getValue().get("error_code"), is("EC_UNEXPECTED_EXCEPTION"));
-//        assertThat(mParamsCaptor.getValue().get("error_message"),
-//                is("Oops... Something went wrong, please try again."));
+        assertThat(mParamsCaptor.getValue().get("error_message"),
+                is("Oops… Something went wrong, please try again."));
         assertThat(mParamsCaptor.getValue().get("error_description"),
                 containsString("Insights detected error"));
         assertThat(mParamsCaptor.getValue().get("erfd"), nullValue());

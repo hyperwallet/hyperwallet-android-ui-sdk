@@ -149,6 +149,10 @@ public class BankCardInsightTest {
         assertThat(mParamsCaptor.getValue().get("error_type"), is("FORM"));
         assertThat(mParamsCaptor.getValue().get("error_message"), is("Expiry Date is invalid."));
         assertThat(mParamsCaptor.getValue().get("erfd"), is("dateOfExpiry"));
+        assertThat(mParamsCaptor.getValue().get("hyperwallet_ea_country"), is("US"));
+        assertThat(mParamsCaptor.getValue().get("hyperwallet_ea_currency"), is("USD"));
+        assertThat(mParamsCaptor.getValue().get("hyperwallet_ea_type"), is("BANK_CARD"));
+        assertThat(mParamsCaptor.getValue().get("hyperwallet_ea_profile_type"), is("INDIVIDUAL"));
     }
 
     @Test
