@@ -4,6 +4,7 @@
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@color/regularColorPrimary"
                 tools:context=".view.ReceiptDetailFragment">
 
     <androidx.core.widget.NestedScrollView
@@ -77,7 +78,7 @@
                               android:layout_marginStart="@dimen/grid_margin_left"
                               android:layout_marginTop="@dimen/grid_margin_top"
                               android:text="@string/journalId"
-                              android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                              android:textAppearance="@style/TextAppearance.Hyperwallet.Caption"
                               app:layout_constraintLeft_toLeftOf="parent"
                               app:layout_constraintStart_toStartOf="parent"
                               app:layout_constraintTop_toTopOf="parent"/>
@@ -107,7 +108,7 @@
                               android:layout_marginStart="@dimen/grid_margin_left"
                               android:layout_marginTop="@dimen/item_text_top_bottom_margin"
                               android:text="@string/createdOn"
-                              android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                              android:textAppearance="@style/TextAppearance.Hyperwallet.Caption"
                               app:layout_constraintLeft_toLeftOf="parent"
                               app:layout_constraintStart_toStartOf="parent"
                               app:layout_constraintTop_toBottomOf="@+id/receipt_id_value"/>
@@ -144,7 +145,7 @@
                               android:layout_marginStart="@dimen/grid_margin_left"
                               android:layout_marginTop="@dimen/item_text_top_bottom_margin"
                               android:text="@string/clientPaymentId"
-                              android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                              android:textAppearance="@style/TextAppearance.Hyperwallet.Caption"
                               app:layout_constraintLeft_toLeftOf="parent"
                               app:layout_constraintStart_toStartOf="parent"/>
 
@@ -180,7 +181,7 @@
                               android:layout_marginStart="@dimen/grid_margin_left"
                               android:layout_marginTop="@dimen/item_text_top_bottom_margin"
                               android:text="@string/charityName"
-                              android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                              android:textAppearance="@style/TextAppearance.Hyperwallet.Caption"
                               app:layout_constraintLeft_toLeftOf="parent"
                               app:layout_constraintStart_toStartOf="parent"/>
 
@@ -216,7 +217,7 @@
                               android:layout_marginStart="@dimen/grid_margin_left"
                               android:layout_marginTop="@dimen/item_text_top_bottom_margin"
                               android:text="@string/checkNumber"
-                              android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                              android:textAppearance="@style/TextAppearance.Hyperwallet.Caption"
                               app:layout_constraintLeft_toLeftOf="parent"
                               app:layout_constraintStart_toStartOf="parent"/>
 
@@ -252,7 +253,7 @@
                               android:layout_marginStart="@dimen/grid_margin_left"
                               android:layout_marginTop="@dimen/item_text_top_bottom_margin"
                               android:text="@string/website"
-                              android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                              android:textAppearance="@style/TextAppearance.Hyperwallet.Caption"
                               app:layout_constraintLeft_toLeftOf="parent"
                               app:layout_constraintStart_toStartOf="parent"/>
 
@@ -356,7 +357,7 @@
                                   android:layout_marginStart="@dimen/grid_margin_left"
                                   android:layout_marginTop="@dimen/grid_margin_top"
                                   android:text="@string/details_amount_label"
-                                  android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                                  android:textAppearance="@style/TextAppearance.Hyperwallet.Caption"
                                   app:layout_constraintLeft_toLeftOf="parent"
                                   app:layout_constraintStart_toStartOf="parent"
                                   app:layout_constraintTop_toTopOf="parent"/>
@@ -377,7 +378,7 @@
                                   android:layout_marginStart="@dimen/grid_margin_left"
                                   android:layout_marginTop="8dp"
                                   android:text="@string/fee_label"
-                                  android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                                  android:textAppearance="@style/TextAppearance.Hyperwallet.Caption"
                                   app:layout_constraintLeft_toLeftOf="parent"
                                   app:layout_constraintStart_toStartOf="parent"
                                   app:layout_constraintTop_toBottomOf="@+id/details_amount_value"/>
@@ -398,7 +399,7 @@
                                   android:layout_marginStart="@dimen/grid_margin_left"
                                   android:layout_marginTop="@dimen/item_text_top_bottom_margin"
                                   android:text="@string/transfer_amount_label"
-                                  android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                                  android:textAppearance="@style/TextAppearance.Hyperwallet.Caption"
                                   app:layout_constraintLeft_toLeftOf="parent"
                                   app:layout_constraintStart_toStartOf="parent"
                                   app:layout_constraintTop_toBottomOf="@+id/details_fee_value"/>

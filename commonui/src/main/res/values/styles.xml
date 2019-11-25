@@ -2,7 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -14,9 +14,9 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar"/>
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light"/>
 
     <style name="Widget.Hyperwallet.ProgressBar" parent="@style/Widget.AppCompat.ProgressBar">
         <item name="colorAccent">@color/colorPrimary</item>
@@ -37,7 +37,7 @@
     </style>
 
     <style name="ThemeOverlay.Hyperwallet.Selector.ActionBar"
-        parent="@style/ThemeOverlay.AppCompat.ActionBar">
+        parent="@style/ThemeOverlay.MaterialComponents.ActionBar">
         <item name="android:background">@color/regularColorPrimary</item>
         <item name="android:titleTextAppearance">
             @style/TextAppearance.MaterialComponents.Subtitle1
@@ -147,13 +147,13 @@
     </style>
 
     <style name="Theme.Hyperwallet.Confirmation.Dialog"
-        parent="Base.Theme.MaterialComponents.Light">
+        parent="Theme.MaterialComponents.Light">
         <item name="alertDialogTheme">@style/Widget.Hyperwallet.Confirmation.Dialog.Alert</item>
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
     <style name="Widget.Hyperwallet.Confirmation.Dialog.Alert"
-        parent="Base.Theme.MaterialComponents.Light.Dialog">
+        parent="Theme.MaterialComponents.Light.Dialog">
         <item name="android:textColorPrimary">@color/colorSecondaryDark</item>
         <item name="android:windowTitleStyle">@style/TextAppearance.Hyperwallet.Dialog.Alert.Title
         </item>
@@ -181,13 +181,13 @@
         <item name="android:letterSpacing">0.12</item>
     </style>
 
-    <style name="Theme.Hyperwallet.Alert" parent="Base.Theme.MaterialComponents.Light">
+    <style name="Theme.Hyperwallet.Alert" parent="Theme.MaterialComponents.Light">
         <item name="alertDialogTheme">@style/Widget.Hyperwallet.Dialog.Alert</item>
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
     <style name="Widget.Hyperwallet.Dialog.Alert"
-        parent="Base.Theme.MaterialComponents.Light.Dialog">
+        parent="Theme.MaterialComponents.Light.Dialog">
         <item name="android:textColorPrimary">@color/colorSecondaryDark</item>
         <item name="buttonBarNegativeButtonStyle">
             @style/Widget.Hyperwallet.Button.Negative
@@ -234,11 +234,17 @@
     </style>
 
     <style name="TextAppearance.Hyperwallet.Subtitle1"
-        parent="@style/TextAppearance.MaterialComponents.Subtitle1">
+        parent="TextAppearance.MaterialComponents.Subtitle1">
+        <item name="android:textColor">@color/regularColorSecondary</item>
     </style>
 
-    <style name="Widget.Hyperwallet.Switch" parent="Theme.AppCompat.Light">
-        <item name="android:colorControlActivated">@color/colorPrimary</item>
+    <style name="TextAppearance.Hyperwallet.Caption"
+        parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textColor">@color/regularColorSecondary</item>
+    </style>
+
+    <style name="Widget.Hyperwallet.Switch" parent="Theme.MaterialComponents.DayNight">
+        <item name="android:colorControlActivated">@color/regularColorSecondary</item>
     </style>
 </resources>
 

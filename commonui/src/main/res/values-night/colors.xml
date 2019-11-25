@@ -7,18 +7,18 @@
     <color name="colorPrimaryAccent">#E1F6FA</color> <!-- N3 Highlight  -->
 
     <!-- Secondary Colors -->
-    <color name="colorSecondaryDark">#666666</color>
-    <color name="colorSecondary">#C4C4C4</color>
-    <color name="colorSecondaryLight">#E0E0E0</color>
-    <color name="colorSecondaryAccent">#EFEFF4</color>
+    <color name="colorSecondaryDark">#FFFFFF</color>
+    <color name="colorSecondary">#E0E0E0</color>
+    <color name="colorSecondaryLight">#C4C4C4</color>
+    <color name="colorSecondaryAccent">#666666</color>
 
-    <color name="colorButtonDisabled">#F7F7F7</color>
+    <color name="colorButtonDisabled">#DBDBDB</color>
     <color name="colorButtonTextDisabled">#ACACAC</color>
-    <color name="colorInputFormBackground">#DBDBDB</color>
+    <color name="colorInputFormBackground">@color/colorSecondaryAccent</color>
 
     <!-- Regular Colors -->
-    <color name="regularColorPrimary">#FFFFFF</color>
-    <color name="regularColorSecondary">#000000</color>
+    <color name="regularColorPrimary">#000000</color>
+    <color name="regularColorSecondary">#FFFFFF</color>
 
     <color name="colorAccent">#DB4437</color>
 
