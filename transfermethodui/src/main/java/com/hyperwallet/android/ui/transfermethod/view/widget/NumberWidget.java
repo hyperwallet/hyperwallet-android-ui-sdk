@@ -17,6 +17,7 @@
 package com.hyperwallet.android.ui.transfermethod.view.widget;
 
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -34,15 +35,18 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.hyperwallet.android.model.graphql.field.HyperwalletField;
 import com.hyperwallet.android.ui.R;
 
-public class NumberWidget extends AbstractWidget {
+public class NumberWidget extends AbstractMaskedInputWidget {
     private ViewGroup mContainer;
     private TextInputLayout mTextInputLayout;
     private String mValue;
+    private final boolean hasMasking;
+    private InputFilter[] mInputFilter;
 
     public NumberWidget(@NonNull HyperwalletField field, @NonNull WidgetEventListener listener,
             @Nullable String defaultValue, @NonNull View defaultFocusView) {
         super(field, listener, defaultValue, defaultFocusView);
         mValue = defaultValue;
+        hasMasking = field.getMask() != null;
     }
 
     @Override
@@ -67,7 +71,8 @@ public class NumberWidget extends AbstractWidget {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
                     if (!hasFocus) {
-                        mValue = ((EditText) v).getText().toString();
+                        String input = ((EditText) v).getText().toString();
+                        mValue = hasMasking ? formatToApi(input) : input;
                         mListener.valueChanged();
                     } else {
                         mListener.widgetFocused(NumberWidget.this.getName());
