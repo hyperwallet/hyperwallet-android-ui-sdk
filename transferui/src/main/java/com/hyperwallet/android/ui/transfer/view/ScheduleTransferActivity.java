@@ -34,6 +34,7 @@ import com.hyperwallet.android.model.StatusTransition;
 import com.hyperwallet.android.model.transfer.Transfer;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.ui.common.repository.Event;
+import com.hyperwallet.android.ui.common.util.PageGroups;
 import com.hyperwallet.android.ui.common.view.ActivityUtils;
 import com.hyperwallet.android.ui.common.view.error.OnNetworkErrorCallback;
 import com.hyperwallet.android.ui.transfer.HyperwalletTransferLocalBroadcast;
@@ -45,6 +46,8 @@ import com.hyperwallet.android.ui.transfer.viewmodel.ScheduleTransferViewModel;
  * Schedule Transfer Activity
  */
 public class ScheduleTransferActivity extends AppCompatActivity implements OnNetworkErrorCallback {
+
+    public static final String TAG = "transfer-funds:review-transfer";
 
     public static final String EXTRA_TRANSFER = "TRANSFER";
     public static final String EXTRA_TRANSFER_METHOD = "TRANSFER_METHOD";
@@ -111,7 +114,7 @@ public class ScheduleTransferActivity extends AppCompatActivity implements OnNet
                     @Override
                     public void onChanged(final Event<HyperwalletErrors> event) {
                         if (event != null && !event.isContentConsumed()) {
-                            ActivityUtils.showError(ScheduleTransferActivity.this,
+                            ActivityUtils.showError(ScheduleTransferActivity.this, TAG, PageGroups.TRANSFER_FUNDS,
                                     event.getContent().getErrors());
                         }
                     }

@@ -27,8 +27,8 @@ import android.content.Intent;
 
 import androidx.annotation.NonNull;
 
-import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.HyperwalletAuthenticationTokenProvider;
+import com.hyperwallet.android.ui.common.insight.HyperwalletInsight;
 import com.hyperwallet.android.ui.common.intent.HyperwalletIntent;
 import com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity;
 import com.hyperwallet.android.ui.transfermethod.view.ListTransferMethodActivity;
@@ -45,19 +45,22 @@ public final class HyperwalletTransferMethodUi {
     }
 
     /**
+     * Returns an instance that will also initialize the Insights library.
+     *
+     * @param context                     A Context of the application consuming this Intent.
      * @param authenticationTokenProvider An implementation of the {@link HyperwalletAuthenticationTokenProvider}
-     * @return Returns a newly created HyperwalletTransferMethodUi that can be used to get Intents to launch different
-     * activities.
+     * @return singleton instance of HyperwalletTransferMethodUi
      */
-    public static synchronized HyperwalletTransferMethodUi getInstance(
+    public static synchronized HyperwalletTransferMethodUi getInstance(@NonNull final Context context,
             @NonNull final HyperwalletAuthenticationTokenProvider authenticationTokenProvider) {
         if (sInstance == null) {
             sInstance = new HyperwalletTransferMethodUi();
-            Hyperwallet.getInstance(authenticationTokenProvider);
         }
+
+        // initialize insight
+        HyperwalletInsight.getInstance().initialize(context, authenticationTokenProvider);
         return sInstance;
     }
-
 
     /**
      * @param context A Context of the application consuming this Intent.
