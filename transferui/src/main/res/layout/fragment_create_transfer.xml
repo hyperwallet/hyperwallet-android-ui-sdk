@@ -234,7 +234,7 @@
                     android:layout_height="wrap_content">
                     <EditText
                         android:id="@+id/transfer_notes"
-                        android:theme="@style/Widget.Hyperwallet.Transfer.EditText"
+                        style="@style/Widget.Hyperwallet.Transfer.EditText"
                         android:inputType="text"
                         android:maxLines="3"
                         android:enabled="false"

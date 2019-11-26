@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="Widget.Hyperwallet.Transfer.EditText" parent="Widget.AppCompat.EditText">
-        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Subtitle1
+        <item name="android:textAppearance">@style/TextAppearance.Hyperwallet.Subtitle1
         </item>
         <item name="android:colorControlActivated">@color/colorPrimary</item>
         <item name="android:background">@null</item>
