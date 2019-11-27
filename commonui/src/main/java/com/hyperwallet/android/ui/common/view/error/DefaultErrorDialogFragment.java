@@ -16,10 +16,6 @@
  */
 package com.hyperwallet.android.ui.common.view.error;
 
-import static com.hyperwallet.android.ExceptionMapper.EC_AUTHENTICATION_TOKEN_PROVIDER_EXCEPTION;
-import static com.hyperwallet.android.ExceptionMapper.EC_IO_EXCEPTION;
-import static com.hyperwallet.android.ExceptionMapper.EC_JSON_EXCEPTION;
-import static com.hyperwallet.android.ExceptionMapper.EC_JSON_PARSE_EXCEPTION;
 import static com.hyperwallet.android.ExceptionMapper.EC_UNEXPECTED_EXCEPTION;
 
 import android.app.Dialog;
@@ -35,6 +31,8 @@ import androidx.fragment.app.FragmentManager;
 
 import com.hyperwallet.android.model.HyperwalletError;
 import com.hyperwallet.android.ui.common.R;
+import com.hyperwallet.android.ui.common.util.ErrorTypes;
+import com.hyperwallet.android.ui.common.util.ErrorUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,8 +43,6 @@ public class DefaultErrorDialogFragment extends DialogFragment {
     public static final String TAG = DefaultErrorDialogFragment.class.getName();
     private static final String ARGUMENT_ERROR_KEY =
             "Hyperwallet:" + DefaultErrorDialogFragment.class.getName() + ":Error:Key";
-
-    private DefaultErrorDialogFragmentContract.Presenter mPresenter;
 
     /**
      * Please do not use this to have instance of DefaultErrorDialogFragment this is reserved for android framework
@@ -72,8 +68,6 @@ public class DefaultErrorDialogFragment extends DialogFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        mPresenter = new DefaultErrorDialogFragmentPresenter();
     }
 
     @Override
@@ -111,7 +105,7 @@ public class DefaultErrorDialogFragment extends DialogFragment {
             errors.add(error);
         }
 
-        String message = mPresenter.buildDialogMessage(errors, getResources());
+        String message = ErrorUtils.getMessage(errors, getResources());
 
         return buildDialog(errors.get(0).getCode(), message);
     }
@@ -120,11 +114,10 @@ public class DefaultErrorDialogFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(
                 new ContextThemeWrapper(requireContext(), R.style.Theme_Hyperwallet_Alert));
         builder.setMessage(message);
-        switch (errorCode) {
-            case EC_UNEXPECTED_EXCEPTION:
-            case EC_JSON_EXCEPTION:
-            case EC_JSON_PARSE_EXCEPTION:
-            case EC_AUTHENTICATION_TOKEN_PROVIDER_EXCEPTION:
+
+        String errorType = ErrorTypes.getErrorType(errorCode);
+        switch (errorType) {
+            case ErrorTypes.SDK_ERROR:
                 builder.setTitle(requireContext().getString(R.string.error_dialog_unexpected_title))
                         .setPositiveButton(getResources().getString(R.string.close_button_label),
                                 new DialogInterface.OnClickListener() {
@@ -135,7 +128,7 @@ public class DefaultErrorDialogFragment extends DialogFragment {
                                     }
                                 });
                 break;
-            case EC_IO_EXCEPTION: // connection error
+            case ErrorTypes.CONNECTION_ERROR:
                 builder.setTitle(requireContext().getString(R.string.error_dialog_connectivity_title))
                         .setNegativeButton(getResources().getString(R.string.cancel_button_label),
                                 new DialogInterface.OnClickListener() {
