@@ -19,6 +19,7 @@ package com.hyperwallet.android.ui.transfermethod.view.widget;
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -31,8 +32,8 @@ public abstract class AbstractMaskedInputWidget extends AbstractWidget {
     private static final char NUMBER_TOKEN = '#';
     private static final char TEXT_TOKEN = '@';
 
-    private InputFilter[] mInputFilters;
-    private WidgetInputFilter mWidgetInputFilter;
+    private InputFilter[] mInputFilters;  // TODO delete
+    private WidgetInputFilter mWidgetInputFilter;  // TODO delete
 
     public AbstractMaskedInputWidget(@Nullable HyperwalletField field, @NonNull WidgetEventListener listener,
             @Nullable String defaultValue, @NonNull View defaultFocusView) {
@@ -102,6 +103,7 @@ public abstract class AbstractMaskedInputWidget extends AbstractWidget {
         return formattedValue.toString();
     }
 
+    // TODO delete inner class
     private static final class WidgetInputFilter implements InputFilter {
 
         private final Mask mMask;
@@ -112,23 +114,48 @@ public abstract class AbstractMaskedInputWidget extends AbstractWidget {
 
         @Override
         public CharSequence filter(CharSequence input, int start, int end, Spanned dest, int dstart, int dend) {
-            if (mMask != null) {
-                if (!TextUtils.isEmpty(input)) {
-                    String textToFormat = dest.toString().trim().isEmpty() ? input.toString() : dest.toString();
-                    String formatPattern = mMask.getPattern(textToFormat);
 
-                    String displayed = input.toString() + dest.toString();
-                    if (dest.length() < formatPattern.length()) {
-                        if (!isValueFormatted(displayed, formatPattern)) {
-                            return formatInput(input.toString(), formatPattern, dend);
+            if (input.toString() == "") {
+                Log.d("filter input", "(empty string)/backspace");
+            } else {
+                Log.d("filter input", input.toString());
+            }
+            Log.d("filter start", String.valueOf(start));
+            Log.d("filter end", String.valueOf(end));
+            Log.d("filter dest", dest.toString());
+            Log.d("filter dstart", String.valueOf(dstart));
+            Log.d("filter dend", String.valueOf(dend));
+
+            if (mMask != null) {
+//                if (!TextUtils.isEmpty(input)) {
+                String textToFormat = dest.toString().trim().isEmpty() ? input.toString() : dest.toString();
+                String formatPattern = mMask.getPattern(textToFormat);
+
+                String displayed = input.toString() + dest.toString();
+                if (dest.length() < formatPattern.length()) {
+                    if (!isValueFormatted(displayed, formatPattern)) {
+                        Log.d("filter return3", formatInput(input.toString(), formatPattern, dend));
+                        return formatInput(input.toString(), formatPattern, dend);
+                    } else {
+                        String return2Value = (input.length() > formatPattern.length() ?
+                                input.subSequence(0, formatPattern.length()) : input).toString();
+                        if (return2Value == "") {
+                            return2Value = "- ";
+                            Log.d("filter return2", "(empty return value)");
+                            return return2Value;
                         } else {
-                            return input.length() > formatPattern.length() ?
-                                    input.subSequence(0, formatPattern.length()) : input;
+                            Log.d("filter return2", return2Value);
                         }
+
+                        return input.length() > formatPattern.length() ?
+                                input.subSequence(0, formatPattern.length()) : input;
                     }
                 }
-                return "";
+//                }
+                Log.d("filter return5", "(empty string)");
+                return null;
             } else {
+                Log.d("filter return4", input.toString());
                 return input;
             }
         }

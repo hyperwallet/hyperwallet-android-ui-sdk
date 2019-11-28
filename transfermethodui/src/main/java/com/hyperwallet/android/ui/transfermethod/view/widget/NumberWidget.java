@@ -19,9 +19,7 @@ package com.hyperwallet.android.ui.transfermethod.view.widget;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
-import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.text.method.DigitsKeyListener;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -88,8 +86,19 @@ public class NumberWidget extends AbstractMaskedInputWidget {
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     if (before != count) {
-                        mValue = s.toString();
+                        System.out.println("1hasWindowFocus: " + editText.hasWindowFocus());
+                        System.out.println("1hasFocus: " + editText.hasFocus());
+                        System.out.println("1charseq: " + s);
+                        System.out.println("1start: " + start);
+                        System.out.println("1before: " + before);
+                        System.out.println("1count: " + count);
+                        System.out.println("1onTextChanged: before != count");
+                        mValue = hasMasking ? formatToApi(s.toString()) : s.toString();
                         mListener.saveTextChanged(getName(), getValue());
+                        String displayedValue = formatToDisplay(getValue());
+                        editText.setText(displayedValue);
+                        editText.setSelection(displayedValue.length());
+//                        System.out.println("formattedValue.length(): " + formattedValue.length());
                     }
                 }
 
@@ -98,19 +107,20 @@ public class NumberWidget extends AbstractMaskedInputWidget {
                 }
             });
 
-            editText.setText(TextUtils.isEmpty(mDefaultValue) ? mField.getValue() : mDefaultValue);
+            editText.setText(mDefaultValue);
             editText.setInputType(InputType.TYPE_CLASS_NUMBER);
-
-            if (hasMasking) {
-                editText.setText(
-                        formatToDisplay(TextUtils.isEmpty(mDefaultValue) ? mField.getValue() : mDefaultValue));
-                editText.setFilters(getInputFilters());
-                DigitsKeyListener digitsKeyListener = DigitsKeyListener
-                        .getInstance("- 0123456789");
-                editText.setKeyListener(digitsKeyListener);
-            } else {
-                editText.setText(TextUtils.isEmpty(mDefaultValue) ? mField.getValue() : mDefaultValue);
-            }
+//
+//            if (hasMasking) {
+//                editText.setText(TextUtils.isEmpty(mDefaultValue) ? mField.getValue() : mDefaultValue);
+//                editText.setText(
+//                        formatToDisplay(TextUtils.isEmpty(mDefaultValue) ? mField.getValue() : mDefaultValue));
+//                editText.setFilters(getInputFilters());
+//                DigitsKeyListener digitsKeyListener = DigitsKeyListener
+//                        .getInstance("- 0123456789");
+//                editText.setKeyListener(digitsKeyListener);
+//            } else {
+//                editText.setText(TextUtils.isEmpty(mDefaultValue) ? mField.getValue() : mDefaultValue);
+//            }
             editText.setOnKeyListener(new DefaultKeyListener(mDefaultFocusView, editText));
             editText.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI | EditorInfo.IME_ACTION_NEXT);
             mTextInputLayout.addView(editText);
