@@ -24,11 +24,8 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.hyperwallet.android.model.graphql.field.ConditionalPattern;
 import com.hyperwallet.android.model.graphql.field.HyperwalletField;
 import com.hyperwallet.android.model.graphql.field.Mask;
-
-import java.util.List;
 
 public abstract class AbstractMaskedInputWidget extends AbstractWidget {
     private static final char NUMBER_TOKEN = '#';
@@ -61,20 +58,9 @@ public abstract class AbstractMaskedInputWidget extends AbstractWidget {
 
 
     protected String formatToDisplay(@NonNull final String apiValue) {
-        if (mField != null && mField.getMask().containsConditionalPattern()) {
+        if (mField != null && mField.getMask() != null) {
             // format
             String pattern = mField.getMask().getPattern(apiValue);
-
-            List<ConditionalPattern> conditionalPatterns = mField.getMask().getConditionalPatterns();
-
-            for (ConditionalPattern conditionalPattern : conditionalPatterns) {
-                /* TODO this might already be handled in Mask.java
-
-                if (conditionalPattern.getRegex().matches(value) == true)
-                    pattern = conditionalPattern.getPattern();
-
-                 */
-            }
             if (!TextUtils.isEmpty(pattern)) {
                 return format(apiValue, pattern);
             } else {
