@@ -83,9 +83,8 @@ public class ExpiryDateWidget extends AbstractWidget {
                 public void onFocusChange(View v, boolean hasFocus) {
                     if (!hasFocus) {
                         mValue = mExpireDateUtils.convertDateToServerFormat(((EditText) v).getText().toString());
-                        mListener.valueChanged();
+                        onValueChanged();
                     } else {
-                        mListener.widgetFocused(ExpiryDateWidget.this.getName());
                         editText.setHint(editText.getText().toString().trim().isEmpty() ?
                                 viewGroup.getContext().getResources().getString(R.string.api_expiry_date_format) : "");
 

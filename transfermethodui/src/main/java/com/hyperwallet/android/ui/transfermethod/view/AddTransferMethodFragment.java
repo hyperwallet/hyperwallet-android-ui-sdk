@@ -267,15 +267,15 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     }
 
     @Override
-    public void valueChanged() {
-        performValidation(false);
+    public WidgetInputState getWidgetInputState(@NonNull final String widgetName) {
+        return mWidgetInputStateHashMap.get(widgetName);
     }
 
-    @Override
-    public void widgetFocused(@NonNull final String fieldName) {
-        WidgetInputState widgetInputState = mWidgetInputStateHashMap.get(fieldName);
-        widgetInputState.setHasFocused(true);
-    }
+//    @Override
+//    public void widgetFocused(@NonNull final String fieldName) {
+//        WidgetInputState widgetInputState = mWidgetInputStateHashMap.get(fieldName);
+//        widgetInputState.setHasFocused(true);
+//    }
 
     @Override
     public void saveTextChanged(@NonNull final String fieldName, @NonNull final String value) {
@@ -483,7 +483,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     }
 
     private void triggerSubmit() {
-        if (performValidation(true)) {
+        if (performValidation()) {
             switch (mTransferMethodType) {
                 case BANK_ACCOUNT:
                     mTransferMethod = new HyperwalletBankAccount.Builder()
@@ -551,7 +551,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
         mCreateTransferMethodButton.setBackgroundColor(getResources().getColor(R.color.colorSecondaryDark));
     }
 
-    private boolean performValidation(boolean bypassFocusCheck) {
+    private boolean performValidation() {
         boolean valid = true;
         // this is added since some phones triggers the create button but the widgets are not yet initialized
         boolean hasWidget = false;
@@ -560,20 +560,8 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
             if (v.getTag() instanceof AbstractWidget) {
                 hasWidget = true;
                 AbstractWidget widget = (AbstractWidget) v.getTag();
-                WidgetInputState widgetInputState = mWidgetInputStateHashMap.get(widget.getName());
-                widgetInputState.setValue(widget.getValue());
-                if (bypassFocusCheck || widgetInputState.hasFocused()) {
-                    if (widget.isValid()) {
-                        if (!widgetInputState.hasApiError()) {
-                            widgetInputState.setErrorMessage(null);
-                            widget.showValidationError(null);
-                        }
-                    } else {
-                        valid = false;
-                        widget.showValidationError(widget.getErrorMessage());
-                        widgetInputState.setErrorMessage(widget.getErrorMessage());
-                        widgetInputState.setHasApiError(false);
-                    }
+                if(!widget.isValidSubmission()) {
+                    valid = false;
                 }
             }
         }

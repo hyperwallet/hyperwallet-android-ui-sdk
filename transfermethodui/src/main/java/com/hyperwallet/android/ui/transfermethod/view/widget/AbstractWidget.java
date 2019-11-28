@@ -69,6 +69,10 @@ public abstract class AbstractWidget {
 
     @NonNull
     public WidgetInputState getWidgetInputState() {
+        WidgetInputState savedState = mListener.getWidgetInputState(this.getName());
+        if (mWidgetInputState == null || (savedState != null && mWidgetInputState != savedState)) {
+            mWidgetInputState = savedState;
+        }
         return mWidgetInputState;
     }
 
@@ -143,6 +147,29 @@ public abstract class AbstractWidget {
         } else {
             view.setId(getIdByResourceName(fieldName + LABEL_SUFFIX, view));
         }
+    }
+
+    protected void onValueChanged() {
+        isValidSubmission();
+    }
+
+    public boolean isValidSubmission() {
+
+        WidgetInputState widgetInputState = getWidgetInputState();
+        widgetInputState.setValue(getValue());
+        boolean isValid = isValid();
+        if (isValid()) {
+            if (!widgetInputState.hasApiError()) {
+                widgetInputState.setErrorMessage(null);
+                showValidationError(null);
+            }
+        } else {
+            showValidationError(getErrorMessage());
+            widgetInputState.setErrorMessage(getErrorMessage());
+            widgetInputState.setHasApiError(false);
+        }
+        return isValid;
+
     }
 
     private int getIdByResourceName(@NonNull final String fieldName, @NonNull final View view) {

@@ -43,7 +43,6 @@ public class WidgetInputState implements Parcelable, Serializable {
 
     private final String mFieldName;
     private String mErrorMessage;
-    private boolean mHasFocused;
     private boolean mHasApiError;
     private String mSelectedName;
     private String mValue;
@@ -54,19 +53,10 @@ public class WidgetInputState implements Parcelable, Serializable {
 
     private WidgetInputState(Parcel in) {
         mErrorMessage = in.readString();
-        mHasFocused = in.readByte() != 0;
         mFieldName = in.readString();
         mHasApiError = in.readByte() != 0;
         mSelectedName = in.readString();
         mValue = in.readString();
-    }
-
-    public boolean hasFocused() {
-        return mHasFocused;
-    }
-
-    public void setHasFocused(boolean hasFocused) {
-        this.mHasFocused = hasFocused;
     }
 
     public boolean hasApiError() {
@@ -112,7 +102,6 @@ public class WidgetInputState implements Parcelable, Serializable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(mErrorMessage);
-        dest.writeByte((byte) (mHasFocused ? 1 : 0));
         dest.writeString(mFieldName);
         dest.writeByte((byte) (mHasApiError ? 1 : 0));
         dest.writeString(mSelectedName);
@@ -129,8 +118,7 @@ public class WidgetInputState implements Parcelable, Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         WidgetInputState that = (WidgetInputState) o;
-        return mHasFocused == that.mHasFocused &&
-                mHasApiError == that.mHasApiError &&
+        return mHasApiError == that.mHasApiError &&
                 Objects.equals(mErrorMessage, that.mErrorMessage) &&
                 Objects.equals(mFieldName, that.mFieldName) &&
                 Objects.equals(mSelectedName, that.mSelectedName) &&
@@ -139,6 +127,6 @@ public class WidgetInputState implements Parcelable, Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(mErrorMessage, mHasFocused, mFieldName, mHasApiError, mSelectedName, mValue);
+        return Objects.hash(mErrorMessage, mFieldName, mHasApiError, mSelectedName, mValue);
     }
 }

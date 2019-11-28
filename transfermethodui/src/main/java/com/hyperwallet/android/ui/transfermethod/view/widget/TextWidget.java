@@ -68,9 +68,7 @@ public class TextWidget extends AbstractWidget {
                 public void onFocusChange(View v, boolean hasFocus) {
                     if (!hasFocus) {
                         mValue = ((EditText) v).getText().toString();
-                        mListener.valueChanged();
-                    } else {
-                        mListener.widgetFocused(TextWidget.this.getName());
+                        onValueChanged();
                     }
                 }
             });

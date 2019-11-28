@@ -90,7 +90,6 @@ public class SelectionWidget extends AbstractWidget implements WidgetSelectionDi
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
                     if (hasFocus) {
-                        mListener.widgetFocused(SelectionWidget.this.getName());
                         hideSoftKey(v);
                         showSelectionFragmentDialog();
                     } else {
@@ -99,7 +98,7 @@ public class SelectionWidget extends AbstractWidget implements WidgetSelectionDi
                         }
                         String label = ((EditText) v).getText().toString();
                         mValue = mSelectionNameValueMap.get(label);
-                        mListener.valueChanged();
+                        onValueChanged();
                     }
                 }
             });
@@ -137,7 +136,7 @@ public class SelectionWidget extends AbstractWidget implements WidgetSelectionDi
     @Override
     public void onWidgetSelectionItemClicked(@NonNull String selectedValue) {
         mValue = selectedValue;
-        mListener.valueChanged();
+        onValueChanged();
         mEditText.setText(getKeyFromValue(selectedValue));
     }
 
