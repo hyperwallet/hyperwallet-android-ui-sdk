@@ -277,17 +277,6 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
 //        widgetInputState.setHasFocused(true);
 //    }
 
-    @Override
-    public void saveTextChanged(@NonNull final String fieldName, @NonNull final String value) {
-        WidgetInputState inputState = mWidgetInputStateHashMap.get(fieldName);
-        if (inputState.hasApiError()) {
-            String oldValue = inputState.getValue();
-            if (!TextUtils.isEmpty(oldValue) && !oldValue.equals(value)) {
-                inputState.setHasApiError(false);
-            }
-        }
-        inputState.setValue(value);
-    }
 
     @Override
     public void notifyTransferMethodAdded(@NonNull final HyperwalletTransferMethod transferMethod) {
@@ -320,7 +309,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                                             mWidgetInputStateHashMap.get(field.getName()).getValue() : "",
                                     mCreateTransferMethodButton);
                     if (mWidgetInputStateHashMap.isEmpty() || !mWidgetInputStateHashMap.containsKey(widget.getName())) {
-                        mWidgetInputStateHashMap.put(widget.getName(), widget.getWidgetInputState());
+                        mWidgetInputStateHashMap.put(widget.getName(), new WidgetInputState(widget.getName()));
                     }
 
                     View widgetView = widget.getView(mDynamicContainer);

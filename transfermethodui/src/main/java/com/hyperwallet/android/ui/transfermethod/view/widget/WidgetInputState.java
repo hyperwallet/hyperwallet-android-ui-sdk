@@ -47,7 +47,7 @@ public class WidgetInputState implements Parcelable, Serializable {
     private String mSelectedName;
     private String mValue;
 
-    protected WidgetInputState(@NonNull final String fieldName) {
+    public WidgetInputState(@NonNull final String fieldName) {
         mFieldName = fieldName;
     }
 

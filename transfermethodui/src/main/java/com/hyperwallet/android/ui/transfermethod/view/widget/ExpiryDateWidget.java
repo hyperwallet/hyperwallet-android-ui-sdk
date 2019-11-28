@@ -169,7 +169,7 @@ public class ExpiryDateWidget extends AbstractWidget {
 
                     if (before != count) {
                         mValue = mExpireDateUtils.convertDateToServerFormat(formattedDate);
-                        mListener.saveTextChanged(getName(), mValue);
+                        saveTextChanged(mValue);
                     }
                     ignoreConcurrentChanges = false;
                 }

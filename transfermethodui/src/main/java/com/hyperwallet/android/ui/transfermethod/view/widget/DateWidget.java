@@ -115,7 +115,7 @@ public class DateWidget extends AbstractWidget implements DateChangedListener {
             mValue = selectedDate;
             try {
                 mEditText.setText(mDateUtils.convertDateFromServerToWidgetFormat(selectedDate));
-                mListener.saveTextChanged(getName(), getValue());
+                saveTextChanged(getValue());
                 onValueChanged();
             } catch (ParseException e) {
                 mEditText.setText(selectedDate);

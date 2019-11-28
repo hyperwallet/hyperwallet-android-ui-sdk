@@ -82,7 +82,7 @@ public class PhoneWidget extends AbstractWidget {
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     if (before != count) {
                         mValue = s.toString();
-                        mListener.saveTextChanged(getName(), getValue());
+                        saveTextChanged(getValue());
                     }
                 }
 

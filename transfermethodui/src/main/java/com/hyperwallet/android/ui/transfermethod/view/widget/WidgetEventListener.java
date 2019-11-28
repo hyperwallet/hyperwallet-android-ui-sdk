@@ -26,8 +26,6 @@ public interface WidgetEventListener {
     void openWidgetSelectionFragmentDialog(@NonNull final TreeMap<String, String> nameValueMap,
             @NonNull final String selectedName, @NonNull final String fieldLabel, @NonNull final String fieldName);
 
-    void saveTextChanged(@NonNull final String fieldName, @NonNull final String value);
-
     void openWidgetDateDialog(@Nullable final String date, @NonNull final String fieldName);
 
     WidgetInputState getWidgetInputState(@NonNull final String widgetName);

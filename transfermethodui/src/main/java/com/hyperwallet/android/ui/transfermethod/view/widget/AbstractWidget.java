@@ -16,6 +16,7 @@
  */
 package com.hyperwallet.android.ui.transfermethod.view.widget;
 
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +36,7 @@ public abstract class AbstractWidget {
     protected final HyperwalletField mField;
     protected final WidgetEventListener mListener;
     protected int mBottomViewId = 0;
-    protected WidgetInputState mWidgetInputState;
+
 
     public AbstractWidget(@Nullable HyperwalletField field, @NonNull WidgetEventListener listener,
             @Nullable String defaultValue, @NonNull View defaultFocusView) {
@@ -43,7 +44,7 @@ public abstract class AbstractWidget {
         mListener = listener;
         mDefaultValue = defaultValue;
         mDefaultFocusView = defaultFocusView;
-        mWidgetInputState = new WidgetInputState(getName());
+
     }
 
     public abstract View getView(@NonNull final ViewGroup viewGroup);
@@ -69,15 +70,19 @@ public abstract class AbstractWidget {
 
     @NonNull
     public WidgetInputState getWidgetInputState() {
-        WidgetInputState savedState = mListener.getWidgetInputState(this.getName());
-        if (mWidgetInputState == null || (savedState != null && mWidgetInputState != savedState)) {
-            mWidgetInputState = savedState;
-        }
-        return mWidgetInputState;
+        return mListener.getWidgetInputState(this.getName());
     }
 
-    public void setWidgetInputState(@NonNull WidgetInputState widgetInputState) {
-        mWidgetInputState = widgetInputState;
+    //todo this method should live in AbstractMaskedInputWidget (but then ExpiryDateWidget would be a problem)
+    protected void saveTextChanged(@NonNull final String value) {
+        WidgetInputState inputState = getWidgetInputState();
+        if (inputState.hasApiError()) {
+            String oldValue = inputState.getValue();
+            if (!TextUtils.isEmpty(oldValue) && !oldValue.equals(value)) {
+                inputState.setHasApiError(false);
+            }
+        }
+        inputState.setValue(value);
     }
 
     protected boolean isInvalidRegex() {
