@@ -2,7 +2,8 @@ project.ext {
     mavenName = 'Hyperwallet Android Common UI SDK'
     fileFilter = ['**/BuildConfig.*',
                   '**/com/hyperwallet/android/ui/common/view/error/DefaultErrorDialogFragment.*',
-                  '**/com/hyperwallet/android/ui/common/view/*'
+                  '**/com/hyperwallet/android/ui/common/view/*',
+                  '**/com/hyperwallet/android/ui/common/insight/HyperwalletInsight*'
     ]
 }
 description = 'Hyperwallet Common UI SDK for Android to integrate with the Hyperwallet Platform'
@@ -11,6 +12,7 @@ apply from: "$rootProject.projectDir/android-library.gradle"
 apply from: "$rootProject.projectDir/publish.gradle"
 
 dependencies {
+    implementation "com.hyperwallet.android:insight-sdk:$hyperwalletInsightVersion"
     implementation project(':commonrepository')
 
     testImplementation "org.robolectric:robolectric:$robolectricVersion"
