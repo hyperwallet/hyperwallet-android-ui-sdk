@@ -515,7 +515,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     }
 
     private void triggerSubmit() {
-        if (performValidation(true)) {
+        if (performValidation()) {
             switch (mTransferMethodType) {
                 case BANK_ACCOUNT:
                     mTransferMethod = new HyperwalletBankAccount.Builder()
@@ -587,6 +587,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
         boolean valid = true;
         // this is added since some phones triggers the create button but the widgets are not yet initialized
         boolean hasWidget = false;
+        Context context = requireContext();
         for (int i = 0; i < mDynamicContainer.getChildCount(); i++) {
             View v = mDynamicContainer.getChildAt(i);
             if (v.getTag() instanceof AbstractWidget) {
