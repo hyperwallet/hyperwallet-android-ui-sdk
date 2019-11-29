@@ -35,6 +35,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.transfer.Transfer;
 import com.hyperwallet.android.ui.common.repository.Event;
+import com.hyperwallet.android.ui.common.util.PageGroups;
 import com.hyperwallet.android.ui.common.view.ActivityUtils;
 import com.hyperwallet.android.ui.common.view.error.OnNetworkErrorCallback;
 import com.hyperwallet.android.ui.common.viewmodel.Navigator;
@@ -50,6 +51,7 @@ import com.hyperwallet.android.ui.user.repository.UserRepositoryFactory;
 public class CreateTransferActivity extends AppCompatActivity implements OnNetworkErrorCallback,
         Navigator<Event<Transfer>> {
 
+    public static final String TAG = "transfer-funds:create-transfer";
     public static final String EXTRA_TRANSFER_SOURCE_TOKEN = "TRANSFER_SOURCE_TOKEN";
 
     private CreateTransferViewModel mCreateTransferViewModel;
@@ -156,7 +158,7 @@ public class CreateTransferActivity extends AppCompatActivity implements OnNetwo
                     @Override
                     public void onChanged(Event<HyperwalletErrors> event) {
                         if (event != null && !event.isContentConsumed()) {
-                            ActivityUtils.showError(CreateTransferActivity.this,
+                            ActivityUtils.showError(CreateTransferActivity.this, TAG, PageGroups.TRANSFER_FUNDS,
                                     event.getContent().getErrors());
                         }
                     }
@@ -166,7 +168,8 @@ public class CreateTransferActivity extends AppCompatActivity implements OnNetwo
             @Override
             public void onChanged(Event<HyperwalletErrors> event) {
                 if (event != null && !event.isContentConsumed()) {
-                    ActivityUtils.showError(CreateTransferActivity.this, event.getContent().getErrors());
+                    ActivityUtils.showError(CreateTransferActivity.this, TAG, PageGroups.TRANSFER_FUNDS,
+                            event.getContent().getErrors());
                 }
             }
         });
@@ -182,7 +185,8 @@ public class CreateTransferActivity extends AppCompatActivity implements OnNetwo
             @Override
             public void onChanged(Event<HyperwalletErrors> event) {
                 if (!event.isContentConsumed()) {
-                    ActivityUtils.showError(CreateTransferActivity.this, event.getContent().getErrors());
+                    ActivityUtils.showError(CreateTransferActivity.this, TAG, PageGroups.TRANSFER_FUNDS,
+                            event.getContent().getErrors());
                 }
             }
         });

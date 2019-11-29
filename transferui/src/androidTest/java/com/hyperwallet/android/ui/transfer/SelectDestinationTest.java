@@ -23,6 +23,7 @@ import static java.net.HttpURLConnection.HTTP_OK;
 
 import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.ACTION_SELECT_TRANSFER_METHOD;
 import static com.hyperwallet.android.ui.testutils.util.EspressoUtils.atPosition;
+import static com.hyperwallet.android.ui.testutils.util.EspressoUtils.nestedScrollTo;
 
 import android.app.Activity;
 import android.app.Instrumentation;
@@ -34,11 +35,10 @@ import androidx.test.espresso.intent.rule.IntentsTestRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
-import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
-import com.hyperwallet.android.ui.testutils.TestAuthenticationProvider;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletMockWebServer;
+import com.hyperwallet.android.ui.testutils.rule.HyperwalletSdkRule;
 import com.hyperwallet.android.ui.testutils.util.RecyclerViewCountAssertion;
 import com.hyperwallet.android.ui.transfer.repository.TransferRepositoryFactory;
 import com.hyperwallet.android.ui.transfer.view.CreateTransferActivity;
@@ -61,6 +61,8 @@ public class SelectDestinationTest {
     @ClassRule
     public static HyperwalletExternalResourceManager sResourceManager = new HyperwalletExternalResourceManager();
     @Rule
+    public HyperwalletSdkRule mHyperwalletSdkRule = new HyperwalletSdkRule();
+    @Rule
     public HyperwalletMockWebServer mMockWebServer = new HyperwalletMockWebServer(8080);
     @Rule
     public ActivityTestRule<CreateTransferActivity> mActivityTestRule =
@@ -71,27 +73,17 @@ public class SelectDestinationTest {
 
     @Before
     public void setup() {
-        Hyperwallet.getInstance(new TestAuthenticationProvider());
-
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("authentication_token_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("user_response.json")).mock();
+        IdlingRegistry.getInstance().register(EspressoIdlingResource.getIdlingResource());
     }
 
     @After
     public void cleanup() {
         UserRepositoryFactory.clearInstance();
         TransferRepositoryFactory.clearInstance();
-    }
-
-    @Before
-    public void registerIdlingResource() {
-        IdlingRegistry.getInstance().register(EspressoIdlingResource.getIdlingResource());
-    }
-
-    @After
-    public void unregisterIdlingResource() {
         IdlingRegistry.getInstance().unregister(EspressoIdlingResource.getIdlingResource());
     }
 
@@ -107,10 +99,10 @@ public class SelectDestinationTest {
         mActivityTestRule.launchActivity(null);
 
         onView(withId(R.id.add_transfer_destination)).check(matches(not(isDisplayed())));
-        onView(withId(R.id.transfer_destination)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_destination)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_icon)).check(matches(withText(R.string.bank_account_font_icon)));
         onView(withId(R.id.transfer_destination_title)).check(matches(withText(R.string.bank_account)));
-        onView(withId(R.id.transfer_destination_selection)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_destination_selection)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_description_1)).check(matches(withText("United States")));
         onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("Ending on 0616")));
 
@@ -188,14 +180,14 @@ public class SelectDestinationTest {
         mActivityTestRule.launchActivity(null);
 
         onView(withId(R.id.add_transfer_destination)).check(matches(not(isDisplayed())));
-        onView(withId(R.id.transfer_destination)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_destination)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_icon)).check(matches(withText(R.string.bank_account_font_icon)));
         onView(withId(R.id.transfer_destination_title)).check(matches(withText(R.string.bank_account)));
-        onView(withId(R.id.transfer_destination_selection)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_destination_selection)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_description_1)).check(matches(withText("United States")));
         onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("Ending on 0616")));
 
-        onView(withId(R.id.transfer_summary)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_summary)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_summary)).check(matches(withText("Available for Transfer: 998.00 USD")));
 
         onView(withId(R.id.transfer_destination_title)).perform(click());
@@ -207,14 +199,14 @@ public class SelectDestinationTest {
         onView(withContentDescription(R.string.abc_action_bar_up_description)).perform(click());
 
         onView(withId(R.id.add_transfer_destination)).check(matches(not(isDisplayed())));
-        onView(withId(R.id.transfer_destination)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_destination)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_icon)).check(matches(withText(R.string.bank_account_font_icon)));
         onView(withId(R.id.transfer_destination_title)).check(matches(withText(R.string.bank_account)));
-        onView(withId(R.id.transfer_destination_selection)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_destination_selection)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_description_1)).check(matches(withText("United States")));
         onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("Ending on 0616")));
 
-        onView(withId(R.id.transfer_summary)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_summary)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_summary)).check(matches(withText("Available for Transfer: 998.00 USD")));
     }
 
@@ -245,14 +237,14 @@ public class SelectDestinationTest {
         intended(hasAction(ACTION_SELECT_TRANSFER_METHOD));
 
         onView(withId(R.id.add_transfer_destination)).check(matches(not(isDisplayed())));
-        onView(withId(R.id.transfer_destination)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_destination)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_icon)).check(matches(withText(R.string.bank_account_font_icon)));
         onView(withId(R.id.transfer_destination_title)).check(matches(withText(R.string.bank_account)));
-        onView(withId(R.id.transfer_destination_selection)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_destination_selection)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_description_1)).check(matches(withText("Canada")));
         onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("Ending on 5121")));
 
-        onView(withId(R.id.transfer_summary)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_summary)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_summary)).check(matches(withText("Available for Transfer: 1,157.40 CAD")));
 
     }
@@ -271,37 +263,37 @@ public class SelectDestinationTest {
         mActivityTestRule.launchActivity(null);
 
         onView(withId(R.id.add_transfer_destination)).check(matches(not(isDisplayed())));
-        onView(withId(R.id.transfer_destination)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_destination)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_icon)).check(matches(withText(R.string.bank_account_font_icon)));
         onView(withId(R.id.transfer_destination_title)).check(matches(withText(R.string.bank_account)));
-        onView(withId(R.id.transfer_destination_selection)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_destination_selection)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_description_1)).check(matches(withText("United States")));
         onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("Ending on 0616")));
 
-        onView(withId(R.id.transfer_summary)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_summary)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_summary)).check(matches(withText("Available for Transfer: 998.00 USD")));
 
         onView(withId(R.id.transfer_destination_title)).perform(click());
 
         onView(withId(R.id.transfer_destination_list)).perform(RecyclerViewActions.actionOnItemAtPosition(5, click()));
-        onView(withId(R.id.transfer_destination)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_destination)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_icon)).check(matches(withText(R.string.paypal_account_font_icon)));
         onView(withId(R.id.transfer_destination_title)).check(matches(withText(R.string.paypal_account)));
-        onView(withId(R.id.transfer_destination_selection)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_destination_selection)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_description_1)).check(matches(withText("United States")));
         onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("honey.thigpen@ukbuilder.com")));
 
-        onView(withId(R.id.transfer_amount)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_amount)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_amount)).check(matches(withText("")));
         onView(withId(R.id.transfer_amount_currency)).check(matches(withText("USD")));
 
         //Check that the toggle is disabled by default
-        onView(withId(R.id.switchButton)).check(matches(isDisplayed()));
+        onView(withId(R.id.switchButton)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.switchButton)).check(matches(not(isSelected())));
-        onView(withId(R.id.transfer_summary)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_summary)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_summary)).check(matches(withText("Available for Transfer: 1000.00 USD")));
 
-        onView(withId(R.id.transfer_notes)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_notes)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_notes)).check(matches(withText("")));
     }
 
@@ -320,17 +312,17 @@ public class SelectDestinationTest {
         mActivityTestRule.launchActivity(null);
 
         onView(withId(R.id.add_transfer_destination)).check(matches(not(isDisplayed())));
-        onView(withId(R.id.transfer_destination)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_destination)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_icon)).check(matches(withText(R.string.bank_account_font_icon)));
         onView(withId(R.id.transfer_destination_title)).check(matches(withText(R.string.bank_account)));
-        onView(withId(R.id.transfer_destination_selection)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_destination_selection)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_description_1)).check(matches(withText("United States")));
         onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("Ending on 0616")));
 
         onView(withId(R.id.transfer_destination_title)).perform(click());
 
         onView(withText(R.string.error_dialog_connectivity_title)).check(matches(isDisplayed()));
-        onView(withText(R.string.io_exception)).check(matches(isDisplayed()));
+        onView(withText(R.string.io_exception)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(android.R.id.button1)).check(matches(withText(R.string.try_again_button_label)));
         onView(withId(android.R.id.button2)).check(matches(withText(R.string.cancel_button_label)));
 
