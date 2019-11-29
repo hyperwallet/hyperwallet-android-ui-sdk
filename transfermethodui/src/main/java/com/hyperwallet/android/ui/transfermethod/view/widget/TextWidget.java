@@ -17,7 +17,6 @@
 package com.hyperwallet.android.ui.transfermethod.view.widget;
 
 import android.text.Editable;
-import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -39,14 +38,11 @@ public class TextWidget extends AbstractMaskedInputWidget {
     private ViewGroup mContainer;
     private String mValue;
     private TextInputLayout mTextInputLayout;
-    private final boolean hasMasking;
-    private InputFilter[] mInputFilter;  // TODO delete
 
     public TextWidget(@NonNull HyperwalletField field, @NonNull WidgetEventListener listener,
             @Nullable String defaultValue, @NonNull View defaultFocusView) {
         super(field, listener, defaultValue, defaultFocusView);
         mValue = defaultValue;
-        hasMasking = field.getMask() != null;
     }
 
     @Override
@@ -72,7 +68,7 @@ public class TextWidget extends AbstractMaskedInputWidget {
                 public void onFocusChange(View v, boolean hasFocus) {
                     if (!hasFocus) {
                         String input = ((EditText) v).getText().toString();
-                        mValue = hasMasking ? formatToApi(input) : input;
+                        mValue = formatToApi(input);
                         mListener.valueChanged();
                     } else {
                         mListener.widgetFocused(TextWidget.this.getName());
@@ -87,14 +83,11 @@ public class TextWidget extends AbstractMaskedInputWidget {
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     if (before != count) {
-                        System.out.println("charseq: " + s);
-                        mValue = hasMasking ? formatToApi(s.toString()) : s.toString();
+                        mValue = formatToApi(s.toString());
                         mListener.saveTextChanged(getName(), getValue());
                         String displayedValue = formatToDisplay(getValue());
                         editText.setText(displayedValue);
                         editText.setSelection(displayedValue.length());
-                        System.out.println("mValue: " + mValue);
-                        System.out.println("displayedValue: " + displayedValue);
                     }
                 }
 

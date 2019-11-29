@@ -17,8 +17,8 @@
 package com.hyperwallet.android.ui.transfermethod.view.widget;
 
 import android.text.Editable;
-import android.text.InputFilter;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
@@ -38,14 +38,11 @@ public class NumberWidget extends AbstractMaskedInputWidget {
     private ViewGroup mContainer;
     private TextInputLayout mTextInputLayout;
     private String mValue;
-    private final boolean hasMasking;
-    private InputFilter[] mInputFilter;  // TODO delete
 
     public NumberWidget(@NonNull HyperwalletField field, @NonNull WidgetEventListener listener,
             @Nullable String defaultValue, @NonNull View defaultFocusView) {
         super(field, listener, defaultValue, defaultFocusView);
         mValue = defaultValue;
-        hasMasking = field.getMask() != null;
     }
 
     @Override
@@ -71,7 +68,7 @@ public class NumberWidget extends AbstractMaskedInputWidget {
                 public void onFocusChange(View v, boolean hasFocus) {
                     if (!hasFocus) {
                         String input = ((EditText) v).getText().toString();
-                        mValue = hasMasking ? formatToApi(input) : input;
+                        mValue = formatToApi(input);
                         mListener.valueChanged();
                     } else {
                         mListener.widgetFocused(NumberWidget.this.getName());
@@ -86,19 +83,11 @@ public class NumberWidget extends AbstractMaskedInputWidget {
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     if (before != count) {
-                        System.out.println("1hasWindowFocus: " + editText.hasWindowFocus());
-                        System.out.println("1hasFocus: " + editText.hasFocus());
-                        System.out.println("1charseq: " + s);
-                        System.out.println("1start: " + start);
-                        System.out.println("1before: " + before);
-                        System.out.println("1count: " + count);
-                        System.out.println("1onTextChanged: before != count");
-                        mValue = hasMasking ? formatToApi(s.toString()) : s.toString();
+                        mValue = formatToApi(s.toString());
                         mListener.saveTextChanged(getName(), getValue());
                         String displayedValue = formatToDisplay(getValue());
                         editText.setText(displayedValue);
                         editText.setSelection(displayedValue.length());
-//                        System.out.println("formattedValue.length(): " + formattedValue.length());
                     }
                 }
 
@@ -107,20 +96,8 @@ public class NumberWidget extends AbstractMaskedInputWidget {
                 }
             });
 
-            editText.setText(mDefaultValue);
+            editText.setText(TextUtils.isEmpty(mDefaultValue) ? mField.getValue() : mDefaultValue);
             editText.setInputType(InputType.TYPE_CLASS_NUMBER);
-//
-//            if (hasMasking) {
-//                editText.setText(TextUtils.isEmpty(mDefaultValue) ? mField.getValue() : mDefaultValue);
-//                editText.setText(
-//                        formatToDisplay(TextUtils.isEmpty(mDefaultValue) ? mField.getValue() : mDefaultValue));
-//                editText.setFilters(getInputFilters());
-//                DigitsKeyListener digitsKeyListener = DigitsKeyListener
-//                        .getInstance("- 0123456789");
-//                editText.setKeyListener(digitsKeyListener);
-//            } else {
-//                editText.setText(TextUtils.isEmpty(mDefaultValue) ? mField.getValue() : mDefaultValue);
-//            }
             editText.setOnKeyListener(new DefaultKeyListener(mDefaultFocusView, editText));
             editText.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI | EditorInfo.IME_ACTION_NEXT);
             mTextInputLayout.addView(editText);
