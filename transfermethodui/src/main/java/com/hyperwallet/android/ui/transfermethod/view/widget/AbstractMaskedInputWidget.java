@@ -31,6 +31,7 @@ import com.hyperwallet.android.model.graphql.field.Mask;
 public abstract class AbstractMaskedInputWidget extends AbstractWidget {
     private static final char NUMBER_TOKEN = '#';
     private static final char TEXT_TOKEN = '@';
+    private static final char LETTER_OR_NUMBER_TOKEN = '*';
 
     private InputFilter[] mInputFilters;  // TODO delete
     private WidgetInputFilter mWidgetInputFilter;  // TODO delete
@@ -73,31 +74,62 @@ public abstract class AbstractMaskedInputWidget extends AbstractWidget {
 
     /**
      * Helper to formatToDisplay
+     *
+     * TODO switch to private if possible, currently set as package for easier access to write unit tests
      */
-    private String format(@NonNull final String apiValue, @NonNull final String formatTemplate) {
+    String format(@NonNull final String apiValue, @NonNull final String pattern) {
+        if (apiValue == null || apiValue.length() == 0 || pattern == null || pattern.length() == 0) {
+            return "";
+        }
         StringBuilder formattedValue = new StringBuilder();
-        int valueIndex = 0;
-        for (int i = 0; i < formatTemplate.length(); i++) {
-            if (valueIndex == apiValue.length()) {
-                break;
-            }
+        String extraTokens = "";
+        int patternIndex = 0;
+        int textIndex = 0;
 
-            char token = formatTemplate.charAt(i);
+        while (true) {
+            char token = pattern.charAt(patternIndex);
+            char textChar = apiValue.charAt(textIndex);
+
             switch (token) {
                 case NUMBER_TOKEN:
-                    if (Character.isDigit(apiValue.charAt(valueIndex))) {
-                        formattedValue.append(apiValue.charAt(valueIndex));
-                        valueIndex++;
+                    if (Character.isDigit(textChar)) {
+                        if (extraTokens.length() > 0) {
+                            formattedValue.append(extraTokens);
+                            extraTokens = "";
+                        }
+                        formattedValue.append(textChar);
+                        patternIndex++;
                     }
+                    textIndex++;
                     break;
                 case TEXT_TOKEN:
-                    if (Character.isLetter(apiValue.charAt(valueIndex))) {
-                        formattedValue.append(apiValue.charAt(valueIndex));
-                        valueIndex++;
+                    if (Character.isLetter(textChar)) {
+                        if (extraTokens.length() > 0) {
+                            formattedValue.append(extraTokens);
+                            extraTokens = "";
+                        }
+                        formattedValue.append(textChar);
+                        patternIndex++;
                     }
+                    textIndex++;
+                    break;
+                case LETTER_OR_NUMBER_TOKEN:
+                    if (Character.isDigit(textChar) || Character.isLetter(textChar)) {
+                        if (extraTokens.length() > 0) {
+                            formattedValue.append(extraTokens);
+                            extraTokens = "";
+                        }
+                        formattedValue.append(textChar);
+                        patternIndex++;
+                    }
+                    textIndex++;
                     break;
                 default:
-                    formattedValue.append(token);
+                    extraTokens += token;
+                    patternIndex++;
+            }
+            if (textIndex >= apiValue.length() || patternIndex >= pattern.length()) {
+                break;
             }
         }
         return formattedValue.toString();

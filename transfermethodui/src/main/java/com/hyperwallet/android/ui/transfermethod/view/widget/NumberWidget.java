@@ -39,7 +39,7 @@ public class NumberWidget extends AbstractMaskedInputWidget {
     private TextInputLayout mTextInputLayout;
     private String mValue;
     private final boolean hasMasking;
-    private InputFilter[] mInputFilter;
+    private InputFilter[] mInputFilter;  // TODO delete
 
     public NumberWidget(@NonNull HyperwalletField field, @NonNull WidgetEventListener listener,
             @Nullable String defaultValue, @NonNull View defaultFocusView) {
