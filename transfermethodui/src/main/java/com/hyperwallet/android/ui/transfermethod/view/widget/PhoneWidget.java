@@ -34,7 +34,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.hyperwallet.android.model.graphql.field.HyperwalletField;
 import com.hyperwallet.android.ui.R;
 
-public class PhoneWidget extends AbstractWidget {
+public class PhoneWidget extends AbstractMaskedInputWidget {
     private ViewGroup mContainer;
     private String mValue = "";
     private TextInputLayout mTextInputLayout;
@@ -68,7 +68,8 @@ public class PhoneWidget extends AbstractWidget {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
                     if (!hasFocus) {
-                        mValue = ((EditText) v).getText().toString();
+                        String input = ((EditText) v).getText().toString();
+                        mValue = formatToApi(input);
                         mListener.valueChanged();
                     } else {
                         mListener.widgetFocused(PhoneWidget.this.getName());
@@ -83,8 +84,13 @@ public class PhoneWidget extends AbstractWidget {
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     if (before != count) {
-                        mValue = s.toString();
+                        mValue = formatToApi(s.toString());
                         mListener.saveTextChanged(getName(), getValue());
+                        if (mField.getMask() != null) {
+                            String displayedValue = formatToDisplay(getValue());
+                            editText.setText(displayedValue);
+                            editText.setSelection(displayedValue.length());
+                        }
                     }
                 }
 
