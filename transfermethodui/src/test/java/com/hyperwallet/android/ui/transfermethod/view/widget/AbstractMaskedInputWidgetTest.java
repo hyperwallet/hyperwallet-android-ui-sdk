@@ -20,54 +20,58 @@ public class AbstractMaskedInputWidgetTest {
 
     private TestInputWidget mTestInputWidget;
 
-    @Test
-    public void testFormatToDisplay() {
-        // json object
-        // json.setMask(new Pattern("#"))
-
+    public AbstractMaskedInputWidgetTest() {
         mTestInputWidget = new TestInputWidget(null, null, null, null);
+    }
 
+    @Test
+    public void testFormatToDisplay_usingExcelData() {
+        // TODO
+    }
+
+    @Test
+    public void testFormatToDisplay_edgeCases() {
         // TODO temporary tests for most scenarios and edge cases, use values from excel sheet instead
-        String test1 = mTestInputWidget.format("v23", "@#@-#@#");
+        String test1 = mTestInputWidget.formatForTesting("v23", "@#@-#@#");
         assertThat(test1, is("v2"));
 
-        String test2 = mTestInputWidget.format("v5l", "@#@ #@#");
+        String test2 = mTestInputWidget.formatForTesting("v5l", "@#@ #@#");
         assertThat(test2, is("v5l"));
 
-        String test3 = mTestInputWidget.format("v5l3", "@#@-#@#");
+        String test3 = mTestInputWidget.formatForTesting("v5l3", "@#@-#@#");
         assertThat(test3, is("v5l-3"));
 
-        String test4 = mTestInputWidget.format("v5l3c2", "@#@-#@#");
+        String test4 = mTestInputWidget.formatForTesting("v5l3c2", "@#@-#@#");
         assertThat(test4, is("v5l-3c2"));
 
-        String num1 = mTestInputWidget.format("123456", "### ###");
+        String num1 = mTestInputWidget.formatForTesting("123456", "### ###");
         assertThat(num1, is("123 456"));
 
-        String num2 = mTestInputWidget.format("123", "### ###");
+        String num2 = mTestInputWidget.formatForTesting("123", "### ###");
         assertThat(num2, is("123"));
 
-        String num3 = mTestInputWidget.format("123abc", "### ###");
+        String num3 = mTestInputWidget.formatForTesting("123abc", "### ###");
         assertThat(num3, is("123"));
 
-        String num4 = mTestInputWidget.format("123abc456", "### ###");
+        String num4 = mTestInputWidget.formatForTesting("123abc456", "### ###");
         assertThat(num4, is("123 456"));
 
-        String word1 = mTestInputWidget.format("b2", "@@@");
+        String word1 = mTestInputWidget.formatForTesting("b2", "@@@");
         assertThat(word1, is("b"));
 
-        String phone1 = mTestInputWidget.format("16046332234", "+# (###) ###-####");
+        String phone1 = mTestInputWidget.formatForTesting("16046332234", "+# (###) ###-####");
         assertThat(phone1, is("+1 (604) 633-2234"));
 
-        String star1 = mTestInputWidget.format("v5l", "***-***");
+        String star1 = mTestInputWidget.formatForTesting("v5l", "***-***");
         assertThat(star1, is("v5l"));
 
-        String star2 = mTestInputWidget.format("v5l3", "***-***");
+        String star2 = mTestInputWidget.formatForTesting("v5l3", "***-***");
         assertThat(star2, is("v5l-3"));
 
-        String star3 = mTestInputWidget.format("v5!@#$l-)(*&^%$#@!3$^c&%&%2", "***-***");
+        String star3 = mTestInputWidget.formatForTesting("v5!@#$l-)(*&^%$#@!3$^c&%&%2", "***-***");
         assertThat(star3, is("v5l-3c2"));
 
-        String empty = mTestInputWidget.format("", "***-***");
+        String empty = mTestInputWidget.formatForTesting("", "***-***");
         assertThat(empty, is(""));
     }
 

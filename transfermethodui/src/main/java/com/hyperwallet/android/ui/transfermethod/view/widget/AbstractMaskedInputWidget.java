@@ -1,6 +1,6 @@
 /*
  * The MIT License (MIT)
- * Copyright (c) 2018 Hyperwallet Systems Inc.
+ * Copyright (c) 2019 Hyperwallet Systems Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -21,9 +21,13 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 
 import com.hyperwallet.android.model.graphql.field.HyperwalletField;
 
+/**
+ * Provides additional methods for Widget to help with formatting for input types.
+ */
 public abstract class AbstractMaskedInputWidget extends AbstractWidget {
     private static final char NUMBER_TOKEN = '#';
     private static final char TEXT_TOKEN = '@';
@@ -34,6 +38,13 @@ public abstract class AbstractMaskedInputWidget extends AbstractWidget {
         super(field, listener, defaultValue, defaultFocusView);
     }
 
+    /**
+     * Removes the characters matching in the field's scrubRegex. This is to prepare the data for submission to the
+     * server.
+     *
+     * @param displayValue the value that would be coming from the component
+     * @return the raw value that will be sent to the server for submission and validation
+     */
     protected String formatToApi(@NonNull final String displayValue) {
         if (mField.getMask() != null) {
             return displayValue.replaceAll(mField.getMask().getScrubRegex(), "");
@@ -41,7 +52,13 @@ public abstract class AbstractMaskedInputWidget extends AbstractWidget {
         return displayValue;
     }
 
-
+    /**
+     * Uses the input and returns the formatted value specified in the mask pattern. Uses the conditional pattern as
+     * necessary.
+     *
+     * @param apiValue data in raw form
+     * @return a String formatted to the specification in the mask pattern
+     */
     protected String formatToDisplay(@NonNull final String apiValue) {
         if (mField != null && mField.getMask() != null) {
             // format
@@ -55,13 +72,8 @@ public abstract class AbstractMaskedInputWidget extends AbstractWidget {
         return apiValue;
     }
 
-    /**
-     * Helper to formatToDisplay
-     *
-     * TODO switch to private if possible, currently set as package for easier access to write unit tests
-     */
-    String format(@NonNull final String apiValue, @NonNull final String pattern) {
-        if (apiValue == null || apiValue.length() == 0 || pattern == null || pattern.length() == 0) {
+    private String format(@NonNull final String apiValue, @NonNull final String pattern) {
+        if (apiValue.length() == 0 || pattern.length() == 0) {
             return "";
         }
         StringBuilder formattedValue = new StringBuilder();
@@ -116,5 +128,10 @@ public abstract class AbstractMaskedInputWidget extends AbstractWidget {
             }
         }
         return formattedValue.toString();
+    }
+
+    @VisibleForTesting
+    String formatForTesting(@NonNull final String apiValue, @NonNull final String pattern) {
+        return format(apiValue, pattern);
     }
 }
