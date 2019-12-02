@@ -86,11 +86,9 @@ public class PhoneWidget extends AbstractMaskedInputWidget {
                     if (before != count) {
                         mValue = formatToApi(s.toString());
                         mListener.saveTextChanged(getName(), getValue());
-                        if (mField.getMask() != null) {
-                            String displayedValue = formatToDisplay(getValue());
-                            editText.setText(displayedValue);
-                            editText.setSelection(displayedValue.length());
-                        }
+                        String displayedValue = formatToDisplay(getValue());
+                        editText.setText(displayedValue);
+                        editText.setSelection(displayedValue.length());
                     }
                 }
 

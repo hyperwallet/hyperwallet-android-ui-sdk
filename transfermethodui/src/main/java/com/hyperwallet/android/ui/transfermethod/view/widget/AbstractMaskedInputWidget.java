@@ -21,7 +21,6 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
 
 import com.hyperwallet.android.model.graphql.field.HyperwalletField;
 
@@ -42,7 +41,7 @@ public abstract class AbstractMaskedInputWidget extends AbstractWidget {
      * Removes the characters matching in the field's scrubRegex. This is to prepare the data for submission to the
      * server.
      *
-     * @param displayValue the value that would be coming from the component
+     * @param displayValue the value that would be coming from the UI component
      * @return the raw value that will be sent to the server for submission and validation
      */
     protected String formatToApi(@NonNull final String displayValue) {
@@ -72,7 +71,7 @@ public abstract class AbstractMaskedInputWidget extends AbstractWidget {
         return apiValue;
     }
 
-    private String format(@NonNull final String apiValue, @NonNull final String pattern) {
+    String format(@NonNull final String apiValue, @NonNull final String pattern) {
         if (apiValue.length() == 0 || pattern.length() == 0) {
             return "";
         }
@@ -128,10 +127,5 @@ public abstract class AbstractMaskedInputWidget extends AbstractWidget {
             }
         }
         return formattedValue.toString();
-    }
-
-    @VisibleForTesting
-    String formatForTesting(@NonNull final String apiValue, @NonNull final String pattern) {
-        return format(apiValue, pattern);
     }
 }
