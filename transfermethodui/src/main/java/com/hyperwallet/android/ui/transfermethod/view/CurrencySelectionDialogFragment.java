@@ -298,30 +298,32 @@ public class CurrencySelectionDialogFragment extends DialogFragment implements T
         @Override
         public Filter getFilter() {
             return new Filter() {
+                private TreeMap<String, String> currencyNameCodeFilteredMap;
+
                 @Override
                 protected FilterResults performFiltering(CharSequence constraint) {
                     if (constraint.length() == 0) {
-                        mCurrencyNames = new ArrayList<>(mCurrencyNameCodeMap.keySet());
-                        mCurrencyNameCodeFilteredMap = mCurrencyNameCodeMap;
+                        currencyNameCodeFilteredMap = mCurrencyNameCodeMap;
                     } else {
-                        mCurrencyNameCodeFilteredMap = new TreeMap<>();
+                        currencyNameCodeFilteredMap = new TreeMap<>();
                         for (String countryName : mCurrencyNameCodeMap.keySet()) {
                             if (countryName.toLowerCase(Locale.ROOT).contains(
                                     constraint.toString().toLowerCase(Locale.ROOT))) {
-                                mCurrencyNameCodeFilteredMap.put(countryName, mCurrencyNameCodeMap.get(countryName));
+                                currencyNameCodeFilteredMap.put(countryName, mCurrencyNameCodeMap.get(countryName));
                             }
                         }
-                        mCurrencyNames = new ArrayList<>(mCurrencyNameCodeFilteredMap.keySet());
                     }
 
                     FilterResults filterResults = new FilterResults();
-                    filterResults.values = mCurrencyNameCodeFilteredMap;
+                    filterResults.values = currencyNameCodeFilteredMap;
+                    filterResults.count = currencyNameCodeFilteredMap.size();
                     return filterResults;
                 }
 
                 @Override
                 protected void publishResults(CharSequence constraint, FilterResults results) {
                     mCurrencyNameCodeFilteredMap = (TreeMap<String, String>) results.values;
+                    mCurrencyNames = new ArrayList<>(mCurrencyNameCodeFilteredMap.keySet());
                     notifyDataSetChanged();
                 }
             };

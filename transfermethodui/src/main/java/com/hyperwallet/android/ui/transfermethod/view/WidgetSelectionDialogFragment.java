@@ -306,29 +306,31 @@ public class WidgetSelectionDialogFragment extends DialogFragment implements Too
         @Override
         public Filter getFilter() {
             return new Filter() {
+                private TreeMap<String, String> nameValueFilteredMap;
+
                 @Override
                 protected FilterResults performFiltering(CharSequence constraint) {
                     if (constraint.length() == 0) {
-                        mSelectionList = new ArrayList<>(mNameValueMap.keySet());
-                        mNameValueFilteredMap = mNameValueMap;
+                        nameValueFilteredMap = mNameValueMap;
                     } else {
-                        mNameValueFilteredMap = new TreeMap<>();
+                        nameValueFilteredMap = new TreeMap<>();
                         for (String selection : mNameValueMap.keySet()) {
                             if (selection.toLowerCase(Locale.ROOT)
                                     .contains(constraint.toString().toLowerCase(Locale.ROOT))) {
-                                mNameValueFilteredMap.put(selection, mNameValueMap.get(selection));
+                                nameValueFilteredMap.put(selection, mNameValueMap.get(selection));
                             }
                         }
-                        mSelectionList = new ArrayList<>(mNameValueFilteredMap.keySet());
                     }
                     FilterResults filterResults = new FilterResults();
-                    filterResults.values = mNameValueFilteredMap;
+                    filterResults.values = nameValueFilteredMap;
+                    filterResults.count = nameValueFilteredMap.size();
                     return filterResults;
                 }
 
                 @Override
                 protected void publishResults(CharSequence constraint, FilterResults results) {
                     mNameValueFilteredMap = (TreeMap<String, String>) results.values;
+                    mSelectionList = new ArrayList<>(mNameValueFilteredMap.keySet());
                     notifyDataSetChanged();
                 }
             };
