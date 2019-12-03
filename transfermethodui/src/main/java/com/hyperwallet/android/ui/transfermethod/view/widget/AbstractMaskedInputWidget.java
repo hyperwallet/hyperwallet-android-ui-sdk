@@ -16,12 +16,17 @@
  */
 package com.hyperwallet.android.ui.transfermethod.view.widget;
 
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.hyperwallet.android.model.graphql.field.HyperwalletField;
 
 /**
@@ -32,6 +37,10 @@ public abstract class AbstractMaskedInputWidget extends AbstractWidget {
     private static final char TEXT_TOKEN = '@';
     private static final char LETTER_OR_NUMBER_TOKEN = '*';
     private static final char BACKSLASH_ESCAPED = '\\';
+
+    protected ViewGroup mContainer;
+    protected String mValue;
+    protected TextInputLayout mTextInputLayout;
 
     public AbstractMaskedInputWidget(@Nullable HyperwalletField field, @NonNull WidgetEventListener listener,
             @Nullable String defaultValue, @NonNull View defaultFocusView) {
@@ -140,5 +149,36 @@ public abstract class AbstractMaskedInputWidget extends AbstractWidget {
             }
         }
         return formattedValue.toString();
+    }
+
+    class InputMaskTextWatcher implements TextWatcher {
+        boolean ignoreChange = false;
+        EditText mEditText;
+
+        InputMaskTextWatcher(EditText editText) {
+            mEditText = editText;
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            if (!ignoreChange && before != count) {
+                mValue = formatToApi(s.toString());
+                mListener.saveTextChanged(getName(), getValue());
+
+                ignoreChange = true;
+                String displayedValue = formatToDisplay(getValue());
+                mEditText.setText(displayedValue);
+                mEditText.setSelection(displayedValue.length());
+                ignoreChange = false;
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+        }
     }
 }

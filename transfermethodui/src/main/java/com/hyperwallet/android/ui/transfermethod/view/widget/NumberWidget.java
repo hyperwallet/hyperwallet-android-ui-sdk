@@ -16,10 +16,8 @@
  */
 package com.hyperwallet.android.ui.transfermethod.view.widget;
 
-import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,9 +33,6 @@ import com.hyperwallet.android.model.graphql.field.HyperwalletField;
 import com.hyperwallet.android.ui.R;
 
 public class NumberWidget extends AbstractMaskedInputWidget {
-    private ViewGroup mContainer;
-    private TextInputLayout mTextInputLayout;
-    private String mValue;
 
     public NumberWidget(@NonNull HyperwalletField field, @NonNull WidgetEventListener listener,
             @Nullable String defaultValue, @NonNull View defaultFocusView) {
@@ -75,31 +70,7 @@ public class NumberWidget extends AbstractMaskedInputWidget {
                     }
                 }
             });
-            editText.addTextChangedListener(new TextWatcher() {
-                boolean ignoreChange = false;
-
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    if (!ignoreChange && before != count) {
-                        mValue = formatToApi(s.toString());
-                        mListener.saveTextChanged(getName(), getValue());
-
-                        ignoreChange = true;
-                        String displayedValue = formatToDisplay(getValue());
-                        editText.setText(displayedValue);
-                        editText.setSelection(displayedValue.length());
-                        ignoreChange = false;
-                    }
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-                }
-            });
+            editText.addTextChangedListener(new InputMaskTextWatcher(editText));
 
             editText.setText(TextUtils.isEmpty(mDefaultValue) ? mField.getValue() : mDefaultValue);
             editText.setInputType(InputType.TYPE_CLASS_NUMBER);
