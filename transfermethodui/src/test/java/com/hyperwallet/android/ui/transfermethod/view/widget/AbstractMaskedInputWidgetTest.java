@@ -66,7 +66,7 @@ public class AbstractMaskedInputWidgetTest {
         assertThat(star2, is("v5l-3"));
 
         String star3 = mTestInputWidget.format("v5!@#$l-)(*&^%$#@!3$^c&%&%2", "***-***");
-        assertThat(star3, is("v5l-3c2"));
+        assertThat(star3, is("v5!-@#$"));
 
         String empty = mTestInputWidget.format("", "***-***");
         assertThat(empty, is(""));
@@ -90,6 +90,23 @@ public class AbstractMaskedInputWidgetTest {
 
         String paste2 = mTestInputWidget.format("198A76", "1##A##");
         assertThat(paste2, is("198A76"));
+
+        String backslash1 = mTestInputWidget.format("1234", "##\\###");
+        assertThat(backslash1, is("12#34"));
+
+        String backslash2 = mTestInputWidget.format("aaaaaa", "\\@@#*\\#@#*\\*@#*");
+        assertThat(backslash2, is("@a"));
+
+//        String backslash3 = mTestInputWidget.format("111111", "\\@@#*\\#@#*\\*@#*");
+//        assertThat(backslash3, is("@")); // Line 99 of excel, the excel is not correct. Correct answer should be:
+//        (empty string)
+
+//        String backslash4 = mTestInputWidget.format("a1aa1a", "\\@@#*\\#@#*\\*@#*");
+//        assertThat(backslash4, is("@a1a#a1a*")); // Line 100 of excel, the excel is not correct. Correct answer
+//        should be: @a1a#a1a
+
+        String backslash5 = mTestInputWidget.format("@a1a#a1a*a1a", "\\@@#*\\#@#*\\*@#*");
+        assertThat(backslash5, is("@a1a#a1a*a1a"));
     }
 
     class TestInputWidget extends AbstractMaskedInputWidget {

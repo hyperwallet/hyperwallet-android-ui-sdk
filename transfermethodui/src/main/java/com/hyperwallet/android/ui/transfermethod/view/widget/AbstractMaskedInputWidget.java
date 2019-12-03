@@ -72,61 +72,70 @@ public abstract class AbstractMaskedInputWidget extends AbstractWidget {
     }
 
     String format(@NonNull final String apiValue, @NonNull final String pattern) {
-        if (apiValue.length() == 0 || pattern.length() == 0) {
-            return "";
-        }
         StringBuilder formattedValue = new StringBuilder();
         String extraTokens = "";
+        String backslash = "";
         int patternIndex = 0;
         int textIndex = 0;
 
         while (true) {
+            if (textIndex >= apiValue.length() || patternIndex >= pattern.length()) {
+                break;
+            }
             char token = pattern.charAt(patternIndex);
             char textChar = apiValue.charAt(textIndex);
 
-            switch (token) {
-                case NUMBER_TOKEN:
-                    if (Character.isDigit(textChar)) {
-                        if (extraTokens.length() > 0) {
-                            formattedValue.append(extraTokens);
-                            extraTokens = "";
+            if (token == '\\') {
+                backslash += token;
+                patternIndex++;
+
+            } else if (backslash.length() == 1) {
+                extraTokens += token;
+                patternIndex++;
+                backslash = "";
+
+            } else {
+                switch (token) {
+                    case NUMBER_TOKEN:
+                        if (Character.isDigit(textChar)) {
+                            if (extraTokens.length() > 0) {
+                                formattedValue.append(extraTokens);
+                                extraTokens = "";
+                            }
+                            formattedValue.append(textChar);
+                            patternIndex++;
                         }
-                        formattedValue.append(textChar);
-                        patternIndex++;
-                    }
-                    textIndex++;
-                    break;
-                case TEXT_TOKEN:
-                    if (Character.isLetter(textChar)) {
-                        if (extraTokens.length() > 0) {
-                            formattedValue.append(extraTokens);
-                            extraTokens = "";
-                        }
-                        formattedValue.append(textChar);
-                        patternIndex++;
-                    }
-                    textIndex++;
-                    break;
-                case LETTER_OR_NUMBER_TOKEN:
-                        if (extraTokens.length() > 0) {
-                            formattedValue.append(extraTokens);
-                            extraTokens = "";
-                        }
-                        formattedValue.append(textChar);
-                        patternIndex++;
-                    textIndex++;
-                    break;
-                default:
-                    if (token == textChar) {
-                        formattedValue.append(textChar);
                         textIndex++;
-                    } else {
-                        extraTokens += token;
-                    }
-                    patternIndex++;
-            }
-            if (textIndex >= apiValue.length() || patternIndex >= pattern.length()) {
-                break;
+                        break;
+                    case TEXT_TOKEN:
+                        if (Character.isLetter(textChar)) {
+                            if (extraTokens.length() > 0) {
+                                formattedValue.append(extraTokens);
+                                extraTokens = "";
+                            }
+                            formattedValue.append(textChar);
+                            patternIndex++;
+                        }
+                        textIndex++;
+                        break;
+                    case LETTER_OR_NUMBER_TOKEN:
+                        if (extraTokens.length() > 0) {
+                            formattedValue.append(extraTokens);
+                            extraTokens = "";
+                        }
+                        formattedValue.append(textChar);
+                        patternIndex++;
+                        textIndex++;
+                        break;
+                    default:
+                        if (token == textChar) {
+                            formattedValue.append(textChar);
+                            textIndex++;
+                        } else {
+                            extraTokens += token;
+                        }
+                        patternIndex++;
+                }
             }
         }
         return formattedValue.toString();
