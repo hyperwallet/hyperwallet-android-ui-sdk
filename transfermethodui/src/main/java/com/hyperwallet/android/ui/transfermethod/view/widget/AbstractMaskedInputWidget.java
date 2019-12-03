@@ -108,18 +108,21 @@ public abstract class AbstractMaskedInputWidget extends AbstractWidget {
                     textIndex++;
                     break;
                 case LETTER_OR_NUMBER_TOKEN:
-                    if (Character.isDigit(textChar) || Character.isLetter(textChar)) {
                         if (extraTokens.length() > 0) {
                             formattedValue.append(extraTokens);
                             extraTokens = "";
                         }
                         formattedValue.append(textChar);
                         patternIndex++;
-                    }
                     textIndex++;
                     break;
                 default:
-                    extraTokens += token;
+                    if (token == textChar) {
+                        formattedValue.append(textChar);
+                        textIndex++;
+                    } else {
+                        extraTokens += token;
+                    }
                     patternIndex++;
             }
             if (textIndex >= apiValue.length() || patternIndex >= pattern.length()) {

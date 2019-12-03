@@ -76,18 +76,23 @@ public class TextWidget extends AbstractMaskedInputWidget {
                 }
             });
             editText.addTextChangedListener(new TextWatcher() {
+                boolean ignoreChange = false;
+
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 }
 
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    if (before != count) {
+                    if (!ignoreChange && before != count) {
                         mValue = formatToApi(s.toString());
                         mListener.saveTextChanged(getName(), getValue());
+
+                        ignoreChange = true;
                         String displayedValue = formatToDisplay(getValue());
                         editText.setText(displayedValue);
                         editText.setSelection(displayedValue.length());
+                        ignoreChange = false;
                     }
                 }
 

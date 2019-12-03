@@ -23,7 +23,7 @@ public class AbstractMaskedInputWidgetTest {
 
     @Test
     public void testFormatToDisplay_usingExcelData() {
-        // TODO
+        // TODO for Mani
     }
 
     @Test
@@ -70,6 +70,26 @@ public class AbstractMaskedInputWidgetTest {
 
         String empty = mTestInputWidget.format("", "***-***");
         assertThat(empty, is(""));
+
+        // below simulates if the user clicks keys one letter at a time
+        String conflict1 = mTestInputWidget.format("9", "1**A**");
+        assertThat(conflict1, is("19"));
+
+        String conflict2 = mTestInputWidget.format("198", "1##A##");
+        assertThat(conflict2, is("198"));
+
+        String conflict3 = mTestInputWidget.format("1987", "1##A##");
+        assertThat(conflict3, is("198A7"));
+
+        String conflict4 = mTestInputWidget.format("198A76", "1##A##");
+        assertThat(conflict4, is("198A76"));
+
+        // simulates user pasting in values
+        String paste1 = mTestInputWidget.format("9876", "1##A##");
+        assertThat(paste1, is("198A76"));
+
+        String paste2 = mTestInputWidget.format("198A76", "1##A##");
+        assertThat(paste2, is("198A76"));
     }
 
     class TestInputWidget extends AbstractMaskedInputWidget {
