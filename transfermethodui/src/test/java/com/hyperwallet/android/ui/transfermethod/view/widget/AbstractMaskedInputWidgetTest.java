@@ -107,6 +107,10 @@ public class AbstractMaskedInputWidgetTest {
 
         String backslash5 = mTestInputWidget.format("@a1a#a1a*a1a", "\\@@#*\\#@#*\\*@#*");
         assertThat(backslash5, is("@a1a#a1a*a1a"));
+
+        // we don't support ending suffix
+        String backslash6 = mTestInputWidget.format("1234", "\\\\##\\\\##\\\\");
+        assertThat(backslash6, is("\\12\\34"));
     }
 
     class TestInputWidget extends AbstractMaskedInputWidget {

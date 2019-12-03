@@ -31,6 +31,7 @@ public abstract class AbstractMaskedInputWidget extends AbstractWidget {
     private static final char NUMBER_TOKEN = '#';
     private static final char TEXT_TOKEN = '@';
     private static final char LETTER_OR_NUMBER_TOKEN = '*';
+    private static final char BACKSLASH_ESCAPED = '\\';
 
     public AbstractMaskedInputWidget(@Nullable HyperwalletField field, @NonNull WidgetEventListener listener,
             @Nullable String defaultValue, @NonNull View defaultFocusView) {
@@ -85,14 +86,14 @@ public abstract class AbstractMaskedInputWidget extends AbstractWidget {
             char token = pattern.charAt(patternIndex);
             char textChar = apiValue.charAt(textIndex);
 
-            if (token == '\\') {
-                backslash += token;
-                patternIndex++;
-
-            } else if (backslash.length() == 1) {
+            if (backslash.length() == 1) {
                 extraTokens += token;
                 patternIndex++;
                 backslash = "";
+
+            } else if (token == BACKSLASH_ESCAPED) {
+                backslash += token;
+                patternIndex++;
 
             } else {
                 switch (token) {
