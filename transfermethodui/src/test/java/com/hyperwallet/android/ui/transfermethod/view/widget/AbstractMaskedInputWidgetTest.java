@@ -117,6 +117,9 @@ public class AbstractMaskedInputWidgetTest {
 
         String extra2 = mTestInputWidget.format("123-", "###-###");
         assertThat(extra2, is("123-"));
+
+        String characterSet1 = mTestInputWidget.format("12你好ééab12你好", "@@-##-**");
+        assertThat(characterSet1, is("ab-12-你好"));
     }
 
     class TestInputWidget extends AbstractMaskedInputWidget {

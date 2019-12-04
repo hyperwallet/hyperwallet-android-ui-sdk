@@ -34,7 +34,7 @@ import com.hyperwallet.android.model.graphql.field.HyperwalletField;
  */
 public abstract class AbstractMaskedInputWidget extends AbstractWidget {
     private static final char NUMBER_TOKEN = '#';
-    private static final char TEXT_TOKEN = '@';
+    private static final char ENGLISH_LETTER_TOKEN = '@';
     private static final char LETTER_OR_NUMBER_TOKEN = '*';
     private static final char BACKSLASH_ESCAPED = '\\';
 
@@ -88,6 +88,7 @@ public abstract class AbstractMaskedInputWidget extends AbstractWidget {
         int patternIndex = 0;
         int textIndex = 0;
 
+        // Please ensure one of patternIndex or textIndex is incremented for each iteration to prevent an infinite loop
         while (true) {
             if (textIndex >= apiValue.length() || patternIndex >= pattern.length()) {
                 break;
@@ -117,8 +118,8 @@ public abstract class AbstractMaskedInputWidget extends AbstractWidget {
                         }
                         textIndex++;
                         break;
-                    case TEXT_TOKEN:
-                        if (Character.isLetter(textChar)) {
+                    case ENGLISH_LETTER_TOKEN:
+                        if ((textChar >= 'a' && textChar <= 'z') || (textChar >= 'A' && textChar <= 'Z')) {
                             if (extraTokens.length() > 0) {
                                 formattedValue.append(extraTokens);
                                 extraTokens = "";
