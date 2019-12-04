@@ -153,9 +153,9 @@ public abstract class AbstractMaskedInputWidget extends AbstractWidget {
     }
 
     class InputMaskTextWatcher implements TextWatcher {
-        EditText mEditText;
+        private final EditText mEditText;
 
-        InputMaskTextWatcher(EditText editText) {
+        InputMaskTextWatcher(@NonNull final EditText editText) {
             mEditText = editText;
         }
 
