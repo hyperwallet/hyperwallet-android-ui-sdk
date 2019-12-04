@@ -12,7 +12,12 @@ import androidx.annotation.Nullable;
 import com.hyperwallet.android.model.graphql.field.HyperwalletField;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
+import junitparams.FileParameters;
+import junitparams.JUnitParamsRunner;
+
+@RunWith(JUnitParamsRunner.class)
 public class AbstractMaskedInputWidgetTest {
 
     private TestInputWidget mTestInputWidget;
@@ -22,8 +27,11 @@ public class AbstractMaskedInputWidgetTest {
     }
 
     @Test
-    public void testFormatToDisplay_usingExcelData() {
-        // TODO for Mani
+    @FileParameters("src/test/resources/formatter_mask_test_scenarios.csv")
+    public void testFormatToDisplay_usingExcelData(String description, String pattern, String scenario,
+            String inputValue, String formattedValue) {
+        assertThat("Description: " + description + "; Scenario: " + scenario,
+                mTestInputWidget.format(inputValue, pattern), is(formattedValue));
     }
 
     @Test
