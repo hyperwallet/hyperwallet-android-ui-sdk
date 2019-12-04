@@ -298,25 +298,25 @@ public class CurrencySelectionDialogFragment extends DialogFragment implements T
         @Override
         public Filter getFilter() {
             return new Filter() {
-                private TreeMap<String, String> currencyNameCodeFilteredMap;
+                private TreeMap<String, String> currencyNameCodeFiltered;
 
                 @Override
                 protected FilterResults performFiltering(CharSequence constraint) {
                     if (constraint.length() == 0) {
-                        currencyNameCodeFilteredMap = mCurrencyNameCodeMap;
+                        currencyNameCodeFiltered = mCurrencyNameCodeMap;
                     } else {
-                        currencyNameCodeFilteredMap = new TreeMap<>();
+                        currencyNameCodeFiltered = new TreeMap<>();
                         for (String countryName : mCurrencyNameCodeMap.keySet()) {
                             if (countryName.toLowerCase(Locale.ROOT).contains(
                                     constraint.toString().toLowerCase(Locale.ROOT))) {
-                                currencyNameCodeFilteredMap.put(countryName, mCurrencyNameCodeMap.get(countryName));
+                                currencyNameCodeFiltered.put(countryName, mCurrencyNameCodeMap.get(countryName));
                             }
                         }
                     }
 
                     FilterResults filterResults = new FilterResults();
-                    filterResults.values = currencyNameCodeFilteredMap;
-                    filterResults.count = currencyNameCodeFilteredMap.size();
+                    filterResults.values = currencyNameCodeFiltered;
+                    filterResults.count = currencyNameCodeFiltered.size();
                     return filterResults;
                 }
 

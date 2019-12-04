@@ -306,24 +306,24 @@ public class WidgetSelectionDialogFragment extends DialogFragment implements Too
         @Override
         public Filter getFilter() {
             return new Filter() {
-                private TreeMap<String, String> nameValueFilteredMap;
+                private TreeMap<String, String> nameValueFiltered;
 
                 @Override
                 protected FilterResults performFiltering(CharSequence constraint) {
                     if (constraint.length() == 0) {
-                        nameValueFilteredMap = mNameValueMap;
+                        nameValueFiltered = mNameValueMap;
                     } else {
-                        nameValueFilteredMap = new TreeMap<>();
+                        nameValueFiltered = new TreeMap<>();
                         for (String selection : mNameValueMap.keySet()) {
                             if (selection.toLowerCase(Locale.ROOT)
                                     .contains(constraint.toString().toLowerCase(Locale.ROOT))) {
-                                nameValueFilteredMap.put(selection, mNameValueMap.get(selection));
+                                nameValueFiltered.put(selection, mNameValueMap.get(selection));
                             }
                         }
                     }
                     FilterResults filterResults = new FilterResults();
-                    filterResults.values = nameValueFilteredMap;
-                    filterResults.count = nameValueFilteredMap.size();
+                    filterResults.values = nameValueFiltered;
+                    filterResults.count = nameValueFiltered.size();
                     return filterResults;
                 }
 

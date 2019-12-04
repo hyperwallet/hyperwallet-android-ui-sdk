@@ -265,24 +265,24 @@ public class CountrySelectionDialogFragment extends DialogFragment implements To
         @Override
         public Filter getFilter() {
             return new Filter() {
-                private TreeMap<String, String> countryNameCodeFilteredMap;
+                private TreeMap<String, String> countryNameCodeFiltered;
 
                 @Override
                 protected FilterResults performFiltering(CharSequence constraint) {
                     if (constraint.length() == 0) {
-                        countryNameCodeFilteredMap = mCountryNameCodeMap;
+                        countryNameCodeFiltered = mCountryNameCodeMap;
                     } else {
-                        countryNameCodeFilteredMap = new TreeMap<>();
+                        countryNameCodeFiltered = new TreeMap<>();
                         for (String countryName : mCountryNameCodeMap.keySet()) {
                             if (countryName.toLowerCase(Locale.ROOT).contains(
                                     constraint.toString().toLowerCase(Locale.ROOT))) {
-                                countryNameCodeFilteredMap.put(countryName, mCountryNameCodeMap.get(countryName));
+                                countryNameCodeFiltered.put(countryName, mCountryNameCodeMap.get(countryName));
                             }
                         }
                     }
                     FilterResults filterResults = new FilterResults();
-                    filterResults.values = countryNameCodeFilteredMap;
-                    filterResults.count = countryNameCodeFilteredMap.size();
+                    filterResults.values = countryNameCodeFiltered;
+                    filterResults.count = countryNameCodeFiltered.size();
                     return filterResults;
                 }
 
