@@ -111,6 +111,12 @@ public class AbstractMaskedInputWidgetTest {
         // we don't support ending suffix
         String backslash6 = mTestInputWidget.format("1234", "\\\\##\\\\##\\\\");
         assertThat(backslash6, is("\\12\\34"));
+
+        String extra1 = mTestInputWidget.format("123_", "###_###");
+        assertThat(extra1, is("123_"));
+
+        String extra2 = mTestInputWidget.format("123-", "###-###");
+        assertThat(extra2, is("123-"));
     }
 
     class TestInputWidget extends AbstractMaskedInputWidget {
