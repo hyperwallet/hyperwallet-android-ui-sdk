@@ -144,6 +144,10 @@ public abstract class AbstractMaskedInputWidget extends AbstractWidget {
                         break;
                     default:
                         if (token == textChar) {
+                            if (extraTokens.length() > 0) {
+                                formattedValue.append(extraTokens);
+                                extraTokens = "";
+                            }
                             formattedValue.append(textChar);
                             textIndex++;
                         } else {
