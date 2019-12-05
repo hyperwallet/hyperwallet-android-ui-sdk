@@ -265,30 +265,31 @@ public class CountrySelectionDialogFragment extends DialogFragment implements To
         @Override
         public Filter getFilter() {
             return new Filter() {
+                private TreeMap<String, String> countryNameCodeFiltered;
+
                 @Override
                 protected FilterResults performFiltering(CharSequence constraint) {
                     if (constraint.length() == 0) {
-                        mCountryNames = new ArrayList<>(mCountryNameCodeMap.keySet());
-                        mCountryNameCodeFilteredMap = mCountryNameCodeMap;
+                        countryNameCodeFiltered = mCountryNameCodeMap;
                     } else {
-                        mCountryNameCodeFilteredMap = new TreeMap<>();
+                        countryNameCodeFiltered = new TreeMap<>();
                         for (String countryName : mCountryNameCodeMap.keySet()) {
                             if (countryName.toLowerCase(Locale.ROOT).contains(
                                     constraint.toString().toLowerCase(Locale.ROOT))) {
-                                mCountryNameCodeFilteredMap.put(countryName, mCountryNameCodeMap.get(countryName));
+                                countryNameCodeFiltered.put(countryName, mCountryNameCodeMap.get(countryName));
                             }
                         }
-                        mCountryNames = new ArrayList<>(mCountryNameCodeFilteredMap.keySet());
                     }
-
                     FilterResults filterResults = new FilterResults();
-                    filterResults.values = mCountryNameCodeFilteredMap;
+                    filterResults.values = countryNameCodeFiltered;
+                    filterResults.count = countryNameCodeFiltered.size();
                     return filterResults;
                 }
 
                 @Override
                 protected void publishResults(CharSequence constraint, FilterResults results) {
                     mCountryNameCodeFilteredMap = (TreeMap<String, String>) results.values;
+                    mCountryNames = new ArrayList<>(mCountryNameCodeFilteredMap.keySet());
                     notifyDataSetChanged();
                 }
             };
