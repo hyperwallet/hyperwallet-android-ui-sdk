@@ -11,8 +11,6 @@ import androidx.annotation.Nullable;
 
 import com.hyperwallet.android.model.graphql.field.HyperwalletField;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -186,49 +184,6 @@ public class AbstractMaskedInputWidgetTest {
                         "3473 567891 34567"},
 
                 {rowNumber++, "Prefix with characters", "Hello: @@@@@", "1", "Hello: abcde", "Hello: abcde"}
-        });
-    }
-
-    @Test
-    public void testFormatToDisplay() throws JSONException {
-        JSONObject jsonMask = new JSONObject();
-        jsonMask.put("scrubRegex", "\\s");
-        jsonMask.put("defaultPattern", "#### #### #### ####");
-
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("mask", jsonMask);
-
-        HyperwalletField field = new HyperwalletField(jsonObject);
-        mTestInputWidget = new TestInputWidget(field, null, null, null);
-
-        String displayValue = mTestInputWidget.formatToDisplay("1234567887654321");
-        assertThat(displayValue, is("1234 5678 8765 4321"));
-    }
-
-    @Test
-    @Parameters(method = "formatToApi")
-    public void testFormatToApi(String scrubRegex, String input, String output) throws JSONException {
-        JSONObject jsonMask = new JSONObject();
-        jsonMask.put("scrubRegex", scrubRegex);
-
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("mask", jsonMask);
-
-        HyperwalletField field = new HyperwalletField(jsonObject);
-        mTestInputWidget = new TestInputWidget(field, null, null, null);
-
-        String a1 = mTestInputWidget.formatToApi(input);
-        assertThat(a1, is(output));
-    }
-
-    private Collection<Object[]> formatToApi() {
-        return Arrays.asList(new Object[][]{
-                {"\\s", "604 123 4567", "6041234567"},
-                {"\\-", "604-123-4567", "6041234567"},
-                {"[+()\\-\\s]", "+1 (604) 123-4567", "16041234567"},
-                {"[\\+\\s\\@\\#]", "a@+#123", "a123"},
-                {"[Ad]", "AdQdAQQdAZZAdZAd", "QQQZZZ"},
-                {"[A\\s]", "B Apple A", "Bpple"},
         });
     }
 
