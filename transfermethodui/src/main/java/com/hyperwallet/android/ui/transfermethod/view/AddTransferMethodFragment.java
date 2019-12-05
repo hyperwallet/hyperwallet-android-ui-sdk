@@ -300,6 +300,18 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
 //        widgetInputState.setHasFocused(true);
 //    }
 
+    @Override
+    public void trackLocalWidgetError(String widgetName, String errorMessage) {
+        HyperwalletInsight.getInstance().trackError(getContext(),
+                TAG, PageGroups.TRANSFER_METHOD,
+                new HyperwalletInsight.ErrorParamsBuilder()
+                        .type(ErrorTypes.FORM_ERROR)
+                        .message(errorMessage)
+                        .fieldName(widgetName)
+                        .build());
+
+    }
+
 
     @Override
     public void notifyTransferMethodAdded(@NonNull final HyperwalletTransferMethod transferMethod) {
@@ -593,7 +605,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
             if (v.getTag() instanceof AbstractWidget) {
                 hasWidget = true;
                 AbstractWidget widget = (AbstractWidget) v.getTag();
-                if(!widget.isValidSubmission()) {
+                if(!widget.isSubmissionValid()) {
                     valid = false;
                     HyperwalletInsight.getInstance().trackError(context,
                             TAG, PageGroups.TRANSFER_METHOD,

@@ -154,16 +154,20 @@ public abstract class AbstractWidget {
         }
     }
 
-    protected void onValueChanged() {
-        isValidSubmission();
+    protected void onFocusChanged() {
+        boolean isValid = isSubmissionValid();
+        if (!isValid) {
+            mListener.trackWidgetError(getName(), getErrorMessage());
+        }
+
     }
 
-    public boolean isValidSubmission() {
+    public boolean isSubmissionValid() {
 
         WidgetInputState widgetInputState = getWidgetInputState();
         widgetInputState.setValue(getValue());
         boolean isValid = isValid();
-        if (isValid()) {
+        if (isValid) {
             if (!widgetInputState.hasApiError()) {
                 widgetInputState.setErrorMessage(null);
                 showValidationError(null);

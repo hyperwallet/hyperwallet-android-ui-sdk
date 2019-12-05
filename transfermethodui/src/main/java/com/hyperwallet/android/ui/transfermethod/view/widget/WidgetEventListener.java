@@ -29,4 +29,6 @@ public interface WidgetEventListener {
     void openWidgetDateDialog(@Nullable final String date, @NonNull final String fieldName);
 
     WidgetInputState getWidgetInputState(@NonNull final String widgetName);
+
+    void trackLocalWidgetError(String widgetName, String errorMessage);
 }

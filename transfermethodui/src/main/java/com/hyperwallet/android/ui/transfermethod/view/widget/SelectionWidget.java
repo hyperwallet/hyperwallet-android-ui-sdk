@@ -98,7 +98,7 @@ public class SelectionWidget extends AbstractWidget implements WidgetSelectionDi
                         }
                         String label = ((EditText) v).getText().toString();
                         mValue = mSelectionNameValueMap.get(label);
-                        onValueChanged();
+                        onFocusChanged();
                     }
                 }
             });
@@ -136,7 +136,7 @@ public class SelectionWidget extends AbstractWidget implements WidgetSelectionDi
     @Override
     public void onWidgetSelectionItemClicked(@NonNull String selectedValue) {
         mValue = selectedValue;
-        onValueChanged();
+        onFocusChanged();
         mEditText.setText(getKeyFromValue(selectedValue));
     }
 
