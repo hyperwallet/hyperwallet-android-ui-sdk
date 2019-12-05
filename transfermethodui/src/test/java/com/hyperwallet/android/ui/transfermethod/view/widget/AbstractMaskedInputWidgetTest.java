@@ -44,145 +44,159 @@ public class AbstractMaskedInputWidgetTest {
 
     @Test
     @Parameters(method = "maskTestCaseScenarios")
-    public void testFormatToDisplay_fromExcelData(String description, String pattern, String scenario,
+    public void testFormatToDisplay_fromExcelData(int rowNumber, String description, String pattern, String scenario,
             String inputValue, String formattedValue) {
-        assertThat("Description: " + description + "; Scenario: " + scenario + "; Pattern:" + pattern + ";InputValue:"
+        assertThat(
+                "Row Number: " + rowNumber + "; Description: " + description + "; Scenario: " + scenario + "; Pattern:"
+                        + pattern + " ;InputValue:"
                         + inputValue,
                 mTestInputWidget.format(inputValue, pattern), is(formattedValue));
     }
 
     private Collection<Object[]> maskTestCaseScenarios() {
+        int rowNumber = 2;
         return Arrays.asList(new Object[][]{
-                {"Single number", "#", "1", "1", "1"},
-                {"Single number", "#", "2", "11", "1"},
-                {"Single number", "#", "3", "a", ""},
-                {"Single number", "#", "4", "a1", "1"},
-                {"Single number", "#", "5", "", ""},
+                {rowNumber++, "Single number", "#", "1", "1", "1"},
+                {rowNumber++, "Single number", "#", "2", "11", "1"},
+                {rowNumber++, "Single number", "#", "3", "a", ""},
+                {rowNumber++, "Single number", "#", "4", "a1", "1"},
+                {rowNumber++, "Single number", "#", "5", "", ""},
 
-                {"Single number", "##", "1", "11", "11"},
-                {"Single number", "##", "2", "1111", "11"},
-                {"Single number", "##", "3", "aa11", "11"},
-                {"Single number", "##", "4", "1a1a", "11"},
-                {"Single number", "##", "5", "", ""},
+                {rowNumber++, "Single number", "##", "1", "11", "11"},
+                {rowNumber++, "Single number", "##", "2", "1111", "11"},
+                {rowNumber++, "Single number", "##", "3", "aa11", "11"},
+                {rowNumber++, "Single number", "##", "4", "1a1a", "11"},
+                {rowNumber++, "Single number", "##", "5", "", ""},
 
-                {"Numbers with delimiter in between", "##-##", "1", "11", "11"},
-                {"Numbers with delimiter in between", "##-##", "2", "1111", "11-11"},
-                {"Numbers with delimiter in between", "##-##", "3", "aa11aa11", "11-11"},
-                {"Numbers with delimiter in between", "##-##", "4", "11-11", "11-11"},
-                {"Numbers with delimiter in between", "##-##", "5", "aa-aa-1111", "11-11"},
+                {rowNumber++, "Numbers with delimiter in between", "##-##", "1", "11", "11"},
+                {rowNumber++, "Numbers with delimiter in between", "##-##", "2", "1111", "11-11"},
+                {rowNumber++, "Numbers with delimiter in between", "##-##", "3", "aa11aa11", "11-11"},
+                {rowNumber++, "Numbers with delimiter in between", "##-##", "4", "11-11", "11-11"},
+                {rowNumber++, "Numbers with delimiter in between", "##-##", "5", "aa-aa-1111", "11-11"},
 
-                {"Numbers with prefix and delimiter in between", "A##B##", "1", "11", "A11"},
-                {"Numbers with prefix and delimiter in between", "A##B##", "2", "111", "A11B1"},
-                {"Numbers with prefix and delimiter in between", "A##B##", "3", "A11B11", "A11B11"},
-                {"Numbers with prefix and delimiter in between", "A##B##", "4", "AAA11BBB11", "A11B11"},
-                {"Numbers with prefix and delimiter in between", "A##B##", "5", "", ""},
+                {rowNumber++, "Numbers with prefix and delimiter in between", "A##B##", "1", "11", "A11"},
+                {rowNumber++, "Numbers with prefix and delimiter in between", "A##B##", "2", "111", "A11B1"},
+                {rowNumber++, "Numbers with prefix and delimiter in between", "A##B##", "3", "A11B11", "A11B11"},
+                {rowNumber++, "Numbers with prefix and delimiter in between", "A##B##", "4", "AAA11BBB11", "A11B11"},
+                {rowNumber++, "Numbers with prefix and delimiter in between", "A##B##", "5", "", ""},
 
-                {"Numbers with escape", "##\\###", "1", "11", "11#"},
-                {"Numbers with escape", "##\\###", "2", "1111", "11#11"},
-                {"Numbers with escape", "##\\###", "3", "aa11aa11", "11#11"},
-                {"Numbers with escape", "##\\###", "4", "11-11", "11#11"},
-                {"Numbers with escape", "##\\###", "5", "aa-aa-1111", "11#11"},
+                {rowNumber++, "Numbers with escape", "##\\###", "1", "11", "11"},
+                // fail 1, row 22, excel is wrong (11#), shouldn't add suffix
+                {rowNumber++, "Numbers with escape", "##\\###", "2", "1111", "11#11"},
+                {rowNumber++, "Numbers with escape", "##\\###", "3", "aa11aa11", "11#11"},
+                {rowNumber++, "Numbers with escape", "##\\###", "4", "11-11", "11#11"},
+                {rowNumber++, "Numbers with escape", "##\\###", "5", "aa-aa-1111", "11#11"},
 
-                {"Single letter", "@", "1", "a", "a"},
-                {"Single letter", "@", "2", "aa", "a"},
-                {"Single letter", "@", "3", "1", ""},
-                {"Single letter", "@", "4", "1a", "a"},
-                {"Single letter", "@", "5", "", ""},
+                {rowNumber++, "Single letter", "@", "1", "a", "a"},
+                {rowNumber++, "Single letter", "@", "2", "aa", "a"},
+                {rowNumber++, "Single letter", "@", "3", "1", ""},
+                {rowNumber++, "Single letter", "@", "4", "1a", "a"},
+                {rowNumber++, "Single letter", "@", "5", "", ""},
 
-                {"Double Letters", "@@", "1", "aa", "aa"},
-                {"Double Letters", "@@", "2", "aaaa", "aa"},
-                {"Double Letters", "@@", "3", "11aa", "aa"},
-                {"Double Letters", "@@", "4", "a1a1", "aa"},
-                {"Double Letters", "@@", "5", "", ""},
+                {rowNumber++, "Double Letters", "@@", "1", "aa", "aa"},
+                {rowNumber++, "Double Letters", "@@", "2", "aaaa", "aa"},
+                {rowNumber++, "Double Letters", "@@", "3", "11aa", "aa"},
+                {rowNumber++, "Double Letters", "@@", "4", "a1a1", "aa"},
+                {rowNumber++, "Double Letters", "@@", "5", "", ""},
 
-                {"Letters with delimiter in between", "@@-@@", "1", "aa", "aa"},
-                {"Letters with delimiter in between", "@@-@@", "2", "aaaa", "aa-aa"},
-                {"Letters with delimiter in between", "@@-@@", "3", "11aa11aa", "aa-aa"},
-                {"Letters with delimiter in between", "@@-@@", "4", "aa-aa", "aa-aa"},
-                {"Letters with delimiter in between", "@@-@@", "5", "11-11-aaaa", "aa-aa"},
+                {rowNumber++, "Letters with delimiter in between", "@@-@@", "1", "aa", "aa"},
+                {rowNumber++, "Letters with delimiter in between", "@@-@@", "2", "aaaa", "aa-aa"},
+                {rowNumber++, "Letters with delimiter in between", "@@-@@", "3", "11aa11aa", "aa-aa"},
+                {rowNumber++, "Letters with delimiter in between", "@@-@@", "4", "aa-aa", "aa-aa"},
+                {rowNumber++, "Letters with delimiter in between", "@@-@@", "5", "11-11-aaaa", "aa-aa"},
 
-                {"Lettetrs with prefix and delimiter in between", "1@@2@@", "1", "aa", "1aa"},
-                {"Lettetrs with prefix and delimiter in between", "1@@2@@", "2", "aaa", "1aa2a"},
-                {"Lettetrs with prefix and delimiter in between", "1@@2@@", "3", "1aa2aa", "1aa2aa"},
-                {"Lettetrs with prefix and delimiter in between", "1@@2@@", "4", "111aa222bb", "1aa2bb"},
-                {"Lettetrs with prefix and delimiter in between", "1@@2@@", "5", "", ""},
+                {rowNumber++, "Lettetrs with prefix and delimiter in between", "1@@2@@", "1", "aa", "1aa"},
+                {rowNumber++, "Lettetrs with prefix and delimiter in between", "1@@2@@", "2", "aaa", "1aa2a"},
+                {rowNumber++, "Lettetrs with prefix and delimiter in between", "1@@2@@", "3", "1aa2aa", "1aa2aa"},
+                {rowNumber++, "Lettetrs with prefix and delimiter in between", "1@@2@@", "4", "111aa222bb", "1aa2bb"},
+                {rowNumber++, "Lettetrs with prefix and delimiter in between", "1@@2@@", "5", "", ""},
 
-                {"Letters with escape", "@@\\@@@", "1", "aa", "aa@"},
-                {"Letters with escape", "@@\\@@@", "2", "aaaa", "aa@aa"},
-                {"Letters with escape", "@@\\@@@", "3", "11aa11aa", "aa@aa"},
-                {"Letters with escape", "@@\\@@@", "4", "aa-aa", "aa@aa"},
-                {"Letters with escape", "@@\\@@@", "5", "11-11-aaaa", "aa@aa"},
+                {rowNumber++, "Letters with escape", "@@\\@@@", "1", "aa", "aa"},
+                // fail 2, row 47, excel is wrong (aa@), shouldn't add suffix
+                {rowNumber++, "Letters with escape", "@@\\@@@", "2", "aaaa", "aa@aa"},
+                {rowNumber++, "Letters with escape", "@@\\@@@", "3", "11aa11aa", "aa@aa"},
+                {rowNumber++, "Letters with escape", "@@\\@@@", "4", "aa-aa", "aa@aa"},
+                {rowNumber++, "Letters with escape", "@@\\@@@", "5", "11-11-aaaa", "aa@aa"},
 
-                {"Single character", "*", "1", "1", "1"},
-                {"Single character", "*", "2", "11", "1"},
-                {"Single character", "*", "3", "a", "a"},
-                {"Single character", "*", "4", "a1", "a"},
-                {"Single character", "*", "5", "", ""},
+                {rowNumber++, "Single character", "*", "1", "1", "1"},
+                {rowNumber++, "Single character", "*", "2", "11", "1"},
+                {rowNumber++, "Single character", "*", "3", "a", "a"},
+                {rowNumber++, "Single character", "*", "4", "a1", "a"},
+                {rowNumber++, "Single character", "*", "5", "", ""},
 
-                {"Double characters", "**", "1", "aa", "aa"},
-                {"Double characters", "**", "2", "aaaa", "aa"},
-                {"Double characters", "**", "3", "11aa", "11"},
-                {"Double characters", "**", "4", "a1a1", "a1"},
-                {"Double characters", "**", "5", "", ""},
+                {rowNumber++, "Double characters", "**", "1", "aa", "aa"},
+                {rowNumber++, "Double characters", "**", "2", "aaaa", "aa"},
+                {rowNumber++, "Double characters", "**", "3", "11aa", "11"},
+                {rowNumber++, "Double characters", "**", "4", "a1a1", "a1"},
+                {rowNumber++, "Double characters", "**", "5", "", ""},
 
-                {"Characters with delimiter in between", "**-**", "1", "11", "11"},
-                {"Characters with delimiter in between", "**-**", "2", "1111", "11-11"},
-                {"Characters with delimiter in between", "**-**", "3", "aa11aa11", "aa-11"},
-                {"Characters with delimiter in between", "**-**", "4", "11-11", "11-11"},
-                {"Characters with delimiter in between", "**-**", "5", "aa-aa-1111", "aa-aa"},
-                {"Characters with delimiter in between", "**-**", "6", "11-", "11"},
+                {rowNumber++, "Characters with delimiter in between", "**-**", "1", "11", "11"},
+                {rowNumber++, "Characters with delimiter in between", "**-**", "2", "1111", "11-11"},
+                {rowNumber++, "Characters with delimiter in between", "**-**", "3", "aa11aa11", "aa-11"},
+                {rowNumber++, "Characters with delimiter in between", "**-**", "4", "11-11", "11-11"},
+                {rowNumber++, "Characters with delimiter in between", "**-**", "5", "aa-aa-1111", "aa-aa"},
+                {rowNumber++, "Characters with delimiter in between", "**-**", "6", "11-", "11-"},
+                // fail 3, row 67, excel is wrong (11), user entered matching dash, we should enter it too
 
-                {"Characters with prefix and delimiter in between", "1**A**", "1", "aa", "1aa"},
-                {"Characters with prefix and delimiter in between", "1**A**", "2", "aaa", "1aaAa"},
-                {"Characters with prefix and delimiter in between", "1**A**", "3", "1aa2aa", "1aaA2a"},
-                {"Characters with prefix and delimiter in between", "1**A**", "4", "111aa222bb", "111Aaa"},
-                {"Characters with prefix and delimiter in between", "1**A**", "5", "", ""},
+                {rowNumber++, "Characters with prefix and delimiter in between", "1**A**", "1", "aa", "1aa"},
+                {rowNumber++, "Characters with prefix and delimiter in between", "1**A**", "2", "aaa", "1aaAa"},
+                {rowNumber++, "Characters with prefix and delimiter in between", "1**A**", "3", "1aa2aa", "1aaA2a"},
+                {rowNumber++, "Characters with prefix and delimiter in between", "1**A**", "4", "111aa222bb", "111Aaa"},
+                {rowNumber++, "Characters with prefix and delimiter in between", "1**A**", "5", "", ""},
 
-                {"Characters with escape", "**\\***", "1", "11", "11*"},
-                {"Characters with escape", "**\\***", "2", "1111", "11*11"},
-                {"Characters with escape", "**\\***", "3", "aa11aa11", "aa*11"},
-                {"Characters with escape", "**\\***", "4", "11-NOV", "11*-N"},
-                {"Characters with escape", "**\\***", "5", "aa-aa-1111", "aa*-a"},
+                {rowNumber++, "Characters with escape", "**\\***", "1", "11", "11"},
+                // fail 4, row 73, excel is wrong (11*), shouldn't add suffix
+                {rowNumber++, "Characters with escape", "**\\***", "2", "1111", "11*11"},
+                {rowNumber++, "Characters with escape", "**\\***", "3", "aa11aa11", "aa*11"},
+                {rowNumber++, "Characters with escape", "**\\***", "4", "11-NOV", "11*NO"},
+                // fail 5, row 76, excel is wrong (11*-N), * character only accepts 0-9AZaz
+                {rowNumber++, "Characters with escape", "**\\***", "5", "aa-aa-1111", "aa*aa"},
+                // fail 6, row 77, excel is wrong (aa*-a), * character only accepts 0-9AZaz
 
-                {"Combined - Single", "#@*", "1", "aaa", ""},
-                {"Combined - Single", "#@*", "2", "111", "1"},
-                {"Combined - Single", "#@*", "3", "1ab", "1ab"},
-                {"Combined - Single", "#@*", "4", "ba1", "1"},
-                {"Combined - Single", "#@*", "5", "1ab1", "1ab"},
+                {rowNumber++, "Combined - Single", "#@*", "1", "aaa", ""},
+                {rowNumber++, "Combined - Single", "#@*", "2", "111", "1"},
+                {rowNumber++, "Combined - Single", "#@*", "3", "1ab", "1ab"},
+                {rowNumber++, "Combined - Single", "#@*", "4", "ba1", "1"},
+                {rowNumber++, "Combined - Single", "#@*", "5", "1ab1", "1ab"},
 
-                {"Combined - Double", "#@*#@*", "1", "aaaaaa", ""},
-                {"Combined - Double", "#@*#@*", "2", "111111", "1"},
-                {"Combined - Double", "#@*#@*", "3", "1a11a1", "1a11a1"},
-                {"Combined - Double", "#@*#@*", "4", "a1aa1a", "1aa1a"},
-                {"Combined - Double", "#@*#@*", "5", "-1a-", "1a-"},
+                {rowNumber++, "Combined - Double", "#@*#@*", "1", "aaaaaa", ""},
+                {rowNumber++, "Combined - Double", "#@*#@*", "2", "111111", "1"},
+                {rowNumber++, "Combined - Double", "#@*#@*", "3", "1a11a1", "1a11a1"},
+                {rowNumber++, "Combined - Double", "#@*#@*", "4", "a1aa1a", "1aa1a"},
+                {rowNumber++, "Combined - Double", "#@*#@*", "5", "-1a-", "1a"},
+                // fail 7, row 87, excel is wrong (1a-), * character only accepts 0-9AZaz
 
-                {"Combined - With delimiter in between", "#@*-@#*", "1", "aaaaaa", ""},
-                {"Combined - With delimiter in between", "#@*-@#*", "2", "111111", "1"},
-                {"Combined - With delimiter in between", "#@*-@#*", "3", "1a11a1", "1a1-a1"},
-                {"Combined - With delimiter in between", "#@*-@#*", "4", "-12ab-12ab", "1ab-a"},
-                {"Combined - With delimiter in between", "#@*-@#*", "5", "", ""},
+                {rowNumber++, "Combined - With delimiter in between", "#@*-@#*", "1", "aaaaaa", ""},
+                {rowNumber++, "Combined - With delimiter in between", "#@*-@#*", "2", "111111", "1"},
+                {rowNumber++, "Combined - With delimiter in between", "#@*-@#*", "3", "1a11a1", "1a1-a1"},
+                {rowNumber++, "Combined - With delimiter in between", "#@*-@#*", "4", "-12ab-12ab", "1ab-a"},
+                {rowNumber++, "Combined - With delimiter in between", "#@*-@#*", "5", "", ""},
 
-                {"Combined - With prefix and delimiter in between", "^#@*-@#*", "1", "aaaaaa", ""},
-                {"Combined - With prefix and delimiter in between", "^#@*-@#*", "2", "111111", "^1"},
-                {"Combined - With prefix and delimiter in between", "^#@*-@#*", "3", "1a11a1", "^1a1-a1"},
-                {"Combined - With prefix and delimiter in between", "^#@*-@#*", "4", "-12ab-12ab", "^1ab-a"},
-                {"Combined - With prefix and delimiter in between", "^#@*-@#*", "5", "", ""},
+                {rowNumber++, "Combined - With prefix and delimiter in between", "^#@*-@#*", "1", "aaaaaa", ""},
+                {rowNumber++, "Combined - With prefix and delimiter in between", "^#@*-@#*", "2", "111111", "^1"},
+                {rowNumber++, "Combined - With prefix and delimiter in between", "^#@*-@#*", "3", "1a11a1", "^1a1-a1"},
+                {rowNumber++, "Combined - With prefix and delimiter in between", "^#@*-@#*", "4", "-12ab-12ab",
+                        "^1ab-a"},
+                {rowNumber++, "Combined - With prefix and delimiter in between", "^#@*-@#*", "5", "", ""},
 
-                {"Combined - With escape", "\\@@#*\\#@#*\\*@#*", "1", "aaaaaa", "@a"},
-                {"Combined - With escape", "\\@@#*\\#@#*\\*@#*", "2", "111111", "@"},
-                {"Combined - With escape", "\\@@#*\\#@#*\\*@#*", "3", "a1aa1a", "@a1a#a1a*"},
-                {"Combined - With escape", "\\@@#*\\#@#*\\*@#*", "4", "@a1a#a1a*a1a", "@a1a#a1a*a1a"},
+                {rowNumber++, "Combined - With escape", "\\@@#*\\#@#*\\*@#*", "1", "aaaaaa", "@a"},
+                {rowNumber++, "Combined - With escape", "\\@@#*\\#@#*\\*@#*", "2", "111111", ""},
+                // fail 8, row 99, excel is wrong (@), shouldn't add prefix if no valid characers inputted
+                {rowNumber++, "Combined - With escape", "\\@@#*\\#@#*\\*@#*", "3", "a1aa1a", "@a1a#a1a"},
+                // fail 9, row 100, excel is wrong, shouldn't add suffix
+                {rowNumber++, "Combined - With escape", "\\@@#*\\#@#*\\*@#*", "4", "@a1a#a1a*a1a", "@a1a#a1a*a1a"},
 
-                {"formatted post code", "@#@ #@#", "1", "V1B2N3", "V1B 2N3"},
+                {rowNumber++, "formatted post code", "@#@ #@#", "1", "V1B2N3", "V1B 2N3"},
 
-                {"formatted CVV", "###", "1", "A123", "123"},
+                {rowNumber++, "formatted CVV", "###", "1", "A123", "123"},
 
-                {"formatted visa debit card number", "#### #### #### ####", "1", "4123567891234567",
+                {rowNumber++, "formatted visa debit card number", "#### #### #### ####", "1", "4123567891234567",
                         "4123 5678 9123 4567"},
 
-                {"formatted amex debit card number", "#### ###### #####", "1", "347356789134567", "3473 567891 34567"},
+                {rowNumber++, "formatted amex debit card number", "#### ###### #####", "1", "347356789134567",
+                        "3473 567891 34567"},
 
-                {"Prefix with characters", "Hello: @@@@@", "1", "Hello: abcde", "Hello: abcde"}
+                {rowNumber++, "Prefix with characters", "Hello: @@@@@", "1", "Hello: abcde", "Hello: abcde"}
         });
     }
 
