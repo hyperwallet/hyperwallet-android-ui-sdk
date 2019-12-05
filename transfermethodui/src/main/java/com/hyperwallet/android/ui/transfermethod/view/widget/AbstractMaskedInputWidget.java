@@ -55,7 +55,7 @@ public abstract class AbstractMaskedInputWidget extends AbstractWidget {
      * @return the raw value that will be sent to the server for submission and validation
      */
     protected String formatToApi(@NonNull final String displayValue) {
-        if (mField.getMask() != null) {
+        if (mField.getMask() != null && mField.getMask().getScrubRegex() != null) {
             return displayValue.replaceAll(mField.getMask().getScrubRegex(), "");
         }
         return displayValue;
@@ -130,12 +130,16 @@ public abstract class AbstractMaskedInputWidget extends AbstractWidget {
                         textIndex++;
                         break;
                     case LETTER_OR_NUMBER_TOKEN:
-                        if (extraTokens.length() > 0) {
-                            formattedValue.append(extraTokens);
-                            extraTokens = "";
+                        if (Character.isDigit(textChar)
+                                || (textChar >= 'a' && textChar <= 'z')
+                                || (textChar >= 'A' && textChar <= 'Z')) {
+                            if (extraTokens.length() > 0) {
+                                formattedValue.append(extraTokens);
+                                extraTokens = "";
+                            }
+                            formattedValue.append(textChar);
+                            patternIndex++;
                         }
-                        formattedValue.append(textChar);
-                        patternIndex++;
                         textIndex++;
                         break;
                     default:
