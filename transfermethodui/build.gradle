@@ -36,6 +36,7 @@ dependencies {
     androidTestImplementation "org.mockito:mockito-android:$mockitoVersion"
     androidTestImplementation project(":testutils")
 
+    testImplementation "org.json:json:20190722"
     testImplementation "org.robolectric:robolectric:$robolectricVersion"
     testImplementation "com.squareup.okhttp3:mockwebserver:$mockWebServerVersion"
     testImplementation project(':testutils')

@@ -11,18 +11,24 @@ import androidx.annotation.Nullable;
 
 import com.hyperwallet.android.model.graphql.field.HyperwalletField;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import junitparams.FileParameters;
 import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
 
 @RunWith(JUnitParamsRunner.class)
 public class AbstractMaskedInputWidgetTest {
 
     private TestInputWidget mTestInputWidget;
 
-    public AbstractMaskedInputWidgetTest() {
+    public AbstractMaskedInputWidgetTest() throws JSONException {
         mTestInputWidget = new TestInputWidget(null, null, null, null);
     }
 
@@ -35,7 +41,79 @@ public class AbstractMaskedInputWidgetTest {
     }
 
     @Test
-    public void testFormatToDisplay_edgeCases() {
+    public void testFormatToDisplay() throws JSONException {
+        JSONObject jsonMask = new JSONObject();
+        jsonMask.put("scrubRegex", "\\s");
+        jsonMask.put("defaultPattern", "#### #### #### ####");
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("mask", jsonMask);
+
+        HyperwalletField field = new HyperwalletField(jsonObject);
+        mTestInputWidget = new TestInputWidget(field, null, null, null);
+
+        String displayValue = mTestInputWidget.formatToDisplay("1234567887654321");
+        assertThat(displayValue, is("1234 5678 8765 4321"));
+    }
+
+    @Test
+    @Parameters(method = "formatToApi")
+    public void testFormatToApi(String scrubRegex, String input, String output) throws JSONException {
+        JSONObject jsonMask = new JSONObject();
+        jsonMask.put("scrubRegex", scrubRegex);
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("mask", jsonMask);
+
+        HyperwalletField field = new HyperwalletField(jsonObject);
+        mTestInputWidget = new TestInputWidget(field, null, null, null);
+
+        String a1 = mTestInputWidget.formatToApi(input);
+        assertThat(a1, is(output));
+    }
+
+    private Collection<Object[]> formatToApi() {
+        return Arrays.asList(new Object[][]{
+                {"\\s", "604 123 4567", "6041234567"},
+                {"\\-", "604-123-4567", "6041234567"},
+                {"[+()\\-\\s]", "+1 (604) 123-4567", "16041234567"},
+                {"[A]", "AabcdeA", "abcde"},
+        });
+    }
+
+    @Test
+    @Parameters(method = "edgeCases")
+    public void testFormatToDisplay_edgeCases(String description, String pattern, String scenario,
+            String inputValue, String formattedValue) {
+        assertThat("Description: " + description + "; Scenario: " + scenario,
+                mTestInputWidget.format(inputValue, pattern), is(formattedValue));
+    }
+
+    private Collection<Object[]> edgeCases() {
+        return Arrays.asList(new Object[][]{
+                {"Ending suffix", "###-##-", "1", "123456", "123-45"},
+                {"Ending suffix", "###-##-9", "2", "123456", "123-45"},
+                {"Ending suffix", "###-##9", "3", "123456", "123-45"},
+                {"Ending suffix", "###-##9", "4", "123456", "123-45"},
+
+                {"Backslash", "##\\\\##9", "1", "12345", "12\\34"},
+                {"Backslash", "##\\\\\\\\##9", "2", "12345", "12\\\\34"},
+                {"Backslash", "\\\\##9##", "3", "12345", "\\12934"},
+                {"Backslash", "\\\\\\\\##9##", "4", "12345", "\\\\12934"},
+
+                // * should only accept [0-9A-Za-z]
+                {"Character Set", "@@-##-**-**", "1", "12你好ééab你好éé12你好éé", "ab-12"},
+
+                {"Phone", "+# (###) ###-####", "1", "16046332234", "+1 (604) 633-2234"},
+                {"Phone", "+# (###) ###-####", "2", "1604", "+1 (604"},
+                {"Phone", "+# (###) ###-####", "3", "16046", "+1 (604) 6"},
+                {"Phone", "+# (###) ###-####", "3", "1abc", "+1"},
+                {"Phone", "+# (###) ###-####", "4", "abc", ""},
+        });
+    }
+
+    @Test
+    public void testFormatToDisplay_edgeCases_TODO_delete_me() {
         // TODO temporary tests for most scenarios and edge cases, use values from excel sheet instead
         String test1 = mTestInputWidget.format("v23", "@#@-#@#");
         assertThat(test1, is("v2"));
@@ -72,9 +150,6 @@ public class AbstractMaskedInputWidgetTest {
 
         String star2 = mTestInputWidget.format("v5l3", "***-***");
         assertThat(star2, is("v5l-3"));
-
-        String star3 = mTestInputWidget.format("v5!@#$l-)(*&^%$#@!3$^c&%&%2", "***-***");
-        assertThat(star3, is("v5!-@#$"));
 
         String empty = mTestInputWidget.format("", "***-***");
         assertThat(empty, is(""));
@@ -125,9 +200,6 @@ public class AbstractMaskedInputWidgetTest {
 
         String extra2 = mTestInputWidget.format("123-", "###-###");
         assertThat(extra2, is("123-"));
-
-        String characterSet1 = mTestInputWidget.format("12你好ééab12你好", "@@-##-**");
-        assertThat(characterSet1, is("ab-12-你好"));
     }
 
     class TestInputWidget extends AbstractMaskedInputWidget {
