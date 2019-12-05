@@ -270,6 +270,14 @@ public class AbstractMaskedInputWidgetTest {
                 {"Matching input", "12**5*", "7", "2135", "12135"},
                 {"Matching input", "12**5*", "8", "21356", "121356"},
                 {"Matching input", "12**5*", "9", "123456", "123456"},
+
+                {"Matching input backslash", "\\@\\#***\\@*", "1", "a", "@#a"},
+                {"Matching input backslash", "\\@\\#***\\@*", "1", "@", "@"},
+                {"Matching input backslash", "\\@\\#***\\@*", "1", "@a", "@#a"},
+                {"Matching input backslash", "\\@\\#***\\@*", "1", "@#a", "@#a"},
+                {"Matching input backslash", "\\@\\#***\\@*", "1", "abc#@", "@#abc@"},
+                {"Matching input backslash", "\\@\\#***\\@*", "1", "abc#d", "@#abc@d"},
+                {"Matching input backslash", "\\@\\#***\\@*", "1", "abc#@d", "@#abc@d"},
         });
     }
 

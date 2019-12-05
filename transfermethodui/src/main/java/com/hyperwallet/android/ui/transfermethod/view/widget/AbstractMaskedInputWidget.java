@@ -97,13 +97,27 @@ public abstract class AbstractMaskedInputWidget extends AbstractWidget {
             char textChar = apiValue.charAt(textIndex);
 
             if (backslash.length() == 1) {
-                extraTokens += token;
+                if (token == textChar) {
+                    if (extraTokens.length() > 0) {
+                        formattedValue.append(extraTokens);
+                        extraTokens = "";
+                    }
+                    formattedValue.append(textChar);
+                    textIndex++;
+                } else {
+                    extraTokens += token;
+                }
                 patternIndex++;
                 backslash = "";
 
             } else if (token == BACKSLASH_ESCAPED) {
                 backslash += token;
                 patternIndex++;
+
+            } else if (extraTokens.length() == 1 && textChar == extraTokens.charAt(0)) {
+                formattedValue.append(textChar);
+                extraTokens = "";
+                textIndex++;
 
             } else {
                 switch (token) {
