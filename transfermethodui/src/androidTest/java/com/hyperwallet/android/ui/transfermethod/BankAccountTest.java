@@ -220,7 +220,7 @@ public class BankAccountTest {
         onView(withId(R.id.stateProvince)).check(matches(withText("BC")));
         onView(withId(R.id.addressLine1)).check(matches(withText("950 Granville Street")));
         onView(withId(R.id.city)).check(matches(withText("Vancouver")));
-        onView(withId(R.id.postalCode)).check(matches(withText("V6Z1L2")));
+        onView(withId(R.id.postalCode)).check(matches(withText("V6Z-1L2")));
     }
 
     @Test
@@ -442,8 +442,8 @@ public class BankAccountTest {
         onView(allOf(withId(R.id.select_name), withText("Savings"))).perform(click());
 
         // Need to use replace here as typeText is giving inconsistent input
-        onView(withId(R.id.postalCode)).perform(nestedScrollTo(), replaceText("1-V33KVN5 5"));
-        onView(withId(R.id.postalCode)).check(matches(withText("V33-K55")));
+        onView(withId(R.id.postalCode)).perform(nestedScrollTo(), replaceText("1-V3KVN5K 5"));
+        onView(withId(R.id.postalCode)).check(matches(withText("V3K-5K5")));
 
         onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo(), click());
 
@@ -454,6 +454,6 @@ public class BankAccountTest {
         RecordedRequest createBankCardRequest = mMockWebServer.getRequest();
         JSONObject bankCard = new JSONObject(createBankCardRequest.getBody().readUtf8());
 
-        assertThat("Postal Code is incorrect", bankCard.getString("postalCode"), is("V33K55"));
+        assertThat("Postal Code is incorrect", bankCard.getString("postalCode"), is("V3K5K5"));
     }
 }

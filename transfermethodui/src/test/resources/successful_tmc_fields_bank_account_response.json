@@ -1213,7 +1213,7 @@
                     "isRequired": true,
                     "value": "V6Z1L2",
                     "mask": {
-                      "defaultPattern": "@#*-@#*",
+                      "defaultPattern": "@#*-#@*",
                       "scrubRegex": "\\-"
                     },
                     "validationMessage": {
