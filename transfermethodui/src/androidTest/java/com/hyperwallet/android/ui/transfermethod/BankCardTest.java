@@ -224,15 +224,9 @@ public class BankCardTest {
     public void testAddTransferMethod_returnsErrorOnInvalidPattern() {
         mActivityTestRule.launchActivity(null);
 
-        onView(withId(R.id.cardNumber)).perform(nestedScrollTo(), replaceText("abc12341234cb"));
         onView(withId(R.id.dateOfExpiry)).perform(nestedScrollTo(), replaceText(INVALID_PATTERN_EXPIRATION_DATE));
-        onView(withId(R.id.cvv)).perform(nestedScrollTo(), replaceText("9-09"));
-
         onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo(), click());
-
-        onView(withId(R.id.cardNumberLabel)).check(matches(hasErrorText("is invalid length or format.")));
-        onView(withId(R.id.dateOfExpiryLabel)).check(matches(hasErrorText("Expiry Date is invalid.")));
-        onView(withId(R.id.cvvLabel)).check(matches(hasErrorText("is invalid length or format.")));
+        onView(withId(R.id.dateOfExpiryLabel)).check(matches(hasErrorText("Expiration Date is invalid.")));
     }
 
     @Test
