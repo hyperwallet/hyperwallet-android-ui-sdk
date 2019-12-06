@@ -40,6 +40,7 @@ import android.widget.TextView;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.IdlingRegistry;
+import androidx.test.espresso.action.ViewActions;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
@@ -54,6 +55,7 @@ import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodReposi
 import com.hyperwallet.android.ui.transfermethod.rule.HyperwalletInsightMockRule;
 import com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity;
 
+import org.json.JSONObject;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -62,6 +64,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.concurrent.CountDownLatch;
+
+import okhttp3.mockwebserver.RecordedRequest;
 
 @RunWith(AndroidJUnit4.class)
 public class BankAccountTest {
@@ -422,6 +426,45 @@ public class BankAccountTest {
                         "Routing Number [" + INVALID_ROUTING_NUMBER
                                 + "] is not valid. Please modify Routing Number to a valid ACH Routing Number of the "
                                 + "branch of your bank.")));
+    }
+
+    @Test
+    public void testAddTransferMethod_verifyFieldFormatting() throws Exception {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_CREATED).withBody(sResourceManager
+                .getResourceContent("bank_account_response.json")).mock();
+
+        mActivityTestRule.launchActivity(null);
+
+        onView(withId(R.id.branchId)).perform(nestedScrollTo(), replaceText(ROUTING_NUMBER));
+        onView(withId(R.id.bankAccountId)).perform(nestedScrollTo(), replaceText(ACCOUNT_NUMBER));
+        onView(withId(R.id.bankAccountPurpose)).perform(nestedScrollTo(), click());
+        onView(withId(R.id.search_button)).check(doesNotExist());
+        onView(withId(R.id.input_selection_list)).check(new RecyclerViewCountAssertion(2));
+        onView(allOf(withId(R.id.select_name), withText("Savings"))).perform(click());
+
+        onView(withId(R.id.postalCode)).perform(nestedScrollTo(), replaceText("1-V33KVN5 5"));
+        onView(withId(R.id.postalCode)).check(matches(withText("V33-K55")));
+
+        onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo(), click());
+
+        // Authentication Token request
+        mMockWebServer.getRequest();
+        // GraphQl Fields request
+        mMockWebServer.getRequest();
+        RecordedRequest createBankCardRequest = mMockWebServer.getRequest();
+        JSONObject bankCard = new JSONObject(createBankCardRequest.getBody().readUtf8());
+
+        assertThat("Postal Code is incorrect", bankCard.getString("postalCode"), is("V33K55"));
+    }
+
+    private void typeInputIntoTextView(int textViewId, String text) {
+        if (0 != text.length()) {
+            onView(ViewMatchers.withId(textViewId)).perform(ViewActions.typeText(text.substring(0, 1)));
+            for (int i = 1; i < text.length(); i++) {
+                onView(ViewMatchers.withId(textViewId)).perform(
+                        ViewActions.typeTextIntoFocusedView(text.substring(i, i + 1)));
+            }
+        }
     }
 
 }

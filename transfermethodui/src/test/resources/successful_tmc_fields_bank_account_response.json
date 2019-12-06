@@ -1212,6 +1212,10 @@
                     "regularExpression": "^(?![\\-]+$)[\\sa-zA-Z0-9\\-]{2,16}$",
                     "isRequired": true,
                     "value": "V6Z1L2",
+                    "mask": {
+                      "defaultPattern": "@#*-@#*",
+                      "scrubRegex": "\\-"
+                    },
                     "validationMessage": {
                       "length": "",
                       "pattern": "is invalid length or format.",
