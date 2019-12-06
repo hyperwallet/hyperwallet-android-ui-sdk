@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Secondary Colors -->
-    <color name="colorSecondaryLight">#E0E0E0</color>
-    <color name="colorInputFormBackground">#C4C0C0</color>
+    <color name="colorSecondaryLight">#C4C0C0</color>
+    <color name="colorInputFormBackground">#F0F0F0</color>
 </resources>
 
