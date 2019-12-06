@@ -191,13 +191,15 @@ public abstract class AbstractMaskedInputWidget extends AbstractWidget {
                 String displayedValue = formatToDisplay(s.toString());
                 mEditText.setText(displayedValue);
                 mEditText.setSelection(displayedValue.length());
+
+                mValue = formatToApi(displayedValue);
+                mListener.saveTextChanged(getName(), getValue());
             }
         }
 
         @Override
         public void afterTextChanged(Editable s) {
-            mValue = formatToApi(s.toString());
-            mListener.saveTextChanged(getName(), getValue());
+
         }
     }
 }
