@@ -8,6 +8,7 @@ import java.net.HttpURLConnection;
 
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
+import okhttp3.mockwebserver.RecordedRequest;
 
 public final class HyperwalletMockWebServer extends TestWatcher {
 
@@ -46,6 +47,15 @@ public final class HyperwalletMockWebServer extends TestWatcher {
 
     public MockWebServer getServer() {
         return mServer;
+    }
+
+    public RecordedRequest getRequest() {
+        try {
+            return mServer.takeRequest();
+        } catch (InterruptedException e) {
+            throw new IllegalThreadStateException("It was not possible to return the request. " +
+                    "Make sure a request has been sent. Details: " + e.getMessage());
+        }
     }
 
     public static class HyperwalletMockResponse {
