@@ -40,7 +40,6 @@ import android.widget.TextView;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.IdlingRegistry;
-import androidx.test.espresso.action.ViewActions;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
@@ -442,6 +441,7 @@ public class BankAccountTest {
         onView(withId(R.id.input_selection_list)).check(new RecyclerViewCountAssertion(2));
         onView(allOf(withId(R.id.select_name), withText("Savings"))).perform(click());
 
+        // Need to use replace here as typeText is giving inconsistent input
         onView(withId(R.id.postalCode)).perform(nestedScrollTo(), replaceText("1-V33KVN5 5"));
         onView(withId(R.id.postalCode)).check(matches(withText("V33-K55")));
 
@@ -456,15 +456,4 @@ public class BankAccountTest {
 
         assertThat("Postal Code is incorrect", bankCard.getString("postalCode"), is("V33K55"));
     }
-
-    private void typeInputIntoTextView(int textViewId, String text) {
-        if (0 != text.length()) {
-            onView(ViewMatchers.withId(textViewId)).perform(ViewActions.typeText(text.substring(0, 1)));
-            for (int i = 1; i < text.length(); i++) {
-                onView(ViewMatchers.withId(textViewId)).perform(
-                        ViewActions.typeTextIntoFocusedView(text.substring(i, i + 1)));
-            }
-        }
-    }
-
 }
