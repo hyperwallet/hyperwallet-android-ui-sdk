@@ -139,6 +139,7 @@ public class SelectionWidget extends AbstractWidget implements WidgetSelectionDi
         mValue = selectedValue;
         mListener.valueChanged();
         mEditText.setText(getKeyFromValue(selectedValue));
+        mEditText.requestFocus();
     }
 
     private void hideSoftKey(@NonNull View focusedView) {
