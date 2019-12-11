@@ -66,6 +66,7 @@ public class DateWidget extends AbstractWidget implements DateChangedListener {
 
             mEditText = new EditText(
                     new ContextThemeWrapper(viewGroup.getContext(), R.style.Widget_Hyperwallet_TextInputEditText));
+            mEditText.setTextColor(viewGroup.getContext().getResources().getColor(R.color.regularColorSecondary));
             try {
                 mEditText.setText(mDateUtils.convertDateFromServerToWidgetFormat(
                         TextUtils.isEmpty(mDefaultValue) ? mValue = mField.getValue() : mDefaultValue));
