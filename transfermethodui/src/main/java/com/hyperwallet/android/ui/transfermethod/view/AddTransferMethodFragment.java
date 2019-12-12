@@ -289,8 +289,8 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     }
 
     @Override
-    public void valueChanged() {
-        performValidation(false);
+    public void valueChanged(@NonNull final AbstractWidget widget) {
+        isWidgetItemValid(widget);
     }
 
     @Override
@@ -530,7 +530,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     }
 
     private void triggerSubmit() {
-        if (performValidation(true)) {
+        if (performValidation()) {
             switch (mTransferMethodType) {
                 case BANK_ACCOUNT:
                     mTransferMethod = new HyperwalletBankAccount.Builder()
@@ -598,8 +598,12 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
         mCreateTransferMethodButton.setBackgroundColor(getResources().getColor(R.color.colorSecondaryDark));
     }
 
-    private boolean performValidation(boolean bypassFocusCheck) {
+    /**
+     * Use this when we want to perform validation on the entire form, typically used when about to submit the form.
+     */
+    private boolean performValidation() {
         boolean valid = true;
+
         // this is added since some phones triggers the create button but the widgets are not yet initialized
         boolean hasWidget = false;
         Context context = requireContext();
@@ -607,39 +611,53 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
             View v = mDynamicContainer.getChildAt(i);
             if (v.getTag() instanceof AbstractWidget) {
                 hasWidget = true;
+
                 AbstractWidget widget = (AbstractWidget) v.getTag();
                 WidgetInputState widgetInputState = mWidgetInputStateHashMap.get(widget.getName());
                 widgetInputState.setValue(widget.getValue());
-                if (bypassFocusCheck || widgetInputState.hasFocused()) {
-                    if (widget.isValid()) {
-                        if (!widgetInputState.hasApiError()) {
-                            widgetInputState.setErrorMessage(null);
-                            widget.showValidationError(null);
-                        }
-                    } else {
-                        HyperwalletInsight.getInstance().trackError(context,
-                                TAG, PageGroups.TRANSFER_METHOD,
-                                new HyperwalletInsight.ErrorParamsBuilder()
-                                        .message(widget.getErrorMessage())
-                                        .fieldName(widget.getName())
-                                        .type(ErrorTypes.FORM_ERROR)
-                                        .addAll(new HyperwalletInsight.TransferMethodParamsBuilder()
-                                                .country(mCountry)
-                                                .currency(mCurrency)
-                                                .type(mTransferMethodType)
-                                                .profileType(mTransferMethodProfileType)
-                                                .build())
-                                        .build());
 
-                        valid = false;
-                        widget.showValidationError(widget.getErrorMessage());
-                        widgetInputState.setErrorMessage(widget.getErrorMessage());
-                        widgetInputState.setHasApiError(false);
-                    }
+                if (valid) {
+                    valid = isWidgetItemValid((AbstractWidget) v.getTag());
+                } else {
+                    isWidgetItemValid((AbstractWidget) v.getTag());
                 }
             }
         }
         return valid && hasWidget;
+    }
+
+    private boolean isWidgetItemValid(AbstractWidget widget) {
+        boolean valid = true;
+        Context context = requireContext();
+
+        WidgetInputState widgetInputState = mWidgetInputStateHashMap.get(widget.getName());
+        widgetInputState.setValue(widget.getValue());
+        if (widget.isValid()) {
+            if (!widgetInputState.hasApiError()) {
+                widgetInputState.setErrorMessage(null);
+                widget.showValidationError(null);
+            }
+        } else {
+            HyperwalletInsight.getInstance().trackError(context,
+                    TAG, PageGroups.TRANSFER_METHOD,
+                    new HyperwalletInsight.ErrorParamsBuilder()
+                            .message(widget.getErrorMessage())
+                            .fieldName(widget.getName())
+                            .type(ErrorTypes.FORM_ERROR)
+                            .addAll(new HyperwalletInsight.TransferMethodParamsBuilder()
+                                    .country(mCountry)
+                                    .currency(mCurrency)
+                                    .type(mTransferMethodType)
+                                    .profileType(mTransferMethodProfileType)
+                                    .build())
+                            .build());
+
+            valid = false;
+            widget.showValidationError(widget.getErrorMessage());
+            widgetInputState.setErrorMessage(widget.getErrorMessage());
+            widgetInputState.setHasApiError(false);
+        }
+        return valid;
     }
 
     @Override
