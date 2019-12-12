@@ -181,14 +181,6 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        HyperwalletInsight.getInstance().trackImpression(requireContext(),
-                TAG, PageGroups.TRANSFER_METHOD,
-                new HyperwalletInsight.TransferMethodParamsBuilder()
-                        .country(mCountry)
-                        .currency(mCurrency)
-                        .type(mTransferMethodType)
-                        .profileType(mTransferMethodProfileType)
-                        .build());
 
         mDynamicContainer = view.findViewById(R.id.add_transfer_method_dynamic_container);
 
@@ -365,6 +357,15 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                 }
             }
 
+            HyperwalletInsight.getInstance().trackImpression(requireContext(),
+                    TAG, PageGroups.TRANSFER_METHOD,
+                    new HyperwalletInsight.TransferMethodParamsBuilder()
+                            .country(mCountry)
+                            .currency(mCurrency)
+                            .type(mTransferMethodType)
+                            .profileType(mTransferMethodProfileType)
+                            .build());
+            
             if (mShowCreateProgressBar) {
                 setVisibleAndDisableFields();
             }
