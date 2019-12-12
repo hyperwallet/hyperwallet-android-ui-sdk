@@ -173,7 +173,7 @@ public class ListTransferMethodFragment extends Fragment implements ListTransfer
         recyclerView = view.findViewById(R.id.list_transfer_method_item);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.addItemDecoration(new HorizontalDividerItemDecorator(requireContext()));
+        recyclerView.addItemDecoration(new HorizontalDividerItemDecorator(requireContext(), false));
     }
 
     @Override
