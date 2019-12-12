@@ -54,6 +54,8 @@ public class NumberWidget extends AbstractMaskedInputWidget {
 
             final EditText editText = new EditText(
                     new ContextThemeWrapper(viewGroup.getContext(), R.style.Widget_Hyperwallet_TextInputEditText));
+            editText.setTextColor(viewGroup.getContext().getResources().getColor(R.color.regularColorSecondary));
+
             editText.setEnabled(mField.isEditable());
             setIdFromFieldLabel(mTextInputLayout);
             setIdFromFieldName(editText);
