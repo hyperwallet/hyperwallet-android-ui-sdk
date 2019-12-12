@@ -502,6 +502,11 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     }
 
     @Override
+    public boolean isWidgetSelectionFragmentDialogOpen() {
+        return getFragmentManager().findFragmentByTag(WidgetSelectionDialogFragment.TAG) != null;
+    }
+
+    @Override
     public void openWidgetSelectionFragmentDialog(@NonNull final TreeMap<String, String> nameValueMap,
             @NonNull final String selectedName, @NonNull final String fieldLabel, @NonNull final String fieldName) {
         String selectedLabel = selectedName;
@@ -511,7 +516,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
             mWidgetInputStateHashMap.get(fieldName).setSelectedName(selectedLabel);
         }
 
-        if (getFragmentManager().findFragmentByTag(WidgetSelectionDialogFragment.TAG) == null) {
+        if (!isWidgetSelectionFragmentDialogOpen()) {
             WidgetSelectionDialogFragment widgetSelectionDialogFragment = WidgetSelectionDialogFragment
                     .newInstance(nameValueMap, selectedLabel, fieldLabel, fieldName);
 
