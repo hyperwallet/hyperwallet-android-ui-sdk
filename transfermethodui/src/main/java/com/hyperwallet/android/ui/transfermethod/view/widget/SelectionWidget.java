@@ -96,12 +96,14 @@ public class SelectionWidget extends AbstractWidget implements WidgetSelectionDi
                         hideSoftKey(v);
                         showSelectionFragmentDialog();
                     } else {
-                        if (isValid()) {
-                            mTextInputLayout.setError(null);
+                        if (!mListener.isWidgetSelectionFragmentDialogOpen()) {
+                            if (isValid()) {
+                                mTextInputLayout.setError(null);
+                            }
+                            String label = ((EditText) v).getText().toString();
+                            mValue = mSelectionNameValueMap.get(label);
+                            mListener.valueChanged();
                         }
-                        String label = ((EditText) v).getText().toString();
-                        mValue = mSelectionNameValueMap.get(label);
-                        mListener.valueChanged();
                     }
                 }
             });
@@ -141,6 +143,7 @@ public class SelectionWidget extends AbstractWidget implements WidgetSelectionDi
         mValue = selectedValue;
         mListener.valueChanged();
         mEditText.setText(getKeyFromValue(selectedValue));
+        mEditText.requestFocus();
     }
 
     private void hideSoftKey(@NonNull View focusedView) {
