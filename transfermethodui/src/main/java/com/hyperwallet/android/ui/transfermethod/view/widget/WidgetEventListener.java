@@ -27,6 +27,8 @@ public interface WidgetEventListener {
 
     boolean isWidgetSelectionFragmentDialogOpen();
 
+    boolean isWidgetSelectionFragmentDialogOpen();
+
     void openWidgetSelectionFragmentDialog(@NonNull final TreeMap<String, String> nameValueMap,
             @NonNull final String selectedName, @NonNull final String fieldLabel, @NonNull final String fieldName);
 

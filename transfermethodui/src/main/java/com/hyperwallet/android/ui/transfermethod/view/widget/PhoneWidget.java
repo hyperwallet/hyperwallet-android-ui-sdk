@@ -54,6 +54,7 @@ public class PhoneWidget extends AbstractMaskedInputWidget {
             final EditText editText = new EditText(
                     new ContextThemeWrapper(viewGroup.getContext(), R.style.Widget_Hyperwallet_TextInputEditText));
             editText.setEnabled(mField.isEditable());
+            editText.setTextColor(viewGroup.getContext().getResources().getColor(R.color.regularColorSecondary));
 
             mTextInputLayout.addView(editText);
             mTextInputLayout.setHint(mField.getLabel());

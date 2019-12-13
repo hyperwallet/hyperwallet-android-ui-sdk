@@ -2,6 +2,7 @@ package com.hyperwallet.android.ui.transfermethod.view.widget;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.when;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,9 +11,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.hyperwallet.android.model.graphql.field.HyperwalletField;
+import com.hyperwallet.android.model.graphql.field.Mask;
 
+import org.hamcrest.Matchers;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -24,6 +31,14 @@ import junitparams.Parameters;
 public class AbstractMaskedInputWidgetTest {
 
     private TestInputWidget mTestInputWidget;
+
+    @Rule
+    public MockitoRule mMockito = MockitoJUnit.rule();
+
+    @Mock
+    private HyperwalletField mHyperwalletField;
+    @Mock
+    private Mask mMask;
 
     public AbstractMaskedInputWidgetTest() {
         mTestInputWidget = new TestInputWidget(null, null, null, null);
@@ -38,6 +53,30 @@ public class AbstractMaskedInputWidgetTest {
                         + pattern + " ;InputValue:"
                         + inputValue,
                 mTestInputWidget.format(inputValue, pattern), is(formattedValue));
+    }
+
+
+    @Test
+    @Parameters(method = "formatToApiScenarios")
+    public void testFormatToApi(String scrubRegex, String input, String output) {
+
+        when(mHyperwalletField.getMask()).thenReturn(mMask);
+        when(mMask.getScrubRegex()).thenReturn(scrubRegex);
+
+        TestInputWidget testInputWidget = new TestInputWidget(mHyperwalletField, null, null, null);
+
+        String a1 = testInputWidget.formatToApi(input);
+        assertThat(a1, Matchers.is(output));
+
+    }
+
+
+    private Collection<Object[]> formatToApiScenarios() {
+        return Arrays.asList(new Object[][]{
+                {"[+()\\-\\s]", "+1 (604) 123-4567", "16041234567"},
+                {"[\\+\\s\\@\\#]", "a@+#123", "a123"},
+                {"[A\\s]", "B Apple A", "Bpple"},
+        });
     }
 
     private Collection<Object[]> maskTestCaseScenarios() {

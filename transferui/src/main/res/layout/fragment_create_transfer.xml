@@ -130,7 +130,7 @@
                     app:layout_constraintTop_toTopOf="parent">
                     <EditText
                         android:id="@+id/transfer_amount"
-                        android:theme="@style/Widget.Hyperwallet.Transfer.EditText"
+                        android:textColor="@color/regularColorSecondary"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:enabled="false"
@@ -234,7 +234,7 @@
                     android:layout_height="wrap_content">
                     <EditText
                         android:id="@+id/transfer_notes"
-                        android:theme="@style/Widget.Hyperwallet.Transfer.EditText"
+                        android:textColor="@color/regularColorSecondary"
                         android:inputType="text"
                         android:maxLines="3"
                         android:enabled="false"
