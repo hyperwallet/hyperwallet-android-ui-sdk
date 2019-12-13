@@ -31,14 +31,15 @@ import com.hyperwallet.android.ui.common.R;
 public class HorizontalDividerItemDecorator extends RecyclerView.ItemDecoration {
 
     private static final short DEFAULT_PADDING = 0;
-    private static final short TOP_DIVIDER_PADDING = 30;
 
     protected final Drawable mHorizontalItemDivider;
     private final boolean mHasTopDivider;
+    private final int topDividerPadding;
 
     public HorizontalDividerItemDecorator(@NonNull final Context context, final boolean hasTopDivider) {
         mHorizontalItemDivider = context.getResources().getDrawable(R.drawable.horizontal_divider, null);
         mHasTopDivider = hasTopDivider;
+        topDividerPadding = context.getResources().getInteger(R.integer.top_divider_padding_value);
     }
 
     @Override
@@ -56,7 +57,7 @@ public class HorizontalDividerItemDecorator extends RecyclerView.ItemDecoration 
         }
 
         if (itemPosition == 0) { // first item
-            outRect.set(view.getPaddingLeft(), mHasTopDivider ? TOP_DIVIDER_PADDING : DEFAULT_PADDING,
+            outRect.set(view.getPaddingLeft(), mHasTopDivider ? topDividerPadding : DEFAULT_PADDING,
                     view.getPaddingRight(), view.getPaddingBottom());
         } else if (itemCount > 0 && itemPosition == itemCount - 1) { // last item
             outRect.set(view.getPaddingLeft(), view.getPaddingTop(), view.getPaddingRight(), view.getPaddingBottom());
