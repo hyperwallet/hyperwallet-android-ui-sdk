@@ -41,7 +41,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
@@ -503,6 +502,11 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     }
 
     @Override
+    public boolean isWidgetSelectionFragmentDialogOpen() {
+        return getFragmentManager().findFragmentByTag(WidgetSelectionDialogFragment.TAG) != null;
+    }
+
+    @Override
     public void openWidgetSelectionFragmentDialog(@NonNull final TreeMap<String, String> nameValueMap,
             @NonNull final String selectedName, @NonNull final String fieldLabel, @NonNull final String fieldName) {
         String selectedLabel = selectedName;
@@ -512,17 +516,17 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
             mWidgetInputStateHashMap.get(fieldName).setSelectedName(selectedLabel);
         }
 
-        getFragmentManager().popBackStack(WidgetSelectionDialogFragment.TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        if (!isWidgetSelectionFragmentDialogOpen()) {
+            WidgetSelectionDialogFragment widgetSelectionDialogFragment = WidgetSelectionDialogFragment
+                    .newInstance(nameValueMap, selectedLabel, fieldLabel, fieldName);
 
-        WidgetSelectionDialogFragment widgetSelectionDialogFragment = WidgetSelectionDialogFragment
-                .newInstance(nameValueMap, selectedLabel, fieldLabel, fieldName);
-
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-        fragmentTransaction.replace(android.R.id.content, widgetSelectionDialogFragment,
-                WidgetSelectionDialogFragment.TAG);
-        fragmentTransaction.addToBackStack(WidgetSelectionDialogFragment.TAG);
-        fragmentTransaction.commit();
+            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            fragmentTransaction.replace(android.R.id.content, widgetSelectionDialogFragment,
+                    WidgetSelectionDialogFragment.TAG);
+            fragmentTransaction.addToBackStack(WidgetSelectionDialogFragment.TAG);
+            fragmentTransaction.commit();
+        }
     }
 
     private void triggerSubmit() {
