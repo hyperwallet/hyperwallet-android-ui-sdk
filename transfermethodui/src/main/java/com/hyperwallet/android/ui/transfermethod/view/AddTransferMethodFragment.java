@@ -180,21 +180,12 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        HyperwalletInsight.getInstance().trackImpression(requireContext(),
-                TAG, PageGroups.TRANSFER_METHOD,
-                new HyperwalletInsight.TransferMethodParamsBuilder()
-                        .country(mCountry)
-                        .currency(mCurrency)
-                        .type(mTransferMethodType)
-                        .profileType(mTransferMethodProfileType)
-                        .build());
 
         mDynamicContainer = view.findViewById(R.id.add_transfer_method_dynamic_container);
-
         mCreateButtonProgressBar = view.findViewById(R.id.add_transfer_method_create_button_progress_bar);
         mProgressBar = view.findViewById(R.id.add_transfer_method_progress_bar_layout);
-
         mCreateTransferMethodButton = view.findViewById(R.id.add_transfer_method_button);
+        
         mCreateTransferMethodButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         mCreateTransferMethodButton.setTextColor(getResources().getColor(R.color.regularColorPrimary));
         mCreateTransferMethodButton.setOnClickListener(new View.OnClickListener() {
@@ -364,6 +355,15 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                 }
             }
 
+            HyperwalletInsight.getInstance().trackImpression(requireContext(),
+                    TAG, PageGroups.TRANSFER_METHOD,
+                    new HyperwalletInsight.TransferMethodParamsBuilder()
+                            .country(mCountry)
+                            .currency(mCurrency)
+                            .type(mTransferMethodType)
+                            .profileType(mTransferMethodProfileType)
+                            .build());
+            
             if (mShowCreateProgressBar) {
                 setVisibleAndDisableFields();
             }
