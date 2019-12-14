@@ -16,6 +16,7 @@
  */
 package com.hyperwallet.android.ui.transfermethod.repository;
 
+import static com.hyperwallet.android.ExceptionMapper.EC_UNEXPECTED_EXCEPTION;
 import static com.hyperwallet.android.model.StatusTransition.StatusDefinition.ACTIVATED;
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TOKEN;
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TYPE;
@@ -33,6 +34,8 @@ import androidx.annotation.VisibleForTesting;
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.exception.HyperwalletException;
 import com.hyperwallet.android.listener.HyperwalletListener;
+import com.hyperwallet.android.model.HyperwalletError;
+import com.hyperwallet.android.model.HyperwalletErrors;
 import com.hyperwallet.android.model.StatusTransition;
 import com.hyperwallet.android.model.paging.HyperwalletPageList;
 import com.hyperwallet.android.model.transfermethod.HyperwalletBankAccount;
@@ -41,6 +44,9 @@ import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethodQueryParam;
 import com.hyperwallet.android.model.transfermethod.PayPalAccount;
 import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TransferMethodRepositoryImpl implements TransferMethodRepository {
 
@@ -70,7 +76,8 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
             case PAYPAL_ACCOUNT:
                 createPayPalAccount(transferMethod, callback);
                 break;
-            default: //no default action
+            default: // error on unknown transfer type
+                errorOnUnsupportedTransferType(callback);
         }
     }
 
@@ -287,5 +294,16 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
                 return mHandler;
             }
         });
+    }
+
+    // Note: This way of surfacing error is not ideal but rather a workaround please have a look on other options,
+    // before resulting into this pattern
+    private void errorOnUnsupportedTransferType(@NonNull final LoadTransferMethodCallback callback) {
+        HyperwalletError error = new HyperwalletError(R.string.error_unsupported_transfer_type,
+                EC_UNEXPECTED_EXCEPTION);
+        List<HyperwalletError> errorList = new ArrayList<>(1);
+        errorList.add(error);
+        HyperwalletErrors errors = new HyperwalletErrors(errorList);
+        callback.onError(errors);
     }
 }

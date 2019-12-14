@@ -13,6 +13,7 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
+import static com.hyperwallet.android.ExceptionMapper.EC_UNEXPECTED_EXCEPTION;
 import static com.hyperwallet.android.model.StatusTransition.StatusDefinition.ACTIVATED;
 import static com.hyperwallet.android.model.StatusTransition.StatusDefinition.DE_ACTIVATED;
 import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.BANK_ACCOUNT_ID;
@@ -36,6 +37,7 @@ import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
 import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethodQueryParam;
 import com.hyperwallet.android.model.transfermethod.PayPalAccount;
 
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -157,6 +159,23 @@ public class TransferMethodRepositoryImplTest {
         assertThat(mErrorsArgumentCaptor.getValue().getErrors(), hasItem(error));
     }
 
+    @Test
+    public void testCreateTransferMethod_createTransferWithUnsupportedTransferType() {
+        HyperwalletBankAccount bankAccount = new HyperwalletBankAccount
+                .Builder("US", "USD", "23432432")
+                .transferMethodType("UNKNOWN_TRANSFER_TYPE")
+                .build();
+
+        // test
+        mTransferMethodRepository.createTransferMethod(bankAccount, mLoadTransferMethodCallback);
+
+        verify(mLoadTransferMethodCallback).onError(mErrorsArgumentCaptor.capture());
+        verify(mLoadTransferMethodCallback, never()).onTransferMethodLoaded(any(HyperwalletTransferMethod.class));
+        assertThat(mErrorsArgumentCaptor.getValue().getErrors(), Matchers.<HyperwalletError>hasSize(1));
+        assertThat(mErrorsArgumentCaptor.getValue().getErrors().get(0).getMessageId(),
+                is(R.string.error_unsupported_transfer_type));
+        assertThat(mErrorsArgumentCaptor.getValue().getErrors().get(0).getCode(), is(EC_UNEXPECTED_EXCEPTION));
+    }
 
     @Test
     public void testDeactivateTransferMethod_bankAccountWithSuccess() {
