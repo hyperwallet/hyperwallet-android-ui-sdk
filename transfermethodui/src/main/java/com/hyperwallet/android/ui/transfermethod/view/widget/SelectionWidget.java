@@ -141,7 +141,7 @@ public class SelectionWidget extends AbstractWidget implements WidgetSelectionDi
     @Override
     public void onWidgetSelectionItemClicked(@NonNull String selectedValue) {
         mValue = selectedValue;
-        mListener.valueChanged(this);
+        mListener.valueChanged(SelectionWidget.this);
         mEditText.setText(getKeyFromValue(selectedValue));
         mEditText.requestFocus();
     }

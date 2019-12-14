@@ -599,14 +599,15 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     }
 
     /**
-     * Use this when we want to perform validation on the entire form, typically used when about to submit the form.
+     * Use this to perform validation on an entire form, typically used during form submission.
+     * @return true if the form is valid
      */
     private boolean performValidation() {
-        boolean valid = true;
+        boolean isWidgetValid;
+        boolean containsInvalidWidget = false;
 
         // this is added since some phones triggers the create button but the widgets are not yet initialized
         boolean hasWidget = false;
-        Context context = requireContext();
         for (int i = 0; i < mDynamicContainer.getChildCount(); i++) {
             View v = mDynamicContainer.getChildAt(i);
             if (v.getTag() instanceof AbstractWidget) {
@@ -616,17 +617,22 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                 WidgetInputState widgetInputState = mWidgetInputStateHashMap.get(widget.getName());
                 widgetInputState.setValue(widget.getValue());
 
-                if (valid) {
-                    valid = isWidgetItemValid((AbstractWidget) v.getTag());
-                } else {
-                    isWidgetItemValid((AbstractWidget) v.getTag());
+                isWidgetValid = isWidgetItemValid(widget);
+                if (!isWidgetValid) {
+                    containsInvalidWidget = true;
                 }
             }
         }
-        return valid && hasWidget;
+        return hasWidget && !containsInvalidWidget;
     }
 
-    private boolean isWidgetItemValid(AbstractWidget widget) {
+    /**
+     * Use this to perform validation on a single widget item, typically used while the user is inputting data.
+     *
+     * @param widget the widget to validate
+     * @return true if the input is valid
+     */
+    private boolean isWidgetItemValid(@NonNull final AbstractWidget widget) {
         boolean valid = true;
         Context context = requireContext();
 
