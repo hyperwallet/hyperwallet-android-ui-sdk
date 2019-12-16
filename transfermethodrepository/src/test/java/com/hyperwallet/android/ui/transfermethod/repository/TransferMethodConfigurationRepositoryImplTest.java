@@ -26,7 +26,7 @@ import com.hyperwallet.android.model.graphql.HyperwalletTransferMethodConfigurat
 import com.hyperwallet.android.model.graphql.HyperwalletTransferMethodConfigurationKey;
 import com.hyperwallet.android.model.graphql.field.FieldGroup;
 import com.hyperwallet.android.model.graphql.field.TransferMethodConfiguration;
-import com.hyperwallet.android.model.graphql.field.HyperwalletTransferMethodConfigurationFieldResult;
+import com.hyperwallet.android.model.graphql.field.TransferMethodConfigurationFieldResult;
 import com.hyperwallet.android.model.graphql.keyed.Country;
 import com.hyperwallet.android.model.graphql.keyed.Currency;
 import com.hyperwallet.android.model.graphql.keyed.TransferMethodConfigurationKeyResult;
@@ -161,8 +161,8 @@ public class TransferMethodConfigurationRepositoryImplTest {
             InvocationTargetException {
         String responseBody = externalResourceManager.getResourceContent(
                 "successful_tmc_fields_bank_account_response.json");
-        final HyperwalletTransferMethodConfigurationFieldResult result = JsonUtils.fromJsonString(responseBody,
-                new TypeReference<HyperwalletTransferMethodConfigurationFieldResult>() {
+        final TransferMethodConfigurationFieldResult result = JsonUtils.fromJsonString(responseBody,
+                new TypeReference<TransferMethodConfigurationFieldResult>() {
                 });
         doAnswer(new Answer() {
             @Override
@@ -250,8 +250,8 @@ public class TransferMethodConfigurationRepositoryImplTest {
     public void testGetFields_callsListenerWithFieldResultFromCacheWhenNotNull() throws Exception {
         String responseBody = externalResourceManager.getResourceContent(
                 "successful_tmc_fields_bank_account_response.json");
-        final HyperwalletTransferMethodConfigurationFieldResult result = JsonUtils.fromJsonString(responseBody,
-                new TypeReference<HyperwalletTransferMethodConfigurationFieldResult>() {
+        final TransferMethodConfigurationFieldResult result = JsonUtils.fromJsonString(responseBody,
+                new TypeReference<TransferMethodConfigurationFieldResult>() {
                 });
 
         FieldMapKey fieldMapKey = new FieldMapKey(COUNTRY, CURRENCY, TRANSFER_METHOD_TYPE);
@@ -277,7 +277,7 @@ public class TransferMethodConfigurationRepositoryImplTest {
         JSONObject jsonObject = new JSONObject(responseBody);
         FieldMapKey fieldMapKey = new FieldMapKey(COUNTRY, CURRENCY, TRANSFER_METHOD_TYPE);
         HashMap<FieldMapKey, HyperwalletTransferMethodConfigurationField> fieldMap = new HashMap<>();
-        fieldMap.put(fieldMapKey, new HyperwalletTransferMethodConfigurationFieldResult(jsonObject));
+        fieldMap.put(fieldMapKey, new TransferMethodConfigurationFieldResult(jsonObject));
         TransferMethodConfigurationRepositoryImpl repositoryWithCache = new TransferMethodConfigurationRepositoryImpl(
                 null, null, fieldMap);
         repositoryWithCache.refreshFields();
