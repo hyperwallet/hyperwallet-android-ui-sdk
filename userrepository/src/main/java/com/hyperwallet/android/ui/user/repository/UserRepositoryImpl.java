@@ -27,12 +27,12 @@ import androidx.annotation.VisibleForTesting;
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.exception.HyperwalletException;
 import com.hyperwallet.android.listener.HyperwalletListener;
-import com.hyperwallet.android.model.user.HyperwalletUser;
+import com.hyperwallet.android.model.user.User;
 
 public class UserRepositoryImpl implements UserRepository {
 
     private Handler mHandler = new Handler();
-    private HyperwalletUser mUser;
+    private User mUser;
 
     @VisibleForTesting
     Hyperwallet getHyperwallet() {
@@ -42,9 +42,9 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public void loadUser(@NonNull final LoadUserCallback callback) {
         if (mUser == null) {
-            getHyperwallet().getUser(new HyperwalletListener<HyperwalletUser>() {
+            getHyperwallet().getUser(new HyperwalletListener<User>() {
                 @Override
-                public void onSuccess(@Nullable HyperwalletUser result) {
+                public void onSuccess(@Nullable User result) {
                     mUser = result;
                     callback.onUserLoaded(mUser);
                 }

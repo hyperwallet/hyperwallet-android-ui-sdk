@@ -37,8 +37,8 @@ import com.hyperwallet.android.exception.HyperwalletException;
 import com.hyperwallet.android.listener.HyperwalletListener;
 import com.hyperwallet.android.model.graphql.HyperwalletTransferMethodConfigurationField;
 import com.hyperwallet.android.model.graphql.HyperwalletTransferMethodConfigurationKey;
-import com.hyperwallet.android.model.graphql.query.HyperwalletTransferMethodConfigurationFieldQuery;
-import com.hyperwallet.android.model.graphql.query.HyperwalletTransferMethodConfigurationKeysQuery;
+import com.hyperwallet.android.model.graphql.query.TransferMethodConfigurationFieldQuery;
+import com.hyperwallet.android.model.graphql.query.TransferMethodConfigurationKeysQuery;
 import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
 
 import java.util.HashMap;
@@ -72,7 +72,7 @@ public class TransferMethodConfigurationRepositoryImpl implements TransferMethod
 
     @VisibleForTesting
     void getTransferMethodConfigurationKeyResult(final LoadKeysCallback loadKeysCallback) {
-        HyperwalletTransferMethodConfigurationKeysQuery query = new HyperwalletTransferMethodConfigurationKeysQuery();
+        TransferMethodConfigurationKeysQuery query = new TransferMethodConfigurationKeysQuery();
         EspressoIdlingResource.increment();
 
         getHyperwallet().retrieveTransferMethodConfigurationKeys(query,
@@ -104,8 +104,8 @@ public class TransferMethodConfigurationRepositoryImpl implements TransferMethod
             @NonNull final String transferMethodType,
             @NonNull final String transferMethodProfileType,
             @NonNull final LoadFieldsCallback loadFieldsCallback) {
-        HyperwalletTransferMethodConfigurationFieldQuery query =
-                new HyperwalletTransferMethodConfigurationFieldQuery(country, currency,
+        TransferMethodConfigurationFieldQuery query =
+                new TransferMethodConfigurationFieldQuery(country, currency,
                         transferMethodType, transferMethodProfileType);
         EspressoIdlingResource.increment();
 

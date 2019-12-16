@@ -20,7 +20,7 @@ import android.content.res.Resources;
 
 import androidx.annotation.NonNull;
 
-import com.hyperwallet.android.model.HyperwalletError;
+import com.hyperwallet.android.model.Error;
 
 import java.util.Iterator;
 import java.util.List;
@@ -41,9 +41,9 @@ public final class ErrorUtils {
      * @param errors    the list of errors com.hyperwallet.android.sdk.R.string.unexpected_exception
      * @param resources the resource responsible for generating the string
      */
-    public static String getMessage(@NonNull List<HyperwalletError> errors, @NonNull Resources resources) {
+    public static String getMessage(@NonNull List<Error> errors, @NonNull Resources resources) {
         String message;
-        HyperwalletError error = errors.get(0);
+        Error error = errors.get(0);
         String errorType = ErrorTypes.getErrorType(error.getCode());
 
         switch (errorType) {
@@ -59,10 +59,10 @@ public final class ErrorUtils {
         return message;
     }
 
-    private static String getMessageFromResources(@NonNull final List<HyperwalletError> errors,
+    private static String getMessageFromResources(@NonNull final List<Error> errors,
             @NonNull final Resources resources) {
         StringBuilder messageBuilder = new StringBuilder();
-        Iterator<HyperwalletError> iterator = errors.iterator();
+        Iterator<Error> iterator = errors.iterator();
         while (iterator.hasNext()) {
             messageBuilder.append(iterator.next().getMessageFromResourceWhenAvailable(resources));
             if (iterator.hasNext()) {

@@ -39,7 +39,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.hyperwallet.android.model.HyperwalletError;
+import com.hyperwallet.android.model.Error;
 import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.common.insight.HyperwalletInsight;
 import com.hyperwallet.android.ui.common.util.PageGroups;
@@ -334,28 +334,28 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
     }
 
     @Override
-    public void showErrorLoadTransferMethodConfigurationKeys(@NonNull final List<HyperwalletError> errors) {
+    public void showErrorLoadTransferMethodConfigurationKeys(@NonNull final List<Error> errors) {
         mOnLoadTransferMethodConfigurationKeysNetworkErrorCallback.showErrorsLoadTransferMethodConfigurationKeys(
                 errors);
     }
 
     @Override
-    public void showErrorLoadCurrency(@NonNull final List<HyperwalletError> errors) {
+    public void showErrorLoadCurrency(@NonNull final List<Error> errors) {
         mOnLoadCurrencyConfigurationNetworkErrorCallback.showErrorsLoadCurrencyConfiguration(errors);
     }
 
     @Override
-    public void showErrorLoadTransferMethodTypes(@NonNull final List<HyperwalletError> errors) {
+    public void showErrorLoadTransferMethodTypes(@NonNull final List<Error> errors) {
         mOnLoadTransferMethodTypeNetworkErrorCallback.showErrorsLoadTransferMethodTypes(errors);
     }
 
     @Override
-    public void showErrorLoadCountrySelection(@NonNull final List<HyperwalletError> errors) {
+    public void showErrorLoadCountrySelection(@NonNull final List<Error> errors) {
         mOnLoadCountrySelectionNetworkErrorCallback.showErrorsLoadCountrySelection(errors);
     }
 
     @Override
-    public void showErrorLoadCurrencySelection(@NonNull final List<HyperwalletError> errors) {
+    public void showErrorLoadCurrencySelection(@NonNull final List<Error> errors) {
         mOnLoadCurrencySelectionNetworkErrorCallback.showErrorsLoadCurrencySelection(errors);
     }
 
@@ -401,27 +401,27 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
 
     interface OnLoadTransferMethodConfigurationKeysNetworkErrorCallback {
 
-        void showErrorsLoadTransferMethodConfigurationKeys(@NonNull final List<HyperwalletError> errors);
+        void showErrorsLoadTransferMethodConfigurationKeys(@NonNull final List<Error> errors);
     }
 
     interface OnLoadCurrencyConfigurationNetworkErrorCallback {
 
-        void showErrorsLoadCurrencyConfiguration(@NonNull final List<HyperwalletError> errors);
+        void showErrorsLoadCurrencyConfiguration(@NonNull final List<Error> errors);
     }
 
     interface OnLoadTransferMethodTypeNetworkErrorCallback {
 
-        void showErrorsLoadTransferMethodTypes(@NonNull final List<HyperwalletError> errors);
+        void showErrorsLoadTransferMethodTypes(@NonNull final List<Error> errors);
     }
 
     interface OnLoadCountrySelectionNetworkErrorCallback {
 
-        void showErrorsLoadCountrySelection(@NonNull final List<HyperwalletError> errors);
+        void showErrorsLoadCountrySelection(@NonNull final List<Error> errors);
     }
 
     interface OnLoadCurrencySelectionNetworkErrorCallback {
 
-        void showErrorsLoadCurrencySelection(@NonNull final List<HyperwalletError> errors);
+        void showErrorsLoadCurrencySelection(@NonNull final List<Error> errors);
     }
 
     private static class TransferMethodTypesAdapter extends

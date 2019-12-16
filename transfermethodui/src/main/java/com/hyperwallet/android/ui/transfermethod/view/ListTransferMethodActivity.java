@@ -30,8 +30,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.hyperwallet.android.model.HyperwalletError;
-import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
+import com.hyperwallet.android.model.Error;
+import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.common.util.PageGroups;
 import com.hyperwallet.android.ui.common.view.ActivityUtils;
@@ -57,7 +57,7 @@ public class ListTransferMethodActivity extends AppCompatActivity implements
     private static final short RETRY_LOAD_TRANSFER_METHOD = 100;
 
     private short mRetryCode;
-    private HyperwalletTransferMethod mTransferMethod;
+    private TransferMethod mTransferMethod;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,19 +131,19 @@ public class ListTransferMethodActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void showErrorsDeactivateTransferMethod(@NonNull final List<HyperwalletError> errors) {
+    public void showErrorsDeactivateTransferMethod(@NonNull final List<Error> errors) {
         mRetryCode = RETRY_DEACTIVATE_TRANSFER_METHOD;
         ActivityUtils.showError(this, TAG, PageGroups.TRANSFER_METHOD, errors);
     }
 
     @Override
-    public void showErrorsLoadTransferMethods(@NonNull final List<HyperwalletError> errors) {
+    public void showErrorsLoadTransferMethods(@NonNull final List<Error> errors) {
         mRetryCode = RETRY_LOAD_TRANSFER_METHOD;
         ActivityUtils.showError(this, TAG, PageGroups.TRANSFER_METHOD, errors);
     }
 
     @Override
-    public void showConfirmationDialog(@NonNull HyperwalletTransferMethod transferMethod) {
+    public void showConfirmationDialog(@NonNull TransferMethod transferMethod) {
         mRetryCode = RETRY_CONFIRM_DEACTIVATE_TRANSFER_METHOD_DIALOG;
         mTransferMethod = transferMethod;
         FragmentManager fragmentManager = getSupportFragmentManager();

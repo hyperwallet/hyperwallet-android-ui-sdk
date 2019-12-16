@@ -29,15 +29,15 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.BANK_ACCOUNT_ID;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_COUNTRY;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_CURRENCY;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.BANK_ACCOUNT_ID;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TRANSFER_METHOD_COUNTRY;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TRANSFER_METHOD_CURRENCY;
 
-import com.hyperwallet.android.model.HyperwalletError;
-import com.hyperwallet.android.model.HyperwalletErrors;
+import com.hyperwallet.android.model.Error;
+import com.hyperwallet.android.model.Errors;
 import com.hyperwallet.android.model.StatusTransition;
-import com.hyperwallet.android.model.transfermethod.HyperwalletBankAccount;
-import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
+import com.hyperwallet.android.model.transfermethod.BankAccount;
+import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepository;
 import com.hyperwallet.android.ui.transfermethod.view.ListTransferMethodContract;
 import com.hyperwallet.android.ui.transfermethod.view.ListTransferMethodPresenter;
@@ -59,8 +59,8 @@ import java.util.List;
 
 public class ListTransferMethodPresenterTest {
 
-    private final HyperwalletErrors errors = createErrors();
-    private final HyperwalletBankAccount bankAccount = new HyperwalletBankAccount
+    private final Errors errors = createErrors();
+    private final BankAccount bankAccount = new BankAccount
             .Builder("CA", "CAD", "3423423432")
             .build();
     private final StatusTransition statusTransition = new StatusTransition.Builder()
@@ -73,9 +73,9 @@ public class ListTransferMethodPresenterTest {
     @Mock
     private ListTransferMethodContract.View mView;
     @Captor
-    private ArgumentCaptor<List<HyperwalletError>> mListArgumentErrorCaptor;
+    private ArgumentCaptor<List<Error>> mListArgumentErrorCaptor;
     @Captor
-    private ArgumentCaptor<List<HyperwalletTransferMethod>> mListArgumentTransferMethodCaptor;
+    private ArgumentCaptor<List<TransferMethod>> mListArgumentTransferMethodCaptor;
     private ListTransferMethodPresenter presenter;
 
     @Before
@@ -93,7 +93,7 @@ public class ListTransferMethodPresenterTest {
             public Object answer(InvocationOnMock invocation) {
                 TransferMethodRepository.LoadTransferMethodListCallback callback =
                         (TransferMethodRepository.LoadTransferMethodListCallback) invocation.getArguments()[0];
-                List<HyperwalletTransferMethod> list = new ArrayList<>();
+                List<TransferMethod> list = new ArrayList<>();
                 list.add(bankAccount);
                 callback.onTransferMethodListLoaded(list);
                 return callback;
@@ -106,18 +106,18 @@ public class ListTransferMethodPresenterTest {
 
         verify(mTransferMethodRepository, atLeastOnce()).loadTransferMethods(
                 any(TransferMethodRepository.LoadTransferMethodListCallback.class));
-        verify(mTransferMethodRepository, never()).deactivateTransferMethod(any(HyperwalletTransferMethod.class),
+        verify(mTransferMethodRepository, never()).deactivateTransferMethod(any(TransferMethod.class),
                 any(TransferMethodRepository.DeactivateTransferMethodCallback.class));
-        verify(mTransferMethodRepository, never()).createTransferMethod(any(HyperwalletTransferMethod.class),
+        verify(mTransferMethodRepository, never()).createTransferMethod(any(TransferMethod.class),
                 any(TransferMethodRepository.LoadTransferMethodCallback.class));
-        verify(mView, never()).showErrorDeactivateTransferMethod(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(mView, never()).showErrorListTransferMethods(ArgumentMatchers.<HyperwalletError>anyList());
+        verify(mView, never()).showErrorDeactivateTransferMethod(ArgumentMatchers.<Error>anyList());
+        verify(mView, never()).showErrorListTransferMethods(ArgumentMatchers.<Error>anyList());
         verify(mView, never()).notifyTransferMethodDeactivated(any(StatusTransition.class));
         verify(mView, never()).initiateAddTransferMethodFlow();
         verify(mView, never()).initiateAddTransferMethodFlowResult();
         verify(mView, atLeastOnce()).displayTransferMethods(mListArgumentTransferMethodCaptor.capture());
 
-        List<HyperwalletTransferMethod> capturedList = mListArgumentTransferMethodCaptor.getValue();
+        List<TransferMethod> capturedList = mListArgumentTransferMethodCaptor.getValue();
         assertThat(capturedList, hasSize(1));
         assertThat(capturedList.get(0).getField(TRANSFER_METHOD_CURRENCY), is("CAD"));
         assertThat(capturedList.get(0).getField(TRANSFER_METHOD_COUNTRY), is("CA"));
@@ -131,8 +131,8 @@ public class ListTransferMethodPresenterTest {
             public Object answer(InvocationOnMock invocation) {
                 TransferMethodRepository.LoadTransferMethodListCallback callback =
                         (TransferMethodRepository.LoadTransferMethodListCallback) invocation.getArguments()[0];
-                List<HyperwalletTransferMethod> bankAccounts = new ArrayList<>();
-                bankAccounts.add(mock(HyperwalletBankAccount.class));
+                List<TransferMethod> bankAccounts = new ArrayList<>();
+                bankAccounts.add(mock(BankAccount.class));
                 callback.onTransferMethodListLoaded(bankAccounts);
                 return callback;
             }
@@ -143,8 +143,8 @@ public class ListTransferMethodPresenterTest {
         when(mView.isActive()).thenReturn(false);
         presenter.loadTransferMethods();
 
-        verify(mView, never()).showErrorDeactivateTransferMethod(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(mView, never()).showErrorListTransferMethods(ArgumentMatchers.<HyperwalletError>anyList());
+        verify(mView, never()).showErrorDeactivateTransferMethod(ArgumentMatchers.<Error>anyList());
+        verify(mView, never()).showErrorListTransferMethods(ArgumentMatchers.<Error>anyList());
         verify(mView, never()).notifyTransferMethodDeactivated(any(StatusTransition.class));
         verify(mView, never()).initiateAddTransferMethodFlow();
         verify(mView, never()).initiateAddTransferMethodFlowResult();
@@ -172,18 +172,18 @@ public class ListTransferMethodPresenterTest {
 
         verify(mTransferMethodRepository, atLeastOnce()).loadTransferMethods(
                 any(TransferMethodRepository.LoadTransferMethodListCallback.class));
-        verify(mTransferMethodRepository, never()).deactivateTransferMethod(any(HyperwalletTransferMethod.class),
+        verify(mTransferMethodRepository, never()).deactivateTransferMethod(any(TransferMethod.class),
                 any(TransferMethodRepository.DeactivateTransferMethodCallback.class));
-        verify(mTransferMethodRepository, never()).createTransferMethod(any(HyperwalletTransferMethod.class),
+        verify(mTransferMethodRepository, never()).createTransferMethod(any(TransferMethod.class),
                 any(TransferMethodRepository.LoadTransferMethodCallback.class));
-        verify(mView, never()).showErrorDeactivateTransferMethod(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(mView, never()).showErrorListTransferMethods(ArgumentMatchers.<HyperwalletError>anyList());
+        verify(mView, never()).showErrorDeactivateTransferMethod(ArgumentMatchers.<Error>anyList());
+        verify(mView, never()).showErrorListTransferMethods(ArgumentMatchers.<Error>anyList());
         verify(mView, never()).notifyTransferMethodDeactivated(any(StatusTransition.class));
         verify(mView, never()).initiateAddTransferMethodFlow();
         verify(mView, never()).initiateAddTransferMethodFlowResult();
         verify(mView, atLeastOnce()).displayTransferMethods(mListArgumentTransferMethodCaptor.capture());
 
-        List<HyperwalletTransferMethod> capturedList = mListArgumentTransferMethodCaptor.getValue();
+        List<TransferMethod> capturedList = mListArgumentTransferMethodCaptor.getValue();
         assertThat(capturedList, is(nullValue()));
     }
 
@@ -208,17 +208,17 @@ public class ListTransferMethodPresenterTest {
 
         verify(mTransferMethodRepository, atLeastOnce()).loadTransferMethods(
                 any(TransferMethodRepository.LoadTransferMethodListCallback.class));
-        verify(mTransferMethodRepository, never()).deactivateTransferMethod(any(HyperwalletTransferMethod.class),
+        verify(mTransferMethodRepository, never()).deactivateTransferMethod(any(TransferMethod.class),
                 any(TransferMethodRepository.DeactivateTransferMethodCallback.class));
-        verify(mTransferMethodRepository, never()).createTransferMethod(any(HyperwalletTransferMethod.class),
+        verify(mTransferMethodRepository, never()).createTransferMethod(any(TransferMethod.class),
                 any(TransferMethodRepository.LoadTransferMethodCallback.class));
-        verify(mView, never()).displayTransferMethods(ArgumentMatchers.<HyperwalletTransferMethod>anyList());
+        verify(mView, never()).displayTransferMethods(ArgumentMatchers.<TransferMethod>anyList());
         verify(mView, never()).notifyTransferMethodDeactivated(any(StatusTransition.class));
         verify(mView, never()).initiateAddTransferMethodFlow();
         verify(mView, never()).initiateAddTransferMethodFlowResult();
         verify(mView, atLeastOnce()).showErrorListTransferMethods(mListArgumentErrorCaptor.capture());
 
-        List<HyperwalletError> capturedList = mListArgumentErrorCaptor.getValue();
+        List<Error> capturedList = mListArgumentErrorCaptor.getValue();
         assertThat(capturedList, hasSize(1));
         assertThat(capturedList, hasItem(errors.getErrors().get(0)));
     }
@@ -233,7 +233,7 @@ public class ListTransferMethodPresenterTest {
             public Object answer(InvocationOnMock invocation) {
                 TransferMethodRepository.LoadTransferMethodListCallback callback =
                         (TransferMethodRepository.LoadTransferMethodListCallback) invocation.getArguments()[0];
-                HyperwalletErrors hyperwalletErrors = mock(HyperwalletErrors.class);
+                Errors hyperwalletErrors = mock(Errors.class);
                 callback.onError(hyperwalletErrors);
                 return callback;
             }
@@ -243,8 +243,8 @@ public class ListTransferMethodPresenterTest {
         // Then
         presenter.loadTransferMethods();
         verify(mView, never()).hideProgressBar();
-        verify(mView, never()).showErrorDeactivateTransferMethod(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(mView, never()).showErrorListTransferMethods(ArgumentMatchers.<HyperwalletError>anyList());
+        verify(mView, never()).showErrorDeactivateTransferMethod(ArgumentMatchers.<Error>anyList());
+        verify(mView, never()).showErrorListTransferMethods(ArgumentMatchers.<Error>anyList());
     }
 
     @Test
@@ -260,23 +260,23 @@ public class ListTransferMethodPresenterTest {
                 callback.onTransferMethodDeactivated(statusTransition);
                 return callback;
             }
-        }).when(mTransferMethodRepository).deactivateTransferMethod(any(HyperwalletTransferMethod.class),
+        }).when(mTransferMethodRepository).deactivateTransferMethod(any(TransferMethod.class),
                 any(TransferMethodRepository.DeactivateTransferMethodCallback.class));
 
         // Then
         presenter.deactivateTransferMethod(bankAccount);
 
-        verify(mTransferMethodRepository, atLeastOnce()).deactivateTransferMethod(any(HyperwalletTransferMethod.class),
+        verify(mTransferMethodRepository, atLeastOnce()).deactivateTransferMethod(any(TransferMethod.class),
                 any(TransferMethodRepository.DeactivateTransferMethodCallback.class));
         verify(mTransferMethodRepository, never()).loadTransferMethods(
                 any(TransferMethodRepository.LoadTransferMethodListCallback.class));
-        verify(mTransferMethodRepository, never()).createTransferMethod(any(HyperwalletTransferMethod.class),
+        verify(mTransferMethodRepository, never()).createTransferMethod(any(TransferMethod.class),
                 any(TransferMethodRepository.LoadTransferMethodCallback.class));
-        verify(mView, never()).displayTransferMethods(ArgumentMatchers.<HyperwalletTransferMethod>anyList());
+        verify(mView, never()).displayTransferMethods(ArgumentMatchers.<TransferMethod>anyList());
         verify(mView, never()).initiateAddTransferMethodFlow();
         verify(mView, never()).initiateAddTransferMethodFlowResult();
-        verify(mView, never()).showErrorDeactivateTransferMethod(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(mView, never()).showErrorListTransferMethods(ArgumentMatchers.<HyperwalletError>anyList());
+        verify(mView, never()).showErrorDeactivateTransferMethod(ArgumentMatchers.<Error>anyList());
+        verify(mView, never()).showErrorListTransferMethods(ArgumentMatchers.<Error>anyList());
         verify(mView, atLeastOnce()).notifyTransferMethodDeactivated(any(StatusTransition.class));
     }
 
@@ -293,17 +293,17 @@ public class ListTransferMethodPresenterTest {
                 callback.onTransferMethodDeactivated(statusTransition);
                 return callback;
             }
-        }).when(mTransferMethodRepository).deactivateTransferMethod(any(HyperwalletTransferMethod.class),
+        }).when(mTransferMethodRepository).deactivateTransferMethod(any(TransferMethod.class),
                 any(TransferMethodRepository.DeactivateTransferMethodCallback.class));
 
         // Then
         presenter.deactivateTransferMethod(bankAccount);
         verify(mView, never()).hideProgressBar();
-        verify(mView, never()).displayTransferMethods(ArgumentMatchers.<HyperwalletTransferMethod>anyList());
+        verify(mView, never()).displayTransferMethods(ArgumentMatchers.<TransferMethod>anyList());
         verify(mView, never()).initiateAddTransferMethodFlow();
         verify(mView, never()).initiateAddTransferMethodFlowResult();
-        verify(mView, never()).showErrorDeactivateTransferMethod(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(mView, never()).showErrorListTransferMethods(ArgumentMatchers.<HyperwalletError>anyList());
+        verify(mView, never()).showErrorDeactivateTransferMethod(ArgumentMatchers.<Error>anyList());
+        verify(mView, never()).showErrorListTransferMethods(ArgumentMatchers.<Error>anyList());
         verify(mView, never()).notifyTransferMethodDeactivated(any(StatusTransition.class));
     }
 
@@ -320,25 +320,25 @@ public class ListTransferMethodPresenterTest {
                 callback.onError(errors);
                 return callback;
             }
-        }).when(mTransferMethodRepository).deactivateTransferMethod(any(HyperwalletTransferMethod.class),
+        }).when(mTransferMethodRepository).deactivateTransferMethod(any(TransferMethod.class),
                 any(TransferMethodRepository.DeactivateTransferMethodCallback.class));
 
         // Then
         presenter.deactivateTransferMethod(bankAccount);
 
-        verify(mTransferMethodRepository, atLeastOnce()).deactivateTransferMethod((HyperwalletTransferMethod) any(),
+        verify(mTransferMethodRepository, atLeastOnce()).deactivateTransferMethod((TransferMethod) any(),
                 any(TransferMethodRepository.DeactivateTransferMethodCallback.class));
         verify(mTransferMethodRepository, never()).loadTransferMethods(
                 any(TransferMethodRepository.LoadTransferMethodListCallback.class));
-        verify(mTransferMethodRepository, never()).createTransferMethod(any(HyperwalletTransferMethod.class),
+        verify(mTransferMethodRepository, never()).createTransferMethod(any(TransferMethod.class),
                 any(TransferMethodRepository.LoadTransferMethodCallback.class));
-        verify(mView, never()).displayTransferMethods(ArgumentMatchers.<HyperwalletTransferMethod>anyList());
+        verify(mView, never()).displayTransferMethods(ArgumentMatchers.<TransferMethod>anyList());
         verify(mView, never()).initiateAddTransferMethodFlow();
         verify(mView, never()).initiateAddTransferMethodFlowResult();
         verify(mView, never()).notifyTransferMethodDeactivated(any(StatusTransition.class));
         verify(mView, atLeastOnce()).showErrorDeactivateTransferMethod(mListArgumentErrorCaptor.capture());
 
-        List<HyperwalletError> capturedList = mListArgumentErrorCaptor.getValue();
+        List<Error> capturedList = mListArgumentErrorCaptor.getValue();
         assertThat(capturedList, hasSize(1));
         assertThat(capturedList, hasItem(errors.getErrors().get(0)));
     }
@@ -356,25 +356,25 @@ public class ListTransferMethodPresenterTest {
                 callback.onError(errors);
                 return callback;
             }
-        }).when(mTransferMethodRepository).deactivateTransferMethod(any(HyperwalletTransferMethod.class),
+        }).when(mTransferMethodRepository).deactivateTransferMethod(any(TransferMethod.class),
                 any(TransferMethodRepository.DeactivateTransferMethodCallback.class));
 
         // Then
         presenter.deactivateTransferMethod(bankAccount);
 
         verify(mView, never()).hideProgressBar();
-        verify(mView, never()).displayTransferMethods(ArgumentMatchers.<HyperwalletTransferMethod>anyList());
+        verify(mView, never()).displayTransferMethods(ArgumentMatchers.<TransferMethod>anyList());
         verify(mView, never()).initiateAddTransferMethodFlow();
         verify(mView, never()).initiateAddTransferMethodFlowResult();
         verify(mView, never()).notifyTransferMethodDeactivated(any(StatusTransition.class));
-        verify(mView, never()).showErrorDeactivateTransferMethod(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(mView, never()).showErrorListTransferMethods(ArgumentMatchers.<HyperwalletError>anyList());
+        verify(mView, never()).showErrorDeactivateTransferMethod(ArgumentMatchers.<Error>anyList());
+        verify(mView, never()).showErrorListTransferMethods(ArgumentMatchers.<Error>anyList());
     }
 
-    private HyperwalletErrors createErrors() {
-        List<HyperwalletError> errors = new ArrayList<>();
-        HyperwalletError error = new HyperwalletError("test message", "TEST_CODE");
+    private Errors createErrors() {
+        List<Error> errors = new ArrayList<>();
+        Error error = new Error("test message", "TEST_CODE");
         errors.add(error);
-        return new HyperwalletErrors(errors);
+        return new Errors(errors);
     }
 }

@@ -19,11 +19,11 @@ package com.hyperwallet.android.ui.transfermethod.view;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.hyperwallet.android.model.HyperwalletError;
-import com.hyperwallet.android.model.graphql.HyperwalletFee;
+import com.hyperwallet.android.model.Error;
+import com.hyperwallet.android.model.graphql.Fee;
 import com.hyperwallet.android.model.graphql.ProcessingTime;
-import com.hyperwallet.android.model.graphql.field.HyperwalletFieldGroup;
-import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
+import com.hyperwallet.android.model.graphql.field.FieldGroup;
+import com.hyperwallet.android.model.transfermethod.TransferMethod;
 
 import java.util.List;
 import java.util.Map;
@@ -35,15 +35,15 @@ public interface AddTransferMethodContract {
 
     interface View {
 
-        void notifyTransferMethodAdded(@NonNull final HyperwalletTransferMethod transferMethod);
+        void notifyTransferMethodAdded(@NonNull final TransferMethod transferMethod);
 
-        void showErrorAddTransferMethod(@NonNull final List<HyperwalletError> errors);
+        void showErrorAddTransferMethod(@NonNull final List<Error> errors);
 
-        void showErrorLoadTransferMethodConfigurationFields(@NonNull final List<HyperwalletError> errors);
+        void showErrorLoadTransferMethodConfigurationFields(@NonNull final List<Error> errors);
 
-        void showTransferMethodFields(@NonNull final List<HyperwalletFieldGroup> fields);
+        void showTransferMethodFields(@NonNull final List<FieldGroup> fields);
 
-        void showTransactionInformation(@NonNull final List<HyperwalletFee> fees,
+        void showTransactionInformation(@NonNull final List<Fee> fees,
                 @Nullable final ProcessingTime processingTime);
 
         void showCreateButtonProgressBar();
@@ -54,7 +54,7 @@ public interface AddTransferMethodContract {
 
         void hideProgressBar();
 
-        void showInputErrors(@NonNull final List<HyperwalletError> errors);
+        void showInputErrors(@NonNull final List<Error> errors);
 
         /**
          * Check the state of a View
@@ -70,7 +70,7 @@ public interface AddTransferMethodContract {
 
     interface Presenter {
 
-        void createTransferMethod(@NonNull HyperwalletTransferMethod transferMethod);
+        void createTransferMethod(@NonNull TransferMethod transferMethod);
 
         void loadTransferMethodConfigurationFields(boolean forceUpdate,
                 @NonNull final String country,
@@ -79,6 +79,6 @@ public interface AddTransferMethodContract {
                 @NonNull final String transferMethodProfileType);
 
         void handleUnmappedFieldError(@NonNull final Map<String, ?> fieldSet,
-                @NonNull final List<HyperwalletError> errors);
+                @NonNull final List<Error> errors);
     }
 }

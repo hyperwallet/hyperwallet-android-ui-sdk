@@ -38,7 +38,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.android.material.textfield.TextInputLayout;
-import com.hyperwallet.android.model.graphql.field.HyperwalletField;
+import com.hyperwallet.android.model.graphql.field.Field;
 import com.hyperwallet.android.ui.R;
 
 public class ExpiryDateWidget extends AbstractWidget {
@@ -49,7 +49,7 @@ public class ExpiryDateWidget extends AbstractWidget {
     private String mMessageInvalidDateLength;
     private String mMessageInvalidDate;
 
-    public ExpiryDateWidget(@NonNull HyperwalletField field, @NonNull WidgetEventListener listener,
+    public ExpiryDateWidget(@NonNull Field field, @NonNull WidgetEventListener listener,
             @Nullable String defaultValue, @NonNull View defaultFocusView) {
         super(field, listener, defaultValue, defaultFocusView);
         mValue = defaultValue;

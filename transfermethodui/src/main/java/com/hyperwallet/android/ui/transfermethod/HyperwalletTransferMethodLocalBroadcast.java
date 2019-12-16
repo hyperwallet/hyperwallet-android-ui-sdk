@@ -27,7 +27,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.StringDef;
 
 import com.hyperwallet.android.model.StatusTransition;
-import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
+import com.hyperwallet.android.model.transfermethod.TransferMethod;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -35,7 +35,7 @@ import java.lang.annotation.RetentionPolicy;
 public class HyperwalletTransferMethodLocalBroadcast {
 
     public static Intent createBroadcastIntentTransferMethodAdded(
-            @NonNull final HyperwalletTransferMethod transferMethod) {
+            @NonNull final TransferMethod transferMethod) {
         return createBroadcastIntent(transferMethod,
                 ACTION_HYPERWALLET_TRANSFER_METHOD_ADDED);
     }

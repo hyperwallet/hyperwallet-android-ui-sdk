@@ -28,8 +28,8 @@ import androidx.paging.PageKeyedDataSource;
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.exception.HyperwalletException;
 import com.hyperwallet.android.listener.HyperwalletListener;
-import com.hyperwallet.android.model.HyperwalletErrors;
-import com.hyperwallet.android.model.paging.HyperwalletPageList;
+import com.hyperwallet.android.model.Errors;
+import com.hyperwallet.android.model.paging.PageList;
 import com.hyperwallet.android.model.receipt.Receipt;
 import com.hyperwallet.android.model.receipt.ReceiptQueryParam;
 import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
@@ -49,7 +49,7 @@ public class PrepaidCardReceiptDataSource extends PageKeyedDataSource<Date, Rece
 
     private final Calendar mCalendarYearBeforeNow;
     private final String mToken;
-    private final MutableLiveData<Event<HyperwalletErrors>> mErrors = new MutableLiveData<>();
+    private final MutableLiveData<Event<Errors>> mErrors = new MutableLiveData<>();
     private final MutableLiveData<Boolean> mIsFetchingData = new MutableLiveData<>();
     private PageKeyedDataSource.LoadCallback<Date, Receipt> mLoadAfterCallback;
     private PageKeyedDataSource.LoadParams<Date> mLoadAfterParams;
@@ -83,9 +83,9 @@ public class PrepaidCardReceiptDataSource extends PageKeyedDataSource<Date, Rece
 
         EspressoIdlingResource.increment();
         getHyperwallet().listPrepaidCardReceipts(mToken, queryParam,
-                new HyperwalletListener<HyperwalletPageList<Receipt>>() {
+                new HyperwalletListener<PageList<Receipt>>() {
                     @Override
-                    public void onSuccess(@Nullable HyperwalletPageList<Receipt> result) {
+                    public void onSuccess(@Nullable PageList<Receipt> result) {
                         mIsFetchingData.postValue(Boolean.FALSE);
                         mErrors.postValue(null);
 
@@ -137,9 +137,9 @@ public class PrepaidCardReceiptDataSource extends PageKeyedDataSource<Date, Rece
 
         EspressoIdlingResource.increment();
         getHyperwallet().listPrepaidCardReceipts(mToken, queryParam,
-                new HyperwalletListener<HyperwalletPageList<Receipt>>() {
+                new HyperwalletListener<PageList<Receipt>>() {
                     @Override
-                    public void onSuccess(@Nullable HyperwalletPageList<Receipt> result) {
+                    public void onSuccess(@Nullable PageList<Receipt> result) {
                         mIsFetchingData.postValue(Boolean.FALSE);
                         mErrors.postValue(null);
 
@@ -181,9 +181,9 @@ public class PrepaidCardReceiptDataSource extends PageKeyedDataSource<Date, Rece
     /**
      * Retrieve reference of Hyperwallet errors inorder for consumers to observe on data changes
      *
-     * @return Live event data of {@link HyperwalletErrors}
+     * @return Live event data of {@link Errors}
      */
-    public LiveData<Event<HyperwalletErrors>> getErrors() {
+    public LiveData<Event<Errors>> getErrors() {
         return mErrors;
     }
 
@@ -196,7 +196,7 @@ public class PrepaidCardReceiptDataSource extends PageKeyedDataSource<Date, Rece
     }
 
     @VisibleForTesting
-    Date getNextDate(@NonNull final HyperwalletPageList<Receipt> result) {
+    Date getNextDate(@NonNull final PageList<Receipt> result) {
         if (result.getDataList() != null && !result.getDataList().isEmpty()) {
             // get last receipt date
             return DateUtil.fromDateTimeString(

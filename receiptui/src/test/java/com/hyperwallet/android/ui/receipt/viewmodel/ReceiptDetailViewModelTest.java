@@ -12,7 +12,7 @@ import android.content.Intent;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.hyperwallet.android.exception.HyperwalletException;
-import com.hyperwallet.android.model.paging.HyperwalletPageList;
+import com.hyperwallet.android.model.paging.PageList;
 import com.hyperwallet.android.model.receipt.Receipt;
 import com.hyperwallet.android.ui.receipt.view.ReceiptDetailActivity;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
@@ -34,13 +34,13 @@ public class ReceiptDetailViewModelTest {
 
     private Intent mIntent;
     private Receipt mReceipt;
-    private HyperwalletPageList<Receipt> mReceiptList;
+    private PageList<Receipt> mReceiptList;
 
     @Before
     public void initialize() throws JSONException, HyperwalletException {
         String json = mExternalResourceManager.getResourceContent("prepaid_card_receipt_list_response.json");
         JSONObject jsonObject = new JSONObject(json);
-        mReceiptList = new HyperwalletPageList<>(jsonObject, Receipt.class);
+        mReceiptList = new PageList<>(jsonObject, Receipt.class);
 
         mIntent = new Intent();
         mReceipt = mReceiptList.getDataList().get(0);

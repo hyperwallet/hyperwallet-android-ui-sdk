@@ -24,7 +24,7 @@ import android.widget.RelativeLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.hyperwallet.android.model.graphql.field.HyperwalletField;
+import com.hyperwallet.android.model.graphql.field.Field;
 
 public abstract class AbstractWidget {
 
@@ -32,12 +32,12 @@ public abstract class AbstractWidget {
 
     protected final View mDefaultFocusView;
     protected final String mDefaultValue;
-    protected final HyperwalletField mField;
+    protected final Field mField;
     protected final WidgetEventListener mListener;
     protected int mBottomViewId = 0;
     protected WidgetInputState mWidgetInputState;
 
-    public AbstractWidget(@Nullable HyperwalletField field, @NonNull WidgetEventListener listener,
+    public AbstractWidget(@Nullable Field field, @NonNull WidgetEventListener listener,
             @Nullable String defaultValue, @NonNull View defaultFocusView) {
         mField = field;
         mListener = listener;
