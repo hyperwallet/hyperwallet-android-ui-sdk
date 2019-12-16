@@ -242,6 +242,26 @@ public class TransferMethodRepositoryImplTest {
     }
 
     @Test
+    public void testDeactivateTransferMethod_createTransferWithUnsupportedTransferType() {
+        HyperwalletBankAccount bankAccount = new HyperwalletBankAccount
+                .Builder("US", "USD", "23432432")
+                .token("trm-854c4ec1-9161-49d6-92e2-b8d15aa4bf56")
+                .transferMethodType("UNKNOWN_TRANSFER_TYPE")
+                .build();
+        bankAccount.setField(STATUS, StatusTransition.StatusDefinition.ACTIVATED);
+
+        // test
+        mTransferMethodRepository.deactivateTransferMethod(bankAccount, mDeactivateTransferMethodCallback);
+
+        verify(mDeactivateTransferMethodCallback).onError(mErrorsArgumentCaptor.capture());
+        verify(mDeactivateTransferMethodCallback, never()).onTransferMethodDeactivated(any(StatusTransition.class));
+        assertThat(mErrorsArgumentCaptor.getValue().getErrors(), Matchers.<HyperwalletError>hasSize(1));
+        assertThat(mErrorsArgumentCaptor.getValue().getErrors().get(0).getMessageId(),
+                is(R.string.error_unsupported_transfer_type));
+        assertThat(mErrorsArgumentCaptor.getValue().getErrors().get(0).getCode(), is(EC_UNEXPECTED_EXCEPTION));
+    }
+
+    @Test
     public void testDeactivateTransferMethod_bankCardWithSuccess() {
         HyperwalletBankCard bankCard = new HyperwalletBankCard
                 .Builder("CA", "CAD", "1232345456784", "2019-05", "234")
@@ -363,7 +383,6 @@ public class TransferMethodRepositoryImplTest {
 
         assertThat(mErrorsArgumentCaptor.getValue().getErrors(), hasItem(error));
     }
-
 
     @Test
     public void testCreateTransferMethod_bankCardWithSuccess() {
