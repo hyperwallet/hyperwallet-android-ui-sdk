@@ -399,27 +399,27 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
         void onTransferMethodSelected(TransferMethodSelectionItem transferMethodType);
     }
 
-    interface OnLoadTransferMethodConfigurationKeysNetworkErrorCallback {
+    public interface OnLoadTransferMethodConfigurationKeysNetworkErrorCallback {
 
         void showErrorsLoadTransferMethodConfigurationKeys(@NonNull final List<HyperwalletError> errors);
     }
 
-    interface OnLoadCurrencyConfigurationNetworkErrorCallback {
+    public interface OnLoadCurrencyConfigurationNetworkErrorCallback {
 
         void showErrorsLoadCurrencyConfiguration(@NonNull final List<HyperwalletError> errors);
     }
 
-    interface OnLoadTransferMethodTypeNetworkErrorCallback {
+    public interface OnLoadTransferMethodTypeNetworkErrorCallback {
 
         void showErrorsLoadTransferMethodTypes(@NonNull final List<HyperwalletError> errors);
     }
 
-    interface OnLoadCountrySelectionNetworkErrorCallback {
+    public interface OnLoadCountrySelectionNetworkErrorCallback {
 
         void showErrorsLoadCountrySelection(@NonNull final List<HyperwalletError> errors);
     }
 
-    interface OnLoadCurrencySelectionNetworkErrorCallback {
+    public interface OnLoadCurrencySelectionNetworkErrorCallback {
 
         void showErrorsLoadCurrencySelection(@NonNull final List<HyperwalletError> errors);
     }
