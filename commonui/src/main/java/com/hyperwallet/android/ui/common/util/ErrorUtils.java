@@ -48,7 +48,8 @@ public final class ErrorUtils {
 
         switch (errorType) {
             case ErrorTypes.SDK_ERROR:
-                message = resources.getString(com.hyperwallet.android.sdk.R.string.unexpected_exception);
+                message = resources.getString(error.getMessageId() != 0 ?
+                        error.getMessageId() : com.hyperwallet.android.sdk.R.string.unexpected_exception);
                 break;
             case ErrorTypes.CONNECTION_ERROR:
                 message = getMessageFromResources(errors, resources);
