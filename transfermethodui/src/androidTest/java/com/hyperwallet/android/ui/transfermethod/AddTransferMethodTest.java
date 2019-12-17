@@ -3,6 +3,7 @@ package com.hyperwallet.android.ui.transfermethod;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.replaceText;
+import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.RootMatchers.isDialog;
@@ -39,6 +40,7 @@ import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
 import com.hyperwallet.android.ui.common.view.error.DefaultErrorDialogFragment;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletMockWebServer;
+import com.hyperwallet.android.ui.testutils.util.RecyclerViewCountAssertion;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
 import com.hyperwallet.android.ui.transfermethod.rule.HyperwalletInsightMockRule;
 import com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity;
@@ -208,5 +210,23 @@ public class AddTransferMethodTest {
         Instrumentation.ActivityResult result = mActivityTestRule.getActivityResult();
         assertThat(result.getResultCode(), is(DefaultErrorDialogFragment.RESULT_ERROR));
         assertThat(mActivityTestRule.getActivity().isFinishing(), is(true));
+    }
+
+    @Test
+    public void testAddTransferMethod_verifySelectionWidgetSearch() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_fields_bank_account_selection_response.json")).mock();
+
+        mActivityTestRule.launchActivity(null);
+
+        onView(withId(R.id.bankId)).perform(nestedScrollTo(), click());
+        onView(withId(R.id.search_button)).perform(click());
+        onView(withId(R.id.search_src_text)).perform(typeText("HSBC Bank Argentina"));
+        onView(withId(R.id.input_selection_list)).check(new RecyclerViewCountAssertion(1));
+        onView(allOf(withId(R.id.select_name), withText("HSBC Bank Argentina"))).check(matches(isDisplayed()));
+        onView(allOf(withId(R.id.select_name), withText("HSBC Bank Argentina"))).perform(click());
+
+        onView(withId(R.id.bankId)).check(matches(withText("HSBC Bank Argentina")));
+        onView(withId(R.id.input_selection_list)).check(doesNotExist());
     }
 }
