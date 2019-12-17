@@ -76,4 +76,6 @@
     <dimen name="widget_left_margin_offset">32dp</dimen>
     <dimen name="circle_icon">48dp</dimen>
     <dimen name="circle_white_density">3dp</dimen>
+
+    <dimen name="negative_padding">3dp</dimen>
 </resources>

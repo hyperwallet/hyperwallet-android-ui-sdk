@@ -40,6 +40,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -89,6 +90,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     private Button mCreateTransferMethodButton;
     private String mCurrency;
     private ViewGroup mDynamicContainer;
+    private NestedScrollView mNestedScrollView;
     private OnAddTransferMethodNetworkErrorCallback mOnAddTransferMethodNetworkErrorCallback;
     private OnLoadTransferMethodConfigurationFieldsNetworkErrorCallback
             mOnLoadTransferMethodConfigurationFieldsNetworkErrorCallback;
@@ -182,10 +184,12 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
         super.onViewCreated(view, savedInstanceState);
 
         mDynamicContainer = view.findViewById(R.id.add_transfer_method_dynamic_container);
+        mNestedScrollView = view.findViewById(R.id.add_transfer_method_scroll_view);
+
         mCreateButtonProgressBar = view.findViewById(R.id.add_transfer_method_create_button_progress_bar);
         mProgressBar = view.findViewById(R.id.add_transfer_method_progress_bar_layout);
         mCreateTransferMethodButton = view.findViewById(R.id.add_transfer_method_button);
-        
+
         mCreateTransferMethodButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         mCreateTransferMethodButton.setTextColor(getResources().getColor(R.color.regularColorPrimary));
         mCreateTransferMethodButton.setOnClickListener(new View.OnClickListener() {
@@ -363,7 +367,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                             .type(mTransferMethodType)
                             .profileType(mTransferMethodProfileType)
                             .build());
-            
+
             if (mShowCreateProgressBar) {
                 setVisibleAndDisableFields();
             }
@@ -609,17 +613,20 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
         // this is added since some phones triggers the create button but the widgets are not yet initialized
         boolean hasWidget = false;
         for (int i = 0; i < mDynamicContainer.getChildCount(); i++) {
-            View v = mDynamicContainer.getChildAt(i);
-            if (v.getTag() instanceof AbstractWidget) {
+            View currentView = mDynamicContainer.getChildAt(i);
+            if (currentView.getTag() instanceof AbstractWidget) {
                 hasWidget = true;
 
-                AbstractWidget widget = (AbstractWidget) v.getTag();
+                AbstractWidget widget = (AbstractWidget) currentView.getTag();
                 WidgetInputState widgetInputState = mWidgetInputStateHashMap.get(widget.getName());
                 widgetInputState.setValue(widget.getValue());
 
                 isWidgetValid = isWidgetItemValid(widget);
-                if (!isWidgetValid) {
+                if (!containsInvalidWidget && !isWidgetValid) {
                     containsInvalidWidget = true;
+                    int pixels = (int) (requireContext().getResources().getDimension(R.dimen.negative_padding)
+                            * requireContext().getResources().getDisplayMetrics().density);
+                    mNestedScrollView.smoothScrollTo(0, currentView.getTop() - pixels);
                 }
             }
         }
