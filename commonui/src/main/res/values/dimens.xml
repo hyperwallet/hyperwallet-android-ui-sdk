@@ -56,6 +56,7 @@
     <dimen name="collapsing_header_size">136dp</dimen>
     <dimen name="divider_height">1dp</dimen>
     <dimen name="divider_padding_top">16dp</dimen>
+    <dimen name="item_horizontal_padding">3dp</dimen>
     <dimen name="item_vertical_padding">8dp</dimen>
     <dimen name="item_vertical_margin">8dp</dimen>
     <dimen name="keyboard_arrow_height">14dp</dimen>

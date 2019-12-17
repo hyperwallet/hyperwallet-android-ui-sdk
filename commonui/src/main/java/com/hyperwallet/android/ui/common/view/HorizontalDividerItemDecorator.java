@@ -34,12 +34,12 @@ public class HorizontalDividerItemDecorator extends RecyclerView.ItemDecoration 
 
     protected final Drawable mHorizontalItemDivider;
     private final boolean mHasTopDivider;
-    private final int topDividerPadding;
+    private final float topDividerPadding;
 
     public HorizontalDividerItemDecorator(@NonNull final Context context, final boolean hasTopDivider) {
         mHorizontalItemDivider = context.getResources().getDrawable(R.drawable.horizontal_divider, null);
         mHasTopDivider = hasTopDivider;
-        topDividerPadding = context.getResources().getInteger(R.integer.top_divider_padding_value);
+        topDividerPadding = getTopDividerPadding(context);
     }
 
     @Override
@@ -57,7 +57,7 @@ public class HorizontalDividerItemDecorator extends RecyclerView.ItemDecoration 
         }
 
         if (itemPosition == 0) { // first item
-            outRect.set(view.getPaddingLeft(), mHasTopDivider ? topDividerPadding : DEFAULT_PADDING,
+            outRect.set(view.getPaddingLeft(), mHasTopDivider ? (int) topDividerPadding : DEFAULT_PADDING,
                     view.getPaddingRight(), view.getPaddingBottom());
         } else if (itemCount > 0 && itemPosition == itemCount - 1) { // last item
             outRect.set(view.getPaddingLeft(), view.getPaddingTop(), view.getPaddingRight(), view.getPaddingBottom());
@@ -102,5 +102,10 @@ public class HorizontalDividerItemDecorator extends RecyclerView.ItemDecoration 
             mHorizontalItemDivider.setBounds(left, top, right, bottom);
             mHorizontalItemDivider.draw(c);
         }
+    }
+
+    private float getTopDividerPadding(@NonNull final Context context) {
+        return context.getResources().getDimension(R.dimen.item_horizontal_padding)
+                * context.getResources().getDisplayMetrics().density;
     }
 }
