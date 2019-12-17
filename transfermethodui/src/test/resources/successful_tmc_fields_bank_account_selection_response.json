@@ -1,0 +1,375 @@
+{
+  "data": {
+    "transferMethodUIConfigurations": {
+      "nodes": [
+        {
+          "country": "US",
+          "currency": "USD",
+          "transferMethodType": "BANK_ACCOUNT",
+          "profile": "INDIVIDUAL",
+          "fieldGroups": {
+            "nodes": [
+              {
+                "group": "ACCOUNT_INFORMATION",
+                "fields": [
+                  {
+                    "category": "ACCOUNT",
+                    "dataType": "SELECTION",
+                    "isEditable": true,
+                    "fieldSelectionOptions": [
+                      {
+                        "label": "A.B.N Amro Bank",
+                        "value": "005"
+                      },
+                      {
+                        "label": "Banco de Galicia Y Buenos Aires",
+                        "value": "007"
+                      },
+                      {
+                        "label": "Lloyds Tsb Bank",
+                        "value": "010"
+                      },
+                      {
+                        "label": "Banco de La Nacion Argentina",
+                        "value": "011"
+                      },
+                      {
+                        "label": "Banco de La Provincia de Buenos A",
+                        "value": "014"
+                      },
+                      {
+                        "label": "ICBC Argentina",
+                        "value": "015"
+                      },
+                      {
+                        "label": "Citibank",
+                        "value": "016"
+                      },
+                      {
+                        "label": "BBVA Banco Frances",
+                        "value": "017"
+                      },
+                      {
+                        "label": "The Bank Of Tokyo - Mitsubishi",
+                        "value": "018"
+                      },
+                      {
+                        "label": "Banco de La Provincia de Cordoba",
+                        "value": "020"
+                      },
+                      {
+                        "label": "Banco Supervielle",
+                        "value": "027"
+                      },
+                      {
+                        "label": "Banco de La Ciudad de Buenos Aires",
+                        "value": "029"
+                      },
+                      {
+                        "label": "Banco Patagonia Sudameris",
+                        "value": "034"
+                      },
+                      {
+                        "label": "Banco Hipotecario",
+                        "value": "044"
+                      },
+                      {
+                        "label": "Banco de San Juan",
+                        "value": "045"
+                      },
+                      {
+                        "label": "Banco Do Brasil",
+                        "value": "046"
+                      },
+                      {
+                        "label": "Banco Del Tucuman",
+                        "value": "060"
+                      },
+                      {
+                        "label": "Banco Municipal de Ros",
+                        "value": "065"
+                      },
+                      {
+                        "label": "Banco Santander Rio",
+                        "value": "072"
+                      },
+                      {
+                        "label": "Banco Regional de Cuyo",
+                        "value": "079"
+                      },
+                      {
+                        "label": "Banco Del Chubut",
+                        "value": "083"
+                      },
+                      {
+                        "label": "Banco de Santa Cruz",
+                        "value": "086"
+                      },
+                      {
+                        "label": "Banco de La Pampa Sociedad de Economia M",
+                        "value": "093"
+                      },
+                      {
+                        "label": "Banco de Corrientes",
+                        "value": "094"
+                      },
+                      {
+                        "label": "Banco Provincia Del Neuquen",
+                        "value": "097"
+                      },
+                      {
+                        "label": "Banco Empresario de Tucuman Coop. L",
+                        "value": "137"
+                      },
+                      {
+                        "label": "Banco B. I. Creditanstalt",
+                        "value": "147"
+                      },
+                      {
+                        "label": "HSBC Bank Argentina",
+                        "value": "150"
+                      },
+                      {
+                        "label": "J P Morgan Chase Bank Sucursal Buenos Aires",
+                        "value": "165"
+                      },
+                      {
+                        "label": "Banco Credicoop Coop. L",
+                        "value": "191"
+                      },
+                      {
+                        "label": "Banco de Valores",
+                        "value": "198"
+                      },
+                      {
+                        "label": "Banco Roela",
+                        "value": "247"
+                      },
+                      {
+                        "label": "Banco Mariva",
+                        "value": "254"
+                      },
+                      {
+                        "label": "Banco Itau Buen Ayre",
+                        "value": "259"
+                      },
+                      {
+                        "label": "Bank Of America, National Associa",
+                        "value": "262"
+                      },
+                      {
+                        "label": "Hexagon Bank Argentina",
+                        "value": "265"
+                      },
+                      {
+                        "label": "Bnp Paribas",
+                        "value": "266"
+                      },
+                      {
+                        "label": "Banco Provincia de Tierra Del Fuego",
+                        "value": "268"
+                      },
+                      {
+                        "label": "Banco de La Republica Oriental Del Uruguay",
+                        "value": "269"
+                      },
+                      {
+                        "label": "Banco Saenz",
+                        "value": "277"
+                      },
+                      {
+                        "label": "Banco Meridian",
+                        "value": "281"
+                      },
+                      {
+                        "label": "Banco Macro Bansud",
+                        "value": "285"
+                      },
+                      {
+                        "label": "Banco Mercurio",
+                        "value": "293"
+                      },
+                      {
+                        "label": "Ing Bank",
+                        "value": "294"
+                      },
+                      {
+                        "label": "American Express Bank Ltd",
+                        "value": "295"
+                      },
+                      {
+                        "label": "Banco Banex",
+                        "value": "297"
+                      },
+                      {
+                        "label": "Banco Comafi",
+                        "value": "299"
+                      },
+                      {
+                        "label": "Banco de Inversion Y Comercio Exterior",
+                        "value": "300"
+                      },
+                      {
+                        "label": "Banco Piano",
+                        "value": "301"
+                      },
+                      {
+                        "label": "Banco Finansur",
+                        "value": "303"
+                      },
+                      {
+                        "label": "Banco Julio",
+                        "value": "305"
+                      },
+                      {
+                        "label": "Banco Privado de Inversiones",
+                        "value": "306"
+                      },
+                      {
+                        "label": "Nuevo Banco de La Rioja",
+                        "value": "309"
+                      },
+                      {
+                        "label": "Banco Del Sol",
+                        "value": "310"
+                      },
+                      {
+                        "label": "Nuevo Banco Del Chaco",
+                        "value": "311"
+                      },
+                      {
+                        "label": "M. B. A. Banco de Inversiones",
+                        "value": "312"
+                      },
+                      {
+                        "label": "Banco de Formosa",
+                        "value": "315"
+                      },
+                      {
+                        "label": "Banco CMF",
+                        "value": "319"
+                      },
+                      {
+                        "label": "Banco de Santiago Del Estero",
+                        "value": "321"
+                      },
+                      {
+                        "label": "Nuevo Banco Industrial de Azul",
+                        "value": "322"
+                      },
+                      {
+                        "label": "Deutsche Bank",
+                        "value": "325"
+                      },
+                      {
+                        "label": "Nuevo Banco de Santa Fe",
+                        "value": "330"
+                      },
+                      {
+                        "label": "Banco Cetelem Argentina",
+                        "value": "331"
+                      },
+                      {
+                        "label": "Banco de Servicios Financieros",
+                        "value": "332"
+                      },
+                      {
+                        "label": "Banco Cofidis",
+                        "value": "335"
+                      },
+                      {
+                        "label": "Banco Bradesco Argentina",
+                        "value": "336"
+                      },
+                      {
+                        "label": "Banco de Servicios Y Transacciones",
+                        "value": "338"
+                      },
+                      {
+                        "label": "Rci Ba",
+                        "value": "339"
+                      },
+                      {
+                        "label": "Bacs Banco de Credito Y Securitizacion",
+                        "value": "340"
+                      },
+                      {
+                        "label": "Nuevo Banco de Entre Rios",
+                        "value": "386"
+                      },
+                      {
+                        "label": "Nuevo Banco Suquia",
+                        "value": "387"
+                      },
+                      {
+                        "label": "Nuevo Banco Bisel",
+                        "value": "388"
+                      },
+                      {
+                        "label": "Banco Columbia",
+                        "value": "389"
+                      }
+                    ],
+                    "label": "Bank Name",
+                    "maxLength": 3,
+                    "minLength": 3,
+                    "name": "bankId",
+                    "placeholder": "",
+                    "regularExpression": "^[0-9]{3}$",
+                    "isRequired": true,
+                    "validationMessage": {
+                      "length": "The exact length of this field is 3.",
+                      "pattern": "is invalid length or format.",
+                      "empty": "You must provide a value for this field"
+                    }
+                  },
+                  {
+                    "category": "ACCOUNT",
+                    "dataType": "NUMBER",
+                    "isEditable": true,
+                    "label": "Account Number",
+                    "maxLength": 22,
+                    "minLength": 22,
+                    "name": "bankAccountId",
+                    "placeholder": "",
+                    "regularExpression": "^[0-9]{22}$",
+                    "isRequired": true,
+                    "validationMessage": {
+                      "length": "The exact length of this field is 22.",
+                      "pattern": "is invalid. Input should be 22 numbers long (CBU format).",
+                      "empty": "You must provide a value for this field"
+                    }
+                  },
+                  {
+                    "category": "ACCOUNT",
+                    "dataType": "SELECTION",
+                    "isEditable": true,
+                    "fieldSelectionOptions": [
+                      {
+                        "label": "Checking",
+                        "value": "CHECKING"
+                      },
+                      {
+                        "label": "Savings",
+                        "value": "SAVINGS"
+                      }
+                    ],
+                    "label": "Bank Account Type",
+                    "name": "bankAccountPurpose",
+                    "placeholder": "",
+                    "isRequired": true,
+                    "validationMessage": {
+                      "length": "",
+                      "pattern": "is invalid length or format.",
+                      "empty": "You must provide a value for this field"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
