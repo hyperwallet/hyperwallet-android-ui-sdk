@@ -86,7 +86,7 @@ public class HyperwalletInsight {
      */
     public void initialize(@NonNull final Context context, @NonNull final Configuration configuration) {
         Insight.initialize(context, configuration.getEnvironment(), configuration.getProgramToken(), SDK_VERSION,
-                configuration.getInsightApiUrl(), configuration.getUserToken());
+                configuration.getInsightApiUri(), configuration.getUserToken());
     }
 
     /**
@@ -105,7 +105,7 @@ public class HyperwalletInsight {
                     public void onSuccess(@Nullable Configuration configuration) {
                         if (configuration != null) {
                             Insight.initialize(context, configuration.getEnvironment(), configuration.getProgramToken(),
-                                    SDK_VERSION, configuration.getInsightApiUrl(), configuration.getUserToken());
+                                    SDK_VERSION, configuration.getInsightApiUri(), configuration.getUserToken());
                         }
                     }
 
