@@ -45,7 +45,7 @@ import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethodQue
 import com.hyperwallet.android.model.transfermethod.PayPalAccount;
 import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
 
-import java.util.Arrays;
+import java.util.Collections;
 
 public class TransferMethodRepositoryImpl implements TransferMethodRepository {
 
@@ -301,6 +301,6 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
     private HyperwalletErrors getErrorsOnUnsupportedTransferType() {
         HyperwalletError error = new HyperwalletError(R.string.error_unsupported_transfer_type,
                 EC_UNEXPECTED_EXCEPTION);
-        return new HyperwalletErrors(Arrays.asList(error));
+        return new HyperwalletErrors(Collections.singletonList(error));
     }
 }

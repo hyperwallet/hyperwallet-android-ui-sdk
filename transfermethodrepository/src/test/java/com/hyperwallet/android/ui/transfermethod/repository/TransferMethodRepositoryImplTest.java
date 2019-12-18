@@ -160,7 +160,7 @@ public class TransferMethodRepositoryImplTest {
     }
 
     @Test
-    public void testCreateTransferMethod_createTransferWithUnsupportedTransferType() {
+    public void testCreateTransferMethod_withUnsupportedTransferMethodType() {
         HyperwalletBankAccount bankAccount = new HyperwalletBankAccount
                 .Builder("US", "USD", "23432432")
                 .transferMethodType("UNKNOWN_TRANSFER_TYPE")
@@ -242,7 +242,7 @@ public class TransferMethodRepositoryImplTest {
     }
 
     @Test
-    public void testDeactivateTransferMethod_createTransferWithUnsupportedTransferType() {
+    public void testDeactivateTransferMethod_withUnsupportedTransferMethodType() {
         HyperwalletBankAccount bankAccount = new HyperwalletBankAccount
                 .Builder("US", "USD", "23432432")
                 .token("trm-854c4ec1-9161-49d6-92e2-b8d15aa4bf56")
