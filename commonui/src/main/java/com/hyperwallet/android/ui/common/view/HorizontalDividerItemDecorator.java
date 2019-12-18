@@ -34,12 +34,12 @@ public class HorizontalDividerItemDecorator extends RecyclerView.ItemDecoration 
 
     protected final Drawable mHorizontalItemDivider;
     private final boolean mHasTopDivider;
-    private final float topDividerPadding;
+    private final float mTopDividerPadding;
 
     public HorizontalDividerItemDecorator(@NonNull final Context context, final boolean hasTopDivider) {
         mHorizontalItemDivider = context.getResources().getDrawable(R.drawable.horizontal_divider, null);
         mHasTopDivider = hasTopDivider;
-        topDividerPadding = getTopDividerPadding(context);
+        mTopDividerPadding = getTopDividerPadding(context);
     }
 
     @Override
@@ -57,7 +57,7 @@ public class HorizontalDividerItemDecorator extends RecyclerView.ItemDecoration 
         }
 
         if (itemPosition == 0) { // first item
-            outRect.set(view.getPaddingLeft(), mHasTopDivider ? (int) topDividerPadding : DEFAULT_PADDING,
+            outRect.set(view.getPaddingLeft(), mHasTopDivider ? (int) mTopDividerPadding : DEFAULT_PADDING,
                     view.getPaddingRight(), view.getPaddingBottom());
         } else if (itemCount > 0 && itemPosition == itemCount - 1) { // last item
             outRect.set(view.getPaddingLeft(), view.getPaddingTop(), view.getPaddingRight(), view.getPaddingBottom());
