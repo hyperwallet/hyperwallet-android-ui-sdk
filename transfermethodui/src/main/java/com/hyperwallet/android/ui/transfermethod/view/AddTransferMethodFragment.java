@@ -482,7 +482,10 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                     AbstractWidget widget = (AbstractWidget) view.getTag();
                     if (widget.getName().equals(error.getFieldName())) {
                         if (!focusSet) {
-                            widget.getView(mDynamicContainer).requestFocus();
+                            Resources resources = requireContext().getResources();
+                            int pixels = (int) (resources.getDimension(R.dimen.negative_padding)
+                                    * resources.getDisplayMetrics().density);
+                            mNestedScrollView.smoothScrollTo(0, view.getTop() - pixels);
                             focusSet = true;
                         }
                         HyperwalletInsight.getInstance().trackError(context,
