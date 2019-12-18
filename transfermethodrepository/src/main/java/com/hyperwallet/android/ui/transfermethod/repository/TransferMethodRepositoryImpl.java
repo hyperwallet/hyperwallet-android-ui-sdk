@@ -45,8 +45,7 @@ import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import com.hyperwallet.android.model.transfermethod.TransferMethodQueryParam;
 import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 public class TransferMethodRepositoryImpl implements TransferMethodRepository {
 
@@ -77,7 +76,7 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
                 createPayPalAccount(transferMethod, callback);
                 break;
             default: // error on unknown transfer type
-                errorOnUnsupportedTransferType(callback);
+                callback.onError(getErrorsOnUnsupportedTransferType());
         }
     }
 
@@ -163,7 +162,8 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
             case PAYPAL_ACCOUNT:
                 deactivatePayPalAccount(transferMethod, callback);
                 break;
-            default: //no default action
+            default: // error on unknown transfer type
+                callback.onError(getErrorsOnUnsupportedTransferType());
         }
     }
 
@@ -298,12 +298,9 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
 
     // Note: This way of surfacing error is not ideal but rather a workaround please have a look on other options,
     // before resulting into this pattern
-    private void errorOnUnsupportedTransferType(@NonNull final LoadTransferMethodCallback callback) {
+    private HyperwalletErrors getErrorsOnUnsupportedTransferType() {
         Error error = new Error(R.string.error_unsupported_transfer_type,
                 EC_UNEXPECTED_EXCEPTION);
-        List<Error> errorList = new ArrayList<>(1);
-        errorList.add(error);
-        Errors errors = new Errors(errorList);
-        callback.onError(errors);
+        return new Errors(Arrays.asList(error));
     }
 }
