@@ -28,6 +28,7 @@ import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMe
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -607,7 +608,6 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
      * @return true if the form is valid
      */
     private boolean performValidation() {
-        boolean isWidgetValid;
         boolean containsInvalidWidget = false;
 
         // this is added since some phones triggers the create button but the widgets are not yet initialized
@@ -621,11 +621,12 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                 WidgetInputState widgetInputState = mWidgetInputStateHashMap.get(widget.getName());
                 widgetInputState.setValue(widget.getValue());
 
-                isWidgetValid = isWidgetItemValid(widget);
-                if (!containsInvalidWidget && !isWidgetValid) {
+                if (!isWidgetItemValid(widget) && !containsInvalidWidget) {
+                    Resources resources = requireContext().getResources();
+
                     containsInvalidWidget = true;
-                    int pixels = (int) (requireContext().getResources().getDimension(R.dimen.negative_padding)
-                            * requireContext().getResources().getDisplayMetrics().density);
+                    int pixels = (int) (resources.getDimension(R.dimen.negative_padding)
+                            * resources.getDisplayMetrics().density);
                     mNestedScrollView.smoothScrollTo(0, currentView.getTop() - pixels);
                 }
             }
