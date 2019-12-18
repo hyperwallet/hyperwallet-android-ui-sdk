@@ -35,6 +35,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -538,6 +539,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     }
 
     private void triggerSubmit() {
+        hideSoftKeys();
         if (performValidation()) {
             switch (mTransferMethodType) {
                 case BANK_ACCOUNT:
@@ -580,6 +582,17 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
 
             mTransferMethod.setField(PROFILE_TYPE, mTransferMethodProfileType);
             mPresenter.createTransferMethod(mTransferMethod);
+        }
+    }
+
+    private void hideSoftKeys() {
+        View view = getActivity().getCurrentFocus();
+
+        if (view != null) {
+            view.clearFocus();
+            InputMethodManager inputMethodManager = (InputMethodManager) view.getContext().getSystemService(
+                    Activity.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
 
