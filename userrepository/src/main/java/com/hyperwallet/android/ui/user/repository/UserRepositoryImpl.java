@@ -51,7 +51,7 @@ public class UserRepositoryImpl implements UserRepository {
 
                 @Override
                 public void onFailure(HyperwalletException exception) {
-                    callback.onError(exception.getHyperwalletErrors());
+                    callback.onError(exception.getErrors());
                 }
 
                 @Override

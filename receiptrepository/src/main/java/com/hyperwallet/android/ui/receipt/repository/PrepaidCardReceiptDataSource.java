@@ -102,7 +102,7 @@ public class PrepaidCardReceiptDataSource extends PageKeyedDataSource<Date, Rece
                     @Override
                     public void onFailure(HyperwalletException exception) {
                         mIsFetchingData.postValue(Boolean.FALSE);
-                        mErrors.postValue(new Event<>(exception.getHyperwalletErrors()));
+                        mErrors.postValue(new Event<>(exception.getErrors()));
                         EspressoIdlingResource.decrement();
                     }
 
@@ -156,7 +156,7 @@ public class PrepaidCardReceiptDataSource extends PageKeyedDataSource<Date, Rece
                     @Override
                     public void onFailure(HyperwalletException exception) {
                         mIsFetchingData.postValue(Boolean.FALSE);
-                        mErrors.postValue(new Event<>(exception.getHyperwalletErrors()));
+                        mErrors.postValue(new Event<>(exception.getErrors()));
                         EspressoIdlingResource.decrement();
                     }
 

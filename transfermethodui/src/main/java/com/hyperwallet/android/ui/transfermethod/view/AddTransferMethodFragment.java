@@ -58,7 +58,7 @@ import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.common.insight.HyperwalletInsight;
 import com.hyperwallet.android.ui.common.util.ErrorTypes;
 import com.hyperwallet.android.ui.common.util.PageGroups;
-import com.hyperwallet.android.ui.transfermethod.HyperwalletTransferMethodLocalBroadcast;
+import com.hyperwallet.android.ui.transfermethod.TransferMethodLocalBroadcast;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
 import com.hyperwallet.android.ui.transfermethod.view.widget.AbstractWidget;
 import com.hyperwallet.android.ui.transfermethod.view.widget.DateChangedListener;
@@ -314,7 +314,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                         .profileType(mTransferMethodProfileType)
                         .build());
 
-        Intent intent = HyperwalletTransferMethodLocalBroadcast.createBroadcastIntentTransferMethodAdded(
+        Intent intent = TransferMethodLocalBroadcast.createBroadcastIntentTransferMethodAdded(
                 transferMethod);
         LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
         getActivity().setResult(Activity.RESULT_OK);

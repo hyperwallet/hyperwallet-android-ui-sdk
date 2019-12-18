@@ -17,8 +17,8 @@
 package com.hyperwallet.android.ui.transfermethod;
 
 import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.HYPERWALLET_LOCAL_BROADCAST_PAYLOAD_KEY;
-import static com.hyperwallet.android.ui.transfermethod.HyperwalletTransferMethodLocalBroadcast.HyperwalletTransferMethodLocalBroadcastAction.ACTION_HYPERWALLET_TRANSFER_METHOD_ADDED;
-import static com.hyperwallet.android.ui.transfermethod.HyperwalletTransferMethodLocalBroadcast.HyperwalletTransferMethodLocalBroadcastAction.ACTION_HYPERWALLET_TRANSFER_METHOD_DEACTIVATED;
+import static com.hyperwallet.android.ui.transfermethod.TransferMethodLocalBroadcast.TransferMethodLocalBroadcastAction.ACTION_HYPERWALLET_TRANSFER_METHOD_ADDED;
+import static com.hyperwallet.android.ui.transfermethod.TransferMethodLocalBroadcast.TransferMethodLocalBroadcastAction.ACTION_HYPERWALLET_TRANSFER_METHOD_DEACTIVATED;
 
 import android.content.Intent;
 import android.os.Parcelable;
@@ -32,7 +32,7 @@ import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-public class HyperwalletTransferMethodLocalBroadcast {
+public class TransferMethodLocalBroadcast {
 
     public static Intent createBroadcastIntentTransferMethodAdded(
             @NonNull final TransferMethod transferMethod) {
@@ -47,7 +47,7 @@ public class HyperwalletTransferMethodLocalBroadcast {
     }
 
     private static Intent createBroadcastIntent(@NonNull final Parcelable parcelable,
-            @NonNull final @HyperwalletTransferMethodLocalBroadcastActionType String action) {
+            @NonNull final @TransferMethodLocalBroadcastActionType String action) {
         final Intent intent = new Intent();
         intent.setAction(action);
         intent.putExtra(HYPERWALLET_LOCAL_BROADCAST_PAYLOAD_KEY, parcelable);
@@ -59,12 +59,12 @@ public class HyperwalletTransferMethodLocalBroadcast {
             ACTION_HYPERWALLET_TRANSFER_METHOD_ADDED,
             ACTION_HYPERWALLET_TRANSFER_METHOD_DEACTIVATED
     })
-    public @interface HyperwalletTransferMethodLocalBroadcastActionType {
+    public @interface TransferMethodLocalBroadcastActionType {
     }
 
-    public final class HyperwalletTransferMethodLocalBroadcastAction {
+    public final class TransferMethodLocalBroadcastAction {
 
-        private HyperwalletTransferMethodLocalBroadcastAction() {}
+        private TransferMethodLocalBroadcastAction() {}
         public static final String ACTION_HYPERWALLET_TRANSFER_METHOD_ADDED =
                 "ACTION_HYPERWALLET_TRANSFER_METHOD_ADDED";
         public static final String ACTION_HYPERWALLET_TRANSFER_METHOD_DEACTIVATED =

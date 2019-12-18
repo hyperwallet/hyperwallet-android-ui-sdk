@@ -49,7 +49,7 @@ import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.common.view.HorizontalDividerItemDecorator;
 import com.hyperwallet.android.ui.common.view.OneClickListener;
-import com.hyperwallet.android.ui.transfermethod.HyperwalletTransferMethodLocalBroadcast;
+import com.hyperwallet.android.ui.transfermethod.TransferMethodLocalBroadcast;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
 
 import java.util.ArrayList;
@@ -224,7 +224,7 @@ public class ListTransferMethodFragment extends Fragment implements ListTransfer
     @Override
     public void notifyTransferMethodDeactivated(
             @NonNull final StatusTransition statusTransition) {
-        Intent intent = HyperwalletTransferMethodLocalBroadcast.createBroadcastIntentTransferMethodDeactivated(
+        Intent intent = TransferMethodLocalBroadcast.createBroadcastIntentTransferMethodDeactivated(
                 statusTransition);
         LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
         mPresenter.loadTransferMethods();

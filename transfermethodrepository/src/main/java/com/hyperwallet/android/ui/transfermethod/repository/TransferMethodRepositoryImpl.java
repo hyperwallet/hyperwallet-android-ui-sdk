@@ -45,7 +45,8 @@ import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import com.hyperwallet.android.model.transfermethod.TransferMethodQueryParam;
 import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TransferMethodRepositoryImpl implements TransferMethodRepository {
 
@@ -76,7 +77,7 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
                 createPayPalAccount(transferMethod, callback);
                 break;
             default: // error on unknown transfer type
-                callback.onError(getErrorsOnUnsupportedTransferType());
+                errorOnUnsupportedTransferType(callback);
         }
     }
 
@@ -103,7 +104,7 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
                     @Override
                     public void onFailure(HyperwalletException exception) {
                         EspressoIdlingResource.decrement();
-                        callback.onError(exception.getHyperwalletErrors());
+                        callback.onError(exception.getErrors());
                     }
 
                     @Override
@@ -135,7 +136,7 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
                     @Override
                     public void onFailure(HyperwalletException exception) {
                         EspressoIdlingResource.decrement();
-                        callback.onError(exception.getHyperwalletErrors());
+                        callback.onError(exception.getErrors());
                     }
 
                     @Override
@@ -162,8 +163,7 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
             case PAYPAL_ACCOUNT:
                 deactivatePayPalAccount(transferMethod, callback);
                 break;
-            default: // error on unknown transfer type
-                callback.onError(getErrorsOnUnsupportedTransferType());
+            default: //no default action
         }
     }
 
@@ -178,7 +178,7 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
 
                     @Override
                     public void onFailure(HyperwalletException exception) {
-                        callback.onError(exception.getHyperwalletErrors());
+                        callback.onError(exception.getErrors());
                     }
 
                     @Override
@@ -199,7 +199,7 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
 
                     @Override
                     public void onFailure(HyperwalletException exception) {
-                        callback.onError(exception.getHyperwalletErrors());
+                        callback.onError(exception.getErrors());
                     }
 
                     @Override
@@ -220,7 +220,7 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
 
                     @Override
                     public void onFailure(HyperwalletException exception) {
-                        callback.onError(exception.getHyperwalletErrors());
+                        callback.onError(exception.getErrors());
                     }
 
                     @Override
@@ -242,7 +242,7 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
 
             @Override
             public void onFailure(HyperwalletException exception) {
-                callback.onError(exception.getHyperwalletErrors());
+                callback.onError(exception.getErrors());
             }
 
             @Override
@@ -264,7 +264,7 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
 
             @Override
             public void onFailure(HyperwalletException exception) {
-                callback.onError(exception.getHyperwalletErrors());
+                callback.onError(exception.getErrors());
             }
 
             @Override
@@ -286,7 +286,7 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
 
             @Override
             public void onFailure(HyperwalletException exception) {
-                callback.onError(exception.getHyperwalletErrors());
+                callback.onError(exception.getErrors());
             }
 
             @Override
@@ -298,9 +298,12 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
 
     // Note: This way of surfacing error is not ideal but rather a workaround please have a look on other options,
     // before resulting into this pattern
-    private HyperwalletErrors getErrorsOnUnsupportedTransferType() {
+    private void errorOnUnsupportedTransferType(@NonNull final LoadTransferMethodCallback callback) {
         Error error = new Error(R.string.error_unsupported_transfer_type,
                 EC_UNEXPECTED_EXCEPTION);
-        return new Errors(Arrays.asList(error));
+        List<Error> errorList = new ArrayList<>(1);
+        errorList.add(error);
+        Errors errors = new Errors(errorList);
+        callback.onError(errors);
     }
 }

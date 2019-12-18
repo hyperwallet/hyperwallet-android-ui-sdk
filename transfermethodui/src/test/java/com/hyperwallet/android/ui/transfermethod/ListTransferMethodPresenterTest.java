@@ -233,8 +233,8 @@ public class ListTransferMethodPresenterTest {
             public Object answer(InvocationOnMock invocation) {
                 TransferMethodRepository.LoadTransferMethodListCallback callback =
                         (TransferMethodRepository.LoadTransferMethodListCallback) invocation.getArguments()[0];
-                Errors hyperwalletErrors = mock(Errors.class);
-                callback.onError(hyperwalletErrors);
+                Errors errors = mock(Errors.class);
+                callback.onError(errors);
                 return callback;
             }
         }).when(mTransferMethodRepository).loadTransferMethods(any(

@@ -86,7 +86,7 @@ public class TransferMethodConfigurationRepositoryImpl implements TransferMethod
 
                     @Override
                     public void onFailure(HyperwalletException exception) {
-                        loadKeysCallback.onError(exception.getHyperwalletErrors());
+                        loadKeysCallback.onError(exception.getErrors());
                         EspressoIdlingResource.decrement();
                     }
 
@@ -122,7 +122,7 @@ public class TransferMethodConfigurationRepositoryImpl implements TransferMethod
 
                     @Override
                     public void onFailure(HyperwalletException exception) {
-                        loadFieldsCallback.onError(exception.getHyperwalletErrors());
+                        loadFieldsCallback.onError(exception.getErrors());
                         EspressoIdlingResource.decrement();
                     }
 

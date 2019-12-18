@@ -209,11 +209,11 @@ public class ExpiryDateWidget extends AbstractWidget {
 
     @Override
     public String getErrorMessage() {
-        if (mField == null || mField.getHyperwalletValidationMessage() == null) {
+        if (mField == null || mField.getValidationMessage() == null) {
             return null;
         }
         if (isInvalidEmptyValue()) {
-            return mField.getHyperwalletValidationMessage().getEmpty();
+            return mField.getValidationMessage().getEmpty();
         }
 
         if (isInvalidLength()) {

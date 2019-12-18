@@ -36,7 +36,7 @@ public class AbstractMaskedInputWidgetTest {
     public MockitoRule mMockito = MockitoJUnit.rule();
 
     @Mock
-    private Field mHyperwalletField;
+    private Field mField;
     @Mock
     private Mask mMask;
 
@@ -60,10 +60,10 @@ public class AbstractMaskedInputWidgetTest {
     @Parameters(method = "formatToApiScenarios")
     public void testFormatToApi(String scrubRegex, String input, String output) {
 
-        when(mHyperwalletField.getMask()).thenReturn(mMask);
+        when(mField.getMask()).thenReturn(mMask);
         when(mMask.getScrubRegex()).thenReturn(scrubRegex);
 
-        TestInputWidget testInputWidget = new TestInputWidget(mHyperwalletField, null, null, null);
+        TestInputWidget testInputWidget = new TestInputWidget(mField, null, null, null);
 
         String a1 = testInputWidget.formatToApi(input);
         assertThat(a1, Matchers.is(output));

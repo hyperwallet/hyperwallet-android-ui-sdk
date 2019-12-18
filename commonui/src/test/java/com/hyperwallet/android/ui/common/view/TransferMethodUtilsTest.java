@@ -70,9 +70,9 @@ public class TransferMethodUtilsTest {
     public void testGetTransferMethodName_returnsCorrectNameForType() throws JSONException {
         String json = mExternalResourceManager.getResourceContent("bank_card_response.json");
         JSONObject htmJsonObject = new JSONObject(json);
-        TransferMethod hyperwalletTransferMethod = new TransferMethod(htmJsonObject);
+        TransferMethod transferMethod = new TransferMethod(htmJsonObject);
         when(mContext.getString(R.string.bank_card)).thenReturn("My card");
-        String transferMethodName = TransferMethodUtils.getTransferMethodName(mContext, hyperwalletTransferMethod);
+        String transferMethodName = TransferMethodUtils.getTransferMethodName(mContext, transferMethod);
         assertThat(transferMethodName, is("My card"));
         verify(mContext, times(1)).getString(anyInt());
     }

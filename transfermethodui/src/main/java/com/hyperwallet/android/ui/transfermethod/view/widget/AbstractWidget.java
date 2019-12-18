@@ -96,20 +96,20 @@ public abstract class AbstractWidget {
     }
 
     public String getErrorMessage() {
-        if (mField == null || mField.getHyperwalletValidationMessage() == null) {
+        if (mField == null || mField.getValidationMessage() == null) {
             return null;
         }
 
         if (isInvalidEmptyValue()) {
-            return mField.getHyperwalletValidationMessage().getEmpty();
+            return mField.getValidationMessage().getEmpty();
         }
 
         if (isInvalidLength()) {
-            return mField.getHyperwalletValidationMessage().getLength();
+            return mField.getValidationMessage().getLength();
         }
 
         if (isInvalidRegex()) {
-            return mField.getHyperwalletValidationMessage().getPattern();
+            return mField.getValidationMessage().getPattern();
         }
 
         return null;

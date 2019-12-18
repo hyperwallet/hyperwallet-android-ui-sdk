@@ -148,10 +148,10 @@ public class TransferMethodConfigurationRepositoryImplTest {
         verify(loadKeysCallback, never()).onKeysLoaded(any(HyperwalletTransferMethodConfigurationKey.class));
         verify(loadKeysCallback).onError(mErrorsArgumentCaptor.capture());
 
-        Errors hyperwalletErrors = mErrorsArgumentCaptor.getValue();
-        assertNotNull(hyperwalletErrors);
-        assertNotNull(hyperwalletErrors.getErrors());
-        Error inError = hyperwalletErrors.getErrors().get(0);
+        Errors errorsList = mErrorsArgumentCaptor.getValue();
+        assertNotNull(errorsList);
+        assertNotNull(errorsList.getErrors());
+        Error inError = errorsList.getErrors().get(0);
         assertThat(errors.getErrors().get(0), is(inError));
     }
 
@@ -219,9 +219,9 @@ public class TransferMethodConfigurationRepositoryImplTest {
         verify(loadFieldsCallback, never()).onFieldsLoaded(any(HyperwalletTransferMethodConfigurationField.class));
         verify(loadFieldsCallback).onError(mErrorsArgumentCaptor.capture());
 
-        Errors hyperwalletErrors = mErrorsArgumentCaptor.getValue();
-        assertNotNull(hyperwalletErrors);
-        List<Error> inErrors = hyperwalletErrors.getErrors();
+        Errors errorsList = mErrorsArgumentCaptor.getValue();
+        assertNotNull(errorsList);
+        List<Error> inErrors = errorsList.getErrors();
         assertNotNull(errors);
         Error inError = inErrors.get(0);
         assertThat(errors.getErrors().get(0), is(inError));

@@ -94,7 +94,7 @@ public class UserReceiptDataSource extends PageKeyedDataSource<Integer, Receipt>
                     @Override
                     public void onFailure(HyperwalletException exception) {
                         mIsFetchingData.postValue(Boolean.FALSE);
-                        mErrors.postValue(new Event<>(exception.getHyperwalletErrors()));
+                        mErrors.postValue(new Event<>(exception.getErrors()));
                         EspressoIdlingResource.decrement();
                     }
 
@@ -155,7 +155,7 @@ public class UserReceiptDataSource extends PageKeyedDataSource<Integer, Receipt>
                     @Override
                     public void onFailure(HyperwalletException exception) {
                         mIsFetchingData.postValue(Boolean.FALSE);
-                        mErrors.postValue(new Event<>(exception.getHyperwalletErrors()));
+                        mErrors.postValue(new Event<>(exception.getErrors()));
                         EspressoIdlingResource.decrement();
                     }
 

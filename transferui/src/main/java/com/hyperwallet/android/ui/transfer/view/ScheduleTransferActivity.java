@@ -37,7 +37,7 @@ import com.hyperwallet.android.ui.common.repository.Event;
 import com.hyperwallet.android.ui.common.util.PageGroups;
 import com.hyperwallet.android.ui.common.view.ActivityUtils;
 import com.hyperwallet.android.ui.common.view.error.OnNetworkErrorCallback;
-import com.hyperwallet.android.ui.transfer.HyperwalletTransferLocalBroadcast;
+import com.hyperwallet.android.ui.transfer.TransferLocalBroadcast;
 import com.hyperwallet.android.ui.transfer.R;
 import com.hyperwallet.android.ui.transfer.repository.TransferRepositoryFactory;
 import com.hyperwallet.android.ui.transfer.viewmodel.ScheduleTransferViewModel;
@@ -123,7 +123,7 @@ public class ScheduleTransferActivity extends AppCompatActivity implements OnNet
         mScheduleTransferViewModel.getTransferStatusTransition().observe(this, new Observer<StatusTransition>() {
             @Override
             public void onChanged(final StatusTransition statusTransition) {
-                Intent intent = HyperwalletTransferLocalBroadcast.createBroadcastIntentTransferScheduled(
+                Intent intent = TransferLocalBroadcast.createBroadcastIntentTransferScheduled(
                         statusTransition);
                 LocalBroadcastManager.getInstance(ScheduleTransferActivity.this).sendBroadcast(intent);
                 setResult(Activity.RESULT_OK, intent);
