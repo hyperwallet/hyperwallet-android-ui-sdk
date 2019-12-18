@@ -586,7 +586,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     }
 
     private void hideSoftKeys() {
-        View view = getActivity().getCurrentFocus();
+        View view = requireActivity().getCurrentFocus();
 
         if (view != null) {
             view.clearFocus();
