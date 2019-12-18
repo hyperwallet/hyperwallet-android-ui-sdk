@@ -124,6 +124,17 @@ public class CreateTransferViewModel extends ViewModel {
         loadTransferSource();
     }
 
+    public void reset() {
+        // initialize
+        mTransferAvailableFunds.setValue(Boolean.FALSE);
+        mIsLoading.setValue(Boolean.TRUE);
+        mIsCreateQuoteLoading.setValue(Boolean.FALSE);
+        mShowFxRateChange.setValue(Boolean.FALSE);
+        mTransferAmount.setValue("");
+        mTransferNotes.setValue("");
+        loadTransferSource();
+    }
+
     public LiveData<Boolean> isTransferAllAvailableFunds() {
         return mTransferAvailableFunds;
     }
