@@ -9,7 +9,7 @@ import static org.junit.Assert.assertTrue;
 import androidx.lifecycle.LiveData;
 import androidx.paging.PagedList;
 
-import com.hyperwallet.android.model.HyperwalletErrors;
+import com.hyperwallet.android.model.Errors;
 import com.hyperwallet.android.model.receipt.Receipt;
 import com.hyperwallet.android.ui.common.repository.Event;
 
@@ -55,14 +55,14 @@ public class PrepaidCardReceiptRepositoryImplTest {
 
     @Test
     public void testGetErrors_returnsLiveData() {
-        LiveData<Event<HyperwalletErrors>> result = mPrepaidCardReceiptRepository.getErrors();
+        LiveData<Event<Errors>> result = mPrepaidCardReceiptRepository.getErrors();
         assertThat(result, is(notNullValue()));
     }
 
     @Test
     public void testGetErrors_liveDataSingleInstantiation() {
-        LiveData<Event<HyperwalletErrors>> result = mPrepaidCardReceiptRepository.getErrors();
-        LiveData<Event<HyperwalletErrors>> result2 = mPrepaidCardReceiptRepository.getErrors();
+        LiveData<Event<Errors>> result = mPrepaidCardReceiptRepository.getErrors();
+        LiveData<Event<Errors>> result2 = mPrepaidCardReceiptRepository.getErrors();
         assertTrue(result == result2);
     }
 

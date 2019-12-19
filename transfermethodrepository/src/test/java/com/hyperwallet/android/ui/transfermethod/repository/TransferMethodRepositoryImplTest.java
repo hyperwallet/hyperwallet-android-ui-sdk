@@ -16,25 +16,25 @@ import static org.mockito.Mockito.verify;
 import static com.hyperwallet.android.ExceptionMapper.EC_UNEXPECTED_EXCEPTION;
 import static com.hyperwallet.android.model.StatusTransition.StatusDefinition.ACTIVATED;
 import static com.hyperwallet.android.model.StatusTransition.StatusDefinition.DE_ACTIVATED;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.BANK_ACCOUNT_ID;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.BANK_NAME;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.STATUS;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TOKEN;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_COUNTRY;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_CURRENCY;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TYPE;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.BANK_ACCOUNT_ID;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.BANK_NAME;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.STATUS;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TOKEN;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TRANSFER_METHOD_COUNTRY;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TRANSFER_METHOD_CURRENCY;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TYPE;
 
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.exception.HyperwalletException;
 import com.hyperwallet.android.listener.HyperwalletListener;
-import com.hyperwallet.android.model.HyperwalletError;
-import com.hyperwallet.android.model.HyperwalletErrors;
+import com.hyperwallet.android.model.Error;
+import com.hyperwallet.android.model.Errors;
 import com.hyperwallet.android.model.StatusTransition;
-import com.hyperwallet.android.model.paging.HyperwalletPageList;
-import com.hyperwallet.android.model.transfermethod.HyperwalletBankAccount;
-import com.hyperwallet.android.model.transfermethod.HyperwalletBankCard;
-import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
-import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethodQueryParam;
+import com.hyperwallet.android.model.paging.PageList;
+import com.hyperwallet.android.model.transfermethod.BankAccount;
+import com.hyperwallet.android.model.transfermethod.BankCard;
+import com.hyperwallet.android.model.transfermethod.TransferMethod;
+import com.hyperwallet.android.model.transfermethod.TransferMethodQueryParam;
 import com.hyperwallet.android.model.transfermethod.PayPalAccount;
 
 import org.hamcrest.Matchers;
@@ -75,19 +75,19 @@ public class TransferMethodRepositoryImplTest {
     @Mock
     private TransferMethodRepository.LoadTransferMethodCallback mLoadTransferMethodCallback;
     @Captor
-    private ArgumentCaptor<HyperwalletErrors> mErrorsArgumentCaptor;
+    private ArgumentCaptor<Errors> mErrorsArgumentCaptor;
     @Captor
-    private ArgumentCaptor<HyperwalletBankAccount> mBankAccountArgumentCaptor;
+    private ArgumentCaptor<BankAccount> mBankAccountArgumentCaptor;
     @Captor
-    private ArgumentCaptor<HyperwalletBankCard> mBankCardArgumentCaptor;
+    private ArgumentCaptor<BankCard> mBankCardArgumentCaptor;
     @Captor
     private ArgumentCaptor<PayPalAccount> mPayPalAccountArgumentCaptor;
     @Captor
     private ArgumentCaptor<StatusTransition> mStatusTransitionArgumentCaptor;
     @Captor
-    private ArgumentCaptor<List<HyperwalletTransferMethod>> mListTransferMethodCaptor;
+    private ArgumentCaptor<List<TransferMethod>> mListTransferMethodCaptor;
     @Captor
-    private ArgumentCaptor<HyperwalletTransferMethodQueryParam> mQueryParamCaptor;
+    private ArgumentCaptor<TransferMethodQueryParam> mQueryParamCaptor;
 
     @Before
     public void setup() {
@@ -96,7 +96,7 @@ public class TransferMethodRepositoryImplTest {
 
     @Test
     public void testCreateTransferMethod_bankAccountWithSuccess() {
-        HyperwalletBankAccount bankAccount = new HyperwalletBankAccount
+        BankAccount bankAccount = new BankAccount
                 .Builder("CA", "CAD", "3423423432")
                 .build();
 
@@ -104,25 +104,25 @@ public class TransferMethodRepositoryImplTest {
             @Override
             public Object answer(InvocationOnMock invocation) {
                 HyperwalletListener listener = (HyperwalletListener) invocation.getArguments()[1];
-                HyperwalletBankAccount returnedBank = new HyperwalletBankAccount
+                BankAccount returnedBank = new BankAccount
                         .Builder("CA", "CAD", "3423423432")
                         .bankName("Mock Bank Response")
                         .build();
                 listener.onSuccess(returnedBank);
                 return listener;
             }
-        }).when(mHyperwallet).createBankAccount(any(HyperwalletBankAccount.class),
-                ArgumentMatchers.<HyperwalletListener<HyperwalletBankAccount>>any());
+        }).when(mHyperwallet).createBankAccount(any(BankAccount.class),
+                ArgumentMatchers.<HyperwalletListener<BankAccount>>any());
 
         // test
         mTransferMethodRepository.createTransferMethod(bankAccount, mLoadTransferMethodCallback);
 
         verify(mLoadTransferMethodCallback).onTransferMethodLoaded(mBankAccountArgumentCaptor.capture());
-        verify(mLoadTransferMethodCallback, never()).onError(any(HyperwalletErrors.class));
+        verify(mLoadTransferMethodCallback, never()).onError(any(Errors.class));
 
-        HyperwalletBankAccount transferMethod = mBankAccountArgumentCaptor.getValue();
+        BankAccount transferMethod = mBankAccountArgumentCaptor.getValue();
         assertThat(transferMethod, is(notNullValue()));
-        assertThat(transferMethod.getField(TYPE), is(HyperwalletTransferMethod.TransferMethodTypes.BANK_ACCOUNT));
+        assertThat(transferMethod.getField(TYPE), is(TransferMethod.TransferMethodTypes.BANK_ACCOUNT));
         assertThat(transferMethod.getField(BANK_NAME), is("Mock Bank Response"));
         assertThat(transferMethod.getField(TRANSFER_METHOD_COUNTRY), is("CA"));
         assertThat(transferMethod.getField(TRANSFER_METHOD_CURRENCY), is("CAD"));
@@ -131,37 +131,37 @@ public class TransferMethodRepositoryImplTest {
 
     @Test
     public void testCreateTransferMethod_bankAccountWithError() {
-        HyperwalletBankAccount bankAccount = new HyperwalletBankAccount
+        BankAccount bankAccount = new BankAccount
                 .Builder("US", "USD", "23432432")
                 .build();
 
-        final HyperwalletError error = new HyperwalletError("test message", "TEST_CODE");
+        final Error error = new Error("test message", "TEST_CODE");
 
         doAnswer(new Answer() {
             @Override
             public Object answer(InvocationOnMock invocation) {
                 HyperwalletListener listener = (HyperwalletListener) invocation.getArguments()[1];
-                List<HyperwalletError> errorList = new ArrayList<>();
+                List<Error> errorList = new ArrayList<>();
                 errorList.add(error);
-                HyperwalletErrors errors = new HyperwalletErrors(errorList);
+                Errors errors = new Errors(errorList);
                 HyperwalletException exception = new HyperwalletException(errors);
                 listener.onFailure(exception);
                 return listener;
             }
-        }).when(mHyperwallet).createBankAccount(any(HyperwalletBankAccount.class),
-                ArgumentMatchers.<HyperwalletListener<HyperwalletBankAccount>>any());
+        }).when(mHyperwallet).createBankAccount(any(BankAccount.class),
+                ArgumentMatchers.<HyperwalletListener<BankAccount>>any());
 
         // test
         mTransferMethodRepository.createTransferMethod(bankAccount, mLoadTransferMethodCallback);
 
         verify(mLoadTransferMethodCallback).onError(mErrorsArgumentCaptor.capture());
-        verify(mLoadTransferMethodCallback, never()).onTransferMethodLoaded(any(HyperwalletTransferMethod.class));
+        verify(mLoadTransferMethodCallback, never()).onTransferMethodLoaded(any(TransferMethod.class));
         assertThat(mErrorsArgumentCaptor.getValue().getErrors(), hasItem(error));
     }
 
     @Test
     public void testCreateTransferMethod_withUnsupportedTransferMethodType() {
-        HyperwalletBankAccount bankAccount = new HyperwalletBankAccount
+        BankAccount bankAccount = new BankAccount
                 .Builder("US", "USD", "23432432")
                 .transferMethodType("UNKNOWN_TRANSFER_TYPE")
                 .build();
@@ -170,8 +170,8 @@ public class TransferMethodRepositoryImplTest {
         mTransferMethodRepository.createTransferMethod(bankAccount, mLoadTransferMethodCallback);
 
         verify(mLoadTransferMethodCallback).onError(mErrorsArgumentCaptor.capture());
-        verify(mLoadTransferMethodCallback, never()).onTransferMethodLoaded(any(HyperwalletTransferMethod.class));
-        assertThat(mErrorsArgumentCaptor.getValue().getErrors(), Matchers.<HyperwalletError>hasSize(1));
+        verify(mLoadTransferMethodCallback, never()).onTransferMethodLoaded(any(TransferMethod.class));
+        assertThat(mErrorsArgumentCaptor.getValue().getErrors(), Matchers.<Error>hasSize(1));
         assertThat(mErrorsArgumentCaptor.getValue().getErrors().get(0).getMessageId(),
                 is(R.string.error_unsupported_transfer_type));
         assertThat(mErrorsArgumentCaptor.getValue().getErrors().get(0).getCode(), is(EC_UNEXPECTED_EXCEPTION));
@@ -179,7 +179,7 @@ public class TransferMethodRepositoryImplTest {
 
     @Test
     public void testDeactivateTransferMethod_bankAccountWithSuccess() {
-        HyperwalletBankAccount bankAccount = new HyperwalletBankAccount
+        BankAccount bankAccount = new BankAccount
                 .Builder("CA", "CAD", "3423423432")
                 .token("trm-854c4ec1-9161-49d6-92e2-b8d15aa4bf56")
                 .build();
@@ -202,7 +202,7 @@ public class TransferMethodRepositoryImplTest {
 
         verify(mDeactivateTransferMethodCallback).onTransferMethodDeactivated(
                 mStatusTransitionArgumentCaptor.capture());
-        verify(mDeactivateTransferMethodCallback, never()).onError(any(HyperwalletErrors.class));
+        verify(mDeactivateTransferMethodCallback, never()).onError(any(Errors.class));
 
         StatusTransition statusTransition = mStatusTransitionArgumentCaptor.getValue();
         assertThat(statusTransition, is(notNullValue()));
@@ -212,19 +212,19 @@ public class TransferMethodRepositoryImplTest {
 
     @Test
     public void testDeactivateTransferMethod_bankAccountWithError() {
-        HyperwalletBankAccount bankAccount = new HyperwalletBankAccount
+        BankAccount bankAccount = new BankAccount
                 .Builder("CA", "CAD", "3423423432")
                 .token("trm-854c4ec1-9161-49d6-92e2-b8d15aa4bf56")
                 .build();
         bankAccount.setField(STATUS, StatusTransition.StatusDefinition.ACTIVATED);
-        final HyperwalletError error = new HyperwalletError("test message", "TEST_CODE");
+        final Error error = new Error("test message", "TEST_CODE");
         doAnswer(new Answer() {
             @Override
             public Object answer(InvocationOnMock invocation) {
                 HyperwalletListener listener = (HyperwalletListener) invocation.getArguments()[2];
-                List<HyperwalletError> errorList = new ArrayList<>();
+                List<Error> errorList = new ArrayList<>();
                 errorList.add(error);
-                HyperwalletErrors errors = new HyperwalletErrors(errorList);
+                Errors errors = new Errors(errorList);
                 listener.onFailure(new HyperwalletException(errors));
                 return listener;
             }
@@ -243,7 +243,7 @@ public class TransferMethodRepositoryImplTest {
 
     @Test
     public void testDeactivateTransferMethod_withUnsupportedTransferMethodType() {
-        HyperwalletBankAccount bankAccount = new HyperwalletBankAccount
+        BankAccount bankAccount = new BankAccount
                 .Builder("US", "USD", "23432432")
                 .token("trm-854c4ec1-9161-49d6-92e2-b8d15aa4bf56")
                 .transferMethodType("UNKNOWN_TRANSFER_TYPE")
@@ -255,7 +255,7 @@ public class TransferMethodRepositoryImplTest {
 
         verify(mDeactivateTransferMethodCallback).onError(mErrorsArgumentCaptor.capture());
         verify(mDeactivateTransferMethodCallback, never()).onTransferMethodDeactivated(any(StatusTransition.class));
-        assertThat(mErrorsArgumentCaptor.getValue().getErrors(), Matchers.<HyperwalletError>hasSize(1));
+        assertThat(mErrorsArgumentCaptor.getValue().getErrors(), Matchers.<Error>hasSize(1));
         assertThat(mErrorsArgumentCaptor.getValue().getErrors().get(0).getMessageId(),
                 is(R.string.error_unsupported_transfer_type));
         assertThat(mErrorsArgumentCaptor.getValue().getErrors().get(0).getCode(), is(EC_UNEXPECTED_EXCEPTION));
@@ -263,7 +263,7 @@ public class TransferMethodRepositoryImplTest {
 
     @Test
     public void testDeactivateTransferMethod_bankCardWithSuccess() {
-        HyperwalletBankCard bankCard = new HyperwalletBankCard
+        BankCard bankCard = new BankCard
                 .Builder("CA", "CAD", "1232345456784", "2019-05", "234")
                 .token("trm-854c4ec1-9161-49d6-92e2-b8d15aa4bf56")
                 .build();
@@ -286,7 +286,7 @@ public class TransferMethodRepositoryImplTest {
 
         verify(mDeactivateTransferMethodCallback).onTransferMethodDeactivated(
                 mStatusTransitionArgumentCaptor.capture());
-        verify(mDeactivateTransferMethodCallback, never()).onError(any(HyperwalletErrors.class));
+        verify(mDeactivateTransferMethodCallback, never()).onError(any(Errors.class));
 
         StatusTransition statusTransition = mStatusTransitionArgumentCaptor.getValue();
         assertThat(statusTransition, is(notNullValue()));
@@ -296,19 +296,19 @@ public class TransferMethodRepositoryImplTest {
 
     @Test
     public void testDeactivateTransferMethod_bankCardWithError() {
-        HyperwalletBankCard bankCard = new HyperwalletBankCard
+        BankCard bankCard = new BankCard
                 .Builder("CA", "CAD", "1232345456784", "2019-05", "234")
                 .token("trm-854c4ec1-9161-49d6-92e2-b8d15aa4bf56")
                 .build();
         bankCard.setField(STATUS, StatusTransition.StatusDefinition.ACTIVATED);
-        final HyperwalletError error = new HyperwalletError("test message", "TEST_CODE");
+        final Error error = new Error("test message", "TEST_CODE");
         doAnswer(new Answer() {
             @Override
             public Object answer(InvocationOnMock invocation) {
                 HyperwalletListener listener = (HyperwalletListener) invocation.getArguments()[2];
-                List<HyperwalletError> errorList = new ArrayList<>();
+                List<Error> errorList = new ArrayList<>();
                 errorList.add(error);
-                HyperwalletErrors errors = new HyperwalletErrors(errorList);
+                Errors errors = new Errors(errorList);
                 listener.onFailure(new HyperwalletException(errors));
                 return listener;
             }
@@ -347,7 +347,7 @@ public class TransferMethodRepositoryImplTest {
 
         verify(mDeactivateTransferMethodCallback).onTransferMethodDeactivated(
                 mStatusTransitionArgumentCaptor.capture());
-        verify(mDeactivateTransferMethodCallback, never()).onError(any(HyperwalletErrors.class));
+        verify(mDeactivateTransferMethodCallback, never()).onError(any(Errors.class));
 
         StatusTransition statusTransition = mStatusTransitionArgumentCaptor.getValue();
         assertThat(statusTransition, is(notNullValue()));
@@ -360,14 +360,14 @@ public class TransferMethodRepositoryImplTest {
         PayPalAccount payPalAccount = new PayPalAccount.Builder("US", "US", "jsmith4@hyperwallet.com")
                 .token("trm-854c4ec1-9161-49d6-92e2-b8d15aa4bf56").build();
         payPalAccount.setField(STATUS, StatusTransition.StatusDefinition.ACTIVATED);
-        final HyperwalletError error = new HyperwalletError("test message", "TEST_CODE");
+        final Error error = new Error("test message", "TEST_CODE");
         doAnswer(new Answer() {
             @Override
             public Object answer(InvocationOnMock invocation) {
                 HyperwalletListener listener = (HyperwalletListener) invocation.getArguments()[2];
-                List<HyperwalletError> errorList = new ArrayList<>();
+                List<Error> errorList = new ArrayList<>();
                 errorList.add(error);
-                HyperwalletErrors errors = new HyperwalletErrors(errorList);
+                Errors errors = new Errors(errorList);
                 listener.onFailure(new HyperwalletException(errors));
                 return listener;
             }
@@ -384,9 +384,10 @@ public class TransferMethodRepositoryImplTest {
         assertThat(mErrorsArgumentCaptor.getValue().getErrors(), hasItem(error));
     }
 
+
     @Test
     public void testCreateTransferMethod_bankCardWithSuccess() {
-        HyperwalletBankCard bankCard = new HyperwalletBankCard
+        BankCard bankCard = new BankCard
                 .Builder("CA", "CAD", "1232345456784", "2019-05", "234")
                 .build();
 
@@ -394,7 +395,7 @@ public class TransferMethodRepositoryImplTest {
             @Override
             public Object answer(InvocationOnMock invocation) {
                 HyperwalletListener listener = (HyperwalletListener) invocation.getArguments()[1];
-                HyperwalletBankCard returnedBankCard = new HyperwalletBankCard
+                BankCard returnedBankCard = new BankCard
                         .Builder("CA", "CAD", "1232345456784", "2019-05", "234")
                         .cardBrand("Brand")
                         .cardType("cardType")
@@ -402,62 +403,62 @@ public class TransferMethodRepositoryImplTest {
                 listener.onSuccess(returnedBankCard);
                 return listener;
             }
-        }).when(mHyperwallet).createBankCard(any(HyperwalletBankCard.class),
-                ArgumentMatchers.<HyperwalletListener<HyperwalletBankCard>>any());
+        }).when(mHyperwallet).createBankCard(any(BankCard.class),
+                ArgumentMatchers.<HyperwalletListener<BankCard>>any());
 
         // test
         mTransferMethodRepository.createTransferMethod(bankCard, mLoadTransferMethodCallback);
 
         verify(mLoadTransferMethodCallback).onTransferMethodLoaded(mBankCardArgumentCaptor.capture());
-        verify(mLoadTransferMethodCallback, never()).onError(any(HyperwalletErrors.class));
+        verify(mLoadTransferMethodCallback, never()).onError(any(Errors.class));
 
-        HyperwalletBankCard transferMethod = mBankCardArgumentCaptor.getValue();
+        BankCard transferMethod = mBankCardArgumentCaptor.getValue();
         assertThat(transferMethod, is(notNullValue()));
-        assertThat(transferMethod.getField(TYPE), is(HyperwalletTransferMethod.TransferMethodTypes.BANK_CARD));
-        assertThat(transferMethod.getField(HyperwalletTransferMethod.TransferMethodFields.CARD_BRAND), is("Brand"));
-        assertThat(transferMethod.getField(HyperwalletTransferMethod.TransferMethodFields.CARD_TYPE), is("cardType"));
+        assertThat(transferMethod.getField(TYPE), is(TransferMethod.TransferMethodTypes.BANK_CARD));
+        assertThat(transferMethod.getField(TransferMethod.TransferMethodFields.CARD_BRAND), is("Brand"));
+        assertThat(transferMethod.getField(TransferMethod.TransferMethodFields.CARD_TYPE), is("cardType"));
     }
 
     @Test
     public void testCreateTransferMethod_bankCardWithError() {
-        HyperwalletBankCard bankCard = new HyperwalletBankCard
+        BankCard bankCard = new BankCard
                 .Builder("CA", "CAD", "1232345456784", "2019-05", "234")
                 .build();
 
-        final HyperwalletError error = new HyperwalletError("bank card test message", "BANK_CARD_TEST_CODE");
+        final Error error = new Error("bank card test message", "BANK_CARD_TEST_CODE");
 
         doAnswer(new Answer() {
             @Override
             public Object answer(InvocationOnMock invocation) {
                 HyperwalletListener listener = (HyperwalletListener) invocation.getArguments()[1];
-                List<HyperwalletError> errorList = new ArrayList<>();
+                List<Error> errorList = new ArrayList<>();
                 errorList.add(error);
-                HyperwalletErrors errors = new HyperwalletErrors(errorList);
+                Errors errors = new Errors(errorList);
                 HyperwalletException exception = new HyperwalletException(errors);
                 listener.onFailure(exception);
                 return listener;
             }
-        }).when(mHyperwallet).createBankCard(any(HyperwalletBankCard.class),
-                ArgumentMatchers.<HyperwalletListener<HyperwalletBankCard>>any());
+        }).when(mHyperwallet).createBankCard(any(BankCard.class),
+                ArgumentMatchers.<HyperwalletListener<BankCard>>any());
 
         // test
         mTransferMethodRepository.createTransferMethod(bankCard, mLoadTransferMethodCallback);
 
         verify(mLoadTransferMethodCallback).onError(mErrorsArgumentCaptor.capture());
-        verify(mLoadTransferMethodCallback, never()).onTransferMethodLoaded(any(HyperwalletTransferMethod.class));
+        verify(mLoadTransferMethodCallback, never()).onTransferMethodLoaded(any(TransferMethod.class));
         assertThat(mErrorsArgumentCaptor.getValue().getErrors(), hasItem(error));
     }
 
 
     @Test
     public void testLoadTransferMethod_returnsBankAccount() {
-        HyperwalletBankAccount bankAccount = new HyperwalletBankAccount
+        BankAccount bankAccount = new BankAccount
                 .Builder("CA", "CAD", "3423423432")
                 .build();
 
-        List<HyperwalletBankAccount> accounts = new ArrayList<>();
+        List<BankAccount> accounts = new ArrayList<>();
         accounts.add(bankAccount);
-        final HyperwalletPageList<HyperwalletBankAccount> pageList = new HyperwalletPageList<>(accounts);
+        final PageList<BankAccount> pageList = new PageList<>(accounts);
 
         doAnswer(new Answer() {
             @Override
@@ -466,16 +467,16 @@ public class TransferMethodRepositoryImplTest {
                 listener.onSuccess(pageList);
                 return listener;
             }
-        }).when(mHyperwallet).listTransferMethods((HyperwalletTransferMethodQueryParam) any(),
-                ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<HyperwalletTransferMethod>>>any());
+        }).when(mHyperwallet).listTransferMethods((TransferMethodQueryParam) any(),
+                ArgumentMatchers.<HyperwalletListener<PageList<TransferMethod>>>any());
 
         // test
         mTransferMethodRepository.loadTransferMethods(mLoadTransferMethodListCallback);
 
         verify(mLoadTransferMethodListCallback).onTransferMethodListLoaded(mListTransferMethodCaptor.capture());
-        verify(mLoadTransferMethodListCallback, never()).onError(any(HyperwalletErrors.class));
+        verify(mLoadTransferMethodListCallback, never()).onError(any(Errors.class));
 
-        List<HyperwalletTransferMethod> transferMethods = mListTransferMethodCaptor.getValue();
+        List<TransferMethod> transferMethods = mListTransferMethodCaptor.getValue();
         assertThat(transferMethods, hasSize(1));
         assertThat(transferMethods.get(0).getField(TRANSFER_METHOD_COUNTRY), is("CA"));
         assertThat(transferMethods.get(0).getField(TRANSFER_METHOD_CURRENCY), is("CAD"));
@@ -491,41 +492,41 @@ public class TransferMethodRepositoryImplTest {
                 listener.onSuccess(null);
                 return listener;
             }
-        }).when(mHyperwallet).listTransferMethods((HyperwalletTransferMethodQueryParam) any(),
-                ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<HyperwalletTransferMethod>>>any());
+        }).when(mHyperwallet).listTransferMethods((TransferMethodQueryParam) any(),
+                ArgumentMatchers.<HyperwalletListener<PageList<TransferMethod>>>any());
 
         // test
         mTransferMethodRepository.loadTransferMethods(mLoadTransferMethodListCallback);
 
         verify(mLoadTransferMethodListCallback).onTransferMethodListLoaded(mListTransferMethodCaptor.capture());
-        verify(mLoadTransferMethodListCallback, never()).onError(any(HyperwalletErrors.class));
+        verify(mLoadTransferMethodListCallback, never()).onError(any(Errors.class));
 
-        List<HyperwalletTransferMethod> transferMethods = mListTransferMethodCaptor.getValue();
+        List<TransferMethod> transferMethods = mListTransferMethodCaptor.getValue();
         assertThat(transferMethods, is(nullValue()));
     }
 
     @Test
     public void testLoadTransferMethod_withError() {
-        final HyperwalletError error = new HyperwalletError("test message", "TEST_CODE");
+        final Error error = new Error("test message", "TEST_CODE");
 
         doAnswer(new Answer() {
             @Override
             public Object answer(InvocationOnMock invocation) {
                 HyperwalletListener listener = (HyperwalletListener) invocation.getArguments()[1];
-                List<HyperwalletError> errorList = new ArrayList<>();
+                List<Error> errorList = new ArrayList<>();
                 errorList.add(error);
-                HyperwalletErrors errors = new HyperwalletErrors(errorList);
+                Errors errors = new Errors(errorList);
                 listener.onFailure(new HyperwalletException(errors));
                 return listener;
             }
-        }).when(mHyperwallet).listTransferMethods((HyperwalletTransferMethodQueryParam) any(),
-                ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<HyperwalletTransferMethod>>>any());
+        }).when(mHyperwallet).listTransferMethods((TransferMethodQueryParam) any(),
+                ArgumentMatchers.<HyperwalletListener<PageList<TransferMethod>>>any());
 
         // test
         mTransferMethodRepository.loadTransferMethods(mLoadTransferMethodListCallback);
 
         verify(mLoadTransferMethodListCallback, never()).onTransferMethodListLoaded(
-                ArgumentMatchers.<HyperwalletTransferMethod>anyList());
+                ArgumentMatchers.<TransferMethod>anyList());
         verify(mLoadTransferMethodListCallback).onError(mErrorsArgumentCaptor.capture());
 
         assertThat(mErrorsArgumentCaptor.getValue().getErrors(), hasItem(error));
@@ -533,16 +534,16 @@ public class TransferMethodRepositoryImplTest {
 
     @Test
     public void testLoadLatestTransferMethod_returnsBankAccount() {
-        List<HyperwalletBankAccount> accounts = new ArrayList<HyperwalletBankAccount>() {{
-            add(new HyperwalletBankAccount
+        List<BankAccount> accounts = new ArrayList<BankAccount>() {{
+            add(new BankAccount
                     .Builder("CA", "CAD", "3423423432")
                     .build());
-            add(new HyperwalletBankAccount
+            add(new BankAccount
                     .Builder("US", "USD", "1231231222")
                     .build());
         }};
 
-        final HyperwalletPageList<HyperwalletBankAccount> pageList = new HyperwalletPageList<>(accounts);
+        final PageList<BankAccount> pageList = new PageList<>(accounts);
 
         doAnswer(new Answer() {
             @Override
@@ -551,16 +552,16 @@ public class TransferMethodRepositoryImplTest {
                 listener.onSuccess(pageList);
                 return listener;
             }
-        }).when(mHyperwallet).listTransferMethods((HyperwalletTransferMethodQueryParam) any(),
-                ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<HyperwalletTransferMethod>>>any());
+        }).when(mHyperwallet).listTransferMethods((TransferMethodQueryParam) any(),
+                ArgumentMatchers.<HyperwalletListener<PageList<TransferMethod>>>any());
 
         // test
         mTransferMethodRepository.loadLatestTransferMethod(mLoadTransferMethodCallback);
 
         verify(mLoadTransferMethodCallback).onTransferMethodLoaded(mBankAccountArgumentCaptor.capture());
-        verify(mLoadTransferMethodCallback, never()).onError(any(HyperwalletErrors.class));
+        verify(mLoadTransferMethodCallback, never()).onError(any(Errors.class));
 
-        HyperwalletBankAccount transferMethod = mBankAccountArgumentCaptor.getValue();
+        BankAccount transferMethod = mBankAccountArgumentCaptor.getValue();
         assertThat(transferMethod, is(notNullValue()));
         assertThat(transferMethod.getField(TRANSFER_METHOD_COUNTRY), is("CA"));
         assertThat(transferMethod.getField(TRANSFER_METHOD_CURRENCY), is("CAD"));
@@ -576,40 +577,40 @@ public class TransferMethodRepositoryImplTest {
                 listener.onSuccess(null);
                 return listener;
             }
-        }).when(mHyperwallet).listTransferMethods((HyperwalletTransferMethodQueryParam) any(),
-                ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<HyperwalletTransferMethod>>>any());
+        }).when(mHyperwallet).listTransferMethods((TransferMethodQueryParam) any(),
+                ArgumentMatchers.<HyperwalletListener<PageList<TransferMethod>>>any());
 
         // test
         mTransferMethodRepository.loadLatestTransferMethod(mLoadTransferMethodCallback);
 
         verify(mLoadTransferMethodCallback).onTransferMethodLoaded(mBankAccountArgumentCaptor.capture());
-        verify(mLoadTransferMethodCallback, never()).onError(any(HyperwalletErrors.class));
+        verify(mLoadTransferMethodCallback, never()).onError(any(Errors.class));
 
-        HyperwalletBankAccount transferMethod = mBankAccountArgumentCaptor.getValue();
+        BankAccount transferMethod = mBankAccountArgumentCaptor.getValue();
         assertThat(transferMethod, is(nullValue()));
     }
 
     @Test
     public void testLoadLatestTransferMethod_withError() {
-        final HyperwalletError error = new HyperwalletError("test message", "TEST_CODE");
+        final Error error = new Error("test message", "TEST_CODE");
 
         doAnswer(new Answer() {
             @Override
             public Object answer(InvocationOnMock invocation) {
                 HyperwalletListener listener = (HyperwalletListener) invocation.getArguments()[1];
-                List<HyperwalletError> errorList = new ArrayList<>();
+                List<Error> errorList = new ArrayList<>();
                 errorList.add(error);
-                HyperwalletErrors errors = new HyperwalletErrors(errorList);
+                Errors errors = new Errors(errorList);
                 listener.onFailure(new HyperwalletException(errors));
                 return listener;
             }
-        }).when(mHyperwallet).listTransferMethods((HyperwalletTransferMethodQueryParam) any(),
-                ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<HyperwalletTransferMethod>>>any());
+        }).when(mHyperwallet).listTransferMethods((TransferMethodQueryParam) any(),
+                ArgumentMatchers.<HyperwalletListener<PageList<TransferMethod>>>any());
 
         // test
         mTransferMethodRepository.loadLatestTransferMethod(mLoadTransferMethodCallback);
 
-        verify(mLoadTransferMethodCallback, never()).onTransferMethodLoaded(any(HyperwalletTransferMethod.class));
+        verify(mLoadTransferMethodCallback, never()).onTransferMethodLoaded(any(TransferMethod.class));
         verify(mLoadTransferMethodCallback).onError(mErrorsArgumentCaptor.capture());
 
         assertThat(mErrorsArgumentCaptor.getValue().getErrors(), hasItem(error));
@@ -643,7 +644,7 @@ public class TransferMethodRepositoryImplTest {
 
         // verify
         verify(mLoadTransferMethodCallback).onTransferMethodLoaded(mPayPalAccountArgumentCaptor.capture());
-        verify(mLoadTransferMethodCallback, never()).onError(any(HyperwalletErrors.class));
+        verify(mLoadTransferMethodCallback, never()).onError(any(Errors.class));
 
         // assert
         PayPalAccount payPalAccount = mPayPalAccountArgumentCaptor.getValue();
@@ -658,17 +659,17 @@ public class TransferMethodRepositoryImplTest {
     @Test
     public void testCreateTransferMethod_payPalAccountWithError() {
         // prepare
-        final HyperwalletError returnedError = new HyperwalletError("PayPal test message", "PAYPAL_TEST_CODE");
+        final Error returnedError = new Error("PayPal test message", "PAYPAL_TEST_CODE");
 
         doAnswer(new Answer() {
             @Override
             public Object answer(InvocationOnMock invocation) {
                 HyperwalletListener listener = (HyperwalletListener) invocation.getArguments()[1];
 
-                List<HyperwalletError> errorList = new ArrayList<>();
+                List<Error> errorList = new ArrayList<>();
                 errorList.add(returnedError);
 
-                listener.onFailure(new HyperwalletException(new HyperwalletErrors(errorList)));
+                listener.onFailure(new HyperwalletException(new Errors(errorList)));
                 return listener;
             }
         }).when(mHyperwallet).createPayPalAccount(any(PayPalAccount.class),
@@ -679,7 +680,7 @@ public class TransferMethodRepositoryImplTest {
         mTransferMethodRepository.createTransferMethod(parameter, mLoadTransferMethodCallback);
 
         // verify
-        verify(mLoadTransferMethodCallback, never()).onTransferMethodLoaded(any(HyperwalletTransferMethod.class));
+        verify(mLoadTransferMethodCallback, never()).onTransferMethodLoaded(any(TransferMethod.class));
         verify(mLoadTransferMethodCallback).onError(mErrorsArgumentCaptor.capture());
 
         // assert
@@ -688,35 +689,35 @@ public class TransferMethodRepositoryImplTest {
 
     @Test
     public void testCreateTransferMethod_wireAccountWithSuccess() {
-        HyperwalletBankAccount bankAccount = new HyperwalletBankAccount
+        BankAccount bankAccount = new BankAccount
                 .Builder("US", "USD", "1411413412")
-                .transferMethodType(HyperwalletTransferMethod.TransferMethodTypes.WIRE_ACCOUNT)
+                .transferMethodType(TransferMethod.TransferMethodTypes.WIRE_ACCOUNT)
                 .build();
 
         doAnswer(new Answer() {
             @Override
             public Object answer(InvocationOnMock invocation) {
                 HyperwalletListener listener = (HyperwalletListener) invocation.getArguments()[1];
-                HyperwalletBankAccount returnedBank = new HyperwalletBankAccount
+                BankAccount returnedBank = new BankAccount
                         .Builder("US", "USD", "1411413412")
                         .bankName("Mock Bank Response")
-                        .transferMethodType(HyperwalletTransferMethod.TransferMethodTypes.WIRE_ACCOUNT)
+                        .transferMethodType(TransferMethod.TransferMethodTypes.WIRE_ACCOUNT)
                         .build();
                 listener.onSuccess(returnedBank);
                 return listener;
             }
-        }).when(mHyperwallet).createBankAccount(any(HyperwalletBankAccount.class),
-                ArgumentMatchers.<HyperwalletListener<HyperwalletBankAccount>>any());
+        }).when(mHyperwallet).createBankAccount(any(BankAccount.class),
+                ArgumentMatchers.<HyperwalletListener<BankAccount>>any());
 
         // test
         mTransferMethodRepository.createTransferMethod(bankAccount, mLoadTransferMethodCallback);
 
         verify(mLoadTransferMethodCallback).onTransferMethodLoaded(mBankAccountArgumentCaptor.capture());
-        verify(mLoadTransferMethodCallback, never()).onError(any(HyperwalletErrors.class));
+        verify(mLoadTransferMethodCallback, never()).onError(any(Errors.class));
 
-        HyperwalletBankAccount transferMethod = mBankAccountArgumentCaptor.getValue();
+        BankAccount transferMethod = mBankAccountArgumentCaptor.getValue();
         assertThat(transferMethod, is(notNullValue()));
-        assertThat(transferMethod.getField(TYPE), is(HyperwalletTransferMethod.TransferMethodTypes.WIRE_ACCOUNT));
+        assertThat(transferMethod.getField(TYPE), is(TransferMethod.TransferMethodTypes.WIRE_ACCOUNT));
         assertThat(transferMethod.getField(BANK_NAME), is("Mock Bank Response"));
         assertThat(transferMethod.getField(TRANSFER_METHOD_COUNTRY), is("US"));
         assertThat(transferMethod.getField(TRANSFER_METHOD_CURRENCY), is("USD"));
@@ -725,9 +726,9 @@ public class TransferMethodRepositoryImplTest {
 
     @Test
     public void testDeactivateTransferMethod_wireAccountWithSuccess() {
-        HyperwalletBankAccount bankAccount = new HyperwalletBankAccount
+        BankAccount bankAccount = new BankAccount
                 .Builder("CA", "CAD", "3423423432")
-                .transferMethodType(HyperwalletTransferMethod.TransferMethodTypes.WIRE_ACCOUNT)
+                .transferMethodType(TransferMethod.TransferMethodTypes.WIRE_ACCOUNT)
                 .token("trm-123")
                 .build();
         bankAccount.setField(STATUS, StatusTransition.StatusDefinition.ACTIVATED);
@@ -749,7 +750,7 @@ public class TransferMethodRepositoryImplTest {
 
         verify(mDeactivateTransferMethodCallback).onTransferMethodDeactivated(
                 mStatusTransitionArgumentCaptor.capture());
-        verify(mDeactivateTransferMethodCallback, never()).onError(any(HyperwalletErrors.class));
+        verify(mDeactivateTransferMethodCallback, never()).onError(any(Errors.class));
 
         StatusTransition statusTransition = mStatusTransitionArgumentCaptor.getValue();
         assertThat(statusTransition, is(notNullValue()));
@@ -759,12 +760,12 @@ public class TransferMethodRepositoryImplTest {
 
     @Test
     public void testLoadTransferMethod_verifyDefaultQueryParams() {
-        HyperwalletBankAccount bankAccount = new HyperwalletBankAccount
+        BankAccount bankAccount = new BankAccount
                 .Builder("CA", "CAD", "3423423432")
                 .build();
-        List<HyperwalletBankAccount> accounts = new ArrayList<>();
+        List<BankAccount> accounts = new ArrayList<>();
         accounts.add(bankAccount);
-        final HyperwalletPageList<HyperwalletBankAccount> pageList = new HyperwalletPageList<>(accounts);
+        final PageList<BankAccount> pageList = new PageList<>(accounts);
         doAnswer(new Answer() {
             @Override
             public Object answer(InvocationOnMock invocation) {
@@ -773,7 +774,7 @@ public class TransferMethodRepositoryImplTest {
                 return listener;
             }
         }).when(mHyperwallet).listTransferMethods(mQueryParamCaptor.capture(),
-                ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<HyperwalletTransferMethod>>>any());
+                ArgumentMatchers.<HyperwalletListener<PageList<TransferMethod>>>any());
 
         // test
         mTransferMethodRepository.loadTransferMethods(mLoadTransferMethodListCallback);

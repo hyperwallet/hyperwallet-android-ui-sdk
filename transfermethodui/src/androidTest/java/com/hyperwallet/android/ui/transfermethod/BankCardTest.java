@@ -41,7 +41,7 @@ import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
-import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
+import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
@@ -191,12 +191,12 @@ public class BankCardTest {
             public void onReceive(Context context, Intent intent) {
                 gate.countDown();
 
-                HyperwalletTransferMethod transferMethod = intent.getParcelableExtra(
+                TransferMethod transferMethod = intent.getParcelableExtra(
                         "hyperwallet-local-broadcast-payload");
                 assertThat("Card number is incorrect", transferMethod.getField(
-                        HyperwalletTransferMethod.TransferMethodFields.CARD_NUMBER), is(CARD_NUMBER_MASKED));
+                        TransferMethod.TransferMethodFields.CARD_NUMBER), is(CARD_NUMBER_MASKED));
                 assertThat("Expiry date is incorrect", transferMethod.getField(
-                        HyperwalletTransferMethod.TransferMethodFields.DATE_OF_EXPIRY), is("2020-10"));
+                        TransferMethod.TransferMethodFields.DATE_OF_EXPIRY), is("2020-10"));
             }
         };
 
