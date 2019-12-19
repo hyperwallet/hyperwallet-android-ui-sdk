@@ -9,18 +9,18 @@ import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TOKEN;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_COUNTRY;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_CURRENCY;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TOKEN;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TRANSFER_METHOD_COUNTRY;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TRANSFER_METHOD_CURRENCY;
 
 import androidx.lifecycle.ViewModel;
 
 import com.google.common.collect.Lists;
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.HyperwalletAuthenticationTokenProvider;
-import com.hyperwallet.android.model.HyperwalletError;
-import com.hyperwallet.android.model.HyperwalletErrors;
-import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
+import com.hyperwallet.android.model.Error;
+import com.hyperwallet.android.model.Errors;
+import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepository;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryImpl;
@@ -58,7 +58,7 @@ public class ListTransferDestinationViewModelTest {
             @Override
             public Object answer(InvocationOnMock invocation) {
                 TransferMethodRepository.LoadTransferMethodListCallback callback = invocation.getArgument(0);
-                callback.onTransferMethodListLoaded(new ArrayList<HyperwalletTransferMethod>());
+                callback.onTransferMethodListLoaded(new ArrayList<TransferMethod>());
                 return callback;
             }
         }).when(transferMethodRepository).loadTransferMethods(ArgumentMatchers.any(
@@ -71,7 +71,7 @@ public class ListTransferDestinationViewModelTest {
     public void testGetTransferDestinationList_returnsLiveData() {
         assertThat(mModelToTest.getTransferDestinationList(), is(notNullValue()));
         assertThat(mModelToTest.getTransferDestinationList().getValue(),
-                Matchers.<HyperwalletTransferMethod>hasSize(0));
+                Matchers.<TransferMethod>hasSize(0));
     }
 
     @Test
@@ -92,7 +92,7 @@ public class ListTransferDestinationViewModelTest {
         ListTransferDestinationViewModel viewModel = factory.create(ListTransferDestinationViewModel.class);
 
         assertThat(viewModel.getTransferDestinationList(), is(notNullValue()));
-        assertThat(viewModel.getTransferDestinationList().getValue(), Matchers.<HyperwalletTransferMethod>hasSize(0));
+        assertThat(viewModel.getTransferDestinationList().getValue(), Matchers.<TransferMethod>hasSize(0));
     }
 
     @Test
@@ -113,7 +113,7 @@ public class ListTransferDestinationViewModelTest {
 
     @Test
     public void testSelectTransferDestination_callsRepository() {
-        HyperwalletTransferMethod transferMethod = new HyperwalletTransferMethod();
+        TransferMethod transferMethod = new TransferMethod();
         mModelToTest.selectedTransferDestination(transferMethod);
         assertThat(mModelToTest.getSelectedTransferDestination().getValue().getContent(), is(transferMethod));
     }
@@ -144,7 +144,7 @@ public class ListTransferDestinationViewModelTest {
 
     @Test
     public void testLoadNewlyAddedTransferDestination_loadsNewlyAddedTransferDestinationAndSetItAsSelected() {
-        final HyperwalletTransferMethod transferMethod = new HyperwalletTransferMethod();
+        final TransferMethod transferMethod = new TransferMethod();
         transferMethod.setField(TOKEN, "trm-bank-test-token");
         transferMethod.setField(TRANSFER_METHOD_CURRENCY, "CAD");
         transferMethod.setField(TRANSFER_METHOD_COUNTRY, "CA");
@@ -180,7 +180,7 @@ public class ListTransferDestinationViewModelTest {
         assertThat(viewModel.getSelectedTransferDestination().getValue().getContent().getField(TRANSFER_METHOD_COUNTRY),
                 is("CA"));
 
-        assertThat(viewModel.getTransferDestinationList().getValue(), Matchers.<HyperwalletTransferMethod>hasSize(1));
+        assertThat(viewModel.getTransferDestinationList().getValue(), Matchers.<TransferMethod>hasSize(1));
     }
 
     @Test
@@ -193,7 +193,7 @@ public class ListTransferDestinationViewModelTest {
             @Override
             public Object answer(InvocationOnMock invocation) {
                 TransferMethodRepository.LoadTransferMethodListCallback callback = invocation.getArgument(0);
-                callback.onTransferMethodListLoaded(new ArrayList<HyperwalletTransferMethod>());
+                callback.onTransferMethodListLoaded(new ArrayList<TransferMethod>());
                 return callback;
             }
         }).when(repository).loadTransferMethods(ArgumentMatchers.any(
@@ -209,7 +209,7 @@ public class ListTransferDestinationViewModelTest {
 
         // no selection
         assertThat(viewModel.getSelectedTransferDestination().getValue(), is(nullValue()));
-        assertThat(viewModel.getTransferDestinationList().getValue(), Matchers.<HyperwalletTransferMethod>hasSize(0));
+        assertThat(viewModel.getTransferDestinationList().getValue(), Matchers.<TransferMethod>hasSize(0));
     }
 
     @Test
@@ -226,12 +226,12 @@ public class ListTransferDestinationViewModelTest {
             public Object answer(InvocationOnMock invocation) {
                 TransferMethodRepository.LoadTransferMethodListCallback callback = invocation.getArgument(0);
                 if (execution++ == 1) {
-                    HyperwalletError error = new HyperwalletError("test error", "TEST_ERROR_CODE");
-                    HyperwalletErrors errors = new HyperwalletErrors(Lists.newArrayList(error));
+                    Error error = new Error("test error", "TEST_ERROR_CODE");
+                    Errors errors = new Errors(Lists.newArrayList(error));
                     callback.onError(errors);
                     return callback;
                 }
-                callback.onTransferMethodListLoaded(new ArrayList<HyperwalletTransferMethod>());
+                callback.onTransferMethodListLoaded(new ArrayList<TransferMethod>());
                 return callback;
             }
         }).when(repository).loadTransferMethods(ArgumentMatchers.any(
@@ -249,13 +249,13 @@ public class ListTransferDestinationViewModelTest {
 
         assertThat(viewModel.getTransferDestinationError().getValue(), is(notNullValue()));
         assertThat(viewModel.getTransferDestinationError().getValue().getContent().getErrors(),
-                Matchers.<HyperwalletError>hasSize(1));
+                Matchers.<Error>hasSize(1));
         assertThat(viewModel.getTransferDestinationError().getValue().getContent().getErrors().get(0).getCode(),
                 is("TEST_ERROR_CODE"));
         assertThat(viewModel.getTransferDestinationError().getValue().getContent().getErrors().get(0).getMessage(),
                 is("test error"));
         assertThat(viewModel.getSelectedTransferDestination().getValue(), is(nullValue()));
-        assertThat(viewModel.getTransferDestinationList().getValue(), Matchers.<HyperwalletTransferMethod>hasSize(0));
+        assertThat(viewModel.getTransferDestinationList().getValue(), Matchers.<TransferMethod>hasSize(0));
         assertThat(viewModel.isLoading().getValue(), is(false));
     }
 
@@ -269,8 +269,8 @@ public class ListTransferDestinationViewModelTest {
             @Override
             public Object answer(InvocationOnMock invocation) {
                 TransferMethodRepository.LoadTransferMethodListCallback callback = invocation.getArgument(0);
-                HyperwalletError error = new HyperwalletError("test error", "TEST_ERROR_CODE");
-                HyperwalletErrors errors = new HyperwalletErrors(Lists.newArrayList(error));
+                Error error = new Error("test error", "TEST_ERROR_CODE");
+                Errors errors = new Errors(Lists.newArrayList(error));
                 callback.onError(errors);
                 return callback;
             }

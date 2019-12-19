@@ -14,24 +14,24 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import static com.hyperwallet.android.model.user.HyperwalletUser.ProfileTypes.INDIVIDUAL;
+import static com.hyperwallet.android.model.user.User.ProfileTypes.INDIVIDUAL;
 
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.exception.HyperwalletException;
 import com.hyperwallet.android.listener.HyperwalletListener;
-import com.hyperwallet.android.model.HyperwalletError;
-import com.hyperwallet.android.model.HyperwalletErrors;
+import com.hyperwallet.android.model.Error;
+import com.hyperwallet.android.model.Errors;
 import com.hyperwallet.android.model.TypeReference;
 import com.hyperwallet.android.model.graphql.HyperwalletTransferMethodConfigurationField;
 import com.hyperwallet.android.model.graphql.HyperwalletTransferMethodConfigurationKey;
-import com.hyperwallet.android.model.graphql.field.HyperwalletFieldGroup;
-import com.hyperwallet.android.model.graphql.field.HyperwalletTransferMethodConfiguration;
-import com.hyperwallet.android.model.graphql.field.HyperwalletTransferMethodConfigurationFieldResult;
+import com.hyperwallet.android.model.graphql.field.FieldGroup;
+import com.hyperwallet.android.model.graphql.field.TransferMethodConfiguration;
+import com.hyperwallet.android.model.graphql.field.TransferMethodConfigurationFieldResult;
 import com.hyperwallet.android.model.graphql.keyed.Country;
 import com.hyperwallet.android.model.graphql.keyed.Currency;
-import com.hyperwallet.android.model.graphql.keyed.HyperwalletTransferMethodConfigurationKeyResult;
-import com.hyperwallet.android.model.graphql.query.HyperwalletTransferMethodConfigurationFieldQuery;
-import com.hyperwallet.android.model.graphql.query.HyperwalletTransferMethodConfigurationKeysQuery;
+import com.hyperwallet.android.model.graphql.keyed.TransferMethodConfigurationKeyResult;
+import com.hyperwallet.android.model.graphql.query.TransferMethodConfigurationFieldQuery;
+import com.hyperwallet.android.model.graphql.query.TransferMethodConfigurationKeysQuery;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
 import com.hyperwallet.android.util.JsonUtils;
 
@@ -77,7 +77,7 @@ public class TransferMethodConfigurationRepositoryImplTest {
     @Captor
     private ArgumentCaptor<HyperwalletTransferMethodConfigurationField> fieldResultArgumentCaptor;
     @Captor
-    private ArgumentCaptor<HyperwalletErrors> mErrorsArgumentCaptor;
+    private ArgumentCaptor<Errors> mErrorsArgumentCaptor;
     @Mock
     private Hyperwallet mHyperwallet;
     @Mock
@@ -97,7 +97,7 @@ public class TransferMethodConfigurationRepositoryImplTest {
             JSONException, InvocationTargetException {
         String responseBody = externalResourceManager.getResourceContent("successful_tmc_keys_response.json");
         final HyperwalletTransferMethodConfigurationKey result = JsonUtils.fromJsonString(responseBody,
-                new TypeReference<HyperwalletTransferMethodConfigurationKeyResult>() {
+                new TypeReference<TransferMethodConfigurationKeyResult>() {
                 });
         doAnswer(new Answer() {
             @Override
@@ -107,13 +107,13 @@ public class TransferMethodConfigurationRepositoryImplTest {
                 return listener;
             }
         }).when(mHyperwallet).retrieveTransferMethodConfigurationKeys(
-                ArgumentMatchers.<HyperwalletTransferMethodConfigurationKeysQuery>any(),
+                ArgumentMatchers.<TransferMethodConfigurationKeysQuery>any(),
                 ArgumentMatchers.<HyperwalletListener<HyperwalletTransferMethodConfigurationKey>>any());
 
         mTransferMethodConfigurationRepositoryImplMock.getKeys(loadKeysCallback);
 
         verify(loadKeysCallback).onKeysLoaded(keyResultArgumentCaptor.capture());
-        verify(loadKeysCallback, never()).onError(any(HyperwalletErrors.class));
+        verify(loadKeysCallback, never()).onError(any(Errors.class));
 
         HyperwalletTransferMethodConfigurationKey transferMethodConfigurationKeyResult =
                 keyResultArgumentCaptor.getValue();
@@ -129,8 +129,8 @@ public class TransferMethodConfigurationRepositoryImplTest {
             throws NoSuchMethodException, InstantiationException, IllegalAccessException,
             JSONException, InvocationTargetException {
         String responseBody = externalResourceManager.getResourceContent("error_tmc_keys_response.json");
-        final HyperwalletErrors errors = JsonUtils.fromJsonString(responseBody,
-                new TypeReference<HyperwalletErrors>() {
+        final Errors errors = JsonUtils.fromJsonString(responseBody,
+                new TypeReference<Errors>() {
                 });
         doAnswer(new Answer() {
             @Override
@@ -140,7 +140,7 @@ public class TransferMethodConfigurationRepositoryImplTest {
                 return listener;
             }
         }).when(mHyperwallet).retrieveTransferMethodConfigurationKeys(
-                ArgumentMatchers.<HyperwalletTransferMethodConfigurationKeysQuery>any(),
+                ArgumentMatchers.<TransferMethodConfigurationKeysQuery>any(),
                 ArgumentMatchers.<HyperwalletListener<HyperwalletTransferMethodConfigurationKey>>any());
 
         mTransferMethodConfigurationRepositoryImplMock.getKeys(loadKeysCallback);
@@ -148,10 +148,10 @@ public class TransferMethodConfigurationRepositoryImplTest {
         verify(loadKeysCallback, never()).onKeysLoaded(any(HyperwalletTransferMethodConfigurationKey.class));
         verify(loadKeysCallback).onError(mErrorsArgumentCaptor.capture());
 
-        HyperwalletErrors hyperwalletErrors = mErrorsArgumentCaptor.getValue();
-        assertNotNull(hyperwalletErrors);
-        assertNotNull(hyperwalletErrors.getErrors());
-        HyperwalletError inError = hyperwalletErrors.getErrors().get(0);
+        Errors errorsList = mErrorsArgumentCaptor.getValue();
+        assertNotNull(errorsList);
+        assertNotNull(errorsList.getErrors());
+        Error inError = errorsList.getErrors().get(0);
         assertThat(errors.getErrors().get(0), is(inError));
     }
 
@@ -161,8 +161,8 @@ public class TransferMethodConfigurationRepositoryImplTest {
             InvocationTargetException {
         String responseBody = externalResourceManager.getResourceContent(
                 "successful_tmc_fields_bank_account_response.json");
-        final HyperwalletTransferMethodConfigurationFieldResult result = JsonUtils.fromJsonString(responseBody,
-                new TypeReference<HyperwalletTransferMethodConfigurationFieldResult>() {
+        final TransferMethodConfigurationFieldResult result = JsonUtils.fromJsonString(responseBody,
+                new TypeReference<TransferMethodConfigurationFieldResult>() {
                 });
         doAnswer(new Answer() {
             @Override
@@ -172,23 +172,23 @@ public class TransferMethodConfigurationRepositoryImplTest {
                 return listener;
             }
         }).when(mHyperwallet).retrieveTransferMethodConfigurationFields(
-                ArgumentMatchers.<HyperwalletTransferMethodConfigurationFieldQuery>any(),
+                ArgumentMatchers.<TransferMethodConfigurationFieldQuery>any(),
                 ArgumentMatchers.<HyperwalletListener<HyperwalletTransferMethodConfigurationField>>any());
 
         mTransferMethodConfigurationRepositoryImplMock.getFields(COUNTRY, CURRENCY, TRANSFER_METHOD_TYPE, INDIVIDUAL,
                 loadFieldsCallback);
 
         verify(loadFieldsCallback).onFieldsLoaded(fieldResultArgumentCaptor.capture());
-        verify(loadFieldsCallback, never()).onError(any(HyperwalletErrors.class));
+        verify(loadFieldsCallback, never()).onError(any(Errors.class));
 
         HyperwalletTransferMethodConfigurationField transferMethodConfigurationFieldResult =
                 fieldResultArgumentCaptor.getValue();
         assertNotNull(transferMethodConfigurationFieldResult);
-        HyperwalletTransferMethodConfiguration transferMethodConfiguration =
+        TransferMethodConfiguration transferMethodConfiguration =
                 transferMethodConfigurationFieldResult.getFields();
         assertThat(transferMethodConfiguration, is(notNullValue()));
         assertThat(transferMethodConfiguration.getFieldGroups(),
-                is(not(IsEmptyCollection.<HyperwalletFieldGroup>empty())));
+                is(not(IsEmptyCollection.<FieldGroup>empty())));
     }
 
     @Test
@@ -196,8 +196,8 @@ public class TransferMethodConfigurationRepositoryImplTest {
             throws NoSuchMethodException, InstantiationException, IllegalAccessException, JSONException,
             InvocationTargetException {
         String responseBody = externalResourceManager.getResourceContent("error_tmc_keys_response.json");
-        final HyperwalletErrors errors = JsonUtils.fromJsonString(responseBody,
-                new TypeReference<HyperwalletErrors>() {
+        final Errors errors = JsonUtils.fromJsonString(responseBody,
+                new TypeReference<Errors>() {
                 });
         final HyperwalletException exception = new HyperwalletException(errors);
         doAnswer(new Answer() {
@@ -209,7 +209,7 @@ public class TransferMethodConfigurationRepositoryImplTest {
                 return listener;
             }
         }).when(mHyperwallet).retrieveTransferMethodConfigurationFields(
-                ArgumentMatchers.<HyperwalletTransferMethodConfigurationFieldQuery>any(),
+                ArgumentMatchers.<TransferMethodConfigurationFieldQuery>any(),
                 ArgumentMatchers.<HyperwalletListener<HyperwalletTransferMethodConfigurationField>>any());
 
 
@@ -219,11 +219,11 @@ public class TransferMethodConfigurationRepositoryImplTest {
         verify(loadFieldsCallback, never()).onFieldsLoaded(any(HyperwalletTransferMethodConfigurationField.class));
         verify(loadFieldsCallback).onError(mErrorsArgumentCaptor.capture());
 
-        HyperwalletErrors hyperwalletErrors = mErrorsArgumentCaptor.getValue();
-        assertNotNull(hyperwalletErrors);
-        List<HyperwalletError> inErrors = hyperwalletErrors.getErrors();
+        Errors errorsList = mErrorsArgumentCaptor.getValue();
+        assertNotNull(errorsList);
+        List<Error> inErrors = errorsList.getErrors();
         assertNotNull(errors);
-        HyperwalletError inError = inErrors.get(0);
+        Error inError = inErrors.get(0);
         assertThat(errors.getErrors().get(0), is(inError));
     }
 
@@ -232,7 +232,7 @@ public class TransferMethodConfigurationRepositoryImplTest {
         String responseBody = externalResourceManager.getResourceContent("successful_tmc_keys_response.json");
         final HyperwalletTransferMethodConfigurationKey transferMethodConfigurationResult = JsonUtils.fromJsonString(
                 responseBody,
-                new TypeReference<HyperwalletTransferMethodConfigurationKeyResult>() {
+                new TypeReference<TransferMethodConfigurationKeyResult>() {
                 });
         TransferMethodConfigurationRepositoryImpl repositoryWithCache = spy(
                 new TransferMethodConfigurationRepositoryImpl(null, transferMethodConfigurationResult,
@@ -243,15 +243,15 @@ public class TransferMethodConfigurationRepositoryImplTest {
         verify(repositoryWithCache, never()).getTransferMethodConfigurationKeyResult(
                 any(TransferMethodConfigurationRepository.LoadKeysCallback.class));
         verify(loadKeysCallback).onKeysLoaded(keyResultArgumentCaptor.capture());
-        verify(loadKeysCallback, never()).onError(any(HyperwalletErrors.class));
+        verify(loadKeysCallback, never()).onError(any(Errors.class));
     }
 
     @Test
     public void testGetFields_callsListenerWithFieldResultFromCacheWhenNotNull() throws Exception {
         String responseBody = externalResourceManager.getResourceContent(
                 "successful_tmc_fields_bank_account_response.json");
-        final HyperwalletTransferMethodConfigurationFieldResult result = JsonUtils.fromJsonString(responseBody,
-                new TypeReference<HyperwalletTransferMethodConfigurationFieldResult>() {
+        final TransferMethodConfigurationFieldResult result = JsonUtils.fromJsonString(responseBody,
+                new TypeReference<TransferMethodConfigurationFieldResult>() {
                 });
 
         FieldMapKey fieldMapKey = new FieldMapKey(COUNTRY, CURRENCY, TRANSFER_METHOD_TYPE);
@@ -267,7 +267,7 @@ public class TransferMethodConfigurationRepositoryImplTest {
                 any(String.class),
                 any(TransferMethodConfigurationRepository.LoadFieldsCallback.class));
         verify(loadFieldsCallback).onFieldsLoaded(fieldResultArgumentCaptor.capture());
-        verify(loadFieldsCallback, never()).onError(any(HyperwalletErrors.class));
+        verify(loadFieldsCallback, never()).onError(any(Errors.class));
     }
 
     @Test
@@ -277,7 +277,7 @@ public class TransferMethodConfigurationRepositoryImplTest {
         JSONObject jsonObject = new JSONObject(responseBody);
         FieldMapKey fieldMapKey = new FieldMapKey(COUNTRY, CURRENCY, TRANSFER_METHOD_TYPE);
         HashMap<FieldMapKey, HyperwalletTransferMethodConfigurationField> fieldMap = new HashMap<>();
-        fieldMap.put(fieldMapKey, new HyperwalletTransferMethodConfigurationFieldResult(jsonObject));
+        fieldMap.put(fieldMapKey, new TransferMethodConfigurationFieldResult(jsonObject));
         TransferMethodConfigurationRepositoryImpl repositoryWithCache = new TransferMethodConfigurationRepositoryImpl(
                 null, null, fieldMap);
         repositoryWithCache.refreshFields();

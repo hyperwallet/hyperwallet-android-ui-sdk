@@ -10,12 +10,10 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.hyperwallet.android.model.graphql.field.HyperwalletField;
+import com.hyperwallet.android.model.graphql.field.Field;
 import com.hyperwallet.android.model.graphql.field.Mask;
 
 import org.hamcrest.Matchers;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,7 +36,7 @@ public class AbstractMaskedInputWidgetTest {
     public MockitoRule mMockito = MockitoJUnit.rule();
 
     @Mock
-    private HyperwalletField mHyperwalletField;
+    private Field mField;
     @Mock
     private Mask mMask;
 
@@ -62,10 +60,10 @@ public class AbstractMaskedInputWidgetTest {
     @Parameters(method = "formatToApiScenarios")
     public void testFormatToApi(String scrubRegex, String input, String output) {
 
-        when(mHyperwalletField.getMask()).thenReturn(mMask);
+        when(mField.getMask()).thenReturn(mMask);
         when(mMask.getScrubRegex()).thenReturn(scrubRegex);
 
-        TestInputWidget testInputWidget = new TestInputWidget(mHyperwalletField, null, null, null);
+        TestInputWidget testInputWidget = new TestInputWidget(mField, null, null, null);
 
         String a1 = testInputWidget.formatToApi(input);
         assertThat(a1, Matchers.is(output));
@@ -278,7 +276,7 @@ public class AbstractMaskedInputWidgetTest {
     }
 
     class TestInputWidget extends AbstractMaskedInputWidget {
-        public TestInputWidget(@Nullable HyperwalletField field, @NonNull WidgetEventListener listener,
+        public TestInputWidget(@Nullable Field field, @NonNull WidgetEventListener listener,
                 @Nullable String defaultValue, @NonNull View defaultFocusView) {
             super(field, listener, defaultValue, defaultFocusView);
         }

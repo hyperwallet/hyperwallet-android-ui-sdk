@@ -27,7 +27,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.android.material.textfield.TextInputLayout;
-import com.hyperwallet.android.model.graphql.field.HyperwalletField;
+import com.hyperwallet.android.model.graphql.field.Field;
 
 /**
  * Provides additional methods for Widget to help with formatting for input types.
@@ -42,7 +42,7 @@ public abstract class AbstractMaskedInputWidget extends AbstractWidget {
     protected String mValue;
     protected TextInputLayout mTextInputLayout;
 
-    public AbstractMaskedInputWidget(@Nullable HyperwalletField field, @NonNull WidgetEventListener listener,
+    public AbstractMaskedInputWidget(@Nullable Field field, @NonNull WidgetEventListener listener,
             @Nullable String defaultValue, @NonNull View defaultFocusView) {
         super(field, listener, defaultValue, defaultFocusView);
     }

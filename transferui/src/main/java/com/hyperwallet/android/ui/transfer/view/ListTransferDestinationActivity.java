@@ -33,8 +33,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.hyperwallet.android.model.HyperwalletErrors;
-import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
+import com.hyperwallet.android.model.Errors;
+import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import com.hyperwallet.android.ui.common.intent.HyperwalletIntent;
 import com.hyperwallet.android.ui.common.repository.Event;
 import com.hyperwallet.android.ui.common.util.PageGroups;
@@ -123,9 +123,9 @@ public class ListTransferDestinationActivity extends AppCompatActivity implement
 
     private void registerObservers() {
         mListTransferDestinationViewModel.getSelectedTransferDestination().observe(this,
-                new Observer<Event<HyperwalletTransferMethod>>() {
+                new Observer<Event<TransferMethod>>() {
                     @Override
-                    public void onChanged(Event<HyperwalletTransferMethod> destination) {
+                    public void onChanged(Event<TransferMethod> destination) {
                         Intent intent = new Intent();
                         intent.putExtra(EXTRA_SELECTED_DESTINATION_TOKEN, destination.getContent());
                         setResult(Activity.RESULT_OK, intent);
@@ -134,9 +134,9 @@ public class ListTransferDestinationActivity extends AppCompatActivity implement
                 });
 
         mListTransferDestinationViewModel.getTransferDestinationError().observe(this,
-                new Observer<Event<HyperwalletErrors>>() {
+                new Observer<Event<Errors>>() {
                     @Override
-                    public void onChanged(Event<HyperwalletErrors> errorsEvent) {
+                    public void onChanged(Event<Errors> errorsEvent) {
                         if (!errorsEvent.isContentConsumed()) {
                             ActivityUtils.showError(ListTransferDestinationActivity.this, TAG,
                                     PageGroups.TRANSFER_FUNDS, errorsEvent.getContent().getErrors());

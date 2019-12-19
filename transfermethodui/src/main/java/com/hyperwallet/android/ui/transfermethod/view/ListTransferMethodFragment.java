@@ -16,8 +16,8 @@
  */
 package com.hyperwallet.android.ui.transfermethod.view;
 
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_COUNTRY;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TYPE;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TRANSFER_METHOD_COUNTRY;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TYPE;
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getStringFontIcon;
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getStringResourceByName;
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getTransferMethodDetail;
@@ -43,13 +43,13 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.hyperwallet.android.model.HyperwalletError;
+import com.hyperwallet.android.model.Error;
 import com.hyperwallet.android.model.StatusTransition;
-import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
+import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.common.view.HorizontalDividerItemDecorator;
 import com.hyperwallet.android.ui.common.view.OneClickListener;
-import com.hyperwallet.android.ui.transfermethod.HyperwalletTransferMethodLocalBroadcast;
+import com.hyperwallet.android.ui.transfermethod.TransferMethodLocalBroadcast;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
 
 import java.util.ArrayList;
@@ -67,7 +67,7 @@ public class ListTransferMethodFragment extends Fragment implements ListTransfer
     private ListTransferMethodAdapter mListTransferMethodAdapter;
     private ListTransferMethodContract.Presenter mPresenter;
     private View mProgressBar;
-    private ArrayList<HyperwalletTransferMethod> mTransferMethodList;
+    private ArrayList<TransferMethod> mTransferMethodList;
     private OnAddNewTransferMethodSelected mOnAddNewTransferMethodSelected;
     private OnTransferMethodContextMenuDeletionSelected mOnTransferMethodContextMenuDeletionSelected;
     private OnDeactivateTransferMethodNetworkErrorCallback mOnDeactivateTransferMethodNetworkErrorCallback;
@@ -204,12 +204,12 @@ public class ListTransferMethodFragment extends Fragment implements ListTransfer
     }
 
     @Override
-    public void confirmTransferMethodDeactivation(@NonNull final HyperwalletTransferMethod transferMethod) {
+    public void confirmTransferMethodDeactivation(@NonNull final TransferMethod transferMethod) {
         mPresenter.deactivateTransferMethod(transferMethod);
     }
 
     @Override
-    public void displayTransferMethods(@Nullable final List<HyperwalletTransferMethod> transferMethodList) {
+    public void displayTransferMethods(@Nullable final List<TransferMethod> transferMethodList) {
         if (transferMethodList != null && !transferMethodList.isEmpty()) {
             mTransferMethodList = new ArrayList<>(transferMethodList);
             initializeNonEmptyListView();
@@ -224,19 +224,19 @@ public class ListTransferMethodFragment extends Fragment implements ListTransfer
     @Override
     public void notifyTransferMethodDeactivated(
             @NonNull final StatusTransition statusTransition) {
-        Intent intent = HyperwalletTransferMethodLocalBroadcast.createBroadcastIntentTransferMethodDeactivated(
+        Intent intent = TransferMethodLocalBroadcast.createBroadcastIntentTransferMethodDeactivated(
                 statusTransition);
         LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
         mPresenter.loadTransferMethods();
     }
 
     @Override
-    public void showErrorListTransferMethods(@NonNull List<HyperwalletError> errors) {
+    public void showErrorListTransferMethods(@NonNull List<Error> errors) {
         mOnLoadTransferMethodNetworkErrorCallback.showErrorsLoadTransferMethods(errors);
     }
 
     @Override
-    public void showErrorDeactivateTransferMethod(@NonNull List<HyperwalletError> errors) {
+    public void showErrorDeactivateTransferMethod(@NonNull List<Error> errors) {
         mOnDeactivateTransferMethodNetworkErrorCallback.showErrorsDeactivateTransferMethod(errors);
     }
 
@@ -275,7 +275,7 @@ public class ListTransferMethodFragment extends Fragment implements ListTransfer
 
     interface OnTransferMethodContextMenuDeletionSelected {
 
-        void showConfirmationDialog(@NonNull final HyperwalletTransferMethod transferMethod);
+        void showConfirmationDialog(@NonNull final TransferMethod transferMethod);
     }
 
     interface OnAddNewTransferMethodSelected {
@@ -285,19 +285,19 @@ public class ListTransferMethodFragment extends Fragment implements ListTransfer
 
     interface OnDeactivateTransferMethodNetworkErrorCallback {
 
-        void showErrorsDeactivateTransferMethod(@NonNull final List<HyperwalletError> errors);
+        void showErrorsDeactivateTransferMethod(@NonNull final List<Error> errors);
     }
 
     interface OnLoadTransferMethodNetworkErrorCallback {
 
-        void showErrorsLoadTransferMethods(@NonNull final List<HyperwalletError> errors);
+        void showErrorsLoadTransferMethods(@NonNull final List<Error> errors);
     }
 
     private static class ListTransferMethodAdapter extends RecyclerView.Adapter<ListTransferMethodAdapter.ViewHolder> {
-        private List<HyperwalletTransferMethod> mTransferMethodList;
+        private List<TransferMethod> mTransferMethodList;
         private OnTransferMethodContextMenuDeletionSelected mOnTransferMethodContextMenuDeletionSelected;
 
-        ListTransferMethodAdapter(final List<HyperwalletTransferMethod> transferMethodList,
+        ListTransferMethodAdapter(final List<TransferMethod> transferMethodList,
                 final OnTransferMethodContextMenuDeletionSelected onTransferMethodContextMenuSelection) {
             mTransferMethodList = transferMethodList;
             mOnTransferMethodContextMenuDeletionSelected = onTransferMethodContextMenuSelection;
@@ -313,7 +313,7 @@ public class ListTransferMethodFragment extends Fragment implements ListTransfer
 
         @Override
         public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
-            final HyperwalletTransferMethod transferMethod = mTransferMethodList.get(position);
+            final TransferMethod transferMethod = mTransferMethodList.get(position);
             viewHolder.bind(transferMethod);
         }
 
@@ -328,7 +328,7 @@ public class ListTransferMethodFragment extends Fragment implements ListTransfer
             return mTransferMethodList.size();
         }
 
-        void replaceData(List<HyperwalletTransferMethod> transferMethodList) {
+        void replaceData(List<TransferMethod> transferMethodList) {
             mTransferMethodList = transferMethodList;
             notifyDataSetChanged();
         }
@@ -350,7 +350,7 @@ public class ListTransferMethodFragment extends Fragment implements ListTransfer
             }
 
 
-            void bind(@NonNull final HyperwalletTransferMethod transferMethod) {
+            void bind(@NonNull final TransferMethod transferMethod) {
                 String type = transferMethod.getField(TYPE);
                 final String transferMethodIdentification = getTransferMethodDetail(
                         mTransferMethodIdentification.getContext(),

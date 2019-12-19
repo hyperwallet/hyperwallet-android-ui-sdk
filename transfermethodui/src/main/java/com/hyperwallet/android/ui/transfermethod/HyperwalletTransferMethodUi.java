@@ -87,9 +87,9 @@ public final class HyperwalletTransferMethodUi {
      * @param country            The transfer method country code. ISO 3166-1 alpha-2 format.
      * @param currency           The transfer method currency code. ISO 4217 format.
      * @param transferMethodType The type of transfer method. For a complete list of transfer methods, see {@link
-     *                       com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes}
+     *                       com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes}
      * @param profileType        The type of the account holder profile. For a complete list of options, see
-     *                           {@link com.hyperwallet.android.model.user.HyperwalletUser.ProfileTypes}
+     *                           {@link com.hyperwallet.android.model.user.User.ProfileTypes}
      * @return an Intent with the data necessary to launch the {@link AddTransferMethodActivity}
      */
     public Intent getIntentAddTransferMethodActivity(@NonNull final Context context, @NonNull final String country,
