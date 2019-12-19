@@ -30,7 +30,7 @@ import com.hyperwallet.android.ui.common.view.HorizontalDividerItemDecorator;
 public class ReceiptItemDividerDecorator extends HorizontalDividerItemDecorator {
 
     ReceiptItemDividerDecorator(@NonNull final Context context) {
-        super(context);
+        super(context, false);
     }
 
     @Override
