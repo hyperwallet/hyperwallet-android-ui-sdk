@@ -172,6 +172,32 @@ public class AddTransferMethodTest {
     }
 
     @Test
+    public void testAddTransferMethod_notSupportedExternalAccountTypeDisplaysUnexpectedErrorDialog() {
+        Intent intent = new Intent(ApplicationProvider.getApplicationContext(),
+                AddTransferMethodActivity.class);
+        intent.putExtra("TRANSFER_METHOD_TYPE", "PAPER_CHECK");
+        intent.putExtra("TRANSFER_METHOD_COUNTRY", "US");
+        intent.putExtra("TRANSFER_METHOD_CURRENCY", "USD");
+
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_fields_paper_check_response.json")).mock();
+
+        mActivityTestRule.launchActivity(intent);
+
+        onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo(), click());
+
+        // check dialog content
+        onView(withText(R.string.error_dialog_unexpected_title)).inRoot(isDialog()).check(matches(isDisplayed()));
+        onView(withText(R.string.error_unsupported_transfer_type)).inRoot(isDialog()).check(matches(isDisplayed()));
+        onView(withId(android.R.id.button1)).check(matches(withText(R.string.close_button_label)));
+        onView(withId(android.R.id.button1)).perform(click());
+
+        // verify activity is finished
+        assertThat("Result code is incorrect",
+                mActivityTestRule.getActivityResult().getResultCode(), is(RESULT_ERROR));
+    }
+
+    @Test
     public void testAddTransferMethod_displaysNetworkErrorDialogOnConnectionTimeout() throws IOException {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("successful_tmc_fields_bank_account_response.json")).mock();

@@ -23,7 +23,7 @@ import static java.net.HttpURLConnection.HTTP_CREATED;
 import static java.net.HttpURLConnection.HTTP_OK;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
-import static com.hyperwallet.android.model.transfermethod.HyperwalletBankAccount.Purpose.SAVINGS;
+import static com.hyperwallet.android.model.transfermethod.BankAccount.Purpose.SAVINGS;
 import static com.hyperwallet.android.ui.testutils.util.EspressoUtils.hasEmptyText;
 import static com.hyperwallet.android.ui.testutils.util.EspressoUtils.hasErrorText;
 import static com.hyperwallet.android.ui.testutils.util.EspressoUtils.hasNoErrorText;
@@ -44,7 +44,7 @@ import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
-import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
+import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
@@ -259,36 +259,36 @@ public class BankAccountTest {
             public void onReceive(Context context, Intent intent) {
                 gate.countDown();
 
-                HyperwalletTransferMethod transferMethod = intent.getParcelableExtra(
+                TransferMethod transferMethod = intent.getParcelableExtra(
                         "hyperwallet-local-broadcast-payload");
                 assertThat("Bank Account Id is incorrect", transferMethod.getField(
-                        HyperwalletTransferMethod.TransferMethodFields.BANK_ACCOUNT_ID), is(ACCOUNT_NUMBER));
+                        TransferMethod.TransferMethodFields.BANK_ACCOUNT_ID), is(ACCOUNT_NUMBER));
                 assertThat("Branch Id is incorrect", transferMethod.getField(
-                        HyperwalletTransferMethod.TransferMethodFields.BRANCH_ID), is(ROUTING_NUMBER));
+                        TransferMethod.TransferMethodFields.BRANCH_ID), is(ROUTING_NUMBER));
                 assertThat("Bank Account purpose is incorrect", transferMethod.getField(
-                        HyperwalletTransferMethod.TransferMethodFields.BANK_ACCOUNT_PURPOSE), is(SAVINGS));
+                        TransferMethod.TransferMethodFields.BANK_ACCOUNT_PURPOSE), is(SAVINGS));
 
                 assertThat("First Name is incorrect", transferMethod.getField(
-                        HyperwalletTransferMethod.TransferMethodFields.FIRST_NAME), is("Brody"));
+                        TransferMethod.TransferMethodFields.FIRST_NAME), is("Brody"));
                 assertThat("Last Name is incorrect", transferMethod.getField(
-                        HyperwalletTransferMethod.TransferMethodFields.LAST_NAME), is("Nehru"));
+                        TransferMethod.TransferMethodFields.LAST_NAME), is("Nehru"));
                 assertThat("Date of birth is incorrect", transferMethod.getField(
-                        HyperwalletTransferMethod.TransferMethodFields.DATE_OF_BIRTH), is("2000-01-01"));
+                        TransferMethod.TransferMethodFields.DATE_OF_BIRTH), is("2000-01-01"));
 
                 assertThat("Phone Number is incorrect", transferMethod.getField(
-                        HyperwalletTransferMethod.TransferMethodFields.PHONE_NUMBER), is("+1 604 6666666"));
+                        TransferMethod.TransferMethodFields.PHONE_NUMBER), is("+1 604 6666666"));
                 assertThat("Mobile Number incorrect", transferMethod.getField(
-                        HyperwalletTransferMethod.TransferMethodFields.MOBILE_NUMBER), is("604 666 6666"));
+                        TransferMethod.TransferMethodFields.MOBILE_NUMBER), is("604 666 6666"));
                 assertThat("Country is incorrect", transferMethod.getField(
-                        HyperwalletTransferMethod.TransferMethodFields.COUNTRY), is("CA"));
+                        TransferMethod.TransferMethodFields.COUNTRY), is("CA"));
                 assertThat("State Province is incorrect", transferMethod.getField(
-                        HyperwalletTransferMethod.TransferMethodFields.STATE_PROVINCE), is("BC"));
+                        TransferMethod.TransferMethodFields.STATE_PROVINCE), is("BC"));
                 assertThat("Address is incorrect", transferMethod.getField(
-                        HyperwalletTransferMethod.TransferMethodFields.ADDRESS_LINE_1), is("950 Granville Street"));
+                        TransferMethod.TransferMethodFields.ADDRESS_LINE_1), is("950 Granville Street"));
                 assertThat("City is incorrect", transferMethod.getField(
-                        HyperwalletTransferMethod.TransferMethodFields.CITY), is("Vancouver"));
+                        TransferMethod.TransferMethodFields.CITY), is("Vancouver"));
                 assertThat("Postal Code is incorrect", transferMethod.getField(
-                        HyperwalletTransferMethod.TransferMethodFields.POSTAL_CODE), is("V6Z1L2"));
+                        TransferMethod.TransferMethodFields.POSTAL_CODE), is("V6Z1L2"));
             }
         };
 

@@ -22,14 +22,14 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 
-import com.hyperwallet.android.model.graphql.HyperwalletFee;
+import com.hyperwallet.android.model.graphql.Fee;
 import com.hyperwallet.android.ui.R;
 
 import java.util.List;
 
 public class FeeFormatter {
 
-    public static String getFormattedFee(@NonNull final Context context, @NonNull final List<HyperwalletFee> fees) {
+    public static String getFormattedFee(@NonNull final Context context, @NonNull final List<Fee> fees) {
         String formattedString = context.getResources().getString(R.string.unknown);
         if (fees.size() == 1) {
             formattedString = getSingleFormattedFee(context, fees, formattedString);
@@ -39,13 +39,13 @@ public class FeeFormatter {
         return formattedString;
     }
 
-    private static String getSingleFormattedFee(@NonNull Context context, @NonNull List<HyperwalletFee> fees,
+    private static String getSingleFormattedFee(@NonNull Context context, @NonNull List<Fee> fees,
             String formattedString) {
-        HyperwalletFee fee = fees.get(0);
-        if (HyperwalletFee.FeeRate.FLAT.equals(fee.getFeeRateType())) {
+        Fee fee = fees.get(0);
+        if (Fee.FeeRate.FLAT.equals(fee.getFeeRateType())) {
             formattedString = context.getResources().getString(R.string.fee_flat_formatter, fee.getCurrency(),
                     fee.getValue());
-        } else if (HyperwalletFee.FeeRate.PERCENT.equals(fee.getFeeRateType())) {
+        } else if (Fee.FeeRate.PERCENT.equals(fee.getFeeRateType())) {
             formattedString = getPercentFormattedFee(context, fee);
         }
         return formattedString;
@@ -53,14 +53,14 @@ public class FeeFormatter {
 
     // we expect at the most 2 fees and in that case one should be flat and other percent
     // which will be formatted to USD 3.00 + 3% (Min: USD 1.00, Max: USD 15.00)
-    private static String getMixFormattedFee(@NonNull Context context, @NonNull List<HyperwalletFee> fees,
+    private static String getMixFormattedFee(@NonNull Context context, @NonNull List<Fee> fees,
             String formattedString) {
-        HyperwalletFee flatFee = null;
-        HyperwalletFee percentFee = null;
-        for (HyperwalletFee fee : fees) {
-            if (HyperwalletFee.FeeRate.FLAT.equals(fee.getFeeRateType())) {
+        Fee flatFee = null;
+        Fee percentFee = null;
+        for (Fee fee : fees) {
+            if (Fee.FeeRate.FLAT.equals(fee.getFeeRateType())) {
                 flatFee = fee;
-            } else if (HyperwalletFee.FeeRate.PERCENT.equals(fee.getFeeRateType())) {
+            } else if (Fee.FeeRate.PERCENT.equals(fee.getFeeRateType())) {
                 percentFee = fee;
             }
         }
@@ -85,7 +85,7 @@ public class FeeFormatter {
     }
 
 
-    private static String getPercentFormattedFee(@NonNull final Context context, @NonNull final HyperwalletFee fee) {
+    private static String getPercentFormattedFee(@NonNull final Context context, @NonNull final Fee fee) {
         String formattedFee;
         String minimumAmount = fee.getMin();
         String maximumAmount = fee.getMax();

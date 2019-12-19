@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
-import com.hyperwallet.android.model.HyperwalletErrors;
+import com.hyperwallet.android.model.Errors;
 import com.hyperwallet.android.model.receipt.Receipt;
 import com.hyperwallet.android.ui.common.repository.Event;
 
@@ -16,7 +16,7 @@ public class PrepaidCardReceiptRepositoryImpl implements PrepaidCardReceiptRepos
 
     private final PrepaidCardReceiptDataSourceFactory mDataSourceFactory;
     private final LiveData<PrepaidCardReceiptDataSource> mReceiptDataSourceLiveData;
-    private LiveData<Event<HyperwalletErrors>> mErrorsLiveData;
+    private LiveData<Event<Errors>> mErrorsLiveData;
     private LiveData<Boolean> mIsFetchingData;
     private LiveData<PagedList<Receipt>> mReceiptsLiveData;
 
@@ -56,7 +56,7 @@ public class PrepaidCardReceiptRepositoryImpl implements PrepaidCardReceiptRepos
      * @see PrepaidCardReceiptRepository#getErrors()
      */
     @Override
-    public LiveData<Event<HyperwalletErrors>> getErrors() {
+    public LiveData<Event<Errors>> getErrors() {
         if (mErrorsLiveData == null) {
             mErrorsLiveData = mReceiptDataSourceLiveData.getValue().getErrors();
         }

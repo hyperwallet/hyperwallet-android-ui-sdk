@@ -29,7 +29,7 @@ package com.hyperwallet.android.ui.transfermethod.repository;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.hyperwallet.android.model.HyperwalletErrors;
+import com.hyperwallet.android.model.Errors;
 import com.hyperwallet.android.model.graphql.HyperwalletTransferMethodConfigurationField;
 import com.hyperwallet.android.model.graphql.HyperwalletTransferMethodConfigurationKey;
 
@@ -49,13 +49,13 @@ public interface TransferMethodConfigurationRepository {
 
         void onKeysLoaded(@Nullable final HyperwalletTransferMethodConfigurationKey transferMethodConfigurationKey);
 
-        void onError(@NonNull final HyperwalletErrors errors);
+        void onError(@NonNull final Errors errors);
     }
 
     interface LoadFieldsCallback {
 
         void onFieldsLoaded(@Nullable final HyperwalletTransferMethodConfigurationField field);
 
-        void onError(@NonNull final HyperwalletErrors errors);
+        void onError(@NonNull final Errors errors);
     }
 }

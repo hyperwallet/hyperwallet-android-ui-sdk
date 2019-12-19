@@ -22,9 +22,9 @@ import androidx.paging.PageKeyedDataSource;
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.exception.HyperwalletException;
 import com.hyperwallet.android.listener.HyperwalletListener;
-import com.hyperwallet.android.model.HyperwalletError;
-import com.hyperwallet.android.model.HyperwalletErrors;
-import com.hyperwallet.android.model.paging.HyperwalletPageList;
+import com.hyperwallet.android.model.Error;
+import com.hyperwallet.android.model.Errors;
+import com.hyperwallet.android.model.paging.PageList;
 import com.hyperwallet.android.model.receipt.Receipt;
 import com.hyperwallet.android.model.receipt.ReceiptQueryParam;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
@@ -87,7 +87,7 @@ public class UserReceiptDataSourceTest {
     public void testLoadInitial_returnsReceipts() throws Exception {
         String json = mExternalResourceManager.getResourceContent("receipt_list_date_grouping_response.json");
         JSONObject jsonObject = new JSONObject(json);
-        final HyperwalletPageList<Receipt> response = new HyperwalletPageList<>(jsonObject, Receipt.class);
+        final PageList<Receipt> response = new PageList<>(jsonObject, Receipt.class);
         doAnswer(new Answer() {
             @Override
             public Object answer(InvocationOnMock invocation) {
@@ -96,13 +96,13 @@ public class UserReceiptDataSourceTest {
                 return listener;
             }
         }).when(mHyperwallet).listUserReceipts(any(ReceiptQueryParam.class),
-                ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
+                ArgumentMatchers.<HyperwalletListener<PageList<Receipt>>>any());
 
         // test
         mUserReceiptDataSource.loadInitial(mInitialParams, mInitialCallback);
 
         verify(mHyperwallet).listUserReceipts(any(ReceiptQueryParam.class),
-                ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
+                ArgumentMatchers.<HyperwalletListener<PageList<Receipt>>>any());
         verify(mInitialCallback).onResult(mListArgumentCaptor.capture(), mPreviousCaptor.capture(),
                 mNextCaptor.capture());
 
@@ -149,13 +149,13 @@ public class UserReceiptDataSourceTest {
                 return listener;
             }
         }).when(mHyperwallet).listUserReceipts(any(ReceiptQueryParam.class),
-                ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
+                ArgumentMatchers.<HyperwalletListener<PageList<Receipt>>>any());
 
         // test
         mUserReceiptDataSource.loadInitial(mInitialParams, mInitialCallback);
 
         verify(mHyperwallet).listUserReceipts(any(ReceiptQueryParam.class),
-                ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
+                ArgumentMatchers.<HyperwalletListener<PageList<Receipt>>>any());
         verify(mInitialCallback, never()).onResult(ArgumentMatchers.<Receipt>anyList(), anyInt(), anyInt());
 
         assertThat(mUserReceiptDataSource.getErrors().getValue(), is(nullValue()));
@@ -164,10 +164,10 @@ public class UserReceiptDataSourceTest {
 
     @Test
     public void testLoadInitial_withError() {
-        final HyperwalletError error = new HyperwalletError("test message", "TEST_CODE");
-        List<HyperwalletError> errorList = new ArrayList<>();
+        final Error error = new Error("test message", "TEST_CODE");
+        List<Error> errorList = new ArrayList<>();
         errorList.add(error);
-        final HyperwalletErrors errors = new HyperwalletErrors(errorList);
+        final Errors errors = new Errors(errorList);
 
         doAnswer(new Answer() {
             @Override
@@ -177,18 +177,18 @@ public class UserReceiptDataSourceTest {
                 return listener;
             }
         }).when(mHyperwallet).listUserReceipts(any(ReceiptQueryParam.class),
-                ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
+                ArgumentMatchers.<HyperwalletListener<PageList<Receipt>>>any());
 
         // test
         mUserReceiptDataSource.loadInitial(mInitialParams, mInitialCallback);
 
         verify(mHyperwallet).listUserReceipts(any(ReceiptQueryParam.class),
-                ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
+                ArgumentMatchers.<HyperwalletListener<PageList<Receipt>>>any());
         verify(mInitialCallback, never()).onResult(ArgumentMatchers.<Receipt>anyList(), anyInt(), anyInt());
 
         assertThat(mUserReceiptDataSource.getErrors().getValue(), is(notNullValue()));
         assertThat(mUserReceiptDataSource.getErrors().getValue().getContent().getErrors(),
-                Matchers.<HyperwalletError>hasSize(1));
+                Matchers.<Error>hasSize(1));
         assertThat(mUserReceiptDataSource.getErrors().getValue().getContent().getErrors().get(0).getCode(),
                 is("TEST_CODE"));
         assertThat(mUserReceiptDataSource.getErrors().getValue().getContent().getErrors().get(0).getMessage(),
@@ -198,10 +198,10 @@ public class UserReceiptDataSourceTest {
 
     @Test
     public void testRetry_loadInitial() {
-        final HyperwalletError error = new HyperwalletError("test message", "TEST_CODE");
-        List<HyperwalletError> errorList = new ArrayList<>();
+        final Error error = new Error("test message", "TEST_CODE");
+        List<Error> errorList = new ArrayList<>();
         errorList.add(error);
-        final HyperwalletErrors errors = new HyperwalletErrors(errorList);
+        final Errors errors = new Errors(errorList);
 
         doAnswer(new Answer() {
             @Override
@@ -211,13 +211,13 @@ public class UserReceiptDataSourceTest {
                 return listener;
             }
         }).when(mHyperwallet).listUserReceipts(any(ReceiptQueryParam.class),
-                ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
+                ArgumentMatchers.<HyperwalletListener<PageList<Receipt>>>any());
 
         // test
         mUserReceiptDataSource.loadInitial(mInitialParams, mInitialCallback);
 
         verify(mHyperwallet).listUserReceipts(any(ReceiptQueryParam.class),
-                ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
+                ArgumentMatchers.<HyperwalletListener<PageList<Receipt>>>any());
         verify(mInitialCallback, never()).onResult(ArgumentMatchers.<Receipt>anyList(), anyInt(), anyInt());
 
         // error occurred, this will save params and callback
@@ -239,7 +239,7 @@ public class UserReceiptDataSourceTest {
     public void testLoadAfter_returnsReceipts() throws Exception {
         String json = mExternalResourceManager.getResourceContent("receipt_list_date_grouping_response.json");
         JSONObject jsonObject = new JSONObject(json);
-        final HyperwalletPageList<Receipt> response = new HyperwalletPageList<>(jsonObject, Receipt.class);
+        final PageList<Receipt> response = new PageList<>(jsonObject, Receipt.class);
         doAnswer(new Answer() {
             @Override
             public Object answer(InvocationOnMock invocation) {
@@ -248,13 +248,13 @@ public class UserReceiptDataSourceTest {
                 return listener;
             }
         }).when(mHyperwallet).listUserReceipts(any(ReceiptQueryParam.class),
-                ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
+                ArgumentMatchers.<HyperwalletListener<PageList<Receipt>>>any());
 
         // test
         mUserReceiptDataSource.loadAfter(mLoadAfterParams, mLoadAfterCallback);
 
         verify(mHyperwallet).listUserReceipts(any(ReceiptQueryParam.class),
-                ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
+                ArgumentMatchers.<HyperwalletListener<PageList<Receipt>>>any());
         verify(mLoadAfterCallback).onResult(mListArgumentCaptor.capture(), mNextCaptor.capture());
 
         assertThat(mNextCaptor.getValue(), is(10));
@@ -299,13 +299,13 @@ public class UserReceiptDataSourceTest {
                 return listener;
             }
         }).when(mHyperwallet).listUserReceipts(any(ReceiptQueryParam.class),
-                ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
+                ArgumentMatchers.<HyperwalletListener<PageList<Receipt>>>any());
 
         // test
         mUserReceiptDataSource.loadAfter(mLoadAfterParams, mLoadAfterCallback);
 
         verify(mHyperwallet).listUserReceipts(any(ReceiptQueryParam.class),
-                ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
+                ArgumentMatchers.<HyperwalletListener<PageList<Receipt>>>any());
         verify(mLoadAfterCallback, never()).onResult(ArgumentMatchers.<List<Receipt>>any(), anyInt());
 
         assertThat(mUserReceiptDataSource.getErrors().getValue(), is(nullValue()));
@@ -314,10 +314,10 @@ public class UserReceiptDataSourceTest {
 
     @Test
     public void testLoadAfter_withError() {
-        final HyperwalletError error = new HyperwalletError("test message load after", "LOAD_AFTER_CODE");
-        List<HyperwalletError> errorList = new ArrayList<>();
+        final Error error = new Error("test message load after", "LOAD_AFTER_CODE");
+        List<Error> errorList = new ArrayList<>();
         errorList.add(error);
-        final HyperwalletErrors errors = new HyperwalletErrors(errorList);
+        final Errors errors = new Errors(errorList);
 
         doAnswer(new Answer() {
             @Override
@@ -327,19 +327,19 @@ public class UserReceiptDataSourceTest {
                 return listener;
             }
         }).when(mHyperwallet).listUserReceipts(any(ReceiptQueryParam.class),
-                ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
+                ArgumentMatchers.<HyperwalletListener<PageList<Receipt>>>any());
 
         // test
         mUserReceiptDataSource.loadAfter(mLoadAfterParams, mLoadAfterCallback);
 
         verify(mHyperwallet).listUserReceipts(any(ReceiptQueryParam.class),
-                ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
+                ArgumentMatchers.<HyperwalletListener<PageList<Receipt>>>any());
         verify(mLoadAfterCallback, never()).onResult(ArgumentMatchers.<Receipt>anyList(), anyInt());
 
         // error occurred, this will save params and callback
         assertThat(mUserReceiptDataSource.getErrors().getValue(), is(notNullValue()));
         assertThat(mUserReceiptDataSource.getErrors().getValue().getContent().getErrors(),
-                Matchers.<HyperwalletError>hasSize(1));
+                Matchers.<Error>hasSize(1));
         assertThat(mUserReceiptDataSource.getErrors().getValue().getContent().getErrors().get(0).getCode(),
                 is("LOAD_AFTER_CODE"));
         assertThat(mUserReceiptDataSource.getErrors().getValue().getContent().getErrors().get(0).getMessage(),
@@ -349,10 +349,10 @@ public class UserReceiptDataSourceTest {
 
     @Test
     public void testRetry_loadAfter() {
-        final HyperwalletError error = new HyperwalletError("test message", "TEST_CODE");
-        List<HyperwalletError> errorList = new ArrayList<>();
+        final Error error = new Error("test message", "TEST_CODE");
+        List<Error> errorList = new ArrayList<>();
         errorList.add(error);
-        final HyperwalletErrors errors = new HyperwalletErrors(errorList);
+        final Errors errors = new Errors(errorList);
 
         doAnswer(new Answer() {
             @Override
@@ -362,13 +362,13 @@ public class UserReceiptDataSourceTest {
                 return listener;
             }
         }).when(mHyperwallet).listUserReceipts(any(ReceiptQueryParam.class),
-                ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
+                ArgumentMatchers.<HyperwalletListener<PageList<Receipt>>>any());
 
         // test
         mUserReceiptDataSource.loadAfter(mLoadAfterParams, mLoadAfterCallback);
 
         verify(mHyperwallet).listUserReceipts(any(ReceiptQueryParam.class),
-                ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
+                ArgumentMatchers.<HyperwalletListener<PageList<Receipt>>>any());
         verify(mLoadAfterCallback, never()).onResult(ArgumentMatchers.<Receipt>anyList(), anyInt());
 
         // error occurred, this will save params and callback

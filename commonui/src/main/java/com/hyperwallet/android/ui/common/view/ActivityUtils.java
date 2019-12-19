@@ -22,7 +22,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.hyperwallet.android.model.HyperwalletError;
+import com.hyperwallet.android.model.Error;
 import com.hyperwallet.android.ui.common.insight.HyperwalletInsight;
 import com.hyperwallet.android.ui.common.util.ErrorTypes;
 import com.hyperwallet.android.ui.common.util.ErrorUtils;
@@ -57,7 +57,7 @@ public final class ActivityUtils {
      * @param errors           specify the errors
      */
     public static void showError(@NonNull final FragmentActivity fragmentActivity, @NonNull final String pageName,
-            @NonNull final String pageGroup, @NonNull final List<HyperwalletError> errors) {
+            @NonNull final String pageGroup, @NonNull final List<Error> errors) {
         FragmentManager fragmentManager = fragmentActivity.getSupportFragmentManager();
         DefaultErrorDialogFragment fragment = (DefaultErrorDialogFragment) fragmentManager.findFragmentByTag(
                 DefaultErrorDialogFragment.TAG);
