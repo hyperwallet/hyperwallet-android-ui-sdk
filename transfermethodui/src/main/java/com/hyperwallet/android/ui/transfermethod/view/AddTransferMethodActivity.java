@@ -26,7 +26,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 
-import com.hyperwallet.android.model.HyperwalletError;
+import com.hyperwallet.android.model.Error;
 import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.common.util.PageGroups;
 import com.hyperwallet.android.ui.common.view.ActivityUtils;
@@ -129,13 +129,13 @@ public class AddTransferMethodActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void showErrorsAddTransferMethod(@NonNull final List<HyperwalletError> errors) {
+    public void showErrorsAddTransferMethod(@NonNull final List<Error> errors) {
         mRetryCode = RETRY_SHOW_ERROR_ADD_TRANSFER_METHOD;
         ActivityUtils.showError(this, TAG, PageGroups.TRANSFER_METHOD, errors);
     }
 
     @Override
-    public void showErrorsLoadTransferMethodConfigurationFields(@NonNull final List<HyperwalletError> errors) {
+    public void showErrorsLoadTransferMethodConfigurationFields(@NonNull final List<Error> errors) {
         mRetryCode = RETRY_SHOW_ERROR_LOAD_TMC_FIELDS;
         ActivityUtils.showError(this, TAG, PageGroups.TRANSFER_METHOD, errors);
     }

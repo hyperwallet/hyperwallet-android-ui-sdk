@@ -24,9 +24,9 @@ import androidx.paging.PageKeyedDataSource;
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.exception.HyperwalletException;
 import com.hyperwallet.android.listener.HyperwalletListener;
-import com.hyperwallet.android.model.HyperwalletError;
-import com.hyperwallet.android.model.HyperwalletErrors;
-import com.hyperwallet.android.model.paging.HyperwalletPageList;
+import com.hyperwallet.android.model.Error;
+import com.hyperwallet.android.model.Errors;
+import com.hyperwallet.android.model.paging.PageList;
 import com.hyperwallet.android.model.receipt.Receipt;
 import com.hyperwallet.android.model.receipt.ReceiptQueryParam;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
@@ -91,7 +91,7 @@ public class PrepaidCardReceiptDataSourceTest {
     public void testLoadInitial_returnsReceipts() throws Exception {
         String json = mExternalResourceManager.getResourceContent("prepaid_card_receipt_list_response.json");
         JSONObject jsonObject = new JSONObject(json);
-        final HyperwalletPageList<Receipt> response = new HyperwalletPageList<>(jsonObject, Receipt.class);
+        final PageList<Receipt> response = new PageList<>(jsonObject, Receipt.class);
 
         doAnswer(new Answer() {
             @Override
@@ -101,14 +101,14 @@ public class PrepaidCardReceiptDataSourceTest {
                 return listener;
             }
         }).when(mHyperwallet).listPrepaidCardReceipts(anyString(), any(ReceiptQueryParam.class),
-                ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
+                ArgumentMatchers.<HyperwalletListener<PageList<Receipt>>>any());
 
         // test
         mPrepaidCardReceiptDataSource.loadInitial(mInitialParams, mInitialCallback);
 
         // verify
         verify(mHyperwallet).listPrepaidCardReceipts(anyString(), any(ReceiptQueryParam.class),
-                ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
+                ArgumentMatchers.<HyperwalletListener<PageList<Receipt>>>any());
         verify(mInitialCallback).onResult(mListArgumentCaptor.capture(), mPreviousCaptor.capture(),
                 mNextCaptor.capture());
 
@@ -151,14 +151,14 @@ public class PrepaidCardReceiptDataSourceTest {
                 return listener;
             }
         }).when(mHyperwallet).listPrepaidCardReceipts(anyString(), any(ReceiptQueryParam.class),
-                ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
+                ArgumentMatchers.<HyperwalletListener<PageList<Receipt>>>any());
 
         // test
         mPrepaidCardReceiptDataSource.loadInitial(mInitialParams, mInitialCallback);
 
         // verify
         verify(mHyperwallet).listPrepaidCardReceipts(anyString(), any(ReceiptQueryParam.class),
-                ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
+                ArgumentMatchers.<HyperwalletListener<PageList<Receipt>>>any());
         verify(mInitialCallback, never()).onResult(ArgumentMatchers.<Receipt>anyList(), any(Date.class),
                 any(Date.class));
 
@@ -169,10 +169,10 @@ public class PrepaidCardReceiptDataSourceTest {
 
     @Test
     public void testLoadInitial_withError() {
-        final HyperwalletError error = new HyperwalletError("test message", "TEST_CODE");
-        List<HyperwalletError> errorList = new ArrayList<>();
+        final Error error = new Error("test message", "TEST_CODE");
+        List<Error> errorList = new ArrayList<>();
         errorList.add(error);
-        final HyperwalletErrors errors = new HyperwalletErrors(errorList);
+        final Errors errors = new Errors(errorList);
 
         doAnswer(new Answer() {
             @Override
@@ -182,20 +182,20 @@ public class PrepaidCardReceiptDataSourceTest {
                 return listener;
             }
         }).when(mHyperwallet).listPrepaidCardReceipts(anyString(), any(ReceiptQueryParam.class),
-                ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
+                ArgumentMatchers.<HyperwalletListener<PageList<Receipt>>>any());
 
         // test
         mPrepaidCardReceiptDataSource.loadInitial(mInitialParams, mInitialCallback);
 
         // verify
         verify(mHyperwallet).listPrepaidCardReceipts(anyString(), any(ReceiptQueryParam.class),
-                ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
+                ArgumentMatchers.<HyperwalletListener<PageList<Receipt>>>any());
         verify(mInitialCallback, never()).onResult(ArgumentMatchers.<Receipt>anyList(), any(Date.class),
                 any(Date.class));
 
         assertThat(mPrepaidCardReceiptDataSource.getErrors().getValue(), is(notNullValue()));
         assertThat(mPrepaidCardReceiptDataSource.getErrors().getValue().getContent().getErrors(),
-                Matchers.<HyperwalletError>hasSize(1));
+                Matchers.<Error>hasSize(1));
         assertThat(mPrepaidCardReceiptDataSource.getErrors().getValue().getContent().getErrors().get(0).getCode(),
                 is("TEST_CODE"));
         assertThat(mPrepaidCardReceiptDataSource.getErrors().getValue().getContent().getErrors().get(0).getMessage(),
@@ -205,10 +205,10 @@ public class PrepaidCardReceiptDataSourceTest {
 
     @Test
     public void testRetry_loadInitial() {
-        final HyperwalletError error = new HyperwalletError("test message", "TEST_CODE");
-        List<HyperwalletError> errorList = new ArrayList<>();
+        final Error error = new Error("test message", "TEST_CODE");
+        List<Error> errorList = new ArrayList<>();
         errorList.add(error);
-        final HyperwalletErrors errors = new HyperwalletErrors(errorList);
+        final Errors errors = new Errors(errorList);
 
         doAnswer(new Answer() {
             @Override
@@ -218,14 +218,14 @@ public class PrepaidCardReceiptDataSourceTest {
                 return listener;
             }
         }).when(mHyperwallet).listPrepaidCardReceipts(anyString(), any(ReceiptQueryParam.class),
-                ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
+                ArgumentMatchers.<HyperwalletListener<PageList<Receipt>>>any());
 
         // test
         mPrepaidCardReceiptDataSource.loadInitial(mInitialParams, mInitialCallback);
 
         // verify
         verify(mHyperwallet).listPrepaidCardReceipts(anyString(), any(ReceiptQueryParam.class),
-                ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
+                ArgumentMatchers.<HyperwalletListener<PageList<Receipt>>>any());
         verify(mInitialCallback, never()).onResult(ArgumentMatchers.<Receipt>anyList(), any(Date.class),
                 any(Date.class));
 
@@ -248,7 +248,7 @@ public class PrepaidCardReceiptDataSourceTest {
     public void testLoadAfter_returnsReceipts() throws Exception {
         String json = mExternalResourceManager.getResourceContent("prepaid_card_receipt_list_response.json");
         JSONObject jsonObject = new JSONObject(json);
-        final HyperwalletPageList<Receipt> response = new HyperwalletPageList<>(jsonObject, Receipt.class);
+        final PageList<Receipt> response = new PageList<>(jsonObject, Receipt.class);
 
         doAnswer(new Answer() {
             @Override
@@ -258,14 +258,14 @@ public class PrepaidCardReceiptDataSourceTest {
                 return listener;
             }
         }).when(mHyperwallet).listPrepaidCardReceipts(anyString(), any(ReceiptQueryParam.class),
-                ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
+                ArgumentMatchers.<HyperwalletListener<PageList<Receipt>>>any());
 
         // test
         mPrepaidCardReceiptDataSource.loadAfter(mLoadAfterParams, mLoadAfterCallback);
 
         // verify
         verify(mHyperwallet).listPrepaidCardReceipts(anyString(), any(ReceiptQueryParam.class),
-                ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
+                ArgumentMatchers.<HyperwalletListener<PageList<Receipt>>>any());
         verify(mLoadAfterCallback).onResult(mListArgumentCaptor.capture(), mNextCaptor.capture());
 
         // assert receipts information
@@ -305,14 +305,14 @@ public class PrepaidCardReceiptDataSourceTest {
                 return listener;
             }
         }).when(mHyperwallet).listPrepaidCardReceipts(anyString(), any(ReceiptQueryParam.class),
-                ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
+                ArgumentMatchers.<HyperwalletListener<PageList<Receipt>>>any());
 
         // test
         mPrepaidCardReceiptDataSource.loadAfter(mLoadAfterParams, mLoadAfterCallback);
 
         // verify
         verify(mHyperwallet).listPrepaidCardReceipts(anyString(), any(ReceiptQueryParam.class),
-                ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
+                ArgumentMatchers.<HyperwalletListener<PageList<Receipt>>>any());
         verify(mLoadAfterCallback, never()).onResult(ArgumentMatchers.<Receipt>anyList(), any(Date.class));
 
         // assert
@@ -322,10 +322,10 @@ public class PrepaidCardReceiptDataSourceTest {
 
     @Test
     public void testLoadAfter_withError() {
-        final HyperwalletError error = new HyperwalletError("test message", "TEST_CODE");
-        List<HyperwalletError> errorList = new ArrayList<>();
+        final Error error = new Error("test message", "TEST_CODE");
+        List<Error> errorList = new ArrayList<>();
         errorList.add(error);
-        final HyperwalletErrors errors = new HyperwalletErrors(errorList);
+        final Errors errors = new Errors(errorList);
 
         doAnswer(new Answer() {
             @Override
@@ -335,19 +335,19 @@ public class PrepaidCardReceiptDataSourceTest {
                 return listener;
             }
         }).when(mHyperwallet).listPrepaidCardReceipts(anyString(), any(ReceiptQueryParam.class),
-                ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
+                ArgumentMatchers.<HyperwalletListener<PageList<Receipt>>>any());
 
         // test
         mPrepaidCardReceiptDataSource.loadAfter(mLoadAfterParams, mLoadAfterCallback);
 
         // verify
         verify(mHyperwallet).listPrepaidCardReceipts(anyString(), any(ReceiptQueryParam.class),
-                ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
+                ArgumentMatchers.<HyperwalletListener<PageList<Receipt>>>any());
         verify(mLoadAfterCallback, never()).onResult(ArgumentMatchers.<Receipt>anyList(), any(Date.class));
 
         assertThat(mPrepaidCardReceiptDataSource.getErrors().getValue(), is(notNullValue()));
         assertThat(mPrepaidCardReceiptDataSource.getErrors().getValue().getContent().getErrors(),
-                Matchers.<HyperwalletError>hasSize(1));
+                Matchers.<Error>hasSize(1));
         assertThat(mPrepaidCardReceiptDataSource.getErrors().getValue().getContent().getErrors().get(0).getCode(),
                 is("TEST_CODE"));
         assertThat(mPrepaidCardReceiptDataSource.getErrors().getValue().getContent().getErrors().get(0).getMessage(),
@@ -357,10 +357,10 @@ public class PrepaidCardReceiptDataSourceTest {
 
     @Test
     public void testRetry_loadAfter() {
-        final HyperwalletError error = new HyperwalletError("test message", "TEST_CODE");
-        List<HyperwalletError> errorList = new ArrayList<>();
+        final Error error = new Error("test message", "TEST_CODE");
+        List<Error> errorList = new ArrayList<>();
         errorList.add(error);
-        final HyperwalletErrors errors = new HyperwalletErrors(errorList);
+        final Errors errors = new Errors(errorList);
 
         doAnswer(new Answer() {
             @Override
@@ -370,14 +370,14 @@ public class PrepaidCardReceiptDataSourceTest {
                 return listener;
             }
         }).when(mHyperwallet).listPrepaidCardReceipts(anyString(), any(ReceiptQueryParam.class),
-                ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
+                ArgumentMatchers.<HyperwalletListener<PageList<Receipt>>>any());
 
         // test
         mPrepaidCardReceiptDataSource.loadAfter(mLoadAfterParams, mLoadAfterCallback);
 
         // verify
         verify(mHyperwallet).listPrepaidCardReceipts(anyString(), any(ReceiptQueryParam.class),
-                ArgumentMatchers.<HyperwalletListener<HyperwalletPageList<Receipt>>>any());
+                ArgumentMatchers.<HyperwalletListener<PageList<Receipt>>>any());
         verify(mLoadAfterCallback, never()).onResult(ArgumentMatchers.<Receipt>anyList(), any(Date.class));
 
         // error occurred, this will save params and callback
@@ -397,7 +397,7 @@ public class PrepaidCardReceiptDataSourceTest {
 
     @Test
     public void testGetNextDate_verifyDefaultValue() {
-        Date date = mPrepaidCardReceiptDataSource.getNextDate(new HyperwalletPageList<Receipt>(null));
+        Date date = mPrepaidCardReceiptDataSource.getNextDate(new PageList<Receipt>(null));
         assertThat(date, is(notNullValue()));
     }
 

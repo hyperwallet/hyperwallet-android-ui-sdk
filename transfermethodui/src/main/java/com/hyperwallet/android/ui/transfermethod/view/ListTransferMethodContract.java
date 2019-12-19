@@ -18,9 +18,9 @@ package com.hyperwallet.android.ui.transfermethod.view;
 
 import androidx.annotation.NonNull;
 
-import com.hyperwallet.android.model.HyperwalletError;
+import com.hyperwallet.android.model.Error;
 import com.hyperwallet.android.model.StatusTransition;
-import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
+import com.hyperwallet.android.model.transfermethod.TransferMethod;
 
 import java.util.List;
 
@@ -28,19 +28,19 @@ public interface ListTransferMethodContract {
 
     interface View {
 
-        void displayTransferMethods(@NonNull final List<HyperwalletTransferMethod> transferMethodList);
+        void displayTransferMethods(@NonNull final List<TransferMethod> transferMethodList);
 
         void notifyTransferMethodDeactivated(@NonNull final StatusTransition statusTransition);
 
-        void showErrorListTransferMethods(@NonNull final List<HyperwalletError> errors);
+        void showErrorListTransferMethods(@NonNull final List<Error> errors);
 
-        void showErrorDeactivateTransferMethod(@NonNull final List<HyperwalletError> errors);
+        void showErrorDeactivateTransferMethod(@NonNull final List<Error> errors);
 
         void initiateAddTransferMethodFlow();
 
         void initiateAddTransferMethodFlowResult();
 
-        void confirmTransferMethodDeactivation(@NonNull HyperwalletTransferMethod transferMethod);
+        void confirmTransferMethodDeactivation(@NonNull TransferMethod transferMethod);
 
         void showProgressBar();
 
@@ -60,6 +60,6 @@ public interface ListTransferMethodContract {
 
         void loadTransferMethods();
 
-        void deactivateTransferMethod(@NonNull final HyperwalletTransferMethod transferMethod);
+        void deactivateTransferMethod(@NonNull final TransferMethod transferMethod);
     }
 }

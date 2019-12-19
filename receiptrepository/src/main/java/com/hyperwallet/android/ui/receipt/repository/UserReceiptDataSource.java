@@ -27,8 +27,8 @@ import androidx.paging.PageKeyedDataSource;
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.exception.HyperwalletException;
 import com.hyperwallet.android.listener.HyperwalletListener;
-import com.hyperwallet.android.model.HyperwalletErrors;
-import com.hyperwallet.android.model.paging.HyperwalletPageList;
+import com.hyperwallet.android.model.Errors;
+import com.hyperwallet.android.model.paging.PageList;
 import com.hyperwallet.android.model.receipt.Receipt;
 import com.hyperwallet.android.model.receipt.ReceiptQueryParam;
 import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
@@ -44,7 +44,7 @@ public class UserReceiptDataSource extends PageKeyedDataSource<Integer, Receipt>
 
     private static final int YEAR_BEFORE_NOW = -1;
     private final Calendar mCalendarYearBeforeNow;
-    private final MutableLiveData<Event<HyperwalletErrors>> mErrors = new MutableLiveData<>();
+    private final MutableLiveData<Event<Errors>> mErrors = new MutableLiveData<>();
     private final MutableLiveData<Boolean> mIsFetchingData = new MutableLiveData<>();
     private LoadInitialCallback<Integer, Receipt> mLoadInitialCallback;
     private LoadInitialParams<Integer> mLoadInitialParams;
@@ -74,9 +74,9 @@ public class UserReceiptDataSource extends PageKeyedDataSource<Integer, Receipt>
 
         EspressoIdlingResource.increment();
         getHyperwallet().listUserReceipts(queryParam,
-                new HyperwalletListener<HyperwalletPageList<Receipt>>() {
+                new HyperwalletListener<PageList<Receipt>>() {
                     @Override
-                    public void onSuccess(@Nullable HyperwalletPageList<Receipt> result) {
+                    public void onSuccess(@Nullable PageList<Receipt> result) {
                         mIsFetchingData.postValue(Boolean.FALSE);
                         mErrors.postValue(null);
 
@@ -94,7 +94,7 @@ public class UserReceiptDataSource extends PageKeyedDataSource<Integer, Receipt>
                     @Override
                     public void onFailure(HyperwalletException exception) {
                         mIsFetchingData.postValue(Boolean.FALSE);
-                        mErrors.postValue(new Event<>(exception.getHyperwalletErrors()));
+                        mErrors.postValue(new Event<>(exception.getErrors()));
                         EspressoIdlingResource.decrement();
                     }
 
@@ -135,9 +135,9 @@ public class UserReceiptDataSource extends PageKeyedDataSource<Integer, Receipt>
 
         EspressoIdlingResource.increment();
         getHyperwallet().listUserReceipts(queryParam,
-                new HyperwalletListener<HyperwalletPageList<Receipt>>() {
+                new HyperwalletListener<PageList<Receipt>>() {
                     @Override
-                    public void onSuccess(@Nullable HyperwalletPageList<Receipt> result) {
+                    public void onSuccess(@Nullable PageList<Receipt> result) {
                         mIsFetchingData.postValue(Boolean.FALSE);
                         mErrors.postValue(null);
 
@@ -155,7 +155,7 @@ public class UserReceiptDataSource extends PageKeyedDataSource<Integer, Receipt>
                     @Override
                     public void onFailure(HyperwalletException exception) {
                         mIsFetchingData.postValue(Boolean.FALSE);
-                        mErrors.postValue(new Event<>(exception.getHyperwalletErrors()));
+                        mErrors.postValue(new Event<>(exception.getErrors()));
                         EspressoIdlingResource.decrement();
                     }
 
@@ -180,9 +180,9 @@ public class UserReceiptDataSource extends PageKeyedDataSource<Integer, Receipt>
     /**
      * Retrieve reference of Hyperwallet errors inorder for consumers to observe on data changes
      *
-     * @return Live event data of {@link HyperwalletErrors}
+     * @return Live event data of {@link Errors}
      */
-    public LiveData<Event<HyperwalletErrors>> getErrors() {
+    public LiveData<Event<Errors>> getErrors() {
         return mErrors;
     }
 

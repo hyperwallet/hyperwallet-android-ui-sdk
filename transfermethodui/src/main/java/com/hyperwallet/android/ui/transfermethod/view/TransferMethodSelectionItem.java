@@ -19,7 +19,7 @@ package com.hyperwallet.android.ui.transfermethod.view;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.hyperwallet.android.model.graphql.HyperwalletFee;
+import com.hyperwallet.android.model.graphql.Fee;
 import com.hyperwallet.android.model.graphql.ProcessingTime;
 
 import java.util.ArrayList;
@@ -31,7 +31,7 @@ public class TransferMethodSelectionItem {
 
     private final String mCountry;
     private final String mCurrency;
-    private final List<HyperwalletFee> mFees;
+    private final List<Fee> mFees;
     private final ProcessingTime mProcessingTime;
     private final String mProfileType;
     private final String mTransferMethodType;
@@ -40,7 +40,7 @@ public class TransferMethodSelectionItem {
     public TransferMethodSelectionItem(@NonNull final String country, @NonNull final String currency,
             @NonNull final String profileType, @NonNull final String transferMethodType,
             @NonNull final String transferMethodName, @Nullable final ProcessingTime processingTime,
-            @NonNull final Set<HyperwalletFee> fees) {
+            @NonNull final Set<Fee> fees) {
         mCountry = country;
         mCurrency = currency;
         mProfileType = profileType;
@@ -75,7 +75,7 @@ public class TransferMethodSelectionItem {
         return mProcessingTime;
     }
 
-    public List<HyperwalletFee> getFees() {
+    public List<Fee> getFees() {
         return mFees;
     }
 
