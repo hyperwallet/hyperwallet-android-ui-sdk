@@ -24,6 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/regularColorPrimary"
+        android:elevation="@dimen/component_elevation"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -132,14 +133,6 @@
                 app:layout_constraintTop_toTopOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
-    <View
-        android:id="@+id/spacer"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/widget_default_margin"
-        android:background="@drawable/view_header_top_border"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/country_selection_layout_container"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/select_transfer_method_types_list"
         android:layout_width="match_parent"
@@ -147,5 +140,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spacer"/>
+        app:layout_constraintTop_toBottomOf="@+id/country_selection_layout_container" />
 </androidx.constraintlayout.widget.ConstraintLayout>
