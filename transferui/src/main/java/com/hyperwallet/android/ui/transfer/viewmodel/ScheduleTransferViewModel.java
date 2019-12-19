@@ -26,10 +26,10 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.hyperwallet.android.model.HyperwalletErrors;
+import com.hyperwallet.android.model.Errors;
 import com.hyperwallet.android.model.StatusTransition;
 import com.hyperwallet.android.model.transfer.Transfer;
-import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
+import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import com.hyperwallet.android.ui.common.repository.Event;
 import com.hyperwallet.android.ui.transfer.repository.TransferRepository;
 
@@ -45,11 +45,11 @@ import java.util.Locale;
 public class ScheduleTransferViewModel extends ViewModel {
 
     private Transfer mTransfer;
-    private HyperwalletTransferMethod mTransferDestination;
+    private TransferMethod mTransferDestination;
     private boolean mShowFxChangeWarning;
     private TransferRepository mTransferRepository;
     private MutableLiveData<StatusTransition> mTransferStatusTransition = new MutableLiveData<>();
-    private MutableLiveData<Event<HyperwalletErrors>> mTransferStatusTransitionError = new MutableLiveData<>();
+    private MutableLiveData<Event<Errors>> mTransferStatusTransitionError = new MutableLiveData<>();
     private MutableLiveData<Boolean> mIsScheduleTransferLoading = new MutableLiveData<>();
 
 
@@ -68,34 +68,34 @@ public class ScheduleTransferViewModel extends ViewModel {
             }
 
             @Override
-            public void onError(@NonNull HyperwalletErrors errors) {
+            public void onError(@NonNull Errors errors) {
                 mTransferStatusTransitionError.postValue(new Event<>(errors));
                 mIsScheduleTransferLoading.postValue(Boolean.FALSE);
             }
         });
     }
 
-    public void setTransfer(@NonNull final Transfer transfer) {
-        mTransfer = transfer;
-    }
-
     public Transfer getTransfer() {
         return mTransfer;
     }
 
-    public void setTransferDestination(@NonNull final HyperwalletTransferMethod transferDestination) {
-        mTransferDestination = transferDestination;
+    public void setTransfer(@NonNull final Transfer transfer) {
+        mTransfer = transfer;
     }
 
-    public HyperwalletTransferMethod getTransferDestination() {
+    public TransferMethod getTransferDestination() {
         return mTransferDestination;
+    }
+
+    public void setTransferDestination(@NonNull final TransferMethod transferDestination) {
+        mTransferDestination = transferDestination;
     }
 
     public LiveData<StatusTransition> getTransferStatusTransition() {
         return mTransferStatusTransition;
     }
 
-    public LiveData<Event<HyperwalletErrors>> getTransferStatusTransitionError() {
+    public LiveData<Event<Errors>> getTransferStatusTransitionError() {
         return mTransferStatusTransitionError;
     }
 

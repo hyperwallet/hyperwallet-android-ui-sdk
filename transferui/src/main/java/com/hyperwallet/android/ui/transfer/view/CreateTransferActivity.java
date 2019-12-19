@@ -32,7 +32,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.hyperwallet.android.model.HyperwalletErrors;
+import com.hyperwallet.android.model.Errors;
 import com.hyperwallet.android.model.transfer.Transfer;
 import com.hyperwallet.android.ui.common.repository.Event;
 import com.hyperwallet.android.ui.common.util.PageGroups;
@@ -154,9 +154,9 @@ public class CreateTransferActivity extends AppCompatActivity implements OnNetwo
 
     private void registerErrorObservers() {
         mCreateTransferViewModel.getLoadTransferRequiredDataErrors().observe(this,
-                new Observer<Event<HyperwalletErrors>>() {
+                new Observer<Event<Errors>>() {
                     @Override
-                    public void onChanged(Event<HyperwalletErrors> event) {
+                    public void onChanged(Event<Errors> event) {
                         if (event != null && !event.isContentConsumed()) {
                             ActivityUtils.showError(CreateTransferActivity.this, TAG, PageGroups.TRANSFER_FUNDS,
                                     event.getContent().getErrors());
@@ -164,9 +164,9 @@ public class CreateTransferActivity extends AppCompatActivity implements OnNetwo
                     }
                 });
 
-        mCreateTransferViewModel.getCreateTransferError().observe(this, new Observer<Event<HyperwalletErrors>>() {
+        mCreateTransferViewModel.getCreateTransferError().observe(this, new Observer<Event<Errors>>() {
             @Override
-            public void onChanged(Event<HyperwalletErrors> event) {
+            public void onChanged(Event<Errors> event) {
                 if (event != null && !event.isContentConsumed()) {
                     ActivityUtils.showError(CreateTransferActivity.this, TAG, PageGroups.TRANSFER_FUNDS,
                             event.getContent().getErrors());
@@ -181,9 +181,9 @@ public class CreateTransferActivity extends AppCompatActivity implements OnNetwo
             }
         });
 
-        mCreateTransferViewModel.getModuleUnavailableError().observe(this, new Observer<Event<HyperwalletErrors>>() {
+        mCreateTransferViewModel.getModuleUnavailableError().observe(this, new Observer<Event<Errors>>() {
             @Override
-            public void onChanged(Event<HyperwalletErrors> event) {
+            public void onChanged(Event<Errors> event) {
                 if (!event.isContentConsumed()) {
                     ActivityUtils.showError(CreateTransferActivity.this, TAG, PageGroups.TRANSFER_FUNDS,
                             event.getContent().getErrors());

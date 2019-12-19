@@ -30,7 +30,7 @@ package com.hyperwallet.android.ui.transfermethod.view;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.hyperwallet.android.model.HyperwalletError;
+import com.hyperwallet.android.model.Error;
 
 import java.util.List;
 import java.util.TreeMap;
@@ -42,15 +42,15 @@ public interface SelectTransferMethodContract {
         void showAddTransferMethod(@NonNull final String country, @NonNull final String currency,
                 @NonNull final String transferMethodType, @NonNull final String profileType);
 
-        void showErrorLoadTransferMethodConfigurationKeys(@NonNull final List<HyperwalletError> errors);
+        void showErrorLoadTransferMethodConfigurationKeys(@NonNull final List<Error> errors);
 
-        void showErrorLoadCurrency(@NonNull final List<HyperwalletError> errors);
+        void showErrorLoadCurrency(@NonNull final List<Error> errors);
 
-        void showErrorLoadTransferMethodTypes(@NonNull final List<HyperwalletError> errors);
+        void showErrorLoadTransferMethodTypes(@NonNull final List<Error> errors);
 
-        void showErrorLoadCountrySelection(@NonNull final List<HyperwalletError> errors);
+        void showErrorLoadCountrySelection(@NonNull final List<Error> errors);
 
-        void showErrorLoadCurrencySelection(@NonNull final List<HyperwalletError> errors);
+        void showErrorLoadCurrencySelection(@NonNull final List<Error> errors);
 
         void showTransferMethodCurrency(@NonNull String currencyCode);
 
