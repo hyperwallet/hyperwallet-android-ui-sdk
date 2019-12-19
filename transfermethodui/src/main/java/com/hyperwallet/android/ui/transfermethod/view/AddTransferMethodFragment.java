@@ -476,6 +476,9 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     public void showInputErrors(@NonNull final List<Error> errors) {
         boolean focusSet = false;
         Context context = requireContext();
+        Resources resources = context.getResources();
+        int pixels = (int) (resources.getDimension(R.dimen.negative_padding) * resources.getDisplayMetrics().density);
+
         for (Error error : errors) {
             for (int i = 0; i < mDynamicContainer.getChildCount(); i++) {
                 View view = mDynamicContainer.getChildAt(i);
@@ -483,9 +486,6 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                     AbstractWidget widget = (AbstractWidget) view.getTag();
                     if (widget.getName().equals(error.getFieldName())) {
                         if (!focusSet) {
-                            Resources resources = requireContext().getResources();
-                            int pixels = (int) (resources.getDimension(R.dimen.negative_padding)
-                                    * resources.getDisplayMetrics().density);
                             mNestedScrollView.smoothScrollTo(0, view.getTop() - pixels);
                             focusSet = true;
                         }
@@ -628,6 +628,9 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
 
         // this is added since some phones triggers the create button but the widgets are not yet initialized
         boolean hasWidget = false;
+        Resources resources = requireContext().getResources();
+        int pixels = (int) (resources.getDimension(R.dimen.negative_padding) * resources.getDisplayMetrics().density);
+
         for (int i = 0; i < mDynamicContainer.getChildCount(); i++) {
             View currentView = mDynamicContainer.getChildAt(i);
             if (currentView.getTag() instanceof AbstractWidget) {
@@ -638,8 +641,6 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                 widgetInputState.setValue(widget.getValue());
 
                 if (!isWidgetItemValid(widget) && !containsInvalidWidget) {
-                    Resources resources = requireContext().getResources();
-
                     containsInvalidWidget = true;
                     int pixels = (int) (resources.getDimension(R.dimen.negative_padding)
                             * resources.getDisplayMetrics().density);
