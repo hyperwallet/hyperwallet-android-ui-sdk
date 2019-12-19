@@ -160,7 +160,7 @@ public class TransferMethodRepositoryImplTest {
     }
 
     @Test
-    public void testCreateTransferMethod_createTransferWithUnsupportedTransferType() {
+    public void testCreateTransferMethod_withUnsupportedTransferMethodType() {
         BankAccount bankAccount = new BankAccount
                 .Builder("US", "USD", "23432432")
                 .transferMethodType("UNKNOWN_TRANSFER_TYPE")
@@ -239,6 +239,26 @@ public class TransferMethodRepositoryImplTest {
         verify(mDeactivateTransferMethodCallback).onError(mErrorsArgumentCaptor.capture());
 
         assertThat(mErrorsArgumentCaptor.getValue().getErrors(), hasItem(error));
+    }
+
+    @Test
+    public void testDeactivateTransferMethod_withUnsupportedTransferMethodType() {
+        BankAccount bankAccount = new BankAccount
+                .Builder("US", "USD", "23432432")
+                .token("trm-854c4ec1-9161-49d6-92e2-b8d15aa4bf56")
+                .transferMethodType("UNKNOWN_TRANSFER_TYPE")
+                .build();
+        bankAccount.setField(STATUS, StatusTransition.StatusDefinition.ACTIVATED);
+
+        // test
+        mTransferMethodRepository.deactivateTransferMethod(bankAccount, mDeactivateTransferMethodCallback);
+
+        verify(mDeactivateTransferMethodCallback).onError(mErrorsArgumentCaptor.capture());
+        verify(mDeactivateTransferMethodCallback, never()).onTransferMethodDeactivated(any(StatusTransition.class));
+        assertThat(mErrorsArgumentCaptor.getValue().getErrors(), Matchers.<Error>hasSize(1));
+        assertThat(mErrorsArgumentCaptor.getValue().getErrors().get(0).getMessageId(),
+                is(R.string.error_unsupported_transfer_type));
+        assertThat(mErrorsArgumentCaptor.getValue().getErrors().get(0).getCode(), is(EC_UNEXPECTED_EXCEPTION));
     }
 
     @Test
