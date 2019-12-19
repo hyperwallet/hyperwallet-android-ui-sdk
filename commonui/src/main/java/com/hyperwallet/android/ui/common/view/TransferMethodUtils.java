@@ -16,16 +16,16 @@
  */
 package com.hyperwallet.android.ui.common.view;
 
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.BANK_ACCOUNT_ID;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.CARD_NUMBER;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.EMAIL;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TYPE;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.BANK_ACCOUNT;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.BANK_CARD;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.PAPER_CHECK;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.PAYPAL_ACCOUNT;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.PREPAID_CARD;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.WIRE_ACCOUNT;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.BANK_ACCOUNT_ID;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.CARD_NUMBER;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.EMAIL;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TYPE;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.BANK_ACCOUNT;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.BANK_CARD;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.PAPER_CHECK;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.PAYPAL_ACCOUNT;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.PREPAID_CARD;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.WIRE_ACCOUNT;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -34,8 +34,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 
-import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
-import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodType;
+import com.hyperwallet.android.model.transfermethod.TransferMethod;
+import com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodType;
 import com.hyperwallet.android.ui.common.R;
 
 import java.util.Locale;
@@ -77,15 +77,15 @@ public class TransferMethodUtils {
     }
 
     /**
-     * Get title by the {@link HyperwalletTransferMethod.TransferMethodFields#TYPE}
+     * Get title by the {@link TransferMethod.TransferMethodFields#TYPE}
      *
      * @param context        {@link Context}
-     * @param transferMethod {@link HyperwalletTransferMethod}
+     * @param transferMethod {@link TransferMethod}
      * @return title or null if a TYPE doesn't match any defined string resources
      */
     @NonNull
     public static String getTransferMethodName(@NonNull final Context context,
-            final HyperwalletTransferMethod transferMethod) {
+            final TransferMethod transferMethod) {
         String transferMethodType = transferMethod.getField(TYPE);
         if (transferMethodType == null) {
             transferMethodType = "";
@@ -134,15 +134,15 @@ public class TransferMethodUtils {
     }
 
     /**
-     * Gets Transfer method identifier from the {@link HyperwalletTransferMethod} field
+     * Gets Transfer method identifier from the {@link TransferMethod} field
      * by a {@link TransferMethodType}.
      *
      * @param context        Context
-     * @param transferMethod HyperwalletTransferMethod
+     * @param transferMethod TransferMethod
      * @param type           TransferMethodType
      */
     public static String getTransferMethodDetail(@NonNull Context context,
-            @NonNull final HyperwalletTransferMethod transferMethod,
+            @NonNull final TransferMethod transferMethod,
             @Nullable @TransferMethodType final String type) {
         if (type == null) {
             return "";
@@ -168,8 +168,8 @@ public class TransferMethodUtils {
     }
 
     private static String getFourDigitsIdentification(@NonNull final Context context,
-            @NonNull final HyperwalletTransferMethod transferMethod,
-            @NonNull @HyperwalletTransferMethod.TransferMethodFieldKey final String fieldKey,
+            @NonNull final TransferMethod transferMethod,
+            @NonNull @TransferMethod.TransferMethodFieldKey final String fieldKey,
             @StringRes final int stringResId) {
         final String transferIdentification = transferMethod.getField(fieldKey);
 

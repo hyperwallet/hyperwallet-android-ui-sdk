@@ -173,13 +173,13 @@ public void onClick(View view) {
 ## Broadcast Receiver
 We currently have types of broadevents that you can register for:
 
-HyperwalletTransferMethodLocalBroadcast.HyperwalletTransferMethodLocalBroadcastAction.ACTION_HYPERWALLET_TRANSFER_METHOD_ADDED
+TransferMethodLocalBroadcast.TransferMethodLocalBroadcastAction.ACTION_HYPERWALLET_TRANSFER_METHOD_ADDED
 * Posted when a new transfer method (bank account, bank card, PayPal account, prepaid card, paper check) has been created. 
 
-HyperwalletTransferMethodLocalBroadcast.HyperwalletTransferMethodLocalBroadcastAction.ACTION_HYPERWALLET_TRANSFER_METHOD_DEACTIVATED
+TransferMethodLocalBroadcast.TransferMethodLocalBroadcastAction.ACTION_HYPERWALLET_TRANSFER_METHOD_DEACTIVATED
 * Posted when a transfer method (bank account, bank card, PayPal account, prepaid card, paper check) has been deactivated.
 
-HyperwalletTransferLocalBroadcast.HyperwalletTransferLocalBroadcastAction.ACTION_HYPERWALLET_TRANSFER_SCHEDULED
+TransferLocalBroadcast.TransferLocalBroadcastAction.ACTION_HYPERWALLET_TRANSFER_SCHEDULED
 * Posted when a transfer has been scheduled.
 
 ### Usage
@@ -199,9 +199,9 @@ protected void onCreate(Bundle savedInstanceState) {
 
     // register receiver
     IntentFilter filter = new IntentFilter();
-    filter.addAction(HyperwalletTransferMethodLocalBroadcast.HyperwalletTransferMethodLocalBroadcastAction.ACTION_HYPERWALLET_TRANSFER_METHOD_ADDED);
-    filter.addAction(HyperwalletTransferMethodLocalBroadcast.HyperwalletTransferMethodLocalBroadcastAction.ACTION_HYPERWALLET_TRANSFER_METHOD_DEACTIVATED);
-    filter.addAction(HyperwalletTransferLocalBroadcast.HyperwalletTransferLocalBroadcastAction.ACTION_HYPERWALLET_TRANSFER_SCHEDULED);
+    filter.addAction(TransferMethodLocalBroadcast.TransferMethodLocalBroadcastAction.ACTION_HYPERWALLET_TRANSFER_METHOD_ADDED);
+    filter.addAction(TransferMethodLocalBroadcast.TransferMethodLocalBroadcastAction.ACTION_HYPERWALLET_TRANSFER_METHOD_DEACTIVATED);
+    filter.addAction(TransferLocalBroadcast.TransferLocalBroadcastAction.ACTION_HYPERWALLET_TRANSFER_SCHEDULED);
     
     LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(mBroadcastReceiver, filter);
 }

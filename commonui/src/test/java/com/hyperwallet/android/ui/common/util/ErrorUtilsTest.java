@@ -15,7 +15,7 @@ import static com.hyperwallet.android.ExceptionMapper.EC_UNEXPECTED_EXCEPTION;
 
 import android.content.res.Resources;
 
-import com.hyperwallet.android.model.HyperwalletError;
+import com.hyperwallet.android.model.Error;
 import com.hyperwallet.android.ui.common.R;
 
 import org.junit.Test;
@@ -36,8 +36,8 @@ public class ErrorUtilsTest {
     @Test
     public void testBuildDialogMessage_buildIoExceptionMessage() {
         Resources resources = mock(Resources.class);
-        List<HyperwalletError> errors = new ArrayList<>(2);
-        errors.add(new HyperwalletError(R.string.authentication_token_provider_exception, EC_IO_EXCEPTION));
+        List<Error> errors = new ArrayList<>(2);
+        errors.add(new Error(R.string.authentication_token_provider_exception, EC_IO_EXCEPTION));
         when(resources.getString(R.string.authentication_token_provider_exception)).thenReturn("My IO message");
         String message = ErrorUtils.getMessage(errors, resources);
 
@@ -48,8 +48,8 @@ public class ErrorUtilsTest {
     @Parameters(method = "testBuildCommonDialogMessageData")
     public void testBuildDialogMessage_buildCommonExceptionMessage(String errorCode) {
         Resources resources = mock(Resources.class);
-        List<HyperwalletError> errors = new ArrayList<>(2);
-        errors.add(new HyperwalletError(errorCode, errorCode));
+        List<Error> errors = new ArrayList<>(2);
+        errors.add(new Error(errorCode, errorCode));
         when(resources.getString(R.string.unexpected_exception)).thenReturn("Unexpected");
         String message = ErrorUtils.getMessage(errors, resources);
 
@@ -59,8 +59,8 @@ public class ErrorUtilsTest {
     @Test
     public void testBuildDialogMessage_buildDefaultExceptionMessage() {
         Resources resources = mock(Resources.class);
-        List<HyperwalletError> errors = new ArrayList<>(2);
-        errors.add(new HyperwalletError("My default message", "my error code"));
+        List<Error> errors = new ArrayList<>(2);
+        errors.add(new Error("My default message", "my error code"));
         String message = ErrorUtils.getMessage(errors, resources);
 
         verify(resources, never()).getString(ArgumentMatchers.anyInt());

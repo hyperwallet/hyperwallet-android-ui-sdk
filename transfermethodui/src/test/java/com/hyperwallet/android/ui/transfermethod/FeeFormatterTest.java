@@ -8,7 +8,7 @@ import static org.mockito.Mockito.when;
 import android.content.Context;
 import android.content.res.Resources;
 
-import com.hyperwallet.android.model.graphql.HyperwalletFee;
+import com.hyperwallet.android.model.graphql.Fee;
 import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
 import com.hyperwallet.android.ui.transfermethod.view.FeeFormatter;
@@ -44,13 +44,13 @@ public class FeeFormatterTest {
     private Context context;
     @Mock
     private Resources resources;
-    private HyperwalletFee mFlatFee;
+    private Fee mFlatFee;
     private JSONObject mJSONObject;
 
     @Before
     public void setUp() throws JSONException {
         mJSONObject = new JSONObject(externalResourceManager.getResourceContent("fee_information.json"));
-        mFlatFee = new HyperwalletFee(mJSONObject.getJSONObject("FEE_ONE").getJSONArray("nodes")
+        mFlatFee = new Fee(mJSONObject.getJSONObject("FEE_ONE").getJSONArray("nodes")
                 .getJSONObject(0));
         when(context.getResources()).thenReturn(resources);
     }
@@ -68,7 +68,7 @@ public class FeeFormatterTest {
 
     @Test
     public void testGetFormattedFee_returnsPercentFormattedFeeWithMinAndMax() {
-        HyperwalletFee fee = new HyperwalletFee(mJSONObject.optJSONObject("FEE_TWO").optJSONArray("nodes")
+        Fee fee = new Fee(mJSONObject.optJSONObject("FEE_TWO").optJSONArray("nodes")
                 .optJSONObject(0));
 
         FeeFormatter.getFormattedFee(context, Arrays.asList(fee));
@@ -82,7 +82,7 @@ public class FeeFormatterTest {
 
     @Test
     public void testGetFormattedFee_returnsPercentFormattedFeeWithMinOnly() {
-        HyperwalletFee fee = new HyperwalletFee(mJSONObject.optJSONObject("FEE_THREE").optJSONArray("nodes")
+        Fee fee = new Fee(mJSONObject.optJSONObject("FEE_THREE").optJSONArray("nodes")
                 .optJSONObject(0));
 
         FeeFormatter.getFormattedFee(context, Arrays.asList(fee));
@@ -96,7 +96,7 @@ public class FeeFormatterTest {
 
     @Test
     public void testGetFormattedFee_returnsPercentFormattedFeeWithMaxOnly() {
-        HyperwalletFee fee = new HyperwalletFee(mJSONObject.optJSONObject("FEE_FOUR").optJSONArray("nodes")
+        Fee fee = new Fee(mJSONObject.optJSONObject("FEE_FOUR").optJSONArray("nodes")
                 .optJSONObject(0));
         FeeFormatter.getFormattedFee(context, Arrays.asList(fee));
 
@@ -109,7 +109,7 @@ public class FeeFormatterTest {
 
     @Test
     public void testGetFormattedFee_returnsPercentFormattedFeeWithoutMinAndMax() {
-        HyperwalletFee fee = new HyperwalletFee(mJSONObject.optJSONObject("FEE_FIVE").optJSONArray("nodes")
+        Fee fee = new Fee(mJSONObject.optJSONObject("FEE_FIVE").optJSONArray("nodes")
                 .optJSONObject(0));
 
         FeeFormatter.getFormattedFee(context, Arrays.asList(fee));
@@ -123,7 +123,7 @@ public class FeeFormatterTest {
 
     @Test
     public void testGetFormattedFee_returnsPercentAndFlatFormattedFeeWithMinAndMax() {
-        HyperwalletFee percentFee = new HyperwalletFee(mJSONObject.optJSONObject("FEE_SIX").optJSONArray("nodes")
+        Fee percentFee = new Fee(mJSONObject.optJSONObject("FEE_SIX").optJSONArray("nodes")
                 .optJSONObject(0));
 
         FeeFormatter.getFormattedFee(context, Arrays.asList(mFlatFee, percentFee));
@@ -137,7 +137,7 @@ public class FeeFormatterTest {
 
     @Test
     public void testGetFormattedFee_returnsPercentAndFlatFormattedFeeWithMinOnly() {
-        HyperwalletFee percentFee = new HyperwalletFee(mJSONObject.optJSONObject("FEE_SEVEN").optJSONArray("nodes")
+        Fee percentFee = new Fee(mJSONObject.optJSONObject("FEE_SEVEN").optJSONArray("nodes")
                 .optJSONObject(0));
 
         FeeFormatter.getFormattedFee(context, Arrays.asList(mFlatFee, percentFee));

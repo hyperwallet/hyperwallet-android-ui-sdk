@@ -16,13 +16,14 @@
  */
 package com.hyperwallet.android.ui.transfermethod.repository;
 
+import static com.hyperwallet.android.ExceptionMapper.EC_UNEXPECTED_EXCEPTION;
 import static com.hyperwallet.android.model.StatusTransition.StatusDefinition.ACTIVATED;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TOKEN;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TYPE;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.BANK_ACCOUNT;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.BANK_CARD;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.PAYPAL_ACCOUNT;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.WIRE_ACCOUNT;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TOKEN;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TYPE;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.BANK_ACCOUNT;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.BANK_CARD;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.PAYPAL_ACCOUNT;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.WIRE_ACCOUNT;
 
 import android.os.Handler;
 
@@ -33,14 +34,18 @@ import androidx.annotation.VisibleForTesting;
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.exception.HyperwalletException;
 import com.hyperwallet.android.listener.HyperwalletListener;
+import com.hyperwallet.android.model.Error;
+import com.hyperwallet.android.model.Errors;
 import com.hyperwallet.android.model.StatusTransition;
-import com.hyperwallet.android.model.paging.HyperwalletPageList;
-import com.hyperwallet.android.model.transfermethod.HyperwalletBankAccount;
-import com.hyperwallet.android.model.transfermethod.HyperwalletBankCard;
-import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
-import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethodQueryParam;
+import com.hyperwallet.android.model.paging.PageList;
+import com.hyperwallet.android.model.transfermethod.BankAccount;
+import com.hyperwallet.android.model.transfermethod.BankCard;
 import com.hyperwallet.android.model.transfermethod.PayPalAccount;
+import com.hyperwallet.android.model.transfermethod.TransferMethod;
+import com.hyperwallet.android.model.transfermethod.TransferMethodQueryParam;
 import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
+
+import java.util.Collections;
 
 public class TransferMethodRepositoryImpl implements TransferMethodRepository {
 
@@ -54,10 +59,10 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
     }
 
     /**
-     * @see TransferMethodRepository#createTransferMethod(HyperwalletTransferMethod, LoadTransferMethodCallback)
+     * @see TransferMethodRepository#createTransferMethod(TransferMethod, LoadTransferMethodCallback)
      */
     @Override
-    public void createTransferMethod(@NonNull final HyperwalletTransferMethod transferMethod,
+    public void createTransferMethod(@NonNull final TransferMethod transferMethod,
             LoadTransferMethodCallback callback) {
         switch (transferMethod.getField(TYPE)) {
             case BANK_ACCOUNT:
@@ -70,7 +75,8 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
             case PAYPAL_ACCOUNT:
                 createPayPalAccount(transferMethod, callback);
                 break;
-            default: //no default action
+            default: // error on unknown transfer type
+                callback.onError(getErrorsOnUnsupportedTransferType());
         }
     }
 
@@ -80,16 +86,16 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
     @Override
     public void loadTransferMethods(@NonNull final LoadTransferMethodListCallback callback) {
 
-        HyperwalletTransferMethodQueryParam queryParam = new HyperwalletTransferMethodQueryParam.Builder()
+        TransferMethodQueryParam queryParam = new TransferMethodQueryParam.Builder()
                 .limit(DEFAULT_LIMIT)
                 .sortByCreatedOnDesc()
                 .status(ACTIVATED)
                 .build();
         EspressoIdlingResource.increment();
         getHyperwallet().listTransferMethods(queryParam,
-                new HyperwalletListener<HyperwalletPageList<HyperwalletTransferMethod>>() {
+                new HyperwalletListener<PageList<TransferMethod>>() {
                     @Override
-                    public void onSuccess(@Nullable HyperwalletPageList<HyperwalletTransferMethod> result) {
+                    public void onSuccess(@Nullable PageList<TransferMethod> result) {
                         EspressoIdlingResource.decrement();
                         callback.onTransferMethodListLoaded(result != null ? result.getDataList() : null);
                     }
@@ -97,7 +103,7 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
                     @Override
                     public void onFailure(HyperwalletException exception) {
                         EspressoIdlingResource.decrement();
-                        callback.onError(exception.getHyperwalletErrors());
+                        callback.onError(exception.getErrors());
                     }
 
                     @Override
@@ -112,16 +118,16 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
      */
     @Override
     public void loadLatestTransferMethod(@NonNull final LoadTransferMethodCallback callback) {
-        HyperwalletTransferMethodQueryParam queryParam = new HyperwalletTransferMethodQueryParam.Builder()
+        TransferMethodQueryParam queryParam = new TransferMethodQueryParam.Builder()
                 .sortByCreatedOnDesc()
                 .limit(QUERY_SINGLE_RESULT)
                 .status(ACTIVATED)
                 .build();
         EspressoIdlingResource.increment();
         getHyperwallet().listTransferMethods(queryParam,
-                new HyperwalletListener<HyperwalletPageList<HyperwalletTransferMethod>>() {
+                new HyperwalletListener<PageList<TransferMethod>>() {
                     @Override
-                    public void onSuccess(@Nullable HyperwalletPageList<HyperwalletTransferMethod> result) {
+                    public void onSuccess(@Nullable PageList<TransferMethod> result) {
                         EspressoIdlingResource.decrement();
                         callback.onTransferMethodLoaded(result != null ? result.getDataList().get(0) : null);
                     }
@@ -129,7 +135,7 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
                     @Override
                     public void onFailure(HyperwalletException exception) {
                         EspressoIdlingResource.decrement();
-                        callback.onError(exception.getHyperwalletErrors());
+                        callback.onError(exception.getErrors());
                     }
 
                     @Override
@@ -140,10 +146,10 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
     }
 
     /**
-     * @see TransferMethodRepository#deactivateTransferMethod(HyperwalletTransferMethod, DeactivateTransferMethodCallback)
+     * @see TransferMethodRepository#deactivateTransferMethod(TransferMethod, DeactivateTransferMethodCallback)
      */
     @Override
-    public void deactivateTransferMethod(@NonNull final HyperwalletTransferMethod transferMethod,
+    public void deactivateTransferMethod(@NonNull final TransferMethod transferMethod,
             @NonNull final DeactivateTransferMethodCallback callback) {
         switch (transferMethod.getField(TYPE)) {
             case BANK_ACCOUNT:
@@ -156,11 +162,12 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
             case PAYPAL_ACCOUNT:
                 deactivatePayPalAccount(transferMethod, callback);
                 break;
-            default: //no default action
+            default: // error on unknown transfer type
+                callback.onError(getErrorsOnUnsupportedTransferType());
         }
     }
 
-    private void deactivateBankAccount(@NonNull final HyperwalletTransferMethod transferMethod,
+    private void deactivateBankAccount(@NonNull final TransferMethod transferMethod,
             @NonNull final DeactivateTransferMethodCallback callback) {
         getHyperwallet().deactivateBankAccount(transferMethod.getField(TOKEN), null,
                 new HyperwalletListener<StatusTransition>() {
@@ -171,7 +178,7 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
 
                     @Override
                     public void onFailure(HyperwalletException exception) {
-                        callback.onError(exception.getHyperwalletErrors());
+                        callback.onError(exception.getErrors());
                     }
 
                     @Override
@@ -181,7 +188,7 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
                 });
     }
 
-    private void deactivateBankCardAccount(@NonNull final HyperwalletTransferMethod transferMethod,
+    private void deactivateBankCardAccount(@NonNull final TransferMethod transferMethod,
             @NonNull final DeactivateTransferMethodCallback callback) {
         getHyperwallet().deactivateBankCard(transferMethod.getField(TOKEN), null,
                 new HyperwalletListener<StatusTransition>() {
@@ -192,7 +199,7 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
 
                     @Override
                     public void onFailure(HyperwalletException exception) {
-                        callback.onError(exception.getHyperwalletErrors());
+                        callback.onError(exception.getErrors());
                     }
 
                     @Override
@@ -202,7 +209,7 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
                 });
     }
 
-    private void deactivatePayPalAccount(@NonNull final HyperwalletTransferMethod transferMethod,
+    private void deactivatePayPalAccount(@NonNull final TransferMethod transferMethod,
             @NonNull final DeactivateTransferMethodCallback callback) {
         getHyperwallet().deactivatePayPalAccount(transferMethod.getField(TOKEN), null,
                 new HyperwalletListener<StatusTransition>() {
@@ -213,7 +220,7 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
 
                     @Override
                     public void onFailure(HyperwalletException exception) {
-                        callback.onError(exception.getHyperwalletErrors());
+                        callback.onError(exception.getErrors());
                     }
 
                     @Override
@@ -223,19 +230,19 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
                 });
     }
 
-    private void createBankAccount(final HyperwalletTransferMethod transferMethod,
+    private void createBankAccount(final TransferMethod transferMethod,
             final LoadTransferMethodCallback callback) {
-        HyperwalletBankAccount bankAccount = (HyperwalletBankAccount) transferMethod;
+        BankAccount bankAccount = (BankAccount) transferMethod;
 
-        getHyperwallet().createBankAccount(bankAccount, new HyperwalletListener<HyperwalletBankAccount>() {
+        getHyperwallet().createBankAccount(bankAccount, new HyperwalletListener<BankAccount>() {
             @Override
-            public void onSuccess(@Nullable HyperwalletBankAccount result) {
+            public void onSuccess(@Nullable BankAccount result) {
                 callback.onTransferMethodLoaded(result);
             }
 
             @Override
             public void onFailure(HyperwalletException exception) {
-                callback.onError(exception.getHyperwalletErrors());
+                callback.onError(exception.getErrors());
             }
 
             @Override
@@ -245,19 +252,19 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
         });
     }
 
-    private void createBankCard(@NonNull final HyperwalletTransferMethod transferMethod,
+    private void createBankCard(@NonNull final TransferMethod transferMethod,
             @NonNull final LoadTransferMethodCallback callback) {
-        HyperwalletBankCard bankCard = (HyperwalletBankCard) transferMethod;
+        BankCard bankCard = (BankCard) transferMethod;
 
-        getHyperwallet().createBankCard(bankCard, new HyperwalletListener<HyperwalletBankCard>() {
+        getHyperwallet().createBankCard(bankCard, new HyperwalletListener<BankCard>() {
             @Override
-            public void onSuccess(@Nullable HyperwalletBankCard result) {
+            public void onSuccess(@Nullable BankCard result) {
                 callback.onTransferMethodLoaded(result);
             }
 
             @Override
             public void onFailure(HyperwalletException exception) {
-                callback.onError(exception.getHyperwalletErrors());
+                callback.onError(exception.getErrors());
             }
 
             @Override
@@ -267,7 +274,7 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
         });
     }
 
-    private void createPayPalAccount(@NonNull final HyperwalletTransferMethod transferMethod,
+    private void createPayPalAccount(@NonNull final TransferMethod transferMethod,
             @NonNull final LoadTransferMethodCallback callback) {
         PayPalAccount payPalAccount = (PayPalAccount) transferMethod;
 
@@ -279,7 +286,7 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
 
             @Override
             public void onFailure(HyperwalletException exception) {
-                callback.onError(exception.getHyperwalletErrors());
+                callback.onError(exception.getErrors());
             }
 
             @Override
@@ -287,5 +294,13 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
                 return mHandler;
             }
         });
+    }
+
+    // Note: This way of surfacing error is not ideal but rather a workaround please have a look on other options,
+    // before resulting into this pattern
+    private Errors getErrorsOnUnsupportedTransferType() {
+        Error error = new Error(R.string.error_unsupported_transfer_type,
+                EC_UNEXPECTED_EXCEPTION);
+        return new Errors(Collections.singletonList(error));
     }
 }

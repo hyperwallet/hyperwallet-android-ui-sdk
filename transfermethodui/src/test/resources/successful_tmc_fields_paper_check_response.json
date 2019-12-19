@@ -1,0 +1,158 @@
+{
+  "data": {
+    "transferMethodUIConfigurations": {
+      "nodes": [
+        {
+          "country": "US",
+          "currency": "USD",
+          "transferMethodType": "PAPER_CHECK",
+          "profile": "INDIVIDUAL",
+          "fieldGroups": {
+            "nodes": [
+              {
+                "group": "ACCOUNT_INFORMATION",
+                "fields": [
+                  {
+                    "category": "ACCOUNT",
+                    "dataType": "SELECTION",
+                    "isEditable": true,
+                    "fieldSelectionOptions": [
+                      {
+                        "label": "Expedited Delivery",
+                        "value": "EXPEDITED"
+                      },
+                      {
+                        "label": "Standard Mail",
+                        "value": "STANDARD"
+                      }
+                    ],
+                    "label": "Shipping Method",
+                    "name": "shippingMethod",
+                    "placeholder": "",
+                    "value": "STANDARD",
+                    "isRequired": false,
+                    "validationMessage": {
+                      "length": "",
+                      "pattern": "is invalid length or format.",
+                      "empty": "You must provide a value for this field"
+                    }
+                  }
+                ]
+              },
+              {
+                "group": "ADDRESS",
+                "fields": [
+                  {
+                    "category": "ADDRESS",
+                    "dataType": "SELECTION",
+                    "isEditable": false,
+                    "fieldSelectionOptions": [
+                      {
+                        "label": "United States",
+                        "value": "US"
+                      }
+                    ],
+                    "label": "Country",
+                    "name": "country",
+                    "placeholder": "",
+                    "isRequired": true,
+                    "value": "US",
+                    "validationMessage": {
+                      "length": "",
+                      "pattern": "is invalid length or format.",
+                      "empty": "You must provide a value for this field"
+                    }
+                  },
+                  {
+                    "category": "ADDRESS",
+                    "dataType": "TEXT",
+                    "isEditable": true,
+                    "label": "State\/Province",
+                    "name": "stateProvince",
+                    "placeholder": "",
+                    "regularExpression": "[A-Z]{2}",
+                    "isRequired": true,
+                    "value": "BC",
+                    "validationMessage": {
+                      "length": "",
+                      "pattern": "is invalid length or format.",
+                      "empty": "You must provide a value for this field"
+                    }
+                  },
+                  {
+                    "category": "ADDRESS",
+                    "dataType": "TEXT",
+                    "isEditable": true,
+                    "label": "Street",
+                    "name": "addressLine1",
+                    "placeholder": "",
+                    "regularExpression": "^$||[\\sa-zA-Z0-9\/\\-?:().,+]{1,50}",
+                    "isRequired": true,
+                    "value": "950 Granville Street",
+                    "validationMessage": {
+                      "length": "",
+                      "pattern": "is invalid length or format.",
+                      "empty": "You must provide a value for this field"
+                    }
+                  },
+                  {
+                    "category": "ADDRESS",
+                    "dataType": "TEXT",
+                    "isEditable": true,
+                    "label": "City",
+                    "name": "city",
+                    "placeholder": "",
+                    "regularExpression": "^$||[\\sa-zA-Z0-9\/\\-?:().,+]+",
+                    "isRequired": true,
+                    "value": "Vancouver",
+                    "validationMessage": {
+                      "length": "",
+                      "pattern": "is invalid length or format.",
+                      "empty": "You must provide a value for this field"
+                    }
+                  },
+                  {
+                    "category": "ADDRESS",
+                    "dataType": "TEXT",
+                    "isEditable": true,
+                    "label": "Zip\/Postal Code",
+                    "name": "postalCode",
+                    "placeholder": "",
+                    "regularExpression": "^$||[0-9]{5}||([0-9]{5}-[0-9]{4})",
+                    "isRequired": true,
+                    "value": "12345",
+                    "validationMessage": {
+                      "length": "",
+                      "pattern": "is invalid length or format.",
+                      "empty": "You must provide a value for this field"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "fees": {
+      "nodes": [
+        {
+          "value": "0.25",
+          "feeRateType": "FLAT",
+          "country": "US",
+          "currency": "USD"
+        }
+      ]
+    },
+    "processingTimes": {
+      "nodes": [
+        {
+          "country": "US",
+          "currency": "USD",
+          "transferMethodType": "PAPER_CHECK",
+          "value": "5 - 7 Business days"
+        }
+      ]
+    }
+  }
+}
