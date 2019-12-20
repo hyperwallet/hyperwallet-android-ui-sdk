@@ -15,12 +15,12 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 import static com.hyperwallet.android.ExceptionMapper.EC_UNEXPECTED_EXCEPTION;
 
-import com.hyperwallet.android.model.HyperwalletError;
-import com.hyperwallet.android.model.HyperwalletErrors;
+import com.hyperwallet.android.model.Error;
+import com.hyperwallet.android.model.Errors;
 import com.hyperwallet.android.model.graphql.HyperwalletTransferMethodConfigurationKey;
-import com.hyperwallet.android.model.graphql.keyed.HyperwalletTransferMethodConfigurationKeyResult;
-import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
-import com.hyperwallet.android.model.user.HyperwalletUser;
+import com.hyperwallet.android.model.graphql.keyed.TransferMethodConfigurationKeyResult;
+import com.hyperwallet.android.model.transfermethod.TransferMethod;
+import com.hyperwallet.android.model.user.User;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodConfigurationRepository;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodConfigurationRepositoryImpl;
@@ -51,7 +51,7 @@ import java.util.TreeMap;
 @RunWith(RobolectricTestRunner.class)
 public class SelectTransferMethodPresenterTest {
 
-    private final HyperwalletErrors errors = createErrors();
+    private final Errors errors = createErrors();
     @Rule
     public HyperwalletExternalResourceManager externalResourceManager = new HyperwalletExternalResourceManager();
     @Mock
@@ -61,11 +61,11 @@ public class SelectTransferMethodPresenterTest {
     @Mock
     private UserRepositoryImpl mUserRepository;
     @Captor
-    private ArgumentCaptor<List<HyperwalletError>> mErrorCaptor;
+    private ArgumentCaptor<List<Error>> mErrorCaptor;
 
     private HyperwalletTransferMethodConfigurationKey mResult;
     private HyperwalletTransferMethodConfigurationKey mPartialResult;
-    private HyperwalletUser mUser;
+    private User mUser;
     private SelectTransferMethodPresenter selectTransferMethodPresenter;
 
     @Before
@@ -73,15 +73,15 @@ public class SelectTransferMethodPresenterTest {
         initMocks(this);
         String responseBody = externalResourceManager.getResourceContent("successful_tmc_keys_response.json");
         final JSONObject jsonObject = new JSONObject(responseBody);
-        mResult = new HyperwalletTransferMethodConfigurationKeyResult(jsonObject);
+        mResult = new TransferMethodConfigurationKeyResult(jsonObject);
 
         String partialResponseBody = externalResourceManager.getResourceContent(
                 "partial_success_tmc_keys_response.json");
-        mPartialResult = new HyperwalletTransferMethodConfigurationKeyResult(new JSONObject(partialResponseBody));
+        mPartialResult = new TransferMethodConfigurationKeyResult(new JSONObject(partialResponseBody));
 
         String userResponseBody = externalResourceManager.getResourceContent("user_response.json");
         final JSONObject userJsonObject = new JSONObject(userResponseBody);
-        mUser = new HyperwalletUser(userJsonObject);
+        mUser = new User(userJsonObject);
 
         selectTransferMethodPresenter = new SelectTransferMethodPresenter(view, mTransferMethodConfigurationRepository,
                 mUserRepository);
@@ -121,11 +121,11 @@ public class SelectTransferMethodPresenterTest {
         verify(view).showTransferMethodCurrency("CAD");
         verify(view).showTransferMethodTypes(ArgumentMatchers.<TransferMethodSelectionItem>anyList());
         verify(view, never()).showErrorLoadTransferMethodConfigurationKeys(
-                ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorLoadCurrency(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorLoadTransferMethodTypes(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorLoadCountrySelection(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorLoadCurrencySelection(ArgumentMatchers.<HyperwalletError>anyList());
+                ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadCurrency(ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadTransferMethodTypes(ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadCountrySelection(ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadCurrencySelection(ArgumentMatchers.<Error>anyList());
         verify(view, never()).showAddTransferMethod(anyString(), anyString(), anyString(), anyString());
     }
 
@@ -162,11 +162,11 @@ public class SelectTransferMethodPresenterTest {
         verify(view, never()).hideProgressBar();
         verify(view, never()).showTransferMethodTypes(ArgumentMatchers.<TransferMethodSelectionItem>anyList());
         verify(view, never()).showErrorLoadTransferMethodConfigurationKeys(
-                ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorLoadCurrency(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorLoadTransferMethodTypes(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorLoadCountrySelection(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorLoadCurrencySelection(ArgumentMatchers.<HyperwalletError>anyList());
+                ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadCurrency(ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadTransferMethodTypes(ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadCountrySelection(ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadCurrencySelection(ArgumentMatchers.<Error>anyList());
         verify(view, never()).showAddTransferMethod(anyString(), anyString(), anyString(), anyString());
     }
 
@@ -239,11 +239,11 @@ public class SelectTransferMethodPresenterTest {
         verify(view).showTransferMethodCurrency("USD");
         verify(view).showTransferMethodTypes(ArgumentMatchers.<TransferMethodSelectionItem>anyList());
         verify(view, never()).showErrorLoadTransferMethodConfigurationKeys(
-                ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorLoadCurrency(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorLoadTransferMethodTypes(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorLoadCountrySelection(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorLoadCurrencySelection(ArgumentMatchers.<HyperwalletError>anyList());
+                ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadCurrency(ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadTransferMethodTypes(ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadCountrySelection(ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadCurrencySelection(ArgumentMatchers.<Error>anyList());
         verify(view, never()).showAddTransferMethod(anyString(), anyString(), anyString(), anyString());
     }
 
@@ -287,8 +287,8 @@ public class SelectTransferMethodPresenterTest {
         verify(view, never()).showTransferMethodTypes(ArgumentMatchers.<TransferMethodSelectionItem>anyList());
 
         // Assert
-        List<HyperwalletError> errors = mErrorCaptor.getValue();
-        assertThat(errors, Matchers.<HyperwalletError>hasSize(1));
+        List<Error> errors = mErrorCaptor.getValue();
+        assertThat(errors, Matchers.<Error>hasSize(1));
         assertThat(errors.get(0).getCode(), is(EC_UNEXPECTED_EXCEPTION));
         assertThat(errors.get(0).getMessage(), is("Can't get Currency based from Country: US"));
     }
@@ -327,11 +327,11 @@ public class SelectTransferMethodPresenterTest {
         verify(view).showTransferMethodCurrency("CAD");
         verify(view).showTransferMethodTypes(ArgumentMatchers.<TransferMethodSelectionItem>anyList());
         verify(view, never()).showErrorLoadTransferMethodConfigurationKeys(
-                ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorLoadCurrency(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorLoadTransferMethodTypes(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorLoadCountrySelection(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorLoadCurrencySelection(ArgumentMatchers.<HyperwalletError>anyList());
+                ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadCurrency(ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadTransferMethodTypes(ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadCountrySelection(ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadCurrencySelection(ArgumentMatchers.<Error>anyList());
         verify(view, never()).showAddTransferMethod(anyString(), anyString(), anyString(), anyString());
         verify(view, atLeastOnce()).showTransferMethodCountry(anyString());
     }
@@ -368,11 +368,11 @@ public class SelectTransferMethodPresenterTest {
 
         verify(view, never()).showTransferMethodTypes(ArgumentMatchers.<TransferMethodSelectionItem>anyList());
         verify(view, never()).showErrorLoadTransferMethodConfigurationKeys(
-                ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorLoadCurrency(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorLoadTransferMethodTypes(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorLoadCountrySelection(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorLoadCurrencySelection(ArgumentMatchers.<HyperwalletError>anyList());
+                ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadCurrency(ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadTransferMethodTypes(ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadCountrySelection(ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadCurrencySelection(ArgumentMatchers.<Error>anyList());
         verify(view, never()).showAddTransferMethod(anyString(), anyString(), anyString(), anyString());
     }
 
@@ -453,11 +453,11 @@ public class SelectTransferMethodPresenterTest {
 
         verify(view).showTransferMethodTypes(ArgumentMatchers.<TransferMethodSelectionItem>anyList());
         verify(view, never()).showErrorLoadTransferMethodConfigurationKeys(
-                ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorLoadCurrency(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorLoadTransferMethodTypes(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorLoadCountrySelection(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorLoadCurrencySelection(ArgumentMatchers.<HyperwalletError>anyList());
+                ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadCurrency(ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadTransferMethodTypes(ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadCountrySelection(ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadCurrencySelection(ArgumentMatchers.<Error>anyList());
         verify(view, never()).showAddTransferMethod(anyString(), anyString(), anyString(), anyString());
         verify(view, atLeastOnce()).showTransferMethodCountry(anyString());
         verify(view, atLeastOnce()).showTransferMethodCurrency(anyString());
@@ -495,11 +495,11 @@ public class SelectTransferMethodPresenterTest {
 
         verify(view, never()).showTransferMethodTypes(ArgumentMatchers.<TransferMethodSelectionItem>anyList());
         verify(view, never()).showErrorLoadTransferMethodConfigurationKeys(
-                ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorLoadCurrency(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorLoadTransferMethodTypes(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorLoadCountrySelection(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorLoadCurrencySelection(ArgumentMatchers.<HyperwalletError>anyList());
+                ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadCurrency(ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadTransferMethodTypes(ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadCountrySelection(ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadCurrencySelection(ArgumentMatchers.<Error>anyList());
         verify(view, never()).showAddTransferMethod(anyString(), anyString(), anyString(), anyString());
     }
 
@@ -590,17 +590,17 @@ public class SelectTransferMethodPresenterTest {
 
         // Then
         selectTransferMethodPresenter.openAddTransferMethod("CA", "CAD",
-                HyperwalletTransferMethod.TransferMethodTypes.BANK_ACCOUNT,
-                HyperwalletUser.ProfileTypes.INDIVIDUAL);
+                TransferMethod.TransferMethodTypes.BANK_ACCOUNT,
+                User.ProfileTypes.INDIVIDUAL);
 
-        verify(view).showAddTransferMethod("CA", "CAD", HyperwalletTransferMethod.TransferMethodTypes.BANK_ACCOUNT,
-                HyperwalletUser.ProfileTypes.INDIVIDUAL);
+        verify(view).showAddTransferMethod("CA", "CAD", TransferMethod.TransferMethodTypes.BANK_ACCOUNT,
+                User.ProfileTypes.INDIVIDUAL);
         verify(view, never()).showErrorLoadTransferMethodConfigurationKeys(
-                ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorLoadCurrency(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorLoadTransferMethodTypes(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorLoadCountrySelection(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorLoadCurrencySelection(ArgumentMatchers.<HyperwalletError>anyList());
+                ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadCurrency(ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadTransferMethodTypes(ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadCountrySelection(ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadCurrencySelection(ArgumentMatchers.<Error>anyList());
         verify(view, never()).showTransferMethodCountry(anyString());
         verify(view, never()).showTransferMethodCurrency(anyString());
         verify(view, never()).showTransferMethodTypes(ArgumentMatchers.<TransferMethodSelectionItem>anyList());
@@ -628,11 +628,11 @@ public class SelectTransferMethodPresenterTest {
 
         verify(view).showCountrySelectionDialog(any(TreeMap.class), anyString());
         verify(view, never()).showErrorLoadTransferMethodConfigurationKeys(
-                ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorLoadCurrency(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorLoadTransferMethodTypes(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorLoadCountrySelection(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorLoadCurrencySelection(ArgumentMatchers.<HyperwalletError>anyList());
+                ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadCurrency(ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadTransferMethodTypes(ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadCountrySelection(ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadCurrencySelection(ArgumentMatchers.<Error>anyList());
         verify(view, never()).showAddTransferMethod(anyString(), anyString(), anyString(), anyString());
     }
 
@@ -656,11 +656,11 @@ public class SelectTransferMethodPresenterTest {
 
         verify(view, never()).showCountrySelectionDialog(any(TreeMap.class), anyString());
         verify(view, never()).showErrorLoadTransferMethodConfigurationKeys(
-                ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorLoadCurrency(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorLoadTransferMethodTypes(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorLoadCountrySelection(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorLoadCurrencySelection(ArgumentMatchers.<HyperwalletError>anyList());
+                ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadCurrency(ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadTransferMethodTypes(ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadCountrySelection(ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadCurrencySelection(ArgumentMatchers.<Error>anyList());
         verify(view, never()).showAddTransferMethod(anyString(), anyString(), anyString(), anyString());
     }
 
@@ -709,11 +709,11 @@ public class SelectTransferMethodPresenterTest {
 
         verify(view, never()).showCountrySelectionDialog(any(TreeMap.class), anyString());
         verify(view, never()).showErrorLoadTransferMethodConfigurationKeys(
-                ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorLoadCurrency(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorLoadTransferMethodTypes(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorLoadCountrySelection(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorLoadCurrencySelection(ArgumentMatchers.<HyperwalletError>anyList());
+                ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadCurrency(ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadTransferMethodTypes(ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadCountrySelection(ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadCurrencySelection(ArgumentMatchers.<Error>anyList());
         verify(view, never()).showAddTransferMethod(anyString(), anyString(), anyString(), anyString());
     }
 
@@ -739,11 +739,11 @@ public class SelectTransferMethodPresenterTest {
 
         verify(view).showCurrencySelectionDialog(any(TreeMap.class), anyString());
         verify(view, never()).showErrorLoadTransferMethodConfigurationKeys(
-                ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorLoadCurrency(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorLoadTransferMethodTypes(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorLoadCountrySelection(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorLoadCurrencySelection(ArgumentMatchers.<HyperwalletError>anyList());
+                ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadCurrency(ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadTransferMethodTypes(ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadCountrySelection(ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadCurrencySelection(ArgumentMatchers.<Error>anyList());
         verify(view, never()).showAddTransferMethod(anyString(), anyString(), anyString(), anyString());
     }
 
@@ -767,11 +767,11 @@ public class SelectTransferMethodPresenterTest {
 
         verify(view, never()).showCurrencySelectionDialog(any(TreeMap.class), anyString());
         verify(view, never()).showErrorLoadTransferMethodConfigurationKeys(
-                ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorLoadCurrency(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorLoadTransferMethodTypes(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorLoadCountrySelection(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorLoadCurrencySelection(ArgumentMatchers.<HyperwalletError>anyList());
+                ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadCurrency(ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadTransferMethodTypes(ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadCountrySelection(ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadCurrencySelection(ArgumentMatchers.<Error>anyList());
         verify(view, never()).showAddTransferMethod(anyString(), anyString(), anyString(), anyString());
     }
 
@@ -820,28 +820,28 @@ public class SelectTransferMethodPresenterTest {
 
         verify(view, never()).showCurrencySelectionDialog(any(TreeMap.class), anyString());
         verify(view, never()).showErrorLoadTransferMethodConfigurationKeys(
-                ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorLoadCurrency(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorLoadTransferMethodTypes(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorLoadCountrySelection(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorLoadCurrencySelection(ArgumentMatchers.<HyperwalletError>anyList());
+                ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadCurrency(ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadTransferMethodTypes(ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadCountrySelection(ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadCurrencySelection(ArgumentMatchers.<Error>anyList());
         verify(view, never()).showAddTransferMethod(anyString(), anyString(), anyString(), anyString());
     }
 
-    private HyperwalletErrors createErrors() {
-        List<HyperwalletError> errors = new ArrayList<>();
-        HyperwalletError error = new HyperwalletError("test message", "TEST_CODE");
+    private Errors createErrors() {
+        List<Error> errors = new ArrayList<>();
+        Error error = new Error("test message", "TEST_CODE");
         errors.add(error);
-        return new HyperwalletErrors(errors);
+        return new Errors(errors);
     }
 
     @Test
     public void testLoadMethods_whenLoadUserWithError_checkShowingErrors() {
 
-        final HyperwalletError error = new HyperwalletError("test message", "TEST_CODE");
-        List<HyperwalletError> errorList = new ArrayList<>();
+        final Error error = new Error("test message", "TEST_CODE");
+        List<Error> errorList = new ArrayList<>();
         errorList.add(error);
-        final HyperwalletErrors errors = new HyperwalletErrors(errorList);
+        final Errors errors = new Errors(errorList);
 
         doAnswer(new Answer() {
             @Override
@@ -858,13 +858,13 @@ public class SelectTransferMethodPresenterTest {
         selectTransferMethodPresenter.loadTransferMethodConfigurationKeys(false, "CA", "CAD");
 
         verify(view, never()).showErrorLoadTransferMethodConfigurationKeys(
-                ArgumentMatchers.<HyperwalletError>anyList());
+                ArgumentMatchers.<Error>anyList());
 
         selectTransferMethodPresenter.loadCurrency(false, "CA");
-        verify(view, never()).showErrorLoadCurrency(ArgumentMatchers.<HyperwalletError>anyList());
+        verify(view, never()).showErrorLoadCurrency(ArgumentMatchers.<Error>anyList());
 
         selectTransferMethodPresenter.loadTransferMethodTypes(false, "CA", "CAD");
-        verify(view, never()).showErrorLoadTransferMethodTypes(ArgumentMatchers.<HyperwalletError>anyList());
+        verify(view, never()).showErrorLoadTransferMethodTypes(ArgumentMatchers.<Error>anyList());
 
 
         // When
@@ -873,12 +873,12 @@ public class SelectTransferMethodPresenterTest {
         // Then
         selectTransferMethodPresenter.loadTransferMethodConfigurationKeys(false, "CA", "CAD");
 
-        verify(view).showErrorLoadTransferMethodConfigurationKeys(ArgumentMatchers.<HyperwalletError>anyList());
+        verify(view).showErrorLoadTransferMethodConfigurationKeys(ArgumentMatchers.<Error>anyList());
 
         selectTransferMethodPresenter.loadCurrency(false, "CA");
-        verify(view).showErrorLoadCurrency(ArgumentMatchers.<HyperwalletError>anyList());
+        verify(view).showErrorLoadCurrency(ArgumentMatchers.<Error>anyList());
 
         selectTransferMethodPresenter.loadTransferMethodTypes(false, "CA", "CAD");
-        verify(view).showErrorLoadTransferMethodTypes(ArgumentMatchers.<HyperwalletError>anyList());
+        verify(view).showErrorLoadTransferMethodTypes(ArgumentMatchers.<Error>anyList());
     }
 }

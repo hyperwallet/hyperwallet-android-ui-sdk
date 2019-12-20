@@ -23,7 +23,7 @@ import androidx.annotation.Nullable;
 
 import com.hyperwallet.android.exception.HyperwalletException;
 import com.hyperwallet.android.model.graphql.field.DataType;
-import com.hyperwallet.android.model.graphql.field.HyperwalletField;
+import com.hyperwallet.android.model.graphql.field.Field;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
@@ -40,12 +40,12 @@ public class WidgetFactory {
     }};
 
     @SuppressWarnings("unchecked")
-    public static AbstractWidget newWidget(@NonNull HyperwalletField field, @NonNull WidgetEventListener listener,
+    public static AbstractWidget newWidget(@NonNull Field field, @NonNull WidgetEventListener listener,
             @Nullable String defaultValue, @NonNull View view) throws HyperwalletException {
         try {
             if (WIDGET_MAP_DEFINITION.containsKey(field.getDataType())) {
                 return (AbstractWidget) WIDGET_MAP_DEFINITION.get(field.getDataType())
-                        .getConstructor(HyperwalletField.class, WidgetEventListener.class, String.class, View.class)
+                        .getConstructor(Field.class, WidgetEventListener.class, String.class, View.class)
                         .newInstance(field, listener, defaultValue, view);
             }
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException e) {

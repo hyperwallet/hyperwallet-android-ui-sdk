@@ -13,17 +13,17 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import static com.hyperwallet.android.model.user.HyperwalletUser.ProfileTypes.INDIVIDUAL;
+import static com.hyperwallet.android.model.user.User.ProfileTypes.INDIVIDUAL;
 
-import com.hyperwallet.android.model.HyperwalletError;
-import com.hyperwallet.android.model.HyperwalletErrors;
-import com.hyperwallet.android.model.graphql.HyperwalletFee;
+import com.hyperwallet.android.model.Error;
+import com.hyperwallet.android.model.Errors;
+import com.hyperwallet.android.model.graphql.Fee;
 import com.hyperwallet.android.model.graphql.HyperwalletTransferMethodConfigurationField;
 import com.hyperwallet.android.model.graphql.ProcessingTime;
-import com.hyperwallet.android.model.graphql.field.HyperwalletFieldGroup;
-import com.hyperwallet.android.model.graphql.field.HyperwalletTransferMethodConfiguration;
-import com.hyperwallet.android.model.transfermethod.HyperwalletBankAccount;
-import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
+import com.hyperwallet.android.model.graphql.field.FieldGroup;
+import com.hyperwallet.android.model.graphql.field.TransferMethodConfiguration;
+import com.hyperwallet.android.model.transfermethod.BankAccount;
+import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodConfigurationRepository;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepository;
@@ -58,8 +58,8 @@ public class AddTransferMethodPresenterTest {
     private final static CountDownLatch LATCH = new CountDownLatch(1);
     private final static int AWAIT_TIME_MS = 50;
 
-    private final HyperwalletErrors errors = createErrors();
-    private final HyperwalletBankAccount bankAccount = new HyperwalletBankAccount
+    private final Errors errors = createErrors();
+    private final BankAccount bankAccount = new BankAccount
             .Builder("CA", "CAD", "3423423432")
             .build();
     @Rule
@@ -74,9 +74,9 @@ public class AddTransferMethodPresenterTest {
     @Mock
     private AddTransferMethodContract.View view;
     @Captor
-    private ArgumentCaptor<List<HyperwalletFieldGroup>> fieldArgumentCaptor;
+    private ArgumentCaptor<List<FieldGroup>> fieldArgumentCaptor;
     @Captor
-    private ArgumentCaptor<List<HyperwalletError>> mErrorListArgumentCaptor;
+    private ArgumentCaptor<List<Error>> mErrorListArgumentCaptor;
 
     @Before
     public void setUp() {
@@ -96,16 +96,16 @@ public class AddTransferMethodPresenterTest {
                 callback.onTransferMethodLoaded(bankAccount);
                 return callback;
             }
-        }).when(tmRepository).createTransferMethod(any(HyperwalletTransferMethod.class),
+        }).when(tmRepository).createTransferMethod(any(TransferMethod.class),
                 any(TransferMethodRepository.LoadTransferMethodCallback.class));
 
         // Then
         presenter.createTransferMethod(bankAccount);
 
         verify(view, never()).showErrorLoadTransferMethodConfigurationFields(
-                ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorAddTransferMethod(ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, atLeastOnce()).notifyTransferMethodAdded(any(HyperwalletBankAccount.class));
+                ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorAddTransferMethod(ArgumentMatchers.<Error>anyList());
+        verify(view, atLeastOnce()).notifyTransferMethodAdded(any(BankAccount.class));
     }
 
     @Test
@@ -121,15 +121,15 @@ public class AddTransferMethodPresenterTest {
                 callback.onError(errors);
                 return callback;
             }
-        }).when(tmRepository).createTransferMethod(any(HyperwalletTransferMethod.class),
+        }).when(tmRepository).createTransferMethod(any(TransferMethod.class),
                 any(TransferMethodRepository.LoadTransferMethodCallback.class));
 
         // Then
         presenter.createTransferMethod(bankAccount);
 
         verify(view, atLeastOnce()).showErrorAddTransferMethod(mErrorListArgumentCaptor.capture());
-        verify(view, never()).notifyTransferMethodAdded(any(HyperwalletTransferMethod.class));
-        List<HyperwalletError> capturedList = mErrorListArgumentCaptor.getValue();
+        verify(view, never()).notifyTransferMethodAdded(any(TransferMethod.class));
+        List<Error> capturedList = mErrorListArgumentCaptor.getValue();
         assertNotNull(capturedList);
         assertThat(capturedList, hasItems(errors.getErrors().get(0)));
     }
@@ -143,7 +143,7 @@ public class AddTransferMethodPresenterTest {
 
         JSONObject jsonObject = new JSONObject(
                 externalResourceManager.getResourceContent("add_transfer_method_presenter_test.json"));
-        final HyperwalletTransferMethodConfiguration configuration = new HyperwalletTransferMethodConfiguration(
+        final TransferMethodConfiguration configuration = new TransferMethodConfiguration(
                 jsonObject);
 
         // When
@@ -167,9 +167,9 @@ public class AddTransferMethodPresenterTest {
 
         verify(view).showTransferMethodFields(fieldArgumentCaptor.capture());
         verify(view, never()).showErrorLoadTransferMethodConfigurationFields(
-                ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorAddTransferMethod(ArgumentMatchers.<HyperwalletError>anyList());
-        List<HyperwalletFieldGroup> responseFields = fieldArgumentCaptor.getValue();
+                ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorAddTransferMethod(ArgumentMatchers.<Error>anyList());
+        List<FieldGroup> responseFields = fieldArgumentCaptor.getValue();
         assertThat(responseFields, hasItem(configuration.getFieldGroups().get(0)));
     }
 
@@ -193,7 +193,7 @@ public class AddTransferMethodPresenterTest {
         presenter.loadTransferMethodConfigurationFields(false, "CA", "CAD", "BANK_ACCOUNT", INDIVIDUAL);
         LATCH.await(AWAIT_TIME_MS, TimeUnit.MILLISECONDS);
 
-        verify(view, never()).showTransferMethodFields(ArgumentMatchers.<HyperwalletFieldGroup>anyList());
+        verify(view, never()).showTransferMethodFields(ArgumentMatchers.<FieldGroup>anyList());
         verify(view, atLeastOnce()).showErrorLoadTransferMethodConfigurationFields(mErrorListArgumentCaptor.capture());
         assertThat(mErrorListArgumentCaptor.getValue(), hasItem(errors.getErrors().get(0)));
     }
@@ -205,10 +205,10 @@ public class AddTransferMethodPresenterTest {
         verify(tmcRepository, atLeastOnce()).refreshFields();
         verify(tmcRepository, atLeastOnce()).getFields(anyString(), anyString(), anyString(), anyString(),
                 any(TransferMethodConfigurationRepository.LoadFieldsCallback.class));
-        verify(view, never()).showTransferMethodFields(ArgumentMatchers.<HyperwalletFieldGroup>anyList());
+        verify(view, never()).showTransferMethodFields(ArgumentMatchers.<FieldGroup>anyList());
         verify(view, never()).showErrorLoadTransferMethodConfigurationFields(
-                ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorAddTransferMethod(ArgumentMatchers.<HyperwalletError>anyList());
+                ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorAddTransferMethod(ArgumentMatchers.<Error>anyList());
     }
 
     @Test
@@ -223,8 +223,8 @@ public class AddTransferMethodPresenterTest {
         verify(tmcRepository, atLeastOnce()).getFields(anyString(), anyString(), anyString(), anyString(),
                 any(TransferMethodConfigurationRepository.LoadFieldsCallback.class));
         verify(view, never()).hideProgressBar();
-        verify(view, never()).showTransferMethodFields(ArgumentMatchers.<HyperwalletFieldGroup>anyList());
-        verify(view, never()).showTransactionInformation(ArgumentMatchers.<HyperwalletFee>anyList(),
+        verify(view, never()).showTransferMethodFields(ArgumentMatchers.<FieldGroup>anyList());
+        verify(view, never()).showTransactionInformation(ArgumentMatchers.<Fee>anyList(),
                 any(ProcessingTime.class));
     }
 
@@ -251,8 +251,8 @@ public class AddTransferMethodPresenterTest {
 
         verify(view, never()).hideProgressBar();
         verify(view, never()).showErrorLoadTransferMethodConfigurationFields(
-                ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorAddTransferMethod(ArgumentMatchers.<HyperwalletError>anyList());
+                ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorAddTransferMethod(ArgumentMatchers.<Error>anyList());
     }
 
     @Test
@@ -268,14 +268,14 @@ public class AddTransferMethodPresenterTest {
                 callback.onTransferMethodLoaded(bankAccount);
                 return callback;
             }
-        }).when(tmRepository).createTransferMethod(any(HyperwalletTransferMethod.class),
+        }).when(tmRepository).createTransferMethod(any(TransferMethod.class),
                 any(TransferMethodRepository.LoadTransferMethodCallback.class));
 
         // Then
         presenter.createTransferMethod(bankAccount);
 
         verify(view, never()).hideCreateButtonProgressBar();
-        verify(view, never()).notifyTransferMethodAdded(any(HyperwalletTransferMethod.class));
+        verify(view, never()).notifyTransferMethodAdded(any(TransferMethod.class));
     }
 
     @Test
@@ -291,52 +291,52 @@ public class AddTransferMethodPresenterTest {
                 callback.onError(errors);
                 return callback;
             }
-        }).when(tmRepository).createTransferMethod(any(HyperwalletTransferMethod.class),
+        }).when(tmRepository).createTransferMethod(any(TransferMethod.class),
                 any(TransferMethodRepository.LoadTransferMethodCallback.class));
 
         // Then
         presenter.createTransferMethod(bankAccount);
 
         verify(view, never()).hideCreateButtonProgressBar();
-        verify(view, never()).showInputErrors(ArgumentMatchers.<HyperwalletError>anyList());
+        verify(view, never()).showInputErrors(ArgumentMatchers.<Error>anyList());
         verify(view, never()).showErrorLoadTransferMethodConfigurationFields(
-                ArgumentMatchers.<HyperwalletError>anyList());
-        verify(view, never()).showErrorAddTransferMethod(ArgumentMatchers.<HyperwalletError>anyList());
+                ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorAddTransferMethod(ArgumentMatchers.<Error>anyList());
     }
 
     @Test
     public void testHandleUnmappedFieldError_hasFieldErrorUnmapped() {
         Map<String, Object> widgetState = new HashMap<>();
         widgetState.put("fieldOne", new Object());
-        List<HyperwalletError> errorList = new ArrayList<HyperwalletError>() {{
-            add(new HyperwalletError("Test Error", "fieldTwo", "ERROR_UNMAPPED_FIELD"));
-            add(new HyperwalletError("Test Error", "fieldThree", "ERROR_UNMAPPED_FIELD"));
+        List<Error> errorList = new ArrayList<Error>() {{
+            add(new Error("Test Error", "fieldTwo", "ERROR_UNMAPPED_FIELD"));
+            add(new Error("Test Error", "fieldThree", "ERROR_UNMAPPED_FIELD"));
         }};
 
         // test
         presenter.handleUnmappedFieldError(widgetState, errorList);
 
-        verify(view, atLeastOnce()).showErrorAddTransferMethod(ArgumentMatchers.<HyperwalletError>anyList());
+        verify(view, atLeastOnce()).showErrorAddTransferMethod(ArgumentMatchers.<Error>anyList());
     }
 
     @Test
     public void testHandleUnmappedFieldError_fieldsAreMapped() {
         Map<String, Object> widgetState = new HashMap<>();
         widgetState.put("fieldOne", new Object());
-        List<HyperwalletError> errorList = new ArrayList<HyperwalletError>() {{
-            add(new HyperwalletError("Test Error", "fieldOne", "ERROR_UNMAPPED_FIELD"));
+        List<Error> errorList = new ArrayList<Error>() {{
+            add(new Error("Test Error", "fieldOne", "ERROR_UNMAPPED_FIELD"));
         }};
 
         // test
         presenter.handleUnmappedFieldError(widgetState, errorList);
 
-        verify(view, never()).showErrorAddTransferMethod(ArgumentMatchers.<HyperwalletError>anyList());
+        verify(view, never()).showErrorAddTransferMethod(ArgumentMatchers.<Error>anyList());
     }
 
-    private HyperwalletErrors createErrors() {
-        List<HyperwalletError> errors = new ArrayList<>();
-        HyperwalletError error = new HyperwalletError("test message", "TEST_CODE");
+    private Errors createErrors() {
+        List<Error> errors = new ArrayList<>();
+        Error error = new Error("test message", "TEST_CODE");
         errors.add(error);
-        return new HyperwalletErrors(errors);
+        return new Errors(errors);
     }
 }

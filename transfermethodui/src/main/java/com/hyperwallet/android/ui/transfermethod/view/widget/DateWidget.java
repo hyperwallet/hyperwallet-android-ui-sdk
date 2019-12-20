@@ -30,7 +30,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.android.material.textfield.TextInputLayout;
-import com.hyperwallet.android.model.graphql.field.HyperwalletField;
+import com.hyperwallet.android.model.graphql.field.Field;
 import com.hyperwallet.android.ui.R;
 
 import java.text.ParseException;
@@ -43,7 +43,7 @@ public class DateWidget extends AbstractWidget implements DateChangedListener {
     private TextInputLayout mTextInputLayout;
     private EditText mEditText;
 
-    public DateWidget(@NonNull HyperwalletField field, @NonNull WidgetEventListener listener,
+    public DateWidget(@NonNull Field field, @NonNull WidgetEventListener listener,
             @Nullable String defaultValue, @NonNull View defaultFocusView) {
         super(field, listener, defaultValue, defaultFocusView);
         mDateUtils = new DateUtils();
@@ -117,7 +117,7 @@ public class DateWidget extends AbstractWidget implements DateChangedListener {
             try {
                 mEditText.setText(mDateUtils.convertDateFromServerToWidgetFormat(selectedDate));
                 mListener.saveTextChanged(getName(), getValue());
-                mListener.valueChanged();
+                mListener.valueChanged(DateWidget.this);
             } catch (ParseException e) {
                 mEditText.setText(selectedDate);
             }

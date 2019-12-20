@@ -60,7 +60,7 @@ public class TransferRepositoryImpl implements TransferRepository {
 
             @Override
             public void onFailure(HyperwalletException exception) {
-                callback.onError(exception.getHyperwalletErrors());
+                callback.onError(exception.getErrors());
                 EspressoIdlingResource.decrement();
             }
 
@@ -87,7 +87,7 @@ public class TransferRepositoryImpl implements TransferRepository {
 
                     @Override
                     public void onFailure(HyperwalletException exception) {
-                        callback.onError(exception.getHyperwalletErrors());
+                        callback.onError(exception.getErrors());
                         EspressoIdlingResource.decrement();
                     }
 

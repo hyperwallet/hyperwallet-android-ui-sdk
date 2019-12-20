@@ -28,7 +28,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.hyperwallet.android.model.HyperwalletErrors;
+import com.hyperwallet.android.model.Errors;
 import com.hyperwallet.android.model.receipt.Receipt;
 import com.hyperwallet.android.ui.common.repository.Event;
 import com.hyperwallet.android.ui.common.util.PageGroups;
@@ -68,9 +68,9 @@ public class ListUserReceiptActivity extends AppCompatActivity implements OnNetw
                 .ListReceiptViewModelFactory(new UserReceiptRepositoryImpl()))
                 .get(ReceiptViewModel.class);
 
-        mReceiptViewModel.getReceiptErrors().observe(this, new Observer<Event<HyperwalletErrors>>() {
+        mReceiptViewModel.getReceiptErrors().observe(this, new Observer<Event<Errors>>() {
             @Override
-            public void onChanged(Event<HyperwalletErrors> event) {
+            public void onChanged(Event<Errors> event) {
                 if (event != null && !event.isContentConsumed()) {
                     ActivityUtils.showError(ListUserReceiptActivity.this, TAG, PageGroups.RECEIPTS,
                             event.getContent().getErrors());

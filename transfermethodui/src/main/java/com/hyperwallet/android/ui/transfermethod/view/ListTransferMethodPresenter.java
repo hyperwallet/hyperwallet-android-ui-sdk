@@ -18,9 +18,9 @@ package com.hyperwallet.android.ui.transfermethod.view;
 
 import androidx.annotation.NonNull;
 
-import com.hyperwallet.android.model.HyperwalletErrors;
+import com.hyperwallet.android.model.Errors;
 import com.hyperwallet.android.model.StatusTransition;
-import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
+import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepository;
 
 import java.util.List;
@@ -40,7 +40,7 @@ public class ListTransferMethodPresenter implements ListTransferMethodContract.P
         mView.showProgressBar();
         mTransferMethodRepository.loadTransferMethods(new TransferMethodRepository.LoadTransferMethodListCallback() {
             @Override
-            public void onTransferMethodListLoaded(List<HyperwalletTransferMethod> transferMethods) {
+            public void onTransferMethodListLoaded(List<TransferMethod> transferMethods) {
                 if (!mView.isActive()) {
                     return;
                 }
@@ -49,7 +49,7 @@ public class ListTransferMethodPresenter implements ListTransferMethodContract.P
             }
 
             @Override
-            public void onError(HyperwalletErrors errors) {
+            public void onError(Errors errors) {
                 if (!mView.isActive()) {
                     return;
                 }
@@ -60,7 +60,7 @@ public class ListTransferMethodPresenter implements ListTransferMethodContract.P
     }
 
     @Override
-    public void deactivateTransferMethod(@NonNull final HyperwalletTransferMethod transferMethod) {
+    public void deactivateTransferMethod(@NonNull final TransferMethod transferMethod) {
         mView.showProgressBar();
         mTransferMethodRepository.deactivateTransferMethod(transferMethod,
                 new TransferMethodRepository.DeactivateTransferMethodCallback() {
@@ -76,7 +76,7 @@ public class ListTransferMethodPresenter implements ListTransferMethodContract.P
                     }
 
                     @Override
-                    public void onError(HyperwalletErrors errors) {
+                    public void onError(Errors errors) {
                         if (!mView.isActive()) {
                             return;
                         }

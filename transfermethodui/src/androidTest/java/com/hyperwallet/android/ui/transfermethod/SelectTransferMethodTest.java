@@ -21,10 +21,10 @@ import static org.hamcrest.Matchers.instanceOf;
 
 import static java.net.HttpURLConnection.HTTP_OK;
 
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.BANK_ACCOUNT;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.BANK_CARD;
-import static com.hyperwallet.android.model.user.HyperwalletUser.ProfileTypes.BUSINESS;
-import static com.hyperwallet.android.model.user.HyperwalletUser.ProfileTypes.INDIVIDUAL;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.BANK_ACCOUNT;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.BANK_CARD;
+import static com.hyperwallet.android.model.user.User.ProfileTypes.BUSINESS;
+import static com.hyperwallet.android.model.user.User.ProfileTypes.INDIVIDUAL;
 import static com.hyperwallet.android.ui.testutils.util.EspressoUtils.atPosition;
 import static com.hyperwallet.android.ui.testutils.util.EspressoUtils.withDrawable;
 import static com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_COUNTRY;
@@ -74,7 +74,7 @@ public class SelectTransferMethodTest {
     @Rule
     public IntentsTestRule<SelectTransferMethodActivity> mIntentsTestRule =
             new IntentsTestRule<>(SelectTransferMethodActivity.class, true, false);
-    
+
     @Before
     public void setup() {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager

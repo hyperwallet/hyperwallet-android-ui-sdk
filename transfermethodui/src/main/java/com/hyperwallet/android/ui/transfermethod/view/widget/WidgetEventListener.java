@@ -23,7 +23,7 @@ import java.util.TreeMap;
 
 public interface WidgetEventListener {
 
-    void valueChanged();
+    void valueChanged(@NonNull final AbstractWidget widget);
 
     boolean isWidgetSelectionFragmentDialogOpen();
 

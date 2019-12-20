@@ -19,9 +19,9 @@ package com.hyperwallet.android.ui.transfermethod.repository;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.hyperwallet.android.model.HyperwalletErrors;
+import com.hyperwallet.android.model.Errors;
 import com.hyperwallet.android.model.StatusTransition;
-import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
+import com.hyperwallet.android.model.transfermethod.TransferMethod;
 
 import java.util.List;
 
@@ -36,7 +36,7 @@ public interface TransferMethodRepository {
      * @param transferMethod Transfer Method Representation
      * @param callback       @see {@link LoadTransferMethodCallback}
      */
-    void createTransferMethod(@NonNull HyperwalletTransferMethod transferMethod,
+    void createTransferMethod(@NonNull TransferMethod transferMethod,
             @NonNull LoadTransferMethodCallback callback);
 
     /**
@@ -56,10 +56,10 @@ public interface TransferMethodRepository {
     /**
      * Deactivate transfer method specified.
      *
-     * @param transferMethod transfer method to deactivate @see {@link HyperwalletTransferMethod}
+     * @param transferMethod transfer method to deactivate @see {@link TransferMethod}
      * @param callback       @see {@link DeactivateTransferMethodCallback}
      */
-    void deactivateTransferMethod(@NonNull final HyperwalletTransferMethod transferMethod,
+    void deactivateTransferMethod(@NonNull final TransferMethod transferMethod,
             @NonNull final DeactivateTransferMethodCallback callback);
 
     /**
@@ -67,15 +67,15 @@ public interface TransferMethodRepository {
      * Load Transfer Method information
      * <p>
      * When Transfer Method is properly loaded
-     * {@link LoadTransferMethodCallback#onTransferMethodLoaded(HyperwalletTransferMethod)}
-     * is invoked otherwise {@link LoadTransferMethodCallback#onError(HyperwalletErrors)}
+     * {@link LoadTransferMethodCallback#onTransferMethodLoaded(TransferMethod)}
+     * is invoked otherwise {@link LoadTransferMethodCallback#onError(Errors)}
      * is called to further log or show error information
      */
     interface LoadTransferMethodCallback {
 
-        void onTransferMethodLoaded(@Nullable HyperwalletTransferMethod transferMethod);
+        void onTransferMethodLoaded(@Nullable TransferMethod transferMethod);
 
-        void onError(HyperwalletErrors errors);
+        void onError(Errors errors);
     }
 
     /**
@@ -84,9 +84,9 @@ public interface TransferMethodRepository {
      */
     interface LoadTransferMethodListCallback {
 
-        void onTransferMethodListLoaded(@Nullable List<HyperwalletTransferMethod> transferMethods);
+        void onTransferMethodListLoaded(@Nullable List<TransferMethod> transferMethods);
 
-        void onError(HyperwalletErrors errors);
+        void onError(Errors errors);
     }
 
     /**
@@ -97,6 +97,6 @@ public interface TransferMethodRepository {
 
         void onTransferMethodDeactivated(final @NonNull StatusTransition statusTransition);
 
-        void onError(HyperwalletErrors errors);
+        void onError(Errors errors);
     }
 }

@@ -18,10 +18,10 @@ package com.hyperwallet.android.ui.transfermethod.view;
 
 import androidx.annotation.NonNull;
 
-import com.hyperwallet.android.model.HyperwalletError;
-import com.hyperwallet.android.model.HyperwalletErrors;
+import com.hyperwallet.android.model.Error;
+import com.hyperwallet.android.model.Errors;
 import com.hyperwallet.android.model.graphql.HyperwalletTransferMethodConfigurationField;
-import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
+import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodConfigurationRepository;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepository;
@@ -46,12 +46,12 @@ public class AddTransferMethodPresenter implements AddTransferMethodContract.Pre
     }
 
     @Override
-    public void createTransferMethod(@NonNull final HyperwalletTransferMethod transferMethod) {
+    public void createTransferMethod(@NonNull final TransferMethod transferMethod) {
         mView.showCreateButtonProgressBar();
         mTransferMethodRepository.createTransferMethod(transferMethod,
                 new TransferMethodRepository.LoadTransferMethodCallback() {
                     @Override
-                    public void onTransferMethodLoaded(HyperwalletTransferMethod transferMethod) {
+                    public void onTransferMethodLoaded(TransferMethod transferMethod) {
 
                         if (!mView.isActive()) {
                             return;
@@ -61,7 +61,7 @@ public class AddTransferMethodPresenter implements AddTransferMethodContract.Pre
                     }
 
                     @Override
-                    public void onError(HyperwalletErrors errors) {
+                    public void onError(Errors errors) {
                         if (!mView.isActive()) {
                             return;
                         }
@@ -102,7 +102,7 @@ public class AddTransferMethodPresenter implements AddTransferMethodContract.Pre
                     }
 
                     @Override
-                    public void onError(@NonNull HyperwalletErrors errors) {
+                    public void onError(@NonNull Errors errors) {
                         if (!mView.isActive()) {
                             return;
                         }
@@ -114,11 +114,11 @@ public class AddTransferMethodPresenter implements AddTransferMethodContract.Pre
 
     @Override
     public void handleUnmappedFieldError(@NonNull final Map<String, ?> fieldSet,
-            @NonNull final List<HyperwalletError> errors) {
-        for (HyperwalletError error : errors) {
+            @NonNull final List<Error> errors) {
+        for (Error error : errors) {
             if (fieldSet.get(error.getFieldName()) == null) {
-                List<HyperwalletError> errorList = new ArrayList<HyperwalletError>() {{
-                    add(new HyperwalletError(R.string.error_unmapped_field, ERROR_UNMAPPED_FIELD));
+                List<Error> errorList = new ArrayList<Error>() {{
+                    add(new Error(R.string.error_unmapped_field, ERROR_UNMAPPED_FIELD));
                 }};
                 mView.showErrorAddTransferMethod(errorList);
                 return;
