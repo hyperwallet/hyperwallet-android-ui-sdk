@@ -642,8 +642,6 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
 
                 if (!isWidgetItemValid(widget) && !containsInvalidWidget) {
                     containsInvalidWidget = true;
-                    int pixels = (int) (resources.getDimension(R.dimen.negative_padding)
-                            * resources.getDisplayMetrics().density);
                     mNestedScrollView.smoothScrollTo(0, currentView.getTop() - pixels);
                 }
             }
