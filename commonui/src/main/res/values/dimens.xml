@@ -78,4 +78,5 @@
     <dimen name="circle_icon">48dp</dimen>
     <dimen name="circle_white_density">3dp</dimen>
     <dimen name="component_elevation">4dp</dimen>
+    <dimen name="negative_padding">3dp</dimen>
 </resources>

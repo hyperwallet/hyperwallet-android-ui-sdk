@@ -66,7 +66,7 @@ public class DefaultAccountWidget extends AbstractWidget {
                     } else {
                         mValue = Boolean.FALSE.toString();
                     }
-                    mListener.valueChanged();
+                    mListener.valueChanged(DefaultAccountWidget.this);
                 }
             });
             appendLayout(toggle, true);
