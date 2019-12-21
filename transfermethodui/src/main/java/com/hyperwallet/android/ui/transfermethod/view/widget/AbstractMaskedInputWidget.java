@@ -177,7 +177,6 @@ public abstract class AbstractMaskedInputWidget extends AbstractWidget {
     class InputMaskTextWatcher implements TextWatcher {
 
         private final EditText mEditText;
-        private boolean ignoreChange;
 
         InputMaskTextWatcher(@NonNull final EditText editText) {
             mEditText = editText;
@@ -188,25 +187,29 @@ public abstract class AbstractMaskedInputWidget extends AbstractWidget {
         }
 
         @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-            if (ignoreChange) return;
+        public void afterTextChanged(Editable s) {
+        }
 
-            if (before != count) {
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            if (canFormat(s, before, count)) {
                 String displayedValue = formatToDisplay(s.toString());
-                ignoreChange = true;
                 mEditText.setText(displayedValue);
                 mEditText.setSelection(displayedValue.length());
 
                 mValue = formatToApi(displayedValue);
                 mListener.saveTextChanged(getName(), getValue());
             }
-
-            ignoreChange = false;
         }
 
-        @Override
-        public void afterTextChanged(Editable s) {
+        private boolean canFormat(final CharSequence s, final int before, final int count) {
+            // first input character that we are going to accept
+            if (before == 0 && count == 1 && s.length() == 1) {
+                return true;
+            }
 
+            // succeeding characters that we can only accept
+            return (before != count) && (before > 0 && count == 1);
         }
     }
 }
