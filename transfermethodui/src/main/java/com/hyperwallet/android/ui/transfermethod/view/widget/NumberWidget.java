@@ -29,12 +29,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.android.material.textfield.TextInputLayout;
-import com.hyperwallet.android.model.graphql.field.HyperwalletField;
+import com.hyperwallet.android.model.graphql.field.Field;
 import com.hyperwallet.android.ui.R;
 
 public class NumberWidget extends AbstractMaskedInputWidget {
 
-    public NumberWidget(@NonNull HyperwalletField field, @NonNull WidgetEventListener listener,
+    public NumberWidget(@NonNull Field field, @NonNull WidgetEventListener listener,
             @Nullable String defaultValue, @NonNull View defaultFocusView) {
         super(field, listener, defaultValue, defaultFocusView);
         mValue = defaultValue;
@@ -54,6 +54,8 @@ public class NumberWidget extends AbstractMaskedInputWidget {
 
             final EditText editText = new EditText(
                     new ContextThemeWrapper(viewGroup.getContext(), R.style.Widget_Hyperwallet_TextInputEditText));
+            editText.setTextColor(viewGroup.getContext().getResources().getColor(R.color.regularColorSecondary));
+
             editText.setEnabled(mField.isEditable());
             setIdFromFieldLabel(mTextInputLayout);
             setIdFromFieldName(editText);
@@ -64,7 +66,7 @@ public class NumberWidget extends AbstractMaskedInputWidget {
                     if (!hasFocus) {
                         String input = ((EditText) v).getText().toString();
                         mValue = formatToApi(input);
-                        mListener.valueChanged();
+                        mListener.valueChanged(NumberWidget.this);
                     } else {
                         mListener.widgetFocused(NumberWidget.this.getName());
                     }

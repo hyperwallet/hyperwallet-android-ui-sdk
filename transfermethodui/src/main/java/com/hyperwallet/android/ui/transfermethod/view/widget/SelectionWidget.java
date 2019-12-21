@@ -31,8 +31,8 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.material.textfield.TextInputLayout;
-import com.hyperwallet.android.model.graphql.field.HyperwalletField;
-import com.hyperwallet.android.model.graphql.field.HyperwalletFieldSelectionOption;
+import com.hyperwallet.android.model.graphql.field.Field;
+import com.hyperwallet.android.model.graphql.field.FieldSelectionOption;
 import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.transfermethod.view.WidgetSelectionDialogFragment;
 
@@ -47,13 +47,13 @@ public class SelectionWidget extends AbstractWidget implements WidgetSelectionDi
     private TextInputLayout mTextInputLayout;
     private String mValue;
 
-    public SelectionWidget(@NonNull HyperwalletField field, @NonNull WidgetEventListener listener,
+    public SelectionWidget(@NonNull Field field, @NonNull WidgetEventListener listener,
             @Nullable String defaultValue, @NonNull View defaultFocusView) {
         super(field, listener, defaultValue, defaultFocusView);
         mValue = defaultValue;
         mSelectionNameValueMap = new TreeMap<>();
         if (field.getFieldSelectionOptions() != null) {
-            for (HyperwalletFieldSelectionOption option : field.getFieldSelectionOptions()) {
+            for (FieldSelectionOption option : field.getFieldSelectionOptions()) {
                 if (!TextUtils.isEmpty(option.getLabel())) {
                     mSelectionNameValueMap.put(option.getLabel(), option.getValue());
                 }
@@ -76,6 +76,8 @@ public class SelectionWidget extends AbstractWidget implements WidgetSelectionDi
                             : R.style.Widget_Hyperwallet_TextInputLayout_Disabled));
             mEditText = new EditText(
                     new ContextThemeWrapper(viewGroup.getContext(), R.style.Widget_Hyperwallet_TextInputEditText));
+            mEditText.setTextColor(viewGroup.getContext().getResources().getColor(R.color.regularColorSecondary));
+
             mEditText.setText(
                     getKeyFromValue(TextUtils.isEmpty(mDefaultValue) ? mValue = mField.getValue() : mDefaultValue));
             setIdFromFieldLabel(mTextInputLayout);
@@ -94,12 +96,14 @@ public class SelectionWidget extends AbstractWidget implements WidgetSelectionDi
                         hideSoftKey(v);
                         showSelectionFragmentDialog();
                     } else {
-                        if (isValid()) {
-                            mTextInputLayout.setError(null);
+                        if (!mListener.isWidgetSelectionFragmentDialogOpen()) {
+                            if (isValid()) {
+                                mTextInputLayout.setError(null);
+                            }
+                            String label = ((EditText) v).getText().toString();
+                            mValue = mSelectionNameValueMap.get(label);
+                            mListener.valueChanged(SelectionWidget.this);
                         }
-                        String label = ((EditText) v).getText().toString();
-                        mValue = mSelectionNameValueMap.get(label);
-                        mListener.valueChanged();
                     }
                 }
             });
@@ -137,8 +141,9 @@ public class SelectionWidget extends AbstractWidget implements WidgetSelectionDi
     @Override
     public void onWidgetSelectionItemClicked(@NonNull String selectedValue) {
         mValue = selectedValue;
-        mListener.valueChanged();
+        mListener.valueChanged(SelectionWidget.this);
         mEditText.setText(getKeyFromValue(selectedValue));
+        mEditText.requestFocus();
     }
 
     private void hideSoftKey(@NonNull View focusedView) {

@@ -29,7 +29,7 @@ import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.hyperwallet.android.model.HyperwalletError;
+import com.hyperwallet.android.model.Error;
 import com.hyperwallet.android.ui.common.R;
 import com.hyperwallet.android.ui.common.util.ErrorTypes;
 import com.hyperwallet.android.ui.common.util.ErrorUtils;
@@ -56,7 +56,7 @@ public class DefaultErrorDialogFragment extends DialogFragment {
      *
      * @param errors List of Errors @see {@link Error}
      */
-    public static DefaultErrorDialogFragment newInstance(@NonNull List<HyperwalletError> errors) {
+    public static DefaultErrorDialogFragment newInstance(@NonNull List<Error> errors) {
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList(ARGUMENT_ERROR_KEY, new ArrayList<>(errors));
 
@@ -94,13 +94,13 @@ public class DefaultErrorDialogFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle state) {
-        ArrayList<HyperwalletError> errors = getArguments().getParcelableArrayList(ARGUMENT_ERROR_KEY);
+        ArrayList<Error> errors = getArguments().getParcelableArrayList(ARGUMENT_ERROR_KEY);
         if (errors == null) {
             errors = new ArrayList<>(1);
         }
 
         if (errors.isEmpty()) {
-            HyperwalletError error = new HyperwalletError(getString(R.string.unexpected_exception),
+            Error error = new Error(getString(R.string.unexpected_exception),
                     EC_UNEXPECTED_EXCEPTION);
             errors.add(error);
         }

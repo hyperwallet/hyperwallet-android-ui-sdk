@@ -32,7 +32,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.hyperwallet.android.model.HyperwalletErrors;
+import com.hyperwallet.android.model.Errors;
 import com.hyperwallet.android.model.transfer.Transfer;
 import com.hyperwallet.android.ui.common.repository.Event;
 import com.hyperwallet.android.ui.common.util.PageGroups;
@@ -48,7 +48,8 @@ import com.hyperwallet.android.ui.user.repository.UserRepositoryFactory;
 /**
  * Create Transfer Activity
  */
-public class CreateTransferActivity extends AppCompatActivity implements OnNetworkErrorCallback {
+public class CreateTransferActivity extends AppCompatActivity implements OnNetworkErrorCallback,
+        Navigator<Event<Transfer>> {
 
     public static final String TAG = "transfer-funds:create-transfer";
     public static final String EXTRA_TRANSFER_SOURCE_TOKEN = "TRANSFER_SOURCE_TOKEN";
@@ -179,8 +180,13 @@ public class CreateTransferActivity extends AppCompatActivity implements OnNetwo
         }
 
 
-        public abstract void handleActivityResult(int requestCode, int resultCode, @Nullable Intent data);
-
+    @Override
+    protected void onDestroy() {
+        TransferRepositoryFactory.clearInstance();
+        TransferMethodRepositoryFactory.clearInstance();
+        UserRepositoryFactory.clearInstance();
+        super.onDestroy();
+    }
 
         public void registerObservers() {
             mCreateTransferViewModel.getLoadTransferRequiredDataErrors().observe(mAppCompatActivity,

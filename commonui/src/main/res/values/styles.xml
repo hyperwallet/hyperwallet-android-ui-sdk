@@ -40,7 +40,7 @@
         parent="@style/ThemeOverlay.AppCompat.ActionBar">
         <item name="android:background">@color/regularColorPrimary</item>
         <item name="android:titleTextAppearance">
-            @style/TextAppearance.MaterialComponents.Subtitle1
+            @style/TextAppearance.Hyperwallet.Headline6
         </item>
         <item name="android:popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
     </style>

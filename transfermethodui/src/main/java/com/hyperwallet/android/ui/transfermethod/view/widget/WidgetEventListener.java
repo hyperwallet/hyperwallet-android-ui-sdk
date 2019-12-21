@@ -23,7 +23,9 @@ import java.util.TreeMap;
 
 public interface WidgetEventListener {
 
-    void valueChanged();
+    void valueChanged(@NonNull final AbstractWidget widget);
+
+    boolean isWidgetSelectionFragmentDialogOpen();
 
     void openWidgetSelectionFragmentDialog(@NonNull final TreeMap<String, String> nameValueMap,
             @NonNull final String selectedName, @NonNull final String fieldLabel, @NonNull final String fieldName);

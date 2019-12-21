@@ -56,6 +56,7 @@
     <dimen name="collapsing_header_size">136dp</dimen>
     <dimen name="divider_height">1dp</dimen>
     <dimen name="divider_padding_top">16dp</dimen>
+    <dimen name="item_horizontal_padding">3dp</dimen>
     <dimen name="item_vertical_padding">8dp</dimen>
     <dimen name="item_vertical_margin">8dp</dimen>
     <dimen name="keyboard_arrow_height">14dp</dimen>
@@ -76,4 +77,6 @@
     <dimen name="widget_left_margin_offset">32dp</dimen>
     <dimen name="circle_icon">48dp</dimen>
     <dimen name="circle_white_density">3dp</dimen>
+    <dimen name="component_elevation">4dp</dimen>
+    <dimen name="negative_padding">3dp</dimen>
 </resources>

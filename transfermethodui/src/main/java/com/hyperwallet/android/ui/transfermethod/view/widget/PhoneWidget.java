@@ -29,12 +29,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.android.material.textfield.TextInputLayout;
-import com.hyperwallet.android.model.graphql.field.HyperwalletField;
+import com.hyperwallet.android.model.graphql.field.Field;
 import com.hyperwallet.android.ui.R;
 
 public class PhoneWidget extends AbstractMaskedInputWidget {
 
-    public PhoneWidget(@NonNull HyperwalletField field, @NonNull WidgetEventListener listener,
+    public PhoneWidget(@NonNull Field field, @NonNull WidgetEventListener listener,
             @Nullable String defaultValue, @NonNull View defaultFocusView) {
         super(field, listener, defaultValue, defaultFocusView);
         mValue = defaultValue;
@@ -54,6 +54,7 @@ public class PhoneWidget extends AbstractMaskedInputWidget {
             final EditText editText = new EditText(
                     new ContextThemeWrapper(viewGroup.getContext(), R.style.Widget_Hyperwallet_TextInputEditText));
             editText.setEnabled(mField.isEditable());
+            editText.setTextColor(viewGroup.getContext().getResources().getColor(R.color.regularColorSecondary));
 
             mTextInputLayout.addView(editText);
             mTextInputLayout.setHint(mField.getLabel());
@@ -65,7 +66,7 @@ public class PhoneWidget extends AbstractMaskedInputWidget {
                     if (!hasFocus) {
                         String input = ((EditText) v).getText().toString();
                         mValue = formatToApi(input);
-                        mListener.valueChanged();
+                        mListener.valueChanged(PhoneWidget.this);
                     } else {
                         mListener.widgetFocused(PhoneWidget.this.getName());
                     }

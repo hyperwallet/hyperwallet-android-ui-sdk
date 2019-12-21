@@ -12,8 +12,8 @@ import static org.mockito.Mockito.verify;
 
 import static java.net.HttpURLConnection.HTTP_OK;
 
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TOKEN;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_CURRENCY;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TOKEN;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TRANSFER_METHOD_CURRENCY;
 import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.ERROR_SDK_MODULE_UNAVAILABLE;
 
 import android.content.Intent;
@@ -22,12 +22,12 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.hyperwallet.android.Hyperwallet;
-import com.hyperwallet.android.model.HyperwalletError;
-import com.hyperwallet.android.model.HyperwalletErrors;
+import com.hyperwallet.android.model.Error;
+import com.hyperwallet.android.model.Errors;
 import com.hyperwallet.android.model.TypeReference;
 import com.hyperwallet.android.model.transfer.Transfer;
-import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
-import com.hyperwallet.android.model.user.HyperwalletUser;
+import com.hyperwallet.android.model.transfermethod.TransferMethod;
+import com.hyperwallet.android.model.user.User;
 import com.hyperwallet.android.ui.testutils.TestAuthenticationProvider;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletMockWebServer;
@@ -76,7 +76,7 @@ public class CreateTransferViewModelTest {
     private TransferRepository mTransferRepository;
 
     private Transfer mTransfer;
-    private HyperwalletTransferMethod mTransferMethod;
+    private TransferMethod mTransferMethod;
 
     @Before
     public void setup() {
@@ -97,7 +97,7 @@ public class CreateTransferViewModelTest {
                 .memo("Create quote test notes")
                 .build();
 
-        mTransferMethod = new HyperwalletTransferMethod();
+        mTransferMethod = new TransferMethod();
         mTransferMethod.setField(TOKEN, "trm-bank-token");
         mTransferMethod.setField(TRANSFER_METHOD_CURRENCY, "CAD");
 
@@ -114,7 +114,7 @@ public class CreateTransferViewModelTest {
         doAnswer(new Answer() {
             @Override
             public Object answer(InvocationOnMock invocation) {
-                HyperwalletUser user = new HyperwalletUser.Builder()
+                User user = new User.Builder()
                         .token("usr-token-source")
                         .build();
                 UserRepository.LoadUserCallback callback = invocation.getArgument(0);
@@ -333,11 +333,11 @@ public class CreateTransferViewModelTest {
     @Test
     public void testCreateQuoteTransfer_hasGenericError() throws Exception {
         String errorResponse = mResourceManager.getResourceContent("errors/transfer_error_response.json");
-        final HyperwalletErrors errors = JsonUtils.fromJsonString(errorResponse,
-                new TypeReference<HyperwalletErrors>() {
+        final Errors errors = JsonUtils.fromJsonString(errorResponse,
+                new TypeReference<Errors>() {
                 });
 
-        final HyperwalletTransferMethod transferMethod = new HyperwalletTransferMethod();
+        final TransferMethod transferMethod = new TransferMethod();
         transferMethod.setField(TOKEN, "trm-bank-token");
         transferMethod.setField(TRANSFER_METHOD_CURRENCY, "CAD");
 
@@ -364,7 +364,7 @@ public class CreateTransferViewModelTest {
 
         assertThat(viewModel.getCreateTransferError().getValue(), is(notNullValue()));
         assertThat(viewModel.getCreateTransferError().getValue().getContent().getErrors(),
-                Matchers.<HyperwalletError>hasSize(1));
+                Matchers.<Error>hasSize(1));
         assertThat(viewModel.getCreateTransferError().getValue().getContent().getErrors().get(0).getMessage(),
                 is("The source token you provided doesn’t exist or is not a valid source."));
         assertThat(viewModel.getCreateTransferError().getValue().getContent().getErrors().get(0).getCode(),
@@ -375,11 +375,11 @@ public class CreateTransferViewModelTest {
     public void testCreateQuoteTransfer_hasInvalidAmountError() throws Exception {
         String errorResponse = mResourceManager.getResourceContent(
                 "errors/create_transfer_error_invalid_amount_response.json");
-        final HyperwalletErrors errors = JsonUtils.fromJsonString(errorResponse,
-                new TypeReference<HyperwalletErrors>() {
+        final Errors errors = JsonUtils.fromJsonString(errorResponse,
+                new TypeReference<Errors>() {
                 });
 
-        final HyperwalletTransferMethod transferMethod = new HyperwalletTransferMethod();
+        final TransferMethod transferMethod = new TransferMethod();
         transferMethod.setField(TOKEN, "trm-bank-token");
         transferMethod.setField(TRANSFER_METHOD_CURRENCY, "CAD");
 
@@ -413,11 +413,11 @@ public class CreateTransferViewModelTest {
     @Test
     public void testCreateQuoteTransfer_hasInvalidDestinationError() throws Exception {
         String errorResponse = mResourceManager.getResourceContent("errors/transfer_destination_input_invalid.json");
-        final HyperwalletErrors errors = JsonUtils.fromJsonString(errorResponse,
-                new TypeReference<HyperwalletErrors>() {
+        final Errors errors = JsonUtils.fromJsonString(errorResponse,
+                new TypeReference<Errors>() {
                 });
 
-        final HyperwalletTransferMethod transferMethod = new HyperwalletTransferMethod();
+        final TransferMethod transferMethod = new TransferMethod();
         transferMethod.setField(TOKEN, "trm-bank-token");
         transferMethod.setField(TRANSFER_METHOD_CURRENCY, "CAD");
 
@@ -656,7 +656,7 @@ public class CreateTransferViewModelTest {
 
         assertThat(viewModel.getModuleUnavailableError().getValue(), is(notNullValue()));
         assertThat(viewModel.getModuleUnavailableError().getValue().getContent().getErrors(),
-                Matchers.<HyperwalletError>hasSize(1));
+                Matchers.<Error>hasSize(1));
         assertThat(viewModel.getModuleUnavailableError().getValue().getContent().getErrors().get(0).getCode(),
                 is(ERROR_SDK_MODULE_UNAVAILABLE));
     }

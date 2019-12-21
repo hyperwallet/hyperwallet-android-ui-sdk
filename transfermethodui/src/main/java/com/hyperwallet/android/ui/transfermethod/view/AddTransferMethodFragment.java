@@ -16,50 +16,52 @@
  */
 package com.hyperwallet.android.ui.transfermethod.view;
 
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.PROFILE_TYPE;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_COUNTRY;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_CURRENCY;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TYPE;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.BANK_ACCOUNT;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.BANK_CARD;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.PAYPAL_ACCOUNT;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.WIRE_ACCOUNT;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.PROFILE_TYPE;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TRANSFER_METHOD_COUNTRY;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TRANSFER_METHOD_CURRENCY;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TYPE;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.BANK_ACCOUNT;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.BANK_CARD;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.PAYPAL_ACCOUNT;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.WIRE_ACCOUNT;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.hyperwallet.android.exception.HyperwalletException;
-import com.hyperwallet.android.model.HyperwalletError;
-import com.hyperwallet.android.model.graphql.HyperwalletFee;
+import com.hyperwallet.android.model.Error;
+import com.hyperwallet.android.model.graphql.Fee;
 import com.hyperwallet.android.model.graphql.ProcessingTime;
-import com.hyperwallet.android.model.graphql.field.HyperwalletField;
-import com.hyperwallet.android.model.graphql.field.HyperwalletFieldGroup;
-import com.hyperwallet.android.model.transfermethod.HyperwalletBankAccount;
-import com.hyperwallet.android.model.transfermethod.HyperwalletBankCard;
-import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
+import com.hyperwallet.android.model.graphql.field.Field;
+import com.hyperwallet.android.model.graphql.field.FieldGroup;
+import com.hyperwallet.android.model.transfermethod.BankAccount;
+import com.hyperwallet.android.model.transfermethod.BankCard;
 import com.hyperwallet.android.model.transfermethod.PayPalAccount;
+import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.common.insight.HyperwalletInsight;
 import com.hyperwallet.android.ui.common.util.ErrorTypes;
 import com.hyperwallet.android.ui.common.util.PageGroups;
-import com.hyperwallet.android.ui.transfermethod.HyperwalletTransferMethodLocalBroadcast;
+import com.hyperwallet.android.ui.transfermethod.TransferMethodLocalBroadcast;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
 import com.hyperwallet.android.ui.transfermethod.view.widget.AbstractWidget;
 import com.hyperwallet.android.ui.transfermethod.view.widget.DateChangedListener;
@@ -90,6 +92,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     private Button mCreateTransferMethodButton;
     private String mCurrency;
     private ViewGroup mDynamicContainer;
+    private NestedScrollView mNestedScrollView;
     private OnAddTransferMethodNetworkErrorCallback mOnAddTransferMethodNetworkErrorCallback;
     private OnLoadTransferMethodConfigurationFieldsNetworkErrorCallback
             mOnLoadTransferMethodConfigurationFieldsNetworkErrorCallback;
@@ -97,7 +100,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     private View mProgressBar;
     private boolean mShowCreateProgressBar;
     private String mTransferMethodType;
-    private HyperwalletTransferMethod mTransferMethod;
+    private TransferMethod mTransferMethod;
     private String mTransferMethodProfileType;
     private HashMap<String, WidgetInputState> mWidgetInputStateHashMap;
 
@@ -181,21 +184,14 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        HyperwalletInsight.getInstance().trackImpression(requireContext(),
-                TAG, PageGroups.TRANSFER_METHOD,
-                new HyperwalletInsight.TransferMethodParamsBuilder()
-                        .country(mCountry)
-                        .currency(mCurrency)
-                        .type(mTransferMethodType)
-                        .profileType(mTransferMethodProfileType)
-                        .build());
 
         mDynamicContainer = view.findViewById(R.id.add_transfer_method_dynamic_container);
+        mNestedScrollView = view.findViewById(R.id.add_transfer_method_scroll_view);
 
         mCreateButtonProgressBar = view.findViewById(R.id.add_transfer_method_create_button_progress_bar);
         mProgressBar = view.findViewById(R.id.add_transfer_method_progress_bar_layout);
-
         mCreateTransferMethodButton = view.findViewById(R.id.add_transfer_method_button);
+
         mCreateTransferMethodButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         mCreateTransferMethodButton.setTextColor(getResources().getColor(R.color.regularColorPrimary));
         mCreateTransferMethodButton.setOnClickListener(new View.OnClickListener() {
@@ -256,7 +252,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     }
 
     @Override
-    public void showErrorAddTransferMethod(@NonNull final List<HyperwalletError> errors) {
+    public void showErrorAddTransferMethod(@NonNull final List<Error> errors) {
         mOnAddTransferMethodNetworkErrorCallback.showErrorsAddTransferMethod(errors);
     }
 
@@ -273,7 +269,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     }
 
     @Override
-    public void showErrorLoadTransferMethodConfigurationFields(@NonNull final List<HyperwalletError> errors) {
+    public void showErrorLoadTransferMethodConfigurationFields(@NonNull final List<Error> errors) {
         mOnLoadTransferMethodConfigurationFieldsNetworkErrorCallback.showErrorsLoadTransferMethodConfigurationFields(
                 errors);
     }
@@ -290,8 +286,8 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     }
 
     @Override
-    public void valueChanged() {
-        performValidation(false);
+    public void valueChanged(@NonNull final AbstractWidget widget) {
+        isWidgetItemValid(widget);
     }
 
     @Override
@@ -313,7 +309,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     }
 
     @Override
-    public void notifyTransferMethodAdded(@NonNull final HyperwalletTransferMethod transferMethod) {
+    public void notifyTransferMethodAdded(@NonNull final TransferMethod transferMethod) {
         HyperwalletInsight.getInstance().trackImpression(requireContext(),
                 TAG, PageGroups.TRANSFER_METHOD,
                 new HyperwalletInsight.TransferMethodParamsBuilder()
@@ -324,7 +320,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                         .profileType(mTransferMethodProfileType)
                         .build());
 
-        Intent intent = HyperwalletTransferMethodLocalBroadcast.createBroadcastIntentTransferMethodAdded(
+        Intent intent = TransferMethodLocalBroadcast.createBroadcastIntentTransferMethodAdded(
                 transferMethod);
         LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
         getActivity().setResult(Activity.RESULT_OK);
@@ -332,13 +328,13 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     }
 
     @Override
-    public void showTransferMethodFields(@NonNull final List<HyperwalletFieldGroup> fields) {
+    public void showTransferMethodFields(@NonNull final List<FieldGroup> fields) {
         mDynamicContainer.removeAllViews();
 
         try {
             Locale locale = new Locale.Builder().setRegion(mCountry).build();
             // group
-            for (HyperwalletFieldGroup group : fields) {
+            for (FieldGroup group : fields) {
                 View sectionHeader = LayoutInflater.from(mDynamicContainer.getContext())
                         .inflate(R.layout.item_widget_section_header, mDynamicContainer, false);
                 TextView sectionTitle = sectionHeader.findViewById(R.id.section_header_title);
@@ -347,7 +343,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                 mDynamicContainer.addView(sectionHeader);
 
                 // group fields
-                for (final HyperwalletField field : group.getFields()) {
+                for (final Field field : group.getFields()) {
                     AbstractWidget widget = WidgetFactory
                             .newWidget(field, this, mWidgetInputStateHashMap.containsKey(field.getName()) ?
                                             mWidgetInputStateHashMap.get(field.getName()).getValue() : "",
@@ -365,6 +361,15 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                 }
             }
 
+            HyperwalletInsight.getInstance().trackImpression(requireContext(),
+                    TAG, PageGroups.TRANSFER_METHOD,
+                    new HyperwalletInsight.TransferMethodParamsBuilder()
+                            .country(mCountry)
+                            .currency(mCurrency)
+                            .type(mTransferMethodType)
+                            .profileType(mTransferMethodProfileType)
+                            .build());
+
             if (mShowCreateProgressBar) {
                 setVisibleAndDisableFields();
             }
@@ -373,8 +378,8 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
         }
     }
 
-    private String getSectionHeaderText(@NonNull final HyperwalletFieldGroup group, @NonNull final Locale locale) {
-        if (group.getGroupName().equals(HyperwalletFieldGroup.GroupTypes.ACCOUNT_INFORMATION)) {
+    private String getSectionHeaderText(@NonNull final FieldGroup group, @NonNull final Locale locale) {
+        if (group.getGroupName().equals(FieldGroup.GroupTypes.ACCOUNT_INFORMATION)) {
             return requireContext().getResources()
                     .getString(R.string.account_information_section_header, locale.getDisplayName(), mCurrency);
         }
@@ -385,7 +390,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     }
 
     @Override
-    public void showTransactionInformation(@NonNull final List<HyperwalletFee> fees,
+    public void showTransactionInformation(@NonNull final List<Fee> fees,
             @Nullable final ProcessingTime processingTime) {
         View header = getView().findViewById(R.id.add_transfer_method_static_container_header);
         View container = getView().findViewById(R.id.add_transfer_method_static_container);
@@ -468,17 +473,20 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     }
 
     @Override
-    public void showInputErrors(@NonNull final List<HyperwalletError> errors) {
+    public void showInputErrors(@NonNull final List<Error> errors) {
         boolean focusSet = false;
         Context context = requireContext();
-        for (HyperwalletError error : errors) {
+        Resources resources = context.getResources();
+        int pixels = (int) (resources.getDimension(R.dimen.negative_padding) * resources.getDisplayMetrics().density);
+
+        for (Error error : errors) {
             for (int i = 0; i < mDynamicContainer.getChildCount(); i++) {
                 View view = mDynamicContainer.getChildAt(i);
                 if (view.getTag() instanceof AbstractWidget) {
                     AbstractWidget widget = (AbstractWidget) view.getTag();
                     if (widget.getName().equals(error.getFieldName())) {
                         if (!focusSet) {
-                            widget.getView(mDynamicContainer).requestFocus();
+                            mNestedScrollView.smoothScrollTo(0, view.getTop() - pixels);
                             focusSet = true;
                         }
                         HyperwalletInsight.getInstance().trackError(context,
@@ -503,6 +511,11 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     }
 
     @Override
+    public boolean isWidgetSelectionFragmentDialogOpen() {
+        return getFragmentManager().findFragmentByTag(WidgetSelectionDialogFragment.TAG) != null;
+    }
+
+    @Override
     public void openWidgetSelectionFragmentDialog(@NonNull final TreeMap<String, String> nameValueMap,
             @NonNull final String selectedName, @NonNull final String fieldLabel, @NonNull final String fieldName) {
         String selectedLabel = selectedName;
@@ -512,30 +525,31 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
             mWidgetInputStateHashMap.get(fieldName).setSelectedName(selectedLabel);
         }
 
-        getFragmentManager().popBackStack(WidgetSelectionDialogFragment.TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        if (!isWidgetSelectionFragmentDialogOpen()) {
+            WidgetSelectionDialogFragment widgetSelectionDialogFragment = WidgetSelectionDialogFragment
+                    .newInstance(nameValueMap, selectedLabel, fieldLabel, fieldName);
 
-        WidgetSelectionDialogFragment widgetSelectionDialogFragment = WidgetSelectionDialogFragment
-                .newInstance(nameValueMap, selectedLabel, fieldLabel, fieldName);
-
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-        fragmentTransaction.replace(android.R.id.content, widgetSelectionDialogFragment,
-                WidgetSelectionDialogFragment.TAG);
-        fragmentTransaction.addToBackStack(WidgetSelectionDialogFragment.TAG);
-        fragmentTransaction.commit();
+            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            fragmentTransaction.replace(android.R.id.content, widgetSelectionDialogFragment,
+                    WidgetSelectionDialogFragment.TAG);
+            fragmentTransaction.addToBackStack(WidgetSelectionDialogFragment.TAG);
+            fragmentTransaction.commit();
+        }
     }
 
     private void triggerSubmit() {
-        if (performValidation(true)) {
+        hideSoftKeys();
+        if (performValidation()) {
             switch (mTransferMethodType) {
                 case BANK_ACCOUNT:
-                    mTransferMethod = new HyperwalletBankAccount.Builder()
+                    mTransferMethod = new BankAccount.Builder()
                             .transferMethodCountry(mCountry)
                             .transferMethodCurrency(mCurrency)
                             .build();
                     break;
                 case BANK_CARD:
-                    mTransferMethod = new HyperwalletBankCard.Builder().
+                    mTransferMethod = new BankCard.Builder().
                             transferMethodCountry(mCountry).transferMethodCurrency(mCurrency).build();
                     break;
                 case PAYPAL_ACCOUNT:
@@ -545,14 +559,14 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                             .build();
                     break;
                 case WIRE_ACCOUNT:
-                    mTransferMethod = new HyperwalletBankAccount.Builder()
+                    mTransferMethod = new BankAccount.Builder()
                             .transferMethodCountry(mCountry)
                             .transferMethodCurrency(mCurrency)
                             .transferMethodType(WIRE_ACCOUNT)
                             .build();
                     break;
                 default:
-                    mTransferMethod = new HyperwalletTransferMethod();
+                    mTransferMethod = new TransferMethod();
                     mTransferMethod.setField(TRANSFER_METHOD_COUNTRY, mCountry);
                     mTransferMethod.setField(TRANSFER_METHOD_CURRENCY, mCurrency);
                     mTransferMethod.setField(TYPE, mTransferMethodType);
@@ -568,6 +582,17 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
 
             mTransferMethod.setField(PROFILE_TYPE, mTransferMethodProfileType);
             mPresenter.createTransferMethod(mTransferMethod);
+        }
+    }
+
+    private void hideSoftKeys() {
+        View view = requireActivity().getCurrentFocus();
+
+        if (view != null) {
+            view.clearFocus();
+            InputMethodManager inputMethodManager = (InputMethodManager) view.getContext().getSystemService(
+                    Activity.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
 
@@ -594,48 +619,74 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
         mCreateTransferMethodButton.setBackgroundColor(getResources().getColor(R.color.colorSecondaryDark));
     }
 
-    private boolean performValidation(boolean bypassFocusCheck) {
-        boolean valid = true;
+    /**
+     * Use this to perform validation on an entire form, typically used during form submission.
+     * @return true if the form is valid
+     */
+    private boolean performValidation() {
+        boolean containsInvalidWidget = false;
+
         // this is added since some phones triggers the create button but the widgets are not yet initialized
         boolean hasWidget = false;
-        Context context = requireContext();
+        Resources resources = requireContext().getResources();
+        int pixels = (int) (resources.getDimension(R.dimen.negative_padding) * resources.getDisplayMetrics().density);
+
         for (int i = 0; i < mDynamicContainer.getChildCount(); i++) {
-            View v = mDynamicContainer.getChildAt(i);
-            if (v.getTag() instanceof AbstractWidget) {
+            View currentView = mDynamicContainer.getChildAt(i);
+            if (currentView.getTag() instanceof AbstractWidget) {
                 hasWidget = true;
-                AbstractWidget widget = (AbstractWidget) v.getTag();
+
+                AbstractWidget widget = (AbstractWidget) currentView.getTag();
                 WidgetInputState widgetInputState = mWidgetInputStateHashMap.get(widget.getName());
                 widgetInputState.setValue(widget.getValue());
-                if (bypassFocusCheck || widgetInputState.hasFocused()) {
-                    if (widget.isValid()) {
-                        if (!widgetInputState.hasApiError()) {
-                            widgetInputState.setErrorMessage(null);
-                            widget.showValidationError(null);
-                        }
-                    } else {
-                        HyperwalletInsight.getInstance().trackError(context,
-                                TAG, PageGroups.TRANSFER_METHOD,
-                                new HyperwalletInsight.ErrorParamsBuilder()
-                                        .message(widget.getErrorMessage())
-                                        .fieldName(widget.getName())
-                                        .type(ErrorTypes.FORM_ERROR)
-                                        .addAll(new HyperwalletInsight.TransferMethodParamsBuilder()
-                                                .country(mCountry)
-                                                .currency(mCurrency)
-                                                .type(mTransferMethodType)
-                                                .profileType(mTransferMethodProfileType)
-                                                .build())
-                                        .build());
 
-                        valid = false;
-                        widget.showValidationError(widget.getErrorMessage());
-                        widgetInputState.setErrorMessage(widget.getErrorMessage());
-                        widgetInputState.setHasApiError(false);
-                    }
+                if (!isWidgetItemValid(widget) && !containsInvalidWidget) {
+                    containsInvalidWidget = true;
+                    mNestedScrollView.smoothScrollTo(0, currentView.getTop() - pixels);
                 }
             }
         }
-        return valid && hasWidget;
+        return hasWidget && !containsInvalidWidget;
+    }
+
+    /**
+     * Use this to perform validation on a single widget item, typically used while the user is inputting data.
+     *
+     * @param widget the widget to validate
+     * @return true if the input is valid
+     */
+    private boolean isWidgetItemValid(@NonNull final AbstractWidget widget) {
+        boolean valid = true;
+        Context context = requireContext();
+
+        WidgetInputState widgetInputState = mWidgetInputStateHashMap.get(widget.getName());
+        widgetInputState.setValue(widget.getValue());
+        if (widget.isValid()) {
+            if (!widgetInputState.hasApiError()) {
+                widgetInputState.setErrorMessage(null);
+                widget.showValidationError(null);
+            }
+        } else {
+            HyperwalletInsight.getInstance().trackError(context,
+                    TAG, PageGroups.TRANSFER_METHOD,
+                    new HyperwalletInsight.ErrorParamsBuilder()
+                            .message(widget.getErrorMessage())
+                            .fieldName(widget.getName())
+                            .type(ErrorTypes.FORM_ERROR)
+                            .addAll(new HyperwalletInsight.TransferMethodParamsBuilder()
+                                    .country(mCountry)
+                                    .currency(mCurrency)
+                                    .type(mTransferMethodType)
+                                    .profileType(mTransferMethodProfileType)
+                                    .build())
+                            .build());
+
+            valid = false;
+            widget.showValidationError(widget.getErrorMessage());
+            widgetInputState.setErrorMessage(widget.getErrorMessage());
+            widgetInputState.setHasApiError(false);
+        }
+        return valid;
     }
 
     @Override
@@ -673,10 +724,10 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     }
 
     interface OnLoadTransferMethodConfigurationFieldsNetworkErrorCallback {
-        void showErrorsLoadTransferMethodConfigurationFields(@NonNull final List<HyperwalletError> errors);
+        void showErrorsLoadTransferMethodConfigurationFields(@NonNull final List<Error> errors);
     }
 
     interface OnAddTransferMethodNetworkErrorCallback {
-        void showErrorsAddTransferMethod(@NonNull final List<HyperwalletError> errors);
+        void showErrorsAddTransferMethod(@NonNull final List<Error> errors);
     }
 }
