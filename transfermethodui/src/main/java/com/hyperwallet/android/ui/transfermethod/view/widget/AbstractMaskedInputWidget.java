@@ -192,7 +192,7 @@ public abstract class AbstractMaskedInputWidget extends AbstractWidget {
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            if (canFormat(s, before, count)) {
+            if (before != count) {
                 String displayedValue = formatToDisplay(s.toString());
                 mEditText.setText(displayedValue);
                 mEditText.setSelection(displayedValue.length());
@@ -200,16 +200,6 @@ public abstract class AbstractMaskedInputWidget extends AbstractWidget {
                 mValue = formatToApi(displayedValue);
                 mListener.saveTextChanged(getName(), getValue());
             }
-        }
-
-        private boolean canFormat(final CharSequence s, final int before, final int count) {
-            // first input character that we are going to accept
-            if (before == 0 && count == 1 && s.length() == 1) {
-                return true;
-            }
-
-            // succeeding characters that we can only accept
-            return (before != count) && (before > 0 && count == 1);
         }
     }
 }

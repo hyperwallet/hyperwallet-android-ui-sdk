@@ -16,8 +16,10 @@
  */
 package com.hyperwallet.android.ui.transfermethod.view.widget;
 
+import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -71,10 +73,74 @@ public class TextWidget extends AbstractMaskedInputWidget {
                     }
                 }
             });
-            editText.addTextChangedListener(new InputMaskTextWatcher(editText));
+            editText.addTextChangedListener(new TextWatcher() {
+
+                boolean ignoreChange;
+
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    if (ignoreChange) {
+                        ignoreChange = false;
+                        return;
+                    }
+
+                    if (!TextUtils.isEmpty(mValue)) {
+                        String displayValue = formatToDisplay(mValue);
+                        editText.setText(displayValue);
+                        editText.setSelection(displayValue.length());
+                    }
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    if (ignoreChange) return;
+
+                    if (before != count) {
+                        mValue = formatToApi(s.toString());
+                        mListener.saveTextChanged(getName(), getValue());
+                    } else {
+                        ignoreChange = true;
+                    }
+                }
+            });
 
             editText.setText(TextUtils.isEmpty(mDefaultValue) ? mField.getValue() : mDefaultValue);
             editText.setInputType(InputType.TYPE_CLASS_TEXT);
+//            if (mField.getMask() != null) {
+//                InputFilter[] filters = new InputFilter[]{new InputFilter() {
+//                    @Override
+//                    public CharSequence filter(CharSequence source,
+//                            int start, int end, Spanned dest,
+//                            int dstart, int dend) {
+//
+//                        if (source.equals("")) {
+//                            // this means backspace is triggered
+//                            return "";
+//                        }
+//                        return formatToDisplay(insertString(dest.toString(), source.toString(), dstart, dend));
+//                    }
+//
+//                    private String insertString(final String dest, final String toInsert, int start, int end) {
+//                        // last
+//                        if (start != 0 && end == dest.length()) {
+//                            return dest + toInsert;
+//                        }
+//                        // middle
+//                        else if (start != 0 && start == end) {
+//                            return dest.substring(0, start - 1) + toInsert + dest.substring(end);
+//                        }
+//
+//                        // start
+//                        return toInsert + dest;
+//                    }
+//                }};
+//                editText.setFilters(filters);
+//            }
             editText.setOnKeyListener(new DefaultKeyListener(mDefaultFocusView, editText));
             editText.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI | EditorInfo.IME_ACTION_NEXT);
 
