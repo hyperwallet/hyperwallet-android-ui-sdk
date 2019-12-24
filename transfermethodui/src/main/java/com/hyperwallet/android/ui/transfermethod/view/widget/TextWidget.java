@@ -16,10 +16,8 @@
  */
 package com.hyperwallet.android.ui.transfermethod.view.widget;
 
-import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -73,28 +71,8 @@ public class TextWidget extends AbstractMaskedInputWidget {
                     }
                 }
             });
-            editText.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                }
 
-                @Override
-                public void afterTextChanged(Editable s) {
-                    editText.removeTextChangedListener(this);
-                    String displayValue = formatToDisplay(mValue);
-                    s.replace(0, s.length(), displayValue);
-                    editText.addTextChangedListener(this);
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    if (before != count) {
-                        mValue = formatToApi(s.toString());
-                        mListener.saveTextChanged(getName(), getValue());
-                    }
-                }
-            });
-
+            editText.addTextChangedListener(new TextWidgetWatcher(editText));
             editText.setText(TextUtils.isEmpty(mDefaultValue) ? mField.getValue() : mDefaultValue);
             editText.setInputType(InputType.TYPE_CLASS_TEXT);
             editText.setOnKeyListener(new DefaultKeyListener(mDefaultFocusView, editText));
