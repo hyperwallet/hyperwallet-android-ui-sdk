@@ -12,7 +12,7 @@ apply from: "$rootProject.projectDir/publish.gradle"
 
 dependencies {
     implementation project(':commonui')
-    implementation project(":receiptrepository")
+    implementation project(':receiptrepository')
 
     implementation "com.google.android.material:material:$androidMaterialVersion"
     implementation "androidx.constraintlayout:constraintlayout:$constraintlayoutVersion"
