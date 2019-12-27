@@ -28,18 +28,21 @@ import static com.hyperwallet.android.model.transfermethod.TransferMethod.Transf
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -89,6 +92,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     private Button mCreateTransferMethodButton;
     private String mCurrency;
     private ViewGroup mDynamicContainer;
+    private NestedScrollView mNestedScrollView;
     private OnAddTransferMethodNetworkErrorCallback mOnAddTransferMethodNetworkErrorCallback;
     private OnLoadTransferMethodConfigurationFieldsNetworkErrorCallback
             mOnLoadTransferMethodConfigurationFieldsNetworkErrorCallback;
@@ -182,6 +186,8 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
         super.onViewCreated(view, savedInstanceState);
 
         mDynamicContainer = view.findViewById(R.id.add_transfer_method_dynamic_container);
+        mNestedScrollView = view.findViewById(R.id.add_transfer_method_scroll_view);
+
         mCreateButtonProgressBar = view.findViewById(R.id.add_transfer_method_create_button_progress_bar);
         mProgressBar = view.findViewById(R.id.add_transfer_method_progress_bar_layout);
         mCreateTransferMethodButton = view.findViewById(R.id.add_transfer_method_button);
@@ -280,8 +286,8 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     }
 
     @Override
-    public void valueChanged() {
-        performValidation(false);
+    public void valueChanged(@NonNull final AbstractWidget widget) {
+        isWidgetItemValid(widget);
     }
 
     @Override
@@ -470,6 +476,9 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     public void showInputErrors(@NonNull final List<Error> errors) {
         boolean focusSet = false;
         Context context = requireContext();
+        Resources resources = context.getResources();
+        int pixels = (int) (resources.getDimension(R.dimen.negative_padding) * resources.getDisplayMetrics().density);
+
         for (Error error : errors) {
             for (int i = 0; i < mDynamicContainer.getChildCount(); i++) {
                 View view = mDynamicContainer.getChildAt(i);
@@ -477,7 +486,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                     AbstractWidget widget = (AbstractWidget) view.getTag();
                     if (widget.getName().equals(error.getFieldName())) {
                         if (!focusSet) {
-                            widget.getView(mDynamicContainer).requestFocus();
+                            mNestedScrollView.smoothScrollTo(0, view.getTop() - pixels);
                             focusSet = true;
                         }
                         HyperwalletInsight.getInstance().trackError(context,
@@ -530,7 +539,8 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     }
 
     private void triggerSubmit() {
-        if (performValidation(true)) {
+        hideSoftKeys();
+        if (performValidation()) {
             switch (mTransferMethodType) {
                 case BANK_ACCOUNT:
                     mTransferMethod = new BankAccount.Builder()
@@ -575,6 +585,17 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
         }
     }
 
+    private void hideSoftKeys() {
+        View view = requireActivity().getCurrentFocus();
+
+        if (view != null) {
+            view.clearFocus();
+            InputMethodManager inputMethodManager = (InputMethodManager) view.getContext().getSystemService(
+                    Activity.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
     void onWidgetSelectionItemClicked(@NonNull final String selectedValue, @NonNull final String fieldName) {
         for (int i = 0; i < mDynamicContainer.getChildCount(); i++) {
             View view = mDynamicContainer.getChildAt(i);
@@ -598,48 +619,74 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
         mCreateTransferMethodButton.setBackgroundColor(getResources().getColor(R.color.colorSecondaryDark));
     }
 
-    private boolean performValidation(boolean bypassFocusCheck) {
-        boolean valid = true;
+    /**
+     * Use this to perform validation on an entire form, typically used during form submission.
+     * @return true if the form is valid
+     */
+    private boolean performValidation() {
+        boolean containsInvalidWidget = false;
+
         // this is added since some phones triggers the create button but the widgets are not yet initialized
         boolean hasWidget = false;
-        Context context = requireContext();
+        Resources resources = requireContext().getResources();
+        int pixels = (int) (resources.getDimension(R.dimen.negative_padding) * resources.getDisplayMetrics().density);
+
         for (int i = 0; i < mDynamicContainer.getChildCount(); i++) {
-            View v = mDynamicContainer.getChildAt(i);
-            if (v.getTag() instanceof AbstractWidget) {
+            View currentView = mDynamicContainer.getChildAt(i);
+            if (currentView.getTag() instanceof AbstractWidget) {
                 hasWidget = true;
-                AbstractWidget widget = (AbstractWidget) v.getTag();
+
+                AbstractWidget widget = (AbstractWidget) currentView.getTag();
                 WidgetInputState widgetInputState = mWidgetInputStateHashMap.get(widget.getName());
                 widgetInputState.setValue(widget.getValue());
-                if (bypassFocusCheck || widgetInputState.hasFocused()) {
-                    if (widget.isValid()) {
-                        if (!widgetInputState.hasApiError()) {
-                            widgetInputState.setErrorMessage(null);
-                            widget.showValidationError(null);
-                        }
-                    } else {
-                        HyperwalletInsight.getInstance().trackError(context,
-                                TAG, PageGroups.TRANSFER_METHOD,
-                                new HyperwalletInsight.ErrorParamsBuilder()
-                                        .message(widget.getErrorMessage())
-                                        .fieldName(widget.getName())
-                                        .type(ErrorTypes.FORM_ERROR)
-                                        .addAll(new HyperwalletInsight.TransferMethodParamsBuilder()
-                                                .country(mCountry)
-                                                .currency(mCurrency)
-                                                .type(mTransferMethodType)
-                                                .profileType(mTransferMethodProfileType)
-                                                .build())
-                                        .build());
 
-                        valid = false;
-                        widget.showValidationError(widget.getErrorMessage());
-                        widgetInputState.setErrorMessage(widget.getErrorMessage());
-                        widgetInputState.setHasApiError(false);
-                    }
+                if (!isWidgetItemValid(widget) && !containsInvalidWidget) {
+                    containsInvalidWidget = true;
+                    mNestedScrollView.smoothScrollTo(0, currentView.getTop() - pixels);
                 }
             }
         }
-        return valid && hasWidget;
+        return hasWidget && !containsInvalidWidget;
+    }
+
+    /**
+     * Use this to perform validation on a single widget item, typically used while the user is inputting data.
+     *
+     * @param widget the widget to validate
+     * @return true if the input is valid
+     */
+    private boolean isWidgetItemValid(@NonNull final AbstractWidget widget) {
+        boolean valid = true;
+        Context context = requireContext();
+
+        WidgetInputState widgetInputState = mWidgetInputStateHashMap.get(widget.getName());
+        widgetInputState.setValue(widget.getValue());
+        if (widget.isValid()) {
+            if (!widgetInputState.hasApiError()) {
+                widgetInputState.setErrorMessage(null);
+                widget.showValidationError(null);
+            }
+        } else {
+            HyperwalletInsight.getInstance().trackError(context,
+                    TAG, PageGroups.TRANSFER_METHOD,
+                    new HyperwalletInsight.ErrorParamsBuilder()
+                            .message(widget.getErrorMessage())
+                            .fieldName(widget.getName())
+                            .type(ErrorTypes.FORM_ERROR)
+                            .addAll(new HyperwalletInsight.TransferMethodParamsBuilder()
+                                    .country(mCountry)
+                                    .currency(mCurrency)
+                                    .type(mTransferMethodType)
+                                    .profileType(mTransferMethodProfileType)
+                                    .build())
+                            .build());
+
+            valid = false;
+            widget.showValidationError(widget.getErrorMessage());
+            widgetInputState.setErrorMessage(widget.getErrorMessage());
+            widgetInputState.setHasApiError(false);
+        }
+        return valid;
     }
 
     @Override
