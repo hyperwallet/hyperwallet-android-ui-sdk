@@ -223,6 +223,7 @@ abstract class AbstractMaskedInputWidget extends AbstractWidget {
             if (displayValue != null) {
                 mEditText.removeTextChangedListener(this);
                 s.replace(0, s.length(), displayValue);
+                mValue = formatToApi(displayValue);
                 mEditText.addTextChangedListener(this);
             }
         }
