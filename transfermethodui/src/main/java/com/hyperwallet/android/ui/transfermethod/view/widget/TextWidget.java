@@ -71,8 +71,8 @@ public class TextWidget extends AbstractMaskedInputWidget {
                     }
                 }
             });
-            editText.addTextChangedListener(new InputMaskTextWatcher(editText));
 
+            editText.addTextChangedListener(new TextWidgetWatcher(editText));
             editText.setText(TextUtils.isEmpty(mDefaultValue) ? mField.getValue() : mDefaultValue);
             editText.setInputType(InputType.TYPE_CLASS_TEXT);
             editText.setOnKeyListener(new DefaultKeyListener(mDefaultFocusView, editText));

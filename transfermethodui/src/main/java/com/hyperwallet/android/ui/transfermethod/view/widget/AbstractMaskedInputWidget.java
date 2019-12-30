@@ -32,17 +32,17 @@ import com.hyperwallet.android.model.graphql.field.Field;
 /**
  * Provides additional methods for Widget to help with formatting for input types.
  */
-public abstract class AbstractMaskedInputWidget extends AbstractWidget {
+abstract class AbstractMaskedInputWidget extends AbstractWidget {
     private static final char NUMBER_TOKEN = '#';
     private static final char ENGLISH_LETTER_TOKEN = '@';
     private static final char LETTER_OR_NUMBER_TOKEN = '*';
     private static final char BACKSLASH_ESCAPED = '\\';
 
-    protected ViewGroup mContainer;
-    protected String mValue;
-    protected TextInputLayout mTextInputLayout;
+    ViewGroup mContainer;
+    String mValue;
+    TextInputLayout mTextInputLayout;
 
-    public AbstractMaskedInputWidget(@Nullable Field field, @NonNull WidgetEventListener listener,
+    AbstractMaskedInputWidget(@Nullable Field field, @NonNull WidgetEventListener listener,
             @Nullable String defaultValue, @NonNull View defaultFocusView) {
         super(field, listener, defaultValue, defaultFocusView);
     }
@@ -54,7 +54,7 @@ public abstract class AbstractMaskedInputWidget extends AbstractWidget {
      * @param displayValue the value that would be coming from the UI component
      * @return the raw value that will be sent to the server for submission and validation
      */
-    protected String formatToApi(@NonNull final String displayValue) {
+    String formatToApi(@NonNull final String displayValue) {
         if (mField.getMask() != null && mField.getMask().getScrubRegex() != null) {
             return displayValue.replaceAll(mField.getMask().getScrubRegex(), "");
         }
@@ -68,7 +68,7 @@ public abstract class AbstractMaskedInputWidget extends AbstractWidget {
      * @param apiValue data in raw form
      * @return a String formatted to the specification in the mask pattern
      */
-    protected String formatToDisplay(@NonNull final String apiValue) {
+    String formatToDisplay(@NonNull final String apiValue) {
         if (mField != null && mField.getMask() != null) {
             // format
             String pattern = mField.getMask().getPattern(apiValue);
@@ -175,7 +175,8 @@ public abstract class AbstractMaskedInputWidget extends AbstractWidget {
     }
 
     class InputMaskTextWatcher implements TextWatcher {
-        private final EditText mEditText;
+
+        final EditText mEditText;
 
         InputMaskTextWatcher(@NonNull final EditText editText) {
             mEditText = editText;
@@ -183,6 +184,10 @@ public abstract class AbstractMaskedInputWidget extends AbstractWidget {
 
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
         }
 
         @Override
@@ -196,10 +201,42 @@ public abstract class AbstractMaskedInputWidget extends AbstractWidget {
                 mListener.saveTextChanged(getName(), getValue());
             }
         }
+    }
 
+    /**
+     * Text widget needs more control on updating text on edit text within watcher
+     * to avoid re-triggering the watcher an additional routine is executed during
+     * {@link #afterTextChanged(Editable)} is being invoked
+     */
+    class TextWidgetWatcher extends InputMaskTextWatcher {
+
+        TextWidgetWatcher(@NonNull final EditText editText) {
+            super(editText);
+        }
+
+        /*
+         * @see {@link TextWatcher#afterTextChanged(Editable)}
+         */
         @Override
         public void afterTextChanged(Editable s) {
+            String displayValue = formatToDisplay(mValue);
+            if (displayValue != null) {
+                mEditText.removeTextChangedListener(this);
+                s.replace(0, s.length(), displayValue);
+                mValue = formatToApi(displayValue);
+                mEditText.addTextChangedListener(this);
+            }
+        }
 
+        /*
+         * @see {@link TextWatcher#onTextChanged(CharSequence, int, int, int)}
+         */
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            if (before != count) {
+                mValue = formatToApi(s.toString());
+                mListener.saveTextChanged(getName(), getValue());
+            }
         }
     }
 }
