@@ -78,7 +78,7 @@ public class SelectionWidget extends AbstractWidget implements WidgetSelectionDi
                     new ContextThemeWrapper(viewGroup.getContext(), R.style.Widget_Hyperwallet_TextInputEditText));
             mEditText.setTextColor(viewGroup.getContext().getResources().getColor(R.color.regularColorSecondary));
 
-            mEditText.setText(getKeyFromValue(mDefaultValue));
+            mEditText.setText(getKeyFromValue(TextUtils.isEmpty(mDefaultValue) ? mField.getValue() : mDefaultValue));
             setIdFromFieldLabel(mTextInputLayout);
             setIdFromFieldName(mEditText);
 
