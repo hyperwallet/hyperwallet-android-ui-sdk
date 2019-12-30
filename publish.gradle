@@ -34,14 +34,23 @@ publishing {
                 name = project.mavenName
                 description = project.description
                 url = 'https://github.com/hyperwallet/hyperwallet-android-ui-sdk'
-                pom.withXml {
+                om.withXml {
                     def dependenciesNode = asNode().appendNode('dependencies')
                     configurations.implementation.allDependencies.each {
                         def dependencyNode = dependenciesNode.appendNode('dependency')
-                        println "project >> $project.name"
-                        println " name >>> $it.name"
-                        println " group >>> $it.group"
-                        if (it.group == "hyperwallet-android-ui-sdk") {
+                        println "projectx >> $project.name"
+                        println "name >>> $it.name"
+                        println "group >>> $it.group"
+                        if (it.name in ["commonrepository",
+                                        "commonui",
+                                        "receiptrepository",
+                                        "receiptui",
+                                        "transfermethodrepository",
+                                        "transfermethodui",
+                                        "transferrepository",
+                                        "transferui",
+                                        "userrepository"
+                        ]) {
                             dependencyNode.appendNode('groupId', "com.hyperwallet.android.ui")
                         } else {
                             dependencyNode.appendNode('groupId', it.group)
