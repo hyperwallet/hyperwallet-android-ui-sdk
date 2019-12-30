@@ -416,7 +416,7 @@ public class CreateTransferFragment extends Fragment {
         mTransferCurrency.setTextColor(getResources().getColor(R.color.colorButtonTextDisabled));
         mTransferAmount.setEnabled(false);
         mTransferNotes.setEnabled(false);
-        mTransferAllSwitch.setEnabled(false);
+        mTransferAllSwitch.setClickable(false);
         mTransferDestination.setEnabled(false);
         mAddTransferDestination.setEnabled(false);
     }
@@ -425,7 +425,7 @@ public class CreateTransferFragment extends Fragment {
         mTransferCurrency.setTextColor(getResources().getColor(R.color.colorSecondaryDark));
         mTransferAmount.setEnabled(true);
         mTransferNotes.setEnabled(true);
-        mTransferAllSwitch.setEnabled(true);
+        mTransferAllSwitch.setClickable(true);
         mTransferDestination.setEnabled(true);
         mAddTransferDestination.setEnabled(true);
     }
