@@ -38,7 +38,7 @@ publishing {
                     def dependenciesNode = asNode().appendNode('dependencies')
                     configurations.implementation.allDependencies.each {
                         def dependencyNode = dependenciesNode.appendNode('dependency')
-                        println "project >> $project.mavenName"
+                        println "project >> $project.name"
                         println " name >>> $it.name"
                         println " group >>> $it.group"
                         if (it.group == "hyperwallet-android-ui-sdk") {
