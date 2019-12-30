@@ -34,7 +34,7 @@ publishing {
                 name = project.mavenName
                 description = project.description
                 url = 'https://github.com/hyperwallet/hyperwallet-android-ui-sdk'
-                om.withXml {
+                pom.withXml {
                     def dependenciesNode = asNode().appendNode('dependencies')
                     configurations.implementation.allDependencies.each {
                         def dependencyNode = dependenciesNode.appendNode('dependency')
