@@ -38,7 +38,16 @@ publishing {
                     def dependenciesNode = asNode().appendNode('dependencies')
                     configurations.implementation.allDependencies.each {
                         def dependencyNode = dependenciesNode.appendNode('dependency')
-                        if (it.group == "hyperwallet-android-ui-sdk") {
+                        if (it.name in ["commonrepository",
+                                        "commonui",
+                                        "receiptrepository",
+                                        "receiptui",
+                                        "transfermethodrepository",
+                                        "transfermethodui",
+                                        "transferrepository",
+                                        "transferui",
+                                        "userrepository"
+                        ]) {
                             dependencyNode.appendNode('groupId', "com.hyperwallet.android.ui")
                         } else {
                             dependencyNode.appendNode('groupId', it.group)
