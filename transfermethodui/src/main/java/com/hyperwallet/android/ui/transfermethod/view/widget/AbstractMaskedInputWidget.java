@@ -219,12 +219,14 @@ abstract class AbstractMaskedInputWidget extends AbstractWidget {
          */
         @Override
         public void afterTextChanged(Editable s) {
-            String displayValue = formatToDisplay(mValue);
-            if (displayValue != null) {
-                mEditText.removeTextChangedListener(this);
-                s.replace(0, s.length(), displayValue);
-                mValue = formatToApi(displayValue);
-                mEditText.addTextChangedListener(this);
+            if (mValue != null) {
+                String displayValue = formatToDisplay(mValue);
+                if (displayValue != null) {
+                    mEditText.removeTextChangedListener(this);
+                    s.replace(0, s.length(), displayValue);
+                    mValue = formatToApi(displayValue);
+                    mEditText.addTextChangedListener(this);
+                }
             }
         }
 
