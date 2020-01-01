@@ -12,7 +12,6 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.timeout;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import static java.net.HttpURLConnection.HTTP_OK;
@@ -105,7 +104,7 @@ public class SelectTransferMethodInsightTest {
         mActivityTestRule.launchActivity(null);
 
         verify(mHyperwalletInsightMockRule.getInsight(),
-                times(1)).trackImpression(any(Context.class),
+                timeout(5000).times(1)).trackImpression(any(Context.class),
                 eq(SelectTransferMethodActivity.TAG),
                 eq(PageGroups.TRANSFER_METHOD),
                 mParamsCaptor.capture());
