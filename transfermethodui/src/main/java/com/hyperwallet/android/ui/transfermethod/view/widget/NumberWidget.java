@@ -17,7 +17,6 @@
 package com.hyperwallet.android.ui.transfermethod.view.widget;
 
 import android.text.InputType;
-import android.text.TextUtils;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -72,9 +71,9 @@ public class NumberWidget extends AbstractMaskedInputWidget {
                     }
                 }
             });
-            editText.addTextChangedListener(new InputMaskTextWatcher(editText));
 
-            editText.setText(TextUtils.isEmpty(mDefaultValue) ? mField.getValue() : mDefaultValue);
+            editText.addTextChangedListener(new InputMaskTextWatcher(editText));
+            editText.setText(mDefaultValue);
             editText.setInputType(InputType.TYPE_CLASS_NUMBER);
             editText.setOnKeyListener(new DefaultKeyListener(mDefaultFocusView, editText));
             editText.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI | EditorInfo.IME_ACTION_NEXT);

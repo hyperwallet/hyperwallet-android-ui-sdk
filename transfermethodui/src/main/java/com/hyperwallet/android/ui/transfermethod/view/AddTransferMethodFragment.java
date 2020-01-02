@@ -346,7 +346,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                 for (final Field field : group.getFields()) {
                     AbstractWidget widget = WidgetFactory
                             .newWidget(field, this, mWidgetInputStateHashMap.containsKey(field.getName()) ?
-                                            mWidgetInputStateHashMap.get(field.getName()).getValue() : "",
+                                            mWidgetInputStateHashMap.get(field.getName()).getValue() : field.getValue(),
                                     mCreateTransferMethodButton);
                     if (mWidgetInputStateHashMap.isEmpty() || !mWidgetInputStateHashMap.containsKey(widget.getName())) {
                         mWidgetInputStateHashMap.put(widget.getName(), widget.getWidgetInputState());

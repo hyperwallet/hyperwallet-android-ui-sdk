@@ -153,20 +153,23 @@ public class SelectionWidget extends AbstractWidget implements WidgetSelectionDi
     }
 
     private void showSelectionFragmentDialog() {
-        String defaultSelected = TextUtils.isEmpty(mValue) ?
-                TextUtils.isEmpty(mDefaultValue) ? getKeyFromValue(mField.getValue()) :
-                        getKeyFromValue(mDefaultValue) : getKeyFromValue(mValue);
-        mListener.openWidgetSelectionFragmentDialog(mSelectionNameValueMap, defaultSelected, mField.getLabel(),
-                mField.getName());
+        String selected = TextUtils.isEmpty(mValue) ? getKeyFromValue(mDefaultValue) : getKeyFromValue(mValue);
+        mListener.openWidgetSelectionFragmentDialog(mSelectionNameValueMap,
+                selected, mField.getLabel(), mField.getName());
     }
 
-    private String getKeyFromValue(@NonNull String value) {
+    private String getKeyFromValue(@Nullable final String value) {
+        String emptyKey = "";
+        if (TextUtils.isEmpty(value)) {
+            return emptyKey;
+        }
+
         Set<String> selections = mSelectionNameValueMap.keySet();
         for (String key : selections) {
             if (value.equals(mSelectionNameValueMap.get(key))) {
                 return key;
             }
         }
-        return "";
+        return emptyKey;
     }
 }
