@@ -107,7 +107,7 @@ public class CreateTransferActivity extends AppCompatActivity implements OnNetwo
         fragment.retry();
     }
 
-    public void navigate(@NonNull final Event<Transfer> event) {
+    private void navigate(@NonNull final Event<Transfer> event) {
         if (!event.isContentConsumed()) {
             Intent intent = new Intent(this, ScheduleTransferActivity.class);
             intent.putExtra(ScheduleTransferActivity.EXTRA_TRANSFER, event.getContent());

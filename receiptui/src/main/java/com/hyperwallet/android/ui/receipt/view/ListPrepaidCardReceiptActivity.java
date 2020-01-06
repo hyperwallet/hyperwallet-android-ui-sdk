@@ -107,7 +107,7 @@ public class ListPrepaidCardReceiptActivity extends AppCompatActivity implements
         fragment.retry();
     }
 
-    public void navigate(@NonNull final Event<Receipt> event) {
+    private void navigate(@NonNull final Event<Receipt> event) {
         if (!event.isContentConsumed()) {
             Intent intent = new Intent(this, ReceiptDetailActivity.class);
             intent.putExtra(ReceiptDetailActivity.EXTRA_RECEIPT, event.getContent());
