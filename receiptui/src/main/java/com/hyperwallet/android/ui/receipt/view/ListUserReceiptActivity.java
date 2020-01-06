@@ -34,14 +34,12 @@ import com.hyperwallet.android.ui.common.repository.Event;
 import com.hyperwallet.android.ui.common.util.PageGroups;
 import com.hyperwallet.android.ui.common.view.ActivityUtils;
 import com.hyperwallet.android.ui.common.view.error.OnNetworkErrorCallback;
-import com.hyperwallet.android.ui.common.viewmodel.Navigator;
 import com.hyperwallet.android.ui.receipt.R;
 import com.hyperwallet.android.ui.receipt.repository.UserReceiptRepositoryImpl;
 import com.hyperwallet.android.ui.receipt.viewmodel.ListUserReceiptViewModel;
 import com.hyperwallet.android.ui.receipt.viewmodel.ReceiptViewModel;
 
-public class ListUserReceiptActivity extends AppCompatActivity implements OnNetworkErrorCallback,
-        Navigator<Event<Receipt>> {
+public class ListUserReceiptActivity extends AppCompatActivity implements OnNetworkErrorCallback {
 
     public static final String TAG = "receipts:user:list-receipts";
 
@@ -113,7 +111,6 @@ public class ListUserReceiptActivity extends AppCompatActivity implements OnNetw
         fragment.retry();
     }
 
-    @Override
     public void navigate(@NonNull final Event<Receipt> event) {
         if (!event.isContentConsumed()) {
             Intent intent = new Intent(this, ReceiptDetailActivity.class);

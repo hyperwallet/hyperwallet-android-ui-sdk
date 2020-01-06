@@ -38,7 +38,6 @@ import com.hyperwallet.android.ui.common.repository.Event;
 import com.hyperwallet.android.ui.common.util.PageGroups;
 import com.hyperwallet.android.ui.common.view.ActivityUtils;
 import com.hyperwallet.android.ui.common.view.error.OnNetworkErrorCallback;
-import com.hyperwallet.android.ui.common.viewmodel.Navigator;
 import com.hyperwallet.android.ui.transfer.R;
 import com.hyperwallet.android.ui.transfer.repository.TransferRepositoryFactory;
 import com.hyperwallet.android.ui.transfer.viewmodel.CreateTransferViewModel;
@@ -48,8 +47,7 @@ import com.hyperwallet.android.ui.user.repository.UserRepositoryFactory;
 /**
  * Create Transfer Activity
  */
-public class CreateTransferActivity extends AppCompatActivity implements OnNetworkErrorCallback,
-        Navigator<Event<Transfer>> {
+public class CreateTransferActivity extends AppCompatActivity implements OnNetworkErrorCallback {
 
     public static final String TAG = "transfer-funds:create-transfer";
     public static final String EXTRA_TRANSFER_SOURCE_TOKEN = "TRANSFER_SOURCE_TOKEN";
@@ -109,8 +107,6 @@ public class CreateTransferActivity extends AppCompatActivity implements OnNetwo
         fragment.retry();
     }
 
-
-    @Override
     public void navigate(@NonNull final Event<Transfer> event) {
         if (!event.isContentConsumed()) {
             Intent intent = new Intent(this, ScheduleTransferActivity.class);
