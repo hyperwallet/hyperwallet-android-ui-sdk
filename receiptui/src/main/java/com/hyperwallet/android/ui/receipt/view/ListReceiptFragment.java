@@ -101,6 +101,12 @@ public class ListReceiptFragment extends Fragment {
         registerObservers();
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mReceiptViewModel.init();
+    }
+
     private void registerObservers() {
         mReceiptViewModel.getReceiptList().observe(getViewLifecycleOwner(), new Observer<PagedList<Receipt>>() {
             @Override

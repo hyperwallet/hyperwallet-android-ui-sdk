@@ -98,7 +98,7 @@ public class CreateTransferViewModel extends ViewModel {
         mIsLoading.postValue(Boolean.TRUE);
         mIsCreateQuoteLoading.setValue(Boolean.FALSE);
         mShowFxRateChange.setValue(Boolean.FALSE);
-        loadTransferDestination(sourceToken);
+        //loadTransferDestination(sourceToken);
     }
 
     /**
@@ -121,7 +121,15 @@ public class CreateTransferViewModel extends ViewModel {
         mIsLoading.postValue(Boolean.TRUE);
         mIsCreateQuoteLoading.setValue(Boolean.FALSE);
         mShowFxRateChange.setValue(Boolean.FALSE);
-        loadTransferSource();
+        //loadTransferSource();
+    }
+
+    public void init() {
+        if (mSourceToken == null) {
+            loadTransferSource();
+        } else {
+            loadTransferDestination(mSourceToken);
+        }
     }
 
     public void reset() {

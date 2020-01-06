@@ -13,6 +13,7 @@ apply from: "$rootProject.projectDir/publish.gradle"
 
 dependencies {
     implementation "com.hyperwallet.android:insight-sdk:$hyperwalletInsightVersion"
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleExtensionsVersion"
     implementation project(':commonrepository')
 
     testImplementation "org.robolectric:robolectric:$robolectricVersion"

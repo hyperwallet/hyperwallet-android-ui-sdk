@@ -51,6 +51,12 @@ public class ListUserReceiptViewModel extends ReceiptViewModel {
         mUserReceiptRepository.getErrors().observeForever(mErrorEventObserver);
     }
 
+    @Override
+    public void init() {
+        // load initial receipts
+        mUserReceiptRepository.loadUserReceipts();
+    }
+
     /**
      * @see ReceiptViewModel#isLoadingData()
      */

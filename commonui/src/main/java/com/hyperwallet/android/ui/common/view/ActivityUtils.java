@@ -27,6 +27,7 @@ import com.hyperwallet.android.ui.common.insight.HyperwalletInsight;
 import com.hyperwallet.android.ui.common.util.ErrorTypes;
 import com.hyperwallet.android.ui.common.util.ErrorUtils;
 import com.hyperwallet.android.ui.common.view.error.DefaultErrorDialogFragment;
+import com.hyperwallet.android.ui.common.view.error.ViewModelErrorDialogFragment;
 
 import java.util.List;
 
@@ -64,6 +65,40 @@ public final class ActivityUtils {
 
         if (fragment == null) {
             fragment = DefaultErrorDialogFragment.newInstance(errors);
+        }
+
+        String errorMessage = errors.get(0).getMessage();
+        if (errorMessage == null || errorMessage.trim().length() == 0) {
+            errorMessage = ErrorUtils.getMessage(errors, fragmentActivity.getResources());
+        }
+        HyperwalletInsight.getInstance().trackError(fragmentActivity, pageName, pageGroup,
+                new HyperwalletInsight.ErrorParamsBuilder()
+                        .code(errors.get(0).getCode())
+                        .message(errorMessage)
+                        .fieldName(errors.get(0).getFieldName())
+                        .type(ErrorTypes.getErrorType(errors.get(0).getCode()))
+                        .description(ErrorTypes.getStackTrace())
+                        .build());
+
+        if (!fragment.isAdded()) {
+            fragment.show(fragmentManager);
+        }
+    }
+
+    /**
+     * Create and display the error dialog
+     *
+     * @param fragmentActivity specify context of the Fragment
+     * @param errors           specify the errors
+     */
+    public static void showError2(@NonNull final FragmentActivity fragmentActivity, @NonNull final String pageName,
+            @NonNull final String pageGroup, @NonNull final List<Error> errors) {
+        FragmentManager fragmentManager = fragmentActivity.getSupportFragmentManager();
+        ViewModelErrorDialogFragment fragment = (ViewModelErrorDialogFragment) fragmentManager.findFragmentByTag(
+                ViewModelErrorDialogFragment.TAG);
+
+        if (fragment == null) {
+            fragment = ViewModelErrorDialogFragment.newInstance(errors);
         }
 
         String errorMessage = errors.get(0).getMessage();

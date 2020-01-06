@@ -37,6 +37,7 @@ import com.hyperwallet.android.model.transfer.Transfer;
 import com.hyperwallet.android.ui.common.repository.Event;
 import com.hyperwallet.android.ui.common.util.PageGroups;
 import com.hyperwallet.android.ui.common.view.ActivityUtils;
+import com.hyperwallet.android.ui.common.view.ErrorViewModel;
 import com.hyperwallet.android.ui.common.view.error.OnNetworkErrorCallback;
 import com.hyperwallet.android.ui.common.viewmodel.Navigator;
 import com.hyperwallet.android.ui.transfer.R;
@@ -48,12 +49,14 @@ import com.hyperwallet.android.ui.user.repository.UserRepositoryFactory;
 /**
  * Create Transfer Activity
  */
-public class CreateTransferActivity extends AppCompatActivity implements OnNetworkErrorCallback {
+public class CreateTransferActivity extends AppCompatActivity {
 
     public static final String TAG = "transfer-funds:create-transfer";
     public static final String EXTRA_TRANSFER_SOURCE_TOKEN = "TRANSFER_SOURCE_TOKEN";
 
     private CreateTransferViewModel mCreateTransferViewModel;
+    private ErrorViewModel mErrorViewModel;
+
     private CreateTransferActivity.Helper mHelper;
 
     @Override
@@ -90,7 +93,9 @@ public class CreateTransferActivity extends AppCompatActivity implements OnNetwo
         }
 
         mCreateTransferViewModel = ViewModelProviders.of(this, factory).get(CreateTransferViewModel.class);
-        mHelper = new CreateTransferActivity.Helper(mCreateTransferViewModel) {
+        mErrorViewModel = ViewModelProviders.of(this).get(ErrorViewModel.class);
+
+        mHelper = new CreateTransferActivity.Helper(mCreateTransferViewModel, mErrorViewModel) {
             @Override
             public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
                 if (requestCode == SCHEDULE_TRANSFER_REQUEST_CODE
@@ -117,15 +122,19 @@ public class CreateTransferActivity extends AppCompatActivity implements OnNetwo
         };
 
         mHelper.registerObservers();
+        mErrorViewModel.getRetryAction().observe(this, new Observer<Event<Void>>() {
+            @Override
+            public void onChanged(Event<Void> booleanEvent) {
+                if (!booleanEvent.isContentConsumed()) {
+                    booleanEvent.getContent();
+                    mCreateTransferViewModel.retry();
+                }
+            }
+        });
 
         if (savedInstanceState == null) {
             ActivityUtils.initFragment(this, CreateTransferFragment.newInstance(), R.id.create_transfer_fragment);
         }
-    }
-
-    @Override
-    public void retry() {
-        mHelper.retry();
     }
 
 
@@ -148,9 +157,11 @@ public class CreateTransferActivity extends AppCompatActivity implements OnNetwo
     public abstract static class Helper implements OnNetworkErrorCallback, Navigator<Event<Transfer>> {
 
         private CreateTransferViewModel mCreateTransferViewModel;
+        private ErrorViewModel mErrorViewModel;
 
-        public Helper(@NonNull final CreateTransferViewModel createTransferViewModel) {
+        public Helper(@NonNull final CreateTransferViewModel createTransferViewModel, ErrorViewModel errorViewModel) {
             mCreateTransferViewModel = createTransferViewModel;
+            mErrorViewModel = errorViewModel;
         }
 
         public abstract void onActivityResult(int requestCode, int resultCode, @Nullable Intent data);
@@ -188,7 +199,8 @@ public class CreateTransferActivity extends AppCompatActivity implements OnNetwo
                         @Override
                         public void onChanged(Event<Errors> event) {
                             if (event != null && !event.isContentConsumed()) {
-                                ActivityUtils.showError(getHostActivity(), TAG, PageGroups.TRANSFER_FUNDS,
+                                mErrorViewModel.postErrors(event.getContent().getErrors());
+                                ActivityUtils.showError2(getHostActivity(), TAG, PageGroups.TRANSFER_FUNDS,
                                         event.getContent().getErrors());
                             }
                         }
@@ -198,7 +210,8 @@ public class CreateTransferActivity extends AppCompatActivity implements OnNetwo
                 @Override
                 public void onChanged(Event<Errors> event) {
                     if (event != null && !event.isContentConsumed()) {
-                        ActivityUtils.showError(getHostActivity(), TAG, PageGroups.TRANSFER_FUNDS,
+                        mErrorViewModel.postErrors(event.getContent().getErrors());
+                        ActivityUtils.showError2(getHostActivity(), TAG, PageGroups.TRANSFER_FUNDS,
                                 event.getContent().getErrors());
                     }
                 }
@@ -215,7 +228,8 @@ public class CreateTransferActivity extends AppCompatActivity implements OnNetwo
                 @Override
                 public void onChanged(Event<Errors> event) {
                     if (!event.isContentConsumed()) {
-                        ActivityUtils.showError(getHostActivity(), TAG, PageGroups.TRANSFER_FUNDS,
+                        mErrorViewModel.postErrors(event.getContent().getErrors());
+                        ActivityUtils.showError2(getHostActivity(), TAG, PageGroups.TRANSFER_FUNDS,
                                 event.getContent().getErrors());
                     }
                 }
