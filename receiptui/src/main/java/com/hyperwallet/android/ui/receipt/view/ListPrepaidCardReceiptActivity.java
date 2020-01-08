@@ -34,14 +34,12 @@ import com.hyperwallet.android.ui.common.repository.Event;
 import com.hyperwallet.android.ui.common.util.PageGroups;
 import com.hyperwallet.android.ui.common.view.ActivityUtils;
 import com.hyperwallet.android.ui.common.view.error.OnNetworkErrorCallback;
-import com.hyperwallet.android.ui.common.viewmodel.Navigator;
 import com.hyperwallet.android.ui.receipt.R;
 import com.hyperwallet.android.ui.receipt.repository.PrepaidCardReceiptRepositoryImpl;
 import com.hyperwallet.android.ui.receipt.viewmodel.ListPrepaidCardReceiptViewModel;
 import com.hyperwallet.android.ui.receipt.viewmodel.ReceiptViewModel;
 
-public class ListPrepaidCardReceiptActivity extends AppCompatActivity implements OnNetworkErrorCallback,
-        Navigator<Event<Receipt>> {
+public class ListPrepaidCardReceiptActivity extends AppCompatActivity implements OnNetworkErrorCallback {
 
     public static final String TAG = "receipts:prepaidcard:list-receipts";
     public static final String EXTRA_PREPAID_CARD_TOKEN = "PREPAID_CARD_TOKEN";
@@ -109,8 +107,7 @@ public class ListPrepaidCardReceiptActivity extends AppCompatActivity implements
         fragment.retry();
     }
 
-    @Override
-    public void navigate(@NonNull final Event<Receipt> event) {
+    private void navigate(@NonNull final Event<Receipt> event) {
         if (!event.isContentConsumed()) {
             Intent intent = new Intent(this, ReceiptDetailActivity.class);
             intent.putExtra(ReceiptDetailActivity.EXTRA_RECEIPT, event.getContent());
