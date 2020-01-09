@@ -38,8 +38,6 @@ public class ListUserReceiptViewModel extends ReceiptViewModel {
 
     private ListUserReceiptViewModel(@NonNull final UserReceiptRepository userReceiptRepository) {
         mUserReceiptRepository = userReceiptRepository;
-        // load initial receipts
-        mUserReceiptRepository.loadUserReceipts();
 
         // register one time error event observer
         mErrorEventObserver = new Observer<Event<Errors>>() {
@@ -49,6 +47,12 @@ public class ListUserReceiptViewModel extends ReceiptViewModel {
             }
         };
         mUserReceiptRepository.getErrors().observeForever(mErrorEventObserver);
+    }
+
+    @Override
+    public void init() {
+        // load initial receipts
+        mUserReceiptRepository.loadUserReceipts();
     }
 
     /**

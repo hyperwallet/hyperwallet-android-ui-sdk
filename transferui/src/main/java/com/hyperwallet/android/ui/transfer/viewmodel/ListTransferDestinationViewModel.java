@@ -44,6 +44,9 @@ public class ListTransferDestinationViewModel extends ViewModel {
 
     ListTransferDestinationViewModel(@NonNull final TransferMethodRepository repository) {
         mTransferMethodRepository = repository;
+    }
+
+    public void init() {
         loadTransferDestinationList();
     }
 

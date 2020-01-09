@@ -121,6 +121,9 @@ public class CreateTransferViewModel extends ViewModel {
         mIsLoading.postValue(Boolean.TRUE);
         mIsCreateQuoteLoading.setValue(Boolean.FALSE);
         mShowFxRateChange.setValue(Boolean.FALSE);
+    }
+
+    public void init() {
         loadTransferSource();
     }
 
