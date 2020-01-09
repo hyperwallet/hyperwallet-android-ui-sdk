@@ -3,6 +3,10 @@ package com.hyperwallet.android.ui.receipt.viewmodel;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import com.hyperwallet.android.ui.receipt.repository.UserReceiptRepository;
 import com.hyperwallet.android.ui.receipt.repository.UserReceiptRepositoryImpl;
@@ -16,14 +20,15 @@ import org.robolectric.RobolectricTestRunner;
 public class ListUserReceiptViewModelTest {
 
     private ReceiptViewModel mReceiptViewModelToTest;
-    private ListUserReceiptViewModel.ListReceiptViewModelFactory mListReceiptViewModelfactoryToTest;
+    private ListUserReceiptViewModel.ListReceiptViewModelFactory mListReceiptViewModelfactory;
+    private UserReceiptRepository mUserReceiptRepositoryTest;
 
     @Before
     public void initializedViewModel() {
-        UserReceiptRepository userReceiptRepository = new UserReceiptRepositoryImpl();
-        mListReceiptViewModelfactoryToTest = new ListUserReceiptViewModel.ListReceiptViewModelFactory(
-                userReceiptRepository);
-        mReceiptViewModelToTest = mListReceiptViewModelfactoryToTest.create(ReceiptViewModel.class);
+        mUserReceiptRepositoryTest = spy(new UserReceiptRepositoryImpl());
+        mListReceiptViewModelfactory = new ListUserReceiptViewModel.ListReceiptViewModelFactory(
+                mUserReceiptRepositoryTest);
+        mReceiptViewModelToTest = mListReceiptViewModelfactory.create(ReceiptViewModel.class);
     }
 
     @Test
@@ -48,6 +53,17 @@ public class ListUserReceiptViewModelTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testListReceiptViewModelFactory_throwsExceptionOnInvalidClassArgument() {
-        mListReceiptViewModelfactoryToTest.create(ListPrepaidCardReceiptViewModel.class);
+        mListReceiptViewModelfactory.create(ListPrepaidCardReceiptViewModel.class);
+    }
+
+    @Test
+    public void testListUserReceiptViewModel() {
+        verify(mUserReceiptRepositoryTest, never()).loadUserReceipts();
+    }
+
+    @Test
+    public void testInit() {
+        mReceiptViewModelToTest.init();
+        verify(mUserReceiptRepositoryTest, times(1)).loadUserReceipts();
     }
 }

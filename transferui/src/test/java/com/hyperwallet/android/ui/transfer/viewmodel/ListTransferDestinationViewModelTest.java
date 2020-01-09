@@ -7,6 +7,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TOKEN;
@@ -69,6 +72,7 @@ public class ListTransferDestinationViewModelTest {
 
     @Test
     public void testGetTransferDestinationList_returnsLiveData() {
+        mModelToTest.init();
         assertThat(mModelToTest.getTransferDestinationList(), is(notNullValue()));
         assertThat(mModelToTest.getTransferDestinationList().getValue(),
                 Matchers.<TransferMethod>hasSize(0));
@@ -90,6 +94,7 @@ public class ListTransferDestinationViewModelTest {
                 TransferMethodRepository.LoadTransferMethodListCallback.class));
 
         ListTransferDestinationViewModel viewModel = factory.create(ListTransferDestinationViewModel.class);
+        viewModel.init();
 
         assertThat(viewModel.getTransferDestinationList(), is(notNullValue()));
         assertThat(viewModel.getTransferDestinationList().getValue(), Matchers.<TransferMethod>hasSize(0));
@@ -107,6 +112,7 @@ public class ListTransferDestinationViewModelTest {
 
     @Test
     public void testInitialization_callsRepository() {
+        mModelToTest.init();
         verify(transferMethodRepository).loadTransferMethods(
                 any(TransferMethodRepository.LoadTransferMethodListCallback.class));
     }
@@ -239,6 +245,7 @@ public class ListTransferDestinationViewModelTest {
 
         // during creation of view model `loadTransferDestinationList` is called first
         ListTransferDestinationViewModel viewModel = factory.create(ListTransferDestinationViewModel.class);
+        viewModel.init();
         // no selection
         assertThat(viewModel.getSelectedTransferDestination().getValue(), is(nullValue()));
         // no error
@@ -278,9 +285,23 @@ public class ListTransferDestinationViewModelTest {
                 TransferMethodRepository.LoadTransferMethodListCallback.class));
 
         ListTransferDestinationViewModel viewModel = factory.create(ListTransferDestinationViewModel.class);
+        viewModel.init();
 
         assertThat(viewModel.getSelectedTransferDestination().getValue(), is(nullValue()));
         assertThat(viewModel.getTransferDestinationList().getValue(), is(nullValue()));
         assertThat(viewModel.isLoading().getValue(), is(false));
+    }
+
+    @Test
+    public void testListTransferDestinationViewModel() {
+        ListTransferDestinationViewModel viewModel = spy(mModelToTest);
+        verify(viewModel, never()).loadTransferDestinationList();
+    }
+
+    @Test
+    public void testInit() {
+        ListTransferDestinationViewModel viewModel = spy(mModelToTest);
+        viewModel.init();
+        verify(viewModel, times(1)).loadTransferDestinationList();
     }
 }

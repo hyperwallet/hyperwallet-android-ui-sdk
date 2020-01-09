@@ -24,6 +24,7 @@ import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -296,7 +297,8 @@ public class CreateTransferViewModel extends ViewModel {
                 mTransferDestination.getValue().getField(TOKEN));
     }
 
-    private void loadTransferSource() {
+    @VisibleForTesting
+    void loadTransferSource() {
         mUserRepository.loadUser(new UserRepository.LoadUserCallback() {
             @Override
             public void onUserLoaded(@NonNull User user) {
@@ -312,7 +314,8 @@ public class CreateTransferViewModel extends ViewModel {
         });
     }
 
-    private void loadTransferDestination(@NonNull final String sourceToken) {
+    @VisibleForTesting
+    void loadTransferDestination(@NonNull final String sourceToken) {
         mTransferMethodRepository.loadLatestTransferMethod(new TransferMethodRepository.LoadTransferMethodCallback() {
             @Override
             public void onTransferMethodLoaded(@Nullable TransferMethod transferMethod) {
