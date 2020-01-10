@@ -28,7 +28,7 @@ import com.hyperwallet.android.ui.common.repository.Event;
 public abstract class ReceiptViewModel extends ViewModel {
 
     /**
-     * initialize the loadReceipt
+     * Initialize loading receipts
      */
     public abstract void init();
 
