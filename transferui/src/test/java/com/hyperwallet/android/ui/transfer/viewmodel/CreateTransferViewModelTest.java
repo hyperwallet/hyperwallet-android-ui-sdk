@@ -147,6 +147,8 @@ public class CreateTransferViewModelTest {
         assertThat(model.isTransferAllAvailableFunds(), is(notNullValue()));
         assertThat(model.isTransferAllAvailableFunds().getValue(), is(false));
         assertThat(model.isCreateQuoteLoading().getValue(), is(false));
+
+        verify(model, never()).loadTransferDestination(any(String.class));
     }
 
     @Test
@@ -157,6 +159,8 @@ public class CreateTransferViewModelTest {
         assertThat(viewModel.isTransferAllAvailableFunds(), is(notNullValue()));
         assertThat(viewModel.isTransferAllAvailableFunds().getValue(), is(false));
         assertThat(viewModel.isCreateQuoteLoading().getValue(), is(false));
+        
+        verify(viewModel, never()).loadTransferSource();
     }
 
     @Test
@@ -165,7 +169,10 @@ public class CreateTransferViewModelTest {
                 mTransfer.getToken(), mTransferRepository, mTransferMethodRepository, mUserRepository
         ).create(CreateTransferViewModel.class);
 
-        viewModel.init();
+        CreateTransferViewModel mockedViewModel = spy(viewModel);
+        mockedViewModel.init();
+
+        verify(mockedViewModel, times(1)).loadTransferDestination(any(String.class));
 
         assertThat(viewModel, is(notNullValue()));
         assertThat(viewModel.isTransferAllAvailableFunds().getValue(), is(false));
@@ -200,7 +207,10 @@ public class CreateTransferViewModelTest {
                 mTransferRepository, mTransferMethodRepository, mUserRepository
         ).create(CreateTransferViewModel.class);
 
-        viewModel.init();
+        CreateTransferViewModel mockedViewModel = spy(viewModel);
+        mockedViewModel.init();
+
+        verify(mockedViewModel, times(1)).loadTransferSource();
 
         assertThat(viewModel, is(notNullValue()));
         assertThat(viewModel.isTransferAllAvailableFunds().getValue(), is(false));
