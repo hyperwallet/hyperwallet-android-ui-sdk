@@ -147,14 +147,6 @@ public class CreateTransferViewModelTest {
         assertThat(model.isTransferAllAvailableFunds(), is(notNullValue()));
         assertThat(model.isTransferAllAvailableFunds().getValue(), is(false));
         assertThat(model.isCreateQuoteLoading().getValue(), is(false));
-
-        CreateTransferViewModel.CreateTransferViewModelFactory createTransferViewModelFactory =
-                new CreateTransferViewModel.CreateTransferViewModelFactory(
-                        "usr-token-source", mTransferRepository, mTransferMethodRepository, mUserRepository);
-        CreateTransferViewModel createTransferViewModel = spy(
-                createTransferViewModelFactory.create(CreateTransferViewModel.class));
-
-        verify(createTransferViewModel, never()).loadTransferDestination(any(String.class));
     }
 
     @Test
@@ -165,21 +157,15 @@ public class CreateTransferViewModelTest {
         assertThat(viewModel.isTransferAllAvailableFunds(), is(notNullValue()));
         assertThat(viewModel.isTransferAllAvailableFunds().getValue(), is(false));
         assertThat(viewModel.isCreateQuoteLoading().getValue(), is(false));
-
-        CreateTransferViewModel.CreateTransferViewModelFactory createTransferViewModelFactory =
-                new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
-                        mTransferMethodRepository, mUserRepository);
-        CreateTransferViewModel createTransferViewModel = spy(
-                createTransferViewModelFactory.create(CreateTransferViewModel.class));
-
-        verify(createTransferViewModel, never()).loadTransferSource();
     }
 
     @Test
-    public void testCreateTransferViewModel_verifyDefaultValuesWithFundingSource() {
+    public void testInit_withFundingSource() {
         CreateTransferViewModel viewModel = new CreateTransferViewModel.CreateTransferViewModelFactory(
-                "src-token", mTransferRepository, mTransferMethodRepository, mUserRepository
+                mTransfer.getToken(), mTransferRepository, mTransferMethodRepository, mUserRepository
         ).create(CreateTransferViewModel.class);
+
+        viewModel.init();
 
         assertThat(viewModel, is(notNullValue()));
         assertThat(viewModel.isTransferAllAvailableFunds().getValue(), is(false));
@@ -209,7 +195,7 @@ public class CreateTransferViewModelTest {
     }
 
     @Test
-    public void testCreateTransferViewModel_verifyDefaultValuesWithoutFundingSource() {
+    public void testInit_withoutFundingSource() {
         CreateTransferViewModel viewModel = new CreateTransferViewModel.CreateTransferViewModelFactory(
                 mTransferRepository, mTransferMethodRepository, mUserRepository
         ).create(CreateTransferViewModel.class);
@@ -713,29 +699,6 @@ public class CreateTransferViewModelTest {
         assertThat(viewModel, is(notNullValue()));
     }
 
-    @Test
-    public void testInit_withFundingSource() {
-        CreateTransferViewModel.CreateTransferViewModelFactory createTransferViewModelFactory =
-                new CreateTransferViewModel.CreateTransferViewModelFactory(
-                        "usr-token-source", mTransferRepository, mTransferMethodRepository, mUserRepository);
-        CreateTransferViewModel createTransferViewModel = spy(
-                createTransferViewModelFactory.create(CreateTransferViewModel.class));
-        createTransferViewModel.init();
-
-        verify(createTransferViewModel, times(1)).loadTransferDestination(any(String.class));
-    }
-
-    @Test
-    public void testInit_withoutFundingSource() {
-        CreateTransferViewModel.CreateTransferViewModelFactory createTransferViewModelFactory =
-                new CreateTransferViewModel.CreateTransferViewModelFactory(
-                        mTransferRepository, mTransferMethodRepository, mUserRepository);
-        CreateTransferViewModel createTransferViewModel = spy(
-                createTransferViewModelFactory.create(CreateTransferViewModel.class));
-        createTransferViewModel.init();
-
-        verify(createTransferViewModel, times(1)).loadTransferSource();
-    }
 
     class FakeModel extends ViewModel {
     }

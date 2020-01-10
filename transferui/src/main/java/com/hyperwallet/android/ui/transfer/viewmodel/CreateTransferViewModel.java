@@ -99,7 +99,6 @@ public class CreateTransferViewModel extends ViewModel {
         mIsLoading.postValue(Boolean.TRUE);
         mIsCreateQuoteLoading.setValue(Boolean.FALSE);
         mShowFxRateChange.setValue(Boolean.FALSE);
-        loadTransferDestination(sourceToken);
     }
 
     /**
@@ -125,7 +124,11 @@ public class CreateTransferViewModel extends ViewModel {
     }
 
     public void init() {
-        loadTransferSource();
+        if (mSourceToken == null) {
+            loadTransferSource();
+        } else {
+            loadTransferDestination(mSourceToken);
+        }
     }
 
     public LiveData<Boolean> isTransferAllAvailableFunds() {

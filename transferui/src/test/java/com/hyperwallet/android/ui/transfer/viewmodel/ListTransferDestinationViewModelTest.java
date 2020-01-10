@@ -47,15 +47,15 @@ public class ListTransferDestinationViewModelTest {
     @Rule
     public final ExpectedException mThrown = ExpectedException.none();
 
-    private ListTransferDestinationViewModel mModelToTest;
-    private TransferMethodRepository transferMethodRepository;
+    private ListTransferDestinationViewModel mListTransferDestinationViewModel;
+    private TransferMethodRepository mTransferMethodRepository;
 
     @Before
     public void initializedViewModel() {
         Hyperwallet.getInstance(mock(HyperwalletAuthenticationTokenProvider.class));
-        transferMethodRepository = mock(TransferMethodRepositoryImpl.class);
+        mTransferMethodRepository = mock(TransferMethodRepositoryImpl.class);
         ListTransferDestinationViewModel.ListTransferDestinationViewModelFactory factory =
-                new ListTransferDestinationViewModel.ListTransferDestinationViewModelFactory(transferMethodRepository);
+                new ListTransferDestinationViewModel.ListTransferDestinationViewModelFactory(mTransferMethodRepository);
 
         doAnswer(new Answer() {
             @Override
@@ -64,24 +64,24 @@ public class ListTransferDestinationViewModelTest {
                 callback.onTransferMethodListLoaded(new ArrayList<TransferMethod>());
                 return callback;
             }
-        }).when(transferMethodRepository).loadTransferMethods(ArgumentMatchers.any(
+        }).when(mTransferMethodRepository).loadTransferMethods(ArgumentMatchers.any(
                 TransferMethodRepository.LoadTransferMethodListCallback.class));
 
-        mModelToTest = factory.create(ListTransferDestinationViewModel.class);
+        mListTransferDestinationViewModel = factory.create(ListTransferDestinationViewModel.class);
     }
 
     @Test
     public void testGetTransferDestinationList_returnsLiveData() {
-        mModelToTest.init();
-        assertThat(mModelToTest.getTransferDestinationList(), is(notNullValue()));
-        assertThat(mModelToTest.getTransferDestinationList().getValue(),
+        mListTransferDestinationViewModel.init();
+        assertThat(mListTransferDestinationViewModel.getTransferDestinationList(), is(notNullValue()));
+        assertThat(mListTransferDestinationViewModel.getTransferDestinationList().getValue(),
                 Matchers.<TransferMethod>hasSize(0));
     }
 
     @Test
     public void testGetTransferDestinationList_returnsLiveDataNotFound() {
         ListTransferDestinationViewModel.ListTransferDestinationViewModelFactory factory =
-                new ListTransferDestinationViewModel.ListTransferDestinationViewModelFactory(transferMethodRepository);
+                new ListTransferDestinationViewModel.ListTransferDestinationViewModelFactory(mTransferMethodRepository);
 
         doAnswer(new Answer() {
             @Override
@@ -90,7 +90,7 @@ public class ListTransferDestinationViewModelTest {
                 callback.onTransferMethodListLoaded(null);
                 return callback;
             }
-        }).when(transferMethodRepository).loadTransferMethods(ArgumentMatchers.any(
+        }).when(mTransferMethodRepository).loadTransferMethods(ArgumentMatchers.any(
                 TransferMethodRepository.LoadTransferMethodListCallback.class));
 
         ListTransferDestinationViewModel viewModel = factory.create(ListTransferDestinationViewModel.class);
@@ -102,26 +102,26 @@ public class ListTransferDestinationViewModelTest {
 
     @Test
     public void testGetTransferDestinationSection_returnsLiveData() {
-        assertThat(mModelToTest.getSelectedTransferDestination(), is(notNullValue()));
+        assertThat(mListTransferDestinationViewModel.getSelectedTransferDestination(), is(notNullValue()));
     }
 
     @Test
     public void testGetTransferDestinationError_returnsLiveData() {
-        assertThat(mModelToTest.getTransferDestinationError(), is(notNullValue()));
+        assertThat(mListTransferDestinationViewModel.getTransferDestinationError(), is(notNullValue()));
     }
 
     @Test
     public void testInitialization_callsRepository() {
-        mModelToTest.init();
-        verify(transferMethodRepository).loadTransferMethods(
+        mListTransferDestinationViewModel.init();
+        verify(mTransferMethodRepository).loadTransferMethods(
                 any(TransferMethodRepository.LoadTransferMethodListCallback.class));
     }
 
     @Test
     public void testSelectTransferDestination_callsRepository() {
         TransferMethod transferMethod = new TransferMethod();
-        mModelToTest.selectedTransferDestination(transferMethod);
-        assertThat(mModelToTest.getSelectedTransferDestination().getValue().getContent(), is(transferMethod));
+        mListTransferDestinationViewModel.selectedTransferDestination(transferMethod);
+        assertThat(mListTransferDestinationViewModel.getSelectedTransferDestination().getValue().getContent(), is(transferMethod));
     }
 
     @Test
@@ -155,9 +155,8 @@ public class ListTransferDestinationViewModelTest {
         transferMethod.setField(TRANSFER_METHOD_CURRENCY, "CAD");
         transferMethod.setField(TRANSFER_METHOD_COUNTRY, "CA");
 
-        TransferMethodRepository repository = mock(TransferMethodRepositoryImpl.class);
         ListTransferDestinationViewModel.ListTransferDestinationViewModelFactory factory =
-                new ListTransferDestinationViewModel.ListTransferDestinationViewModelFactory(repository);
+                new ListTransferDestinationViewModel.ListTransferDestinationViewModelFactory(mTransferMethodRepository);
 
         doAnswer(new Answer() {
             @Override
@@ -166,7 +165,7 @@ public class ListTransferDestinationViewModelTest {
                 callback.onTransferMethodListLoaded(Lists.newArrayList(transferMethod));
                 return callback;
             }
-        }).when(repository).loadTransferMethods(ArgumentMatchers.any(
+        }).when(mTransferMethodRepository).loadTransferMethods(ArgumentMatchers.any(
                 TransferMethodRepository.LoadTransferMethodListCallback.class));
 
         ListTransferDestinationViewModel viewModel = factory.create(ListTransferDestinationViewModel.class);
@@ -191,9 +190,8 @@ public class ListTransferDestinationViewModelTest {
 
     @Test
     public void testLoadNewlyAddedTransferDestination_loadsEmptyTransferDestination() {
-        TransferMethodRepository repository = mock(TransferMethodRepositoryImpl.class);
         ListTransferDestinationViewModel.ListTransferDestinationViewModelFactory factory =
-                new ListTransferDestinationViewModel.ListTransferDestinationViewModelFactory(repository);
+                new ListTransferDestinationViewModel.ListTransferDestinationViewModelFactory(mTransferMethodRepository);
 
         doAnswer(new Answer() {
             @Override
@@ -202,7 +200,7 @@ public class ListTransferDestinationViewModelTest {
                 callback.onTransferMethodListLoaded(new ArrayList<TransferMethod>());
                 return callback;
             }
-        }).when(repository).loadTransferMethods(ArgumentMatchers.any(
+        }).when(mTransferMethodRepository).loadTransferMethods(ArgumentMatchers.any(
                 TransferMethodRepository.LoadTransferMethodListCallback.class));
 
         ListTransferDestinationViewModel viewModel = factory.create(ListTransferDestinationViewModel.class);
@@ -221,9 +219,8 @@ public class ListTransferDestinationViewModelTest {
     @Test
     public void testLoadNewlyAddedTransferDestination_errorOnLoadingTransferDestinationList() {
 
-        TransferMethodRepository repository = mock(TransferMethodRepositoryImpl.class);
         ListTransferDestinationViewModel.ListTransferDestinationViewModelFactory factory =
-                new ListTransferDestinationViewModel.ListTransferDestinationViewModelFactory(repository);
+                new ListTransferDestinationViewModel.ListTransferDestinationViewModelFactory(mTransferMethodRepository);
 
         doAnswer(new Answer() {
             short execution = 0;
@@ -240,7 +237,7 @@ public class ListTransferDestinationViewModelTest {
                 callback.onTransferMethodListLoaded(new ArrayList<TransferMethod>());
                 return callback;
             }
-        }).when(repository).loadTransferMethods(ArgumentMatchers.any(
+        }).when(mTransferMethodRepository).loadTransferMethods(ArgumentMatchers.any(
                 TransferMethodRepository.LoadTransferMethodListCallback.class));
 
         // during creation of view model `loadTransferDestinationList` is called first
@@ -268,9 +265,8 @@ public class ListTransferDestinationViewModelTest {
 
     @Test
     public void testLoadTransferDestinationList_errorOnLoadingTransferDestinationList() {
-        TransferMethodRepository repository = mock(TransferMethodRepositoryImpl.class);
         ListTransferDestinationViewModel.ListTransferDestinationViewModelFactory factory =
-                new ListTransferDestinationViewModel.ListTransferDestinationViewModelFactory(repository);
+                new ListTransferDestinationViewModel.ListTransferDestinationViewModelFactory(mTransferMethodRepository);
 
         doAnswer(new Answer() {
             @Override
@@ -281,7 +277,7 @@ public class ListTransferDestinationViewModelTest {
                 callback.onError(errors);
                 return callback;
             }
-        }).when(repository).loadTransferMethods(ArgumentMatchers.any(
+        }).when(mTransferMethodRepository).loadTransferMethods(ArgumentMatchers.any(
                 TransferMethodRepository.LoadTransferMethodListCallback.class));
 
         ListTransferDestinationViewModel viewModel = factory.create(ListTransferDestinationViewModel.class);
@@ -292,15 +288,10 @@ public class ListTransferDestinationViewModelTest {
         assertThat(viewModel.isLoading().getValue(), is(false));
     }
 
-    @Test
-    public void testListTransferDestinationViewModel() {
-        ListTransferDestinationViewModel viewModel = spy(mModelToTest);
-        verify(viewModel, never()).loadTransferDestinationList();
-    }
 
     @Test
     public void testInit() {
-        ListTransferDestinationViewModel viewModel = spy(mModelToTest);
+        ListTransferDestinationViewModel viewModel = spy(mListTransferDestinationViewModel);
         viewModel.init();
         verify(viewModel, times(1)).loadTransferDestinationList();
     }
