@@ -19,38 +19,38 @@ import org.robolectric.RobolectricTestRunner;
 @RunWith(RobolectricTestRunner.class)
 public class ListPrepaidCardReceiptViewModelTest {
 
-    private ReceiptViewModel mReceiptViewModelToTest;
+    private ReceiptViewModel mReceiptViewModel;
     private ListPrepaidCardReceiptViewModel.ListPrepaidCardReceiptViewModelFactory
             mListPrepaidCardReceiptViewModelFactory;
-    private PrepaidCardReceiptRepository mPrepaidCardReceiptRepositoryTest;
+    private PrepaidCardReceiptRepository mPrepaidCardReceiptRepository;
 
     @Before
     public void initializedViewModel() {
-        mPrepaidCardReceiptRepositoryTest = spy(new PrepaidCardReceiptRepositoryImpl("trm-ppc-token"));
+        mPrepaidCardReceiptRepository = spy(new PrepaidCardReceiptRepositoryImpl("trm-ppc-token"));
         mListPrepaidCardReceiptViewModelFactory =
                 new ListPrepaidCardReceiptViewModel.ListPrepaidCardReceiptViewModelFactory(
-                        mPrepaidCardReceiptRepositoryTest);
-        mReceiptViewModelToTest = mListPrepaidCardReceiptViewModelFactory.create(ReceiptViewModel.class);
+                        mPrepaidCardReceiptRepository);
+        mReceiptViewModel = mListPrepaidCardReceiptViewModelFactory.create(ReceiptViewModel.class);
     }
 
     @Test
     public void testIsLoadingData_returnsLiveData() {
-        assertThat(mReceiptViewModelToTest.isLoadingData(), is(notNullValue()));
+        assertThat(mReceiptViewModel.isLoadingData(), is(notNullValue()));
     }
 
     @Test
     public void testGetReceiptErrors_returnsLiveData() {
-        assertThat(mReceiptViewModelToTest.getReceiptErrors(), is(notNullValue()));
+        assertThat(mReceiptViewModel.getReceiptErrors(), is(notNullValue()));
     }
 
     @Test
     public void testGetReceiptList_returnsLiveData() {
-        assertThat(mReceiptViewModelToTest.getReceiptList(), is(notNullValue()));
+        assertThat(mReceiptViewModel.getReceiptList(), is(notNullValue()));
     }
 
     @Test
     public void testGetDetailNavigation_returnsLiveData() {
-        assertThat(mReceiptViewModelToTest.getDetailNavigation(), is(notNullValue()));
+        assertThat(mReceiptViewModel.getDetailNavigation(), is(notNullValue()));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -60,12 +60,12 @@ public class ListPrepaidCardReceiptViewModelTest {
 
     @Test
     public void testListPrepaidCardReceiptViewModel() {
-        verify(mPrepaidCardReceiptRepositoryTest, never()).loadPrepaidCardReceipts();
+        verify(mPrepaidCardReceiptRepository, never()).loadPrepaidCardReceipts();
     }
 
     @Test
     public void testInit() {
-        mReceiptViewModelToTest.init();
-        verify(mPrepaidCardReceiptRepositoryTest, times(1)).loadPrepaidCardReceipts();
+        mReceiptViewModel.init();
+        verify(mPrepaidCardReceiptRepository, times(1)).loadPrepaidCardReceipts();
     }
 }

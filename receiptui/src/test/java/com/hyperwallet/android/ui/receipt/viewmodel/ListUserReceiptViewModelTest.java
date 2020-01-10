@@ -19,51 +19,51 @@ import org.robolectric.RobolectricTestRunner;
 @RunWith(RobolectricTestRunner.class)
 public class ListUserReceiptViewModelTest {
 
-    private ReceiptViewModel mReceiptViewModelToTest;
-    private ListUserReceiptViewModel.ListReceiptViewModelFactory mListReceiptViewModelfactory;
-    private UserReceiptRepository mUserReceiptRepositoryTest;
+    private ReceiptViewModel mReceiptViewModel;
+    private ListUserReceiptViewModel.ListReceiptViewModelFactory mListReceiptViewModelFactory;
+    private UserReceiptRepository mUserReceiptRepository;
 
     @Before
     public void initializedViewModel() {
-        mUserReceiptRepositoryTest = spy(new UserReceiptRepositoryImpl());
-        mListReceiptViewModelfactory = new ListUserReceiptViewModel.ListReceiptViewModelFactory(
-                mUserReceiptRepositoryTest);
-        mReceiptViewModelToTest = mListReceiptViewModelfactory.create(ReceiptViewModel.class);
+        mUserReceiptRepository = spy(new UserReceiptRepositoryImpl());
+        mListReceiptViewModelFactory = new ListUserReceiptViewModel.ListReceiptViewModelFactory(
+                mUserReceiptRepository);
+        mReceiptViewModel = mListReceiptViewModelFactory.create(ReceiptViewModel.class);
     }
 
     @Test
     public void testIsLoadingData_returnsLiveData() {
-        assertThat(mReceiptViewModelToTest.isLoadingData(), is(notNullValue()));
+        assertThat(mReceiptViewModel.isLoadingData(), is(notNullValue()));
     }
 
     @Test
     public void testGetReceiptErrors_returnsLiveData() {
-        assertThat(mReceiptViewModelToTest.getReceiptErrors(), is(notNullValue()));
+        assertThat(mReceiptViewModel.getReceiptErrors(), is(notNullValue()));
     }
 
     @Test
     public void testGetReceiptList_returnsLiveData() {
-        assertThat(mReceiptViewModelToTest.getReceiptList(), is(notNullValue()));
+        assertThat(mReceiptViewModel.getReceiptList(), is(notNullValue()));
     }
 
     @Test
     public void testGetDetailNavigation_returnsLiveData() {
-        assertThat(mReceiptViewModelToTest.getDetailNavigation(), is(notNullValue()));
+        assertThat(mReceiptViewModel.getDetailNavigation(), is(notNullValue()));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testListReceiptViewModelFactory_throwsExceptionOnInvalidClassArgument() {
-        mListReceiptViewModelfactory.create(ListPrepaidCardReceiptViewModel.class);
+        mListReceiptViewModelFactory.create(ListPrepaidCardReceiptViewModel.class);
     }
 
     @Test
     public void testListUserReceiptViewModel() {
-        verify(mUserReceiptRepositoryTest, never()).loadUserReceipts();
+        verify(mUserReceiptRepository, never()).loadUserReceipts();
     }
 
     @Test
     public void testInit() {
-        mReceiptViewModelToTest.init();
-        verify(mUserReceiptRepositoryTest, times(1)).loadUserReceipts();
+        mReceiptViewModel.init();
+        verify(mUserReceiptRepository, times(1)).loadUserReceipts();
     }
 }
