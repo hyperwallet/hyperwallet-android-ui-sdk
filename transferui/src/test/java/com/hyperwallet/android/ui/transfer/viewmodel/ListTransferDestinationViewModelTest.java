@@ -293,5 +293,7 @@ public class ListTransferDestinationViewModelTest {
         ListTransferDestinationViewModel viewModel = spy(mListTransferDestinationViewModel);
         viewModel.init();
         verify(viewModel).loadTransferDestinationList();
+
+        viewModel.init();
     }
 }

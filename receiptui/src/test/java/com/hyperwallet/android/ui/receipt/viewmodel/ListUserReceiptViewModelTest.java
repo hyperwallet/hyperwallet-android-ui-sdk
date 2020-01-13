@@ -64,5 +64,7 @@ public class ListUserReceiptViewModelTest {
     public void testInit() {
         mReceiptViewModel.init();
         verify(mUserReceiptRepository).loadUserReceipts();
+
+        mReceiptViewModel.init();
     }
 }

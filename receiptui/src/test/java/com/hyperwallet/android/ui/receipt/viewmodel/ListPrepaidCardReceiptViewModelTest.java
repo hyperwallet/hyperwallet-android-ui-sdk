@@ -66,5 +66,7 @@ public class ListPrepaidCardReceiptViewModelTest {
     public void testInit() {
         mReceiptViewModel.init();
         verify(mPrepaidCardReceiptRepository).loadPrepaidCardReceipts();
+
+        mReceiptViewModel.init();
     }
 }
