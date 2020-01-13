@@ -36,6 +36,8 @@ public class ListUserReceiptViewModel extends ReceiptViewModel {
     private Observer<Event<Errors>> mErrorEventObserver;
     private UserReceiptRepository mUserReceiptRepository;
 
+    private boolean mIsInitialized;
+
     private ListUserReceiptViewModel(@NonNull final UserReceiptRepository userReceiptRepository) {
         mUserReceiptRepository = userReceiptRepository;
 
@@ -51,8 +53,11 @@ public class ListUserReceiptViewModel extends ReceiptViewModel {
 
     @Override
     public void init() {
-        // load initial receipts
-        mUserReceiptRepository.loadUserReceipts();
+        if(!mIsInitialized) {
+            mIsInitialized = true;
+            // load initial receipts
+            mUserReceiptRepository.loadUserReceipts();
+        }
     }
 
     /**

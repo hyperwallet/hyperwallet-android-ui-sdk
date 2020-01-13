@@ -36,6 +36,8 @@ public class ListPrepaidCardReceiptViewModel extends ReceiptViewModel {
     private Observer<Event<Errors>> mErrorEventObserver;
     private PrepaidCardReceiptRepository mPrepaidCardReceiptRepository;
 
+    private boolean mIsInitialized;
+
     private ListPrepaidCardReceiptViewModel(@NonNull final PrepaidCardReceiptRepository receiptRepository) {
         mPrepaidCardReceiptRepository = receiptRepository;
 
@@ -51,8 +53,11 @@ public class ListPrepaidCardReceiptViewModel extends ReceiptViewModel {
 
     @Override
     public void init() {
-        // load initial receipts
-        mPrepaidCardReceiptRepository.loadPrepaidCardReceipts();
+        if(!mIsInitialized) {
+            mIsInitialized = true;
+            // load initial receipts
+            mPrepaidCardReceiptRepository.loadPrepaidCardReceipts();
+        }
     }
 
     /**

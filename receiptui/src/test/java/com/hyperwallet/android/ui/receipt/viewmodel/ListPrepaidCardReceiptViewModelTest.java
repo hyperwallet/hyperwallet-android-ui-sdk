@@ -5,7 +5,6 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import com.hyperwallet.android.ui.receipt.repository.PrepaidCardReceiptRepository;
@@ -66,6 +65,6 @@ public class ListPrepaidCardReceiptViewModelTest {
     @Test
     public void testInit() {
         mReceiptViewModel.init();
-        verify(mPrepaidCardReceiptRepository, times(1)).loadPrepaidCardReceipts();
+        verify(mPrepaidCardReceiptRepository).loadPrepaidCardReceipts();
     }
 }

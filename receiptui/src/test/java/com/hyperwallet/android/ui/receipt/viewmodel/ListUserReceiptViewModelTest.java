@@ -5,7 +5,6 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import com.hyperwallet.android.ui.receipt.repository.UserReceiptRepository;
@@ -64,6 +63,6 @@ public class ListUserReceiptViewModelTest {
     @Test
     public void testInit() {
         mReceiptViewModel.init();
-        verify(mUserReceiptRepository, times(1)).loadUserReceipts();
+        verify(mUserReceiptRepository).loadUserReceipts();
     }
 }

@@ -75,6 +75,7 @@ public class CreateTransferViewModel extends ViewModel {
     private final MutableLiveData<Event<Error>> mInvalidDestinationError = new MutableLiveData<>();
 
     private String mSourceToken;
+    private boolean mIsInitialized;
 
     /**
      * Initialize Create Transfer View Model with designated transfer source token
@@ -124,10 +125,13 @@ public class CreateTransferViewModel extends ViewModel {
     }
 
     public void init() {
-        if (mSourceToken == null) {
-            loadTransferSource();
-        } else {
-            loadTransferDestination(mSourceToken);
+        if(!mIsInitialized) {
+            mIsInitialized = true;
+            if (mSourceToken == null) {
+                loadTransferSource();
+            } else {
+                loadTransferDestination(mSourceToken);
+            }
         }
     }
 

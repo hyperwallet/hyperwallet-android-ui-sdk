@@ -7,9 +7,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TOKEN;
@@ -121,7 +119,8 @@ public class ListTransferDestinationViewModelTest {
     public void testSelectTransferDestination_callsRepository() {
         TransferMethod transferMethod = new TransferMethod();
         mListTransferDestinationViewModel.selectedTransferDestination(transferMethod);
-        assertThat(mListTransferDestinationViewModel.getSelectedTransferDestination().getValue().getContent(), is(transferMethod));
+        assertThat(mListTransferDestinationViewModel.getSelectedTransferDestination().getValue().getContent(),
+                is(transferMethod));
     }
 
     @Test
@@ -293,6 +292,6 @@ public class ListTransferDestinationViewModelTest {
     public void testInit() {
         ListTransferDestinationViewModel viewModel = spy(mListTransferDestinationViewModel);
         viewModel.init();
-        verify(viewModel, times(1)).loadTransferDestinationList();
+        verify(viewModel).loadTransferDestinationList();
     }
 }

@@ -172,7 +172,8 @@ public class CreateTransferViewModelTest {
         CreateTransferViewModel mockedViewModel = spy(viewModel);
         mockedViewModel.init();
 
-        verify(mockedViewModel, times(1)).loadTransferDestination(any(String.class));
+        verify(mockedViewModel).loadTransferDestination(any(String.class));
+        verify(mockedViewModel, never()).loadTransferSource();
 
         assertThat(viewModel, is(notNullValue()));
         assertThat(viewModel.isTransferAllAvailableFunds().getValue(), is(false));
@@ -210,7 +211,7 @@ public class CreateTransferViewModelTest {
         CreateTransferViewModel mockedViewModel = spy(viewModel);
         mockedViewModel.init();
 
-        verify(mockedViewModel, times(1)).loadTransferSource();
+        verify(mockedViewModel).loadTransferSource();
 
         assertThat(viewModel, is(notNullValue()));
         assertThat(viewModel.isTransferAllAvailableFunds().getValue(), is(false));
