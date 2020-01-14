@@ -24,6 +24,7 @@ import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -74,6 +75,7 @@ public class CreateTransferViewModel extends ViewModel {
     private final MutableLiveData<Event<Error>> mInvalidDestinationError = new MutableLiveData<>();
 
     private String mSourceToken;
+    private boolean mIsInitialized;
 
     /**
      * Initialize Create Transfer View Model with designated transfer source token
@@ -98,7 +100,6 @@ public class CreateTransferViewModel extends ViewModel {
         mIsLoading.postValue(Boolean.TRUE);
         mIsCreateQuoteLoading.setValue(Boolean.FALSE);
         mShowFxRateChange.setValue(Boolean.FALSE);
-        loadTransferDestination(sourceToken);
     }
 
     /**
@@ -121,7 +122,17 @@ public class CreateTransferViewModel extends ViewModel {
         mIsLoading.postValue(Boolean.TRUE);
         mIsCreateQuoteLoading.setValue(Boolean.FALSE);
         mShowFxRateChange.setValue(Boolean.FALSE);
-        loadTransferSource();
+    }
+
+    public void init() {
+        if (!mIsInitialized) {
+            mIsInitialized = true;
+            if (mSourceToken == null) {
+                loadTransferSource();
+            } else {
+                loadTransferDestination(mSourceToken);
+            }
+        }
     }
 
     public LiveData<Boolean> isTransferAllAvailableFunds() {
@@ -293,7 +304,8 @@ public class CreateTransferViewModel extends ViewModel {
                 mTransferDestination.getValue().getField(TOKEN));
     }
 
-    private void loadTransferSource() {
+    @VisibleForTesting
+    void loadTransferSource() {
         mUserRepository.loadUser(new UserRepository.LoadUserCallback() {
             @Override
             public void onUserLoaded(@NonNull User user) {
@@ -309,7 +321,8 @@ public class CreateTransferViewModel extends ViewModel {
         });
     }
 
-    private void loadTransferDestination(@NonNull final String sourceToken) {
+    @VisibleForTesting
+    void loadTransferDestination(@NonNull final String sourceToken) {
         mTransferMethodRepository.loadLatestTransferMethod(new TransferMethodRepository.LoadTransferMethodCallback() {
             @Override
             public void onTransferMethodLoaded(@Nullable TransferMethod transferMethod) {

@@ -6,6 +6,7 @@ import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -159,10 +160,14 @@ public class CreateTransferViewModelTest {
     }
 
     @Test
-    public void testCreateTransferViewModel_verifyDefaultValuesWithFundingSource() {
-        CreateTransferViewModel viewModel = new CreateTransferViewModel.CreateTransferViewModelFactory(
-                "src-token", mTransferRepository, mTransferMethodRepository, mUserRepository
-        ).create(CreateTransferViewModel.class);
+    public void testInit_withFundingSource() {
+        CreateTransferViewModel viewModel = spy(new CreateTransferViewModel.CreateTransferViewModelFactory(
+                mTransfer.getToken(), mTransferRepository, mTransferMethodRepository, mUserRepository
+        ).create(CreateTransferViewModel.class));
+        viewModel.init();
+
+        verify(viewModel).loadTransferDestination(any(String.class));
+        verify(viewModel, never()).loadTransferSource();
 
         assertThat(viewModel, is(notNullValue()));
         assertThat(viewModel.isTransferAllAvailableFunds().getValue(), is(false));
@@ -192,10 +197,13 @@ public class CreateTransferViewModelTest {
     }
 
     @Test
-    public void testCreateTransferViewModel_verifyDefaultValuesWithoutFundingSource() {
-        CreateTransferViewModel viewModel = new CreateTransferViewModel.CreateTransferViewModelFactory(
+    public void testInit_withoutFundingSource() {
+        CreateTransferViewModel viewModel = spy(new CreateTransferViewModel.CreateTransferViewModelFactory(
                 mTransferRepository, mTransferMethodRepository, mUserRepository
-        ).create(CreateTransferViewModel.class);
+        ).create(CreateTransferViewModel.class));
+        viewModel.init();
+
+        verify(viewModel).loadTransferSource();
 
         assertThat(viewModel, is(notNullValue()));
         assertThat(viewModel.isTransferAllAvailableFunds().getValue(), is(false));
@@ -271,6 +279,7 @@ public class CreateTransferViewModelTest {
         viewModel.setTransferNotes("Create quote test notes");
         viewModel.setTransferAmount("123.23");
 
+        viewModel.init();
         // test
         viewModel.createTransfer();
 
@@ -306,7 +315,7 @@ public class CreateTransferViewModelTest {
         viewModel.setTransferNotes("Create quote test notes");
         viewModel.setTransferAllAvailableFunds(true);
         viewModel.setTransferAmount("124.23");
-
+        viewModel.init();
         // test
         viewModel.createTransfer();
 
@@ -358,7 +367,7 @@ public class CreateTransferViewModelTest {
             }
         }).when(mTransferRepository).createTransfer(any(Transfer.class),
                 any(TransferRepository.CreateTransferCallback.class));
-
+        viewModel.init();
         // test
         viewModel.createTransfer();
 
@@ -400,7 +409,7 @@ public class CreateTransferViewModelTest {
             }
         }).when(mTransferRepository).createTransfer(any(Transfer.class),
                 any(TransferRepository.CreateTransferCallback.class));
-
+        viewModel.init();
         // test
         viewModel.createTransfer();
 
@@ -438,6 +447,7 @@ public class CreateTransferViewModelTest {
         }).when(mTransferRepository).createTransfer(any(Transfer.class),
                 any(TransferRepository.CreateTransferCallback.class));
 
+        viewModel.init();
         // test
         viewModel.createTransfer();
 
@@ -466,6 +476,7 @@ public class CreateTransferViewModelTest {
 
         // test
         CreateTransferViewModel viewModel = factory.create(CreateTransferViewModel.class);
+        viewModel.init();
         viewModel.retry();
 
         verify(mUserRepository, times(2)).loadUser(any(UserRepository.LoadUserCallback.class));
@@ -489,6 +500,7 @@ public class CreateTransferViewModelTest {
 
         // test
         CreateTransferViewModel viewModel = factory.create(CreateTransferViewModel.class);
+        viewModel.init();
         viewModel.retry();
 
         verify(mUserRepository, times(1)).loadUser(any(UserRepository.LoadUserCallback.class));
@@ -514,6 +526,7 @@ public class CreateTransferViewModelTest {
 
         // test
         CreateTransferViewModel viewModel = factory.create(CreateTransferViewModel.class);
+        viewModel.init();
         viewModel.retry();
 
         verify(mUserRepository, times(1)).loadUser(any(UserRepository.LoadUserCallback.class));
@@ -539,6 +552,7 @@ public class CreateTransferViewModelTest {
 
         // test
         CreateTransferViewModel viewModel = factory.create(CreateTransferViewModel.class);
+        viewModel.init();
         viewModel.retry();
 
         verify(mUserRepository, times(1)).loadUser(any(UserRepository.LoadUserCallback.class));
@@ -556,6 +570,7 @@ public class CreateTransferViewModelTest {
                         mTransferMethodRepository, mUserRepository);
         // test
         CreateTransferViewModel viewModel = factory.create(CreateTransferViewModel.class);
+        viewModel.init();
         viewModel.retry();
 
         verify(mUserRepository, times(1)).loadUser(any(UserRepository.LoadUserCallback.class));
@@ -596,6 +611,7 @@ public class CreateTransferViewModelTest {
 
         // test
         CreateTransferViewModel viewModel = factory.create(CreateTransferViewModel.class);
+        viewModel.init();
         viewModel.retry();
 
         verify(mUserRepository, times(1)).loadUser(any(UserRepository.LoadUserCallback.class));
@@ -636,6 +652,7 @@ public class CreateTransferViewModelTest {
 
         // test
         CreateTransferViewModel viewModel = factory.create(CreateTransferViewModel.class);
+        viewModel.init();
         viewModel.setTransferAmount("20.25");
         viewModel.retry();
 
@@ -684,6 +701,7 @@ public class CreateTransferViewModelTest {
         CreateTransferViewModel viewModel = factory.create(CreateTransferViewModel.class);
         assertThat(viewModel, is(notNullValue()));
     }
+
 
     class FakeModel extends ViewModel {
     }

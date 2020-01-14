@@ -42,9 +42,17 @@ public class ListTransferDestinationViewModel extends ViewModel {
     private final MutableLiveData<Event<Errors>> mTransferDestinationError = new MutableLiveData<>();
     private final TransferMethodRepository mTransferMethodRepository;
 
+    private boolean mIsInitialized;
+
     ListTransferDestinationViewModel(@NonNull final TransferMethodRepository repository) {
         mTransferMethodRepository = repository;
-        loadTransferDestinationList();
+    }
+
+    public void init() {
+        if (!mIsInitialized) {
+            mIsInitialized = true;
+            loadTransferDestinationList();
+        }
     }
 
     public void selectedTransferDestination(@NonNull final TransferMethod transferMethod) {

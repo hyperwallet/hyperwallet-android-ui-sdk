@@ -55,8 +55,8 @@ import java.util.concurrent.TimeUnit;
 @RunWith(RobolectricTestRunner.class)
 public class AddTransferMethodPresenterTest {
 
-    private final static CountDownLatch LATCH = new CountDownLatch(1);
-    private final static int AWAIT_TIME_MS = 50;
+    private static final CountDownLatch LATCH = new CountDownLatch(1);
+    private static final int AWAIT_TIME_MS = 50;
 
     private final Errors errors = createErrors();
     private final BankAccount bankAccount = new BankAccount
