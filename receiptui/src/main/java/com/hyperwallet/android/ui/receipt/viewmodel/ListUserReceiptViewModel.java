@@ -53,7 +53,7 @@ public class ListUserReceiptViewModel extends ReceiptViewModel {
 
     @Override
     public void init() {
-        if(!mIsInitialized) {
+        if (!mIsInitialized) {
             mIsInitialized = true;
             // load initial receipts
             mUserReceiptRepository.loadUserReceipts();

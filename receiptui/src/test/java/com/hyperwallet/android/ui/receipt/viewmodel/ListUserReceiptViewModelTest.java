@@ -61,10 +61,11 @@ public class ListUserReceiptViewModelTest {
     }
 
     @Test
-    public void testInit() {
+    public void testInit_verifyInitializedOnce() {
         mReceiptViewModel.init();
         verify(mUserReceiptRepository).loadUserReceipts();
-
+        // call again. multiple calls to init should only register 1 call to repository
         mReceiptViewModel.init();
+        verify(mUserReceiptRepository).loadUserReceipts();
     }
 }

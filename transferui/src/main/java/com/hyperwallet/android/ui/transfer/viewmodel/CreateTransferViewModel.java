@@ -125,7 +125,7 @@ public class CreateTransferViewModel extends ViewModel {
     }
 
     public void init() {
-        if(!mIsInitialized) {
+        if (!mIsInitialized) {
             mIsInitialized = true;
             if (mSourceToken == null) {
                 loadTransferSource();

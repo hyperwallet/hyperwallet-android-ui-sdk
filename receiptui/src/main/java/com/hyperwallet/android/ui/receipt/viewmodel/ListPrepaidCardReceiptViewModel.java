@@ -53,7 +53,7 @@ public class ListPrepaidCardReceiptViewModel extends ReceiptViewModel {
 
     @Override
     public void init() {
-        if(!mIsInitialized) {
+        if (!mIsInitialized) {
             mIsInitialized = true;
             // load initial receipts
             mPrepaidCardReceiptRepository.loadPrepaidCardReceipts();

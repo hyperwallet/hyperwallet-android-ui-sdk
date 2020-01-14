@@ -63,10 +63,11 @@ public class ListPrepaidCardReceiptViewModelTest {
     }
 
     @Test
-    public void testInit() {
+    public void testInit_verifyInitializedOnce() {
         mReceiptViewModel.init();
         verify(mPrepaidCardReceiptRepository).loadPrepaidCardReceipts();
-
+        // call again. multiple calls to init should only register 1 call to repository
         mReceiptViewModel.init();
+        verify(mPrepaidCardReceiptRepository).loadPrepaidCardReceipts();
     }
 }
