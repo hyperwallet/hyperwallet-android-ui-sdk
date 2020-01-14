@@ -49,7 +49,7 @@ public class ListTransferDestinationViewModel extends ViewModel {
     }
 
     public void init() {
-        if(!mIsInitialized) {
+        if (!mIsInitialized) {
             mIsInitialized = true;
             loadTransferDestinationList();
         }

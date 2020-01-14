@@ -65,7 +65,7 @@ public class ListTransferDestinationViewModelTest {
         }).when(mTransferMethodRepository).loadTransferMethods(ArgumentMatchers.any(
                 TransferMethodRepository.LoadTransferMethodListCallback.class));
 
-        mListTransferDestinationViewModel = factory.create(ListTransferDestinationViewModel.class);
+        mListTransferDestinationViewModel = spy(factory.create(ListTransferDestinationViewModel.class));
     }
 
     @Test
@@ -109,14 +109,7 @@ public class ListTransferDestinationViewModelTest {
     }
 
     @Test
-    public void testInitialization_callsRepository() {
-        mListTransferDestinationViewModel.init();
-        verify(mTransferMethodRepository).loadTransferMethods(
-                any(TransferMethodRepository.LoadTransferMethodListCallback.class));
-    }
-
-    @Test
-    public void testSelectTransferDestination_callsRepository() {
+    public void testSelectTransferDestination_returnsTransferMethod() {
         TransferMethod transferMethod = new TransferMethod();
         mListTransferDestinationViewModel.selectedTransferDestination(transferMethod);
         assertThat(mListTransferDestinationViewModel.getSelectedTransferDestination().getValue().getContent(),
@@ -289,11 +282,15 @@ public class ListTransferDestinationViewModelTest {
 
 
     @Test
-    public void testInit() {
-        ListTransferDestinationViewModel viewModel = spy(mListTransferDestinationViewModel);
-        viewModel.init();
-        verify(viewModel).loadTransferDestinationList();
+    public void testInit_verifyInitializedOnce() {
+        mListTransferDestinationViewModel.init();
+        verify(mListTransferDestinationViewModel).loadTransferDestinationList();
 
-        viewModel.init();
+        // call again. multiple calls to init should only register 1 call to repository
+        mListTransferDestinationViewModel.init();
+        verify(mListTransferDestinationViewModel).loadTransferDestinationList();
+
+        verify(mTransferMethodRepository).loadTransferMethods(
+                any(TransferMethodRepository.LoadTransferMethodListCallback.class));
     }
 }

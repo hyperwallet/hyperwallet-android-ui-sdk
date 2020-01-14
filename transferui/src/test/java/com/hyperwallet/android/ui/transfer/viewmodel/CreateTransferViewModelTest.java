@@ -159,21 +159,19 @@ public class CreateTransferViewModelTest {
         assertThat(viewModel.isTransferAllAvailableFunds(), is(notNullValue()));
         assertThat(viewModel.isTransferAllAvailableFunds().getValue(), is(false));
         assertThat(viewModel.isCreateQuoteLoading().getValue(), is(false));
-        
+
         verify(viewModel, never()).loadTransferSource();
     }
 
     @Test
     public void testInit_withFundingSource() {
-        CreateTransferViewModel viewModel = new CreateTransferViewModel.CreateTransferViewModelFactory(
+        CreateTransferViewModel viewModel = spy(new CreateTransferViewModel.CreateTransferViewModelFactory(
                 mTransfer.getToken(), mTransferRepository, mTransferMethodRepository, mUserRepository
-        ).create(CreateTransferViewModel.class);
+        ).create(CreateTransferViewModel.class));
+        viewModel.init();
 
-        CreateTransferViewModel mockedViewModel = spy(viewModel);
-        mockedViewModel.init();
-
-        verify(mockedViewModel).loadTransferDestination(any(String.class));
-        verify(mockedViewModel, never()).loadTransferSource();
+        verify(viewModel).loadTransferDestination(any(String.class));
+        verify(viewModel, never()).loadTransferSource();
 
         assertThat(viewModel, is(notNullValue()));
         assertThat(viewModel.isTransferAllAvailableFunds().getValue(), is(false));
@@ -204,14 +202,12 @@ public class CreateTransferViewModelTest {
 
     @Test
     public void testInit_withoutFundingSource() {
-        CreateTransferViewModel viewModel = new CreateTransferViewModel.CreateTransferViewModelFactory(
+        CreateTransferViewModel viewModel = spy(new CreateTransferViewModel.CreateTransferViewModelFactory(
                 mTransferRepository, mTransferMethodRepository, mUserRepository
-        ).create(CreateTransferViewModel.class);
+        ).create(CreateTransferViewModel.class));
+        viewModel.init();
 
-        CreateTransferViewModel mockedViewModel = spy(viewModel);
-        mockedViewModel.init();
-
-        verify(mockedViewModel).loadTransferSource();
+        verify(viewModel).loadTransferSource();
 
         assertThat(viewModel, is(notNullValue()));
         assertThat(viewModel.isTransferAllAvailableFunds().getValue(), is(false));
