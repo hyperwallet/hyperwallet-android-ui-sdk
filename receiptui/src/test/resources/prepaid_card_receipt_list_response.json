@@ -46,7 +46,7 @@
     {
       "journalId": "FISA_5240223",
       "type": "ADJUSTMENT",
-      "createdOn": "2019-03-31T23:55:17",
+      "createdOn": "2019-03-30T23:55:17",
       "entry": "DEBIT",
       "sourceToken": "trm-2e02da75-a36c-4723-b613-0b64e6f582d9",
       "amount": "7.90",
