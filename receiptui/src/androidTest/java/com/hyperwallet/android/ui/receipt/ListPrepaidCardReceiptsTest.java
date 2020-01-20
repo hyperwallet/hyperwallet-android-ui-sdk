@@ -515,15 +515,14 @@ public class ListPrepaidCardReceiptsTest {
 
     private String dateConversion(String expectedDate, String timeAdjustment, String dateFormat,
             int flag) {
-        SimpleDateFormat df = new SimpleDateFormat(dateFormat + "HH:mm:ss");
-        df.setTimeZone(TimeZone.getTimeZone("GMT"));
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormat + "HH:mm:ss");
+        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
         Date date = null;
         try {
-            date = df.parse(expectedDate + " " + timeAdjustment);
+            date = simpleDateFormat.parse(expectedDate + " " + timeAdjustment);
         } catch (ParseException e) {
             e.printStackTrace();
         }
         return formatDateTime(mActivityTestRule.getActivity(), date.getTime(), flag);
     }
-
 }
