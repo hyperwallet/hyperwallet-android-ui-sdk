@@ -68,4 +68,10 @@ public class ListUserReceiptViewModelTest {
         mReceiptViewModel.init();
         verify(mUserReceiptRepository).loadUserReceipts();
     }
+
+    @Test
+    public void testRetry_loadInitial() {
+        mReceiptViewModel.retry();
+        verify(mUserReceiptRepository).retryLoadReceipt();
+    }
 }

@@ -70,4 +70,10 @@ public class ListPrepaidCardReceiptViewModelTest {
         mReceiptViewModel.init();
         verify(mPrepaidCardReceiptRepository).loadPrepaidCardReceipts();
     }
+
+    @Test
+    public void testRetry_loadInitial() {
+        mReceiptViewModel.retry();
+        verify(mPrepaidCardReceiptRepository).retryLoadReceipt();
+    }
 }
