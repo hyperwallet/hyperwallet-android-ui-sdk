@@ -6,5 +6,4 @@ dependencies {
     implementation "androidx.test:rules:$testRulesVersion"
     implementation "androidx.test.espresso:espresso-core:$espressoVersion"
     implementation "com.squareup.okhttp3:mockwebserver:$mockServerVersion"
-    implementation project(':commonui')
 }
