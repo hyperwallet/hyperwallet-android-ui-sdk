@@ -50,7 +50,7 @@ public abstract class ReceiptViewModel extends ViewModel {
     /**
      * Explicit invoke of load retry on receipts data
      */
-    public abstract void retryLoadReceipts();
+    public abstract void retry();
 
     /**
      * @return binding live data of detail navigation information

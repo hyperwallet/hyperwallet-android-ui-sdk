@@ -128,7 +128,7 @@ public class ListReceiptFragment extends Fragment {
     }
 
     void retry() {
-        mReceiptViewModel.retryLoadReceipts();
+        mReceiptViewModel.retry();
     }
 
     private static class ListReceiptItemDiffCallback extends DiffUtil.ItemCallback<Receipt> {

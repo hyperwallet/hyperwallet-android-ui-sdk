@@ -85,10 +85,10 @@ public class ListPrepaidCardReceiptViewModel extends ReceiptViewModel {
     }
 
     /**
-     * @see ReceiptViewModel#retryLoadReceipts()
+     * @see ReceiptViewModel#retry()
      */
     @Override
-    public void retryLoadReceipts() {
+    public void retry() {
         mPrepaidCardReceiptRepository.retryLoadReceipt();
     }
 

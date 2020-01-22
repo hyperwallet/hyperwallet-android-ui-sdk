@@ -63,6 +63,7 @@ public class ListUserReceiptViewModel extends ReceiptViewModel {
     /**
      * @see ReceiptViewModel#isLoadingData()
      */
+    @Override
     public LiveData<Boolean> isLoadingData() {
         return mUserReceiptRepository.isLoading();
     }
@@ -70,6 +71,7 @@ public class ListUserReceiptViewModel extends ReceiptViewModel {
     /**
      * @see ReceiptViewModel#getReceiptErrors()
      */
+    @Override
     public LiveData<Event<Errors>> getReceiptErrors() {
         return mErrorEvent;
     }
@@ -77,20 +79,23 @@ public class ListUserReceiptViewModel extends ReceiptViewModel {
     /**
      * @see ReceiptViewModel#getReceiptList()
      */
+    @Override
     public LiveData<PagedList<Receipt>> getReceiptList() {
         return mUserReceiptRepository.loadUserReceipts();
     }
 
     /**
-     * @see ReceiptViewModel#retryLoadReceipts()
+     * @see ReceiptViewModel#retry()
      */
-    public void retryLoadReceipts() {
+    @Override
+    public void retry() {
         mUserReceiptRepository.retryLoadReceipt();
     }
 
     /**
      * @see ReceiptViewModel#getDetailNavigation()
      */
+    @Override
     public LiveData<Event<Receipt>> getDetailNavigation() {
         return mDetailNavigation;
     }
@@ -98,6 +103,7 @@ public class ListUserReceiptViewModel extends ReceiptViewModel {
     /**
      * @see ReceiptViewModel#setDetailNavigation(Receipt)
      */
+    @Override
     public void setDetailNavigation(@NonNull final Receipt receipt) {
         mDetailNavigation.postValue(new Event<>(receipt));
     }
