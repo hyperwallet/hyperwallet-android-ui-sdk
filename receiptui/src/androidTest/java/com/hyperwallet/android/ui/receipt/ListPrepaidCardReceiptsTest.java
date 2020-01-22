@@ -1,12 +1,5 @@
 package com.hyperwallet.android.ui.receipt;
 
-import static android.text.format.DateUtils.FORMAT_ABBREV_WEEKDAY;
-import static android.text.format.DateUtils.FORMAT_SHOW_DATE;
-import static android.text.format.DateUtils.FORMAT_SHOW_TIME;
-import static android.text.format.DateUtils.FORMAT_SHOW_WEEKDAY;
-import static android.text.format.DateUtils.FORMAT_SHOW_YEAR;
-import static android.text.format.DateUtils.formatDateTime;
-
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
@@ -41,7 +34,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
 import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
-import com.hyperwallet.android.ui.common.util.DateUtils;
 import com.hyperwallet.android.ui.receipt.view.ListPrepaidCardReceiptActivity;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletMockWebServer;
@@ -55,7 +47,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
@@ -90,8 +81,8 @@ public class ListPrepaidCardReceiptsTest {
                 .getResourceContent("authentication_token_response.json")).mock();
 
         mDefaultTimeZone = TimeZone.getDefault();
+        TimeZone.setDefault(TimeZone.getTimeZone("US/Pacific"));
         setLocale(Locale.US);
-        TimeZone.setDefault(TimeZone.getTimeZone("PST"));
         IdlingRegistry.getInstance().register(EspressoIdlingResource.getIdlingResource());
     }
 
@@ -387,15 +378,7 @@ public class ListPrepaidCardReceiptsTest {
         onView(withId(R.id.receipt_id_label)).check(matches(withText(R.string.journalId)));
         onView(withId(R.id.receipt_id_value)).check(matches(withText("FISVL_5240220")));
         onView(withId(R.id.date_label)).check(matches(withText(R.string.createdOn)));
-
-        Date date = DateUtils.fromDateTimeString("2019-06-06T22:48:41");
-        String timezone = DateUtils.toDateFormat(date, "zzz");
-        String text = mActivityTestRule.getActivity().getApplicationContext().getString(
-                R.string.concat_string_view_format,
-                formatDateTime(mActivityTestRule.getActivity().getApplicationContext(), date.getTime(),
-                        FORMAT_SHOW_DATE | FORMAT_SHOW_TIME | FORMAT_SHOW_YEAR
-                                | FORMAT_SHOW_WEEKDAY | FORMAT_ABBREV_WEEKDAY), timezone);
-        onView(withId(R.id.date_value)).check(matches(withText(text)));
+        onView(withId(R.id.date_value)).check(matches(withText("Thu, June 6, 2019, 3:48 PM PDT")));
 
         onView(withId(R.id.client_id_label)).check(matches(withText(R.string.clientPaymentId)));
         onView(withId(R.id.client_id_value)).check(matches(withText("AOxXefx9")));
@@ -447,15 +430,7 @@ public class ListPrepaidCardReceiptsTest {
         onView(withId(R.id.receipt_id_label)).check(matches(withText(R.string.journalId)));
         onView(withId(R.id.receipt_id_value)).check(matches(withText("FISVL_5240221")));
         onView(withId(R.id.date_label)).check(matches(withText(R.string.createdOn)));
-
-        Date date = DateUtils.fromDateTimeString("2019-06-06T22:48:51");
-        String timezone = DateUtils.toDateFormat(date, "zzz");
-        String text = mActivityTestRule.getActivity().getApplicationContext().getString(
-                R.string.concat_string_view_format,
-                formatDateTime(mActivityTestRule.getActivity().getApplicationContext(), date.getTime(),
-                        FORMAT_SHOW_DATE | FORMAT_SHOW_TIME | FORMAT_SHOW_YEAR
-                                | FORMAT_SHOW_WEEKDAY | FORMAT_ABBREV_WEEKDAY), timezone);
-        onView(withId(R.id.date_value)).check(matches(withText(text)));
+        onView(withId(R.id.date_value)).check(matches(withText("Thu, June 6, 2019, 3:48 PM PDT")));
 
         onView(withId(R.id.client_id_label)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
         onView(withId(R.id.client_id_value)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
