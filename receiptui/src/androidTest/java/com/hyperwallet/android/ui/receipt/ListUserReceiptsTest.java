@@ -55,6 +55,7 @@ import org.junit.runner.RunWith;
 
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.mockwebserver.MockResponse;
@@ -71,18 +72,22 @@ public class ListUserReceiptsTest {
     @Rule
     public ActivityTestRule<ListUserReceiptActivity> mActivityTestRule =
             new ActivityTestRule<>(ListUserReceiptActivity.class, true, false);
+    private TimeZone mDefaultTimeZone;
 
     @Before
     public void setup() {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("authentication_token_response.json")).mock();
 
+        mDefaultTimeZone = TimeZone.getDefault();
         setLocale(Locale.US);
+        TimeZone.setDefault(TimeZone.getTimeZone("PST"));
         IdlingRegistry.getInstance().register(EspressoIdlingResource.getIdlingResource());
     }
 
     @After
     public void cleanup() {
+        TimeZone.setDefault(mDefaultTimeZone);
         IdlingRegistry.getInstance().unregister(EspressoIdlingResource.getIdlingResource());
     }
 

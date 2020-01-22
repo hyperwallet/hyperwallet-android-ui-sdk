@@ -1,5 +1,12 @@
 package com.hyperwallet.android.ui.receipt;
 
+import static android.text.format.DateUtils.FORMAT_ABBREV_WEEKDAY;
+import static android.text.format.DateUtils.FORMAT_SHOW_DATE;
+import static android.text.format.DateUtils.FORMAT_SHOW_TIME;
+import static android.text.format.DateUtils.FORMAT_SHOW_WEEKDAY;
+import static android.text.format.DateUtils.FORMAT_SHOW_YEAR;
+import static android.text.format.DateUtils.formatDateTime;
+
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
@@ -50,6 +57,7 @@ import org.junit.runner.RunWith;
 
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.mockwebserver.MockResponse;
@@ -74,18 +82,22 @@ public class ListPrepaidCardReceiptsTest {
                     return intent;
                 }
             };
+    private TimeZone mDefaultTimeZone;
 
     @Before
     public void setup() {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("authentication_token_response.json")).mock();
 
+        mDefaultTimeZone = TimeZone.getDefault();
         setLocale(Locale.US);
+        TimeZone.setDefault(TimeZone.getTimeZone("PST"));
         IdlingRegistry.getInstance().register(EspressoIdlingResource.getIdlingResource());
     }
 
     @After
     public void cleanup() {
+        TimeZone.setDefault(mDefaultTimeZone);
         IdlingRegistry.getInstance().unregister(EspressoIdlingResource.getIdlingResource());
     }
 
@@ -104,9 +116,7 @@ public class ListPrepaidCardReceiptsTest {
         onView(withId(R.id.list_receipts)).check(matches(isDisplayed()));
 
         onView(withId(R.id.list_receipts))
-                .check(matches(atPosition(0, hasDescendant(withText(
-                        DateConversion.dateConvertReceiptList(
-                                "2019-06-06T22:48:41"))))));
+                .check(matches(atPosition(0, hasDescendant(withText("June 2019")))));
         onView(withId(R.id.list_receipts)).check(matches(atPosition(0,
                 hasDescendant(withText(R.string.debit)))));
         onView(withId(R.id.list_receipts)).check(
@@ -114,10 +124,7 @@ public class ListPrepaidCardReceiptsTest {
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(0, hasDescendant(withText("- 10.00")))));
         onView(withId(R.id.list_receipts)).check(
-                matches(atPosition(0,
-                        hasDescendant(withText(
-                                DateConversion.dateConvertReceiptList(
-                                        "2019-06-06T22:48:41"))))));
+                matches(atPosition(0, hasDescendant(withText("June 6, 2019")))));
         onView(withId(R.id.list_receipts)).check(matches(atPosition(0, hasDescendant(withText("USD")))));
 
         onView(withId(R.id.list_receipts)).check(matches(atPosition(1,
@@ -127,10 +134,7 @@ public class ListPrepaidCardReceiptsTest {
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(1, hasDescendant(withText("+ 5.00")))));
         onView(withId(R.id.list_receipts)).check(
-                matches(atPosition(1,
-                        hasDescendant(withText(
-                                DateConversion.dateConvertReceiptList(
-                                        "2019-06-06T22:48:51"))))));
+                matches(atPosition(1, hasDescendant(withText("June 6, 2019")))));
         onView(withId(R.id.list_receipts)).check(matches(atPosition(1, hasDescendant(withText("USD")))));
 
         onView(withId(R.id.list_receipts)).check(matches(atPosition(2,
@@ -140,16 +144,11 @@ public class ListPrepaidCardReceiptsTest {
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(2, hasDescendant(withText("- 8.90")))));
         onView(withId(R.id.list_receipts)).check(
-                matches(atPosition(2,
-                        hasDescendant(withText(
-                                DateConversion.dateConvertReceiptList(
-                                        "2019-06-01T22:49:17"))))));
+                matches(atPosition(2, hasDescendant(withText("June 1, 2019")))));
         onView(withId(R.id.list_receipts)).check(matches(atPosition(2, hasDescendant(withText("USD")))));
 
         onView(withId(R.id.list_receipts))
-                .check(matches(atPosition(3, hasDescendant(withText(
-                        DateConversion.dateConvertReceiptList(
-                                "2019-03-31T23:55:17"))))));
+                .check(matches(atPosition(3, hasDescendant(withText("March 2019")))));
         onView(withId(R.id.list_receipts)).check(matches(atPosition(3,
                 hasDescendant(withText(R.string.debit)))));
         onView(withId(R.id.list_receipts)).check(
@@ -157,10 +156,7 @@ public class ListPrepaidCardReceiptsTest {
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(3, hasDescendant(withText("- 7.90")))));
         onView(withId(R.id.list_receipts)).check(
-                matches(atPosition(3,
-                        hasDescendant(withText(
-                                DateConversion.dateConvertReceiptList(
-                                        "2019-03-31T23:55:17"))))));
+                matches(atPosition(3, hasDescendant(withText("March 31, 2019")))));
         onView(withId(R.id.list_receipts)).check(matches(atPosition(3, hasDescendant(withText("USD")))));
 
         onView(withId(R.id.list_receipts)).check(matches(atPosition(4,
@@ -170,10 +166,7 @@ public class ListPrepaidCardReceiptsTest {
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(4, hasDescendant(withText("+ 6.90")))));
         onView(withId(R.id.list_receipts)).check(
-                matches(atPosition(4,
-                        hasDescendant(withText(
-                                DateConversion.dateConvertReceiptList(
-                                        "2019-02-28T23:55:17"))))));
+                matches(atPosition(4, hasDescendant(withText("February 28, 2019")))));
         onView(withId(R.id.list_receipts)).check(matches(atPosition(4, hasDescendant(withText("USD")))));
 
         onView(withId(R.id.list_receipts)).perform(RecyclerViewActions.scrollToPosition(5));
@@ -184,10 +177,7 @@ public class ListPrepaidCardReceiptsTest {
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(5, hasDescendant(withText("+ 3.90")))));
         onView(withId(R.id.list_receipts)).check(
-                matches(atPosition(5,
-                        hasDescendant(withText(
-                                DateConversion.dateConvertReceiptList(
-                                        "2019-02-23T23:55:17"))))));
+                matches(atPosition(5, hasDescendant(withText("February 23, 2019")))));
         onView(withId(R.id.list_receipts)).check(matches(atPosition(5, hasDescendant(withText("USD")))));
 
         onView(withId(R.id.list_receipts)).perform(RecyclerViewActions.scrollToPosition(6));
@@ -198,10 +188,7 @@ public class ListPrepaidCardReceiptsTest {
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(6, hasDescendant(withText("+ 9.92")))));
         onView(withId(R.id.list_receipts)).check(
-                matches(atPosition(6,
-                        hasDescendant(withText(
-                                DateConversion.dateConvertReceiptList(
-                                        "2019-02-21T23:55:17"))))));
+                matches(atPosition(6, hasDescendant(withText("February 21, 2019")))));
         onView(withId(R.id.list_receipts)).check(matches(atPosition(6, hasDescendant(withText("USD")))));
 
         onView(withId(R.id.list_receipts)).check(new RecyclerViewCountAssertion(7));
@@ -221,9 +208,7 @@ public class ListPrepaidCardReceiptsTest {
                 .check(matches(withText(R.string.title_activity_receipt_list)));
         onView(withId(R.id.list_receipts)).check(matches(isDisplayed()));
         onView(withId(R.id.list_receipts))
-                .check(matches(atPosition(0, hasDescendant(withText(
-                        DateConversion.dateConvertReceiptList(
-                                "2019-06-06T22:48:41"))))));
+                .check(matches(atPosition(0, hasDescendant(withText("June 2019")))));
         onView(withId(R.id.list_receipts)).check(matches(atPosition(0,
                 hasDescendant(withText(com.hyperwallet.android.ui.receipt.R.string.credit)))));
         onView(withId(R.id.list_receipts)).check(
@@ -231,10 +216,7 @@ public class ListPrepaidCardReceiptsTest {
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(0, hasDescendant(withText("+ 15.00")))));
         onView(withId(R.id.list_receipts)).check(
-                matches(atPosition(0,
-                        hasDescendant(withText(
-                                DateConversion.dateConvertReceiptList(
-                                        "2019-06-06T22:48:41"))))));
+                matches(atPosition(0, hasDescendant(withText("June 6, 2019")))));
         onView(withId(R.id.list_receipts)).check(matches(atPosition(0, hasDescendant(withText("CAD")))));
 
         onView(withId(R.id.list_receipts)).check(new RecyclerViewCountAssertion(1));
@@ -263,10 +245,7 @@ public class ListPrepaidCardReceiptsTest {
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(0, hasDescendant(withText("- 8.90")))));
         onView(withId(R.id.list_receipts)).check(
-                matches(atPosition(0,
-                        hasDescendant(withText(
-                                DateConversion.dateConvertReceiptList(
-                                        "2019-06-01T22:49:17"))))));
+                matches(atPosition(0, hasDescendant(withText("June 1, 2019")))));
         onView(withId(R.id.list_receipts)).check(matches(atPosition(0, hasDescendant(withText("USD")))));
 
         onView(withId(R.id.list_receipts)).check(new RecyclerViewCountAssertion(1));
@@ -295,10 +274,7 @@ public class ListPrepaidCardReceiptsTest {
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(0, hasDescendant(withText("+ 15.00")))));
         onView(withId(R.id.list_receipts)).check(
-                matches(atPosition(0,
-                        hasDescendant(withText(
-                                DateConversion.dateConvertReceiptList(
-                                        "2019-06-06T22:48:41"))))));
+                matches(atPosition(0, hasDescendant(withText("June 6, 2019")))));
         onView(withId(R.id.list_receipts)).check(matches(atPosition(0, hasDescendant(withText("CAD")))));
 
         onView(withId(R.id.list_receipts)).check(new RecyclerViewCountAssertion(1));
@@ -336,10 +312,7 @@ public class ListPrepaidCardReceiptsTest {
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(0, hasDescendant(withText("- 8,90")))));
         onView(withId(R.id.list_receipts)).check(
-                matches(atPosition(0,
-                        hasDescendant(withText(
-                                DateConversion.dateConvertReceiptList(
-                                        "2019-06-01T22:49:17"))))));
+                matches(atPosition(0, hasDescendant(withText("1. Juni 2019")))));
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(0, hasDescendant(withText("USD")))));
 
@@ -381,10 +354,7 @@ public class ListPrepaidCardReceiptsTest {
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(0, hasDescendant(withText("- 8.90")))));
         onView(withId(R.id.list_receipts)).check(
-                matches(atPosition(0,
-                        hasDescendant(withText(
-                                DateConversion.dateConvertReceiptList(
-                                        "2019-06-01T22:49:17"))))));
+                matches(atPosition(0, hasDescendant(withText("June 1, 2019")))));
         onView(withId(R.id.list_receipts)).check(matches(atPosition(0, hasDescendant(withText("USD")))));
 
         onView(withId(R.id.list_receipts)).check(new RecyclerViewCountAssertion(1));
@@ -411,9 +381,7 @@ public class ListPrepaidCardReceiptsTest {
         onView(withId(R.id.transaction_title)).check(matches(withText(R.string.prepaid_card_sale)));
         onView(withId(R.id.transaction_amount)).check(matches(withText("- 10.00")));
         onView(withId(R.id.transaction_currency)).check(matches(withText("USD")));
-        onView(withId(R.id.transaction_date)).check(
-                matches(withText(DateConversion.dateConvertReceiptList(
-                        "2019-06-06T22:48:41"))));
+        onView(withId(R.id.transaction_date)).check(matches(withText("June 6, 2019")));
 
         onView(withId(R.id.receipt_details_header_label)).check(matches(withText(R.string.receipt_header_label)));
         onView(withId(R.id.receipt_id_label)).check(matches(withText(R.string.journalId)));
@@ -424,7 +392,9 @@ public class ListPrepaidCardReceiptsTest {
         String timezone = DateUtils.toDateFormat(date, "zzz");
         String text = mActivityTestRule.getActivity().getApplicationContext().getString(
                 R.string.concat_string_view_format,
-                DateConversion.dateConvertReceiptDetails(date), timezone);
+                formatDateTime(mActivityTestRule.getActivity().getApplicationContext(), date.getTime(),
+                        FORMAT_SHOW_DATE | FORMAT_SHOW_TIME | FORMAT_SHOW_YEAR
+                                | FORMAT_SHOW_WEEKDAY | FORMAT_ABBREV_WEEKDAY), timezone);
         onView(withId(R.id.date_value)).check(matches(withText(text)));
 
         onView(withId(R.id.client_id_label)).check(matches(withText(R.string.clientPaymentId)));
@@ -471,9 +441,7 @@ public class ListPrepaidCardReceiptsTest {
         onView(withId(R.id.transaction_title)).check(matches(withText(R.string.deposit)));
         onView(withId(R.id.transaction_amount)).check(matches(withText("+ 5.00")));
         onView(withId(R.id.transaction_currency)).check(matches(withText("USD")));
-        onView(withId(R.id.transaction_date)).check(
-                matches(withText(DateConversion.dateConvertReceiptList(
-                        "2019-06-06T22:48:51"))));
+        onView(withId(R.id.transaction_date)).check(matches(withText("June 6, 2019")));
 
         onView(withId(R.id.receipt_details_header_label)).check(matches(withText(R.string.receipt_header_label)));
         onView(withId(R.id.receipt_id_label)).check(matches(withText(R.string.journalId)));
@@ -484,7 +452,9 @@ public class ListPrepaidCardReceiptsTest {
         String timezone = DateUtils.toDateFormat(date, "zzz");
         String text = mActivityTestRule.getActivity().getApplicationContext().getString(
                 R.string.concat_string_view_format,
-                DateConversion.dateConvertReceiptDetails(date), timezone);
+                formatDateTime(mActivityTestRule.getActivity().getApplicationContext(), date.getTime(),
+                        FORMAT_SHOW_DATE | FORMAT_SHOW_TIME | FORMAT_SHOW_YEAR
+                                | FORMAT_SHOW_WEEKDAY | FORMAT_ABBREV_WEEKDAY), timezone);
         onView(withId(R.id.date_value)).check(matches(withText(text)));
 
         onView(withId(R.id.client_id_label)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
