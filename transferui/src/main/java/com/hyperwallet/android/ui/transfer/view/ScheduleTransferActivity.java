@@ -68,7 +68,6 @@ public class ScheduleTransferActivity extends AppCompatActivity implements OnNet
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setResult(Activity.RESULT_OK);
                 finish();
             }
         });
