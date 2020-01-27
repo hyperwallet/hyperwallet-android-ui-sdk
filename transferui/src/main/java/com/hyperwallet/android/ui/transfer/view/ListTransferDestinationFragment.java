@@ -189,7 +189,7 @@ public class ListTransferDestinationFragment extends DialogFragment {
         }
     }
 
-    private class ListTransferDestinationAdapter extends RecyclerView.Adapter<TransferDestinationViewHolder> {
+    private static class ListTransferDestinationAdapter extends RecyclerView.Adapter<TransferDestinationViewHolder> {
 
         private final List<TransferMethod> mTransferDestinations = new ArrayList<>();
         private final ListTransferDestinationViewModel mViewModel;
@@ -234,7 +234,7 @@ public class ListTransferDestinationFragment extends DialogFragment {
         }
     }
 
-    private class TransferDestinationViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    private static class TransferDestinationViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final TextView mTitle;
         private final TextView mIcon;
         private final TextView mTransferDestinationCountry;
