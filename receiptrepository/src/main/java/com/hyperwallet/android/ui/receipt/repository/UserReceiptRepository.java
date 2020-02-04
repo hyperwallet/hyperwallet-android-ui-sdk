@@ -55,4 +55,13 @@ public interface UserReceiptRepository {
      */
     void retryLoadReceipt();
 
+    /**
+     * Refresh and reinitialized receipts
+     */
+    void refresh();
+
+    /**
+     * Cleanup resources when not needed anymore
+     */
+    void cleanup();
 }

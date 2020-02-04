@@ -45,11 +45,10 @@ public class UserReceiptRepositoryImplTest {
     }
 
     @Test
-    public void testIsLoading_liveDataSingleInstantiation() {
+    public void testIsLoading_liveDataInstanceSwap() {
         LiveData<Boolean> result = mUserReceiptRepository.isLoading();
         LiveData<Boolean> result2 = mUserReceiptRepository.isLoading();
-        assertTrue(result == result2);
-
+        assertTrue(result != result2);
     }
 
     @Test
@@ -59,11 +58,9 @@ public class UserReceiptRepositoryImplTest {
     }
 
     @Test
-    public void testGetErrors_liveDataSingleInstantiation() {
+    public void testGetErrors_liveDataInstanceSwap() {
         LiveData<Event<Errors>> result = mUserReceiptRepository.getErrors();
         LiveData<Event<Errors>> result2 = mUserReceiptRepository.getErrors();
-        assertTrue(result == result2);
+        assertTrue(result != result2);
     }
-
-
 }

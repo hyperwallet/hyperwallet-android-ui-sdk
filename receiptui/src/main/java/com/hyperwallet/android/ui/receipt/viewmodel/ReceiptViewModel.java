@@ -33,6 +33,11 @@ public abstract class ReceiptViewModel extends ViewModel {
     public abstract void init();
 
     /**
+     * Refresh receipts
+     */
+    public abstract void refresh();
+
+    /**
      * @return live data of isloading information
      */
     public abstract LiveData<Boolean> isLoadingData();

@@ -135,6 +135,17 @@ public class CreateTransferViewModel extends ViewModel {
         }
     }
 
+    /**
+     * Refresh this view model please only call this when this view model is initialized
+     * or else it will just do nothing
+     */
+    public void refresh() {
+        if (!isTransferDestinationUnknown()
+                && !isTransferSourceTokenUnknown() && mIsInitialized) {
+            quoteAvailableTransferFunds(mSourceToken, mTransferDestination.getValue());
+        }
+    }
+
     public LiveData<Boolean> isTransferAllAvailableFunds() {
         return mTransferAvailableFunds;
     }

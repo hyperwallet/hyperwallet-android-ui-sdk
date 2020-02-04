@@ -705,4 +705,33 @@ public class CreateTransferViewModelTest {
 
     class FakeModel extends ViewModel {
     }
+
+    @Test
+    public void testRefresh_callsRefreshWithQuote() {
+        CreateTransferViewModel.CreateTransferViewModelFactory factory =
+                new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
+                        mTransferMethodRepository, mUserRepository);
+
+        // test
+        CreateTransferViewModel viewModel = factory.create(CreateTransferViewModel.class);
+        viewModel.init();
+        viewModel.refresh();
+
+        verify(mTransferRepository, times(2)).createTransfer(any(Transfer.class),
+                any(TransferRepository.CreateTransferCallback.class));
+    }
+
+    @Test
+    public void testRefresh_callsRefreshWithoutQuote() {
+        CreateTransferViewModel.CreateTransferViewModelFactory factory =
+                new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
+                        mTransferMethodRepository, mUserRepository);
+
+        // test
+        CreateTransferViewModel viewModel = factory.create(CreateTransferViewModel.class);
+        viewModel.refresh();
+
+        verify(mTransferRepository, never()).createTransfer(any(Transfer.class),
+                any(TransferRepository.CreateTransferCallback.class));
+    }
 }
