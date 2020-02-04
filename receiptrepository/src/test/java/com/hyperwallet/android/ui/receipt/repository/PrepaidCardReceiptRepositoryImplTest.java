@@ -4,7 +4,8 @@ package com.hyperwallet.android.ui.receipt.repository;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 
 import androidx.lifecycle.LiveData;
 import androidx.paging.PagedList;
@@ -29,14 +30,14 @@ public class PrepaidCardReceiptRepositoryImplTest {
         LiveData<PagedList<Receipt>> result = mPrepaidCardReceiptRepository.loadPrepaidCardReceipts();
         assertThat(result, is(notNullValue()));
         LiveData<PagedList<Receipt>> result2 = mPrepaidCardReceiptRepository.loadPrepaidCardReceipts();
-        assertTrue(result == result2);
+        assertSame(result, result2);
     }
 
     @Test
     public void testLoadPrepaidCardReceipts_liveDataSingleInstantiation() {
         LiveData<PagedList<Receipt>> result = mPrepaidCardReceiptRepository.loadPrepaidCardReceipts();
         LiveData<PagedList<Receipt>> result2 = mPrepaidCardReceiptRepository.loadPrepaidCardReceipts();
-        assertTrue(result == result2);
+        assertSame(result, result2);
     }
 
     @Test
@@ -46,10 +47,10 @@ public class PrepaidCardReceiptRepositoryImplTest {
     }
 
     @Test
-    public void testIsLoading_liveDataSingleInstantiation() {
+    public void testIsLoading_liveDataInstanceSwap() {
         LiveData<Boolean> result = mPrepaidCardReceiptRepository.isLoading();
         LiveData<Boolean> result2 = mPrepaidCardReceiptRepository.isLoading();
-        assertTrue(result == result2);
+        assertNotSame(result, result2);
 
     }
 
@@ -60,10 +61,9 @@ public class PrepaidCardReceiptRepositoryImplTest {
     }
 
     @Test
-    public void testGetErrors_liveDataSingleInstantiation() {
+    public void testGetErrors_liveDataInstanceSwap() {
         LiveData<Event<Errors>> result = mPrepaidCardReceiptRepository.getErrors();
         LiveData<Event<Errors>> result2 = mPrepaidCardReceiptRepository.getErrors();
-        assertTrue(result == result2);
+        assertNotSame(result, result2);
     }
-
 }

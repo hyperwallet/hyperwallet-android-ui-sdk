@@ -27,10 +27,12 @@ import androidx.paging.DataSource;
 public class PrepaidCardReceiptDataSourceFactory extends DataSource.Factory {
 
     private final MutableLiveData<PrepaidCardReceiptDataSource> mDataSourceMutableLiveData;
-    private final PrepaidCardReceiptDataSource mPrepaidCardReceiptDataSource;
+    private PrepaidCardReceiptDataSource mPrepaidCardReceiptDataSource;
+    private final String token;
 
     PrepaidCardReceiptDataSourceFactory(@NonNull final String token) {
         super();
+        this.token = token;
         mPrepaidCardReceiptDataSource = new PrepaidCardReceiptDataSource(token);
         mDataSourceMutableLiveData = new MutableLiveData<>();
         mDataSourceMutableLiveData.setValue(mPrepaidCardReceiptDataSource);
@@ -49,6 +51,8 @@ public class PrepaidCardReceiptDataSourceFactory extends DataSource.Factory {
     @NonNull
     @Override
     public DataSource create() {
+        mPrepaidCardReceiptDataSource = new PrepaidCardReceiptDataSource(token);
+        mDataSourceMutableLiveData.postValue(mPrepaidCardReceiptDataSource);
         return mPrepaidCardReceiptDataSource;
     }
 }

@@ -1,7 +1,11 @@
 package com.hyperwallet.android.ui.receipt.repository;
 
 import androidx.annotation.NonNull;
+import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.Transformations;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
@@ -16,13 +20,21 @@ public class PrepaidCardReceiptRepositoryImpl implements PrepaidCardReceiptRepos
 
     private final PrepaidCardReceiptDataSourceFactory mDataSourceFactory;
     private final LiveData<PrepaidCardReceiptDataSource> mReceiptDataSourceLiveData;
-    private LiveData<Event<Errors>> mErrorsLiveData;
-    private LiveData<Boolean> mIsFetchingData;
     private LiveData<PagedList<Receipt>> mReceiptsLiveData;
+    private MutableLiveData<Boolean> mRefreshDataSource = new MutableLiveData<>();
+    private Observer<PrepaidCardReceiptDataSource> mReceiptDataSourceObserver =
+            new Observer<PrepaidCardReceiptDataSource>() {
+                @Override
+                public void onChanged(PrepaidCardReceiptDataSource dataSource) {
+                    mRefreshDataSource.postValue(Boolean.TRUE);
+                }
+            };
 
     public PrepaidCardReceiptRepositoryImpl(@NonNull final String token) {
         mDataSourceFactory = new PrepaidCardReceiptDataSourceFactory(token);
         mReceiptDataSourceLiveData = mDataSourceFactory.getPrepaidCardReceiptDataSource();
+        mReceiptDataSourceLiveData.observeForever(mReceiptDataSourceObserver);
+        mRefreshDataSource.postValue(Boolean.FALSE);
     }
 
     /**
@@ -46,10 +58,12 @@ public class PrepaidCardReceiptRepositoryImpl implements PrepaidCardReceiptRepos
      */
     @Override
     public LiveData<Boolean> isLoading() {
-        if (mIsFetchingData == null) {
-            mIsFetchingData = mReceiptDataSourceLiveData.getValue().isFetchingData();
-        }
-        return mIsFetchingData;
+        return Transformations.switchMap(mRefreshDataSource, new Function<Boolean, LiveData<Boolean>>() {
+            @Override
+            public LiveData<Boolean> apply(Boolean input) {
+                return mReceiptDataSourceLiveData.getValue().isFetchingData();
+            }
+        });
     }
 
     /**
@@ -57,10 +71,12 @@ public class PrepaidCardReceiptRepositoryImpl implements PrepaidCardReceiptRepos
      */
     @Override
     public LiveData<Event<Errors>> getErrors() {
-        if (mErrorsLiveData == null) {
-            mErrorsLiveData = mReceiptDataSourceLiveData.getValue().getErrors();
-        }
-        return mErrorsLiveData;
+        return Transformations.switchMap(mRefreshDataSource, new Function<Boolean, LiveData<Event<Errors>>>() {
+            @Override
+            public LiveData<Event<Errors>> apply(Boolean input) {
+                return mReceiptDataSourceLiveData.getValue().getErrors();
+            }
+        });
     }
 
     /**
@@ -68,8 +84,16 @@ public class PrepaidCardReceiptRepositoryImpl implements PrepaidCardReceiptRepos
      */
     @Override
     public void retryLoadReceipt() {
-        if (mReceiptDataSourceLiveData.getValue() != null) {
-            mReceiptDataSourceLiveData.getValue().retry();
-        }
+        mReceiptDataSourceLiveData.getValue().retry();
+    }
+
+    @Override
+    public void refresh() {
+        mReceiptDataSourceLiveData.getValue().invalidate();
+    }
+
+    @Override
+    public void cleanup() {
+        mReceiptDataSourceLiveData.removeObserver(mReceiptDataSourceObserver);
     }
 }

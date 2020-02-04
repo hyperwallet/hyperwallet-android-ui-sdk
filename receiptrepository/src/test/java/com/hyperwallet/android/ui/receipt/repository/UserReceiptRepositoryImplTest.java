@@ -4,7 +4,8 @@ package com.hyperwallet.android.ui.receipt.repository;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 
 import androidx.lifecycle.LiveData;
 import androidx.paging.PagedList;
@@ -28,14 +29,14 @@ public class UserReceiptRepositoryImplTest {
         LiveData<PagedList<Receipt>> result = mUserReceiptRepository.loadUserReceipts();
         assertThat(result, is(notNullValue()));
         LiveData<PagedList<Receipt>> result2 = mUserReceiptRepository.loadUserReceipts();
-        assertTrue(result == result2);
+        assertSame(result, result2);
     }
 
     @Test
     public void testLoadUserReceipts_liveDataSingleInstantiation() {
         LiveData<PagedList<Receipt>> result = mUserReceiptRepository.loadUserReceipts();
         LiveData<PagedList<Receipt>> result2 = mUserReceiptRepository.loadUserReceipts();
-        assertTrue(result == result2);
+        assertSame(result, result2);
     }
 
     @Test
@@ -48,7 +49,7 @@ public class UserReceiptRepositoryImplTest {
     public void testIsLoading_liveDataInstanceSwap() {
         LiveData<Boolean> result = mUserReceiptRepository.isLoading();
         LiveData<Boolean> result2 = mUserReceiptRepository.isLoading();
-        assertTrue(result != result2);
+        assertNotSame(result, result2);
     }
 
     @Test
@@ -61,6 +62,6 @@ public class UserReceiptRepositoryImplTest {
     public void testGetErrors_liveDataInstanceSwap() {
         LiveData<Event<Errors>> result = mUserReceiptRepository.getErrors();
         LiveData<Event<Errors>> result2 = mUserReceiptRepository.getErrors();
-        assertTrue(result != result2);
+        assertNotSame(result, result2);
     }
 }
