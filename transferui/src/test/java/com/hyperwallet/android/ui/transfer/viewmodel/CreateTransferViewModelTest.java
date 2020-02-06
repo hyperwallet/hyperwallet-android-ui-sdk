@@ -544,7 +544,7 @@ public class CreateTransferViewModelTest {
             @Override
             public Object answer(InvocationOnMock invocation) {
                 TransferRepository.CreateTransferCallback callback = invocation.getArgument(1);
-                callback.onError(null);
+                callback.onError(Errors.getEmptyInstance());
                 return callback;
             }
         }).when(mTransferRepository).createTransfer(any(Transfer.class),
