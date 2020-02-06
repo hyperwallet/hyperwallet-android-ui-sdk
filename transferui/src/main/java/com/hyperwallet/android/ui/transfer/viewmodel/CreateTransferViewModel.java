@@ -178,7 +178,6 @@ public class CreateTransferViewModel extends ViewModel {
 
     public void setTransferDestination(@NonNull final TransferMethod transferDestination) {
         mTransferDestination.postValue(transferDestination);
-        mIsLoading.postValue(Boolean.TRUE);
         quoteAvailableTransferFunds(mSourceToken, transferDestination);
     }
 
@@ -319,6 +318,7 @@ public class CreateTransferViewModel extends ViewModel {
 
     @VisibleForTesting
     void loadTransferSource() {
+        mIsLoading.postValue(Boolean.TRUE);
         mUserRepository.loadUser(new UserRepository.LoadUserCallback() {
             @Override
             public void onUserLoaded(@NonNull User user) {
@@ -336,6 +336,7 @@ public class CreateTransferViewModel extends ViewModel {
 
     @VisibleForTesting
     void loadTransferDestination(@NonNull final String sourceToken) {
+        mIsLoading.postValue(Boolean.TRUE);
         mTransferMethodRepository.loadLatestTransferMethod(new TransferMethodRepository.LoadTransferMethodCallback() {
             @Override
             public void onTransferMethodLoaded(@Nullable TransferMethod transferMethod) {
@@ -358,6 +359,7 @@ public class CreateTransferViewModel extends ViewModel {
     private void quoteAvailableTransferFunds(@NonNull final String sourceToken,
             @NonNull final TransferMethod transferMethod) {
 
+        mIsLoading.postValue(Boolean.TRUE);
         Transfer transfer = new Transfer.Builder()
                 .clientTransferID(CLIENT_IDENTIFICATION_PREFIX + UUID.randomUUID().toString())
                 .sourceToken(sourceToken)
