@@ -28,11 +28,11 @@ public class PrepaidCardReceiptDataSourceFactory extends DataSource.Factory {
 
     private final MutableLiveData<PrepaidCardReceiptDataSource> mDataSourceMutableLiveData;
     private PrepaidCardReceiptDataSource mPrepaidCardReceiptDataSource;
-    private final String token;
+    private final String mToken;
 
     PrepaidCardReceiptDataSourceFactory(@NonNull final String token) {
         super();
-        this.token = token;
+        mToken = token;
         mPrepaidCardReceiptDataSource = new PrepaidCardReceiptDataSource(token);
         mDataSourceMutableLiveData = new MutableLiveData<>();
         mDataSourceMutableLiveData.setValue(mPrepaidCardReceiptDataSource);
@@ -51,7 +51,7 @@ public class PrepaidCardReceiptDataSourceFactory extends DataSource.Factory {
     @NonNull
     @Override
     public DataSource create() {
-        mPrepaidCardReceiptDataSource = new PrepaidCardReceiptDataSource(token);
+        mPrepaidCardReceiptDataSource = new PrepaidCardReceiptDataSource(mToken);
         mDataSourceMutableLiveData.postValue(mPrepaidCardReceiptDataSource);
         return mPrepaidCardReceiptDataSource;
     }

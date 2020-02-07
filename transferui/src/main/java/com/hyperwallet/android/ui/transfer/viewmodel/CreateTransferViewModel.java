@@ -145,6 +145,9 @@ public class CreateTransferViewModel extends ViewModel {
         if (!isTransferDestinationUnknown()
                 && !isTransferSourceTokenUnknown() && mIsInitialized) {
             quoteAvailableTransferFunds(mSourceToken, mTransferDestination.getValue());
+        } else if (isTransferDestinationUnknown()
+                && !isTransferSourceTokenUnknown() && mIsInitialized) {
+            loadTransferDestination(mSourceToken);
         }
     }
 
