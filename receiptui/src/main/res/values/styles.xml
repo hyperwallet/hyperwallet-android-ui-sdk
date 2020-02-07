@@ -3,6 +3,7 @@
            parent="@style/Widget.AppCompat.ProgressBar">
         <item name="colorAccent">@color/colorPrimary</item>
         <item name="android:indeterminateTint">@color/colorPrimary</item>
+        <item name="android:indeterminateTintMode">src_in</item>
         <item name="android:elevation">@dimen/progress_bar_elevation</item>
     </style>
 
