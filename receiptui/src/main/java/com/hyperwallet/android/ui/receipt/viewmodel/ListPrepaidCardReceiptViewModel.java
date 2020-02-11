@@ -60,6 +60,11 @@ public class ListPrepaidCardReceiptViewModel extends ReceiptViewModel {
         }
     }
 
+    @Override
+    public void refresh() {
+        mPrepaidCardReceiptRepository.refresh();
+    }
+
     /**
      * @see ReceiptViewModel#isLoadingData()
      */
@@ -115,6 +120,7 @@ public class ListPrepaidCardReceiptViewModel extends ReceiptViewModel {
     protected void onCleared() {
         super.onCleared();
         mPrepaidCardReceiptRepository.getErrors().removeObserver(mErrorEventObserver);
+        mPrepaidCardReceiptRepository.cleanup();
         mPrepaidCardReceiptRepository = null;
     }
 

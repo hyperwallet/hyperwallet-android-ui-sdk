@@ -135,6 +135,22 @@ public class CreateTransferViewModel extends ViewModel {
         }
     }
 
+    /**
+     * Refresh this view model please only call this when this view model is initialized
+     * or else it will just do nothing
+     */
+    public void refresh() {
+        mTransferAmount.postValue(null);
+        mTransferNotes.postValue(null);
+        if (!isTransferDestinationUnknown()
+                && !isTransferSourceTokenUnknown() && mIsInitialized) {
+            quoteAvailableTransferFunds(mSourceToken, mTransferDestination.getValue());
+        } else if (isTransferDestinationUnknown()
+                && !isTransferSourceTokenUnknown() && mIsInitialized) {
+            loadTransferDestination(mSourceToken);
+        }
+    }
+
     public LiveData<Boolean> isTransferAllAvailableFunds() {
         return mTransferAvailableFunds;
     }
@@ -365,6 +381,13 @@ public class CreateTransferViewModel extends ViewModel {
             public void onError(@NonNull Errors errors) {
                 mIsLoading.postValue(Boolean.FALSE);
                 mQuoteAvailableFunds.setValue(null);
+                if (errors.containsInputError()) {
+                    Error error = errors.getErrors().get(0);
+                    if (Objects.equals(error.getFieldName(), DESTINATION_TOKEN_INPUT_FIELD)) {
+                        mInvalidDestinationError.postValue(new Event<>(error));
+                        return;
+                    }
+                }
                 mLoadTransferRequiredDataErrors.postValue(new Event<>(errors));
             }
         });

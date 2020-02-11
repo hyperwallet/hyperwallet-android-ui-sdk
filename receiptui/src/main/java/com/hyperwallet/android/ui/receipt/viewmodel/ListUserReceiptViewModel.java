@@ -60,6 +60,11 @@ public class ListUserReceiptViewModel extends ReceiptViewModel {
         }
     }
 
+    @Override
+    public void refresh() {
+        mUserReceiptRepository.refresh();
+    }
+
     /**
      * @see ReceiptViewModel#isLoadingData()
      */
@@ -115,6 +120,7 @@ public class ListUserReceiptViewModel extends ReceiptViewModel {
     protected void onCleared() {
         super.onCleared();
         mUserReceiptRepository.getErrors().removeObserver(mErrorEventObserver);
+        mUserReceiptRepository.cleanup();
         mUserReceiptRepository = null;
     }
 

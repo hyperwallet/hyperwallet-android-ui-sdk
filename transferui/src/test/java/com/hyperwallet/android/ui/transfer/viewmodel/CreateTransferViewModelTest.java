@@ -544,7 +544,7 @@ public class CreateTransferViewModelTest {
             @Override
             public Object answer(InvocationOnMock invocation) {
                 TransferRepository.CreateTransferCallback callback = invocation.getArgument(1);
-                callback.onError(null);
+                callback.onError(Errors.getEmptyInstance());
                 return callback;
             }
         }).when(mTransferRepository).createTransfer(any(Transfer.class),
@@ -704,5 +704,34 @@ public class CreateTransferViewModelTest {
 
 
     class FakeModel extends ViewModel {
+    }
+
+    @Test
+    public void testRefresh_callsRefreshWithQuote() {
+        CreateTransferViewModel.CreateTransferViewModelFactory factory =
+                new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
+                        mTransferMethodRepository, mUserRepository);
+
+        // test
+        CreateTransferViewModel viewModel = factory.create(CreateTransferViewModel.class);
+        viewModel.init();
+        viewModel.refresh();
+
+        verify(mTransferRepository, times(2)).createTransfer(any(Transfer.class),
+                any(TransferRepository.CreateTransferCallback.class));
+    }
+
+    @Test
+    public void testRefresh_callsRefreshWithoutQuote() {
+        CreateTransferViewModel.CreateTransferViewModelFactory factory =
+                new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
+                        mTransferMethodRepository, mUserRepository);
+
+        // test
+        CreateTransferViewModel viewModel = factory.create(CreateTransferViewModel.class);
+        viewModel.refresh();
+
+        verify(mTransferRepository, never()).createTransfer(any(Transfer.class),
+                any(TransferRepository.CreateTransferCallback.class));
     }
 }
