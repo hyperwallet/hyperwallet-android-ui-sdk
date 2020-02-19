@@ -52,13 +52,16 @@ public final class HyperwalletTransferUi {
     }
 
     public Intent getIntentCreateTransfer(@NonNull final Context context) {
-        Intent intent = new Intent(context, CreateTransferActivity.class);
-        return intent;
+        return new Intent(context, CreateTransferActivity.class);
     }
 
     public Intent getIntentCreateTransfer(@NonNull final Context context, @NonNull final String sourceToken) {
         Intent intent = new Intent(context, CreateTransferActivity.class);
         intent.putExtra(CreateTransferActivity.EXTRA_TRANSFER_SOURCE_TOKEN, sourceToken);
         return intent;
+    }
+
+    public static void clearInstance() {
+        sInstance = null;
     }
 }

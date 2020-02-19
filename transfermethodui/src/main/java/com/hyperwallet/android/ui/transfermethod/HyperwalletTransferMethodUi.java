@@ -102,4 +102,8 @@ public final class HyperwalletTransferMethodUi {
         intent.putExtra(EXTRA_TRANSFER_METHOD_PROFILE_TYPE, profileType);
         return intent;
     }
+
+    public static void clearInstance() {
+        sInstance = null;
+    }
 }
