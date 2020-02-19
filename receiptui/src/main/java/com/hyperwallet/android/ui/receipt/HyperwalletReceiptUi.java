@@ -65,7 +65,4 @@ public final class HyperwalletReceiptUi {
         return intent;
     }
 
-    public static void clearInstance() {
-        sInstance = null;
-    }
 }
