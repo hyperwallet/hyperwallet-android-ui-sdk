@@ -67,5 +67,6 @@ public final class HyperwalletReceiptUi {
 
     public static void clearInstance() {
         sInstance = null;
+        Hyperwallet.clearInstance();
     }
 }

@@ -63,5 +63,6 @@ public final class HyperwalletTransferUi {
 
     public static void clearInstance() {
         sInstance = null;
+        Hyperwallet.clearInstance();
     }
 }
