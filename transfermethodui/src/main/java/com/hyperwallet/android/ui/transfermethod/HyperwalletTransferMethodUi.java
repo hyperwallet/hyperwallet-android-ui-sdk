@@ -27,6 +27,7 @@ import android.content.Intent;
 
 import androidx.annotation.NonNull;
 
+import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.HyperwalletAuthenticationTokenProvider;
 import com.hyperwallet.android.ui.common.insight.HyperwalletInsight;
 import com.hyperwallet.android.ui.common.intent.HyperwalletIntent;
@@ -101,5 +102,10 @@ public final class HyperwalletTransferMethodUi {
         intent.putExtra(EXTRA_TRANSFER_METHOD_TYPE, transferMethodType);
         intent.putExtra(EXTRA_TRANSFER_METHOD_PROFILE_TYPE, profileType);
         return intent;
+    }
+
+    public static void clearInstance() {
+        sInstance = null;
+        Hyperwallet.clearInstance();
     }
 }
