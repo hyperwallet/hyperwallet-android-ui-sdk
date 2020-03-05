@@ -17,9 +17,12 @@
 package com.hyperwallet.android.ui.common.view.error;
 
 import static com.hyperwallet.android.ExceptionMapper.EC_UNEXPECTED_EXCEPTION;
+import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.AUTHENTICATION_ERROR_ACTION;
+import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.AUTHENTICATION_ERROR_PAYLOAD;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -28,6 +31,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.hyperwallet.android.model.Error;
 import com.hyperwallet.android.ui.common.R;
@@ -73,7 +77,11 @@ public class DefaultErrorDialogFragment extends DialogFragment {
     @Override
     public void onCancel(DialogInterface dialog) {
         super.onCancel(dialog);
-
+        ArrayList<Error> errors = getErrors();
+        if(errors.get(0).getCode().equals(ErrorTypes.AUTH_TOKEN_ERROR)){
+            Error error = new Error(ErrorUtils.getMessage(errors, getResources()), errors.get(0).getCode());
+            LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(createBroadcast(error));
+        }
         requireActivity().setResult(RESULT_ERROR);
         requireActivity().finish();
     }
@@ -94,6 +102,12 @@ public class DefaultErrorDialogFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle state) {
+        ArrayList<Error> errors = getErrors();
+
+        return buildDialog(new Error(ErrorUtils.getMessage(errors, getResources()), errors.get(0).getCode()));
+    }
+
+    private ArrayList<Error> getErrors(){
         ArrayList<Error> errors = getArguments().getParcelableArrayList(ARGUMENT_ERROR_KEY);
         if (errors == null) {
             errors = new ArrayList<>(1);
@@ -104,18 +118,16 @@ public class DefaultErrorDialogFragment extends DialogFragment {
                     EC_UNEXPECTED_EXCEPTION);
             errors.add(error);
         }
-
-        String message = ErrorUtils.getMessage(errors, getResources());
-
-        return buildDialog(errors.get(0).getCode(), message);
+        return errors;
     }
 
-    private AlertDialog buildDialog(@NonNull String errorCode, @NonNull String message) {
+    private AlertDialog buildDialog(@NonNull final Error error) {
+
         AlertDialog.Builder builder = new AlertDialog.Builder(
                 new ContextThemeWrapper(requireContext(), R.style.Theme_Hyperwallet_Alert));
-        builder.setMessage(message);
+        builder.setMessage(error.getMessage());
 
-        String errorType = ErrorTypes.getErrorType(errorCode);
+        String errorType = ErrorTypes.getErrorType(error.getCode());
         switch (errorType) {
             case ErrorTypes.SDK_ERROR:
                 builder.setTitle(requireContext().getString(R.string.error_dialog_unexpected_title))
@@ -149,6 +161,19 @@ public class DefaultErrorDialogFragment extends DialogFragment {
                             });
                 }
                 break;
+            case ErrorTypes.AUTH_TOKEN_ERROR:
+                builder.setTitle(requireContext().getString(R.string.authentication_error_header))
+                        .setPositiveButton(getResources().getString(R.string.close_button_label),
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(createBroadcast(error));
+
+                                        requireActivity().setResult(RESULT_ERROR);
+                                        requireActivity().finish();
+                                    }
+                                });
+                break;
             default: // normal rest errors, we will give the user a chance to fix input values from form
                 builder.setTitle(requireContext().getString(R.string.error_dialog_title))
                         .setPositiveButton(getResources().getString(R.string.close_button_label), null);
@@ -156,5 +181,11 @@ public class DefaultErrorDialogFragment extends DialogFragment {
         AlertDialog dialog = builder.create();
         dialog.setCanceledOnTouchOutside(false);
         return dialog;
+    }
+
+    private Intent createBroadcast(@NonNull final Error error){
+        Intent intent = new Intent(AUTHENTICATION_ERROR_ACTION);
+        intent.putExtra(AUTHENTICATION_ERROR_PAYLOAD, error);
+        return intent;
     }
 }

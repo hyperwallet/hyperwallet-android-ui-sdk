@@ -22,41 +22,43 @@ package com.hyperwallet.android.ui.common.intent;
  */
 public final class HyperwalletIntent {
 
-    private HyperwalletIntent() {
-    }
-
     /**
      * SDK Broadcast Payload Key
      */
     public static final String HYPERWALLET_LOCAL_BROADCAST_PAYLOAD_KEY = "hyperwallet-local-broadcast-payload";
-
     /**
      * SDK Error unavailable constant
      */
     public static final String ERROR_SDK_MODULE_UNAVAILABLE = "ERROR_SDK_MODULE_UNAVAILABLE";
-
     /**
      * Action for SELECT TRANSFER METHOD UI SDK
      */
     public static final String ACTION_SELECT_TRANSFER_METHOD = "com.hyperwallet.intent.action.SELECT_TRANSFER_METHOD";
-
     /**
      * Select Transfer method request code
      */
     public static final short SELECT_TRANSFER_METHOD_REQUEST_CODE = 100;
-
     /**
      * Add Transfer method request code
      */
     public static final short ADD_TRANSFER_METHOD_REQUEST_CODE = 101;
-
     /**
      * Select transfer destination request code
      */
     public static final short SELECT_TRANSFER_DESTINATION_REQUEST_CODE = 102;
-
     /**
      * Schedule transfer
      */
     public static final short SCHEDULE_TRANSFER_REQUEST_CODE = 103;
+    /**
+     * SDK Broadcast payload error
+     */
+    public static final String AUTHENTICATION_ERROR_PAYLOAD = "HYPERWALLET_AUTHENTICATION_ERROR_PAYLOAD";
+    /**
+     * SDK Broadcast error action
+     */
+    public static final String AUTHENTICATION_ERROR_ACTION = "HYPERWALLET_AUTHENTICATION_ERROR_ACTION";
+
+    private HyperwalletIntent() {
+    }
 }
