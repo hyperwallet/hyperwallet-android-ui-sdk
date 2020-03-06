@@ -78,7 +78,7 @@ public class DefaultErrorDialogFragment extends DialogFragment {
     public void onCancel(DialogInterface dialog) {
         super.onCancel(dialog);
         ArrayList<Error> errors = getErrors();
-        if(errors.get(0).getCode().equals(ErrorTypes.AUTH_TOKEN_ERROR)){
+        if (errors.get(0).getCode().equals(ErrorTypes.AUTH_TOKEN_ERROR)) {
             Error error = new Error(ErrorUtils.getMessage(errors, getResources()), errors.get(0).getCode());
             LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(createBroadcast(error));
         }
