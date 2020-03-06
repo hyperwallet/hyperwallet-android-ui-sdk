@@ -82,6 +82,7 @@ public class DefaultErrorDialogFragment extends DialogFragment {
             Error error = new Error(ErrorUtils.getMessage(errors, getResources()), errors.get(0).getCode());
             LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(createBroadcast(error));
         }
+
         requireActivity().setResult(RESULT_ERROR);
         requireActivity().finish();
     }
@@ -126,9 +127,8 @@ public class DefaultErrorDialogFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(
                 new ContextThemeWrapper(requireContext(), R.style.Theme_Hyperwallet_Alert));
         builder.setMessage(error.getMessage());
-
-        String errorType = ErrorTypes.getErrorType(error.getCode());
-        switch (errorType) {
+        
+        switch (ErrorTypes.getErrorType(error.getCode())) {
             case ErrorTypes.SDK_ERROR:
                 builder.setTitle(requireContext().getString(R.string.error_dialog_unexpected_title))
                         .setPositiveButton(getResources().getString(R.string.close_button_label),
