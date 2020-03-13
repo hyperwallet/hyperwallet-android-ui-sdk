@@ -67,10 +67,20 @@ public class ErrorUtilsTest {
         assertThat(message, is("My default message"));
     }
 
+    @Test
+    public void testBuildDialogMessage_buildAuthenticationExceptionMessage() {
+        Resources resources = mock(Resources.class);
+        List<Error> errors = new ArrayList<>(2);
+        errors.add(new Error(R.string.authentication_token_provider_exception, EC_AUTHENTICATION_TOKEN_PROVIDER_EXCEPTION));
+        when(resources.getString(R.string.authentication_token_provider_exception)).thenReturn("My Authentication message");
+        String message = ErrorUtils.getMessage(errors, resources);
+
+        assertThat(message, is("My Authentication message"));
+    }
+
     private Collection<String> testBuildCommonDialogMessageData() {
         return Arrays.asList(EC_UNEXPECTED_EXCEPTION,
                 EC_JSON_EXCEPTION,
-                EC_JSON_PARSE_EXCEPTION,
-                EC_AUTHENTICATION_TOKEN_PROVIDER_EXCEPTION);
+                EC_JSON_PARSE_EXCEPTION);
     }
 }

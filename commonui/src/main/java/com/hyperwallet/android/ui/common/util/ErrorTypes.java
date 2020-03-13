@@ -45,13 +45,20 @@ public class ErrorTypes {
      */
     public static final String FORM_ERROR = "FORM";
 
+    /**
+     * AUTH_TOKEN_ERROR indicates an expected error that is coming when authentication token error occurred.
+     */
+    public static final String AUTH_TOKEN_ERROR = "AUTH_TOKEN_ERROR";
+
     public static String getErrorType(String errorCode) {
         switch (errorCode) {
             case EC_UNEXPECTED_EXCEPTION:
             case EC_JSON_EXCEPTION:
             case EC_JSON_PARSE_EXCEPTION:
-            case EC_AUTHENTICATION_TOKEN_PROVIDER_EXCEPTION:
                 errorCode = SDK_ERROR;
+                break;
+            case EC_AUTHENTICATION_TOKEN_PROVIDER_EXCEPTION:
+                errorCode = AUTH_TOKEN_ERROR;
                 break;
             case EC_IO_EXCEPTION: // connection error
                 errorCode = CONNECTION_ERROR;

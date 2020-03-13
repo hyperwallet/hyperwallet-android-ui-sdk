@@ -59,4 +59,14 @@ public final class HyperwalletIntent {
      * Schedule transfer
      */
     public static final short SCHEDULE_TRANSFER_REQUEST_CODE = 103;
+
+    /**
+     * SDK Broadcast payload error
+     */
+    public static final String AUTHENTICATION_ERROR_PAYLOAD = "HYPERWALLET_AUTHENTICATION_ERROR_PAYLOAD";
+
+    /**
+     * SDK Broadcast error action
+     */
+    public static final String AUTHENTICATION_ERROR_ACTION = "HYPERWALLET_AUTHENTICATION_ERROR_ACTION";
 }
