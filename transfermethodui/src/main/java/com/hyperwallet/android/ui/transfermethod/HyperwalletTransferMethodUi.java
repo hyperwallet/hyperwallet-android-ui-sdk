@@ -31,6 +31,7 @@ import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.HyperwalletAuthenticationTokenProvider;
 import com.hyperwallet.android.ui.common.insight.HyperwalletInsight;
 import com.hyperwallet.android.ui.common.intent.HyperwalletIntent;
+import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
 import com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity;
 import com.hyperwallet.android.ui.transfermethod.view.ListTransferMethodActivity;
 
@@ -107,5 +108,7 @@ public final class HyperwalletTransferMethodUi {
     public static void clearInstance() {
         sInstance = null;
         Hyperwallet.clearInstance();
+        HyperwalletInsight.clearInstance();
+        TransferMethodRepositoryFactory.clearInstance();
     }
 }

@@ -24,6 +24,7 @@ import androidx.annotation.NonNull;
 
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.HyperwalletAuthenticationTokenProvider;
+import com.hyperwallet.android.ui.transfer.repository.TransferRepositoryFactory;
 import com.hyperwallet.android.ui.transfer.view.CreateTransferActivity;
 
 /* Class responsible for initializing the Hyperwallet Transfer UI SDK. It contains methods to interact with the
@@ -64,5 +65,6 @@ public final class HyperwalletTransferUi {
     public static void clearInstance() {
         sInstance = null;
         Hyperwallet.clearInstance();
+        TransferRepositoryFactory.clearInstance();
     }
 }
