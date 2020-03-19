@@ -24,8 +24,10 @@ import androidx.annotation.NonNull;
 
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.HyperwalletAuthenticationTokenProvider;
+import com.hyperwallet.android.exception.HyperwalletInitializationException;
 import com.hyperwallet.android.ui.common.insight.HyperwalletInsight;
 import com.hyperwallet.android.ui.common.intent.HyperwalletIntent;
+import com.hyperwallet.android.ui.transfermethod.exception.HyperwalletTransferMethodUiInitializationException;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
 import com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity;
 import com.hyperwallet.android.ui.transfermethod.view.ListTransferMethodActivity;
@@ -60,8 +62,17 @@ public final class HyperwalletTransferMethodUi {
             sInstance = new HyperwalletTransferMethodUi();
         }
 
+        Hyperwallet.getInstance(authenticationTokenProvider);
+
         // initialize insight
         HyperwalletInsight.getInstance().initialize(context, authenticationTokenProvider);
+        return sInstance;
+    }
+
+    public static HyperwalletTransferMethodUi getDefault() {
+        if (sInstance == null) {
+            throw new HyperwalletTransferMethodUiInitializationException();
+        }
         return sInstance;
     }
 
