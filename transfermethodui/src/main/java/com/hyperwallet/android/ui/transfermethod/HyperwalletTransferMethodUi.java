@@ -17,11 +17,6 @@
  */
 package com.hyperwallet.android.ui.transfermethod;
 
-import static com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_COUNTRY;
-import static com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_CURRENCY;
-import static com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_PROFILE_TYPE;
-import static com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_TYPE;
-
 import android.content.Context;
 import android.content.Intent;
 
@@ -33,8 +28,15 @@ import com.hyperwallet.android.exception.HyperwalletInitializationException;
 import com.hyperwallet.android.ui.common.insight.HyperwalletInsight;
 import com.hyperwallet.android.ui.common.intent.HyperwalletIntent;
 import com.hyperwallet.android.ui.transfermethod.exception.HyperwalletTransferMethodUiInitializationException;
+import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
 import com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity;
 import com.hyperwallet.android.ui.transfermethod.view.ListTransferMethodActivity;
+import com.hyperwallet.android.ui.user.repository.UserRepositoryFactory;
+
+import static com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_COUNTRY;
+import static com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_CURRENCY;
+import static com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_PROFILE_TYPE;
+import static com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_TYPE;
 
 /**
  * Class responsible for initializing the Hyperwallet UI SDK. It contains methods to interact with the activities and
@@ -118,5 +120,8 @@ public final class HyperwalletTransferMethodUi {
     public static void clearInstance() {
         sInstance = null;
         Hyperwallet.clearInstance();
+        HyperwalletInsight.clearInstance();
+        TransferMethodRepositoryFactory.clearInstance();
+        UserRepositoryFactory.clearInstance();
     }
 }

@@ -24,7 +24,9 @@ import androidx.annotation.NonNull;
 
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.HyperwalletAuthenticationTokenProvider;
+import com.hyperwallet.android.ui.transfer.repository.TransferRepositoryFactory;
 import com.hyperwallet.android.ui.transfer.view.CreateTransferActivity;
+import com.hyperwallet.android.ui.user.repository.UserRepositoryFactory;
 
 /* Class responsible for initializing the Hyperwallet Transfer UI SDK. It contains methods to interact with the
  * activities and fragments used to interact with the Hyperwallet platform
@@ -64,5 +66,7 @@ public final class HyperwalletTransferUi {
     public static void clearInstance() {
         sInstance = null;
         Hyperwallet.clearInstance();
+        TransferRepositoryFactory.clearInstance();
+        UserRepositoryFactory.clearInstance();
     }
 }

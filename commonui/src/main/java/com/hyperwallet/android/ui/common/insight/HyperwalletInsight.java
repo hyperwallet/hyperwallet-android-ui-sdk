@@ -124,6 +124,14 @@ public class HyperwalletInsight {
     }
 
     /**
+     * Clears instance of classes {@link Insight} and {@link HyperwalletInsight}
+     */
+    public static void clearInstance() {
+        Insight.clearInstance();
+        sHyperwalletInsight = null;
+    }
+
+    /**
      * Used to track an impression by a user. Typical example is when a user lands on a specific page.
      *
      * @param context   Context where the tracking is happening
