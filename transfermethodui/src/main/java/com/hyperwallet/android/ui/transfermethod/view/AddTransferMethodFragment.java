@@ -497,7 +497,8 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                                         .fieldName(error.getFieldName())
                                         .type(ErrorTypes.API_ERROR)
                                         .build());
-
+                        
+                        widget.showValidationError(null);
                         widget.showValidationError(error.getMessage());
                         WidgetInputState widgetInputState = mWidgetInputStateHashMap.get(widget.getName());
                         widgetInputState.setErrorMessage(error.getMessage());
@@ -682,6 +683,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                             .build());
 
             valid = false;
+            widget.showValidationError(null);
             widget.showValidationError(widget.getErrorMessage());
             widgetInputState.setErrorMessage(widget.getErrorMessage());
             widgetInputState.setHasApiError(false);
