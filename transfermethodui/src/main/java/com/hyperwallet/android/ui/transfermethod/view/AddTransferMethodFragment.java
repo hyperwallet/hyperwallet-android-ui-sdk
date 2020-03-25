@@ -500,6 +500,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                                         .build());
 
                         widget.showValidationError(null);
+                        widgetInputState.setErrorMessage(null);
                         widget.showValidationError(error.getMessage());
                         widgetInputState.setErrorMessage(error.getMessage());
                         widgetInputState.setHasApiError(true);
