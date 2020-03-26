@@ -1,5 +1,5 @@
 {
-  "token": "sts-fedb805c-5a86-4c80-a6ec-a77e7e9eab0a",
+  "token": "sts-token",
   "createdOn": "2019-02-28T23:30:59",
   "transition": "DE_ACTIVATED",
   "fromStatus": "ACTIVATED",
@@ -10,7 +10,7 @@
       "params": {
         "rel": "self"
       },
-      "href": "https://localhost:8181/rest/v3/users/usr-dffcad83-4b45-4696-8118-fc538205de10/bank-accounts/trm-388998c0-10c6-4b05-94e2-833b3007dfe9/status-transitions/sts-fedb805c-5a86-4c80-a6ec-a77e7e9eab0a"
+      "href": "https://localhost:8181/rest/v3/users/test-user-token/bank-accounts/test-fake-token/status-transitions/sts-token"
     }
   ]
 }

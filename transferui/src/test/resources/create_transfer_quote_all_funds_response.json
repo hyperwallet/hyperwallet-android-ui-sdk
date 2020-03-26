@@ -1,10 +1,10 @@
 {
-  "token": "trf-24406d1c-d318-459b-a1b1-31b078059f27",
+  "token": "test-trf-token",
   "status": "QUOTED",
   "createdOn": "2019-08-12T20:43:53",
-  "clientTransferId": "HW-ANDROID-7f7efe43-2b77-4c77-a3b4-eb3869f00c7a",
-  "sourceToken": "usr-00995baf-eb51-4565-a9cd-2547fd7c1bc6",
-  "destinationToken": "trm-19cdf926-ff2c-41c0-880c-4d5e81cba259",
+  "clientTransferId": "test-client-transfer-id",
+  "sourceToken": "test-user-token",
+  "destinationToken": "test-fake-token",
   "destinationAmount": "288.05",
   "destinationFeeAmount": "2.00",
   "destinationCurrency": "USD",
@@ -30,7 +30,7 @@
       "params": {
         "rel": "self"
       },
-      "href": "https://localhost/rest/v3/transfers/trf-24406d1c-d318-459b-a1b1-31b078059f28"
+      "href": "https://localhost/rest/v3/transfers/test-trf-token"
     }
   ]
 }

@@ -116,7 +116,7 @@ public class UserReceiptDataSourceTest {
         assertThat(receipts.get(0).getType(), is(PAYMENT));
         assertThat(receipts.get(0).getEntry(), is(CREDIT));
         assertThat(receipts.get(0).getSourceToken(), is("act-b1f6dc28-e534-45f4-a661-3523f051f77a"));
-        assertThat(receipts.get(0).getDestinationToken(), is("usr-b4e8ec34-52d8-4a81-9566-bdde1bd745b6"));
+        assertThat(receipts.get(0).getDestinationToken(), is("test-user-token"));
         assertThat(receipts.get(0).getAmount(), is("5000.00"));
         assertThat(receipts.get(0).getFee(), is("0.00"));
         assertThat(receipts.get(0).getCurrency(), is("USD"));
@@ -126,8 +126,8 @@ public class UserReceiptDataSourceTest {
         assertThat(receipts.get(1).getJournalId(), is("51660666"));
         assertThat(receipts.get(1).getType(), is(TRANSFER_TO_BANK_ACCOUNT));
         assertThat(receipts.get(1).getEntry(), is(DEBIT));
-        assertThat(receipts.get(1).getSourceToken(), is("usr-b4e8ec34-52d8-4a81-9566-bdde1bd745b6"));
-        assertThat(receipts.get(1).getDestinationToken(), is("trm-0a2ac589-2cae-4ed3-9b0b-658246a34687"));
+        assertThat(receipts.get(1).getSourceToken(), is("test-user-token"));
+        assertThat(receipts.get(1).getDestinationToken(), is("test-fake-token"));
         assertThat(receipts.get(1).getAmount(), is("10.25"));
         assertThat(receipts.get(1).getFee(), is("0.25"));
         assertThat(receipts.get(1).getCurrency(), is("USD"));
@@ -266,7 +266,7 @@ public class UserReceiptDataSourceTest {
         assertThat(receipts.get(3).getType(), is(PAYMENT));
         assertThat(receipts.get(3).getEntry(), is(CREDIT));
         assertThat(receipts.get(3).getSourceToken(), is("act-b1f6dc28-e534-45f4-a661-3523f051f77a"));
-        assertThat(receipts.get(3).getDestinationToken(), is("usr-b4e8ec34-52d8-4a81-9566-bdde1bd745b6"));
+        assertThat(receipts.get(3).getDestinationToken(), is("test-user-token"));
         assertThat(receipts.get(3).getAmount(), is("13.00"));
         assertThat(receipts.get(3).getFee(), is("0.00"));
         assertThat(receipts.get(3).getCurrency(), is("USD"));
@@ -277,7 +277,7 @@ public class UserReceiptDataSourceTest {
         assertThat(receipts.get(4).getType(), is(PAYMENT));
         assertThat(receipts.get(4).getEntry(), is(CREDIT));
         assertThat(receipts.get(4).getSourceToken(), is("act-b1f6dc28-e534-45f4-a661-3523f051f77a"));
-        assertThat(receipts.get(4).getDestinationToken(), is("usr-b4e8ec34-52d8-4a81-9566-bdde1bd745b6"));
+        assertThat(receipts.get(4).getDestinationToken(), is("test-user-token"));
         assertThat(receipts.get(4).getAmount(), is("14.00"));
         assertThat(receipts.get(4).getFee(), is("0.00"));
         assertThat(receipts.get(4).getCurrency(), is("USD"));
