@@ -484,6 +484,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                 View view = mDynamicContainer.getChildAt(i);
                 if (view.getTag() instanceof AbstractWidget) {
                     AbstractWidget widget = (AbstractWidget) view.getTag();
+                    WidgetInputState widgetInputState = mWidgetInputStateHashMap.get(widget.getName());
                     if (widget.getName().equals(error.getFieldName())) {
                         if (!focusSet) {
                             mNestedScrollView.smoothScrollTo(0, view.getTop() - pixels);
@@ -498,10 +499,14 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                                         .type(ErrorTypes.API_ERROR)
                                         .build());
 
+                        widget.showValidationError(null);
+                        widgetInputState.setErrorMessage(null);
                         widget.showValidationError(error.getMessage());
-                        WidgetInputState widgetInputState = mWidgetInputStateHashMap.get(widget.getName());
                         widgetInputState.setErrorMessage(error.getMessage());
                         widgetInputState.setHasApiError(true);
+                    }else{
+                        widget.showValidationError(null);
+                        widgetInputState.setErrorMessage(null);
                     }
                 }
             }
@@ -682,6 +687,8 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                             .build());
 
             valid = false;
+            widget.showValidationError(null);
+            widgetInputState.setErrorMessage(null);
             widget.showValidationError(widget.getErrorMessage());
             widgetInputState.setErrorMessage(widget.getErrorMessage());
             widgetInputState.setHasApiError(false);
