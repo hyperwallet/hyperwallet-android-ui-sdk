@@ -9,14 +9,14 @@
       "createdOn": "2019-06-07T17:08:58",
       "entry": "CREDIT",
       "sourceToken": "act-12345",
-      "destinationToken": "usr-fa76a738-f43d-48b9-9a7a-7048d44a5d2d",
+      "destinationToken": "test-user-token",
       "amount": "20.00",
       "fee": "2.25",
       "currency": "USD",
       "details": {
         "clientPaymentId": "8OxXefx5",
         "payeeName": "A Person",
-        "website": "https://api.sandbox.hyperwallet.com",
+        "website": "https://localhost:8181",
         "notes": "Sample payment for the period of June 15th, 2019 to July 23, 2019",
         "charityName": "Sample Charity",
         "checkNumber": "Sample Check Number"
@@ -28,7 +28,7 @@
       "createdOn": "2019-06-02T16:09:07",
       "entry": "CREDIT",
       "sourceToken": "act-12345",
-      "destinationToken": "usr-fa76a738-f43d-48b9-9a7a-7048d44a5d2d",
+      "destinationToken": "test-user-token",
       "amount": "25.00",
       "fee": "0.00",
       "currency": "CAD",
@@ -42,7 +42,7 @@
       "type": "CARD_ACTIVATION_FEE",
       "createdOn": "2019-06-01T11:09:16",
       "entry": "DEBIT",
-      "sourceToken": "usr-fa76a738-f43d-48b9-9a7a-7048d44a5d2d",
+      "sourceToken": "test-user-token",
       "amount": "1.95",
       "currency": "USD"
     },
@@ -51,7 +51,7 @@
       "type": "TRANSFER_TO_PREPAID_CARD",
       "createdOn": "2018-12-01T17:12:18",
       "entry": "DEBIT",
-      "sourceToken": "usr-fa76a738-f43d-48b9-9a7a-7048d44a5d2d",
+      "sourceToken": "test-user-token",
       "destinationToken": "trm-12345",
       "amount": "18.05",
       "currency": "USD"
@@ -62,7 +62,7 @@
       "params": {
         "rel": "self"
       },
-      "href": "https://api.sandbox.hyperwallet.com/rest/v3/users/usr-fa76a738-f43d-48b9-9a7a-7048d44a5d2d/receipts?offset=0&limit=10"
+      "href": "https://localhost:8181/rest/v3/users/test-user-token/receipts?offset=0&limit=10"
     }
   ]
 }

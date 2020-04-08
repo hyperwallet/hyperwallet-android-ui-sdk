@@ -64,7 +64,7 @@ public class UserRepositoryImplTest {
     public void testLoadUser_returnsUser() {
         User.Builder builder = new User.Builder();
         final User user = builder
-                .token("usr-f9154016-94e8-4686-a840-075688ac07b5")
+                .token("test-user-token")
                 .status(PRE_ACTIVATED)
                 .verificationStatus(NOT_REQUIRED)
                 .createdOn("2017-10-30T22:15:45")
@@ -80,7 +80,7 @@ public class UserRepositoryImplTest {
                 .country("US")
                 .postalCode("94105")
                 .language("en")
-                .programToken("prg-83836cdf-2ce2-4696-8bc5-f1b86077238c")
+                .programToken("test-program-token")
                 .build();
 
         doAnswer(new Answer() {
@@ -98,7 +98,7 @@ public class UserRepositoryImplTest {
         verify(mMockCallback, never()).onError(any(Errors.class));
 
         User resultUser = mUserCaptor.getValue();
-        assertThat(resultUser.getToken(), is("usr-f9154016-94e8-4686-a840-075688ac07b5"));
+        assertThat(resultUser.getToken(), is("test-user-token"));
         assertThat(resultUser.getStatus(), is(PRE_ACTIVATED));
         assertThat(resultUser.getVerificationStatus(), is(NOT_REQUIRED));
         assertThat(resultUser.getCreatedOn(), is("2017-10-30T22:15:45"));
@@ -114,7 +114,7 @@ public class UserRepositoryImplTest {
         assertThat(resultUser.getCountry(), is("US"));
         assertThat(resultUser.getPostalCode(), is("94105"));
         assertThat(resultUser.getLanguage(), is("en"));
-        assertThat(resultUser.getProgramToken(), is("prg-83836cdf-2ce2-4696-8bc5-f1b86077238c"));
+        assertThat(resultUser.getProgramToken(), is("test-program-token"));
     }
 
     @Test
@@ -168,7 +168,7 @@ public class UserRepositoryImplTest {
     public void testRefreshUser_verifyHyperwalletCallGetUser() {
         User.Builder builder = new User.Builder();
         final User user = builder
-                .token("usr-f9154016-94e8-4686-a840-075688ac07b5")
+                .token("test-user-token")
                 .profileType(INDIVIDUAL)
                 .build();
 

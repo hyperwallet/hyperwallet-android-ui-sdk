@@ -23,7 +23,7 @@ public class PrepaidCardReceiptRepositoryImplTest {
 
 
     private PrepaidCardReceiptRepository mPrepaidCardReceiptRepository = new PrepaidCardReceiptRepositoryImpl(
-            "trm-aa308d58-75b4-432b-dec1-eb6b9e341111");
+            "test-fake-token");
 
     @Test
     public void testLoadPrepaidCardReceipts_returnsLiveData() {

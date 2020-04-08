@@ -122,7 +122,7 @@ public class PrepaidCardReceiptDataSourceTest {
         assertThat(receipts.get(0).getType(), is(PREPAID_CARD_SALE));
         assertThat(receipts.get(0).getCreatedOn(), is("2019-06-06T22:48:41"));
         assertThat(receipts.get(0).getEntry(), is(DEBIT));
-        assertThat(receipts.get(0).getDestinationToken(), is("trm-2e02da75-a36c-4723-b613-0b64e6f582d9"));
+        assertThat(receipts.get(0).getDestinationToken(), is("test-fake-token"));
         assertThat(receipts.get(0).getAmount(), is("10.00"));
         assertThat(receipts.get(0).getCurrency(), is("USD"));
         assertThat(receipts.get(0).getDetails(), is(notNullValue()));
@@ -131,7 +131,7 @@ public class PrepaidCardReceiptDataSourceTest {
         assertThat(receipts.get(6).getType(), is(ADJUSTMENT));
         assertThat(receipts.get(6).getCreatedOn(), is("2019-02-21T23:55:17"));
         assertThat(receipts.get(6).getEntry(), is(CREDIT));
-        assertThat(receipts.get(6).getSourceToken(), is("trm-2e02da75-a36c-4723-b613-0b64e6f582d9"));
+        assertThat(receipts.get(6).getSourceToken(), is("test-fake-token"));
         assertThat(receipts.get(6).getAmount(), is("9.92"));
         assertThat(receipts.get(6).getCurrency(), is("USD"));
         assertThat(receipts.get(6).getDetails(), is(notNullValue()));
@@ -275,7 +275,7 @@ public class PrepaidCardReceiptDataSourceTest {
         assertThat(receipts.get(1).getType(), is(DEPOSIT));
         assertThat(receipts.get(1).getCreatedOn(), is("2019-06-06T22:48:51"));
         assertThat(receipts.get(1).getEntry(), is(CREDIT));
-        assertThat(receipts.get(1).getDestinationToken(), is("trm-2e02da75-a36c-4723-b613-0b64e6f582d9"));
+        assertThat(receipts.get(1).getDestinationToken(), is("test-fake-token"));
         assertThat(receipts.get(1).getAmount(), is("5.00"));
         assertThat(receipts.get(1).getCurrency(), is("USD"));
         assertThat(receipts.get(1).getDetails(), is(notNullValue()));
@@ -284,7 +284,7 @@ public class PrepaidCardReceiptDataSourceTest {
         assertThat(receipts.get(5).getType(), is(ADJUSTMENT));
         assertThat(receipts.get(5).getCreatedOn(), is("2019-02-23T23:55:17"));
         assertThat(receipts.get(5).getEntry(), is(CREDIT));
-        assertThat(receipts.get(5).getSourceToken(), is("trm-2e02da75-a36c-4723-b613-0b64e6f582d9"));
+        assertThat(receipts.get(5).getSourceToken(), is("test-fake-token"));
         assertThat(receipts.get(5).getAmount(), is("3.90"));
         assertThat(receipts.get(5).getCurrency(), is("USD"));
         assertThat(receipts.get(5).getDetails(), is(notNullValue()));

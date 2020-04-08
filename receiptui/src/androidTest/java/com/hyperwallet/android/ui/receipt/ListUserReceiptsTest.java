@@ -279,7 +279,7 @@ public class ListUserReceiptsTest {
         onView(withId(R.id.check_number_label)).check(matches(withText(R.string.checkNumber)));
         onView(withId(R.id.check_number_value)).check(matches(withText("Sample Check Number")));
         onView(withId(R.id.website_label)).check(matches(withText(R.string.website)));
-        onView(withId(R.id.website_value)).check(matches(withText("https://api.sandbox.hyperwallet.com")));
+        onView(withId(R.id.website_value)).check(matches(withText("https://localhost:8181")));
         onView(withText("A Person")).check(doesNotExist());
 
         onView(withId(R.id.receipt_notes_header_label)).check(matches(withText(R.string.notes)));

@@ -1,5 +1,5 @@
 {
-  "token": "sts-2157d925-90c9-407b-a9d6-24a0d9dacfb6",
+  "token": "sts-token",
   "createdOn": "2019-08-12T17:39:35",
   "transition": "SCHEDULED",
   "fromStatus": "QUOTED",
@@ -9,7 +9,7 @@
       "params": {
         "rel": "self"
       },
-      "href": "https://localhost/rest/v3/transfers/trf-65d76804-a652-402a-821a-b3b9384bc57b/status-transitions/sts-2157d925-90c9-407b-a9d6-24a0d9dacfb6"
+      "href": "https://localhost/rest/v3/transfers/test-trf-token/status-transitions/sts-token"
     }
   ]
 }

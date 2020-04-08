@@ -226,7 +226,7 @@ public class TransferUserFundsTest {
 
                 StatusTransition transition = intent.getParcelableExtra(
                         "hyperwallet-local-broadcast-payload");
-                assertThat("Token is incorrect", transition.getToken(), is("sts-2157d925-90c9-407b-a9d6-24a0d9dacfb6"));
+                assertThat("Token is incorrect", transition.getToken(), is("sts-token"));
                 assertThat("To Status is incorrect", transition.getToStatus(), is("SCHEDULED"));
                 assertThat("From Status is incorrect", transition.getFromStatus(), is("QUOTED"));
                 assertThat("Transition is incorrect", transition.getTransition(), is("SCHEDULED"));
@@ -313,7 +313,7 @@ public class TransferUserFundsTest {
 
                 StatusTransition transition = intent.getParcelableExtra(
                         "hyperwallet-local-broadcast-payload");
-                assertThat("Token is incorrect", transition.getToken(), is("sts-2157d925-90c9-407b-a9d6-24a0d9dacfb6"));
+                assertThat("Token is incorrect", transition.getToken(), is("sts-token"));
                 assertThat("To Status is incorrect", transition.getToStatus(), is("SCHEDULED"));
                 assertThat("From Status is incorrect", transition.getFromStatus(), is("QUOTED"));
                 assertThat("Transition is incorrect", transition.getTransition(), is("SCHEDULED"));
@@ -379,7 +379,7 @@ public class TransferUserFundsTest {
 
                 StatusTransition transition = intent.getParcelableExtra(
                         "hyperwallet-local-broadcast-payload");
-                assertThat("Token is incorrect", transition.getToken(), is("sts-2157d925-90c9-407b-a9d6-24a0d9dacfb6"));
+                assertThat("Token is incorrect", transition.getToken(), is("sts-token"));
                 assertThat("To Status is incorrect", transition.getToStatus(), is("SCHEDULED"));
                 assertThat("From Status is incorrect", transition.getFromStatus(), is("QUOTED"));
                 assertThat("Transition is incorrect", transition.getTransition(), is("SCHEDULED"));
@@ -447,7 +447,7 @@ public class TransferUserFundsTest {
 
                 StatusTransition transition = intent.getParcelableExtra(
                         "hyperwallet-local-broadcast-payload");
-                assertThat("Token is incorrect", transition.getToken(), is("sts-2157d925-90c9-407b-a9d6-24a0d9dacfb6"));
+                assertThat("Token is incorrect", transition.getToken(), is("sts-token"));
                 assertThat("To Status is incorrect", transition.getToStatus(), is("SCHEDULED"));
                 assertThat("From Status is incorrect", transition.getFromStatus(), is("QUOTED"));
                 assertThat("Transition is incorrect", transition.getTransition(), is("SCHEDULED"));
@@ -515,7 +515,7 @@ public class TransferUserFundsTest {
 
                 StatusTransition transition = intent.getParcelableExtra(
                         "hyperwallet-local-broadcast-payload");
-                assertThat("Token is incorrect", transition.getToken(), is("sts-2157d925-90c9-407b-a9d6-24a0d9dacfb6"));
+                assertThat("Token is incorrect", transition.getToken(), is("sts-token"));
                 assertThat("To Status is incorrect", transition.getToStatus(), is("SCHEDULED"));
                 assertThat("From Status is incorrect", transition.getFromStatus(), is("QUOTED"));
                 assertThat("Transition is incorrect", transition.getTransition(), is("SCHEDULED"));
@@ -623,7 +623,7 @@ public class TransferUserFundsTest {
 
                 StatusTransition transition = intent.getParcelableExtra(
                         "hyperwallet-local-broadcast-payload");
-                assertThat("Token is incorrect", transition.getToken(), is("sts-2157d925-90c9-407b-a9d6-24a0d9dacfb6"));
+                assertThat("Token is incorrect", transition.getToken(), is("sts-token"));
                 assertThat("To Status is incorrect", transition.getToStatus(), is("SCHEDULED"));
                 assertThat("From Status is incorrect", transition.getFromStatus(), is("QUOTED"));
                 assertThat("Transition is incorrect", transition.getTransition(), is("SCHEDULED"));
@@ -905,7 +905,7 @@ public class TransferUserFundsTest {
 
                 StatusTransition transition = intent.getParcelableExtra(
                         "hyperwallet-local-broadcast-payload");
-                assertThat("Token is incorrect", transition.getToken(), is("sts-2157d925-90c9-407b-a9d6-24a0d9dacfb6"));
+                assertThat("Token is incorrect", transition.getToken(), is("sts-token"));
                 assertThat("To Status is incorrect", transition.getToStatus(), is("SCHEDULED"));
                 assertThat("From Status is incorrect", transition.getFromStatus(), is("QUOTED"));
                 assertThat("Transition is incorrect", transition.getTransition(), is("SCHEDULED"));
