@@ -4,7 +4,7 @@
   "limit": 10,
   "data": [
     {
-      "token": "trm-4ad08c69-fed3-48bc-a754-604610049618",
+      "token": "test-fake-token",
       "type": "BANK_CARD",
       "status": "ACTIVATED",
       "createdOn": "2019-04-18T21:57:57",
@@ -19,7 +19,7 @@
           "params": {
             "rel": "self"
           },
-          "href": "https://localhost:8181/rest/v3/users/usr-143005bd-1fa3-4c10-9527-d7923189c9ab/transfer-methods/trm-4ad08c69-fed3-48bc-a754-604610049618"
+          "href": "https://localhost:8181/rest/v3/users/test-user-token/transfer-methods/test-fake-token"
         }
       ]
     }
@@ -29,7 +29,7 @@
       "params": {
         "rel": "self"
       },
-      "href": "https://localhost:8181/rest/v3/users/usr-143005bd-1fa3-4c10-9527-d7923189c9ab/transfer-methods?offset=0&limit=10&sortBy=-createdOn"
+      "href": "https://localhost:8181/rest/v3/users/test-user-token/transfer-methods?offset=0&limit=10&sortBy=-createdOn"
     }
   ]
 }

@@ -181,7 +181,7 @@ public class TransferMethodRepositoryImplTest {
     public void testDeactivateTransferMethod_bankAccountWithSuccess() {
         BankAccount bankAccount = new BankAccount
                 .Builder("CA", "CAD", "3423423432")
-                .token("trm-854c4ec1-9161-49d6-92e2-b8d15aa4bf56")
+                .token("test-fake-token")
                 .build();
         bankAccount.setField(STATUS, StatusTransition.StatusDefinition.ACTIVATED);
         doAnswer(new Answer() {
@@ -214,7 +214,7 @@ public class TransferMethodRepositoryImplTest {
     public void testDeactivateTransferMethod_bankAccountWithError() {
         BankAccount bankAccount = new BankAccount
                 .Builder("CA", "CAD", "3423423432")
-                .token("trm-854c4ec1-9161-49d6-92e2-b8d15aa4bf56")
+                .token("test-fake-token")
                 .build();
         bankAccount.setField(STATUS, StatusTransition.StatusDefinition.ACTIVATED);
         final Error error = new Error("test message", "TEST_CODE");
@@ -245,7 +245,7 @@ public class TransferMethodRepositoryImplTest {
     public void testDeactivateTransferMethod_withUnsupportedTransferMethodType() {
         BankAccount bankAccount = new BankAccount
                 .Builder("US", "USD", "23432432")
-                .token("trm-854c4ec1-9161-49d6-92e2-b8d15aa4bf56")
+                .token("test-fake-token")
                 .transferMethodType("UNKNOWN_TRANSFER_TYPE")
                 .build();
         bankAccount.setField(STATUS, StatusTransition.StatusDefinition.ACTIVATED);
@@ -265,7 +265,7 @@ public class TransferMethodRepositoryImplTest {
     public void testDeactivateTransferMethod_bankCardWithSuccess() {
         BankCard bankCard = new BankCard
                 .Builder("CA", "CAD", "1232345456784", "2019-05", "234")
-                .token("trm-854c4ec1-9161-49d6-92e2-b8d15aa4bf56")
+                .token("test-fake-token")
                 .build();
         bankCard.setField(STATUS, StatusTransition.StatusDefinition.ACTIVATED);
         doAnswer(new Answer() {
@@ -298,7 +298,7 @@ public class TransferMethodRepositoryImplTest {
     public void testDeactivateTransferMethod_bankCardWithError() {
         BankCard bankCard = new BankCard
                 .Builder("CA", "CAD", "1232345456784", "2019-05", "234")
-                .token("trm-854c4ec1-9161-49d6-92e2-b8d15aa4bf56")
+                .token("test-fake-token")
                 .build();
         bankCard.setField(STATUS, StatusTransition.StatusDefinition.ACTIVATED);
         final Error error = new Error("test message", "TEST_CODE");
@@ -328,7 +328,7 @@ public class TransferMethodRepositoryImplTest {
     @Test
     public void testDeactivateTransferMethod_payPalAccountWithSuccess() {
         PayPalAccount payPalAccount = new PayPalAccount.Builder("US", "US", "jsmith4@hyperwallet.com")
-                .token("trm-854c4ec1-9161-49d6-92e2-b8d15aa4bf56").build();
+                .token("test-fake-token").build();
         doAnswer(new Answer() {
             @Override
             public Object answer(InvocationOnMock invocation) {
@@ -358,7 +358,7 @@ public class TransferMethodRepositoryImplTest {
     @Test
     public void testDeactivateTransferMethod_payPalAccountWithError() {
         PayPalAccount payPalAccount = new PayPalAccount.Builder("US", "US", "jsmith4@hyperwallet.com")
-                .token("trm-854c4ec1-9161-49d6-92e2-b8d15aa4bf56").build();
+                .token("test-fake-token").build();
         payPalAccount.setField(STATUS, StatusTransition.StatusDefinition.ACTIVATED);
         final Error error = new Error("test message", "TEST_CODE");
         doAnswer(new Answer() {

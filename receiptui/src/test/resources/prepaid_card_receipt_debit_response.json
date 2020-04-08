@@ -5,7 +5,7 @@
       "type": "ADJUSTMENT",
       "createdOn": "2019-06-01T22:49:17",
       "entry": "DEBIT",
-      "sourceToken": "trm-2e02da75-a36c-4723-b613-0b64e6f582d9",
+      "sourceToken": "test-fake-token",
       "amount": "8.90",
       "currency": "USD",
       "details": {
@@ -18,7 +18,7 @@
       "params": {
         "rel": "self"
       },
-      "href": "https://qamaster-hyperwallet.aws.paylution.net/rest/v3/users/usr-e17ae43b-284d-4198-9585-f417943c624f/prepaid-cards/trm-2e02da75-a36c-4723-b613-0b64e6f582d9/receipts"
+      "href": "https://qamaster-hyperwallet.aws.paylution.net/rest/v3/users/test-user-token/prepaid-cards/test-fake-token/receipts"
     }
   ]
 }

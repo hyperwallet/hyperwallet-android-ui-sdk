@@ -4,7 +4,7 @@
       "message": "The account information you provided is already registered. Based on the external account configuration duplications are not allowed.",
       "code": "DUPLICATE_EXTERNAL_ACCOUNT_CREATION",
       "relatedResources": [
-        "trm-a5ac4489-6320-4558-bcfb-e66c73904109"
+        "test-fake-token"
       ]
     }
   ]
