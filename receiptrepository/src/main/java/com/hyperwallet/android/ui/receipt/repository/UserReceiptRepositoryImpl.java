@@ -16,11 +16,15 @@
  */
 package com.hyperwallet.android.ui.receipt.repository;
 
+import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.Transformations;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
-import com.hyperwallet.android.model.HyperwalletErrors;
+import com.hyperwallet.android.model.Errors;
 import com.hyperwallet.android.model.receipt.Receipt;
 import com.hyperwallet.android.ui.common.repository.Event;
 
@@ -34,13 +38,20 @@ public class UserReceiptRepositoryImpl implements UserReceiptRepository {
 
     private final UserReceiptDataSourceFactory mDataSourceFactory;
     private final LiveData<UserReceiptDataSource> mReceiptDataSourceLiveData;
-    private LiveData<Event<HyperwalletErrors>> mErrorsLiveData;
-    private LiveData<Boolean> mIsFetchingData;
     private LiveData<PagedList<Receipt>> mReceiptsLiveData;
+    private MutableLiveData<Boolean> mRefreshDataSource = new MutableLiveData<>();
+    private Observer<UserReceiptDataSource> mReceiptDataSourceObserver = new Observer<UserReceiptDataSource>() {
+        @Override
+        public void onChanged(UserReceiptDataSource userReceiptDataSource) {
+            mRefreshDataSource.postValue(Boolean.TRUE);
+        }
+    };
 
     public UserReceiptRepositoryImpl() {
         mDataSourceFactory = new UserReceiptDataSourceFactory();
         mReceiptDataSourceLiveData = mDataSourceFactory.getUserReceiptDataSource();
+        mReceiptDataSourceLiveData.observeForever(mReceiptDataSourceObserver);
+        mRefreshDataSource.postValue(Boolean.FALSE);
     }
 
     /**
@@ -64,21 +75,25 @@ public class UserReceiptRepositoryImpl implements UserReceiptRepository {
      */
     @Override
     public LiveData<Boolean> isLoading() {
-        if (mIsFetchingData == null) {
-            mIsFetchingData = mReceiptDataSourceLiveData.getValue().isFetchingData();
-        }
-        return mIsFetchingData;
+        return Transformations.switchMap(mRefreshDataSource, new Function<Boolean, LiveData<Boolean>>() {
+            @Override
+            public LiveData<Boolean> apply(Boolean input) {
+                return mReceiptDataSourceLiveData.getValue().isFetchingData();
+            }
+        });
     }
 
     /**
      * @see UserReceiptRepository#getErrors()
      */
     @Override
-    public LiveData<Event<HyperwalletErrors>> getErrors() {
-        if (mErrorsLiveData == null) {
-            mErrorsLiveData = mReceiptDataSourceLiveData.getValue().getErrors();
-        }
-        return mErrorsLiveData;
+    public LiveData<Event<Errors>> getErrors() {
+        return Transformations.switchMap(mRefreshDataSource, new Function<Boolean, LiveData<Event<Errors>>>() {
+            @Override
+            public LiveData<Event<Errors>> apply(Boolean input) {
+                return mReceiptDataSourceLiveData.getValue().getErrors();
+            }
+        });
     }
 
     /**
@@ -86,8 +101,16 @@ public class UserReceiptRepositoryImpl implements UserReceiptRepository {
      */
     @Override
     public void retryLoadReceipt() {
-        if (mReceiptDataSourceLiveData.getValue() != null) {
-            mReceiptDataSourceLiveData.getValue().retry();
-        }
+        mReceiptDataSourceLiveData.getValue().retry();
+    }
+
+    @Override
+    public void refresh() {
+        mReceiptDataSourceLiveData.getValue().invalidate();
+    }
+
+    @Override
+    public void cleanup() {
+        mReceiptDataSourceLiveData.removeObserver(mReceiptDataSourceObserver);
     }
 }

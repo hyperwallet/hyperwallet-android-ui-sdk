@@ -17,11 +17,6 @@
  */
 package com.hyperwallet.android.ui.transfermethod;
 
-import static com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_COUNTRY;
-import static com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_CURRENCY;
-import static com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_PROFILE_TYPE;
-import static com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_TYPE;
-
 import android.content.Context;
 import android.content.Intent;
 
@@ -29,9 +24,19 @@ import androidx.annotation.NonNull;
 
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.HyperwalletAuthenticationTokenProvider;
+import com.hyperwallet.android.exception.HyperwalletInitializationException;
+import com.hyperwallet.android.ui.common.insight.HyperwalletInsight;
 import com.hyperwallet.android.ui.common.intent.HyperwalletIntent;
+import com.hyperwallet.android.ui.transfermethod.exception.HyperwalletTransferMethodUiInitializationException;
+import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
 import com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity;
 import com.hyperwallet.android.ui.transfermethod.view.ListTransferMethodActivity;
+import com.hyperwallet.android.ui.user.repository.UserRepositoryFactory;
+
+import static com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_COUNTRY;
+import static com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_CURRENCY;
+import static com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_PROFILE_TYPE;
+import static com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_TYPE;
 
 /**
  * Class responsible for initializing the Hyperwallet UI SDK. It contains methods to interact with the activities and
@@ -45,19 +50,31 @@ public final class HyperwalletTransferMethodUi {
     }
 
     /**
+     * Returns an instance that will also initialize the Insights library.
+     *
+     * @param context                     A Context of the application consuming this Intent.
      * @param authenticationTokenProvider An implementation of the {@link HyperwalletAuthenticationTokenProvider}
-     * @return Returns a newly created HyperwalletTransferMethodUi that can be used to get Intents to launch different
-     * activities.
+     * @return singleton instance of HyperwalletTransferMethodUi
      */
-    public static synchronized HyperwalletTransferMethodUi getInstance(
+    public static synchronized HyperwalletTransferMethodUi getInstance(@NonNull final Context context,
             @NonNull final HyperwalletAuthenticationTokenProvider authenticationTokenProvider) {
         if (sInstance == null) {
             sInstance = new HyperwalletTransferMethodUi();
-            Hyperwallet.getInstance(authenticationTokenProvider);
         }
+
+        Hyperwallet.getInstance(authenticationTokenProvider);
+
+        // initialize insight
+        HyperwalletInsight.getInstance().initialize(context, authenticationTokenProvider);
         return sInstance;
     }
 
+    public static HyperwalletTransferMethodUi getDefault() {
+        if (sInstance == null) {
+            throw new HyperwalletTransferMethodUiInitializationException();
+        }
+        return sInstance;
+    }
 
     /**
      * @param context A Context of the application consuming this Intent.
@@ -84,9 +101,9 @@ public final class HyperwalletTransferMethodUi {
      * @param country            The transfer method country code. ISO 3166-1 alpha-2 format.
      * @param currency           The transfer method currency code. ISO 4217 format.
      * @param transferMethodType The type of transfer method. For a complete list of transfer methods, see {@link
-     *                       com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes}
+     *                       com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes}
      * @param profileType        The type of the account holder profile. For a complete list of options, see
-     *                           {@link com.hyperwallet.android.model.user.HyperwalletUser.ProfileTypes}
+     *                           {@link com.hyperwallet.android.model.user.User.ProfileTypes}
      * @return an Intent with the data necessary to launch the {@link AddTransferMethodActivity}
      */
     public Intent getIntentAddTransferMethodActivity(@NonNull final Context context, @NonNull final String country,
@@ -98,5 +115,13 @@ public final class HyperwalletTransferMethodUi {
         intent.putExtra(EXTRA_TRANSFER_METHOD_TYPE, transferMethodType);
         intent.putExtra(EXTRA_TRANSFER_METHOD_PROFILE_TYPE, profileType);
         return intent;
+    }
+
+    public static void clearInstance() {
+        sInstance = null;
+        Hyperwallet.clearInstance();
+        HyperwalletInsight.clearInstance();
+        TransferMethodRepositoryFactory.clearInstance();
+        UserRepositoryFactory.clearInstance();
     }
 }

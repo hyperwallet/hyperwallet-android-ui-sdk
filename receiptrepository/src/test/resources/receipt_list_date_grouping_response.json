@@ -9,7 +9,7 @@
       "createdOn": "2019-05-27T15:42:07",
       "entry": "CREDIT",
       "sourceToken": "act-b1f6dc28-e534-45f4-a661-3523f051f77a",
-      "destinationToken": "usr-b4e8ec34-52d8-4a81-9566-bdde1bd745b6",
+      "destinationToken": "test-user-token",
       "amount": "5000.00",
       "fee": "0.00",
       "currency": "USD",
@@ -23,8 +23,8 @@
       "type": "TRANSFER_TO_BANK_ACCOUNT",
       "createdOn": "2019-05-27T15:57:49",
       "entry": "DEBIT",
-      "sourceToken": "usr-b4e8ec34-52d8-4a81-9566-bdde1bd745b6",
-      "destinationToken": "trm-0a2ac589-2cae-4ed3-9b0b-658246a34687",
+      "sourceToken": "test-user-token",
+      "destinationToken": "test-fake-token",
       "amount": "10.25",
       "fee": "0.25",
       "currency": "USD",
@@ -39,7 +39,7 @@
       "createdOn": "2019-05-27T16:01:10",
       "entry": "CREDIT",
       "sourceToken": "act-b1f6dc28-e534-45f4-a661-3523f051f77a",
-      "destinationToken": "usr-b4e8ec34-52d8-4a81-9566-bdde1bd745b6",
+      "destinationToken": "test-user-token",
       "amount": "11.00",
       "fee": "0.00",
       "currency": "USD",
@@ -54,7 +54,7 @@
       "createdOn": "2019-06-04T10:35:23",
       "entry": "CREDIT",
       "sourceToken": "act-b1f6dc28-e534-45f4-a661-3523f051f77a",
-      "destinationToken": "usr-b4e8ec34-52d8-4a81-9566-bdde1bd745b6",
+      "destinationToken": "test-user-token",
       "amount": "13.00",
       "fee": "0.00",
       "currency": "USD",
@@ -69,7 +69,7 @@
       "createdOn": "2019-06-04T11:16:21",
       "entry": "CREDIT",
       "sourceToken": "act-b1f6dc28-e534-45f4-a661-3523f051f77a",
-      "destinationToken": "usr-b4e8ec34-52d8-4a81-9566-bdde1bd745b6",
+      "destinationToken": "test-user-token",
       "amount": "14.00",
       "fee": "0.00",
       "currency": "USD",
@@ -84,7 +84,7 @@
       "params": {
         "rel": "self"
       },
-      "href": "https://localhost:8181/rest/v3/users/usr-b4e8ec34-52d8-4a81-9566-bdde1bd745b6/receipts?offset=0&limit=10&createdAfter=2019-1-1"
+      "href": "https://localhost:8181/rest/v3/users/test-user-token/receipts?offset=0&limit=10&createdAfter=2019-1-1"
     }
   ]
 }

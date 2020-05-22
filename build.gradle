@@ -24,7 +24,7 @@ allprojects {
 
     }
 
-    project.version = "1.0.0-beta04"
+    project.version = "1.0.0-beta05"
 
 }
 
@@ -38,7 +38,8 @@ subprojects {
         targetVersion = 28
         codeVersion = 1
 
-        hyperwalletCoreVersion = '1.0.0-beta04'
+        hyperwalletCoreVersion = '1.0.0-beta05'
+        hyperwalletInsightVersion = '1.0.0-beta02'
         //
         androidMaterialVersion = '1.0.0'
         appcompatVersion = '1.0.2'
@@ -67,4 +68,23 @@ subprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+task generateAggregatedJavadocs(type: Javadoc) {
+
+    options.links 'https://hyperwallet.github.io/hyperwallet-android-sdk/',
+            'http://docs.oracle.com/javase/7/docs/api/'
+    options.addStringOption 'Xdoclint:none', '-quiet'
+
+    def subs = rootProject.subprojects.findAll {sub -> sub.name != 'testutils'}
+    rootProject.gradle.projectsEvaluated {
+        rootProject.task("allJavadocs") {
+            description = 'Generate an aggregated javadoc for all projects'
+            group = "documentation"
+            dependsOn subs.javadocs
+            source subs.javadocs.source
+            destinationDir rootProject.file("$rootProject.buildDir/docs/javadoc")
+            classpath = rootProject.files(subs.javadocs.classpath)
+        }
+    }
 }

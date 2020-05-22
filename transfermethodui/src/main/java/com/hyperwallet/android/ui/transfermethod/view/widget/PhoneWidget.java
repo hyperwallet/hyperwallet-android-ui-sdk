@@ -16,10 +16,7 @@
  */
 package com.hyperwallet.android.ui.transfermethod.view.widget;
 
-import android.text.Editable;
 import android.text.InputType;
-import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,15 +28,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.android.material.textfield.TextInputLayout;
-import com.hyperwallet.android.model.graphql.field.HyperwalletField;
+import com.hyperwallet.android.model.graphql.field.Field;
 import com.hyperwallet.android.ui.R;
 
-public class PhoneWidget extends AbstractWidget {
-    private ViewGroup mContainer;
-    private String mValue = "";
-    private TextInputLayout mTextInputLayout;
+public class PhoneWidget extends AbstractMaskedInputWidget {
 
-    public PhoneWidget(@NonNull HyperwalletField field, @NonNull WidgetEventListener listener,
+    public PhoneWidget(@NonNull Field field, @NonNull WidgetEventListener listener,
             @Nullable String defaultValue, @NonNull View defaultFocusView) {
         super(field, listener, defaultValue, defaultFocusView);
         mValue = defaultValue;
@@ -59,6 +53,7 @@ public class PhoneWidget extends AbstractWidget {
             final EditText editText = new EditText(
                     new ContextThemeWrapper(viewGroup.getContext(), R.style.Widget_Hyperwallet_TextInputEditText));
             editText.setEnabled(mField.isEditable());
+            editText.setTextColor(viewGroup.getContext().getResources().getColor(R.color.regularColorSecondary));
 
             mTextInputLayout.addView(editText);
             mTextInputLayout.setHint(mField.getLabel());
@@ -68,32 +63,17 @@ public class PhoneWidget extends AbstractWidget {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
                     if (!hasFocus) {
-                        mValue = ((EditText) v).getText().toString();
-                        mListener.valueChanged();
+                        String input = ((EditText) v).getText().toString();
+                        mValue = formatToApi(input);
+                        mListener.valueChanged(PhoneWidget.this);
                     } else {
                         mListener.widgetFocused(PhoneWidget.this.getName());
                     }
                 }
             });
-            editText.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                }
 
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    if (before != count) {
-                        mValue = s.toString();
-                        mListener.saveTextChanged(getName(), getValue());
-                    }
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-                }
-            });
-
-            editText.setText(TextUtils.isEmpty(mDefaultValue) ? mField.getValue() : mDefaultValue);
+            editText.addTextChangedListener(new InputMaskTextWatcher(editText));
+            editText.setText(mDefaultValue);
             editText.setInputType(InputType.TYPE_CLASS_PHONE);
             editText.setOnKeyListener(new DefaultKeyListener(mDefaultFocusView, editText));
             editText.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI | EditorInfo.IME_ACTION_NEXT);

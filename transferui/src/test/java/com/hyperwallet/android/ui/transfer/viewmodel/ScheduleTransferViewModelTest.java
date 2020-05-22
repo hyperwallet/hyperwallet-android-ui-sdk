@@ -9,18 +9,18 @@ import static org.mockito.Mockito.doAnswer;
 
 import static com.hyperwallet.android.model.transfer.Transfer.TransferStatuses.QUOTED;
 import static com.hyperwallet.android.model.transfer.Transfer.TransferStatuses.SCHEDULED;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TOKEN;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_COUNTRY;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_CURRENCY;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TOKEN;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TRANSFER_METHOD_COUNTRY;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TRANSFER_METHOD_CURRENCY;
 
 import androidx.lifecycle.ViewModel;
 
-import com.hyperwallet.android.model.HyperwalletError;
-import com.hyperwallet.android.model.HyperwalletErrors;
+import com.hyperwallet.android.model.Error;
+import com.hyperwallet.android.model.Errors;
 import com.hyperwallet.android.model.StatusTransition;
 import com.hyperwallet.android.model.TypeReference;
 import com.hyperwallet.android.model.transfer.Transfer;
-import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
+import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
 import com.hyperwallet.android.ui.transfer.repository.TransferRepository;
 import com.hyperwallet.android.util.JsonUtils;
@@ -73,7 +73,7 @@ public class ScheduleTransferViewModelTest {
                 .memo("Create quote test notes")
                 .build();
 
-        HyperwalletTransferMethod transferMethod = new HyperwalletTransferMethod();
+        TransferMethod transferMethod = new TransferMethod();
         transferMethod.setField(TOKEN, "trm-canadian-bank-token");
         transferMethod.setField(TRANSFER_METHOD_CURRENCY, "CAD");
         transferMethod.setField(TRANSFER_METHOD_COUNTRY, "CA");
@@ -145,8 +145,8 @@ public class ScheduleTransferViewModelTest {
     @Test
     public void testScheduleTransfer_unsuccessful() throws Exception {
         String errorResponse = mResourceManager.getResourceContent("commit_transfer_timeout.json");
-        final HyperwalletErrors errors = JsonUtils.fromJsonString(errorResponse,
-                new TypeReference<HyperwalletErrors>() {
+        final Errors errors = JsonUtils.fromJsonString(errorResponse,
+                new TypeReference<Errors>() {
                 });
 
         doAnswer(new Answer() {
@@ -164,7 +164,7 @@ public class ScheduleTransferViewModelTest {
 
         assertThat(mScheduleTransferViewModel.getTransferStatusTransitionError().getValue(), is(notNullValue()));
         assertThat(mScheduleTransferViewModel.getTransferStatusTransitionError().getValue().getContent().getErrors(),
-                Matchers.<HyperwalletError>hasSize(1));
+                Matchers.<Error>hasSize(1));
         assertThat(mScheduleTransferViewModel.getTransferStatusTransitionError().getValue().getContent()
                 .getErrors().get(0).getCode(), is("EXPIRED_TRANSFER"));
         assertThat(mScheduleTransferViewModel.getTransferStatusTransitionError().getValue().getContent()

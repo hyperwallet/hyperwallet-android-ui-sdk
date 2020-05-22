@@ -29,7 +29,7 @@ package com.hyperwallet.android.ui.transfer.repository;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.hyperwallet.android.model.HyperwalletErrors;
+import com.hyperwallet.android.model.Errors;
 import com.hyperwallet.android.model.StatusTransition;
 import com.hyperwallet.android.model.transfer.Transfer;
 
@@ -70,9 +70,9 @@ public interface TransferRepository {
         /**
          * Callback method when error occur on Create Transfer action.
          *
-         * @param errors Transfer error representation {@link HyperwalletErrors}
+         * @param errors Transfer error representation {@link Errors}
          */
-        void onError(@NonNull final HyperwalletErrors errors);
+        void onError(@NonNull final Errors errors);
     }
 
     /**
@@ -90,8 +90,8 @@ public interface TransferRepository {
         /**
          * Callback method when error occur on Create Transfer action.
          *
-         * @param errors Transfer error representation {@link HyperwalletErrors}
+         * @param errors Transfer error representation {@link Errors}
          */
-        void onError(@NonNull final HyperwalletErrors errors);
+        void onError(@NonNull final Errors errors);
     }
 }

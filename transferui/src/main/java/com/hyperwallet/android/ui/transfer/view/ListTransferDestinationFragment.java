@@ -16,9 +16,9 @@
  */
 package com.hyperwallet.android.ui.transfer.view;
 
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TOKEN;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_COUNTRY;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TYPE;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TOKEN;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TRANSFER_METHOD_COUNTRY;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TYPE;
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getStringFontIcon;
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getStringResourceByName;
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getTransferMethodDetail;
@@ -47,7 +47,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
+import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import com.hyperwallet.android.ui.transfer.R;
 import com.hyperwallet.android.ui.transfer.viewmodel.ListTransferDestinationViewModel;
 
@@ -128,6 +128,12 @@ public class ListTransferDestinationFragment extends DialogFragment {
     }
 
     @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mListTransferDestinationViewModel.init();
+    }
+
+    @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
 
@@ -139,9 +145,9 @@ public class ListTransferDestinationFragment extends DialogFragment {
 
     private void registerObservers() {
         mListTransferDestinationViewModel.getTransferDestinationList().observe(getViewLifecycleOwner(),
-                new Observer<List<HyperwalletTransferMethod>>() {
+                new Observer<List<TransferMethod>>() {
                     @Override
-                    public void onChanged(List<HyperwalletTransferMethod> transferMethods) {
+                    public void onChanged(List<TransferMethod> transferMethods) {
                         if (mListTransferDestinationAdapter != null) {
                             mListTransferDestinationAdapter.replaceData(transferMethods);
                         }
@@ -183,9 +189,9 @@ public class ListTransferDestinationFragment extends DialogFragment {
         }
     }
 
-    private class ListTransferDestinationAdapter extends RecyclerView.Adapter<TransferDestinationViewHolder> {
+    private static class ListTransferDestinationAdapter extends RecyclerView.Adapter<TransferDestinationViewHolder> {
 
-        private final List<HyperwalletTransferMethod> mTransferDestinations = new ArrayList<>();
+        private final List<TransferMethod> mTransferDestinations = new ArrayList<>();
         private final ListTransferDestinationViewModel mViewModel;
         private final String mSelectedDestination;
 
@@ -207,7 +213,7 @@ public class ListTransferDestinationFragment extends DialogFragment {
 
         @Override
         public void onBindViewHolder(@NonNull TransferDestinationViewHolder holder, int position) {
-            HyperwalletTransferMethod destination = mTransferDestinations.get(position);
+            TransferMethod destination = mTransferDestinations.get(position);
             holder.bind(destination, Objects.equals(destination.getField(TOKEN), mSelectedDestination));
         }
 
@@ -221,21 +227,21 @@ public class ListTransferDestinationFragment extends DialogFragment {
             holder.recycle();
         }
 
-        void replaceData(@NonNull final List<HyperwalletTransferMethod> destinations) {
+        void replaceData(@NonNull final List<TransferMethod> destinations) {
             mTransferDestinations.clear();
             mTransferDestinations.addAll(destinations);
             notifyDataSetChanged();
         }
     }
 
-    private class TransferDestinationViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    private static class TransferDestinationViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final TextView mTitle;
         private final TextView mIcon;
         private final TextView mTransferDestinationCountry;
         private final TextView mTransferDestinationIdentification;
         private final ImageView mSelectedIcon;
         private final ListTransferDestinationViewModel mViewModel;
-        private HyperwalletTransferMethod mTransferMethod;
+        private TransferMethod mTransferMethod;
 
         TransferDestinationViewHolder(@NonNull final View itemView,
                 @NonNull final ListTransferDestinationViewModel viewModel) {
@@ -254,7 +260,7 @@ public class ListTransferDestinationFragment extends DialogFragment {
             mViewModel.selectedTransferDestination(mTransferMethod);
         }
 
-        void bind(@NonNull final HyperwalletTransferMethod destination, final boolean selected) {
+        void bind(@NonNull final TransferMethod destination, final boolean selected) {
             mTransferMethod = destination;
             String type = destination.getField(TYPE);
             Locale locale = new Locale.Builder().setRegion(destination.getField(TRANSFER_METHOD_COUNTRY)).build();

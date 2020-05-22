@@ -101,6 +101,12 @@ public class ListReceiptFragment extends Fragment {
         registerObservers();
     }
 
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mReceiptViewModel.init();
+    }
+
     private void registerObservers() {
         mReceiptViewModel.getReceiptList().observe(getViewLifecycleOwner(), new Observer<PagedList<Receipt>>() {
             @Override
@@ -122,7 +128,7 @@ public class ListReceiptFragment extends Fragment {
     }
 
     void retry() {
-        mReceiptViewModel.retryLoadReceipts();
+        mReceiptViewModel.retry();
     }
 
     private static class ListReceiptItemDiffCallback extends DiffUtil.ItemCallback<Receipt> {

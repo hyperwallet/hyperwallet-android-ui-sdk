@@ -21,11 +21,21 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.paging.PagedList;
 
-import com.hyperwallet.android.model.HyperwalletErrors;
+import com.hyperwallet.android.model.Errors;
 import com.hyperwallet.android.model.receipt.Receipt;
 import com.hyperwallet.android.ui.common.repository.Event;
 
 public abstract class ReceiptViewModel extends ViewModel {
+
+    /**
+     * Initialize loading receipts
+     */
+    public abstract void init();
+
+    /**
+     * Refresh receipts
+     */
+    public abstract void refresh();
 
     /**
      * @return live data of isloading information
@@ -33,9 +43,9 @@ public abstract class ReceiptViewModel extends ViewModel {
     public abstract LiveData<Boolean> isLoadingData();
 
     /**
-     * @return live data of receipt errors {@link HyperwalletErrors}
+     * @return live data of receipt errors {@link Errors}
      */
-    public abstract LiveData<Event<HyperwalletErrors>> getReceiptErrors();
+    public abstract LiveData<Event<Errors>> getReceiptErrors();
 
     /**
      * @return paged live data of receipts {@link Receipt}
@@ -45,7 +55,7 @@ public abstract class ReceiptViewModel extends ViewModel {
     /**
      * Explicit invoke of load retry on receipts data
      */
-    public abstract void retryLoadReceipts();
+    public abstract void retry();
 
     /**
      * @return binding live data of detail navigation information

@@ -19,8 +19,8 @@ package com.hyperwallet.android.ui.user.repository;
 
 import androidx.annotation.NonNull;
 
-import com.hyperwallet.android.model.HyperwalletErrors;
-import com.hyperwallet.android.model.user.HyperwalletUser;
+import com.hyperwallet.android.model.Errors;
+import com.hyperwallet.android.model.user.User;
 
 /**
  * User Repository Contract
@@ -43,14 +43,14 @@ public interface UserRepository {
      * Load User information
      * <p>
      * When User is properly loaded
-     * {@link UserRepository.LoadUserCallback#onUserLoaded(HyperwalletUser)}
-     * is invoked otherwise {@link UserRepository.LoadUserCallback#onError(HyperwalletErrors)}
+     * {@link UserRepository.LoadUserCallback#onUserLoaded(User)}
+     * is invoked otherwise {@link UserRepository.LoadUserCallback#onError(Errors)}
      * is called to further log or show error information
      */
     interface LoadUserCallback {
 
-        void onUserLoaded(@NonNull final HyperwalletUser user);
+        void onUserLoaded(@NonNull final User user);
 
-        void onError(@NonNull final HyperwalletErrors errors);
+        void onError(@NonNull final Errors errors);
     }
 }

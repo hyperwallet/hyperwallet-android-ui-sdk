@@ -29,14 +29,15 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import com.hyperwallet.android.model.HyperwalletErrors;
+import com.hyperwallet.android.model.Errors;
 import com.hyperwallet.android.model.StatusTransition;
 import com.hyperwallet.android.model.transfer.Transfer;
-import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
+import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import com.hyperwallet.android.ui.common.repository.Event;
+import com.hyperwallet.android.ui.common.util.PageGroups;
 import com.hyperwallet.android.ui.common.view.ActivityUtils;
 import com.hyperwallet.android.ui.common.view.error.OnNetworkErrorCallback;
-import com.hyperwallet.android.ui.transfer.HyperwalletTransferLocalBroadcast;
+import com.hyperwallet.android.ui.transfer.TransferLocalBroadcast;
 import com.hyperwallet.android.ui.transfer.R;
 import com.hyperwallet.android.ui.transfer.repository.TransferRepositoryFactory;
 import com.hyperwallet.android.ui.transfer.viewmodel.ScheduleTransferViewModel;
@@ -45,6 +46,8 @@ import com.hyperwallet.android.ui.transfer.viewmodel.ScheduleTransferViewModel;
  * Schedule Transfer Activity
  */
 public class ScheduleTransferActivity extends AppCompatActivity implements OnNetworkErrorCallback {
+
+    public static final String TAG = "transfer-funds:review-transfer";
 
     public static final String EXTRA_TRANSFER = "TRANSFER";
     public static final String EXTRA_TRANSFER_METHOD = "TRANSFER_METHOD";
@@ -65,7 +68,6 @@ public class ScheduleTransferActivity extends AppCompatActivity implements OnNet
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setResult(Activity.RESULT_OK);
                 finish();
             }
         });
@@ -73,13 +75,13 @@ public class ScheduleTransferActivity extends AppCompatActivity implements OnNet
         Parcelable transferParcel = getIntent().getParcelableExtra(EXTRA_TRANSFER);
         Parcelable transferMethodParcel = getIntent().getParcelableExtra(EXTRA_TRANSFER_METHOD);
         boolean showFxRateChangeWarningParcel = getIntent().getBooleanExtra(EXTRA_SHOW_FX_CHANGE_WARNING, false);
-        if (transferParcel instanceof Transfer && transferMethodParcel instanceof HyperwalletTransferMethod) {
+        if (transferParcel instanceof Transfer && transferMethodParcel instanceof TransferMethod) {
             mScheduleTransferViewModel = ViewModelProviders.of(this,
                     new ScheduleTransferViewModel.ScheduleTransferViewModelFactory(
                             TransferRepositoryFactory.getInstance().getTransferRepository()))
                     .get(ScheduleTransferViewModel.class);
             mScheduleTransferViewModel.setTransfer((Transfer) transferParcel);
-            mScheduleTransferViewModel.setTransferDestination((HyperwalletTransferMethod) transferMethodParcel);
+            mScheduleTransferViewModel.setTransferDestination((TransferMethod) transferMethodParcel);
             mScheduleTransferViewModel.setShowFxChangeWarning(showFxRateChangeWarningParcel);
             registerObservers();
         } else {
@@ -107,11 +109,11 @@ public class ScheduleTransferActivity extends AppCompatActivity implements OnNet
 
     private void registerObservers() {
         mScheduleTransferViewModel.getTransferStatusTransitionError().observe(this,
-                new Observer<Event<HyperwalletErrors>>() {
+                new Observer<Event<Errors>>() {
                     @Override
-                    public void onChanged(final Event<HyperwalletErrors> event) {
+                    public void onChanged(final Event<Errors> event) {
                         if (event != null && !event.isContentConsumed()) {
-                            ActivityUtils.showError(ScheduleTransferActivity.this,
+                            ActivityUtils.showError(ScheduleTransferActivity.this, TAG, PageGroups.TRANSFER_FUNDS,
                                     event.getContent().getErrors());
                         }
                     }
@@ -120,7 +122,7 @@ public class ScheduleTransferActivity extends AppCompatActivity implements OnNet
         mScheduleTransferViewModel.getTransferStatusTransition().observe(this, new Observer<StatusTransition>() {
             @Override
             public void onChanged(final StatusTransition statusTransition) {
-                Intent intent = HyperwalletTransferLocalBroadcast.createBroadcastIntentTransferScheduled(
+                Intent intent = TransferLocalBroadcast.createBroadcastIntentTransferScheduled(
                         statusTransition);
                 LocalBroadcastManager.getInstance(ScheduleTransferActivity.this).sendBroadcast(intent);
                 setResult(Activity.RESULT_OK, intent);

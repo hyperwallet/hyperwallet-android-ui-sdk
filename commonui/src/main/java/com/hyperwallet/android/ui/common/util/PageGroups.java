@@ -1,6 +1,6 @@
 /*
  * The MIT License (MIT)
- * Copyright (c) 2018 Hyperwallet Systems Inc.
+ * Copyright (c) 2019 Hyperwallet Systems Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -14,30 +14,13 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.hyperwallet.android.ui.common.view.error;
+package com.hyperwallet.android.ui.common.util;
 
-import android.content.res.Resources;
+public final class PageGroups {
+    public static final String TRANSFER_METHOD = "transfer-method";
+    public static final String TRANSFER_FUNDS = "transfer-funds";
+    public static final String RECEIPTS = "receipts";
 
-import androidx.annotation.NonNull;
-
-import com.hyperwallet.android.model.HyperwalletError;
-
-import java.util.List;
-
-/**
- * Presenter Contract for building an {@link DefaultErrorDialogFragment}
- */
-interface DefaultErrorDialogFragmentContract {
-
-    interface Presenter {
-        /**
-         * Build message from a list of {@link HyperwalletError}.
-         *
-         * @param errors    List of the {@link HyperwalletError}
-         * @param resources {@link Resources}
-         * @return Message based on the {@link HyperwalletError#getCode()}
-         */
-        @NonNull
-        String buildDialogMessage(@NonNull List<HyperwalletError> errors, @NonNull Resources resources);
+    private PageGroups() {
     }
 }

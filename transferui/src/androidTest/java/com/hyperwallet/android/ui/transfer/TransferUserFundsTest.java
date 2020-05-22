@@ -3,7 +3,6 @@ package com.hyperwallet.android.ui.transfer;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.replaceText;
-import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.intent.Intents.intended;
@@ -46,12 +45,11 @@ import androidx.test.espresso.intent.rule.IntentsTestRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
-import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.model.StatusTransition;
 import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
-import com.hyperwallet.android.ui.testutils.TestAuthenticationProvider;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletMockWebServer;
+import com.hyperwallet.android.ui.testutils.rule.HyperwalletSdkRule;
 import com.hyperwallet.android.ui.testutils.util.RecyclerViewCountAssertion;
 import com.hyperwallet.android.ui.transfer.repository.TransferRepositoryFactory;
 import com.hyperwallet.android.ui.transfer.view.CreateTransferActivity;
@@ -75,6 +73,8 @@ public class TransferUserFundsTest {
     @ClassRule
     public static HyperwalletExternalResourceManager sResourceManager = new HyperwalletExternalResourceManager();
     @Rule
+    public HyperwalletSdkRule mHyperwalletSdkRule = new HyperwalletSdkRule();
+    @Rule
     public HyperwalletMockWebServer mMockWebServer = new HyperwalletMockWebServer(8080);
     @Rule
     public ActivityTestRule<CreateTransferActivity> mActivityTestRule =
@@ -85,27 +85,17 @@ public class TransferUserFundsTest {
 
     @Before
     public void setup() {
-        Hyperwallet.getInstance(new TestAuthenticationProvider());
-
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("authentication_token_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("user_response.json")).mock();
+        IdlingRegistry.getInstance().register(EspressoIdlingResource.getIdlingResource());
     }
 
     @After
     public void cleanup() {
         UserRepositoryFactory.clearInstance();
         TransferRepositoryFactory.clearInstance();
-    }
-
-    @Before
-    public void registerIdlingResource() {
-        IdlingRegistry.getInstance().register(EspressoIdlingResource.getIdlingResource());
-    }
-
-    @After
-    public void unregisterIdlingResource() {
         IdlingRegistry.getInstance().unregister(EspressoIdlingResource.getIdlingResource());
     }
 
@@ -119,31 +109,32 @@ public class TransferUserFundsTest {
         mActivityTestRule.launchActivity(null);
 
         onView(withId(R.id.add_transfer_destination)).check(matches(not(isDisplayed())));
-        onView(withId(R.id.transfer_destination)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_destination)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_icon)).check(matches(withText(R.string.bank_account_font_icon)));
         onView(withId(R.id.transfer_destination_title)).check(matches(withText(R.string.bank_account)));
-        onView(withId(R.id.transfer_destination_selection)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_destination_selection)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_description_1)).check(matches(withText("United States")));
         onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("Ending on 0616")));
 
-        onView(withId(R.id.transfer_amount)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_amount)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_amount_layout)).check(matches(withHint("Amount")));
         onView(withId(R.id.transfer_amount_currency)).check(matches(withText("USD")));
-        onView(withId(R.id.transfer_all_funds_label)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_all_funds_label)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_all_funds_label)).check(matches(withText(R.string.transfer_all_funds_label)));
 
         //Check that the toggle is disabled by default
-        onView(withId(R.id.switchButton)).check(matches(isDisplayed()));
+        onView(withId(R.id.switchButton)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.switchButton)).check(matches(not(isSelected())));
-        onView(withId(R.id.transfer_summary)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_summary)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_summary)).check(matches(withText("Available for Transfer: 998.00 USD")));
 
         onView(withId(R.id.transfer_action_button)).perform(nestedScrollTo());
-        onView(withId(R.id.transfer_notes)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_notes)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_notes_layout)).check(matches(withHint("Description")));
-        onView(withText(R.string.transfer_notes_additional_info_label)).check(matches(isDisplayed()));
+        onView(withText(R.string.transfer_notes_additional_info_label)).perform(nestedScrollTo()).check(
+                matches(isDisplayed()));
 
-        onView(withId(R.id.transfer_action_button)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_action_button)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_action_button)).check(matches(isEnabled()));
     }
 
@@ -153,7 +144,7 @@ public class TransferUserFundsTest {
 
         mActivityTestRule.launchActivity(null);
 
-        onView(withId(R.id.add_transfer_destination)).check(matches(isDisplayed()));
+        onView(withId(R.id.add_transfer_destination)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.add_transfer_destination_icon)).check(matches(withText(R.string.add_text)));
         onView(withId(R.id.add_transfer_destination_title)).check(matches(withText(R.string.add_transfer_label)));
         onView(withId(R.id.add_transfer_destination_description_1)).check(
@@ -163,7 +154,7 @@ public class TransferUserFundsTest {
 
         onView(withId(R.id.transfer_action_button)).perform(nestedScrollTo());
         onView(withId(R.id.transfer_summary)).check(matches(not(isDisplayed())));
-        onView(withId(R.id.transfer_action_button)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_action_button)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_action_button)).check(matches(isEnabled()));
     }
 
@@ -180,7 +171,7 @@ public class TransferUserFundsTest {
         Instrumentation.ActivityResult result = new Instrumentation.ActivityResult(Activity.RESULT_OK, null);
         intending(hasAction(ACTION_SELECT_TRANSFER_METHOD)).respondWith(result);
 
-        onView(withId(R.id.add_transfer_destination)).check(matches(isDisplayed()));
+        onView(withId(R.id.add_transfer_destination)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.add_transfer_destination_icon)).check(matches(withText(R.string.add_text)));
         onView(withId(R.id.add_transfer_destination_title)).check(matches(withText(R.string.add_transfer_label)));
         onView(withId(R.id.add_transfer_destination_description_1)).check(
@@ -192,23 +183,23 @@ public class TransferUserFundsTest {
         intended(hasAction(ACTION_SELECT_TRANSFER_METHOD));
 
         onView(withId(R.id.add_transfer_destination)).check(matches(not(isDisplayed())));
-        onView(withId(R.id.transfer_destination)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_destination)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_icon)).check(matches(withText(R.string.bank_account_font_icon)));
         onView(withId(R.id.transfer_destination_title)).check(matches(withText(R.string.bank_account)));
-        onView(withId(R.id.transfer_destination_selection)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_destination_selection)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_description_1)).check(matches(withText("United States")));
         onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("Ending on 0616")));
 
-        onView(withId(R.id.transfer_amount)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_amount)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_amount_layout)).check(matches(withHint("Amount")));
         onView(withId(R.id.transfer_amount_currency)).check(matches(withText("USD")));
-        onView(withId(R.id.transfer_all_funds_label)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_all_funds_label)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_all_funds_label)).check(matches(withText(R.string.transfer_all_funds_label)));
 
         //Check that the toggle is disabled by default
-        onView(withId(R.id.switchButton)).check(matches(isDisplayed()));
+        onView(withId(R.id.switchButton)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.switchButton)).check(matches(not(isSelected())));
-        onView(withId(R.id.transfer_summary)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_summary)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_summary)).check(matches(withText("Available for Transfer: 998.00 USD")));
 
         onView(withId(R.id.transfer_action_button)).check(matches(isEnabled()));
@@ -235,7 +226,7 @@ public class TransferUserFundsTest {
 
                 StatusTransition transition = intent.getParcelableExtra(
                         "hyperwallet-local-broadcast-payload");
-                assertThat("Token is incorrect", transition.getToken(), is("sts-2157d925-90c9-407b-a9d6-24a0d9dacfb6"));
+                assertThat("Token is incorrect", transition.getToken(), is("sts-token"));
                 assertThat("To Status is incorrect", transition.getToStatus(), is("SCHEDULED"));
                 assertThat("From Status is incorrect", transition.getFromStatus(), is("QUOTED"));
                 assertThat("Transition is incorrect", transition.getTransition(), is("SCHEDULED"));
@@ -248,20 +239,20 @@ public class TransferUserFundsTest {
                 .registerReceiver(br, new IntentFilter("ACTION_HYPERWALLET_TRANSFER_SCHEDULED"));
 
         onView(withId(R.id.add_transfer_destination)).check(matches(not(isDisplayed())));
-        onView(withId(R.id.transfer_destination)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_destination)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_icon)).check(matches(withText(R.string.bank_account_font_icon)));
         onView(withId(R.id.transfer_destination_title)).check(matches(withText(R.string.bank_account)));
-        onView(withId(R.id.transfer_destination_selection)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_destination_selection)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_description_1)).check(matches(withText("Canada")));
         onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("Ending on 5121")));
 
-        onView(withId(R.id.transfer_summary)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_summary)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_summary)).check(matches(withText("Available for Transfer: 1,157.40 CAD")));
 
-        onView(withId(R.id.transfer_amount)).perform(replaceText("150.00"));
+        onView(withId(R.id.transfer_amount)).perform(nestedScrollTo(), replaceText("150.00"));
         onView(withId(R.id.transfer_action_button)).perform(nestedScrollTo(), click());
 
-        onView(withId(R.id.list_foreign_exchange)).check(matches(isDisplayed()));
+        onView(withId(R.id.list_foreign_exchange)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.list_foreign_exchange)).check(new RecyclerViewCountAssertion(1));
         onView(withId(R.id.list_foreign_exchange)).check(
                 matches(atPosition(0, hasDescendant(
@@ -322,7 +313,7 @@ public class TransferUserFundsTest {
 
                 StatusTransition transition = intent.getParcelableExtra(
                         "hyperwallet-local-broadcast-payload");
-                assertThat("Token is incorrect", transition.getToken(), is("sts-2157d925-90c9-407b-a9d6-24a0d9dacfb6"));
+                assertThat("Token is incorrect", transition.getToken(), is("sts-token"));
                 assertThat("To Status is incorrect", transition.getToStatus(), is("SCHEDULED"));
                 assertThat("From Status is incorrect", transition.getFromStatus(), is("QUOTED"));
                 assertThat("Transition is incorrect", transition.getTransition(), is("SCHEDULED"));
@@ -334,14 +325,14 @@ public class TransferUserFundsTest {
                 .registerReceiver(br, new IntentFilter("ACTION_HYPERWALLET_TRANSFER_SCHEDULED"));
 
         onView(withId(R.id.add_transfer_destination)).check(matches(not(isDisplayed())));
-        onView(withId(R.id.transfer_destination)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_destination)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_icon)).check(matches(withText(R.string.bank_account_font_icon)));
         onView(withId(R.id.transfer_destination_title)).check(matches(withText(R.string.bank_account)));
-        onView(withId(R.id.transfer_destination_selection)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_destination_selection)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_description_1)).check(matches(withText("United States")));
         onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("Ending on 0616")));
 
-        onView(withId(R.id.transfer_amount)).perform(replaceText("100.00"));
+        onView(withId(R.id.transfer_amount)).perform(nestedScrollTo(), replaceText("100.00"));
         onView(withId(R.id.transfer_action_button)).perform(nestedScrollTo(), click());
 
         onView(withId(R.id.list_foreign_exchange)).check(matches(not(isDisplayed())));
@@ -388,7 +379,7 @@ public class TransferUserFundsTest {
 
                 StatusTransition transition = intent.getParcelableExtra(
                         "hyperwallet-local-broadcast-payload");
-                assertThat("Token is incorrect", transition.getToken(), is("sts-2157d925-90c9-407b-a9d6-24a0d9dacfb6"));
+                assertThat("Token is incorrect", transition.getToken(), is("sts-token"));
                 assertThat("To Status is incorrect", transition.getToStatus(), is("SCHEDULED"));
                 assertThat("From Status is incorrect", transition.getFromStatus(), is("QUOTED"));
                 assertThat("Transition is incorrect", transition.getTransition(), is("SCHEDULED"));
@@ -400,15 +391,15 @@ public class TransferUserFundsTest {
                 .registerReceiver(br, new IntentFilter("ACTION_HYPERWALLET_TRANSFER_SCHEDULED"));
 
         onView(withId(R.id.add_transfer_destination)).check(matches(not(isDisplayed())));
-        onView(withId(R.id.transfer_destination)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_destination)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_icon)).check(matches(withText(R.string.bank_account_font_icon)));
         onView(withId(R.id.transfer_destination_title)).check(matches(withText(R.string.bank_account)));
-        onView(withId(R.id.transfer_destination_selection)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_destination_selection)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_description_1)).check(matches(withText("United States")));
         onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("Ending on 0616")));
 
-        onView(withId(R.id.transfer_amount)).perform(replaceText("100.00"));
-        onView(withId(R.id.transfer_notes)).perform(replaceText("QA Automation Test"));
+        onView(withId(R.id.transfer_amount)).perform(nestedScrollTo(), replaceText("100.00"));
+        onView(withId(R.id.transfer_notes)).perform(nestedScrollTo(), replaceText("QA Automation Test"));
 
         onView(withId(R.id.transfer_action_button)).perform(nestedScrollTo(), click());
 
@@ -421,7 +412,7 @@ public class TransferUserFundsTest {
         onView(withId(R.id.transfer_value)).check(matches(withText("100.00 USD")));
         onView(withId(R.id.exchange_rate_warning_container)).check(matches(not(isDisplayed())));
         onView(withId(R.id.exchange_rate_warning)).check(matches(not(isDisplayed())));
-        onView(withId(R.id.notes_container)).check(matches(isDisplayed()));
+        onView(withId(R.id.notes_container)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.notes_value)).check(matches(withText("Transfer funds test")));
 
         onView(withId(R.id.transfer_confirm_button)).perform(nestedScrollTo(), click());
@@ -456,7 +447,7 @@ public class TransferUserFundsTest {
 
                 StatusTransition transition = intent.getParcelableExtra(
                         "hyperwallet-local-broadcast-payload");
-                assertThat("Token is incorrect", transition.getToken(), is("sts-2157d925-90c9-407b-a9d6-24a0d9dacfb6"));
+                assertThat("Token is incorrect", transition.getToken(), is("sts-token"));
                 assertThat("To Status is incorrect", transition.getToStatus(), is("SCHEDULED"));
                 assertThat("From Status is incorrect", transition.getFromStatus(), is("QUOTED"));
                 assertThat("Transition is incorrect", transition.getTransition(), is("SCHEDULED"));
@@ -468,15 +459,15 @@ public class TransferUserFundsTest {
                 .registerReceiver(br, new IntentFilter("ACTION_HYPERWALLET_TRANSFER_SCHEDULED"));
 
         onView(withId(R.id.add_transfer_destination)).check(matches(not(isDisplayed())));
-        onView(withId(R.id.transfer_destination)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_destination)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_icon)).check(matches(withText(R.string.bank_account_font_icon)));
         onView(withId(R.id.transfer_destination_title)).check(matches(withText(R.string.bank_account)));
-        onView(withId(R.id.transfer_destination_selection)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_destination_selection)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_description_1)).check(matches(withText("United States")));
         onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("Ending on 0616")));
 
-        onView(withId(R.id.transfer_amount)).perform(replaceText("100.00"));
-        onView(withId(R.id.transfer_notes)).perform(replaceText("QA Automation Test"));
+        onView(withId(R.id.transfer_amount)).perform(nestedScrollTo(), replaceText("100.00"));
+        onView(withId(R.id.transfer_notes)).perform(nestedScrollTo(), replaceText("QA Automation Test"));
 
         onView(withId(R.id.transfer_action_button)).perform(nestedScrollTo(), click());
 
@@ -524,7 +515,7 @@ public class TransferUserFundsTest {
 
                 StatusTransition transition = intent.getParcelableExtra(
                         "hyperwallet-local-broadcast-payload");
-                assertThat("Token is incorrect", transition.getToken(), is("sts-2157d925-90c9-407b-a9d6-24a0d9dacfb6"));
+                assertThat("Token is incorrect", transition.getToken(), is("sts-token"));
                 assertThat("To Status is incorrect", transition.getToStatus(), is("SCHEDULED"));
                 assertThat("From Status is incorrect", transition.getFromStatus(), is("QUOTED"));
                 assertThat("Transition is incorrect", transition.getTransition(), is("SCHEDULED"));
@@ -536,21 +527,21 @@ public class TransferUserFundsTest {
                 .registerReceiver(br, new IntentFilter("ACTION_HYPERWALLET_TRANSFER_SCHEDULED"));
 
         onView(withId(R.id.add_transfer_destination)).check(matches(not(isDisplayed())));
-        onView(withId(R.id.transfer_destination)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_destination)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_icon)).check(matches(withText(R.string.bank_account_font_icon)));
         onView(withId(R.id.transfer_destination_title)).check(matches(withText(R.string.bank_account)));
-        onView(withId(R.id.transfer_destination_selection)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_destination_selection)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_description_1)).check(matches(withText("United States")));
         onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("Ending on 0616")));
 
         onView(withId(R.id.switchButton)).perform(nestedScrollTo(), click());
         onView(withId(R.id.transfer_amount)).check(matches(withText("288.05")));
         onView(withId(R.id.transfer_amount)).check(matches(not(isEnabled())));
-        onView(withId(R.id.transfer_notes)).perform(replaceText("Transfer all funds test"));
+        onView(withId(R.id.transfer_notes)).perform(nestedScrollTo(), replaceText("Transfer all funds test"));
 
         onView(withId(R.id.transfer_action_button)).perform(nestedScrollTo(), click());
 
-        onView(withId(R.id.list_foreign_exchange)).check(matches(isDisplayed()));
+        onView(withId(R.id.list_foreign_exchange)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.list_foreign_exchange)).check(new RecyclerViewCountAssertion(2));
         onView(withId(R.id.list_foreign_exchange)).check(
                 matches(atPosition(0, hasDescendant(
@@ -596,7 +587,7 @@ public class TransferUserFundsTest {
         onView(withId(R.id.exchange_rate_warning)).check(matches(not(isDisplayed())));
 
         onView(withId(R.id.notes_container)).perform(nestedScrollTo());
-        onView(withId(R.id.notes_container)).check(matches(isDisplayed()));
+        onView(withId(R.id.notes_container)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.notes_value)).check(matches(withText("Transfer funds test")));
 
         onView(withId(R.id.transfer_confirm_button)).perform(nestedScrollTo(), click());
@@ -632,7 +623,7 @@ public class TransferUserFundsTest {
 
                 StatusTransition transition = intent.getParcelableExtra(
                         "hyperwallet-local-broadcast-payload");
-                assertThat("Token is incorrect", transition.getToken(), is("sts-2157d925-90c9-407b-a9d6-24a0d9dacfb6"));
+                assertThat("Token is incorrect", transition.getToken(), is("sts-token"));
                 assertThat("To Status is incorrect", transition.getToStatus(), is("SCHEDULED"));
                 assertThat("From Status is incorrect", transition.getFromStatus(), is("QUOTED"));
                 assertThat("Transition is incorrect", transition.getTransition(), is("SCHEDULED"));
@@ -644,21 +635,21 @@ public class TransferUserFundsTest {
                 .registerReceiver(br, new IntentFilter("ACTION_HYPERWALLET_TRANSFER_SCHEDULED"));
 
         onView(withId(R.id.add_transfer_destination)).check(matches(not(isDisplayed())));
-        onView(withId(R.id.transfer_destination)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_destination)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_icon)).check(matches(withText(R.string.bank_account_font_icon)));
         onView(withId(R.id.transfer_destination_title)).check(matches(withText(R.string.bank_account)));
-        onView(withId(R.id.transfer_destination_selection)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_destination_selection)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_description_1)).check(matches(withText("United States")));
         onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("Ending on 0616")));
 
         onView(withId(R.id.switchButton)).perform(nestedScrollTo(), click());
             onView(withId(R.id.transfer_amount)).check(matches(withText("288.05")));
         onView(withId(R.id.transfer_amount)).check(matches(not(isEnabled())));
-        onView(withId(R.id.transfer_notes)).perform(replaceText("Transfer all funds test"));
+        onView(withId(R.id.transfer_notes)).perform(nestedScrollTo(), replaceText("Transfer all funds test"));
 
         onView(withId(R.id.transfer_action_button)).perform(nestedScrollTo(), click());
 
-        onView(withId(R.id.list_foreign_exchange)).check(matches(isDisplayed()));
+        onView(withId(R.id.list_foreign_exchange)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.list_foreign_exchange)).check(new RecyclerViewCountAssertion(2));
         onView(withId(R.id.list_foreign_exchange)).check(
                 matches(atPosition(0, hasDescendant(
@@ -701,11 +692,11 @@ public class TransferUserFundsTest {
         onView(withId(R.id.transfer_label)).check(matches(withText(R.string.summary_amount_transfer_label)));
         onView(withId(R.id.transfer_value)).check(matches(withText("192.05 USD")));
         onView(withId(R.id.exchange_rate_warning)).perform(nestedScrollTo());
-        onView(withId(R.id.exchange_rate_warning)).check(matches(isDisplayed()));
+        onView(withId(R.id.exchange_rate_warning)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.exchange_rate_warning)).check(
                 matches(withText("Due to changes in the FX rate, you will now receive 192.05 USD.")));
         onView(withId(R.id.notes_container)).perform(nestedScrollTo());
-        onView(withId(R.id.notes_container)).check(matches(isDisplayed()));
+        onView(withId(R.id.notes_container)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.notes_value)).check(matches(withText("Transfer funds test")));
 
         onView(withId(R.id.transfer_confirm_button)).perform(nestedScrollTo(), click());
@@ -744,7 +735,7 @@ public class TransferUserFundsTest {
 
         mActivityTestRule.launchActivity(null);
 
-        onView(withId(R.id.transfer_amount)).perform(replaceText("100.00"));
+        onView(withId(R.id.transfer_amount)).perform(nestedScrollTo(), replaceText("100.00"));
         onView(withId(R.id.transfer_action_button)).perform(nestedScrollTo(), click());
 
         onView(withId(R.id.transfer_amount_layout)).check(matches(hasErrorText("Invalid amount.")));
@@ -756,10 +747,10 @@ public class TransferUserFundsTest {
 
         mActivityTestRule.launchActivity(null);
 
-        onView(withId(R.id.transfer_amount)).perform(replaceText("100.00"));
+        onView(withId(R.id.transfer_amount)).perform(nestedScrollTo(), replaceText("100.00"));
         onView(withId(R.id.transfer_action_button)).perform(nestedScrollTo(), click());
 
-        onView(withId(R.id.transfer_destination_error)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_destination_error)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_error)).check(
                 matches(withText(R.string.validation_destination_required)));
     }
@@ -775,7 +766,7 @@ public class TransferUserFundsTest {
 
         mActivityTestRule.launchActivity(null);
 
-        onView(withId(R.id.transfer_amount)).perform(replaceText("100000.00"));
+        onView(withId(R.id.transfer_amount)).perform(nestedScrollTo(), replaceText("100000.00"));
         onView(withId(R.id.transfer_action_button)).perform(nestedScrollTo(), click());
 
         onView(withId(R.id.alertTitle)).inRoot(isDialog()).check(matches(isDisplayed()));
@@ -799,7 +790,7 @@ public class TransferUserFundsTest {
 
         mActivityTestRule.launchActivity(null);
 
-        onView(withId(R.id.transfer_amount)).perform(replaceText("5000.00"));
+        onView(withId(R.id.transfer_amount)).perform(nestedScrollTo(), replaceText("5000.00"));
         onView(withId(R.id.transfer_action_button)).perform(nestedScrollTo(), click());
 
         onView(withId(R.id.alertTitle)).inRoot(isDialog()).check(matches(isDisplayed()));
@@ -821,7 +812,7 @@ public class TransferUserFundsTest {
 
         mActivityTestRule.launchActivity(null);
 
-        onView(withId(R.id.transfer_amount)).perform(replaceText("5000.00"));
+        onView(withId(R.id.transfer_amount)).perform(nestedScrollTo(), replaceText("5000.00"));
         onView(withId(R.id.transfer_action_button)).perform(nestedScrollTo(), click());
 
         onView(withId(R.id.alertTitle)).inRoot(isDialog()).check(matches(isDisplayed()));
@@ -844,7 +835,7 @@ public class TransferUserFundsTest {
 
         mActivityTestRule.launchActivity(null);
 
-        onView(withId(R.id.transfer_amount)).perform(replaceText("100.00"));
+        onView(withId(R.id.transfer_amount)).perform(nestedScrollTo(), replaceText("100.00"));
         onView(withId(R.id.transfer_action_button)).perform(nestedScrollTo(), click());
 
         onView(withId(R.id.alertTitle)).inRoot(isDialog()).check(matches(isDisplayed()));
@@ -869,7 +860,7 @@ public class TransferUserFundsTest {
 
         mActivityTestRule.launchActivity(null);
 
-        onView(withId(R.id.transfer_amount)).perform(replaceText("100.00"));
+        onView(withId(R.id.transfer_amount)).perform(nestedScrollTo(), replaceText("100.00"));
         onView(withId(R.id.transfer_action_button)).perform(nestedScrollTo(), click());
 
         onView(withText(R.string.error_dialog_connectivity_title)).check(matches(isDisplayed()));
@@ -914,7 +905,7 @@ public class TransferUserFundsTest {
 
                 StatusTransition transition = intent.getParcelableExtra(
                         "hyperwallet-local-broadcast-payload");
-                assertThat("Token is incorrect", transition.getToken(), is("sts-2157d925-90c9-407b-a9d6-24a0d9dacfb6"));
+                assertThat("Token is incorrect", transition.getToken(), is("sts-token"));
                 assertThat("To Status is incorrect", transition.getToStatus(), is("SCHEDULED"));
                 assertThat("From Status is incorrect", transition.getFromStatus(), is("QUOTED"));
                 assertThat("Transition is incorrect", transition.getTransition(), is("SCHEDULED"));
@@ -925,7 +916,7 @@ public class TransferUserFundsTest {
         LocalBroadcastManager.getInstance(mActivityTestRule.getActivity().getApplicationContext())
                 .registerReceiver(br, new IntentFilter("ACTION_HYPERWALLET_TRANSFER_SCHEDULED"));
 
-        onView(withId(R.id.transfer_amount)).perform(replaceText("100.00"));
+        onView(withId(R.id.transfer_amount)).perform(nestedScrollTo(), replaceText("100.00"));
         onView(withId(R.id.transfer_action_button)).perform(nestedScrollTo(), click());
 
         onView(withId(R.id.list_foreign_exchange)).check(matches(not(isDisplayed())));

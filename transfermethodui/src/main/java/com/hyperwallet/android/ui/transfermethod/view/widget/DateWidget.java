@@ -30,7 +30,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.android.material.textfield.TextInputLayout;
-import com.hyperwallet.android.model.graphql.field.HyperwalletField;
+import com.hyperwallet.android.model.graphql.field.Field;
 import com.hyperwallet.android.ui.R;
 
 import java.text.ParseException;
@@ -43,7 +43,7 @@ public class DateWidget extends AbstractWidget implements DateChangedListener {
     private TextInputLayout mTextInputLayout;
     private EditText mEditText;
 
-    public DateWidget(@NonNull HyperwalletField field, @NonNull WidgetEventListener listener,
+    public DateWidget(@NonNull Field field, @NonNull WidgetEventListener listener,
             @Nullable String defaultValue, @NonNull View defaultFocusView) {
         super(field, listener, defaultValue, defaultFocusView);
         mDateUtils = new DateUtils();
@@ -66,9 +66,9 @@ public class DateWidget extends AbstractWidget implements DateChangedListener {
 
             mEditText = new EditText(
                     new ContextThemeWrapper(viewGroup.getContext(), R.style.Widget_Hyperwallet_TextInputEditText));
+            mEditText.setTextColor(viewGroup.getContext().getResources().getColor(R.color.regularColorSecondary));
             try {
-                mEditText.setText(mDateUtils.convertDateFromServerToWidgetFormat(
-                        TextUtils.isEmpty(mDefaultValue) ? mValue = mField.getValue() : mDefaultValue));
+                mEditText.setText(mDateUtils.convertDateFromServerToWidgetFormat(mDefaultValue));
             } catch (ParseException e) {
                 mEditText.setText("");
             }
@@ -116,7 +116,7 @@ public class DateWidget extends AbstractWidget implements DateChangedListener {
             try {
                 mEditText.setText(mDateUtils.convertDateFromServerToWidgetFormat(selectedDate));
                 mListener.saveTextChanged(getName(), getValue());
-                mListener.valueChanged();
+                mListener.valueChanged(DateWidget.this);
             } catch (ParseException e) {
                 mEditText.setText(selectedDate);
             }

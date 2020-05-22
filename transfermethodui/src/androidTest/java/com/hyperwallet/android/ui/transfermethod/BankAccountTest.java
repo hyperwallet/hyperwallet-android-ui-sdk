@@ -23,7 +23,7 @@ import static java.net.HttpURLConnection.HTTP_CREATED;
 import static java.net.HttpURLConnection.HTTP_OK;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
-import static com.hyperwallet.android.model.transfermethod.HyperwalletBankAccount.Purpose.SAVINGS;
+import static com.hyperwallet.android.model.transfermethod.BankAccount.Purpose.SAVINGS;
 import static com.hyperwallet.android.ui.testutils.util.EspressoUtils.hasEmptyText;
 import static com.hyperwallet.android.ui.testutils.util.EspressoUtils.hasErrorText;
 import static com.hyperwallet.android.ui.testutils.util.EspressoUtils.hasNoErrorText;
@@ -44,17 +44,17 @@ import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
-import com.hyperwallet.android.Hyperwallet;
-import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
+import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
-import com.hyperwallet.android.ui.testutils.TestAuthenticationProvider;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletMockWebServer;
 import com.hyperwallet.android.ui.testutils.util.RecyclerViewCountAssertion;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
+import com.hyperwallet.android.ui.transfermethod.rule.HyperwalletInsightMockRule;
 import com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity;
 
+import org.json.JSONObject;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -63,6 +63,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.concurrent.CountDownLatch;
+
+import okhttp3.mockwebserver.RecordedRequest;
 
 @RunWith(AndroidJUnit4.class)
 public class BankAccountTest {
@@ -73,6 +75,8 @@ public class BankAccountTest {
 
     @ClassRule
     public static HyperwalletExternalResourceManager sResourceManager = new HyperwalletExternalResourceManager();
+    @Rule
+    public HyperwalletInsightMockRule mHyperwalletInsightMockRule = new HyperwalletInsightMockRule();
     @Rule
     public HyperwalletMockWebServer mMockWebServer = new HyperwalletMockWebServer(8080);
     @Rule
@@ -92,28 +96,19 @@ public class BankAccountTest {
 
     @Before
     public void setup() {
-        Hyperwallet.getInstance(new TestAuthenticationProvider());
-
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("authentication_token_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("successful_tmc_fields_bank_account_response.json")).mock();
+        IdlingRegistry.getInstance().register(EspressoIdlingResource.getIdlingResource());
     }
 
     @After
     public void cleanup() {
         TransferMethodRepositoryFactory.clearInstance();
-    }
-
-    @Before
-    public void registerIdlingResource() {
-        IdlingRegistry.getInstance().register(EspressoIdlingResource.getIdlingResource());
-    }
-
-    @After
-    public void unregisterIdlingResource() {
         IdlingRegistry.getInstance().unregister(EspressoIdlingResource.getIdlingResource());
     }
+
 
     @Test
     public void testAddTransferMethod_displaysElementsOnTmcResponse() {
@@ -225,7 +220,7 @@ public class BankAccountTest {
         onView(withId(R.id.stateProvince)).check(matches(withText("BC")));
         onView(withId(R.id.addressLine1)).check(matches(withText("950 Granville Street")));
         onView(withId(R.id.city)).check(matches(withText("Vancouver")));
-        onView(withId(R.id.postalCode)).check(matches(withText("V6Z1L2")));
+        onView(withId(R.id.postalCode)).check(matches(withText("V6Z-1L2")));
     }
 
     @Test
@@ -264,36 +259,36 @@ public class BankAccountTest {
             public void onReceive(Context context, Intent intent) {
                 gate.countDown();
 
-                HyperwalletTransferMethod transferMethod = intent.getParcelableExtra(
+                TransferMethod transferMethod = intent.getParcelableExtra(
                         "hyperwallet-local-broadcast-payload");
                 assertThat("Bank Account Id is incorrect", transferMethod.getField(
-                        HyperwalletTransferMethod.TransferMethodFields.BANK_ACCOUNT_ID), is(ACCOUNT_NUMBER));
+                        TransferMethod.TransferMethodFields.BANK_ACCOUNT_ID), is(ACCOUNT_NUMBER));
                 assertThat("Branch Id is incorrect", transferMethod.getField(
-                        HyperwalletTransferMethod.TransferMethodFields.BRANCH_ID), is(ROUTING_NUMBER));
+                        TransferMethod.TransferMethodFields.BRANCH_ID), is(ROUTING_NUMBER));
                 assertThat("Bank Account purpose is incorrect", transferMethod.getField(
-                        HyperwalletTransferMethod.TransferMethodFields.BANK_ACCOUNT_PURPOSE), is(SAVINGS));
+                        TransferMethod.TransferMethodFields.BANK_ACCOUNT_PURPOSE), is(SAVINGS));
 
                 assertThat("First Name is incorrect", transferMethod.getField(
-                        HyperwalletTransferMethod.TransferMethodFields.FIRST_NAME), is("Brody"));
+                        TransferMethod.TransferMethodFields.FIRST_NAME), is("Brody"));
                 assertThat("Last Name is incorrect", transferMethod.getField(
-                        HyperwalletTransferMethod.TransferMethodFields.LAST_NAME), is("Nehru"));
+                        TransferMethod.TransferMethodFields.LAST_NAME), is("Nehru"));
                 assertThat("Date of birth is incorrect", transferMethod.getField(
-                        HyperwalletTransferMethod.TransferMethodFields.DATE_OF_BIRTH), is("2000-01-01"));
+                        TransferMethod.TransferMethodFields.DATE_OF_BIRTH), is("2000-01-01"));
 
                 assertThat("Phone Number is incorrect", transferMethod.getField(
-                        HyperwalletTransferMethod.TransferMethodFields.PHONE_NUMBER), is("+1 604 6666666"));
+                        TransferMethod.TransferMethodFields.PHONE_NUMBER), is("+1 604 6666666"));
                 assertThat("Mobile Number incorrect", transferMethod.getField(
-                        HyperwalletTransferMethod.TransferMethodFields.MOBILE_NUMBER), is("604 666 6666"));
+                        TransferMethod.TransferMethodFields.MOBILE_NUMBER), is("604 666 6666"));
                 assertThat("Country is incorrect", transferMethod.getField(
-                        HyperwalletTransferMethod.TransferMethodFields.COUNTRY), is("CA"));
+                        TransferMethod.TransferMethodFields.COUNTRY), is("CA"));
                 assertThat("State Province is incorrect", transferMethod.getField(
-                        HyperwalletTransferMethod.TransferMethodFields.STATE_PROVINCE), is("BC"));
+                        TransferMethod.TransferMethodFields.STATE_PROVINCE), is("BC"));
                 assertThat("Address is incorrect", transferMethod.getField(
-                        HyperwalletTransferMethod.TransferMethodFields.ADDRESS_LINE_1), is("950 Granville Street"));
+                        TransferMethod.TransferMethodFields.ADDRESS_LINE_1), is("950 Granville Street"));
                 assertThat("City is incorrect", transferMethod.getField(
-                        HyperwalletTransferMethod.TransferMethodFields.CITY), is("Vancouver"));
+                        TransferMethod.TransferMethodFields.CITY), is("Vancouver"));
                 assertThat("Postal Code is incorrect", transferMethod.getField(
-                        HyperwalletTransferMethod.TransferMethodFields.POSTAL_CODE), is("V6Z1L2"));
+                        TransferMethod.TransferMethodFields.POSTAL_CODE), is("V6Z1L2"));
             }
         };
 
@@ -432,4 +427,33 @@ public class BankAccountTest {
                                 + "branch of your bank.")));
     }
 
+    @Test
+    public void testAddTransferMethod_verifyFieldFormatting() throws Exception {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_CREATED).withBody(sResourceManager
+                .getResourceContent("bank_account_response.json")).mock();
+
+        mActivityTestRule.launchActivity(null);
+
+        onView(withId(R.id.branchId)).perform(nestedScrollTo(), replaceText(ROUTING_NUMBER));
+        onView(withId(R.id.bankAccountId)).perform(nestedScrollTo(), replaceText(ACCOUNT_NUMBER));
+        onView(withId(R.id.bankAccountPurpose)).perform(nestedScrollTo(), click());
+        onView(withId(R.id.search_button)).check(doesNotExist());
+        onView(withId(R.id.input_selection_list)).check(new RecyclerViewCountAssertion(2));
+        onView(allOf(withId(R.id.select_name), withText("Savings"))).perform(click());
+
+        // Need to use replace here as typeText is giving inconsistent input
+        onView(withId(R.id.postalCode)).perform(nestedScrollTo(), replaceText("1-V3KVN5K 5"));
+        onView(withId(R.id.postalCode)).check(matches(withText("V3K-5K5")));
+
+        onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo(), click());
+
+        // Authentication Token request
+        mMockWebServer.getRequest();
+        // GraphQl Fields request
+        mMockWebServer.getRequest();
+        RecordedRequest createBankCardRequest = mMockWebServer.getRequest();
+        JSONObject bankCard = new JSONObject(createBankCardRequest.getBody().readUtf8());
+
+        assertThat("Postal Code is incorrect", bankCard.getString("postalCode"), is("V3K5K5"));
+    }
 }

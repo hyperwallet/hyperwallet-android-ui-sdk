@@ -24,36 +24,51 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.paging.PagedList;
 
-import com.hyperwallet.android.model.HyperwalletErrors;
+import com.hyperwallet.android.model.Errors;
 import com.hyperwallet.android.model.receipt.Receipt;
 import com.hyperwallet.android.ui.common.repository.Event;
 import com.hyperwallet.android.ui.receipt.repository.UserReceiptRepository;
 
 public class ListUserReceiptViewModel extends ReceiptViewModel {
 
-    private MutableLiveData<Event<HyperwalletErrors>> mErrorEvent = new MutableLiveData<>();
+    private MutableLiveData<Event<Errors>> mErrorEvent = new MutableLiveData<>();
     private MutableLiveData<Event<Receipt>> mDetailNavigation = new MutableLiveData<>();
-    private Observer<Event<HyperwalletErrors>> mErrorEventObserver;
+    private Observer<Event<Errors>> mErrorEventObserver;
     private UserReceiptRepository mUserReceiptRepository;
+
+    private boolean mIsInitialized;
 
     private ListUserReceiptViewModel(@NonNull final UserReceiptRepository userReceiptRepository) {
         mUserReceiptRepository = userReceiptRepository;
-        // load initial receipts
-        mUserReceiptRepository.loadUserReceipts();
 
         // register one time error event observer
-        mErrorEventObserver = new Observer<Event<HyperwalletErrors>>() {
+        mErrorEventObserver = new Observer<Event<Errors>>() {
             @Override
-            public void onChanged(Event<HyperwalletErrors> event) {
+            public void onChanged(Event<Errors> event) {
                 mErrorEvent.postValue(event);
             }
         };
         mUserReceiptRepository.getErrors().observeForever(mErrorEventObserver);
     }
 
+    @Override
+    public void init() {
+        if (!mIsInitialized) {
+            mIsInitialized = true;
+            // load initial receipts
+            mUserReceiptRepository.loadUserReceipts();
+        }
+    }
+
+    @Override
+    public void refresh() {
+        mUserReceiptRepository.refresh();
+    }
+
     /**
      * @see ReceiptViewModel#isLoadingData()
      */
+    @Override
     public LiveData<Boolean> isLoadingData() {
         return mUserReceiptRepository.isLoading();
     }
@@ -61,27 +76,31 @@ public class ListUserReceiptViewModel extends ReceiptViewModel {
     /**
      * @see ReceiptViewModel#getReceiptErrors()
      */
-    public LiveData<Event<HyperwalletErrors>> getReceiptErrors() {
+    @Override
+    public LiveData<Event<Errors>> getReceiptErrors() {
         return mErrorEvent;
     }
 
     /**
      * @see ReceiptViewModel#getReceiptList()
      */
+    @Override
     public LiveData<PagedList<Receipt>> getReceiptList() {
         return mUserReceiptRepository.loadUserReceipts();
     }
 
     /**
-     * @see ReceiptViewModel#retryLoadReceipts()
+     * @see ReceiptViewModel#retry()
      */
-    public void retryLoadReceipts() {
+    @Override
+    public void retry() {
         mUserReceiptRepository.retryLoadReceipt();
     }
 
     /**
      * @see ReceiptViewModel#getDetailNavigation()
      */
+    @Override
     public LiveData<Event<Receipt>> getDetailNavigation() {
         return mDetailNavigation;
     }
@@ -89,6 +108,7 @@ public class ListUserReceiptViewModel extends ReceiptViewModel {
     /**
      * @see ReceiptViewModel#setDetailNavigation(Receipt)
      */
+    @Override
     public void setDetailNavigation(@NonNull final Receipt receipt) {
         mDetailNavigation.postValue(new Event<>(receipt));
     }
@@ -100,6 +120,7 @@ public class ListUserReceiptViewModel extends ReceiptViewModel {
     protected void onCleared() {
         super.onCleared();
         mUserReceiptRepository.getErrors().removeObserver(mErrorEventObserver);
+        mUserReceiptRepository.cleanup();
         mUserReceiptRepository = null;
     }
 

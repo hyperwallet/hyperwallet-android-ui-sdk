@@ -28,19 +28,20 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.hyperwallet.android.model.HyperwalletErrors;
+import com.hyperwallet.android.model.Errors;
 import com.hyperwallet.android.model.receipt.Receipt;
 import com.hyperwallet.android.ui.common.repository.Event;
+import com.hyperwallet.android.ui.common.util.PageGroups;
 import com.hyperwallet.android.ui.common.view.ActivityUtils;
 import com.hyperwallet.android.ui.common.view.error.OnNetworkErrorCallback;
-import com.hyperwallet.android.ui.common.viewmodel.Navigator;
 import com.hyperwallet.android.ui.receipt.R;
 import com.hyperwallet.android.ui.receipt.repository.UserReceiptRepositoryImpl;
 import com.hyperwallet.android.ui.receipt.viewmodel.ListUserReceiptViewModel;
 import com.hyperwallet.android.ui.receipt.viewmodel.ReceiptViewModel;
 
-public class ListUserReceiptActivity extends AppCompatActivity implements OnNetworkErrorCallback,
-        Navigator<Event<Receipt>> {
+public class ListUserReceiptActivity extends AppCompatActivity implements OnNetworkErrorCallback {
+
+    public static final String TAG = "receipts:user:list-receipts";
 
     private ReceiptViewModel mReceiptViewModel;
 
@@ -65,11 +66,12 @@ public class ListUserReceiptActivity extends AppCompatActivity implements OnNetw
                 .ListReceiptViewModelFactory(new UserReceiptRepositoryImpl()))
                 .get(ReceiptViewModel.class);
 
-        mReceiptViewModel.getReceiptErrors().observe(this, new Observer<Event<HyperwalletErrors>>() {
+        mReceiptViewModel.getReceiptErrors().observe(this, new Observer<Event<Errors>>() {
             @Override
-            public void onChanged(Event<HyperwalletErrors> event) {
+            public void onChanged(Event<Errors> event) {
                 if (event != null && !event.isContentConsumed()) {
-                    ActivityUtils.showError(ListUserReceiptActivity.this, event.getContent().getErrors());
+                    ActivityUtils.showError(ListUserReceiptActivity.this, TAG, PageGroups.RECEIPTS,
+                            event.getContent().getErrors());
                 }
             }
         });
@@ -109,8 +111,7 @@ public class ListUserReceiptActivity extends AppCompatActivity implements OnNetw
         fragment.retry();
     }
 
-    @Override
-    public void navigate(@NonNull final Event<Receipt> event) {
+    private void navigate(@NonNull final Event<Receipt> event) {
         if (!event.isContentConsumed()) {
             Intent intent = new Intent(this, ReceiptDetailActivity.class);
             intent.putExtra(ReceiptDetailActivity.EXTRA_RECEIPT, event.getContent());

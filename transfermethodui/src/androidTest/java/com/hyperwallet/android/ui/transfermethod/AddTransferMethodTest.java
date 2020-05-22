@@ -3,6 +3,7 @@ package com.hyperwallet.android.ui.transfermethod;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.replaceText;
+import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.RootMatchers.isDialog;
@@ -34,14 +35,14 @@ import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
-import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
 import com.hyperwallet.android.ui.common.view.error.DefaultErrorDialogFragment;
-import com.hyperwallet.android.ui.testutils.TestAuthenticationProvider;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletMockWebServer;
+import com.hyperwallet.android.ui.testutils.util.RecyclerViewCountAssertion;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
+import com.hyperwallet.android.ui.transfermethod.rule.HyperwalletInsightMockRule;
 import com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity;
 
 import org.junit.After;
@@ -62,6 +63,8 @@ public class AddTransferMethodTest {
     @ClassRule
     public static HyperwalletExternalResourceManager sResourceManager = new HyperwalletExternalResourceManager();
     @Rule
+    public HyperwalletInsightMockRule mHyperwalletInsightMockRule = new HyperwalletInsightMockRule();
+    @Rule
     public HyperwalletMockWebServer mMockWebServer = new HyperwalletMockWebServer(8080);
     @Rule
     public ActivityTestRule<AddTransferMethodActivity> mActivityTestRule =
@@ -79,25 +82,14 @@ public class AddTransferMethodTest {
 
     @Before
     public void setup() {
-        Hyperwallet.getInstance(new TestAuthenticationProvider());
-
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("authentication_token_response.json")).mock();
-
+        IdlingRegistry.getInstance().register(EspressoIdlingResource.getIdlingResource());
     }
 
     @After
     public void cleanup() {
         TransferMethodRepositoryFactory.clearInstance();
-    }
-
-    @Before
-    public void registerIdlingResource() {
-        IdlingRegistry.getInstance().register(EspressoIdlingResource.getIdlingResource());
-    }
-
-    @After
-    public void unregisterIdlingResource() {
         IdlingRegistry.getInstance().unregister(EspressoIdlingResource.getIdlingResource());
     }
 
@@ -180,6 +172,32 @@ public class AddTransferMethodTest {
     }
 
     @Test
+    public void testAddTransferMethod_notSupportedExternalAccountTypeDisplaysUnexpectedErrorDialog() {
+        Intent intent = new Intent(ApplicationProvider.getApplicationContext(),
+                AddTransferMethodActivity.class);
+        intent.putExtra("TRANSFER_METHOD_TYPE", "PAPER_CHECK");
+        intent.putExtra("TRANSFER_METHOD_COUNTRY", "US");
+        intent.putExtra("TRANSFER_METHOD_CURRENCY", "USD");
+
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_fields_paper_check_response.json")).mock();
+
+        mActivityTestRule.launchActivity(intent);
+
+        onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo(), click());
+
+        // check dialog content
+        onView(withText(R.string.error_dialog_unexpected_title)).inRoot(isDialog()).check(matches(isDisplayed()));
+        onView(withText(R.string.error_unsupported_transfer_type)).inRoot(isDialog()).check(matches(isDisplayed()));
+        onView(withId(android.R.id.button1)).check(matches(withText(R.string.close_button_label)));
+        onView(withId(android.R.id.button1)).perform(click());
+
+        // verify activity is finished
+        assertThat("Result code is incorrect",
+                mActivityTestRule.getActivityResult().getResultCode(), is(RESULT_ERROR));
+    }
+
+    @Test
     public void testAddTransferMethod_displaysNetworkErrorDialogOnConnectionTimeout() throws IOException {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("successful_tmc_fields_bank_account_response.json")).mock();
@@ -218,5 +236,23 @@ public class AddTransferMethodTest {
         Instrumentation.ActivityResult result = mActivityTestRule.getActivityResult();
         assertThat(result.getResultCode(), is(DefaultErrorDialogFragment.RESULT_ERROR));
         assertThat(mActivityTestRule.getActivity().isFinishing(), is(true));
+    }
+
+    @Test
+    public void testAddTransferMethod_verifySelectionWidgetSearch() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_fields_bank_account_selection_response.json")).mock();
+
+        mActivityTestRule.launchActivity(null);
+
+        onView(withId(R.id.bankId)).perform(nestedScrollTo(), click());
+        onView(withId(R.id.search_button)).perform(click());
+        onView(withId(R.id.search_src_text)).perform(typeText("HSBC Bank Argentina"));
+        onView(withId(R.id.input_selection_list)).check(new RecyclerViewCountAssertion(1));
+        onView(allOf(withId(R.id.select_name), withText("HSBC Bank Argentina"))).check(matches(isDisplayed()));
+        onView(allOf(withId(R.id.select_name), withText("HSBC Bank Argentina"))).perform(click());
+
+        onView(withId(R.id.bankId)).check(matches(withText("HSBC Bank Argentina")));
+        onView(withId(R.id.input_selection_list)).check(doesNotExist());
     }
 }

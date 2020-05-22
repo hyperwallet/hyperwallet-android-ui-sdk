@@ -4,6 +4,7 @@ import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.RootMatchers.isDialog;
 import static androidx.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static androidx.test.espresso.matcher.ViewMatchers.hasSibling;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -21,6 +22,7 @@ import static java.net.HttpURLConnection.HTTP_OK;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 import static com.hyperwallet.android.model.StatusTransition.StatusDefinition.DE_ACTIVATED;
+import static com.hyperwallet.android.ui.common.view.error.DefaultErrorDialogFragment.RESULT_ERROR;
 import static com.hyperwallet.android.ui.testutils.util.EspressoUtils.atPosition;
 import static com.hyperwallet.android.ui.testutils.util.EspressoUtils.withDrawable;
 
@@ -33,18 +35,19 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.test.espresso.IdlingRegistry;
 import androidx.test.espresso.Root;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
-import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.model.StatusTransition;
 import com.hyperwallet.android.ui.R;
-import com.hyperwallet.android.ui.testutils.TestAuthenticationProvider;
+import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletMockWebServer;
 import com.hyperwallet.android.ui.testutils.util.RecyclerViewCountAssertion;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
+import com.hyperwallet.android.ui.transfermethod.rule.HyperwalletInsightMockRule;
 import com.hyperwallet.android.ui.transfermethod.view.ListTransferMethodActivity;
 
 import org.hamcrest.Matchers;
@@ -63,6 +66,8 @@ public class ListTransferMethodTest {
     @ClassRule
     public static HyperwalletExternalResourceManager sResourceManager = new HyperwalletExternalResourceManager();
     @Rule
+    public HyperwalletInsightMockRule mHyperwalletInsightMockRule = new HyperwalletInsightMockRule();
+    @Rule
     public HyperwalletMockWebServer mMockWebServer = new HyperwalletMockWebServer(8080);
     @Rule
     public ActivityTestRule<ListTransferMethodActivity> mActivityTestRule =
@@ -70,15 +75,15 @@ public class ListTransferMethodTest {
 
     @Before
     public void setup() {
-        Hyperwallet.getInstance(new TestAuthenticationProvider());
-
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("authentication_token_response.json")).mock();
+        IdlingRegistry.getInstance().register(EspressoIdlingResource.getIdlingResource());
     }
 
     @After
     public void cleanup() {
         TransferMethodRepositoryFactory.clearInstance();
+        IdlingRegistry.getInstance().unregister(EspressoIdlingResource.getIdlingResource());
     }
 
     @Test
@@ -464,6 +469,37 @@ public class ListTransferMethodTest {
                 matches(atPosition(0, hasDescendant(withText("Ending on 1332")))));
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(0, hasDescendant(withDrawable(R.drawable.ic_three_dots_16dp)))));
+    }
+
+    @Test
+    public void testListTransferMethod_removeUnsupportedTypeDisplaysUnexpectedErrorDialog() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_list_response.json")).mock();
+
+        mActivityTestRule.launchActivity(null);
+
+        onView(allOf(instanceOf(ImageButton.class), hasSibling(withText(R.string.paper_check)))).perform(click())
+                .inRoot(Matchers.<Root>instanceOf(MenuItem.class));
+        onView(withDrawable(R.drawable.ic_trash)).check(matches(isDisplayed()));
+        onView(withText(R.string.menu_remove_account)).check(matches(isDisplayed())).perform(click());
+
+        // confirmation dialog is shown before deletion
+        onView(withText(R.string.transfer_method_remove_confirmation_title)).check(matches(isDisplayed()));
+        onView(withText(R.string.transfer_method_remove_confirmation)).check(matches(isDisplayed()));
+        onView(withId(android.R.id.button1)).check(matches(withText(R.string.remove_button_label)));
+        onView(withId(android.R.id.button2)).check(matches(withText(R.string.cancel_button_label)));
+
+        onView(withId(android.R.id.button1)).perform(click());
+
+        // check dialog content
+        onView(withText(R.string.error_dialog_unexpected_title)).inRoot(isDialog()).check(matches(isDisplayed()));
+        onView(withText(R.string.error_unsupported_transfer_type)).inRoot(isDialog()).check(matches(isDisplayed()));
+        onView(withId(android.R.id.button1)).check(matches(withText(R.string.close_button_label)));
+        onView(withId(android.R.id.button1)).perform(click());
+
+        // verify activity is finished
+        assertThat("Result code is incorrect",
+                mActivityTestRule.getActivityResult().getResultCode(), is(RESULT_ERROR));
     }
 
 }

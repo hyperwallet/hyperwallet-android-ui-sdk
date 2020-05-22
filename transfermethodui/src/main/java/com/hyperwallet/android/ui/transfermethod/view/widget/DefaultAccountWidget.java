@@ -1,6 +1,6 @@
 package com.hyperwallet.android.ui.transfermethod.view.widget;
 
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.IS_DEFAULT_TRANSFER_METHOD;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.IS_DEFAULT_TRANSFER_METHOD;
 
 import android.graphics.Typeface;
 import android.view.View;
@@ -66,7 +66,7 @@ public class DefaultAccountWidget extends AbstractWidget {
                     } else {
                         mValue = Boolean.FALSE.toString();
                     }
-                    mListener.valueChanged();
+                    mListener.valueChanged(DefaultAccountWidget.this);
                 }
             });
             appendLayout(toggle, true);

@@ -19,7 +19,7 @@ package com.hyperwallet.android.ui.receipt.repository;
 import androidx.lifecycle.LiveData;
 import androidx.paging.PagedList;
 
-import com.hyperwallet.android.model.HyperwalletErrors;
+import com.hyperwallet.android.model.Errors;
 import com.hyperwallet.android.model.receipt.Receipt;
 import com.hyperwallet.android.ui.common.repository.Event;
 
@@ -45,12 +45,22 @@ public interface PrepaidCardReceiptRepository {
      *
      * @return live event data list of errors if there's an error
      */
-    LiveData<Event<HyperwalletErrors>> getErrors();
+    LiveData<Event<Errors>> getErrors();
 
     /**
      * Reload receipt information, usually invoked when error is raised after the first load and consumer opts to retry
      * the last operation
      */
     void retryLoadReceipt();
+
+    /**
+     * Refresh and reinitialized receipts
+     */
+    void refresh();
+
+    /**
+     * Cleanup resources when not needed anymore
+     */
+    void cleanup();
 
 }

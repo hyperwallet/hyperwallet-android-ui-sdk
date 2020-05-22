@@ -28,20 +28,20 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.hyperwallet.android.model.HyperwalletErrors;
+import com.hyperwallet.android.model.Errors;
 import com.hyperwallet.android.model.receipt.Receipt;
 import com.hyperwallet.android.ui.common.repository.Event;
+import com.hyperwallet.android.ui.common.util.PageGroups;
 import com.hyperwallet.android.ui.common.view.ActivityUtils;
 import com.hyperwallet.android.ui.common.view.error.OnNetworkErrorCallback;
-import com.hyperwallet.android.ui.common.viewmodel.Navigator;
 import com.hyperwallet.android.ui.receipt.R;
 import com.hyperwallet.android.ui.receipt.repository.PrepaidCardReceiptRepositoryImpl;
 import com.hyperwallet.android.ui.receipt.viewmodel.ListPrepaidCardReceiptViewModel;
 import com.hyperwallet.android.ui.receipt.viewmodel.ReceiptViewModel;
 
-public class ListPrepaidCardReceiptActivity extends AppCompatActivity implements OnNetworkErrorCallback,
-        Navigator<Event<Receipt>> {
+public class ListPrepaidCardReceiptActivity extends AppCompatActivity implements OnNetworkErrorCallback {
 
+    public static final String TAG = "receipts:prepaidcard:list-receipts";
     public static final String EXTRA_PREPAID_CARD_TOKEN = "PREPAID_CARD_TOKEN";
 
     private ReceiptViewModel mReceiptViewModel;
@@ -73,11 +73,12 @@ public class ListPrepaidCardReceiptActivity extends AppCompatActivity implements
                 .ListPrepaidCardReceiptViewModelFactory(new PrepaidCardReceiptRepositoryImpl(token)))
                 .get(ReceiptViewModel.class);
 
-        mReceiptViewModel.getReceiptErrors().observe(this, new Observer<Event<HyperwalletErrors>>() {
+        mReceiptViewModel.getReceiptErrors().observe(this, new Observer<Event<Errors>>() {
             @Override
-            public void onChanged(Event<HyperwalletErrors> event) {
+            public void onChanged(Event<Errors> event) {
                 if (event != null && !event.isContentConsumed()) {
-                    ActivityUtils.showError(ListPrepaidCardReceiptActivity.this, event.getContent().getErrors());
+                    ActivityUtils.showError(ListPrepaidCardReceiptActivity.this, TAG, PageGroups.RECEIPTS,
+                            event.getContent().getErrors());
                 }
             }
         });
@@ -106,8 +107,7 @@ public class ListPrepaidCardReceiptActivity extends AppCompatActivity implements
         fragment.retry();
     }
 
-    @Override
-    public void navigate(@NonNull final Event<Receipt> event) {
+    private void navigate(@NonNull final Event<Receipt> event) {
         if (!event.isContentConsumed()) {
             Intent intent = new Intent(this, ReceiptDetailActivity.class);
             intent.putExtra(ReceiptDetailActivity.EXTRA_RECEIPT, event.getContent());

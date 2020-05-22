@@ -31,8 +31,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 
-import com.hyperwallet.android.model.HyperwalletError;
+import com.hyperwallet.android.model.Error;
 import com.hyperwallet.android.ui.R;
+import com.hyperwallet.android.ui.common.util.PageGroups;
 import com.hyperwallet.android.ui.common.view.ActivityUtils;
 import com.hyperwallet.android.ui.common.view.error.OnNetworkErrorCallback;
 
@@ -48,13 +49,14 @@ public class SelectTransferMethodActivity extends AppCompatActivity implements
         SelectTransferMethodFragment.OnLoadCurrencySelectionNetworkErrorCallback,
         OnNetworkErrorCallback {
 
+    public static final String TAG = "transfer-method:add:select-transfer-method";
+
     private static final String ARGUMENT_RETRY_ACTION = "ARGUMENT_RETRY_ACTION";
     private static final short RETRY_LOAD_COUNTRY_SELECTION = 103;
     private static final short RETRY_LOAD_CURRENCY_CONFIGURATION = 101;
     private static final short RETRY_LOAD_CURRENCY_SELECTION = 104;
     private static final short RETRY_LOAD_TRANSFER_METHOD_CONFIGURATION_KEYS = 100;
     private static final short RETRY_LOAD_TRANSFER_METHOD_TYPES = 102;
-    private static final String TAG = SelectTransferMethodActivity.class.getName();
 
     private short mRetryCode;
 
@@ -151,33 +153,33 @@ public class SelectTransferMethodActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void showErrorsLoadTransferMethodConfigurationKeys(@NonNull final List<HyperwalletError> errors) {
+    public void showErrorsLoadTransferMethodConfigurationKeys(@NonNull final List<Error> errors) {
         mRetryCode = RETRY_LOAD_TRANSFER_METHOD_CONFIGURATION_KEYS;
-        ActivityUtils.showError(this, errors);
+        ActivityUtils.showError(this, TAG, PageGroups.TRANSFER_METHOD, errors);
     }
 
     @Override
-    public void showErrorsLoadCurrencyConfiguration(@NonNull final List<HyperwalletError> errors) {
+    public void showErrorsLoadCurrencyConfiguration(@NonNull final List<Error> errors) {
         mRetryCode = RETRY_LOAD_CURRENCY_CONFIGURATION;
-        ActivityUtils.showError(this, errors);
+        ActivityUtils.showError(this, TAG, PageGroups.TRANSFER_METHOD, errors);
     }
 
     @Override
-    public void showErrorsLoadTransferMethodTypes(@NonNull final List<HyperwalletError> errors) {
+    public void showErrorsLoadTransferMethodTypes(@NonNull final List<Error> errors) {
         mRetryCode = RETRY_LOAD_TRANSFER_METHOD_TYPES;
-        ActivityUtils.showError(this, errors);
+        ActivityUtils.showError(this, TAG, PageGroups.TRANSFER_METHOD, errors);
     }
 
     @Override
-    public void showErrorsLoadCountrySelection(@NonNull final List<HyperwalletError> errors) {
+    public void showErrorsLoadCountrySelection(@NonNull final List<Error> errors) {
         mRetryCode = RETRY_LOAD_COUNTRY_SELECTION;
-        ActivityUtils.showError(this, errors);
+        ActivityUtils.showError(this, TAG, PageGroups.TRANSFER_METHOD, errors);
     }
 
     @Override
-    public void showErrorsLoadCurrencySelection(@NonNull final List<HyperwalletError> errors) {
+    public void showErrorsLoadCurrencySelection(@NonNull final List<Error> errors) {
         mRetryCode = RETRY_LOAD_CURRENCY_SELECTION;
-        ActivityUtils.showError(this, errors);
+        ActivityUtils.showError(this, TAG, PageGroups.TRANSFER_METHOD, errors);
     }
 
     @Override

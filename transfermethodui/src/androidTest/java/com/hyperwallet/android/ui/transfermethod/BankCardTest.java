@@ -41,16 +41,16 @@ import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
-import com.hyperwallet.android.Hyperwallet;
-import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
+import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
-import com.hyperwallet.android.ui.testutils.TestAuthenticationProvider;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletMockWebServer;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
+import com.hyperwallet.android.ui.transfermethod.rule.HyperwalletInsightMockRule;
 import com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity;
 
+import org.json.JSONObject;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -60,10 +60,15 @@ import org.junit.runner.RunWith;
 
 import java.util.concurrent.CountDownLatch;
 
+import okhttp3.mockwebserver.RecordedRequest;
+
 @RunWith(AndroidJUnit4.class)
 public class BankCardTest {
 
     private static final String VALID_CARD_NUMBER = "4895142232120006";
+    private static final String VALID_CARD_NUMBER_FORMATTED = "48951422 32120006";
+    private static final String DEFAULT_CARD_NUMBER = "5910123444449850";
+    private static final String DEFAULT_CARD_NUMBER_FORMATTED = "5910 1234 4444 9850";
     private static final String CARD_NUMBER_MASKED = "************0006";
     private static final String WRONG_LENGTH_CARD_NUMBER = "489514223212";
     private static final String NOT_VALID_CARD_NUMBER = "0101010101010101";
@@ -72,11 +77,13 @@ public class BankCardTest {
     private static final String INVALID_PATTERN_EXPIRATION_DATE = "1100";
     private static final String VALID_CVV = "022";
     private static final String CARD_NUMBER_LABEL = "Card Number";
-    private static final String EXPIRY_DATE_LABEL = "Expiry Date";
+    private static final String EXPIRY_DATE_LABEL = "Expiration Date";
     private static final String CVV_LABEL = "CVV (Card Security Code)";
 
     @ClassRule
     public static HyperwalletExternalResourceManager sResourceManager = new HyperwalletExternalResourceManager();
+    @Rule
+    public HyperwalletInsightMockRule mHyperwalletInsightMockRule = new HyperwalletInsightMockRule();
     @Rule
     public HyperwalletMockWebServer mMockWebServer = new HyperwalletMockWebServer(8080);
     @Rule
@@ -96,26 +103,16 @@ public class BankCardTest {
 
     @Before
     public void setup() {
-        Hyperwallet.getInstance(new TestAuthenticationProvider());
-
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("authentication_token_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("successful_tmc_fields_bank_card_response.json")).mock();
+        IdlingRegistry.getInstance().register(EspressoIdlingResource.getIdlingResource());
     }
 
     @After
     public void cleanup() {
         TransferMethodRepositoryFactory.clearInstance();
-    }
-
-    @Before
-    public void registerIdlingResource() {
-        IdlingRegistry.getInstance().register(EspressoIdlingResource.getIdlingResource());
-    }
-
-    @After
-    public void unregisterIdlingResource() {
         IdlingRegistry.getInstance().unregister(EspressoIdlingResource.getIdlingResource());
     }
 
@@ -194,12 +191,12 @@ public class BankCardTest {
             public void onReceive(Context context, Intent intent) {
                 gate.countDown();
 
-                HyperwalletTransferMethod transferMethod = intent.getParcelableExtra(
+                TransferMethod transferMethod = intent.getParcelableExtra(
                         "hyperwallet-local-broadcast-payload");
                 assertThat("Card number is incorrect", transferMethod.getField(
-                        HyperwalletTransferMethod.TransferMethodFields.CARD_NUMBER), is(CARD_NUMBER_MASKED));
+                        TransferMethod.TransferMethodFields.CARD_NUMBER), is(CARD_NUMBER_MASKED));
                 assertThat("Expiry date is incorrect", transferMethod.getField(
-                        HyperwalletTransferMethod.TransferMethodFields.DATE_OF_EXPIRY), is("2020-10"));
+                        TransferMethod.TransferMethodFields.DATE_OF_EXPIRY), is("2020-10"));
             }
         };
 
@@ -227,15 +224,9 @@ public class BankCardTest {
     public void testAddTransferMethod_returnsErrorOnInvalidPattern() {
         mActivityTestRule.launchActivity(null);
 
-        onView(withId(R.id.cardNumber)).perform(nestedScrollTo(), replaceText("abc12341234cb"));
         onView(withId(R.id.dateOfExpiry)).perform(nestedScrollTo(), replaceText(INVALID_PATTERN_EXPIRATION_DATE));
-        onView(withId(R.id.cvv)).perform(nestedScrollTo(), replaceText("9-09"));
-
         onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo(), click());
-
-        onView(withId(R.id.cardNumberLabel)).check(matches(hasErrorText("is invalid length or format.")));
-        onView(withId(R.id.dateOfExpiryLabel)).check(matches(hasErrorText("Expiry Date is invalid.")));
-        onView(withId(R.id.cvvLabel)).check(matches(hasErrorText("is invalid length or format.")));
+        onView(withId(R.id.dateOfExpiryLabel)).check(matches(hasErrorText("Expiration Date is invalid.")));
     }
 
     @Test
@@ -288,6 +279,112 @@ public class BankCardTest {
 
         onView(withId(R.id.cardNumberLabel)).check(matches(hasErrorText(
                 "The card cannot be registered - Please contact your issuer or the bank for further information.")));
+    }
+
+    @Test
+    public void testAddTransferMethod_verifyFieldFormatting() throws Exception {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_CREATED).withBody(sResourceManager
+                .getResourceContent("bank_card_response.json")).mock();
+
+        mActivityTestRule.launchActivity(null);
+
+        onView(withId(R.id.cardNumber)).perform(nestedScrollTo(), typeText(DEFAULT_CARD_NUMBER));
+        onView(withId(R.id.cardNumber)).check(matches(withText(DEFAULT_CARD_NUMBER_FORMATTED)));
+        onView(withId(R.id.dateOfExpiry)).perform(nestedScrollTo(), typeText(VALID_EXPIRATION_DATE));
+        onView(withId(R.id.dateOfExpiry)).check(matches(withText(VALID_EXPIRATION_DATE_FORMATTED)));
+        onView(withId(R.id.cvv)).perform(nestedScrollTo(), typeText("34459"));
+        onView(withId(R.id.cvv)).check(matches(withText("344")));
+
+        onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo(), click());
+
+        // Authentication Token request
+        mMockWebServer.getRequest();
+        // GraphQl Fields request
+        mMockWebServer.getRequest();
+        RecordedRequest createBankCardRequest = mMockWebServer.getRequest();
+        JSONObject bankCard = new JSONObject(createBankCardRequest.getBody().readUtf8());
+
+        assertThat("Card number is incorrect", bankCard.getString("cardNumber"), is(DEFAULT_CARD_NUMBER));
+        assertThat("Date of expiry is incorrect", bankCard.getString("dateOfExpiry"), is("2020-10"));
+        assertThat("CVV is incorrect", bankCard.getString("cvv"), is("344"));
+    }
+
+    @Test
+    public void testAddTransferMethod_verifyFieldFormattingReplace() throws Exception {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_CREATED).withBody(sResourceManager
+                .getResourceContent("bank_card_response.json")).mock();
+
+        mActivityTestRule.launchActivity(null);
+
+        onView(withId(R.id.cardNumber)).perform(nestedScrollTo(), replaceText("5910  1234 4444 9850"));
+        onView(withId(R.id.cardNumber)).check(matches(withText(DEFAULT_CARD_NUMBER_FORMATTED)));
+        onView(withId(R.id.dateOfExpiry)).perform(nestedScrollTo(), typeText(VALID_EXPIRATION_DATE));
+        onView(withId(R.id.dateOfExpiry)).check(matches(withText(VALID_EXPIRATION_DATE_FORMATTED)));
+        onView(withId(R.id.cvv)).perform(nestedScrollTo(), replaceText("344-59"));
+        onView(withId(R.id.cvv)).check(matches(withText("344")));
+
+        onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo(), click());
+
+        // Authentication Token request
+        mMockWebServer.getRequest();
+        // GraphQl Fields request
+        mMockWebServer.getRequest();
+        RecordedRequest createBankCardRequest = mMockWebServer.getRequest();
+        JSONObject bankCard = new JSONObject(createBankCardRequest.getBody().readUtf8());
+
+        assertThat("Card number is incorrect", bankCard.getString("cardNumber"), is(DEFAULT_CARD_NUMBER));
+        assertThat("Date of expiry is incorrect", bankCard.getString("dateOfExpiry"), is("2020-10"));
+        assertThat("CVV is incorrect", bankCard.getString("cvv"), is("344"));
+    }
+
+    @Test
+    public void testAddTransferMethod_verifyCardNumberConditionalFormatting() throws Exception {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_CREATED).withBody(sResourceManager
+                .getResourceContent("bank_card_response.json")).mock();
+
+        mActivityTestRule.launchActivity(null);
+
+        onView(withId(R.id.cardNumber)).perform(nestedScrollTo(), typeText(VALID_CARD_NUMBER));
+        onView(withId(R.id.cardNumber)).check(matches(withText(VALID_CARD_NUMBER_FORMATTED)));
+        onView(withId(R.id.dateOfExpiry)).perform(nestedScrollTo(), typeText(VALID_EXPIRATION_DATE));
+        onView(withId(R.id.dateOfExpiry)).check(matches(withText(VALID_EXPIRATION_DATE_FORMATTED)));
+        onView(withId(R.id.cvv)).perform(nestedScrollTo(), replaceText(VALID_CVV));
+
+        onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo(), click());
+
+        // Authentication Token request
+        mMockWebServer.getRequest();
+        // GraphQl Fields request
+        mMockWebServer.getRequest();
+        RecordedRequest createBankCardRequest = mMockWebServer.getRequest();
+        JSONObject bankCard = new JSONObject(createBankCardRequest.getBody().readUtf8());
+
+        assertThat("Card number is incorrect", bankCard.getString("cardNumber"), is(VALID_CARD_NUMBER));
+    }
+
+    @Test
+    public void testAddTransferMethod_verifyCardNumberConditionalFormattingReplace() throws Exception {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_CREATED).withBody(sResourceManager
+                .getResourceContent("bank_card_response.json")).mock();
+
+        mActivityTestRule.launchActivity(null);
+
+        onView(withId(R.id.cardNumber)).perform(nestedScrollTo(), replaceText("489514223212000A-64895142232120006"));
+        onView(withId(R.id.cardNumber)).check(matches(withText(VALID_CARD_NUMBER_FORMATTED)));
+        onView(withId(R.id.dateOfExpiry)).perform(nestedScrollTo(), typeText(VALID_EXPIRATION_DATE));
+        onView(withId(R.id.dateOfExpiry)).check(matches(withText(VALID_EXPIRATION_DATE_FORMATTED)));
+        onView(withId(R.id.cvv)).perform(nestedScrollTo(), replaceText(VALID_CVV));
+
+        onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo(), click());
+
+        // Authentication Token request
+        mMockWebServer.getRequest();
+        // GraphQl Fields request
+        mMockWebServer.getRequest();
+        RecordedRequest createBankCardRequest = mMockWebServer.getRequest();
+        JSONObject bankCard = new JSONObject(createBankCardRequest.getBody().readUtf8());
+
+        assertThat("Card number is incorrect", bankCard.getString("cardNumber"), is(VALID_CARD_NUMBER));
     }
 
 }

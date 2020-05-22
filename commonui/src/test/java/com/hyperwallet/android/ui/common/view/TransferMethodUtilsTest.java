@@ -10,19 +10,19 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.BANK_ACCOUNT;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.BANK_CARD;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.PAPER_CHECK;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodTypes.PAYPAL_ACCOUNT;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.BANK_ACCOUNT;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.BANK_CARD;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.PAPER_CHECK;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.PAYPAL_ACCOUNT;
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getTransferMethodDetail;
 
 import android.content.Context;
 import android.content.res.Resources;
 
-import com.hyperwallet.android.model.transfermethod.HyperwalletBankAccount;
-import com.hyperwallet.android.model.transfermethod.HyperwalletBankCard;
-import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
+import com.hyperwallet.android.model.transfermethod.BankAccount;
+import com.hyperwallet.android.model.transfermethod.BankCard;
 import com.hyperwallet.android.model.transfermethod.PayPalAccount;
+import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import com.hyperwallet.android.ui.common.R;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
 
@@ -70,9 +70,9 @@ public class TransferMethodUtilsTest {
     public void testGetTransferMethodName_returnsCorrectNameForType() throws JSONException {
         String json = mExternalResourceManager.getResourceContent("bank_card_response.json");
         JSONObject htmJsonObject = new JSONObject(json);
-        HyperwalletTransferMethod hyperwalletTransferMethod = new HyperwalletTransferMethod(htmJsonObject);
+        TransferMethod transferMethod = new TransferMethod(htmJsonObject);
         when(mContext.getString(R.string.bank_card)).thenReturn("My card");
-        String transferMethodName = TransferMethodUtils.getTransferMethodName(mContext, hyperwalletTransferMethod);
+        String transferMethodName = TransferMethodUtils.getTransferMethodName(mContext, transferMethod);
         assertThat(transferMethodName, is("My card"));
         verify(mContext, times(1)).getString(anyInt());
     }
@@ -87,12 +87,12 @@ public class TransferMethodUtilsTest {
 
     @Test
     public void testGetStringResourceByName_returnsCorrectString() {
-        String identifier = HyperwalletTransferMethod.TransferMethodTypes.WIRE_ACCOUNT.toLowerCase(Locale.ROOT);
+        String identifier = TransferMethod.TransferMethodTypes.WIRE_ACCOUNT.toLowerCase(Locale.ROOT);
         when(mResources.getIdentifier(eq(identifier), eq("string"), anyString())).thenReturn(R.string.wire_account);
         when(mContext.getString(R.string.wire_account)).thenReturn("wire acc");
 
         String stringResource = TransferMethodUtils.getStringResourceByName(mContext,
-                HyperwalletTransferMethod.TransferMethodTypes.WIRE_ACCOUNT);
+                TransferMethod.TransferMethodTypes.WIRE_ACCOUNT);
         assertThat(stringResource, is("wire acc"));
         verify(mResources, times(1)).getIdentifier(anyString(), anyString(), anyString());
         verify(mContext, times(1)).getString(anyInt());
@@ -100,7 +100,7 @@ public class TransferMethodUtilsTest {
 
     @Test
     public void testGetStringResourceByName_returnsDefaultValue() {
-        String identifier = HyperwalletTransferMethod.TransferMethodTypes.BANK_ACCOUNT.toLowerCase(Locale.ROOT);
+        String identifier = TransferMethod.TransferMethodTypes.BANK_ACCOUNT.toLowerCase(Locale.ROOT);
         when(mResources.getIdentifier(eq(identifier), eq("string"), anyString())).thenReturn(R.string.bank_account);
         when(mContext.getString(R.string.bank_account)).thenReturn("bank acc");
         when(mResources.getIdentifier(eq("some type"), eq("string"), anyString())).thenReturn(0);
@@ -114,14 +114,14 @@ public class TransferMethodUtilsTest {
 
     @Test
     public void testGetStringFontIcon_returnsCorrectString() {
-        String identifier = HyperwalletTransferMethod.TransferMethodTypes.PAPER_CHECK.toLowerCase(Locale.ROOT)
+        String identifier = TransferMethod.TransferMethodTypes.PAPER_CHECK.toLowerCase(Locale.ROOT)
                 + "_font_icon";
         when(mResources.getIdentifier(eq(identifier), eq("string"), anyString())).thenReturn(
                 R.string.paper_check_font_icon);
         when(mContext.getString(R.string.paper_check_font_icon)).thenReturn("paper icon");
 
         String stringResource = TransferMethodUtils.getStringFontIcon(mContext,
-                HyperwalletTransferMethod.TransferMethodTypes.PAPER_CHECK);
+                TransferMethod.TransferMethodTypes.PAPER_CHECK);
         assertThat(stringResource, is("paper icon"));
         verify(mResources, times(1)).getIdentifier(anyString(), anyString(), anyString());
         verify(mContext, times(1)).getString(anyInt());
@@ -129,7 +129,7 @@ public class TransferMethodUtilsTest {
 
     @Test
     public void testGetStringFontIcon_returnsDefaultValue() {
-        String identifier = HyperwalletTransferMethod.TransferMethodTypes.BANK_ACCOUNT.toLowerCase(Locale.ROOT)
+        String identifier = TransferMethod.TransferMethodTypes.BANK_ACCOUNT.toLowerCase(Locale.ROOT)
                 + "_font_icon";
         when(mResources.getIdentifier(eq(identifier), eq("string"), anyString())).thenReturn(
                 R.string.bank_account_font_icon);
@@ -146,7 +146,7 @@ public class TransferMethodUtilsTest {
 
     @Test
     public void getTransferMethodDetail_returnsPayPalDetails() {
-        HyperwalletTransferMethod transferMethod = new PayPalAccount.Builder().email(
+        TransferMethod transferMethod = new PayPalAccount.Builder().email(
                 "sunshine.carreiro@hyperwallet.com").build();
 
         String actual = getTransferMethodDetail(mContext, transferMethod, PAYPAL_ACCOUNT);
@@ -155,7 +155,7 @@ public class TransferMethodUtilsTest {
 
     @Test
     public void getTransferMethodDetail_returnsCardDetails() {
-        HyperwalletTransferMethod transferMethod = new HyperwalletBankCard.Builder().cardNumber(
+        TransferMethod transferMethod = new BankCard.Builder().cardNumber(
                 "************0006").build();
 
         when(mContext.getString(ArgumentMatchers.eq(R.string.transfer_method_list_item_description),
@@ -167,7 +167,7 @@ public class TransferMethodUtilsTest {
 
     @Test
     public void getTransferMethodDetail_returnsBankAccountDetails() {
-        HyperwalletTransferMethod transferMethod = new HyperwalletBankAccount.Builder().bankAccountId(
+        TransferMethod transferMethod = new BankAccount.Builder().bankAccountId(
                 "8017110254").build();
 
         when(mContext.getString(ArgumentMatchers.eq(R.string.transfer_method_list_item_description),
@@ -179,7 +179,7 @@ public class TransferMethodUtilsTest {
 
     @Test
     public void getTransferMethodDetail_returnsPaperCheckDetails() {
-        HyperwalletTransferMethod transferMethod = new HyperwalletTransferMethod();
+        TransferMethod transferMethod = new TransferMethod();
 
         String actual = getTransferMethodDetail(mContext, transferMethod, PAPER_CHECK);
         assertThat(actual, is(""));

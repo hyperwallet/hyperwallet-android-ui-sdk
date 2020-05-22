@@ -1145,7 +1145,7 @@
                     },
                     {
                       "code": "PAYPAL_ACCOUNT",
-                      "name": "PayPal Account",
+                      "name": "PayPal",
                       "fees": {
                         "nodes": [
                           {
@@ -1183,7 +1183,7 @@
                     },
                     {
                       "code": "PAYPAL_ACCOUNT",
-                      "name": "PayPal Account",
+                      "name": "PayPal",
                       "fees": {
                         "nodes": [
                           {
@@ -6606,7 +6606,7 @@
                   "nodes": [
                     {
                       "code": "PAYPAL_ACCOUNT",
-                      "name": "PayPal Account",
+                      "name": "PayPal",
                       "fees": {
                         "nodes": [
                           {
@@ -6659,7 +6659,7 @@
                     },
                     {
                       "code": "PAYPAL_ACCOUNT",
-                      "name": "PayPal Account",
+                      "name": "PayPal",
                       "fees": {
                         "nodes": [
                           {

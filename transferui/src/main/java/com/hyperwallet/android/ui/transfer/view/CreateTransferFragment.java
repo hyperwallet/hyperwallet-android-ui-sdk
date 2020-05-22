@@ -18,10 +18,10 @@ package com.hyperwallet.android.ui.transfer.view;
 
 import static android.app.Activity.RESULT_OK;
 
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TOKEN;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_COUNTRY;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TRANSFER_METHOD_CURRENCY;
-import static com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod.TransferMethodFields.TYPE;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TOKEN;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TRANSFER_METHOD_COUNTRY;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TRANSFER_METHOD_CURRENCY;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TYPE;
 import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.ADD_TRANSFER_METHOD_REQUEST_CODE;
 import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.SELECT_TRANSFER_DESTINATION_REQUEST_CODE;
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getStringFontIcon;
@@ -49,9 +49,9 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.material.textfield.TextInputLayout;
-import com.hyperwallet.android.model.HyperwalletError;
+import com.hyperwallet.android.model.Error;
 import com.hyperwallet.android.model.transfer.Transfer;
-import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
+import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import com.hyperwallet.android.ui.common.intent.HyperwalletIntent;
 import com.hyperwallet.android.ui.common.repository.Event;
 import com.hyperwallet.android.ui.common.view.OneClickListener;
@@ -144,7 +144,7 @@ public class CreateTransferFragment extends Fragment {
         mTransferDestination.setOnClickListener(new OneClickListener() {
             @Override
             public void onOneClick(View v) {
-                HyperwalletTransferMethod activeDestination =
+                TransferMethod activeDestination =
                         mCreateTransferViewModel.getTransferDestination().getValue();
                 Intent intent = new Intent(requireContext(), ListTransferDestinationActivity.class);
                 intent.putExtra(ListTransferDestinationActivity.EXTRA_SELECTED_DESTINATION_TOKEN,
@@ -187,11 +187,17 @@ public class CreateTransferFragment extends Fragment {
     }
 
     @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mCreateTransferViewModel.init();
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == SELECT_TRANSFER_DESTINATION_REQUEST_CODE && data != null) {
-                HyperwalletTransferMethod selectedTransferMethod = data.getParcelableExtra(
+                TransferMethod selectedTransferMethod = data.getParcelableExtra(
                         ListTransferDestinationActivity.EXTRA_SELECTED_DESTINATION_TOKEN);
                 mCreateTransferViewModel.setTransferAmount(null);
                 mCreateTransferViewModel.setTransferNotes(null);
@@ -287,9 +293,9 @@ public class CreateTransferFragment extends Fragment {
 
     private void registerErrorObservers() {
         mCreateTransferViewModel.getInvalidAmountError().observe(getViewLifecycleOwner(),
-                new Observer<Event<HyperwalletError>>() {
+                new Observer<Event<Error>>() {
                     @Override
-                    public void onChanged(@NonNull final Event<HyperwalletError> event) {
+                    public void onChanged(@NonNull final Event<Error> event) {
                         if (!event.isContentConsumed()) {
                             mTransferAmountLayout.setError(event.getContent().getMessage());
                         }
@@ -297,9 +303,9 @@ public class CreateTransferFragment extends Fragment {
                 });
 
         mCreateTransferViewModel.getInvalidDestinationError().observe(getViewLifecycleOwner(),
-                new Observer<Event<HyperwalletError>>() {
+                new Observer<Event<Error>>() {
                     @Override
-                    public void onChanged(@NonNull final Event<HyperwalletError> event) {
+                    public void onChanged(@NonNull final Event<Error> event) {
                         if (!event.isContentConsumed()) {
                             mTransferHeaderContainer.setVisibility(View.GONE);
                             mTransferHeaderContainerError.setVisibility(View.VISIBLE);
@@ -324,9 +330,9 @@ public class CreateTransferFragment extends Fragment {
         });
 
         mCreateTransferViewModel.getTransferDestination().observe(getViewLifecycleOwner(),
-                new Observer<HyperwalletTransferMethod>() {
+                new Observer<TransferMethod>() {
                     @Override
-                    public void onChanged(final HyperwalletTransferMethod transferMethod) {
+                    public void onChanged(final TransferMethod transferMethod) {
                         if (transferMethod != null) {
                             mAddTransferDestination.setVisibility(View.GONE);
                             mTransferHeaderContainerError.setVisibility(View.GONE);
@@ -416,7 +422,7 @@ public class CreateTransferFragment extends Fragment {
         mTransferCurrency.setTextColor(getResources().getColor(R.color.colorButtonTextDisabled));
         mTransferAmount.setEnabled(false);
         mTransferNotes.setEnabled(false);
-        mTransferAllSwitch.setEnabled(false);
+        mTransferAllSwitch.setClickable(false);
         mTransferDestination.setEnabled(false);
         mAddTransferDestination.setEnabled(false);
     }
@@ -425,12 +431,12 @@ public class CreateTransferFragment extends Fragment {
         mTransferCurrency.setTextColor(getResources().getColor(R.color.colorSecondaryDark));
         mTransferAmount.setEnabled(true);
         mTransferNotes.setEnabled(true);
-        mTransferAllSwitch.setEnabled(true);
+        mTransferAllSwitch.setClickable(true);
         mTransferDestination.setEnabled(true);
         mAddTransferDestination.setEnabled(true);
     }
 
-    private void showTransferDestination(@NonNull final HyperwalletTransferMethod transferMethod) {
+    private void showTransferDestination(@NonNull final TransferMethod transferMethod) {
         TextView transferIcon = getView().findViewById(R.id.transfer_destination_icon);
         TextView transferTitle = getView().findViewById(R.id.transfer_destination_title);
         TextView transferCountry = getView().findViewById(R.id.transfer_destination_description_1);

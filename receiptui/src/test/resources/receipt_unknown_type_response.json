@@ -9,7 +9,7 @@
       "createdOn": "2019-06-02T17:09:07",
       "entry": "CREDIT",
       "sourceToken": "act-12345",
-      "destinationToken": "usr-fa76a738-f43d-48b9-9a7a-7048d44a5d2d",
+      "destinationToken": "test-user-token",
       "amount": "25.00",
       "fee": "0.00",
       "currency": "CAD",
@@ -24,7 +24,7 @@
       "params": {
         "rel": "self"
       },
-      "href": "https://api.sandbox.hyperwallet.com/rest/v3/users/usr-fa76a738-f43d-48b9-9a7a-7048d44a5d2d/receipts?offset=0&limit=10"
+      "href": "https://localhost:8181/rest/v3/users/test-user-token/receipts?offset=0&limit=10"
     }
   ]
 }

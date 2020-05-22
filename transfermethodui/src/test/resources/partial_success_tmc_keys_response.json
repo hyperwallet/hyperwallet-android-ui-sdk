@@ -39,7 +39,7 @@
                     },
                     {
                       "code": "PAYPAL_ACCOUNT",
-                      "name": "PayPal Account",
+                      "name": "PayPal",
                       "fees": {
                         "nodes": [
                           {

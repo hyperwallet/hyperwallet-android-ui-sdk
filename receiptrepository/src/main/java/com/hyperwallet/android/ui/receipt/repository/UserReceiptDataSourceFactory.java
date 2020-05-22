@@ -27,7 +27,7 @@ import androidx.paging.DataSource;
 public class UserReceiptDataSourceFactory extends DataSource.Factory {
 
     private final MutableLiveData<UserReceiptDataSource> mDataSourceMutableLiveData;
-    private final UserReceiptDataSource mUserReceiptDataSource;
+    private UserReceiptDataSource mUserReceiptDataSource;
 
     UserReceiptDataSourceFactory() {
         super();
@@ -49,6 +49,8 @@ public class UserReceiptDataSourceFactory extends DataSource.Factory {
     @NonNull
     @Override
     public DataSource create() {
+        mUserReceiptDataSource = new UserReceiptDataSource();
+        mDataSourceMutableLiveData.postValue(mUserReceiptDataSource);
         return mUserReceiptDataSource;
     }
 }

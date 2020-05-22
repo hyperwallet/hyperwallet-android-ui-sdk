@@ -18,9 +18,9 @@ Note that this SDK is geared towards those who need both backend data and UI fea
 To install Hyperwallet UI SDK, you just need to add the dependencies into your build.gradle file in Android Studio (or Gradle). For example:
 
 ```bash
-api 'com.hyperwallet.android.ui:transfermethodui:1.0.0-beta04'
-api 'com.hyperwallet.android.ui:receiptui:1.0.0-beta04'
-api 'com.hyperwallet.android.ui:transferui:1.0.0-beta04'
+api 'com.hyperwallet.android.ui:transfermethodui:1.0.0-beta05'
+api 'com.hyperwallet.android.ui:receiptui:1.0.0-beta05'
+api 'com.hyperwallet.android.ui:transferui:1.0.0-beta05'
 ```
 
 ## Initialization
@@ -41,7 +41,7 @@ mHyperwalletReceiptUi.getIntentListUserReceiptActivity(MainActivity.this);
 First of all, your server side should be able to send a POST request to Hyperwallet endpoint via Basic Authentication to retrieve an [authentication token](https://jwt.io/). An authentication token is a JSON Web Token that will be used to authenticate the User to the Hyperwallet platform. For example:
 
 ```
-curl -X "POST" "https://api.sandbox.hyperwallet.com/rest/v3/users/{user-token}/authentication-token" \
+curl -X "POST" "https://localhost:8181/rest/v3/users/{user-token}/authentication-token" \
 -u userName:password \
 -H "Content-type: application/json" \
 -H "Accept: application/json"
@@ -173,14 +173,17 @@ public void onClick(View view) {
 ## Broadcast Receiver
 We currently have types of broadevents that you can register for:
 
-HyperwalletTransferMethodLocalBroadcast.HyperwalletTransferMethodLocalBroadcastAction.ACTION_HYPERWALLET_TRANSFER_METHOD_ADDED
+TransferMethodLocalBroadcast.TransferMethodLocalBroadcastAction.ACTION_HYPERWALLET_TRANSFER_METHOD_ADDED
 * Posted when a new transfer method (bank account, bank card, PayPal account, prepaid card, paper check) has been created. 
 
-HyperwalletTransferMethodLocalBroadcast.HyperwalletTransferMethodLocalBroadcastAction.ACTION_HYPERWALLET_TRANSFER_METHOD_DEACTIVATED
+TransferMethodLocalBroadcast.TransferMethodLocalBroadcastAction.ACTION_HYPERWALLET_TRANSFER_METHOD_DEACTIVATED
 * Posted when a transfer method (bank account, bank card, PayPal account, prepaid card, paper check) has been deactivated.
 
-HyperwalletTransferLocalBroadcast.HyperwalletTransferLocalBroadcastAction.ACTION_HYPERWALLET_TRANSFER_SCHEDULED
+TransferLocalBroadcast.TransferLocalBroadcastAction.ACTION_HYPERWALLET_TRANSFER_SCHEDULED
 * Posted when a transfer has been scheduled.
+
+HyperwalletIntent.AUTHENTICATION_ERROR_ACTION
+* Posted when the client implementation of HyperwalletAuthenticationTokenProvider interface is unable to retrieve new authentication token.
 
 ### Usage
 ```java
@@ -199,9 +202,10 @@ protected void onCreate(Bundle savedInstanceState) {
 
     // register receiver
     IntentFilter filter = new IntentFilter();
-    filter.addAction(HyperwalletTransferMethodLocalBroadcast.HyperwalletTransferMethodLocalBroadcastAction.ACTION_HYPERWALLET_TRANSFER_METHOD_ADDED);
-    filter.addAction(HyperwalletTransferMethodLocalBroadcast.HyperwalletTransferMethodLocalBroadcastAction.ACTION_HYPERWALLET_TRANSFER_METHOD_DEACTIVATED);
-    filter.addAction(HyperwalletTransferLocalBroadcast.HyperwalletTransferLocalBroadcastAction.ACTION_HYPERWALLET_TRANSFER_SCHEDULED);
+    filter.addAction(TransferMethodLocalBroadcast.TransferMethodLocalBroadcastAction.ACTION_HYPERWALLET_TRANSFER_METHOD_ADDED);
+    filter.addAction(TransferMethodLocalBroadcast.TransferMethodLocalBroadcastAction.ACTION_HYPERWALLET_TRANSFER_METHOD_DEACTIVATED);
+    filter.addAction(TransferLocalBroadcast.TransferLocalBroadcastAction.ACTION_HYPERWALLET_TRANSFER_SCHEDULED);
+    filter.addAction(HyperwalletIntent.AUTHENTICATION_ERROR_ACTION);
     
     LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(mBroadcastReceiver, filter);
 }
@@ -301,6 +305,9 @@ On `Connectivity Issue`, a DialogFragment containing `Cancel` and `Try Again` wi
 
 ### Business Errors (invalid input)
 Business errors happen when the Hyperwallet platform has found invalid information or some business restriction related to the data submitted and requires action from the user.
+
+### Authentication Error
+Authentication error happen when the client implementation of HyperwalletAuthenticationTokenProvider interface is not able to retrieve authentication token successfully.
 
 ## License
 The Hyperwallet Android UI SDK is open source and available under the [MIT](https://github.com/hyperwallet/hyperwallet-android-ui-sdk/blob/master/LICENSE) license.

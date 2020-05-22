@@ -3,7 +3,7 @@
   "offset" : 0,
   "limit" : 1,
   "data" : [ {
-    "token" : "trm-6a4cb004-e577-45a1-9270-cb0dd5aebced",
+    "token" : "test-fake-token",
     "type" : "BANK_ACCOUNT",
     "status" : "ACTIVATED",
     "verificationStatus" : "NOT_REQUIRED",
@@ -31,23 +31,23 @@
       "params" : {
         "rel" : "self"
       },
-      "href" : "https://localhost:8181/rest/v3/users/usr-a51c7522-ccba-4bcf-a6a7-bc59dae8f9b0/bank-accounts/trm-6a4cb004-e577-45a1-9270-cb0dd5aebced"
+      "href" : "https://localhost:8181/rest/v3/users/test-user-token/bank-accounts/test-fake-token"
     } ]
   } ],
   "links" : [ {
     "params" : {
       "rel" : "self"
     },
-    "href" : "https://localhost:8181/rest/v3/users/usr-a51c7522-ccba-4bcf-a6a7-bc59dae8f9b0/bank-accounts?offset=0&limit=1"
+    "href" : "https://localhost:8181/rest/v3/users/test-user-token/bank-accounts?offset=0&limit=1"
   }, {
     "params" : {
       "rel" : "next"
     },
-    "href" : "https://localhost:8181/rest/v3/users/usr-a51c7522-ccba-4bcf-a6a7-bc59dae8f9b0/bank-accounts?offset=10&limit=1"
+    "href" : "https://localhost:8181/rest/v3/users/test-user-token/bank-accounts?offset=10&limit=1"
   }, {
     "params" : {
       "rel" : "last"
     },
-    "href" : "https://localhost:8181/rest/v3/users/usr-a51c7522-ccba-4bcf-a6a7-bc59dae8f9b0/bank-accounts?offset=14&limit=1"
+    "href" : "https://localhost:8181/rest/v3/users/test-user-token/bank-accounts?offset=14&limit=1"
   } ]
 }

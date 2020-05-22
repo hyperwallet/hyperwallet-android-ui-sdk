@@ -22,8 +22,8 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.hyperwallet.android.model.HyperwalletErrors;
-import com.hyperwallet.android.model.transfermethod.HyperwalletTransferMethod;
+import com.hyperwallet.android.model.Errors;
+import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import com.hyperwallet.android.ui.common.repository.Event;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepository;
 
@@ -35,31 +35,39 @@ import java.util.List;
  */
 public class ListTransferDestinationViewModel extends ViewModel {
 
-    private final MutableLiveData<List<HyperwalletTransferMethod>> mTransferDestinationList = new MutableLiveData<>();
+    private final MutableLiveData<List<TransferMethod>> mTransferDestinationList = new MutableLiveData<>();
     private final MutableLiveData<Boolean> mIsLoading = new MutableLiveData<>();
-    private final MutableLiveData<Event<HyperwalletTransferMethod>> mSelectedTransferDestination =
+    private final MutableLiveData<Event<TransferMethod>> mSelectedTransferDestination =
             new MutableLiveData<>();
-    private final MutableLiveData<Event<HyperwalletErrors>> mTransferDestinationError = new MutableLiveData<>();
+    private final MutableLiveData<Event<Errors>> mTransferDestinationError = new MutableLiveData<>();
     private final TransferMethodRepository mTransferMethodRepository;
+
+    private boolean mIsInitialized;
 
     ListTransferDestinationViewModel(@NonNull final TransferMethodRepository repository) {
         mTransferMethodRepository = repository;
-        loadTransferDestinationList();
     }
 
-    public void selectedTransferDestination(@NonNull final HyperwalletTransferMethod transferMethod) {
+    public void init() {
+        if (!mIsInitialized) {
+            mIsInitialized = true;
+            loadTransferDestinationList();
+        }
+    }
+
+    public void selectedTransferDestination(@NonNull final TransferMethod transferMethod) {
         mSelectedTransferDestination.postValue(new Event<>(transferMethod));
     }
 
-    public LiveData<List<HyperwalletTransferMethod>> getTransferDestinationList() {
+    public LiveData<List<TransferMethod>> getTransferDestinationList() {
         return mTransferDestinationList;
     }
 
-    public LiveData<Event<HyperwalletTransferMethod>> getSelectedTransferDestination() {
+    public LiveData<Event<TransferMethod>> getSelectedTransferDestination() {
         return mSelectedTransferDestination;
     }
 
-    public LiveData<Event<HyperwalletErrors>> getTransferDestinationError() {
+    public LiveData<Event<Errors>> getTransferDestinationError() {
         return mTransferDestinationError;
     }
 
@@ -71,18 +79,18 @@ public class ListTransferDestinationViewModel extends ViewModel {
         mIsLoading.postValue(Boolean.TRUE);
         mTransferMethodRepository.loadTransferMethods(new TransferMethodRepository.LoadTransferMethodListCallback() {
             @Override
-            public void onTransferMethodListLoaded(List<HyperwalletTransferMethod> transferMethods) {
+            public void onTransferMethodListLoaded(List<TransferMethod> transferMethods) {
                 if (transferMethods != null && !transferMethods.isEmpty()) {
                     mTransferDestinationList.postValue(transferMethods);
                     mSelectedTransferDestination.postValue(new Event<>(transferMethods.get(0)));
                 } else {
-                    mTransferDestinationList.setValue(new ArrayList<HyperwalletTransferMethod>());
+                    mTransferDestinationList.setValue(new ArrayList<TransferMethod>());
                 }
                 mIsLoading.postValue(Boolean.FALSE);
             }
 
             @Override
-            public void onError(HyperwalletErrors errors) {
+            public void onError(Errors errors) {
                 mIsLoading.postValue(Boolean.FALSE);
                 mTransferDestinationError.postValue(new Event<>(errors));
             }
@@ -93,17 +101,17 @@ public class ListTransferDestinationViewModel extends ViewModel {
         mIsLoading.postValue(Boolean.TRUE);
         mTransferMethodRepository.loadTransferMethods(new TransferMethodRepository.LoadTransferMethodListCallback() {
             @Override
-            public void onTransferMethodListLoaded(List<HyperwalletTransferMethod> transferMethods) {
+            public void onTransferMethodListLoaded(List<TransferMethod> transferMethods) {
                 if (transferMethods != null) {
                     mTransferDestinationList.postValue(transferMethods);
                 } else {
-                    mTransferDestinationList.setValue(new ArrayList<HyperwalletTransferMethod>());
+                    mTransferDestinationList.setValue(new ArrayList<TransferMethod>());
                 }
                 mIsLoading.postValue(Boolean.FALSE);
             }
 
             @Override
-            public void onError(HyperwalletErrors errors) {
+            public void onError(Errors errors) {
                 mIsLoading.postValue(Boolean.FALSE);
                 mTransferDestinationError.postValue(new Event<>(errors));
             }

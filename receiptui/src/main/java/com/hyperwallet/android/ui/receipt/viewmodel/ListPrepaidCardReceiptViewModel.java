@@ -24,31 +24,45 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.paging.PagedList;
 
-import com.hyperwallet.android.model.HyperwalletErrors;
+import com.hyperwallet.android.model.Errors;
 import com.hyperwallet.android.model.receipt.Receipt;
 import com.hyperwallet.android.ui.common.repository.Event;
 import com.hyperwallet.android.ui.receipt.repository.PrepaidCardReceiptRepository;
 
 public class ListPrepaidCardReceiptViewModel extends ReceiptViewModel {
 
-    private MutableLiveData<Event<HyperwalletErrors>> mErrorEvent = new MutableLiveData<>();
+    private MutableLiveData<Event<Errors>> mErrorEvent = new MutableLiveData<>();
     private MutableLiveData<Event<Receipt>> mDetailNavigation = new MutableLiveData<>();
-    private Observer<Event<HyperwalletErrors>> mErrorEventObserver;
+    private Observer<Event<Errors>> mErrorEventObserver;
     private PrepaidCardReceiptRepository mPrepaidCardReceiptRepository;
+
+    private boolean mIsInitialized;
 
     private ListPrepaidCardReceiptViewModel(@NonNull final PrepaidCardReceiptRepository receiptRepository) {
         mPrepaidCardReceiptRepository = receiptRepository;
-        // load initial receipts
-        mPrepaidCardReceiptRepository.loadPrepaidCardReceipts();
 
         // register one time error event observer
-        mErrorEventObserver = new Observer<Event<HyperwalletErrors>>() {
+        mErrorEventObserver = new Observer<Event<Errors>>() {
             @Override
-            public void onChanged(Event<HyperwalletErrors> event) {
+            public void onChanged(Event<Errors> event) {
                 mErrorEvent.postValue(event);
             }
         };
         mPrepaidCardReceiptRepository.getErrors().observeForever(mErrorEventObserver);
+    }
+
+    @Override
+    public void init() {
+        if (!mIsInitialized) {
+            mIsInitialized = true;
+            // load initial receipts
+            mPrepaidCardReceiptRepository.loadPrepaidCardReceipts();
+        }
+    }
+
+    @Override
+    public void refresh() {
+        mPrepaidCardReceiptRepository.refresh();
     }
 
     /**
@@ -63,7 +77,7 @@ public class ListPrepaidCardReceiptViewModel extends ReceiptViewModel {
      * @see ReceiptViewModel#getReceiptErrors()
      */
     @Override
-    public LiveData<Event<HyperwalletErrors>> getReceiptErrors() {
+    public LiveData<Event<Errors>> getReceiptErrors() {
         return mErrorEvent;
     }
 
@@ -76,10 +90,10 @@ public class ListPrepaidCardReceiptViewModel extends ReceiptViewModel {
     }
 
     /**
-     * @see ReceiptViewModel#retryLoadReceipts()
+     * @see ReceiptViewModel#retry()
      */
     @Override
-    public void retryLoadReceipts() {
+    public void retry() {
         mPrepaidCardReceiptRepository.retryLoadReceipt();
     }
 
@@ -106,6 +120,7 @@ public class ListPrepaidCardReceiptViewModel extends ReceiptViewModel {
     protected void onCleared() {
         super.onCleared();
         mPrepaidCardReceiptRepository.getErrors().removeObserver(mErrorEventObserver);
+        mPrepaidCardReceiptRepository.cleanup();
         mPrepaidCardReceiptRepository = null;
     }
 

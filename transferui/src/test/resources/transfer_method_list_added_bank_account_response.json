@@ -4,7 +4,7 @@
   "limit": 10,
   "data": [
     {
-      "token": "trm-254d6bfe-b84d-419b-bbea-c1eaef5090ca",
+      "token": "test-fake-token",
       "type": "BANK_ACCOUNT",
       "status": "ACTIVATED",
       "verificationStatus": "NOT_REQUIRED",
@@ -34,12 +34,12 @@
           "params": {
             "rel": "self"
           },
-          "href": "https://localhost/rest/v3/users/usr-00995baf-eb51-4565-a9cd-2547fd7c1bc6/transfer-methods/trm-254d6bfe-b84d-419b-bbea-c1eaef5090ca"
+          "href": "https://localhost/rest/v3/users/test-user-token/transfer-methods/test-fake-token"
         }
       ]
     },
     {
-      "token": "trm-00b89487-89c7-4fec-af66-9e669dd33bcf",
+      "token": "test-fake-token",
       "type": "BANK_ACCOUNT",
       "status": "ACTIVATED",
       "verificationStatus": "NOT_REQUIRED",
@@ -69,7 +69,7 @@
           "params": {
             "rel": "self"
           },
-          "href": "https://localhost/rest/v3/users/usr-00995baf-eb51-4565-a9cd-2547fd7c1bc6/transfer-methods/trm-00b89487-89c7-4fec-af66-9e669dd33bcf"
+          "href": "https://localhost/rest/v3/users/test-user-token/transfer-methods/test-fake-token"
         }
       ]
     }
@@ -79,19 +79,19 @@
       "params": {
         "rel": "self"
       },
-      "href": "https://localhost/rest/v3/users/usr-00995baf-eb51-4565-a9cd-2547fd7c1bc6/transfer-methods?offset=0&limit=1&sortBy=-createdOn"
+      "href": "https://localhost/rest/v3/users/test-user-token/transfer-methods?offset=0&limit=1&sortBy=-createdOn"
     },
     {
       "params": {
         "rel": "next"
       },
-      "href": "https://localhost/rest/v3/users/usr-00995baf-eb51-4565-a9cd-2547fd7c1bc6/transfer-methods?offset=1&limit=1&sortBy=-createdOn"
+      "href": "https://localhost/rest/v3/users/test-user-token/transfer-methods?offset=1&limit=1&sortBy=-createdOn"
     },
     {
       "params": {
         "rel": "last"
       },
-      "href": "https://localhost/rest/v3/users/usr-00995baf-eb51-4565-a9cd-2547fd7c1bc6/transfer-methods?offset=1&limit=1&sortBy=-createdOn"
+      "href": "https://localhost/rest/v3/users/test-user-token/transfer-methods?offset=1&limit=1&sortBy=-createdOn"
     }
   ]
 }
