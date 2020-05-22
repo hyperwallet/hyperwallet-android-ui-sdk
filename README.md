@@ -18,9 +18,9 @@ Note that this SDK is geared towards those who need both backend data and UI fea
 To install Hyperwallet UI SDK, you just need to add the dependencies into your build.gradle file in Android Studio (or Gradle). For example:
 
 ```bash
-api 'com.hyperwallet.android.ui:transfermethodui:1.0.0-beta03'
-api 'com.hyperwallet.android.ui:receiptui:1.0.0-beta03'
-api 'com.hyperwallet.android.ui:transferui:1.0.0-beta03'
+api 'com.hyperwallet.android.ui:transfermethodui:1.0.0-beta05'
+api 'com.hyperwallet.android.ui:receiptui:1.0.0-beta05'
+api 'com.hyperwallet.android.ui:transferui:1.0.0-beta05'
 ```
 
 ## Initialization
@@ -182,6 +182,9 @@ TransferMethodLocalBroadcast.TransferMethodLocalBroadcastAction.ACTION_HYPERWALL
 TransferLocalBroadcast.TransferLocalBroadcastAction.ACTION_HYPERWALLET_TRANSFER_SCHEDULED
 * Posted when a transfer has been scheduled.
 
+HyperwalletIntent.AUTHENTICATION_ERROR_ACTION
+* Posted when the client implementation of HyperwalletAuthenticationTokenProvider interface is unable to retrieve new authentication token.
+
 ### Usage
 ```java
 // create receiver
@@ -202,6 +205,7 @@ protected void onCreate(Bundle savedInstanceState) {
     filter.addAction(TransferMethodLocalBroadcast.TransferMethodLocalBroadcastAction.ACTION_HYPERWALLET_TRANSFER_METHOD_ADDED);
     filter.addAction(TransferMethodLocalBroadcast.TransferMethodLocalBroadcastAction.ACTION_HYPERWALLET_TRANSFER_METHOD_DEACTIVATED);
     filter.addAction(TransferLocalBroadcast.TransferLocalBroadcastAction.ACTION_HYPERWALLET_TRANSFER_SCHEDULED);
+    filter.addAction(HyperwalletIntent.AUTHENTICATION_ERROR_ACTION);
     
     LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(mBroadcastReceiver, filter);
 }
@@ -301,6 +305,9 @@ On `Connectivity Issue`, a DialogFragment containing `Cancel` and `Try Again` wi
 
 ### Business Errors (invalid input)
 Business errors happen when the Hyperwallet platform has found invalid information or some business restriction related to the data submitted and requires action from the user.
+
+### Authentication Error
+Authentication error happen when the client implementation of HyperwalletAuthenticationTokenProvider interface is not able to retrieve authentication token successfully.
 
 ## License
 The Hyperwallet Android UI SDK is open source and available under the [MIT](https://github.com/hyperwallet/hyperwallet-android-ui-sdk/blob/master/LICENSE) license.
