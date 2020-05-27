@@ -8,12 +8,19 @@ public class ActionModeCallbackInterceptor implements ActionMode.Callback {
 
     @Override
     public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-        return false;
+        return true;
     }
 
     @Override
     public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-        return false;
+        try {
+            CharSequence title = menu.findItem(android.R.id.paste).getTitle();
+            menu.clear();
+            menu.add(0, android.R.id.paste, 0, title);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Override
