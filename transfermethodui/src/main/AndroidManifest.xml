@@ -3,6 +3,11 @@
           xmlns:tools="http://schemas.android.com/tools"
           package="com.hyperwallet.android.ui">
 
+    <permission
+        android:name="com.hyperwallet.android.ui.permission.SELECT_TRANSFER_METHOD"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.hyperwallet.android.ui.permission.SELECT_TRANSFER_METHOD" />
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application android:networkSecurityConfig="@xml/network_security_config" tools:targetApi="n">
@@ -15,7 +20,8 @@
         <activity
             android:name="com.hyperwallet.android.ui.transfermethod.view.SelectTransferMethodActivity"
             android:label="@string/title_activity_select_transfer_method"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:permission="com.hyperwallet.android.ui.permission.SELECT_TRANSFER_METHOD">
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable"/>
