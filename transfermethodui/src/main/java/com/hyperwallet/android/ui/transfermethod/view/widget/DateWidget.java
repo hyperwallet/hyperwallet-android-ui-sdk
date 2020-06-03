@@ -79,6 +79,7 @@ public class DateWidget extends AbstractWidget implements DateChangedListener {
             mEditText.setFocusableInTouchMode(false);
             mEditText.setFocusable(false);
             setIdFromFieldName(mEditText);
+            mEditText.setCustomSelectionActionModeCallback(new ActionModeCallbackInterceptor());
             mTextInputLayout.setHint(mField.getLabel());
             mTextInputLayout.addView(mEditText);
 

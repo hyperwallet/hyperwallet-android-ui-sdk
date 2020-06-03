@@ -77,6 +77,7 @@ public class NumberWidget extends AbstractMaskedInputWidget {
             editText.setInputType(InputType.TYPE_CLASS_NUMBER);
             editText.setOnKeyListener(new DefaultKeyListener(mDefaultFocusView, editText));
             editText.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI | EditorInfo.IME_ACTION_NEXT);
+            editText.setCustomSelectionActionModeCallback(new ActionModeCallbackInterceptor());
             mTextInputLayout.addView(editText);
             appendLayout(mTextInputLayout, true);
             mContainer.addView(mTextInputLayout);
