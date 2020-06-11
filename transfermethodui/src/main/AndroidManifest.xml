@@ -15,7 +15,8 @@
         <activity
             android:name="com.hyperwallet.android.ui.transfermethod.view.SelectTransferMethodActivity"
             android:label="@string/title_activity_select_transfer_method"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:exported="false">
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable"/>
