@@ -131,7 +131,7 @@ public class DefaultErrorDialogFragment extends DialogFragment {
         switch (ErrorTypes.getErrorType(error.getCode())) {
             case ErrorTypes.SDK_ERROR:
                 builder.setTitle(requireContext().getString(R.string.error_dialog_unexpected_title))
-                        .setPositiveButton(getResources().getString(R.string.close_button_label),
+                        .setPositiveButton(getResources().getString(R.string.ok),
                                 new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
@@ -163,7 +163,7 @@ public class DefaultErrorDialogFragment extends DialogFragment {
                 break;
             case ErrorTypes.AUTH_TOKEN_ERROR:
                 builder.setTitle(requireContext().getString(R.string.authentication_error_header))
-                        .setPositiveButton(getResources().getString(R.string.close_button_label),
+                        .setPositiveButton(getResources().getString(R.string.ok),
                                 new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
@@ -176,7 +176,7 @@ public class DefaultErrorDialogFragment extends DialogFragment {
                 break;
             default: // normal rest errors, we will give the user a chance to fix input values from form
                 builder.setTitle(requireContext().getString(R.string.error_dialog_title))
-                        .setPositiveButton(getResources().getString(R.string.close_button_label), null);
+                        .setPositiveButton(getResources().getString(R.string.ok), null);
         }
         AlertDialog dialog = builder.create();
         dialog.setCanceledOnTouchOutside(false);
