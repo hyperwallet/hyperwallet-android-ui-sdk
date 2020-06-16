@@ -664,7 +664,7 @@ public class TransferPPCFundsTest {
                 "Your attempted transaction has exceeded the approved payout limit; please contact HyperWallet Pay "
                         + "for further assistance."))
                 .inRoot(isDialog()).check(matches(isDisplayed()));
-        onView(withId(android.R.id.button1)).check(matches(withText(R.string.close_button_label)));
+        onView(withId(android.R.id.button1)).check(matches(withText(R.string.ok)));
         onView(withId(android.R.id.button1)).perform(click());
     }
 
@@ -686,7 +686,7 @@ public class TransferPPCFundsTest {
         onView(withId(R.id.alertTitle)).check(matches(withText(R.string.error_dialog_title)));
         onView(withText("You do not have enough funds in any single currency to complete this transfer."))
                 .inRoot(isDialog()).check(matches(isDisplayed()));
-        onView(withId(android.R.id.button1)).check(matches(withText(R.string.close_button_label)));
+        onView(withId(android.R.id.button1)).check(matches(withText(R.string.ok)));
         onView(withId(android.R.id.button1)).perform(click());
     }
 
@@ -708,7 +708,7 @@ public class TransferPPCFundsTest {
         onView(withId(R.id.alertTitle)).check(matches(withText(R.string.error_dialog_title)));
         onView(withText("Requested transfer amount $0.01, is below the transaction limit of $1.00."))
                 .inRoot(isDialog()).check(matches(isDisplayed()));
-        onView(withId(android.R.id.button1)).check(matches(withText(R.string.close_button_label)));
+        onView(withId(android.R.id.button1)).check(matches(withText(R.string.ok)));
         onView(withId(android.R.id.button1)).perform(click());
 
     }
@@ -731,7 +731,7 @@ public class TransferPPCFundsTest {
         onView(withId(R.id.alertTitle)).check(matches(withText(R.string.error_dialog_title)));
         onView(withText("The account status does not allow the requested action."))
                 .inRoot(isDialog()).check(matches(isDisplayed()));
-        onView(withId(android.R.id.button1)).check(matches(withText(R.string.close_button_label)));
+        onView(withId(android.R.id.button1)).check(matches(withText(R.string.ok)));
         onView(withId(android.R.id.button1)).perform(click());
     }
 

@@ -3,7 +3,7 @@
     <string name="error_dialog_connectivity_title">Connectivity Issue</string>
     <string name="error_dialog_unexpected_title">Unexpected Error</string>
     <string name="cancel_button_label">Cancel</string>
-    <string name="close_button_label">Close</string>
+    <string name="ok">OK</string>
     <string name="try_again_button_label">Try again</string>
     <string name="not_available">Not Available</string>
 

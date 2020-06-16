@@ -223,7 +223,7 @@ public class PayPalTest {
         onView(withText(containsString(
                 "PayPal transfer method email address should be same as profile email address.")))
                 .inRoot(isDialog()).check(matches(isDisplayed()));
-        onView(withId(android.R.id.button1)).check(matches(withText(R.string.close_button_label)));
+        onView(withId(android.R.id.button1)).check(matches(withText(R.string.ok)));
         onView(withId(android.R.id.button1)).perform(click());
 
         // should display the add tm form

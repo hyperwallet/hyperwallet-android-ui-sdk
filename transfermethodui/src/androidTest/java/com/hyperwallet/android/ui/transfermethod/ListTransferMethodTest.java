@@ -494,7 +494,7 @@ public class ListTransferMethodTest {
         // check dialog content
         onView(withText(R.string.error_dialog_unexpected_title)).inRoot(isDialog()).check(matches(isDisplayed()));
         onView(withText(R.string.error_unsupported_transfer_type)).inRoot(isDialog()).check(matches(isDisplayed()));
-        onView(withId(android.R.id.button1)).check(matches(withText(R.string.close_button_label)));
+        onView(withId(android.R.id.button1)).check(matches(withText(R.string.ok)));
         onView(withId(android.R.id.button1)).perform(click());
 
         // verify activity is finished
