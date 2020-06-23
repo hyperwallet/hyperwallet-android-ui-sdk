@@ -6,4 +6,8 @@
     <dimen name="transfer_currency_end">4dp</dimen>
     <dimen name="transfer_amount_layout_offset">11dp</dimen>
     <dimen name="transfer_header_container_with_error_label">82dp</dimen>
+    <dimen name="transfer_all_funds_container_negative_margin">-15dp</dimen>
+    <dimen name="amount_padding">3dp</dimen>
+    <dimen name="currency_padding">12dp</dimen>
+    <dimen name="currency_code_padding">15dp</dimen>
 </resources>

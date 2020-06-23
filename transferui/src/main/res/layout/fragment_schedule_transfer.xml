@@ -28,7 +28,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="@dimen/grid_margin_left"
                     android:layout_marginTop="@dimen/grid_margin_top"
-                    android:text="@string/transfer_destination"
+                    android:text="@string/mobileTransferToLabel"
                     android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"/>
             </LinearLayout>
 
@@ -228,7 +228,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginStart="@dimen/grid_margin_left"
                         android:layout_marginTop="@dimen/grid_margin_top"
-                        android:text="@string/transfer_notes_header_label"
+                        android:text="@string/mobileNoteLabel"
                         android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"/>
                 </LinearLayout>
 

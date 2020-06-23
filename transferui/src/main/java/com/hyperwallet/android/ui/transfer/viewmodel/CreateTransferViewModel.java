@@ -76,6 +76,7 @@ public class CreateTransferViewModel extends ViewModel {
 
     private String mSourceToken;
     private boolean mIsInitialized;
+    private String initialAmount;
 
     /**
      * Initialize Create Transfer View Model with designated transfer source token
@@ -124,7 +125,9 @@ public class CreateTransferViewModel extends ViewModel {
         mShowFxRateChange.setValue(Boolean.FALSE);
     }
 
-    public void init() {
+    public void init(@NonNull final String defaultAmount) {
+        initialAmount = defaultAmount;
+
         if (!mIsInitialized) {
             mIsInitialized = true;
             if (mSourceToken == null) {
@@ -233,7 +236,8 @@ public class CreateTransferViewModel extends ViewModel {
 
     public void createTransfer() {
         mIsCreateQuoteLoading.postValue(Boolean.TRUE);
-        String amount = mTransferAvailableFunds.getValue() ? null : mTransferAmount.getValue();
+        String amount = mTransferAvailableFunds.getValue() ? null :
+                initialAmount.equals(mTransferAmount.getValue()) ? null : mTransferAmount.getValue();
 
         Transfer transfer = new Transfer.Builder()
                 .clientTransferID(CLIENT_IDENTIFICATION_PREFIX + UUID.randomUUID().toString())

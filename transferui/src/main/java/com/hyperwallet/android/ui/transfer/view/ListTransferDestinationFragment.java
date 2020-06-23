@@ -101,7 +101,7 @@ public class ListTransferDestinationFragment extends DialogFragment {
         super.onViewCreated(view, savedInstanceState);
 
         Toolbar toolbar = view.findViewById(R.id.transfer_destination_selection_toolbar);
-        toolbar.setTitle(R.string.transfer_destination);
+        toolbar.setTitle(R.string.mobileTransferToLabel);
         toolbar.setNavigationIcon(R.drawable.ic_close_14dp);
 
         ((AppCompatActivity) requireActivity()).setSupportActionBar(toolbar);

@@ -37,9 +37,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -58,6 +56,7 @@ import com.hyperwallet.android.ui.common.view.OneClickListener;
 import com.hyperwallet.android.ui.transfer.R;
 import com.hyperwallet.android.ui.transfer.viewmodel.CreateTransferViewModel;
 
+import java.util.Currency;
 import java.util.Locale;
 
 
@@ -71,16 +70,14 @@ public class CreateTransferFragment extends Fragment {
     private CreateTransferViewModel mCreateTransferViewModel;
     private EditText mTransferAmount;
     private TextView mTransferCurrency;
+    private TextView mTransferCurrencyCode;
     private TextView mTransferAllFundsSummary;
     private EditText mTransferNotes;
-    private Button mTransferNextButton;
     private View mTransferNextButtonProgress;
     private View mTransferDestination;
     private View mAddTransferDestination;
-    private Switch mTransferAllSwitch;
     private TextInputLayout mTransferAmountLayout;
     private View mTransferHeaderContainerError;
-    private View mTransferHeaderContainer;
     private TextView mTransferDestinationError;
 
     /**
@@ -117,10 +114,20 @@ public class CreateTransferFragment extends Fragment {
 
         mTransferCurrency = view.findViewById(R.id.transfer_amount_currency);
         mTransferCurrency.setText(EMPTY_STRING);
+        mTransferCurrencyCode = view.findViewById(R.id.transfer_amount_currency_code);
+        mTransferCurrencyCode.setText(EMPTY_STRING);
+
+        TextView transferAllFunds = view.findViewById(R.id.transfer_all_funds);
+        transferAllFunds.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCreateTransferViewModel.setTransferAllAvailableFunds(true);
+            }
+        });
 
         // next button
-        mTransferNextButton = view.findViewById(R.id.transfer_action_button);
-        mTransferNextButton.setOnClickListener(new OneClickListener() {
+        Button continueButton = view.findViewById(R.id.transfer_action_button);
+        continueButton.setOnClickListener(new OneClickListener() {
             @Override
             public void onOneClick(View v) {
                 if (isCreateTransferValid()) {
@@ -139,7 +146,6 @@ public class CreateTransferFragment extends Fragment {
         prepareTransferNotes();
 
         // transfer destination
-        mTransferHeaderContainer = view.findViewById(R.id.transfer_header_container);
         mTransferDestination = view.findViewById(R.id.transfer_destination);
         mTransferDestination.setOnClickListener(new OneClickListener() {
             @Override
@@ -172,14 +178,6 @@ public class CreateTransferFragment extends Fragment {
             }
         });
 
-        // toggle button
-        mTransferAllSwitch = view.findViewById(R.id.switchButton);
-        mTransferAllSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mCreateTransferViewModel.setTransferAllAvailableFunds(isChecked);
-            }
-        });
         registerTransferDestinationObservers();
         registerAvailableFundsObserver();
         registerTransferAmountObservers();
@@ -189,7 +187,7 @@ public class CreateTransferFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mCreateTransferViewModel.init();
+        mCreateTransferViewModel.init(getResources().getString(R.string.defaultTransferAmount));
     }
 
     @Override
@@ -221,15 +219,15 @@ public class CreateTransferFragment extends Fragment {
     }
 
     private boolean isCreateTransferValid() {
-        if (TextUtils.isEmpty(mCreateTransferViewModel.getTransferAmount().getValue())) {
+        if (TextUtils.isEmpty(mCreateTransferViewModel.getTransferAmount().getValue())
+                || getResources().getString(R.string.defaultTransferAmount)
+                .equals(mCreateTransferViewModel.getTransferAmount().getValue())) {
             mTransferAmountLayout.setError(requireContext().getString(R.string.validation_amount_required));
             return false;
         }
 
         if (mCreateTransferViewModel.isTransferDestinationUnknown()) {
-            mTransferHeaderContainer.setVisibility(View.GONE);
             mTransferHeaderContainerError.setVisibility(View.VISIBLE);
-            mTransferDestinationError.setText(requireContext().getString(R.string.validation_destination_required));
             return false;
         }
 
@@ -307,7 +305,6 @@ public class CreateTransferFragment extends Fragment {
                     @Override
                     public void onChanged(@NonNull final Event<Error> event) {
                         if (!event.isContentConsumed()) {
-                            mTransferHeaderContainer.setVisibility(View.GONE);
                             mTransferHeaderContainerError.setVisibility(View.VISIBLE);
                             mTransferDestinationError.setText(event.getContent().getMessage());
                         }
@@ -336,7 +333,6 @@ public class CreateTransferFragment extends Fragment {
                         if (transferMethod != null) {
                             mAddTransferDestination.setVisibility(View.GONE);
                             mTransferHeaderContainerError.setVisibility(View.GONE);
-                            mTransferHeaderContainer.setVisibility(View.VISIBLE);
                             mTransferDestination.setVisibility(View.VISIBLE);
                             showTransferDestination(transferMethod);
                             enableInputControls();
@@ -354,7 +350,7 @@ public class CreateTransferFragment extends Fragment {
             @Override
             public void onChanged(final Transfer transfer) {
                 if (transfer != null) {
-                    String summary = requireContext().getString(R.string.transfer_summary_label,
+                    String summary = requireContext().getString(R.string.mobileAvailableBalance,
                             transfer.getDestinationAmount(), transfer.getDestinationCurrency());
                     mTransferAllFundsSummary.setText(summary);
                     mTransferAllFundsSummary.setVisibility(View.VISIBLE);
@@ -375,15 +371,12 @@ public class CreateTransferFragment extends Fragment {
                             if (transfer != null) {
                                 mTransferCurrency.setTextColor(
                                         getResources().getColor(R.color.colorButtonTextDisabled));
-                                mTransferAmount.setEnabled(false);
                                 mTransferAmount.getText().clear();
                                 mTransferAmount.setText(transfer.getDestinationAmount());
                             }
                         } else {
                             mTransferCurrency.setTextColor(getResources().getColor(R.color.colorSecondaryDark));
-                            mTransferAmount.setEnabled(true);
                             mTransferAmount.setText(null);
-                            mTransferAllSwitch.setChecked(false);
                         }
                     }
                 });
@@ -391,8 +384,10 @@ public class CreateTransferFragment extends Fragment {
         mCreateTransferViewModel.getTransferAmount().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String amount) {
-                mTransferAmount.setText(amount);
-                mTransferAmount.setSelection(TextUtils.isEmpty(amount) ? 0 : amount.length());
+                String workingAmount = hardPlaceholder(amount);
+                mTransferAmount.setText(TextUtils.isEmpty(workingAmount) ?
+                        getResources().getText(R.string.defaultTransferAmount) : workingAmount);
+                mTransferAmount.setSelection(TextUtils.isEmpty(workingAmount) ? 1 : workingAmount.length());
             }
         });
 
@@ -418,11 +413,17 @@ public class CreateTransferFragment extends Fragment {
         });
     }
 
+    private String hardPlaceholder(final String amount) {
+        if (amount != null && amount.startsWith(getResources().getString(R.string.defaultTransferAmount))) {
+            return amount.substring(1);
+        }
+        return amount;
+    }
+
     private void disableInputControls() {
         mTransferCurrency.setTextColor(getResources().getColor(R.color.colorButtonTextDisabled));
         mTransferAmount.setEnabled(false);
         mTransferNotes.setEnabled(false);
-        mTransferAllSwitch.setClickable(false);
         mTransferDestination.setEnabled(false);
         mAddTransferDestination.setEnabled(false);
     }
@@ -431,7 +432,6 @@ public class CreateTransferFragment extends Fragment {
         mTransferCurrency.setTextColor(getResources().getColor(R.color.colorSecondaryDark));
         mTransferAmount.setEnabled(true);
         mTransferNotes.setEnabled(true);
-        mTransferAllSwitch.setClickable(true);
         mTransferDestination.setEnabled(true);
         mAddTransferDestination.setEnabled(true);
     }
@@ -454,6 +454,8 @@ public class CreateTransferFragment extends Fragment {
         transferCountry.setText(locale.getDisplayName());
 
         mTransferCurrency.setText(transferMethod.getField(TRANSFER_METHOD_CURRENCY));
+        mTransferCurrencyCode.setText(
+                Currency.getInstance(transferMethod.getField(TRANSFER_METHOD_CURRENCY)).getSymbol(Locale.ROOT));
         mTransferDestination.setVisibility(View.VISIBLE);
     }
 }

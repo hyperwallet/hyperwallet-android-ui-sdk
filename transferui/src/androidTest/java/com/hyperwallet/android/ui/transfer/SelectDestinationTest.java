@@ -102,7 +102,6 @@ public class SelectDestinationTest {
         onView(withId(R.id.transfer_destination)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_icon)).check(matches(withText(R.string.bank_account_font_icon)));
         onView(withId(R.id.transfer_destination_title)).check(matches(withText(R.string.bank_account)));
-        onView(withId(R.id.transfer_destination_selection)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_description_1)).check(matches(withText("United States")));
         onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("Ending on 0616")));
 
@@ -110,7 +109,7 @@ public class SelectDestinationTest {
 
         onView(allOf(instanceOf(TextView.class),
                 withParent(withId(R.id.transfer_destination_selection_toolbar)))).check(
-                matches(withText(R.string.transfer_destination)));
+                matches(withText(R.string.mobileTransferToLabel)));
 
         onView(withId(R.id.transfer_destination_list)).check(
                 matches(atPosition(0, hasDescendant(withText(R.string.bank_account_font_icon)))));
@@ -183,18 +182,17 @@ public class SelectDestinationTest {
         onView(withId(R.id.transfer_destination)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_icon)).check(matches(withText(R.string.bank_account_font_icon)));
         onView(withId(R.id.transfer_destination_title)).check(matches(withText(R.string.bank_account)));
-        onView(withId(R.id.transfer_destination_selection)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_description_1)).check(matches(withText("United States")));
         onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("Ending on 0616")));
 
         onView(withId(R.id.transfer_summary)).perform(nestedScrollTo()).check(matches(isDisplayed()));
-        onView(withId(R.id.transfer_summary)).check(matches(withText("Available for Transfer: 998.00 USD")));
+        onView(withId(R.id.transfer_summary)).check(matches(withText("Available balance: 998.00 USD")));
 
         onView(withId(R.id.transfer_destination_title)).perform(click());
 
         onView(allOf(instanceOf(TextView.class),
                 withParent(withId(R.id.transfer_destination_selection_toolbar)))).check(
-                matches(withText(R.string.transfer_destination)));
+                matches(withText(R.string.mobileTransferToLabel)));
 
         onView(withContentDescription(R.string.abc_action_bar_up_description)).perform(click());
 
@@ -202,12 +200,11 @@ public class SelectDestinationTest {
         onView(withId(R.id.transfer_destination)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_icon)).check(matches(withText(R.string.bank_account_font_icon)));
         onView(withId(R.id.transfer_destination_title)).check(matches(withText(R.string.bank_account)));
-        onView(withId(R.id.transfer_destination_selection)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_description_1)).check(matches(withText("United States")));
         onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("Ending on 0616")));
 
         onView(withId(R.id.transfer_summary)).perform(nestedScrollTo()).check(matches(isDisplayed()));
-        onView(withId(R.id.transfer_summary)).check(matches(withText("Available for Transfer: 998.00 USD")));
+        onView(withId(R.id.transfer_summary)).check(matches(withText("Available balance: 998.00 USD")));
     }
 
     @Test
@@ -232,7 +229,7 @@ public class SelectDestinationTest {
         onView(withId(R.id.transfer_destination_title)).perform(click());
         onView(allOf(instanceOf(TextView.class),
                 withParent(withId(R.id.transfer_destination_selection_toolbar)))).check(
-                matches(withText(R.string.transfer_destination)));
+                matches(withText(R.string.mobileTransferToLabel)));
         onView(withId(R.id.create_transfer_method_fab)).perform(click());
         intended(hasAction(ACTION_SELECT_TRANSFER_METHOD));
 
@@ -240,12 +237,11 @@ public class SelectDestinationTest {
         onView(withId(R.id.transfer_destination)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_icon)).check(matches(withText(R.string.bank_account_font_icon)));
         onView(withId(R.id.transfer_destination_title)).check(matches(withText(R.string.bank_account)));
-        onView(withId(R.id.transfer_destination_selection)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_description_1)).check(matches(withText("Canada")));
         onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("Ending on 5121")));
 
         onView(withId(R.id.transfer_summary)).perform(nestedScrollTo()).check(matches(isDisplayed()));
-        onView(withId(R.id.transfer_summary)).check(matches(withText("Available for Transfer: 1,157.40 CAD")));
+        onView(withId(R.id.transfer_summary)).check(matches(withText("Available balance: 1,157.40 CAD")));
 
     }
 
@@ -266,12 +262,11 @@ public class SelectDestinationTest {
         onView(withId(R.id.transfer_destination)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_icon)).check(matches(withText(R.string.bank_account_font_icon)));
         onView(withId(R.id.transfer_destination_title)).check(matches(withText(R.string.bank_account)));
-        onView(withId(R.id.transfer_destination_selection)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_description_1)).check(matches(withText("United States")));
         onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("Ending on 0616")));
 
         onView(withId(R.id.transfer_summary)).perform(nestedScrollTo()).check(matches(isDisplayed()));
-        onView(withId(R.id.transfer_summary)).check(matches(withText("Available for Transfer: 998.00 USD")));
+        onView(withId(R.id.transfer_summary)).check(matches(withText("Available balance: 998.00 USD")));
 
         onView(withId(R.id.transfer_destination_title)).perform(click());
 
@@ -279,19 +274,18 @@ public class SelectDestinationTest {
         onView(withId(R.id.transfer_destination)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_icon)).check(matches(withText(R.string.paypal_account_font_icon)));
         onView(withId(R.id.transfer_destination_title)).check(matches(withText(R.string.paypal_account)));
-        onView(withId(R.id.transfer_destination_selection)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_description_1)).check(matches(withText("United States")));
         onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("honey.thigpen@ukbuilder.com")));
 
         onView(withId(R.id.transfer_amount)).perform(nestedScrollTo()).check(matches(isDisplayed()));
-        onView(withId(R.id.transfer_amount)).check(matches(withText("")));
+        onView(withId(R.id.transfer_amount)).check(matches(withText(R.string.defaultTransferAmount)));
         onView(withId(R.id.transfer_amount_currency)).check(matches(withText("USD")));
 
         //Check that the toggle is disabled by default
-        onView(withId(R.id.switchButton)).perform(nestedScrollTo()).check(matches(isDisplayed()));
-        onView(withId(R.id.switchButton)).check(matches(not(isSelected())));
+        onView(withId(R.id.transfer_all_funds)).perform(nestedScrollTo()).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_all_funds)).check(matches(not(isSelected())));
         onView(withId(R.id.transfer_summary)).perform(nestedScrollTo()).check(matches(isDisplayed()));
-        onView(withId(R.id.transfer_summary)).check(matches(withText("Available for Transfer: 1000.00 USD")));
+        onView(withId(R.id.transfer_summary)).check(matches(withText("Available balance: 1000.00 USD")));
 
         onView(withId(R.id.transfer_notes)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_notes)).check(matches(withText("")));
@@ -315,7 +309,6 @@ public class SelectDestinationTest {
         onView(withId(R.id.transfer_destination)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_icon)).check(matches(withText(R.string.bank_account_font_icon)));
         onView(withId(R.id.transfer_destination_title)).check(matches(withText(R.string.bank_account)));
-        onView(withId(R.id.transfer_destination_selection)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_description_1)).check(matches(withText("United States")));
         onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("Ending on 0616")));
 
@@ -331,7 +324,7 @@ public class SelectDestinationTest {
 
         onView(allOf(instanceOf(TextView.class),
                 withParent(withId(R.id.transfer_destination_selection_toolbar)))).check(
-                matches(withText(R.string.transfer_destination)));
+                matches(withText(R.string.mobileTransferToLabel)));
 
         onView(withId(R.id.transfer_destination_list)).check(
                 matches(atPosition(0, hasDescendant(withText(R.string.bank_account_font_icon)))));

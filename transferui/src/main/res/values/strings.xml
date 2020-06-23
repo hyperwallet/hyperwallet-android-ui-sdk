@@ -1,18 +1,22 @@
 <resources>
     <string name="title_activity_create_transfer">Transfer Funds</string>
     <string name="transfer_destination">Destination</string>
+    <string name="mobileTransferToLabel">TRANSFER TO</string>
+    <string name="mobileTransferFundsHeader">Transfer funds</string>
     <string name="transfer_foreign_exchange">Foreign Exchange</string>
     <string name="transfer_header_label">Transfer</string>
-    <string name="transfer_destination_required_error">Destination account required</string>
+    <string name="transfer_destination_required_error">Transfer method is required</string>
     <string name="transfer_amount_hint">Amount</string>
     <string name="transfer_currency_placeholder">USD</string>
+    <string name="transfer_currency_code_placeholder">$</string>
     <string name="transfer_all_funds_label">Transfer all Funds</string>
-    <string name="transfer_summary_label">Available for Transfer: %s %s</string>
+    <string name="mobileAvailableBalance">Available balance: %s %s</string>
     <string name="transfer_summary">Summary</string>
-    <string name="transfer_notes_header_label">Notes</string>
+    <string name="mobileNoteLabel">Note</string>
     <string name="transfer_notes_label">Description</string>
     <string name="transfer_notes_additional_info_label">Description is optional</string>
-    <string name="transfer_next_action_label">Next</string>
+    <string name="continueButtonLabel">Continue</string>
+    <string name="defaultTransferAmount">0</string>
     <string name="transfer_confirm_action_label">Confirm</string>
     <string name="add_text">+</string>
     <string name="add_transfer_label">Add Account</string>
@@ -40,7 +44,8 @@
         you will now receive %1$s %2$s.</string>
 
 
-    <string name="transfer_summary_placeholder">Available for Transfer: 2,422.90 CAD</string>
+    <string name="mobileTransferMax">Transfer max amount</string>
+    <string name="transfer_summary_placeholder">Available balance: 2,422.90 CAD</string>
     <string name="transfer_notes_placeholder">Partial transfer</string>
     <string name="transfer_item_icon_placeholder">\uE000</string>
     <string name="transfer_item_title_placeholder">Transfer Type</string>
