@@ -127,16 +127,6 @@ public class CreateTransferActivity extends AppCompatActivity implements OnNetwo
                 && resultCode == Activity.RESULT_OK && data != null) {
             setResult(Activity.RESULT_OK, data);
             finish();
-        } else if (requestCode == SCHEDULE_TRANSFER_REQUEST_CODE) {
-            // back button
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            CreateTransferFragment fragment = (CreateTransferFragment)
-                    fragmentManager.findFragmentById(R.id.create_transfer_fragment);
-
-            if (fragment == null) {
-                fragment = CreateTransferFragment.newInstance();
-            }
-            fragment.reApplyFieldRules();
         }
     }
 

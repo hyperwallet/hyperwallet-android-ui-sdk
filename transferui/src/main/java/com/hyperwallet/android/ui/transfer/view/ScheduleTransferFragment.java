@@ -52,6 +52,7 @@ public class ScheduleTransferFragment extends Fragment {
 
     private ScheduleTransferViewModel mScheduleTransferViewModel;
     private View mTransferConfirmButtonProgress;
+    private View mTransferScheduleProgress;
 
     public ScheduleTransferFragment() {
     }
@@ -73,6 +74,8 @@ public class ScheduleTransferFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        mTransferScheduleProgress = view.findViewById(R.id.progress);
+
         showTransferDestination();
         showForeignExchange();
         showSummary();
@@ -92,9 +95,9 @@ public class ScheduleTransferFragment extends Fragment {
                     @Override
                     public void onChanged(Boolean loading) {
                         if (loading) {
-                            mTransferConfirmButtonProgress.setVisibility(View.VISIBLE);
+                            mTransferScheduleProgress.setVisibility(View.VISIBLE);
                         } else {
-                            mTransferConfirmButtonProgress.setVisibility(View.GONE);
+                            mTransferScheduleProgress.setVisibility(View.GONE);
                         }
                     }
                 });

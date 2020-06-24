@@ -254,12 +254,14 @@ public class CreateTransferViewModel extends ViewModel {
                 mShowFxRateChange.setValue(hasTransferAmountChanged(transfer));
                 mCreateTransfer.postValue(new Event<>(transfer));
                 mIsCreateQuoteLoading.postValue(Boolean.FALSE);
+                mTransferAvailableFunds.setValue(Boolean.FALSE);
             }
 
             @Override
             public void onError(@NonNull final Errors errors) {
                 processCreateTransferError(errors);
                 mIsCreateQuoteLoading.postValue(Boolean.FALSE);
+                mTransferAvailableFunds.setValue(Boolean.FALSE);
             }
         });
     }

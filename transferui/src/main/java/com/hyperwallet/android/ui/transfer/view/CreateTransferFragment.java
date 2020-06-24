@@ -18,6 +18,8 @@ package com.hyperwallet.android.ui.transfer.view;
 
 import static android.app.Activity.RESULT_OK;
 
+import static com.hyperwallet.android.model.transfer.Transfer.CURRENCY_NUMERIC_SEPARATOR;
+import static com.hyperwallet.android.model.transfer.Transfer.EMPTY_STRING;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TOKEN;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TRANSFER_METHOD_COUNTRY;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TRANSFER_METHOD_CURRENCY;
@@ -65,7 +67,6 @@ import java.util.Locale;
  */
 public class CreateTransferFragment extends Fragment {
 
-    private static final String EMPTY_STRING = "";
     private View mProgressBar;
     private CreateTransferViewModel mCreateTransferViewModel;
     private EditText mTransferAmount;
@@ -73,7 +74,6 @@ public class CreateTransferFragment extends Fragment {
     private TextView mTransferCurrencyCode;
     private TextView mTransferAllFundsSummary;
     private EditText mTransferNotes;
-    private View mTransferNextButtonProgress;
     private View mTransferDestination;
     private View mAddTransferDestination;
     private TextInputLayout mTransferAmountLayout;
@@ -110,7 +110,6 @@ public class CreateTransferFragment extends Fragment {
 
         mProgressBar = view.findViewById(R.id.progress_bar);
         mTransferAllFundsSummary = view.findViewById(R.id.transfer_summary);
-        mTransferNextButtonProgress = view.findViewById(R.id.transfer_action_button_progress_bar);
 
         mTransferCurrency = view.findViewById(R.id.transfer_amount_currency);
         mTransferCurrency.setText(EMPTY_STRING);
@@ -121,7 +120,7 @@ public class CreateTransferFragment extends Fragment {
         transferAllFunds.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mCreateTransferViewModel.setTransferAllAvailableFunds(true);
+                mCreateTransferViewModel.setTransferAllAvailableFunds(Boolean.TRUE);
             }
         });
 
@@ -211,13 +210,6 @@ public class CreateTransferFragment extends Fragment {
         mCreateTransferViewModel.retry();
     }
 
-    void reApplyFieldRules() {
-        if (mCreateTransferViewModel.isTransferAllAvailableFunds().getValue()) {
-            mTransferAmount.setEnabled(false);
-            mTransferCurrency.setTextColor(getResources().getColor(R.color.colorButtonTextDisabled));
-        }
-    }
-
     private boolean isCreateTransferValid() {
         if (!isValidAmount(mCreateTransferViewModel.getTransferAmount().getValue())) {
             mTransferAmountLayout.setError(requireContext().getString(R.string.transferAmountInvalid));
@@ -242,7 +234,7 @@ public class CreateTransferFragment extends Fragment {
         }
 
         try {
-            Double.parseDouble(amount);
+            Double.parseDouble(amount.replace(CURRENCY_NUMERIC_SEPARATOR, EMPTY_STRING));
         } catch (NumberFormatException e) {
             return false;
         }
@@ -391,7 +383,7 @@ public class CreateTransferFragment extends Fragment {
                             }
                         } else {
                             mTransferCurrency.setTextColor(getResources().getColor(R.color.colorSecondaryDark));
-                            mTransferAmount.setText(null);
+                            mTransferAmount.setText(mCreateTransferViewModel.getTransferAmount().getValue());
                         }
                     }
                 });
@@ -418,10 +410,10 @@ public class CreateTransferFragment extends Fragment {
             @Override
             public void onChanged(Boolean loading) {
                 if (loading) {
-                    mTransferNextButtonProgress.setVisibility(View.VISIBLE);
+                    mProgressBar.setVisibility(View.VISIBLE);
                     disableInputControls();
                 } else {
-                    mTransferNextButtonProgress.setVisibility(View.GONE);
+                    mProgressBar.setVisibility(View.GONE);
                     enableInputControls();
                 }
             }
