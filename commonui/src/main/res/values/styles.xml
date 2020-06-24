@@ -102,7 +102,7 @@
     </style>
 
     <style name="TextAppearance.Hyperwallet.CurrencyCode.Caption" parent="TextAppearance.MaterialComponents.Caption">
-        <item name="android:textSize">@dimen/font_headline6</item>
+        <item name="android:textSize">@dimen/font_headline5</item>
     </style>
 
     <style name="TextAppearance.Hyperwallet.Clickable.Caption" parent="TextAppearance.MaterialComponents.Caption">

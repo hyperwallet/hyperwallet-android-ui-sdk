@@ -219,10 +219,8 @@ public class CreateTransferFragment extends Fragment {
     }
 
     private boolean isCreateTransferValid() {
-        if (TextUtils.isEmpty(mCreateTransferViewModel.getTransferAmount().getValue())
-                || getResources().getString(R.string.defaultTransferAmount)
-                .equals(mCreateTransferViewModel.getTransferAmount().getValue())) {
-            mTransferAmountLayout.setError(requireContext().getString(R.string.validation_amount_required));
+        if (!isValidAmount(mCreateTransferViewModel.getTransferAmount().getValue())) {
+            mTransferAmountLayout.setError(requireContext().getString(R.string.transferAmountInvalid));
             return false;
         }
 
@@ -231,6 +229,23 @@ public class CreateTransferFragment extends Fragment {
             return false;
         }
 
+        return true;
+    }
+
+    private boolean isValidAmount(final String amount) {
+        if (TextUtils.isEmpty(amount)) {
+            return false;
+        }
+
+        if (getResources().getString(R.string.defaultTransferAmount).equals(amount)) {
+            return false;
+        }
+
+        try {
+            Double.parseDouble(amount);
+        } catch (NumberFormatException e) {
+            return false;
+        }
         return true;
     }
 

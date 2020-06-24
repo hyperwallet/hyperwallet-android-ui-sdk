@@ -5,7 +5,7 @@
     <string name="mobileTransferFundsHeader">Transfer funds</string>
     <string name="transfer_foreign_exchange">Foreign Exchange</string>
     <string name="transfer_header_label">Transfer</string>
-    <string name="transfer_destination_required_error">Transfer method is required</string>
+    <string name="noTransferMethodAdded">Transfer method is required</string>
     <string name="transfer_amount_hint">Amount</string>
     <string name="transfer_currency_placeholder">USD</string>
     <string name="transfer_currency_code_placeholder">$</string>
@@ -28,10 +28,8 @@
     <string name="amount_currency_format">%s %s</string>
     <string name="exchange_rate_format">1 %s = %s %s</string>
 
-    <string name="module_transfermethodui_unavailable_error">Functionality to add an account
-        has not been included in this application.</string>
-    <string name="validation_amount_required">Amount is required.</string>
-    <string name="validation_destination_required">Destination account is required.</string>
+    <string name="module_transfermethodui_unavailable_error">Functionality to add an account has not been included in this application.</string>
+    <string name="transferAmountInvalid">Enter a valid transfer amount</string>
 
     <string name="foreign_exchange_sell_label">You sell:</string>
     <string name="foreign_exchange_buy_label">You buy:</string>

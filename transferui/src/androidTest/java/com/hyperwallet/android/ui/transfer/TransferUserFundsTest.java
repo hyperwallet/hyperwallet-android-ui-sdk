@@ -701,7 +701,7 @@ public class TransferUserFundsTest {
         mActivityTestRule.launchActivity(null);
 
         onView(withId(R.id.transfer_action_button)).perform(nestedScrollTo(), click());
-        onView(withId(R.id.transfer_amount_layout)).check(matches(hasErrorText(R.string.validation_amount_required)));
+        onView(withId(R.id.transfer_amount_layout)).check(matches(hasErrorText(R.string.transferAmountInvalid)));
     }
 
     @Test
@@ -732,7 +732,7 @@ public class TransferUserFundsTest {
 
         onView(withId(R.id.transfer_destination_error)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_error)).check(
-                matches(withText(R.string.transfer_destination_required_error)));
+                matches(withText(R.string.noTransferMethodAdded)));
     }
 
     @Test
