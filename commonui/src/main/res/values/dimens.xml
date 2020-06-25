@@ -81,4 +81,8 @@
     <dimen name="circle_white_density">3dp</dimen>
     <dimen name="component_elevation">4dp</dimen>
     <dimen name="negative_padding">3dp</dimen>
+    <dimen name="negative_margin">-8dp</dimen>
+    <dimen name="edit_text_offset">20dp</dimen>
+    <dimen name="edit_text_top_offset">40dp</dimen>
+    <dimen name="image_offset">32dp</dimen>
 </resources>

@@ -174,7 +174,9 @@
 
             <RelativeLayout
                 android:id="@+id/destination_data_container"
-                android:background="@drawable/content_border_top_bottom"
+                android:background="@drawable/content_border_bottom"
+                android:layout_marginStart="@dimen/grid_margin_left"
+                android:layout_marginEnd="@dimen/grid_margin_right"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -211,19 +213,20 @@
                 android:id="@+id/notes_header_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="@dimen/grid_padding_top">
+                android:paddingTop="@dimen/edit_text_top_offset">
 
                 <TextView
                     android:id="@+id/notes_header"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="@dimen/grid_margin_left"
+                    android:layout_marginStart="@dimen/widget_left_margin_offset"
                     android:text="@string/mobileNoteLabel"
-                    android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"/>
+                    android:textAppearance="@style/TextAppearance.Hyperwallet.InputLabel" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/transfer_notes_data_container"
+                android:layout_marginTop="@dimen/negative_margin"
                 android:paddingStart="@dimen/grid_margin_left"
                 android:paddingEnd="@dimen/grid_margin_right"
                 android:orientation="vertical"
@@ -235,10 +238,13 @@
                     android:theme="@style/Widget.Hyperwallet.TextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
                     <EditText
                         android:id="@+id/transfer_notes"
                         android:textColor="@color/regularColorSecondary"
                         android:textAppearance="@style/TextAppearance.Hyperwallet.Body1"
+                        android:paddingStart="@dimen/edit_text_offset"
+                        android:paddingEnd="@dimen/edit_text_offset"
                         android:inputType="text"
                         android:maxLines="1"
                         android:enabled="false"

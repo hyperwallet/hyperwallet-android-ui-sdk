@@ -150,6 +150,7 @@ public class CreateTransferFragment extends Fragment {
         // transfer amount
         mTransferAmountLayout = view.findViewById(R.id.transfer_amount_layout);
         mTransferAmount = view.findViewById(R.id.transfer_amount);
+        mTransferAmount.requestFocus();
         prepareTransferAmount();
 
         // transfer notes;
