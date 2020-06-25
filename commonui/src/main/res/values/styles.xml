@@ -258,13 +258,18 @@
         <item name="colorAccent">@color/colorPrimary</item>
     </style>
 
-    <style name="TextAppearance.Hyperwallet.Subtitle1"
-        parent="@style/TextAppearance.MaterialComponents.Subtitle1">
-    </style>
+    <style name="TextAppearance.Hyperwallet.Subtitle1" parent="@style/TextAppearance.MaterialComponents.Subtitle1"></style>
 
     <style name="Widget.Hyperwallet.Switch" parent="Theme.AppCompat.Light">
         <item name="android:colorControlActivated">@color/colorPrimary</item>
     </style>
+
+    <!-- overridable styles -->
+    <style name="TextAppearance.Hyperwallet.Headline5" parent="@style/TextAppearance.MaterialComponents.Headline5" />
+
+    <style name="TextAppearance.Hyperwallet.Headline2" parent="@style/TextAppearance.MaterialComponents.Headline2" />
+
+    <style name="TextAppearance.Hyperwallet.Body1" parent="@style/TextAppearance.MaterialComponents.Body1" />
 </resources>
 
 
