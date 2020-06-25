@@ -86,6 +86,7 @@
     <style name="Widget.Hyperwallet.Button" parent="@style/Widget.AppCompat.Button">
         <item name="android:textColor">@color/regularColorPrimary</item>
         <item name="android:background">@color/colorPrimary</item>
+        <item name="android:textSize">@dimen/font_body1</item>
     </style>
 
     <style name="Widget.Hyperwallet.Text.Button" parent="@style/Widget.Hyperwallet.Button">
@@ -98,11 +99,15 @@
     </style>
 
     <style name="TextAppearance.Hyperwallet.Caption" parent="TextAppearance.MaterialComponents.Caption">
-        <item name="android:textSize">@dimen/font_subtitle2</item>
+        <item name="android:textSize">@dimen/font_body1</item>
+    </style>
+
+    <style name="TextAppearance.Hyperwallet.Currency.Caption" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textSize">@dimen/font_currency_symbol</item>
     </style>
 
     <style name="TextAppearance.Hyperwallet.CurrencyCode.Caption" parent="TextAppearance.MaterialComponents.Caption">
-        <item name="android:textSize">@dimen/font_headline5</item>
+        <item name="android:textSize">@dimen/font_currency_code</item>
     </style>
 
     <style name="TextAppearance.Hyperwallet.Clickable.Caption" parent="TextAppearance.MaterialComponents.Caption">

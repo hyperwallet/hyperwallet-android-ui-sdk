@@ -49,7 +49,7 @@
                             android:paddingStart="@dimen/amount_padding"
                             android:paddingEnd="@dimen/amount_padding"
                             android:paddingTop="@dimen/currency_code_padding"
-                            android:textAppearance="@style/TextAppearance.Hyperwallet.CurrencyCode.Caption"
+                            android:textAppearance="@style/TextAppearance.Hyperwallet.Currency.Caption"
                             app:layout_constraintEnd_toStartOf="@+id/transfer_amount"
                             app:layout_constraintTop_toTopOf="parent"
                             tools:text="@string/transfer_currency_code_placeholder" />
@@ -74,9 +74,9 @@
                             android:id="@+id/transfer_amount_currency"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:paddingStart="@dimen/amount_padding"
+                            android:layout_marginStart="@dimen/amount_padding"
                             android:paddingBottom="@dimen/currency_padding"
-                            android:textAppearance="@style/TextAppearance.Hyperwallet.Caption"
+                            android:textAppearance="@style/TextAppearance.Hyperwallet.CurrencyCode.Caption"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/transfer_amount"
                             tools:text="@string/transfer_currency_placeholder" />
@@ -253,6 +253,7 @@
                     android:layout_marginBottom="@dimen/button_bottom_margin"
                     android:maxWidth="@dimen/create_button_max_width"
                     android:text="@string/continueButtonLabel"
+                    android:textAllCaps="false"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
