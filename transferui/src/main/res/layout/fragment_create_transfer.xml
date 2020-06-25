@@ -17,6 +17,22 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <LinearLayout
+                android:id="@+id/transfer_funds_header_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/section_header_height"
+                android:paddingBottom="@dimen/item_horizontal_padding">
+
+                <TextView
+                    android:id="@+id/transfer_funds_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/grid_margin_left"
+                    android:text="@string/mobileTransferFundsHeader"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
+            </LinearLayout>
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/transfer_amount_container"
                 android:layout_width="match_parent"

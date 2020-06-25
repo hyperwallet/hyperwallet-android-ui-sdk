@@ -105,6 +105,12 @@ public class CreateTransferFragment extends Fragment {
     }
 
     @Override
+    public void onStop() {
+        mCreateTransferViewModel.setCreateQuoteLoading(Boolean.FALSE);
+        super.onStop();
+    }
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
@@ -116,6 +122,12 @@ public class CreateTransferFragment extends Fragment {
         mTransferCurrencyCode = view.findViewById(R.id.transfer_amount_currency_code);
         mTransferCurrencyCode.setText(EMPTY_STRING);
 
+        View transferHeader = view.findViewById(R.id.transfer_funds_header_container);
+        if (getActivity() instanceof CreateTransferActivity) {
+            transferHeader.setVisibility(View.GONE);
+        }
+
+        // transfer all funds
         TextView transferAllFunds = view.findViewById(R.id.transfer_all_funds);
         transferAllFunds.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -462,7 +474,7 @@ public class CreateTransferFragment extends Fragment {
 
         mTransferCurrency.setText(transferMethod.getField(TRANSFER_METHOD_CURRENCY));
         mTransferCurrencyCode.setText(
-                Currency.getInstance(transferMethod.getField(TRANSFER_METHOD_CURRENCY)).getSymbol(Locale.ROOT));
+                Currency.getInstance(transferMethod.getField(TRANSFER_METHOD_CURRENCY)).getSymbol(Locale.getDefault()));
         mTransferDestination.setVisibility(View.VISIBLE);
     }
 }
