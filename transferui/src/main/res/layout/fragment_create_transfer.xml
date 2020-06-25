@@ -30,7 +30,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="@dimen/grid_margin_left"
                     android:text="@string/mobileTransferFundsHeader"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
+                    android:textAppearance="@style/TextAppearance.Hyperwallet.Headline5" />
             </LinearLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -80,7 +80,7 @@
                             android:inputType="numberDecimal"
                             android:maxLines="1"
                             android:text="@string/defaultTransferAmount"
-                            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline2"
+                            android:textAppearance="@style/TextAppearance.Hyperwallet.Headline2"
                             android:textColor="@color/regularColorSecondary"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -203,7 +203,7 @@
                     android:layout_marginStart="@dimen/grid_margin_left"
                     android:layout_marginTop="@dimen/grid_margin_top"
                     android:text="@string/noTransferMethodAdded"
-                    android:textAppearance="@style/TextAppearance.Hyperwallet.Body2.Error" />
+                    android:textAppearance="@style/ErrorText" />
 
             </LinearLayout>
 
@@ -238,6 +238,7 @@
                     <EditText
                         android:id="@+id/transfer_notes"
                         android:textColor="@color/regularColorSecondary"
+                        android:textAppearance="@style/TextAppearance.Hyperwallet.Body1"
                         android:inputType="text"
                         android:maxLines="1"
                         android:enabled="false"
