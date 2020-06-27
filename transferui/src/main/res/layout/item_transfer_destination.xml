@@ -16,7 +16,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/grid_margin_left"
-        android:background="@drawable/circle"
         android:fontFamily="@font/icomoon"
         android:gravity="center"
         android:textColor="@color/colorPrimary"
@@ -66,15 +65,16 @@
         android:src="@drawable/ic_check_14dp"
         android:visibility="gone"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/title"
-        app:layout_constraintBottom_toBottomOf="@id/title"
-        tools:visibility="visible"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:visibility="visible" />
 
     <View
         android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="@dimen/divider_height"
         android:background="?android:attr/listDivider"
+        android:layout_marginStart="@dimen/divider_offset"
         android:layout_marginTop="@dimen/divider_padding_top"
         app:layout_constraintStart_toStartOf="@+id/title"
         app:layout_constraintTop_toBottomOf="@+id/description_2"/>

@@ -67,6 +67,9 @@ import java.util.Locale;
  */
 public class CreateTransferFragment extends Fragment {
 
+    private static final int MAX_AMOUNT_WHOLE_NUMBER = 12;
+    private static final int MAX_AMOUNT_DECIMAL = 2;
+
     private View mProgressBar;
     private CreateTransferViewModel mCreateTransferViewModel;
     private EditText mTransferAmount;
@@ -278,6 +281,7 @@ public class CreateTransferFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
+                String amount = s.toString();
             }
         });
     }

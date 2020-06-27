@@ -59,7 +59,7 @@
         <item name="contentScrim">@color/colorPrimary</item>
         <item name="expandedTitleTextAppearance">@style/TextAppearance.Hyperwallet.Headline4</item>
         <item name="collapsedTitleTextAppearance">
-            @style/TextAppearance.MaterialComponents.Headline6
+            @style/TextAppearance.Hyperwallet.Headline6
         </item>
     </style>
 
@@ -262,7 +262,7 @@
         <item name="colorAccent">@color/colorPrimary</item>
     </style>
 
-    <style name="TextAppearance.Hyperwallet.Subtitle1" parent="@style/TextAppearance.MaterialComponents.Subtitle1"></style>
+    <style name="TextAppearance.Hyperwallet.Subtitle1" parent="@style/TextAppearance.MaterialComponents.Subtitle1" />
 
     <style name="Widget.Hyperwallet.Switch" parent="Theme.AppCompat.Light">
         <item name="android:colorControlActivated">@color/colorPrimary</item>

@@ -10,7 +10,7 @@
     <!-- title and font icon -->
     <string name="bank_account">Bank Account</string>
     <string name="bank_card">Debit Card</string>
-    <string name="wire_account">Wire Transfer</string>
+    <string name="wire_account">Wire Transfer Account</string>
     <string name="paper_check">Paper Check</string>
     <string name="prepaid_card">Prepaid Card</string>
     <string name="paypal_account">PayPal</string>
@@ -22,7 +22,7 @@
     <string name="prepaid_card_font_icon">\uE00A</string>
     <string name="paypal_account_font_icon">\uE021</string>
 
-    <string name="transfer_method_list_item_description">Ending on %s</string>
+    <string name="transfer_method_list_item_description">ending in %s</string>
     <string name="not_translated_in_braces">(not translated)</string>
 
     <string name="authentication_error_header">Authentication Error</string>

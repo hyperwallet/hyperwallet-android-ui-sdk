@@ -10,16 +10,15 @@
         android:id="@+id/add_transfer_destination_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/grid_margin_left"
-        android:layout_marginTop="@dimen/grid_margin_top"
-        android:background="@drawable/circle"
+        android:layout_marginStart="@dimen/image_offset"
         android:gravity="center"
         android:text="@string/add_text"
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/font_default_icon_size"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/add_transfer_destination_title"
