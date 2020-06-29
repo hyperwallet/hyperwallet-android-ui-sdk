@@ -382,7 +382,9 @@ public class CreateTransferFragment extends Fragment {
                     mTransferNotes.setText(mCreateTransferViewModel.getTransferNotes().getValue());
                 } else {
                     mCreateTransferViewModel.setTransferNotes(((EditText) v).getText().toString());
-                    if (mCreateTransferViewModel.getTransferNotes().getValue().length() > NOTES_MAX_LINE_LENGTH) {
+                    if (mCreateTransferViewModel.getTransferNotes().getValue() != null
+                            && mCreateTransferViewModel.getTransferNotes().getValue().length()
+                            > NOTES_MAX_LINE_LENGTH) {
                         mTransferNotes.setTag(NOTES_TAG);
                     } else {
                         mTransferNotes.setTag(null);

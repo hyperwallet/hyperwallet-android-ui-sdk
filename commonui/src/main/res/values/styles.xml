@@ -264,6 +264,10 @@
 
     <style name="TextAppearance.Hyperwallet.Subtitle1" parent="@style/TextAppearance.MaterialComponents.Subtitle1" />
 
+    <style name="TextAppearance.Add.TransferMethod" parent="@style/TextAppearance.MaterialComponents.Headline4">
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
     <style name="Widget.Hyperwallet.Switch" parent="Theme.AppCompat.Light">
         <item name="android:colorControlActivated">@color/colorPrimary</item>
     </style>
