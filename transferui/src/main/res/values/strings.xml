@@ -1,24 +1,26 @@
 <resources>
     <string name="title_activity_create_transfer">Transfer Funds</string>
+    <string name="mobileConfirmationHeader">Confirm the details</string>
+    <string name="mobileConfirmNotesLabel">NOTE</string>
     <string name="transfer_destination">Destination</string>
     <string name="mobileTransferToLabel">TRANSFER TO</string>
     <string name="mobileTransferFundsHeader">Transfer funds</string>
     <string name="mobileTransferMethodsHeader">Transfer methods</string>
-    <string name="transfer_foreign_exchange">Foreign Exchange</string>
+    <string name="mobileFXlabel">FOREIGN EXCHANGE</string>
     <string name="transfer_header_label">Transfer</string>
     <string name="noTransferMethodAdded">Transfer method is required</string>
     <string name="transfer_amount_hint">Amount</string>
     <string name="transfer_currency_placeholder">USD</string>
     <string name="transfer_currency_code_placeholder">$</string>
     <string name="transfer_all_funds_label">Transfer all Funds</string>
-    <string name="mobileAvailableBalance">Available balance: %s %s</string>
-    <string name="transfer_summary">Summary</string>
+    <string name="mobileAvailableBalance">Available funds: %s %s</string>
+    <string name="mobileSummaryLabel">SUMMARY</string>
     <string name="mobileNoteLabel">Note</string>
     <string name="transfer_notes_label">Description</string>
     <string name="transfer_notes_additional_info_label">Description is optional</string>
     <string name="continueButtonLabel">Continue</string>
     <string name="defaultTransferAmount">0</string>
-    <string name="transfer_confirm_action_label">Confirm</string>
+    <string name="transfer">Transfer</string>
     <string name="add_text">+</string>
     <string name="add_transfer_label">Add Account</string>
     <string name="add_transfer_description_1">An account hasn\'t been setup yet,</string>
@@ -32,13 +34,13 @@
     <string name="module_transfermethodui_unavailable_error">Functionality to add an account has not been included in this application.</string>
     <string name="transferAmountInvalid">Enter a valid transfer amount</string>
 
-    <string name="foreign_exchange_sell_label">You sell:</string>
-    <string name="foreign_exchange_buy_label">You buy:</string>
-    <string name="foreign_exchange_rate_label">Exchange Rate:</string>
+    <string name="mobileFXsell">From</string>
+    <string name="mobileFXbuy">To</string>
+    <string name="mobileFXRateLabel">Exchange rate</string>
 
-    <string name="summary_amount_label">Amount:</string>
-    <string name="summary_amount_fee_label">Fee:</string>
-    <string name="summary_amount_transfer_label">You will receive:</string>
+    <string name="mobileConfirmDetailsAmount">Amount</string>
+    <string name="mobileConfirmDetailsFee">Fee</string>
+    <string name="mobileConfirmDetailsTotal">You will receive</string>
     <string name="exchange_rate_change_warning">Due to changes in the FX rate,
         you will now receive %1$s %2$s.</string>
 

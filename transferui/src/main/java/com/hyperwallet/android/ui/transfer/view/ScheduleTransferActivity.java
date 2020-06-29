@@ -37,8 +37,8 @@ import com.hyperwallet.android.ui.common.repository.Event;
 import com.hyperwallet.android.ui.common.util.PageGroups;
 import com.hyperwallet.android.ui.common.view.ActivityUtils;
 import com.hyperwallet.android.ui.common.view.error.OnNetworkErrorCallback;
-import com.hyperwallet.android.ui.transfer.TransferLocalBroadcast;
 import com.hyperwallet.android.ui.transfer.R;
+import com.hyperwallet.android.ui.transfer.TransferLocalBroadcast;
 import com.hyperwallet.android.ui.transfer.repository.TransferRepositoryFactory;
 import com.hyperwallet.android.ui.transfer.viewmodel.ScheduleTransferViewModel;
 
@@ -64,7 +64,7 @@ public class ScheduleTransferActivity extends AppCompatActivity implements OnNet
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle(R.string.title_activity_create_transfer);
+        getSupportActionBar().setTitle(R.string.mobileConfirmationHeader);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

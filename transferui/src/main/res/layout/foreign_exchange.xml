@@ -3,7 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/regularColorPrimary"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -20,7 +19,7 @@
             android:layout_marginStart="@dimen/grid_margin_left"
             android:layout_marginTop="@dimen/grid_margin_top"
             android:layout_marginBottom="@dimen/grid_margin_bottom"
-            android:text="@string/foreign_exchange_sell_label"
+            android:text="@string/mobileFXsell"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -65,7 +64,7 @@
             android:layout_marginTop="@dimen/grid_margin_top"
             android:layout_marginBottom="@dimen/grid_margin_bottom"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-            android:text="@string/foreign_exchange_buy_label"
+            android:text="@string/mobileFXbuy"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -108,7 +107,7 @@
             android:layout_marginStart="@dimen/grid_margin_left"
             android:layout_marginTop="@dimen/grid_margin_top"
             android:layout_marginBottom="@dimen/grid_margin_bottom"
-            android:text="@string/foreign_exchange_rate_label"
+            android:text="@string/mobileFXRateLabel"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -126,7 +125,17 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="@string/foreign_exchange_rate_placeholder"/>
+            tools:text="@string/foreign_exchange_rate_placeholder" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider_height"
+            android:background="?android:attr/listDivider"
+            android:layout_marginTop="@dimen/divider_padding_top"
+            android:layout_marginStart="@dimen/grid_margin_left"
+            android:layout_marginEnd="@dimen/grid_margin_right"
+            app:layout_constraintStart_toStartOf="@+id/exchange_rate_value"
+            app:layout_constraintTop_toBottomOf="@+id/exchange_rate_value" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

@@ -268,25 +268,25 @@ public class TransferPPCFundsTest {
         onView(withId(R.id.list_foreign_exchange)).check(new RecyclerViewCountAssertion(1));
         onView(withId(R.id.list_foreign_exchange)).check(
                 matches(atPosition(0, hasDescendant(
-                        allOf(withId(R.id.sell_label), withText(R.string.foreign_exchange_sell_label))))));
+                        allOf(withId(R.id.sell_label), withText(R.string.mobileFXsell))))));
         onView(withId(R.id.list_foreign_exchange)).check(
                 matches(atPosition(0, hasDescendant(allOf(withId(R.id.sell_value), withText("117.87 USD"))))));
         onView(withId(R.id.list_foreign_exchange)).check(
                 matches(atPosition(0,
-                        hasDescendant(allOf(withId(R.id.buy_label), withText(R.string.foreign_exchange_buy_label))))));
+                        hasDescendant(allOf(withId(R.id.buy_label), withText(R.string.mobileFXbuy))))));
         onView(withId(R.id.list_foreign_exchange)).check(
                 matches(atPosition(0, hasDescendant(allOf(withId(R.id.buy_value), withText("152.20 CAD"))))));
         onView(withId(R.id.list_foreign_exchange)).check(
                 matches(atPosition(0, hasDescendant(
-                        allOf(withId(R.id.exchange_rate_label), withText(R.string.foreign_exchange_rate_label))))));
+                        allOf(withId(R.id.exchange_rate_label), withText(R.string.mobileFXRateLabel))))));
         onView(withId(R.id.list_foreign_exchange)).check(
                 matches(atPosition(0,
                         hasDescendant(allOf(withId(R.id.exchange_rate_value), withText("1 USD = 1.291253 CAD"))))));
-        onView(withId(R.id.amount_label)).check(matches(withText(R.string.summary_amount_label)));
+        onView(withId(R.id.amount_label)).check(matches(withText(R.string.mobileConfirmDetailsAmount)));
         onView(withId(R.id.amount_value)).check(matches(withText("152.20 CAD")));
-        onView(withId(R.id.fee_label)).check(matches(withText(R.string.summary_amount_fee_label)));
+        onView(withId(R.id.fee_label)).check(matches(withText(R.string.mobileConfirmDetailsFee)));
         onView(withId(R.id.fee_value)).check(matches(withText("2.20 CAD")));
-        onView(withId(R.id.transfer_label)).check(matches(withText(R.string.summary_amount_transfer_label)));
+        onView(withId(R.id.transfer_label)).check(matches(withText(R.string.mobileConfirmDetailsTotal)));
         onView(withId(R.id.transfer_value)).check(matches(withText("150.00 CAD")));
         onView(withId(R.id.exchange_rate_warning_container)).check(matches(not(isDisplayed())));
         onView(withId(R.id.exchange_rate_warning)).check(matches(not(isDisplayed())));
@@ -350,11 +350,11 @@ public class TransferPPCFundsTest {
         onView(withId(R.id.transfer_action_button)).perform(nestedScrollTo(), click());
 
         onView(withId(R.id.list_foreign_exchange)).check(matches(not(isDisplayed())));
-        onView(withId(R.id.amount_label)).check(matches(withText(R.string.summary_amount_label)));
+        onView(withId(R.id.amount_label)).check(matches(withText(R.string.mobileConfirmDetailsAmount)));
         onView(withId(R.id.amount_value)).check(matches(withText("102.00 USD")));
-        onView(withId(R.id.fee_label)).check(matches(withText(R.string.summary_amount_fee_label)));
+        onView(withId(R.id.fee_label)).check(matches(withText(R.string.mobileConfirmDetailsFee)));
         onView(withId(R.id.fee_value)).check(matches(withText("2.00 USD")));
-        onView(withId(R.id.transfer_label)).check(matches(withText(R.string.summary_amount_transfer_label)));
+        onView(withId(R.id.transfer_label)).check(matches(withText(R.string.mobileConfirmDetailsTotal)));
         onView(withId(R.id.transfer_value)).check(matches(withText("100.00 USD")));
         onView(withId(R.id.exchange_rate_warning_container)).check(matches(not(isDisplayed())));
         onView(withId(R.id.exchange_rate_warning)).check(matches(not(isDisplayed())));
@@ -420,11 +420,11 @@ public class TransferPPCFundsTest {
         onView(withId(R.id.transfer_action_button)).perform(nestedScrollTo(), click());
 
         onView(withId(R.id.list_foreign_exchange)).check(matches(not(isDisplayed())));
-        onView(withId(R.id.amount_label)).check(matches(withText(R.string.summary_amount_label)));
+        onView(withId(R.id.amount_label)).check(matches(withText(R.string.mobileConfirmDetailsAmount)));
         onView(withId(R.id.amount_value)).check(matches(withText("102.00 USD")));
-        onView(withId(R.id.fee_label)).check(matches(withText(R.string.summary_amount_fee_label)));
+        onView(withId(R.id.fee_label)).check(matches(withText(R.string.mobileConfirmDetailsFee)));
         onView(withId(R.id.fee_value)).check(matches(withText("2.00 USD")));
-        onView(withId(R.id.transfer_label)).check(matches(withText(R.string.summary_amount_transfer_label)));
+        onView(withId(R.id.transfer_label)).check(matches(withText(R.string.mobileConfirmDetailsTotal)));
         onView(withId(R.id.transfer_value)).check(matches(withText("100.00 USD")));
         onView(withId(R.id.exchange_rate_warning_container)).check(matches(not(isDisplayed())));
         onView(withId(R.id.exchange_rate_warning)).check(matches(not(isDisplayed())));
@@ -490,7 +490,7 @@ public class TransferPPCFundsTest {
         onView(withId(R.id.transfer_action_button)).perform(nestedScrollTo(), click());
 
         onView(withId(R.id.list_foreign_exchange)).check(matches(not(isDisplayed())));
-        onView(withId(R.id.amount_label)).check(matches(withText(R.string.summary_amount_label)));
+        onView(withId(R.id.amount_label)).check(matches(withText(R.string.mobileConfirmDetailsAmount)));
         onView(withId(R.id.amount_value)).check(matches(withText("100.00 USD")));
         onView(withId(R.id.fee_label)).check(matches(not(isDisplayed())));
         onView(withId(R.id.fee_value)).check(matches(not(isDisplayed())));
@@ -559,11 +559,11 @@ public class TransferPPCFundsTest {
 
         onView(withId(R.id.list_foreign_exchange)).check(matches(not(isDisplayed())));
 
-        onView(withId(R.id.amount_label)).check(matches(withText(R.string.summary_amount_label)));
+        onView(withId(R.id.amount_label)).check(matches(withText(R.string.mobileConfirmDetailsAmount)));
         onView(withId(R.id.amount_value)).check(matches(withText("1,000.00 USD")));
-        onView(withId(R.id.fee_label)).check(matches(withText(R.string.summary_amount_fee_label)));
+        onView(withId(R.id.fee_label)).check(matches(withText(R.string.mobileConfirmDetailsFee)));
         onView(withId(R.id.fee_value)).check(matches(withText("2.00 USD")));
-        onView(withId(R.id.transfer_label)).check(matches(withText(R.string.summary_amount_transfer_label)));
+        onView(withId(R.id.transfer_label)).check(matches(withText(R.string.mobileConfirmDetailsTotal)));
         onView(withId(R.id.transfer_value)).check(matches(withText("998.00 USD")));
         onView(withId(R.id.exchange_rate_warning_container)).check(matches(not(isDisplayed())));
         onView(withId(R.id.exchange_rate_warning)).check(matches(not(isDisplayed())));
@@ -742,11 +742,11 @@ public class TransferPPCFundsTest {
         onView(withId(android.R.id.button1)).perform(click());
         onView(withText(R.string.error_dialog_connectivity_title)).check(doesNotExist());
 
-        onView(withId(R.id.amount_label)).check(matches(withText(R.string.summary_amount_label)));
+        onView(withId(R.id.amount_label)).check(matches(withText(R.string.mobileConfirmDetailsAmount)));
         onView(withId(R.id.amount_value)).check(matches(withText("102.00 USD")));
-        onView(withId(R.id.fee_label)).check(matches(withText(R.string.summary_amount_fee_label)));
+        onView(withId(R.id.fee_label)).check(matches(withText(R.string.mobileConfirmDetailsFee)));
         onView(withId(R.id.fee_value)).check(matches(withText("2.00 USD")));
-        onView(withId(R.id.transfer_label)).check(matches(withText(R.string.summary_amount_transfer_label)));
+        onView(withId(R.id.transfer_label)).check(matches(withText(R.string.mobileConfirmDetailsTotal)));
         onView(withId(R.id.transfer_value)).check(matches(withText("100.00 USD")));
     }
 
@@ -788,11 +788,11 @@ public class TransferPPCFundsTest {
         onView(withId(R.id.transfer_amount)).perform(nestedScrollTo(), replaceText("100.00"));
         onView(withId(R.id.transfer_action_button)).perform(nestedScrollTo(), click());
 
-        onView(withId(R.id.amount_label)).check(matches(withText(R.string.summary_amount_label)));
+        onView(withId(R.id.amount_label)).check(matches(withText(R.string.mobileConfirmDetailsAmount)));
         onView(withId(R.id.amount_value)).check(matches(withText("102.00 USD")));
-        onView(withId(R.id.fee_label)).check(matches(withText(R.string.summary_amount_fee_label)));
+        onView(withId(R.id.fee_label)).check(matches(withText(R.string.mobileConfirmDetailsFee)));
         onView(withId(R.id.fee_value)).check(matches(withText("2.00 USD")));
-        onView(withId(R.id.transfer_label)).check(matches(withText(R.string.summary_amount_transfer_label)));
+        onView(withId(R.id.transfer_label)).check(matches(withText(R.string.mobileConfirmDetailsTotal)));
         onView(withId(R.id.transfer_value)).check(matches(withText("100.00 USD")));
         onView(withId(R.id.notes_container)).check(matches(not(isDisplayed())));
         onView(withId(R.id.notes_value)).check(matches(not(isDisplayed())));
