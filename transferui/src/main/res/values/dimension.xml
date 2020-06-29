@@ -9,5 +9,10 @@
     <dimen name="transfer_all_funds_container_negative_margin">-15dp</dimen>
     <dimen name="amount_padding">3dp</dimen>
     <dimen name="currency_padding">12dp</dimen>
+    <dimen name="currency_padding_2">15dp</dimen>
+    <dimen name="currency_padding_3">22dp</dimen>
     <dimen name="currency_code_padding">15dp</dimen>
+    <dimen name="currency_code_padding_2">18dp</dimen>
+    <dimen name="currency_code_padding_3">25dp</dimen>
+    <dimen name="amount_container_height">80dp</dimen>
 </resources>

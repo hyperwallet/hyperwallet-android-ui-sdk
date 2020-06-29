@@ -30,6 +30,7 @@ import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getStri
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getStringResourceByName;
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getTransferMethodDetail;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -67,8 +68,9 @@ import java.util.Locale;
  */
 public class CreateTransferFragment extends Fragment {
 
-    private static final int MAX_AMOUNT_WHOLE_NUMBER = 12;
-    private static final int MAX_AMOUNT_DECIMAL = 2;
+    private static final String NOTES_TAG = "NOTES_TAGGED";
+    private static final String ELLIPSIS = "...";
+    private static final int NOTES_MAX_LINE_LENGTH = 40;
 
     private View mProgressBar;
     private CreateTransferViewModel mCreateTransferViewModel;
@@ -266,7 +268,13 @@ public class CreateTransferFragment extends Fragment {
                 }
             }
         });
+
         mTransferAmount.addTextChangedListener(new TextWatcher() {
+
+            private static final int MAX_AMOUNT_WHOLE_NUMBER = 12;
+            private static final int MAX_AMOUNT_DECIMAL = 2;
+            private static final String AMOUNT_DECIMAL = ".";
+
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
@@ -274,27 +282,115 @@ public class CreateTransferFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (before != count) {
-                    mCreateTransferViewModel.setTransferAmount(s.toString());
+                    String amount = s.toString();
+                    String[] comp = amount.split("\\.");
+                    StringBuilder builder = new StringBuilder();
+
+                    if (comp.length == 2) {
+                        String whole = comp[0];
+                        String decimal = comp[1];
+
+                        if (whole.length() <= MAX_AMOUNT_WHOLE_NUMBER) {
+                            builder.append(whole);
+                        } else {
+                            builder.append(whole.substring(0, MAX_AMOUNT_WHOLE_NUMBER));
+                        }
+
+                        if (decimal.length() <= MAX_AMOUNT_DECIMAL) {
+                            builder.append(AMOUNT_DECIMAL).append(decimal);
+                        } else {
+                            builder.append(AMOUNT_DECIMAL).append(decimal.substring(0, MAX_AMOUNT_DECIMAL));
+                        }
+                    } else {
+                        if (amount.contains(AMOUNT_DECIMAL)) {
+                            if (amount.lastIndexOf(AMOUNT_DECIMAL) == (amount.length() - 1)
+                                    && amount.length() <= MAX_AMOUNT_WHOLE_NUMBER + 1) {
+                                builder.append(amount);
+                            } else {
+                                builder.append(amount.substring(0, MAX_AMOUNT_WHOLE_NUMBER + 1));
+                            }
+                        } else {
+                            if (amount.length() <= MAX_AMOUNT_WHOLE_NUMBER) {
+                                builder.append(amount);
+                            } else {
+                                builder.append(amount.substring(0, MAX_AMOUNT_WHOLE_NUMBER));
+                            }
+                        }
+                    }
+
+                    mCreateTransferViewModel.setTransferAmount(builder.toString());
                     mTransferAmountLayout.setError(null);
+                    Context context = CreateTransferFragment.this.getActivity();
+
+                    switch (builder.toString().length()) {
+                        case 9:
+                        case 10:
+                        case 11: // stage one dimension changes
+                            mTransferCurrencyCode.setPadding(
+                                    context.getResources().getDimensionPixelSize(R.dimen.amount_padding),
+                                    context.getResources().getDimensionPixelSize(R.dimen.currency_code_padding_2),
+                                    context.getResources().getDimensionPixelSize(R.dimen.amount_padding), 0);
+                            mTransferCurrency.setPadding(0, 0, 0,
+                                    context.getResources().getDimensionPixelSize(R.dimen.currency_padding_2));
+                            mTransferCurrencyCode.setTextSize(22);
+                            mTransferAmount.setTextSize(50);
+                            break;
+                        case 12:
+                        case 13:
+                        case 14:
+                        case 15: // stage two dimension changes
+                            mTransferCurrencyCode.setPadding(
+                                    context.getResources().getDimensionPixelSize(R.dimen.amount_padding),
+                                    context.getResources().getDimensionPixelSize(R.dimen.currency_code_padding_3),
+                                    context.getResources().getDimensionPixelSize(R.dimen.amount_padding), 0);
+                            mTransferCurrency.setPadding(0, 0, 0,
+                                    context.getResources().getDimensionPixelSize(R.dimen.currency_padding_3));
+                            mTransferCurrencyCode.setTextSize(15);
+                            mTransferAmount.setTextSize(35);
+                            mTransferCurrency.setTextSize(14);
+                            break;
+                        default: // back to original dimensions
+                            mTransferCurrencyCode.setPadding(
+                                    context.getResources().getDimensionPixelSize(R.dimen.amount_padding),
+                                    context.getResources().getDimensionPixelSize(R.dimen.currency_code_padding),
+                                    context.getResources().getDimensionPixelSize(R.dimen.amount_padding), 0);
+                            mTransferCurrency.setPadding(0, 0, 0,
+                                    context.getResources().getDimensionPixelSize(R.dimen.currency_padding));
+                            mTransferCurrencyCode.setTextSize(26);
+                            mTransferAmount.setTextSize(60);
+                            mTransferCurrency.setTextSize(17);
+                    }
                 }
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                String amount = s.toString();
             }
+
         });
     }
 
     private void prepareTransferNotes() {
+
         mTransferNotes.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
+                if (hasFocus) {
+                    if (mTransferNotes.getTag() != null && mTransferNotes.getTag().toString().equals(NOTES_TAG)) {
+                        mTransferNotes.setTag(null);
+                    }
+                    mTransferNotes.setText(mCreateTransferViewModel.getTransferNotes().getValue());
+                } else {
                     mCreateTransferViewModel.setTransferNotes(((EditText) v).getText().toString());
+                    if (mCreateTransferViewModel.getTransferNotes().getValue().length() > NOTES_MAX_LINE_LENGTH) {
+                        mTransferNotes.setTag(NOTES_TAG);
+                    } else {
+                        mTransferNotes.setTag(null);
+                    }
                 }
             }
         });
+
         mTransferNotes.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -302,7 +398,7 @@ public class CreateTransferFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (before != count) {
+                if (before != count && mTransferNotes.getTag() == null) {
                     mCreateTransferViewModel.setTransferNotes(s.toString());
                 }
             }
@@ -418,8 +514,13 @@ public class CreateTransferFragment extends Fragment {
         mCreateTransferViewModel.getTransferNotes().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String notes) {
-                mTransferNotes.setText(notes);
-                mTransferNotes.setSelection(TextUtils.isEmpty(notes) ? 0 : notes.length());
+                if (mTransferNotes.getTag() != null && mTransferNotes.getTag().toString().equals(NOTES_TAG)) {
+                    String withEllipsis = notes.substring(0, NOTES_MAX_LINE_LENGTH - ELLIPSIS.length()) + ELLIPSIS;
+                    mTransferNotes.setText(withEllipsis);
+                } else {
+                    mTransferNotes.setText(notes);
+                    mTransferNotes.setSelection(TextUtils.isEmpty(notes) ? 0 : notes.length());
+                }
             }
         });
 

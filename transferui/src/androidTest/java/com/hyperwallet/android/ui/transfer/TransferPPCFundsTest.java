@@ -137,7 +137,7 @@ public class TransferPPCFundsTest {
         onView(withId(R.id.transfer_destination_icon)).check(matches(withText(R.string.bank_account_font_icon)));
         onView(withId(R.id.transfer_destination_title)).check(matches(withText(R.string.bank_account)));
         onView(withId(R.id.transfer_destination_description_1)).check(matches(withText("United States")));
-        onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("Ending on 0616")));
+        onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("ending in 0616")));
 
         onView(withId(R.id.transfer_amount)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_amount_currency)).check(matches(withText("USD")));
@@ -184,7 +184,7 @@ public class TransferPPCFundsTest {
         onView(withId(R.id.transfer_destination_icon)).check(matches(withText(R.string.bank_account_font_icon)));
         onView(withId(R.id.transfer_destination_title)).check(matches(withText(R.string.bank_account)));
         onView(withId(R.id.transfer_destination_description_1)).check(matches(withText("United States")));
-        onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("Ending on 0616")));
+        onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("ending in 0616")));
 
         onView(withId(R.id.transfer_amount)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_amount_currency)).check(matches(withText("USD")));
@@ -256,7 +256,7 @@ public class TransferPPCFundsTest {
         onView(withId(R.id.transfer_destination_icon)).check(matches(withText(R.string.bank_account_font_icon)));
         onView(withId(R.id.transfer_destination_title)).check(matches(withText(R.string.bank_account)));
         onView(withId(R.id.transfer_destination_description_1)).check(matches(withText("Canada")));
-        onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("Ending on 5121")));
+        onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("ending in 5121")));
 
         onView(withId(R.id.transfer_summary)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_summary)).check(matches(withText("Available balance: 1,157.40 CAD")));
@@ -341,7 +341,7 @@ public class TransferPPCFundsTest {
         onView(withId(R.id.transfer_destination_icon)).check(matches(withText(R.string.bank_account_font_icon)));
         onView(withId(R.id.transfer_destination_title)).check(matches(withText(R.string.bank_account)));
         onView(withId(R.id.transfer_destination_description_1)).check(matches(withText("United States")));
-        onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("Ending on 0616")));
+        onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("ending in 0616")));
 
         onView(withId(R.id.transfer_summary)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_summary)).check(matches(withText("Available balance: 998.00 USD")));
@@ -409,7 +409,7 @@ public class TransferPPCFundsTest {
         onView(withId(R.id.transfer_destination_icon)).check(matches(withText(R.string.bank_account_font_icon)));
         onView(withId(R.id.transfer_destination_title)).check(matches(withText(R.string.bank_account)));
         onView(withId(R.id.transfer_destination_description_1)).check(matches(withText("United States")));
-        onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("Ending on 0616")));
+        onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("ending in 0616")));
 
         onView(withId(R.id.transfer_summary)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_summary)).check(matches(withText("Available balance: 998.00 USD")));
@@ -479,7 +479,7 @@ public class TransferPPCFundsTest {
         onView(withId(R.id.transfer_destination_icon)).check(matches(withText(R.string.bank_account_font_icon)));
         onView(withId(R.id.transfer_destination_title)).check(matches(withText(R.string.bank_account)));
         onView(withId(R.id.transfer_destination_description_1)).check(matches(withText("United States")));
-        onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("Ending on 0616")));
+        onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("ending in 0616")));
 
         onView(withId(R.id.transfer_summary)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_summary)).check(matches(withText("Available balance: 998.00 USD")));
@@ -549,7 +549,7 @@ public class TransferPPCFundsTest {
         onView(withId(R.id.transfer_destination_icon)).check(matches(withText(R.string.bank_account_font_icon)));
         onView(withId(R.id.transfer_destination_title)).check(matches(withText(R.string.bank_account)));
         onView(withId(R.id.transfer_destination_description_1)).check(matches(withText("United States")));
-        onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("Ending on 0616")));
+        onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("ending in 0616")));
 
         onView(withId(R.id.transfer_all_funds)).perform(nestedScrollTo(), click());
         onView(withId(R.id.transfer_amount)).check(matches(withText("998.00")));
