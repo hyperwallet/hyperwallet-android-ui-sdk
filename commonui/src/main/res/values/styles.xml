@@ -57,10 +57,6 @@
         parent="@style/Widget.Design.CollapsingToolbar">
         <item name="android:background">@color/colorPrimary</item>
         <item name="contentScrim">@color/colorPrimary</item>
-        <item name="expandedTitleTextAppearance">@style/TextAppearance.Hyperwallet.Headline4</item>
-        <item name="collapsedTitleTextAppearance">
-            @style/TextAppearance.Hyperwallet.Headline6
-        </item>
     </style>
 
     <style name="Widget.Hyperwallet.FloatingActionButton"
@@ -278,6 +274,8 @@
     <style name="TextAppearance.Hyperwallet.Headline2" parent="@style/TextAppearance.MaterialComponents.Headline2" />
 
     <style name="TextAppearance.Hyperwallet.Body1" parent="@style/TextAppearance.MaterialComponents.Body1" />
+
+    <style name="TextAppearance.Hyperwallet.CollapsingToolbar.Expanded" parent="@style/TextAppearance.Design.CollapsingToolbar.Expanded" />
+
+    <style name="TextAppearance.Hyperwallet.Title" parent="@style/TextAppearance.AppCompat.Title" />
 </resources>
-
-
