@@ -29,6 +29,7 @@ import static com.hyperwallet.android.model.transfermethod.TransferMethod.Transf
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -174,9 +175,9 @@ public class TransferMethodUtils {
         final String transferIdentification = transferMethod.getField(fieldKey);
 
         final String identificationText =
-                transferIdentification != null && transferIdentification.length() > LAST_FOUR_DIGIT
+                !TextUtils.isEmpty(transferIdentification) && transferIdentification.length() > LAST_FOUR_DIGIT
                         ? transferIdentification.substring(transferIdentification.length() - LAST_FOUR_DIGIT)
-                        : "";
+                        : !TextUtils.isEmpty(transferIdentification) ? transferIdentification : "";
 
         return context.getString(stringResId, identificationText);
     }

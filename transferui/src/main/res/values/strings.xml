@@ -60,4 +60,8 @@
     <string name="summary_amount_transfer_placeholder">9.75 CAD</string>
     <string name="exchange_rate_change_warning_placeholder">Due to changes in the FX rate,
         you will now receive 10.00 CAD.</string>
+
+    <string name="mobileTransferSuccessMsg">You transferred %s %s</string>
+    <string name="mobileTransferSuccessDetails">The funds are on the way to your %s</string>
+    <string name="doneButtonLabel">Done</string>
 </resources>

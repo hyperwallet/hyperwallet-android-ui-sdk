@@ -151,13 +151,6 @@ public class ListTransferDestinationFragment extends DialogFragment {
         inputMethodManager.hideSoftInputFromWindow(focusedView.getWindowToken(), 0);
     }
 
-    private void onClose() {
-        requireActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        requireActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        requireActivity().getWindow().setStatusBarColor(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark));
-        requireActivity().getWindow().getDecorView().setSystemUiVisibility(0);
-    }
-
     private void onView() {
         requireActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         requireActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
