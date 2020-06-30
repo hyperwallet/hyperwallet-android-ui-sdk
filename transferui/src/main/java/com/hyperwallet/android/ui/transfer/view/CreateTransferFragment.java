@@ -517,8 +517,12 @@ public class CreateTransferFragment extends Fragment {
             @Override
             public void onChanged(String notes) {
                 if (mTransferNotes.getTag() != null && mTransferNotes.getTag().toString().equals(NOTES_TAG)) {
-                    String withEllipsis = notes.substring(0, NOTES_MAX_LINE_LENGTH - ELLIPSIS.length()) + ELLIPSIS;
-                    mTransferNotes.setText(withEllipsis);
+                    if (!TextUtils.isEmpty(notes)) {
+                        String withEllipsis = notes.substring(0, NOTES_MAX_LINE_LENGTH - ELLIPSIS.length()) + ELLIPSIS;
+                        mTransferNotes.setText(withEllipsis);
+                    } else {
+                        mTransferNotes.setTag(null); // looks like this is reset before it being focused
+                    }
                 } else {
                     mTransferNotes.setText(notes);
                     mTransferNotes.setSelection(TextUtils.isEmpty(notes) ? 0 : notes.length());
