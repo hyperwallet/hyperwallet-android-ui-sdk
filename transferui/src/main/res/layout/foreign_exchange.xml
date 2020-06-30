@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/sell_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="@dimen/row_height_single_entry">
 
         <TextView
             android:id="@+id/sell_label"
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/sell_label"
             android:layout_marginTop="@dimen/grid_margin_top"
-            android:layout_marginEnd="@dimen/view_offset"
+            android:layout_marginEnd="@dimen/grid_margin_right"
             android:layout_marginBottom="@dimen/grid_margin_bottom"
             android:textAppearance="@style/TextAppearance.Hyperwallet.Caption"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -54,7 +54,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/buy_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="@dimen/row_height_single_entry">
 
         <TextView
             android:id="@+id/buy_label"
@@ -75,7 +75,7 @@
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/buy_label"
             android:layout_marginTop="@dimen/grid_margin_top"
-            android:layout_marginEnd="@dimen/view_offset"
+            android:layout_marginEnd="@dimen/grid_margin_right"
             android:layout_marginBottom="@dimen/grid_margin_bottom"
             android:textAppearance="@style/TextAppearance.Hyperwallet.Caption"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -98,7 +98,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/exchange_rate_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="@dimen/row_height_single_entry">
 
         <TextView
             android:id="@+id/exchange_rate_label"
@@ -119,7 +119,7 @@
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/exchange_rate_label"
             android:layout_marginTop="@dimen/grid_margin_top"
-            android:layout_marginEnd="@dimen/view_offset"
+            android:layout_marginEnd="@dimen/grid_margin_right"
             android:layout_marginBottom="@dimen/grid_margin_bottom"
             android:textAppearance="@style/TextAppearance.Hyperwallet.Caption"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -29,21 +29,13 @@ import androidx.fragment.app.FragmentManager;
 
 import com.hyperwallet.android.ui.transfer.R;
 
-import java.util.Currency;
-import java.util.Locale;
-
 public class TransferConfirmationDialogFragment extends DialogFragment {
 
     public static final String TAG = TransferConfirmationDialogFragment.class.getName();
-    private static final String ARGUMENT_KEY_AMOUNT = "ARGUMENT_KEY_AMOUNT";
-    private static final String ARGUMENT_KEY_CURRENCY_CODE = "ARGUMENT_KEY_CURRENCY_CODE";
     private static final String ARGUMENT_KEY_TRANSFER_DESTINATION = "ARGUMENT_KEY_TRANSFER_DESTINATION";
 
-    public static TransferConfirmationDialogFragment newInstance(@NonNull final String amount,
-            @NonNull final String currencyCode, @NonNull final String transferDestination) {
+    public static TransferConfirmationDialogFragment newInstance(@NonNull final String transferDestination) {
         Bundle bundle = new Bundle();
-        bundle.putString(ARGUMENT_KEY_AMOUNT, amount);
-        bundle.putString(ARGUMENT_KEY_CURRENCY_CODE, currencyCode);
         bundle.putString(ARGUMENT_KEY_TRANSFER_DESTINATION, transferDestination);
 
         TransferConfirmationDialogFragment fragment = new TransferConfirmationDialogFragment();
@@ -61,10 +53,7 @@ public class TransferConfirmationDialogFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(
                 new ContextThemeWrapper(requireContext(),
                         com.hyperwallet.android.ui.common.R.style.Theme_Hyperwallet_Confirmation_Dialog));
-        builder.setTitle(requireContext().getString(R.string.mobileTransferSuccessMsg,
-                Currency.getInstance(getArguments().getString(ARGUMENT_KEY_CURRENCY_CODE)).getSymbol(
-                        Locale.getDefault()),
-                getArguments().getString(ARGUMENT_KEY_AMOUNT)));
+        builder.setTitle(requireContext().getString(R.string.mobileTransferSuccessMsg));
         builder.setMessage(requireContext().getString(R.string.mobileTransferSuccessDetails,
                 getArguments().getString(ARGUMENT_KEY_TRANSFER_DESTINATION)));
 

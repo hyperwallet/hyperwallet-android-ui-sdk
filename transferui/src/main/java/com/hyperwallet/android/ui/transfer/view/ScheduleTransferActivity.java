@@ -142,8 +142,6 @@ public class ScheduleTransferActivity extends AppCompatActivity implements OnNet
                 setResult(Activity.RESULT_OK, intent);
 
                 TransferConfirmationDialogFragment fragment = TransferConfirmationDialogFragment.newInstance(
-                        mScheduleTransferViewModel.getTransferTotalAmount(),
-                        Objects.requireNonNull(mScheduleTransferViewModel.getTransfer().getDestinationCurrency()),
                         TransferMethodUtils.getTransferMethodName(getApplicationContext(),
                                 Objects.requireNonNull(mScheduleTransferViewModel.getTransferDestination()
                                         .getField(TransferMethod.TransferMethodFields.TYPE))));
@@ -151,5 +149,4 @@ public class ScheduleTransferActivity extends AppCompatActivity implements OnNet
             }
         });
     }
-
 }

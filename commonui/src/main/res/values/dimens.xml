@@ -54,6 +54,10 @@
     <dimen name="widget_default_margin">8dp</dimen>
     <dimen name="widget_start_margin">12dp</dimen>
 
+    <!-- row height dimension -->
+    <dimen name="row_height_single_entry">60dp</dimen>
+    <dimen name="row_height_triple_entry">88dp</dimen>
+
     <!-- specificity -->
     <dimen name="collapsing_header_size">136dp</dimen>
     <dimen name="divider_height">1dp</dimen>
@@ -83,8 +87,7 @@
     <dimen name="negative_padding">3dp</dimen>
     <dimen name="negative_margin">-8dp</dimen>
     <dimen name="edit_text_offset">20dp</dimen>
-    <dimen name="edit_text_top_offset">40dp</dimen>
+    <dimen name="edit_text_top_offset">35dp</dimen>
     <dimen name="image_offset">32dp</dimen>
     <dimen name="divider_offset">58dp</dimen>
-    <dimen name="view_offset">32dp</dimen>
 </resources>
