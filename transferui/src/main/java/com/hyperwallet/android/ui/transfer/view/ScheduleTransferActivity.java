@@ -45,6 +45,8 @@ import com.hyperwallet.android.ui.transfer.TransferLocalBroadcast;
 import com.hyperwallet.android.ui.transfer.repository.TransferRepositoryFactory;
 import com.hyperwallet.android.ui.transfer.viewmodel.ScheduleTransferViewModel;
 
+import java.util.Objects;
+
 /**
  * Schedule Transfer Activity
  */
@@ -141,12 +143,10 @@ public class ScheduleTransferActivity extends AppCompatActivity implements OnNet
 
                 TransferConfirmationDialogFragment fragment = TransferConfirmationDialogFragment.newInstance(
                         mScheduleTransferViewModel.getTransferTotalAmount(),
-                        mScheduleTransferViewModel.getTransfer() != null ?
-                                mScheduleTransferViewModel.getTransfer().getDestinationCurrency() : "",
-                        mScheduleTransferViewModel.getTransferDestination() != null ?
-                                TransferMethodUtils.getTransferMethodName(getApplicationContext(),
-                                        mScheduleTransferViewModel.getTransferDestination().getField(
-                                                TransferMethod.TransferMethodFields.TYPE)) : "");
+                        Objects.requireNonNull(mScheduleTransferViewModel.getTransfer().getDestinationCurrency()),
+                        TransferMethodUtils.getTransferMethodName(getApplicationContext(),
+                                Objects.requireNonNull(mScheduleTransferViewModel.getTransferDestination()
+                                        .getField(TransferMethod.TransferMethodFields.TYPE))));
                 fragment.show(getSupportFragmentManager());
             }
         });

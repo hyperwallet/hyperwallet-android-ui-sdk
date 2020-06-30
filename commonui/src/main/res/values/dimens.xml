@@ -86,4 +86,5 @@
     <dimen name="edit_text_top_offset">40dp</dimen>
     <dimen name="image_offset">32dp</dimen>
     <dimen name="divider_offset">58dp</dimen>
+    <dimen name="view_offset">32dp</dimen>
 </resources>
