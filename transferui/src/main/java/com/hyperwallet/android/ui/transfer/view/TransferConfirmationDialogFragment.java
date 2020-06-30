@@ -60,7 +60,7 @@ public class TransferConfirmationDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle state) {
         AlertDialog.Builder builder = new AlertDialog.Builder(
                 new ContextThemeWrapper(requireContext(),
-                        com.hyperwallet.android.ui.common.R.style.Theme_Hyperwallet_Alert));
+                        com.hyperwallet.android.ui.common.R.style.Theme_Hyperwallet_Confirmation_Dialog));
         builder.setTitle(requireContext().getString(R.string.mobileTransferSuccessMsg,
                 Currency.getInstance(getArguments().getString(ARGUMENT_KEY_CURRENCY_CODE)).getSymbol(
                         Locale.getDefault()),
