@@ -40,7 +40,7 @@
         parent="@style/ThemeOverlay.AppCompat.ActionBar">
         <item name="android:background">@color/regularColorPrimary</item>
         <item name="android:titleTextAppearance">
-            @style/TextAppearance.Hyperwallet.Headline6
+            @style/TextAppearance.Hyperwallet.TitleTextAppearance
         </item>
         <item name="android:popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
     </style>
@@ -91,6 +91,10 @@
     </style>
 
     <style name="TextAppearance.Hyperwallet.Headline6" parent="@style/TextAppearance.MaterialComponents.Headline6">
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <style name="TextAppearance.Hyperwallet.TitleTextAppearance" parent="@style/TextAppearance.MaterialComponents.Headline6">
         <item name="android:textAlignment">center</item>
     </style>
 

@@ -28,7 +28,6 @@ import android.view.WindowManager;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -63,18 +62,6 @@ public class ListTransferDestinationActivity extends AppCompatActivity implement
             throw new IllegalArgumentException(
                     "EXTRA_SELECTED_DESTINATION_TOKEN intent data is needed to start this activity");
         }
-
-        Toolbar toolbar = findViewById(R.id.transfer_destination_selection_toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle(R.string.mobileTransferMethodsHeader);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
 
         mListTransferDestinationViewModel = ViewModelProviders.of(this,
                 new ListTransferDestinationViewModel.ListTransferDestinationViewModelFactory(
@@ -132,6 +119,15 @@ public class ListTransferDestinationActivity extends AppCompatActivity implement
     @Override
     public void retry() {
         mListTransferDestinationViewModel.loadTransferDestinationList();
+    }
+
+    @Override
+    protected void onStop() {
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
+        getWindow().getDecorView().setSystemUiVisibility(0);
+        super.onStop();
     }
 
     private void registerObservers() {
