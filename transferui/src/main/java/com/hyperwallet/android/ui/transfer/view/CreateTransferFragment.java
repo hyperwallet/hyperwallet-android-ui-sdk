@@ -17,6 +17,7 @@
 package com.hyperwallet.android.ui.transfer.view;
 
 import static android.app.Activity.RESULT_OK;
+import static android.view.View.TEXT_ALIGNMENT_CENTER;
 
 import static com.hyperwallet.android.model.transfer.Transfer.CURRENCY_NUMERIC_SEPARATOR;
 import static com.hyperwallet.android.model.transfer.Transfer.EMPTY_STRING;
@@ -36,6 +37,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -230,7 +232,7 @@ public class CreateTransferFragment extends Fragment {
 
     private boolean isCreateTransferValid() {
         if (!isValidAmount(mCreateTransferViewModel.getTransferAmount().getValue())) {
-            mTransferAmountLayout.setError(requireContext().getString(R.string.transferAmountInvalid));
+            setAmountError(requireContext().getString(R.string.transferAmountInvalid));
             return false;
         }
 
@@ -257,6 +259,17 @@ public class CreateTransferFragment extends Fragment {
             return false;
         }
         return true;
+    }
+
+    private void setAmountError(final String errorMessage) {
+        if (TextUtils.isEmpty(errorMessage)) {
+            mTransferAmountLayout.setError(null);
+        } else {
+            mTransferAmountLayout.setError(errorMessage);
+            TextView errorView = mTransferAmountLayout.findViewById(R.id.textinput_error);
+            errorView.setGravity(Gravity.CENTER);
+            errorView.setTextAlignment(TEXT_ALIGNMENT_CENTER);
+        }
     }
 
     private void prepareTransferAmount() {
@@ -319,7 +332,7 @@ public class CreateTransferFragment extends Fragment {
                     }
 
                     mCreateTransferViewModel.setTransferAmount(builder.toString());
-                    mTransferAmountLayout.setError(null);
+                    setAmountError(null);
                     Context context = CreateTransferFragment.this.getActivity();
 
                     switch (builder.toString().length()) {
@@ -417,7 +430,7 @@ public class CreateTransferFragment extends Fragment {
                     @Override
                     public void onChanged(@NonNull final Event<Error> event) {
                         if (!event.isContentConsumed()) {
-                            mTransferAmountLayout.setError(event.getContent().getMessage());
+                            setAmountError(event.getContent().getMessage());
                         }
                     }
                 });
