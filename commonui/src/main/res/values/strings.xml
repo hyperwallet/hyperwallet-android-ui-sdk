@@ -22,7 +22,7 @@
     <string name="prepaid_card_font_icon">\uE00A</string>
     <string name="paypal_account_font_icon">\uE021</string>
 
-    <string name="transfer_method_list_item_description">ending in %s</string>
+    <string name="endingIn">ending in %s</string>
     <string name="not_translated_in_braces">(not translated)</string>
 
     <string name="authentication_error_header">Authentication Error</string>

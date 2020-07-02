@@ -158,7 +158,7 @@ public class TransferMethodUtilsTest {
         TransferMethod transferMethod = new BankCard.Builder().cardNumber(
                 "************0006").build();
 
-        when(mContext.getString(ArgumentMatchers.eq(R.string.transfer_method_list_item_description),
+        when(mContext.getString(ArgumentMatchers.eq(R.string.endingIn),
                 eq("0006"))).thenReturn(
                 "Ending on 0006");
         String actual = getTransferMethodDetail(mContext, transferMethod, BANK_CARD);
@@ -170,7 +170,7 @@ public class TransferMethodUtilsTest {
         TransferMethod transferMethod = new BankAccount.Builder().bankAccountId(
                 "8017110254").build();
 
-        when(mContext.getString(ArgumentMatchers.eq(R.string.transfer_method_list_item_description),
+        when(mContext.getString(ArgumentMatchers.eq(R.string.endingIn),
                 eq("0254"))).thenReturn(
                 "Ending on 0254");
         String actual = getTransferMethodDetail(mContext, transferMethod, BANK_ACCOUNT);
@@ -183,7 +183,7 @@ public class TransferMethodUtilsTest {
 
         String actual = getTransferMethodDetail(mContext, transferMethod, PAPER_CHECK);
         assertThat(actual, is(""));
-        verify(mContext, never()).getString(ArgumentMatchers.eq(R.string.transfer_method_list_item_description),
+        verify(mContext, never()).getString(ArgumentMatchers.eq(R.string.endingIn),
                 anyString());
     }
 }
