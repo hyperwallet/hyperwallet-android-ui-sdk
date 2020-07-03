@@ -96,23 +96,27 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/transfer_amount"
                             tools:text="@string/transfer_currency_placeholder" />
-
-                        <TextView
-                            android:id="@+id/amount_error_placeholder"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingStart="@dimen/amount_padding"
-                            android:paddingEnd="@dimen/amount_padding"
-                            android:paddingBottom="@dimen/currency_padding"
-                            android:text="@string/transferAmountInvalid"
-                            android:textAppearance="@style/ErrorText"
-                            android:visibility="invisible"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </com.google.android.material.textfield.TextInputLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:id="@+id/transfer_amount_error_container"
+                android:visibility="invisible"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/transfer_amount_error"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/item_horizontal_padding"
+                    android:text="@string/transferAmountInvalid"
+                    android:textAppearance="@style/ErrorText" />
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/transfer_all_funds_container"
@@ -207,7 +211,6 @@
                     android:layout_marginTop="@dimen/item_horizontal_padding"
                     android:text="@string/noTransferMethodAdded"
                     android:textAppearance="@style/ErrorText" />
-
             </LinearLayout>
 
             <LinearLayout

@@ -17,7 +17,6 @@
 package com.hyperwallet.android.ui.transfer.view;
 
 import static android.app.Activity.RESULT_OK;
-import static android.view.View.TEXT_ALIGNMENT_CENTER;
 
 import static com.hyperwallet.android.model.transfer.Transfer.CURRENCY_NUMERIC_SEPARATOR;
 import static com.hyperwallet.android.model.transfer.Transfer.EMPTY_STRING;
@@ -37,7 +36,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,7 +49,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.google.android.material.textfield.TextInputLayout;
 import com.hyperwallet.android.model.Error;
 import com.hyperwallet.android.model.transfer.Transfer;
 import com.hyperwallet.android.model.transfermethod.TransferMethod;
@@ -83,9 +80,10 @@ public class CreateTransferFragment extends Fragment {
     private EditText mTransferNotes;
     private View mTransferDestination;
     private View mAddTransferDestination;
-    private TextInputLayout mTransferAmountLayout;
     private View mTransferHeaderContainerError;
     private TextView mTransferDestinationError;
+    private View mTransferAmountErrorContainer;
+    private TextView mTransferAmountError;
 
     /**
      * Please don't use this constructor this is reserved for Android Core Framework
@@ -155,7 +153,8 @@ public class CreateTransferFragment extends Fragment {
         });
 
         // transfer amount
-        mTransferAmountLayout = view.findViewById(R.id.transfer_amount_layout);
+        mTransferAmountErrorContainer = view.findViewById(R.id.transfer_amount_error_container);
+        mTransferAmountError = view.findViewById(R.id.transfer_amount_error);
         mTransferAmount = view.findViewById(R.id.transfer_amount);
         mTransferAmount.requestFocus();
         prepareTransferAmount();
@@ -264,12 +263,10 @@ public class CreateTransferFragment extends Fragment {
 
     private void setAmountError(final String errorMessage) {
         if (TextUtils.isEmpty(errorMessage)) {
-            mTransferAmountLayout.setError(null);
+            mTransferAmountErrorContainer.setVisibility(View.INVISIBLE);
         } else {
-            mTransferAmountLayout.setError(errorMessage);
-            TextView errorView = mTransferAmountLayout.findViewById(R.id.textinput_error);
-            errorView.setGravity(Gravity.CENTER);
-            errorView.setTextAlignment(TEXT_ALIGNMENT_CENTER);
+            mTransferAmountErrorContainer.setVisibility(View.VISIBLE);
+            mTransferAmountError.setText(errorMessage);
         }
     }
 
