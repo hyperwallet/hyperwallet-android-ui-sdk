@@ -170,7 +170,7 @@ public class TransferPPCFundsTest {
 
         onView(withId(R.id.add_transfer_destination)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.add_transfer_destination_icon)).check(matches(withText(R.string.add_text)));
-        onView(withId(R.id.add_transfer_destination_title)).check(matches(withText(R.string.add_transfer_label)));
+        onView(withId(R.id.add_transfer_destination_title)).check(matches(withText(R.string.mobileAddTransferMethod)));
         onView(withId(R.id.add_transfer_destination_description_1)).check(
                 matches(withText(R.string.add_transfer_description_1)));
         onView(withId(R.id.add_transfer_destination_description_2)).check(
@@ -206,7 +206,7 @@ public class TransferPPCFundsTest {
 
         onView(withId(R.id.add_transfer_destination)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.add_transfer_destination_icon)).check(matches(withText(R.string.add_text)));
-        onView(withId(R.id.add_transfer_destination_title)).check(matches(withText(R.string.add_transfer_label)));
+        onView(withId(R.id.add_transfer_destination_title)).check(matches(withText(R.string.mobileAddTransferMethod)));
         onView(withId(R.id.add_transfer_destination_description_1)).check(
                 matches(withText(R.string.add_transfer_description_1)));
         onView(withId(R.id.add_transfer_destination_description_2)).check(
