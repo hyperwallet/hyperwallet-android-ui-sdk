@@ -97,7 +97,7 @@ public class ScheduleTransferFragment extends Fragment {
         requireActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             getActivity().getWindow().setStatusBarColor(
-                    ContextCompat.getColor(getContext(), R.color.regularColorPrimary));
+                    ContextCompat.getColor(getContext(), R.color.statusBarColor));
             getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         }
     }
