@@ -196,14 +196,15 @@
                 android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/transfer_destination_error"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/grid_margin_left"
-                    android:layout_marginTop="@dimen/grid_margin_top"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/item_horizontal_padding"
                     android:text="@string/noTransferMethodAdded"
                     android:textAppearance="@style/ErrorText" />
 

@@ -231,17 +231,18 @@ public class CreateTransferFragment extends Fragment {
     }
 
     private boolean isCreateTransferValid() {
+        boolean valid = true;
         if (!isValidAmount(mCreateTransferViewModel.getTransferAmount().getValue())) {
             setAmountError(requireContext().getString(R.string.transferAmountInvalid));
-            return false;
+            valid = false;
         }
 
         if (mCreateTransferViewModel.isTransferDestinationUnknown()) {
             mTransferHeaderContainerError.setVisibility(View.VISIBLE);
-            return false;
+            valid = false;
         }
 
-        return true;
+        return valid;
     }
 
     private boolean isValidAmount(final String amount) {
