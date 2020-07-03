@@ -21,9 +21,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.View;
+import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -36,11 +38,14 @@ import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import com.hyperwallet.android.ui.common.repository.Event;
 import com.hyperwallet.android.ui.common.util.PageGroups;
 import com.hyperwallet.android.ui.common.view.ActivityUtils;
+import com.hyperwallet.android.ui.common.view.TransferMethodUtils;
 import com.hyperwallet.android.ui.common.view.error.OnNetworkErrorCallback;
-import com.hyperwallet.android.ui.transfer.TransferLocalBroadcast;
 import com.hyperwallet.android.ui.transfer.R;
+import com.hyperwallet.android.ui.transfer.TransferLocalBroadcast;
 import com.hyperwallet.android.ui.transfer.repository.TransferRepositoryFactory;
 import com.hyperwallet.android.ui.transfer.viewmodel.ScheduleTransferViewModel;
+
+import java.util.Objects;
 
 /**
  * Schedule Transfer Activity
@@ -64,7 +69,7 @@ public class ScheduleTransferActivity extends AppCompatActivity implements OnNet
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle(R.string.title_activity_create_transfer);
+        getSupportActionBar().setTitle(R.string.mobileConfirmationHeader);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,6 +112,15 @@ public class ScheduleTransferActivity extends AppCompatActivity implements OnNet
         fragment.retry();
     }
 
+    @Override
+    public void onBackPressed() {
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
+        getWindow().getDecorView().setSystemUiVisibility(0);
+        super.onBackPressed();
+    }
+
     private void registerObservers() {
         mScheduleTransferViewModel.getTransferStatusTransitionError().observe(this,
                 new Observer<Event<Errors>>() {
@@ -126,9 +140,13 @@ public class ScheduleTransferActivity extends AppCompatActivity implements OnNet
                         statusTransition);
                 LocalBroadcastManager.getInstance(ScheduleTransferActivity.this).sendBroadcast(intent);
                 setResult(Activity.RESULT_OK, intent);
-                finish();
+
+                TransferConfirmationDialogFragment fragment = TransferConfirmationDialogFragment.newInstance(
+                        TransferMethodUtils.getTransferMethodName(getApplicationContext(),
+                                Objects.requireNonNull(mScheduleTransferViewModel.getTransferDestination()
+                                        .getField(TransferMethod.TransferMethodFields.TYPE))));
+                fragment.show(getSupportFragmentManager());
             }
         });
     }
-
 }

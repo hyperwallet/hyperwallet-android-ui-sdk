@@ -101,7 +101,7 @@ public class ListTransferDestinationFragment extends DialogFragment {
         super.onViewCreated(view, savedInstanceState);
 
         Toolbar toolbar = view.findViewById(R.id.transfer_destination_selection_toolbar);
-        toolbar.setTitle(R.string.transfer_destination);
+        toolbar.setTitle(R.string.mobileTransferMethodsHeader);
         toolbar.setNavigationIcon(R.drawable.ic_close_14dp);
 
         ((AppCompatActivity) requireActivity()).setSupportActionBar(toolbar);
@@ -111,7 +111,6 @@ public class ListTransferDestinationFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
                 hideSoftKey(v);
-                onClose();
                 getFragmentManager().popBackStack(TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 dismiss();
                 requireActivity().finish();
@@ -170,13 +169,6 @@ public class ListTransferDestinationFragment extends DialogFragment {
         InputMethodManager inputMethodManager = (InputMethodManager) focusedView.getContext().getSystemService(
                 Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(focusedView.getWindowToken(), 0);
-    }
-
-    private void onClose() {
-        requireActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        requireActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        requireActivity().getWindow().setStatusBarColor(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark));
-        requireActivity().getWindow().getDecorView().setSystemUiVisibility(0);
     }
 
     private void onView() {

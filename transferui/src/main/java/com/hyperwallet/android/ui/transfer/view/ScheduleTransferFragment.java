@@ -22,15 +22,18 @@ import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getStri
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getStringResourceByName;
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getTransferMethodDetail;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -51,7 +54,7 @@ import java.util.Locale;
 public class ScheduleTransferFragment extends Fragment {
 
     private ScheduleTransferViewModel mScheduleTransferViewModel;
-    private View mTransferConfirmButtonProgress;
+    private View mTransferScheduleProgress;
 
     public ScheduleTransferFragment() {
     }
@@ -73,6 +76,9 @@ public class ScheduleTransferFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        mTransferScheduleProgress = view.findViewById(R.id.progress);
+
+        onView();
         showTransferDestination();
         showForeignExchange();
         showSummary();
@@ -86,15 +92,25 @@ public class ScheduleTransferFragment extends Fragment {
         mScheduleTransferViewModel.scheduleTransfer();
     }
 
+    private void onView() {
+        requireActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        requireActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getActivity().getWindow().setStatusBarColor(
+                    ContextCompat.getColor(getContext(), R.color.statusBarColor));
+            getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        }
+    }
+
     private void registerObserver() {
         mScheduleTransferViewModel.isScheduleTransferLoading().observe(getViewLifecycleOwner(),
                 new Observer<Boolean>() {
                     @Override
                     public void onChanged(Boolean loading) {
                         if (loading) {
-                            mTransferConfirmButtonProgress.setVisibility(View.VISIBLE);
+                            mTransferScheduleProgress.setVisibility(View.VISIBLE);
                         } else {
-                            mTransferConfirmButtonProgress.setVisibility(View.GONE);
+                            mTransferScheduleProgress.setVisibility(View.GONE);
                         }
                     }
                 });
@@ -187,7 +203,6 @@ public class ScheduleTransferFragment extends Fragment {
 
     private void showConfirmButton() {
         // transfer confirm button
-        mTransferConfirmButtonProgress = getView().findViewById(R.id.transfer_confirm_button_progress_bar);
         Button button = getView().findViewById(R.id.transfer_confirm_button);
         button.setOnClickListener(new OneClickListener() {
             @Override

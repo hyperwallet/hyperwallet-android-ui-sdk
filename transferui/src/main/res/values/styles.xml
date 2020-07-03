@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <style name="TextAppearance.Hyperwallet.Body2.Error"
-           parent="@style/TextAppearance.Hyperwallet.Body2">
-        <item name="android:textColor">@color/colorAccent</item>
-    </style>
-</resources>

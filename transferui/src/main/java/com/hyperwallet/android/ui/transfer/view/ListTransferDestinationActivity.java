@@ -121,6 +121,15 @@ public class ListTransferDestinationActivity extends AppCompatActivity implement
         mListTransferDestinationViewModel.loadTransferDestinationList();
     }
 
+    @Override
+    protected void onStop() {
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
+        getWindow().getDecorView().setSystemUiVisibility(0);
+        super.onStop();
+    }
+
     private void registerObservers() {
         mListTransferDestinationViewModel.getSelectedTransferDestination().observe(this,
                 new Observer<Event<TransferMethod>>() {

@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="@dimen/row_height_triple_entry">
 
     <TextView
         android:id="@+id/transfer_destination_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/grid_margin_left"
-        android:layout_marginTop="@dimen/grid_margin_top"
-        android:background="@drawable/circle"
+        android:layout_marginTop="@dimen/image_offset"
         android:fontFamily="@font/icomoon"
         android:gravity="center"
         tools:text="@string/not_available"
