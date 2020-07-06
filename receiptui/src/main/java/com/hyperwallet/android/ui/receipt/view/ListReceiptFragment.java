@@ -91,12 +91,17 @@ public class ListReceiptFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull final View view, @Nullable final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        View transactionHeaderView = view.findViewById(R.id.transactions_header);
+        if (getActivity() instanceof ListPrepaidCardReceiptActivity
+                || getActivity() instanceof ListUserReceiptActivity) {
+            transactionHeaderView.setVisibility(View.GONE);
+        }
+
         mProgressBar = view.findViewById(R.id.list_receipt_progress_bar);
         mListReceiptAdapter = new ListReceiptAdapter(mReceiptViewModel, new ListReceiptItemDiffCallback());
         mListReceiptsView = view.findViewById(R.id.list_receipts);
         mListReceiptsView.setHasFixedSize(true);
         mListReceiptsView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mListReceiptsView.addItemDecoration(new ReceiptItemDividerDecorator(requireContext()));
         mListReceiptsView.setAdapter(mListReceiptAdapter);
         registerObservers();
     }
@@ -242,18 +247,14 @@ public class ListReceiptFragment extends Fragment {
                             .getString(R.string.credit_sign, formattedAmount));
                     transactionTypeIcon.setTextColor(transactionTypeIcon.getContext()
                             .getResources().getColor(R.color.positiveColor));
-                    transactionTypeIcon.setBackground(transactionTypeIcon.getContext()
-                            .getDrawable(R.drawable.circle_positive));
                     transactionTypeIcon.setText(transactionTypeIcon.getContext().getText(R.string.credit));
                 } else if (DEBIT.equals(receipt.getEntry())) {
                     transactionAmount.setTextColor(transactionAmount.getContext()
-                            .getResources().getColor(R.color.colorAccent));
+                            .getResources().getColor(R.color.negativeColor));
+                    transactionTypeIcon.setTextColor(transactionTypeIcon.getContext()
+                            .getResources().getColor(R.color.negativeColor));
                     transactionAmount.setText(transactionAmount.getContext()
                             .getString(R.string.debit_sign, formattedAmount));
-                    transactionTypeIcon.setTextColor(transactionTypeIcon.getContext()
-                            .getResources().getColor(R.color.colorAccent));
-                    transactionTypeIcon.setBackground(transactionTypeIcon.getContext()
-                            .getDrawable(R.drawable.circle_negative));
                     transactionTypeIcon.setText(transactionTypeIcon.getContext().getText(R.string.debit));
                 }
 

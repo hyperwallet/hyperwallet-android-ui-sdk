@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -8,9 +9,9 @@
     <RelativeLayout
         android:id="@+id/item_date_header_layout"
         android:layout_width="match_parent"
-        android:background="@drawable/item_view_border_header"
-        android:paddingTop="@dimen/grid_padding_top"
+        android:theme="@style/HeaderTitleAppearance"
         android:layout_height="@dimen/section_header_height">
+
         <TextView
             android:id="@+id/item_date_header_title"
             android:layout_width="match_parent"
@@ -18,16 +19,24 @@
             android:text="@string/text_placeholder"
             android:layout_marginStart="@dimen/grid_margin_left"
             android:layout_marginTop="@dimen/grid_margin_top"
-            android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"/>
+            android:textAppearance="@style/TextAppearance.Hyperwallet.HeaderTitle" />
     </RelativeLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:background="@drawable/view_item_ripple"
         android:id="@+id/receipt_item"
         android:layout_width="match_parent"
+        android:layout_marginStart="@dimen/grid_margin_left"
+        android:layout_marginEnd="@dimen/grid_margin_right"
         android:layout_height="@dimen/item_receipt_information_height">
 
-        <include layout="@layout/receipt"/>
+        <include layout="@layout/receipt" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider_height"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
