@@ -4,7 +4,8 @@
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:context=".view.ReceiptDetailFragment">
+    android:background="@color/colorInputFormBackground"
+    tools:context=".view.ReceiptDetailFragment">
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/receipt_detail_scroll_view"
@@ -19,10 +20,11 @@
 
             <LinearLayout
                 android:id="@+id/transaction_header"
+                style="@style/HeaderTitleAppearance"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/section_header_height"
-                android:background="@drawable/item_view_border_header"
                 android:paddingTop="@dimen/grid_padding_top">
+
                 <TextView
                     android:id="@+id/transaction_header_text"
                     android:layout_width="match_parent"
@@ -30,24 +32,31 @@
                     android:layout_marginStart="@dimen/grid_margin_left"
                     android:layout_marginTop="@dimen/grid_margin_top"
                     android:text="@string/transaction_header_text"
-                    android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"/>
+                    android:textAppearance="@style/TextAppearance.Hyperwallet.HeaderTitle" />
             </LinearLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/transaction_information"
-                android:background="@drawable/item_view_border"
+                android:layout_marginStart="@dimen/grid_margin_left"
+                android:layout_marginEnd="@dimen/grid_margin_right"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/item_receipt_information_height">
 
-                <include layout="@layout/receipt"/>
+                <include layout="@layout/receipt" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/divider_height"
+                    android:background="?android:attr/listDivider"
+                    app:layout_constraintBottom_toBottomOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
                 android:id="@+id/receipt_details_header"
                 android:layout_width="match_parent"
-                android:background="@drawable/item_view_border_header"
-                android:paddingTop="@dimen/grid_padding_top"
-                android:layout_height="@dimen/section_header_height">
+                android:layout_height="wrap_content"
+                style="@style/HeaderTitleAppearance">
+
                 <TextView
                     android:id="@+id/receipt_details_header_label"
                     android:layout_width="match_parent"
@@ -55,30 +64,34 @@
                     android:text="@string/receipt_header_label"
                     android:layout_marginStart="@dimen/grid_margin_left"
                     android:layout_marginTop="@dimen/grid_margin_top"
-                    android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"/>
+                    android:textAppearance="@style/TextAppearance.Hyperwallet.HeaderTitle" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/receipt_details_information"
-                android:background="@drawable/item_view_border"
                 android:orientation="vertical"
+                android:layout_marginStart="@dimen/grid_margin_left"
+                android:layout_marginEnd="@dimen/grid_margin_right"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <RelativeLayout
                     android:id="@+id/receipt_detail_static_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <TextView android:id="@+id/receipt_id_label"
-                              android:layout_width="wrap_content"
-                              android:layout_height="wrap_content"
-                              android:layout_alignParentStart="true"
-                              android:layout_alignParentTop="true"
-                              android:layout_marginStart="@dimen/grid_margin_left"
-                              android:layout_marginTop="@dimen/grid_margin_top"
-                              android:text="@string/journalId"
-                              android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-                              app:layout_constraintLeft_toLeftOf="parent"
+                    android:gravity="center"
+                    android:background="@drawable/content_border_bottom"
+                    android:layout_height="@dimen/row_height_single_entry">
+
+                    <TextView
+                        android:id="@+id/receipt_id_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="@dimen/grid_margin_top"
+                        android:text="@string/journalId"
+                        android:textAppearance="@style/TextAppearance.Hyperwallet.Body1"
+                        app:layout_constraintLeft_toLeftOf="parent"
                               app:layout_constraintStart_toStartOf="parent"
                               app:layout_constraintTop_toTopOf="parent"/>
 
@@ -90,62 +103,64 @@
                               android:gravity="end"
                               android:ellipsize="end"
                               android:maxLines="1"
-                              android:layout_marginStart="@dimen/grid_margin_left"
-                              android:layout_toEndOf="@+id/receipt_id_label"
-                              android:layout_marginTop="@dimen/grid_margin_top"
-                              android:layout_marginEnd="@dimen/grid_margin_right"
-                              android:layout_marginBottom="0dp"
-                              android:text="@string/text_placeholder"
-                              android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"
-                              app:layout_constraintEnd_toEndOf="parent"
-                              app:layout_constraintTop_toTopOf="parent"/>
+                        android:layout_marginStart="@dimen/grid_margin_left"
+                        android:layout_toEndOf="@+id/receipt_id_label"
+                        android:layout_marginTop="@dimen/grid_margin_top"
+                        android:layout_marginBottom="0dp"
+                        android:text="@string/text_placeholder"
+                        android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView android:id="@+id/date_label"
-                              android:layout_width="wrap_content"
-                              android:layout_height="wrap_content"
-                              android:layout_below="@+id/receipt_id_label"
-                              android:layout_marginStart="@dimen/grid_margin_left"
-                              android:layout_marginTop="@dimen/item_text_top_bottom_margin"
-                              android:text="@string/createdOn"
-                              android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-                              app:layout_constraintLeft_toLeftOf="parent"
-                              app:layout_constraintStart_toStartOf="parent"
-                              app:layout_constraintTop_toBottomOf="@+id/receipt_id_value"/>
+                </RelativeLayout>
 
-                    <TextView android:id="@+id/date_value"
-                              android:layout_width="wrap_content"
-                              android:layout_height="wrap_content"
-                              android:layout_below="@+id/receipt_id_label"
-                              android:layout_toEndOf="@+id/date_label"
-                              android:layout_alignParentEnd="true"
-                              android:layout_marginStart="@dimen/grid_margin_left"
-                              android:gravity="end"
-                              android:ellipsize="end"
-                              android:maxLines="1"
-                              android:layout_marginTop="@dimen/item_text_top_bottom_margin"
-                              android:layout_marginEnd="@dimen/grid_margin_right"
-                              android:text="@string/text_placeholder"
-                              android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"
-                              app:layout_constraintEnd_toEndOf="parent"
-                              app:layout_constraintTop_toBottomOf="@+id/receipt_id_value"/>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:background="@drawable/content_border_bottom"
+                    android:gravity="center"
+                    android:layout_height="@dimen/row_height_single_entry">
+
+                    <TextView
+                        android:id="@+id/date_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="@dimen/item_text_top_bottom_margin"
+                        android:text="@string/createdOn"
+                        android:textAppearance="@style/TextAppearance.Hyperwallet.Body1" />
+
+                    <TextView
+                        android:id="@+id/date_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@+id/date_label"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="@dimen/grid_margin_left"
+                        android:gravity="end"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:paddingTop="@dimen/item_text_top_bottom_margin"
+                        android:text="@string/text_placeholder"
+                        android:textAppearance="@style/TextAppearance.Hyperwallet.Body2" />
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:visibility="gone"
                     android:id="@+id/client_id_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:gravity="center"
+                    android:background="@drawable/content_border_bottom"
+                    android:layout_height="@dimen/row_height_single_entry">
 
-                    <TextView android:id="@+id/client_id_label"
-                              android:layout_width="wrap_content"
-                              android:layout_height="wrap_content"
-                              android:layout_alignParentStart="true"
-                              android:layout_alignParentTop="true"
-                              android:layout_marginStart="@dimen/grid_margin_left"
-                              android:layout_marginTop="@dimen/item_text_top_bottom_margin"
-                              android:text="@string/clientPaymentId"
-                              android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-                              app:layout_constraintLeft_toLeftOf="parent"
+                    <TextView
+                        android:id="@+id/client_id_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="@dimen/item_text_top_bottom_margin"
+                        android:text="@string/clientPaymentId"
+                        android:textAppearance="@style/TextAppearance.Hyperwallet.Body1"
+                        app:layout_constraintLeft_toLeftOf="parent"
                               app:layout_constraintStart_toStartOf="parent"/>
 
                     <TextView android:id="@+id/client_id_value"
@@ -155,7 +170,6 @@
                               android:layout_alignParentEnd="true"
                               android:layout_marginStart="@dimen/item_text_top_bottom_margin"
                               android:layout_marginTop="@dimen/item_text_top_bottom_margin"
-                              android:layout_marginEnd="@dimen/grid_margin_right"
                               android:layout_toEndOf="@+id/client_id_label"
                               android:ellipsize="end"
                               android:maxLines="1"
@@ -170,18 +184,20 @@
                     android:visibility="gone"
                     android:id="@+id/charity_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:gravity="center"
+                    android:background="@drawable/content_border_bottom"
+                    android:layout_height="@dimen/row_height_single_entry">
 
-                    <TextView android:id="@+id/charity_label"
-                              android:layout_width="wrap_content"
-                              android:layout_height="wrap_content"
-                              android:layout_alignParentStart="true"
-                              android:layout_alignParentTop="true"
-                              android:layout_marginStart="@dimen/grid_margin_left"
-                              android:layout_marginTop="@dimen/item_text_top_bottom_margin"
-                              android:text="@string/charityName"
-                              android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-                              app:layout_constraintLeft_toLeftOf="parent"
+                    <TextView
+                        android:id="@+id/charity_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="@dimen/item_text_top_bottom_margin"
+                        android:text="@string/charityName"
+                        android:textAppearance="@style/TextAppearance.Hyperwallet.Body1"
+                        app:layout_constraintLeft_toLeftOf="parent"
                               app:layout_constraintStart_toStartOf="parent"/>
 
                     <TextView android:id="@+id/charity_value"
@@ -191,7 +207,6 @@
                               android:layout_alignParentEnd="true"
                               android:layout_marginStart="@dimen/item_text_top_bottom_margin"
                               android:layout_marginTop="@dimen/item_text_top_bottom_margin"
-                              android:layout_marginEnd="@dimen/grid_margin_right"
                               android:layout_toEndOf="@+id/charity_label"
                               android:ellipsize="end"
                               android:maxLines="1"
@@ -206,18 +221,20 @@
                     android:visibility="gone"
                     android:id="@+id/check_number_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:gravity="center"
+                    android:background="@drawable/content_border_bottom"
+                    android:layout_height="@dimen/row_height_single_entry">
 
-                    <TextView android:id="@+id/check_number_label"
-                              android:layout_width="wrap_content"
-                              android:layout_height="wrap_content"
-                              android:layout_alignParentStart="true"
-                              android:layout_alignParentTop="true"
-                              android:layout_marginStart="@dimen/grid_margin_left"
-                              android:layout_marginTop="@dimen/item_text_top_bottom_margin"
-                              android:text="@string/checkNumber"
-                              android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-                              app:layout_constraintLeft_toLeftOf="parent"
+                    <TextView
+                        android:id="@+id/check_number_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="@dimen/item_text_top_bottom_margin"
+                        android:text="@string/checkNumber"
+                        android:textAppearance="@style/TextAppearance.Hyperwallet.Body1"
+                        app:layout_constraintLeft_toLeftOf="parent"
                               app:layout_constraintStart_toStartOf="parent"/>
 
                     <TextView android:id="@+id/check_number_value"
@@ -227,7 +244,6 @@
                               android:layout_alignParentEnd="true"
                               android:layout_marginStart="@dimen/item_text_top_bottom_margin"
                               android:layout_marginTop="@dimen/item_text_top_bottom_margin"
-                              android:layout_marginEnd="@dimen/grid_margin_right"
                               android:layout_toEndOf="@+id/check_number_label"
                               android:ellipsize="end"
                               android:maxLines="1"
@@ -242,18 +258,20 @@
                     android:id="@+id/website_layout"
                     android:visibility="gone"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:gravity="center"
+                    android:background="@drawable/content_border_bottom"
+                    android:layout_height="@dimen/row_height_single_entry">
 
-                    <TextView android:id="@+id/website_label"
-                              android:layout_width="wrap_content"
-                              android:layout_height="wrap_content"
-                              android:layout_alignParentStart="true"
-                              android:layout_alignParentTop="true"
-                              android:layout_marginStart="@dimen/grid_margin_left"
-                              android:layout_marginTop="@dimen/item_text_top_bottom_margin"
-                              android:text="@string/website"
-                              android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-                              app:layout_constraintLeft_toLeftOf="parent"
+                    <TextView
+                        android:id="@+id/website_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="@dimen/item_text_top_bottom_margin"
+                        android:text="@string/website"
+                        android:textAppearance="@style/TextAppearance.Hyperwallet.Body1"
+                        app:layout_constraintLeft_toLeftOf="parent"
                               app:layout_constraintStart_toStartOf="parent"/>
 
                     <TextView android:id="@+id/website_value"
@@ -263,7 +281,6 @@
                               android:layout_alignParentEnd="true"
                               android:layout_marginStart="@dimen/item_text_top_bottom_margin"
                               android:layout_marginTop="@dimen/item_text_top_bottom_margin"
-                              android:layout_marginEnd="@dimen/grid_margin_right"
                               android:layout_toEndOf="@+id/website_label"
                               android:ellipsize="end"
                               android:maxLines="1"
@@ -273,16 +290,10 @@
                               app:layout_constraintBottom_toBottomOf="parent"
                               app:layout_constraintEnd_toEndOf="parent"/>
                 </RelativeLayout>
-
-                <Space android:id="@+id/receipt_details_spacer"
-                       android:layout_width="match_parent"
-                       android:layout_height="@dimen/grid_margin_bottom"/>
-
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/receipt_notes_information"
-                android:background="@drawable/item_view_border"
                 android:orientation="vertical"
                 android:visibility="gone"
                 android:layout_width="match_parent"
@@ -291,25 +302,26 @@
                 <LinearLayout
                     android:id="@+id/receipt_notes_header"
                     android:layout_width="match_parent"
-                    android:background="@drawable/item_view_border_header"
-                    android:paddingTop="@dimen/grid_padding_top"
-                    android:layout_height="@dimen/section_header_height">
+                    android:layout_height="wrap_content"
+                    style="@style/HeaderTitleAppearance">
+
                     <TextView
                         android:id="@+id/receipt_notes_header_label"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="@string/notes"
                         android:layout_marginStart="@dimen/grid_margin_left"
+                        android:layout_marginEnd="@dimen/grid_margin_right"
+                        android:text="@string/notes"
                         android:layout_marginTop="@dimen/grid_margin_top"
-                        android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"/>
+                        android:textAppearance="@style/TextAppearance.Hyperwallet.HeaderTitle" />
                 </LinearLayout>
 
                 <TextView android:id="@+id/notes_value"
                           android:layout_width="match_parent"
                           android:layout_height="wrap_content"
-                          android:layout_marginStart="@dimen/grid_margin_left"
-                          android:layout_marginTop="@dimen/grid_margin_top"
-                          android:layout_marginEnd="@dimen/grid_margin_right"
+                    android:layout_marginStart="@dimen/grid_margin_left"
+                    android:layout_marginEnd="@dimen/grid_margin_right"
+                    android:layout_marginTop="@dimen/grid_margin_top"
                           android:layout_marginBottom="@dimen/grid_margin_bottom"
                           android:text="@string/text_placeholder"
                           android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"
@@ -320,105 +332,148 @@
 
             <LinearLayout
                 android:id="@+id/fee_details_layout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:visibility="gone"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <LinearLayout
                     android:id="@+id/fee_details_header"
                     android:layout_width="match_parent"
-                    android:background="@drawable/item_view_border_header"
-                    android:paddingTop="@dimen/grid_padding_top"
-                    android:layout_height="@dimen/section_header_height">
+                    android:layout_height="wrap_content"
+                    style="@style/HeaderTitleAppearance">
+
                     <TextView
                         android:id="@+id/details_header_text"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="@string/fee_details_header_text"
                         android:layout_marginStart="@dimen/grid_margin_left"
+                        android:layout_marginEnd="@dimen/grid_margin_right"
+                        android:text="@string/fee_details_header_text"
                         android:layout_marginTop="@dimen/grid_margin_top"
-                        android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"/>
+                        android:textAppearance="@style/TextAppearance.Hyperwallet.HeaderTitle" />
                 </LinearLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/fee_details_information"
-                        android:background="@drawable/item_view_border"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                    android:layout_marginStart="@dimen/grid_margin_left"
+                    android:layout_marginEnd="@dimen/grid_margin_right"
+                    android:gravity="center"
+                    android:background="@drawable/content_border_bottom"
+                    android:layout_height="@dimen/row_height_single_entry">
 
-                        <TextView android:id="@+id/details_amount_label"
-                                  android:layout_width="wrap_content"
-                                  android:layout_height="wrap_content"
-                                  android:layout_marginStart="@dimen/grid_margin_left"
-                                  android:layout_marginTop="@dimen/grid_margin_top"
-                                  android:text="@string/details_amount_label"
-                                  android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-                                  app:layout_constraintLeft_toLeftOf="parent"
-                                  app:layout_constraintStart_toStartOf="parent"
-                                  app:layout_constraintTop_toTopOf="parent"/>
+                    <TextView
+                        android:id="@+id/details_amount_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="@dimen/grid_margin_top"
+                        android:text="@string/details_amount_label"
+                        android:textAppearance="@style/TextAppearance.Hyperwallet.Body1"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                        <TextView android:id="@+id/details_amount_value"
-                                  android:layout_width="wrap_content"
-                                  android:layout_height="wrap_content"
-                                  android:layout_marginTop="@dimen/grid_margin_top"
-                                  android:layout_marginEnd="@dimen/grid_margin_right"
-                                  android:text="@string/text_placeholder"
-                                  android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"
-                                  app:layout_constraintEnd_toEndOf="parent"
-                                  app:layout_constraintTop_toTopOf="parent"/>
-
-                        <TextView android:id="@+id/details_fee_label"
-                                  android:layout_width="wrap_content"
-                                  android:layout_height="wrap_content"
-                                  android:layout_marginStart="@dimen/grid_margin_left"
-                                  android:layout_marginTop="8dp"
-                                  android:text="@string/fee_label"
-                                  android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-                                  app:layout_constraintLeft_toLeftOf="parent"
-                                  app:layout_constraintStart_toStartOf="parent"
-                                  app:layout_constraintTop_toBottomOf="@+id/details_amount_value"/>
-
-                        <TextView android:id="@+id/details_fee_value"
-                                  android:layout_width="wrap_content"
-                                  android:layout_height="wrap_content"
-                                  android:layout_marginTop="@dimen/item_text_top_bottom_margin"
-                                  android:layout_marginEnd="@dimen/grid_margin_right"
-                                  android:text="@string/text_placeholder"
-                                  android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"
-                                  app:layout_constraintEnd_toEndOf="parent"
-                                  app:layout_constraintTop_toBottomOf="@+id/details_amount_value"/>
-
-                        <TextView android:id="@+id/details_transfer_amount_label"
-                                  android:layout_width="wrap_content"
-                                  android:layout_height="wrap_content"
-                                  android:layout_marginStart="@dimen/grid_margin_left"
-                                  android:layout_marginTop="@dimen/item_text_top_bottom_margin"
-                                  android:text="@string/transfer_amount_label"
-                                  android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-                                  app:layout_constraintLeft_toLeftOf="parent"
-                                  app:layout_constraintStart_toStartOf="parent"
-                                  app:layout_constraintTop_toBottomOf="@+id/details_fee_value"/>
-
-                        <TextView android:id="@+id/details_transfer_amount_value"
-                                  android:layout_width="wrap_content"
-                                  android:layout_height="wrap_content"
-                                  android:layout_marginTop="@dimen/item_text_top_bottom_margin"
-                                  android:layout_marginEnd="@dimen/grid_margin_right"
-                                  android:layout_marginBottom="@dimen/grid_margin_bottom"
-                                  android:text="@string/text_placeholder"
-                                  android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"
-                                  app:layout_constraintBottom_toBottomOf="parent"
-                                  app:layout_constraintEnd_toEndOf="parent"
-                                  app:layout_constraintTop_toBottomOf="@+id/details_fee_value"/>
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <TextView
+                        android:id="@+id/details_amount_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:gravity="end"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:layout_marginStart="@dimen/grid_margin_left"
+                        android:layout_toEndOf="@+id/details_amount_label"
+                        android:layout_marginTop="@dimen/grid_margin_top"
+                        android:layout_marginBottom="0dp"
+                        tools:text="@string/text_placeholder"
+                        android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
                 </RelativeLayout>
 
-            </LinearLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_marginStart="@dimen/grid_margin_left"
+                    android:layout_marginEnd="@dimen/grid_margin_right"
+                    android:gravity="center"
+                    android:background="@drawable/content_border_bottom"
+                    android:layout_height="@dimen/row_height_single_entry">
 
+                    <TextView
+                        android:id="@+id/details_fee_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="@dimen/grid_margin_top"
+                        android:text="@string/fee_label"
+                        android:textAppearance="@style/TextAppearance.Hyperwallet.Body1"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/details_fee_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:gravity="end"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:layout_marginStart="@dimen/grid_margin_left"
+                        android:layout_toEndOf="@+id/details_fee_label"
+                        android:layout_marginTop="@dimen/grid_margin_top"
+                        android:layout_marginBottom="0dp"
+                        tools:text="@string/text_placeholder"
+                        android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_marginStart="@dimen/grid_margin_left"
+                    android:layout_marginEnd="@dimen/grid_margin_right"
+                    android:gravity="center"
+                    android:background="@drawable/content_border_bottom"
+                    android:layout_height="@dimen/row_height_single_entry">
+
+                    <TextView
+                        android:id="@+id/details_transfer_amount_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="@dimen/grid_margin_top"
+                        android:text="@string/transfer_amount_label"
+                        android:textAppearance="@style/TextAppearance.Hyperwallet.Body1"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/details_transfer_amount_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:gravity="end"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:layout_marginStart="@dimen/grid_margin_left"
+                        android:layout_toEndOf="@+id/details_transfer_amount_label"
+                        android:layout_marginTop="@dimen/grid_margin_top"
+                        android:layout_marginBottom="0dp"
+                        tools:text="@string/text_placeholder"
+                        android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </RelativeLayout>
+            </LinearLayout>
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>

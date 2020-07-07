@@ -27,16 +27,19 @@ import static com.hyperwallet.android.model.receipt.Receipt.Entries.CREDIT;
 import static com.hyperwallet.android.model.receipt.Receipt.Entries.DEBIT;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -80,6 +83,7 @@ public class ReceiptDetailFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull final View view, @Nullable final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        onView();
 
         Receipt receipt = mReceiptDetailViewModel.getReceipt();
 
@@ -91,6 +95,16 @@ public class ReceiptDetailFragment extends Fragment {
 
         // fee details
         setFeeDetailsView(receipt, view);
+    }
+
+    private void onView() {
+        requireActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        requireActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getActivity().getWindow().setStatusBarColor(
+                    ContextCompat.getColor(getContext(), R.color.statusBarColor));
+            getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        }
     }
 
     // By design decision, this code is also repeated in ListReceiptFragment
@@ -113,18 +127,14 @@ public class ReceiptDetailFragment extends Fragment {
                     .getString(R.string.credit_sign, formattedAmount));
             transactionTypeIcon.setTextColor(transactionTypeIcon.getContext()
                     .getResources().getColor(R.color.positiveColor));
-            transactionTypeIcon.setBackground(transactionTypeIcon.getContext()
-                    .getDrawable(R.drawable.circle_positive));
             transactionTypeIcon.setText(transactionTypeIcon.getContext().getText(R.string.credit));
         } else if (DEBIT.equals(receipt.getEntry())) {
             transactionAmount.setTextColor(transactionAmount.getContext()
-                    .getResources().getColor(R.color.colorAccent));
+                    .getResources().getColor(R.color.negativeColor));
             transactionAmount.setText(transactionAmount.getContext()
                     .getString(R.string.debit_sign, formattedAmount));
             transactionTypeIcon.setTextColor(transactionTypeIcon.getContext()
-                    .getResources().getColor(R.color.colorAccent));
-            transactionTypeIcon.setBackground(transactionTypeIcon.getContext()
-                    .getDrawable(R.drawable.circle_negative));
+                    .getResources().getColor(R.color.negativeColor));
             transactionTypeIcon.setText(transactionTypeIcon.getContext().getText(R.string.debit));
         }
 
