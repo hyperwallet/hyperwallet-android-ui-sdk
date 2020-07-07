@@ -14,7 +14,7 @@
         android:layout_marginStart="@dimen/grid_margin_left"
         android:layout_marginTop="@dimen/grid_margin_top"
         android:background="@drawable/circle"
-        android:fontFamily="@font/icomoon"
+        android:fontFamily="@font/hw_mobile_ui_sdk_icons"
         android:gravity="center"
         tools:text="@string/not_available"
         android:textColor="@color/colorPrimary"
