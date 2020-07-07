@@ -14,6 +14,8 @@
     <string name="paper_check">Paper Check</string>
     <string name="prepaid_card">Prepaid Card</string>
     <string name="paypal_account">PayPal</string>
+    <string name="venmo_account">Venmo</string>
+    <string name="cash_pickup_mg">MoneyGram</string>
 
     <string name="bank_account_font_icon">\ue900</string>
     <string name="bank_card_font_icon">\ue903</string>
@@ -21,6 +23,8 @@
     <string name="paper_check_font_icon">\ue902</string>
     <string name="prepaid_card_font_icon">\ue901</string>
     <string name="paypal_account_font_icon">\ue906</string>
+    <string name="venmo_account_font_icon">\ue909</string>
+    <string name="cash_pickup_mg_font_icon">\ue905</string>
 
     <string name="endingIn">ending in %s</string>
     <string name="not_translated_in_braces">(not translated)</string>
