@@ -109,7 +109,7 @@
                         android:layout_marginTop="@dimen/grid_margin_top"
                         android:layout_marginBottom="0dp"
                         tools:text="@string/text_placeholder"
-                        android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"
+                        android:textAppearance="@style/TextAppearance.Hyperwallet.Caption"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -141,7 +141,7 @@
                         android:maxLines="1"
                         android:paddingTop="@dimen/item_text_top_bottom_margin"
                         tools:text="@string/text_placeholder"
-                        android:textAppearance="@style/TextAppearance.Hyperwallet.Body2" />
+                        android:textAppearance="@style/TextAppearance.Hyperwallet.Caption" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -159,26 +159,29 @@
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
                         android:layout_marginTop="@dimen/item_text_top_bottom_margin"
-                        android:text="@string/clientPaymentId"
+                        android:text="@string/mobileMerchantTxnLabel"
                         android:textAppearance="@style/TextAppearance.Hyperwallet.Body1"
                         app:layout_constraintLeft_toLeftOf="parent"
-                              app:layout_constraintStart_toStartOf="parent"/>
+                        app:layout_constraintStart_toStartOf="parent" />
 
-                    <TextView android:id="@+id/client_id_value"
-                              android:layout_width="match_parent"
-                              android:layout_height="wrap_content"
-                              android:layout_alignParentTop="true"
-                              android:layout_alignParentEnd="true"
-                              android:layout_marginStart="@dimen/item_text_top_bottom_margin"
-                              android:layout_marginTop="@dimen/item_text_top_bottom_margin"
-                              android:layout_toEndOf="@+id/client_id_label"
-                              android:ellipsize="end"
-                              android:maxLines="1"
+                    <TextView
+                        android:id="@+id/client_id_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="@dimen/item_text_top_bottom_margin"
+                        android:paddingStart="@dimen/item_text_top_bottom_margin"
+                        android:paddingEnd="@dimen/item_text_top_bottom_margin"
+                        android:layout_marginTop="@dimen/item_text_top_bottom_margin"
+                        android:layout_toEndOf="@+id/client_id_label"
+                        android:ellipsize="end"
+                        android:maxLines="1"
                         android:gravity="end"
                         tools:text="@string/text_placeholder"
-                        android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"
-                              app:layout_constraintBottom_toBottomOf="parent"
-                              app:layout_constraintEnd_toEndOf="parent"/>
+                        android:textAppearance="@style/TextAppearance.Hyperwallet.Caption"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -213,8 +216,8 @@
                               android:maxLines="1"
                         android:gravity="end"
                         tools:text="@string/text_placeholder"
-                        android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"
-                              app:layout_constraintBottom_toBottomOf="parent"
+                        android:textAppearance="@style/TextAppearance.Hyperwallet.Caption"
+                        app:layout_constraintBottom_toBottomOf="parent"
                               app:layout_constraintEnd_toEndOf="parent"/>
                 </RelativeLayout>
 
@@ -236,23 +239,24 @@
                         android:text="@string/mobileCheckNumber"
                         android:textAppearance="@style/TextAppearance.Hyperwallet.Body1"
                         app:layout_constraintLeft_toLeftOf="parent"
-                              app:layout_constraintStart_toStartOf="parent"/>
+                        app:layout_constraintStart_toStartOf="parent" />
 
-                    <TextView android:id="@+id/check_number_value"
-                              android:layout_width="match_parent"
-                              android:layout_height="wrap_content"
-                              android:layout_alignParentTop="true"
-                              android:layout_alignParentEnd="true"
-                              android:layout_marginStart="@dimen/item_text_top_bottom_margin"
-                              android:layout_marginTop="@dimen/item_text_top_bottom_margin"
-                              android:layout_toEndOf="@+id/check_number_label"
-                              android:ellipsize="end"
-                              android:maxLines="1"
+                    <TextView
+                        android:id="@+id/check_number_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="@dimen/item_text_top_bottom_margin"
+                        android:layout_marginTop="@dimen/item_text_top_bottom_margin"
+                        android:layout_toEndOf="@+id/check_number_label"
+                        android:ellipsize="end"
+                        android:maxLines="1"
                         android:gravity="end"
                         tools:text="@string/text_placeholder"
-                        android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"
-                              app:layout_constraintBottom_toBottomOf="parent"
-                              app:layout_constraintEnd_toEndOf="parent"/>
+                        android:textAppearance="@style/TextAppearance.Hyperwallet.Caption"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -273,23 +277,24 @@
                         android:text="@string/mobilePromoWebsite"
                         android:textAppearance="@style/TextAppearance.Hyperwallet.Body1"
                         app:layout_constraintLeft_toLeftOf="parent"
-                              app:layout_constraintStart_toStartOf="parent"/>
+                        app:layout_constraintStart_toStartOf="parent" />
 
-                    <TextView android:id="@+id/website_value"
-                              android:layout_width="match_parent"
-                              android:layout_height="wrap_content"
-                              android:layout_alignParentTop="true"
-                              android:layout_alignParentEnd="true"
-                              android:layout_marginStart="@dimen/item_text_top_bottom_margin"
-                              android:layout_marginTop="@dimen/item_text_top_bottom_margin"
-                              android:layout_toEndOf="@+id/website_label"
-                              android:ellipsize="end"
-                              android:maxLines="1"
+                    <TextView
+                        android:id="@+id/website_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="@dimen/item_text_top_bottom_margin"
+                        android:layout_marginTop="@dimen/item_text_top_bottom_margin"
+                        android:layout_toEndOf="@+id/website_label"
+                        android:ellipsize="end"
+                        android:maxLines="1"
                         android:gravity="end"
                         tools:text="@string/text_placeholder"
-                        android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"
-                              app:layout_constraintBottom_toBottomOf="parent"
-                              app:layout_constraintEnd_toEndOf="parent"/>
+                        android:textAppearance="@style/TextAppearance.Hyperwallet.Caption"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" />
                 </RelativeLayout>
             </LinearLayout>
 
@@ -331,7 +336,7 @@
                         android:layout_marginTop="@dimen/grid_margin_top"
                         android:layout_marginBottom="@dimen/grid_margin_bottom"
                         tools:text="@string/text_placeholder"
-                        android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"
+                        android:textAppearance="@style/TextAppearance.Hyperwallet.Caption"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent" />
                 </LinearLayout>
@@ -397,7 +402,7 @@
                         android:layout_marginTop="@dimen/grid_margin_top"
                         android:layout_marginBottom="0dp"
                         tools:text="@string/text_placeholder"
-                        android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"
+                        android:textAppearance="@style/TextAppearance.Hyperwallet.Caption"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
                 </RelativeLayout>
@@ -437,7 +442,7 @@
                         android:layout_marginTop="@dimen/grid_margin_top"
                         android:layout_marginBottom="0dp"
                         tools:text="@string/text_placeholder"
-                        android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"
+                        android:textAppearance="@style/TextAppearance.Hyperwallet.Caption"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
                 </RelativeLayout>
@@ -477,7 +482,7 @@
                         android:layout_marginTop="@dimen/grid_margin_top"
                         android:layout_marginBottom="0dp"
                         tools:text="@string/text_placeholder"
-                        android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"
+                        android:textAppearance="@style/TextAppearance.Hyperwallet.Caption"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
                 </RelativeLayout>

@@ -381,7 +381,7 @@ public class ListPrepaidCardReceiptsTest {
         onView(withId(R.id.date_label)).check(matches(withText(R.string.date)));
         onView(withId(R.id.date_value)).check(matches(withText("Thu, June 6, 2019, 3:48 PM PDT")));
 
-        onView(withId(R.id.client_id_label)).check(matches(withText(R.string.clientPaymentId)));
+        onView(withId(R.id.client_id_label)).check(matches(withText(R.string.mobileMerchantTxnLabel)));
         onView(withId(R.id.client_id_value)).check(matches(withText("AOxXefx9")));
         onView(withId(R.id.charity_label)).check(matches(withText(R.string.mobileCharityName)));
         onView(withId(R.id.charity_value)).check(matches(withText("Sample Charity")));

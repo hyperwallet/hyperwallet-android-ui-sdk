@@ -273,7 +273,7 @@ public class ListUserReceiptsTest {
         onView(withId(R.id.date_label)).check(matches(withText(R.string.date)));
         onView(withId(R.id.date_value)).check(matches(withText("Fri, June 7, 2019, 10:08 AM PDT")));
 
-        onView(withId(R.id.client_id_label)).check(matches(withText(R.string.clientPaymentId)));
+        onView(withId(R.id.client_id_label)).check(matches(withText(R.string.mobileMerchantTxnLabel)));
         onView(withId(R.id.client_id_value)).check(matches(withText("8OxXefx5")));
         onView(withId(R.id.charity_label)).check(matches(withText(R.string.mobileCharityName)));
         onView(withId(R.id.charity_value)).check(matches(withText("Sample Charity")));
