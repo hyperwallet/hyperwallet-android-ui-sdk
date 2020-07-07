@@ -25,8 +25,8 @@
     <string name="text_placeholder">Placeholder</string>
 
     <!-- entry types -->
-    <string name="debit">\uE903</string>
-    <string name="credit">\uE902</string>
+    <string name="debit">\uE908</string>
+    <string name="credit">\uE907</string>
     <string name="debit_sign">- %s</string>
     <string name="credit_sign">+ %s</string>
 

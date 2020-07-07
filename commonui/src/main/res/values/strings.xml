@@ -15,12 +15,12 @@
     <string name="prepaid_card">Prepaid Card</string>
     <string name="paypal_account">PayPal</string>
 
-    <string name="bank_account_font_icon">\uE907</string>
-    <string name="bank_card_font_icon">\uE905</string>
-    <string name="wire_account_font_icon">\uE900</string>
-    <string name="paper_check_font_icon">\uE906</string>
-    <string name="prepaid_card_font_icon">\uE908</string>
-    <string name="paypal_account_font_icon">\uE904</string>
+    <string name="bank_account_font_icon">\uE900</string>
+    <string name="bank_card_font_icon">\uE903</string>
+    <string name="wire_account_font_icon">\uE90a</string>
+    <string name="paper_check_font_icon">\uE902</string>
+    <string name="prepaid_card_font_icon">\uE901</string>
+    <string name="paypal_account_font_icon">\uE906</string>
 
     <string name="endingIn">ending in %s</string>
     <string name="not_translated_in_braces">(not translated)</string>
