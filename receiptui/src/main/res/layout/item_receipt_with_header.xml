@@ -10,7 +10,7 @@
         android:id="@+id/item_date_header_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/HeaderTitleAppearance">
+        style="@style/HeaderTitleAppearance">
 
         <TextView
             android:id="@+id/item_date_header_title"
