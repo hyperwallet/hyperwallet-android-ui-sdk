@@ -367,39 +367,41 @@ public class ListPrepaidCardReceiptsTest {
 
         onView(withId(R.id.list_receipts)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
 
-        onView(withId(R.id.transaction_header_text)).check(matches(withText(R.string.transaction_header_text)));
+        onView(withId(R.id.transaction_header_text)).check(matches(withText(R.string.mobileTransactionTypeLabel)));
         onView(withId(R.id.transaction_type_icon)).check(matches(withText(R.string.debit)));
         onView(withId(R.id.transaction_title)).check(matches(withText(R.string.prepaid_card_sale)));
         onView(withId(R.id.transaction_amount)).check(matches(withText("- 10.00")));
         onView(withId(R.id.transaction_currency)).check(matches(withText("USD")));
         onView(withId(R.id.transaction_date)).check(matches(withText("June 6, 2019")));
 
-        onView(withId(R.id.receipt_details_header_label)).check(matches(withText(R.string.receipt_header_label)));
-        onView(withId(R.id.receipt_id_label)).check(matches(withText(R.string.journalId)));
+        onView(withId(R.id.receipt_details_header_label)).check(
+                matches(withText(R.string.mobileTransactionDetailsLabel)));
+        onView(withId(R.id.receipt_id_label)).check(matches(withText(R.string.mobileJournalNumberLabel)));
         onView(withId(R.id.receipt_id_value)).check(matches(withText("FISVL_5240220")));
-        onView(withId(R.id.date_label)).check(matches(withText(R.string.createdOn)));
+        onView(withId(R.id.date_label)).check(matches(withText(R.string.date)));
         onView(withId(R.id.date_value)).check(matches(withText("Thu, June 6, 2019, 3:48 PM PDT")));
 
         onView(withId(R.id.client_id_label)).check(matches(withText(R.string.clientPaymentId)));
         onView(withId(R.id.client_id_value)).check(matches(withText("AOxXefx9")));
-        onView(withId(R.id.charity_label)).check(matches(withText(R.string.charityName)));
+        onView(withId(R.id.charity_label)).check(matches(withText(R.string.mobileCharityName)));
         onView(withId(R.id.charity_value)).check(matches(withText("Sample Charity")));
-        onView(withId(R.id.check_number_label)).check(matches(withText(R.string.checkNumber)));
+        onView(withId(R.id.check_number_label)).check(matches(withText(R.string.mobileCheckNumber)));
         onView(withId(R.id.check_number_value)).check(matches(withText("Sample Check Number")));
-        onView(withId(R.id.website_label)).check(matches(withText(R.string.website)));
+        onView(withId(R.id.website_label)).check(matches(withText(R.string.mobilePromoWebsite)));
         onView(withId(R.id.website_value)).check(matches(withText("https://localhost:8181")));
         onView(withText("A Person")).check(doesNotExist());
 
-        onView(withId(R.id.receipt_notes_header_label)).check(matches(withText(R.string.notes)));
+        onView(withId(R.id.receipt_notes_header_label)).check(matches(withText(R.string.mobileConfirmNotesLabel)));
         onView(withId(R.id.notes_value)).check(
                 matches(withText("Sample prepaid card payment for the period of June 15th, 2019 to July 23, 2019")));
 
-        onView(withId(R.id.details_header_text)).check(matches(withText(R.string.fee_details_header_text)));
-        onView(withId(R.id.details_amount_label)).check(matches(withText(R.string.details_amount_label)));
+        onView(withId(R.id.details_header_text)).check(matches(withText(R.string.mobileFeeInfoLabel)));
+        onView(withId(R.id.details_amount_label)).check(matches(withText(R.string.amount)));
         onView(withId(R.id.details_amount_value)).check(matches(withText("10.00 USD")));
-        onView(withId(R.id.details_fee_label)).check(matches(withText(R.string.fee_label)));
+        onView(withId(R.id.details_fee_label)).check(matches(withText(R.string.mobileFeeLabel)));
         onView(withId(R.id.details_fee_value)).check(matches(withText("3.00 USD")));
-        onView(withId(R.id.details_transfer_amount_label)).check(matches(withText(R.string.transfer_amount_label)));
+        onView(withId(R.id.details_transfer_amount_label)).check(
+                matches(withText(R.string.mobileTransactionDetailsTotal)));
         onView(withId(R.id.details_transfer_amount_value)).check(matches(withText("7.00 USD")));
     }
 
@@ -419,17 +421,18 @@ public class ListPrepaidCardReceiptsTest {
 
         onView(withId(R.id.list_receipts)).perform(RecyclerViewActions.actionOnItemAtPosition(1, click()));
 
-        onView(withId(R.id.transaction_header_text)).check(matches(withText(R.string.transaction_header_text)));
+        onView(withId(R.id.transaction_header_text)).check(matches(withText(R.string.mobileTransactionTypeLabel)));
         onView(withId(R.id.transaction_type_icon)).check(matches(withText(R.string.credit)));
         onView(withId(R.id.transaction_title)).check(matches(withText(R.string.deposit)));
         onView(withId(R.id.transaction_amount)).check(matches(withText("+ 5.00")));
         onView(withId(R.id.transaction_currency)).check(matches(withText("USD")));
         onView(withId(R.id.transaction_date)).check(matches(withText("June 6, 2019")));
 
-        onView(withId(R.id.receipt_details_header_label)).check(matches(withText(R.string.receipt_header_label)));
-        onView(withId(R.id.receipt_id_label)).check(matches(withText(R.string.journalId)));
+        onView(withId(R.id.receipt_details_header_label)).check(
+                matches(withText(R.string.mobileTransactionDetailsLabel)));
+        onView(withId(R.id.receipt_id_label)).check(matches(withText(R.string.mobileJournalNumberLabel)));
         onView(withId(R.id.receipt_id_value)).check(matches(withText("FISVL_5240221")));
-        onView(withId(R.id.date_label)).check(matches(withText(R.string.createdOn)));
+        onView(withId(R.id.date_label)).check(matches(withText(R.string.date)));
         onView(withId(R.id.date_value)).check(matches(withText("Thu, June 6, 2019, 3:48 PM PDT")));
 
         onView(withId(R.id.client_id_label)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));

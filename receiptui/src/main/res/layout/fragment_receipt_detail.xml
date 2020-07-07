@@ -31,7 +31,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="@dimen/grid_margin_left"
                     android:layout_marginTop="@dimen/grid_margin_top"
-                    android:text="@string/transaction_header_text"
+                    android:text="@string/mobileTransactionTypeLabel"
                     android:textAppearance="@style/TextAppearance.Hyperwallet.HeaderTitle" />
             </LinearLayout>
 
@@ -61,7 +61,7 @@
                     android:id="@+id/receipt_details_header_label"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="@string/receipt_header_label"
+                    android:text="@string/mobileTransactionDetailsLabel"
                     android:layout_marginStart="@dimen/grid_margin_left"
                     android:layout_marginTop="@dimen/grid_margin_top"
                     android:textAppearance="@style/TextAppearance.Hyperwallet.HeaderTitle" />
@@ -89,25 +89,26 @@
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
                         android:layout_marginTop="@dimen/grid_margin_top"
-                        android:text="@string/journalId"
+                        android:text="@string/mobileJournalNumberLabel"
                         android:textAppearance="@style/TextAppearance.Hyperwallet.Body1"
                         app:layout_constraintLeft_toLeftOf="parent"
-                              app:layout_constraintStart_toStartOf="parent"
-                              app:layout_constraintTop_toTopOf="parent"/>
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView android:id="@+id/receipt_id_value"
-                              android:layout_width="wrap_content"
-                              android:layout_height="wrap_content"
-                              android:layout_alignParentTop="true"
-                              android:layout_alignParentEnd="true"
-                              android:gravity="end"
-                              android:ellipsize="end"
-                              android:maxLines="1"
+                    <TextView
+                        android:id="@+id/receipt_id_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:gravity="end"
+                        android:ellipsize="end"
+                        android:maxLines="1"
                         android:layout_marginStart="@dimen/grid_margin_left"
                         android:layout_toEndOf="@+id/receipt_id_label"
                         android:layout_marginTop="@dimen/grid_margin_top"
                         android:layout_marginBottom="0dp"
-                        android:text="@string/text_placeholder"
+                        tools:text="@string/text_placeholder"
                         android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -125,7 +126,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingTop="@dimen/item_text_top_bottom_margin"
-                        android:text="@string/createdOn"
+                        android:text="@string/date"
                         android:textAppearance="@style/TextAppearance.Hyperwallet.Body1" />
 
                     <TextView
@@ -139,7 +140,7 @@
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:paddingTop="@dimen/item_text_top_bottom_margin"
-                        android:text="@string/text_placeholder"
+                        tools:text="@string/text_placeholder"
                         android:textAppearance="@style/TextAppearance.Hyperwallet.Body2" />
                 </RelativeLayout>
 
@@ -173,9 +174,9 @@
                               android:layout_toEndOf="@+id/client_id_label"
                               android:ellipsize="end"
                               android:maxLines="1"
-                              android:gravity="end"
-                              android:text="@string/text_placeholder"
-                              android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"
+                        android:gravity="end"
+                        tools:text="@string/text_placeholder"
+                        android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"
                               app:layout_constraintBottom_toBottomOf="parent"
                               app:layout_constraintEnd_toEndOf="parent"/>
                 </RelativeLayout>
@@ -195,7 +196,7 @@
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
                         android:layout_marginTop="@dimen/item_text_top_bottom_margin"
-                        android:text="@string/charityName"
+                        android:text="@string/mobileCharityName"
                         android:textAppearance="@style/TextAppearance.Hyperwallet.Body1"
                         app:layout_constraintLeft_toLeftOf="parent"
                               app:layout_constraintStart_toStartOf="parent"/>
@@ -210,9 +211,9 @@
                               android:layout_toEndOf="@+id/charity_label"
                               android:ellipsize="end"
                               android:maxLines="1"
-                              android:gravity="end"
-                              android:text="@string/text_placeholder"
-                              android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"
+                        android:gravity="end"
+                        tools:text="@string/text_placeholder"
+                        android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"
                               app:layout_constraintBottom_toBottomOf="parent"
                               app:layout_constraintEnd_toEndOf="parent"/>
                 </RelativeLayout>
@@ -232,7 +233,7 @@
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
                         android:layout_marginTop="@dimen/item_text_top_bottom_margin"
-                        android:text="@string/checkNumber"
+                        android:text="@string/mobileCheckNumber"
                         android:textAppearance="@style/TextAppearance.Hyperwallet.Body1"
                         app:layout_constraintLeft_toLeftOf="parent"
                               app:layout_constraintStart_toStartOf="parent"/>
@@ -247,9 +248,9 @@
                               android:layout_toEndOf="@+id/check_number_label"
                               android:ellipsize="end"
                               android:maxLines="1"
-                              android:gravity="end"
-                              android:text="@string/text_placeholder"
-                              android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"
+                        android:gravity="end"
+                        tools:text="@string/text_placeholder"
+                        android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"
                               app:layout_constraintBottom_toBottomOf="parent"
                               app:layout_constraintEnd_toEndOf="parent"/>
                 </RelativeLayout>
@@ -269,7 +270,7 @@
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
                         android:layout_marginTop="@dimen/item_text_top_bottom_margin"
-                        android:text="@string/website"
+                        android:text="@string/mobilePromoWebsite"
                         android:textAppearance="@style/TextAppearance.Hyperwallet.Body1"
                         app:layout_constraintLeft_toLeftOf="parent"
                               app:layout_constraintStart_toStartOf="parent"/>
@@ -284,9 +285,9 @@
                               android:layout_toEndOf="@+id/website_label"
                               android:ellipsize="end"
                               android:maxLines="1"
-                              android:gravity="end"
-                              android:text="@string/text_placeholder"
-                              android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"
+                        android:gravity="end"
+                        tools:text="@string/text_placeholder"
+                        android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"
                               app:layout_constraintBottom_toBottomOf="parent"
                               app:layout_constraintEnd_toEndOf="parent"/>
                 </RelativeLayout>
@@ -311,22 +312,29 @@
                         android:layout_height="match_parent"
                         android:layout_marginStart="@dimen/grid_margin_left"
                         android:layout_marginEnd="@dimen/grid_margin_right"
-                        android:text="@string/notes"
+                        android:text="@string/mobileConfirmNotesLabel"
                         android:layout_marginTop="@dimen/grid_margin_top"
                         android:textAppearance="@style/TextAppearance.Hyperwallet.HeaderTitle" />
                 </LinearLayout>
 
-                <TextView android:id="@+id/notes_value"
-                          android:layout_width="match_parent"
-                          android:layout_height="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/grid_margin_left"
                     android:layout_marginEnd="@dimen/grid_margin_right"
-                    android:layout_marginTop="@dimen/grid_margin_top"
-                          android:layout_marginBottom="@dimen/grid_margin_bottom"
-                          android:text="@string/text_placeholder"
-                          android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"
-                          app:layout_constraintBottom_toBottomOf="parent"
-                          app:layout_constraintEnd_toEndOf="parent"/>
+                    android:background="@drawable/content_border_bottom">
+
+                    <TextView
+                        android:id="@+id/notes_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/grid_margin_top"
+                        android:layout_marginBottom="@dimen/grid_margin_bottom"
+                        tools:text="@string/text_placeholder"
+                        android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" />
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -349,7 +357,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginStart="@dimen/grid_margin_left"
                         android:layout_marginEnd="@dimen/grid_margin_right"
-                        android:text="@string/fee_details_header_text"
+                        android:text="@string/mobileFeeInfoLabel"
                         android:layout_marginTop="@dimen/grid_margin_top"
                         android:textAppearance="@style/TextAppearance.Hyperwallet.HeaderTitle" />
                 </LinearLayout>
@@ -369,7 +377,7 @@
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
                         android:layout_marginTop="@dimen/grid_margin_top"
-                        android:text="@string/details_amount_label"
+                        android:text="@string/amount"
                         android:textAppearance="@style/TextAppearance.Hyperwallet.Body1"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -409,7 +417,7 @@
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
                         android:layout_marginTop="@dimen/grid_margin_top"
-                        android:text="@string/fee_label"
+                        android:text="@string/mobileFeeLabel"
                         android:textAppearance="@style/TextAppearance.Hyperwallet.Body1"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -449,7 +457,7 @@
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
                         android:layout_marginTop="@dimen/grid_margin_top"
-                        android:text="@string/transfer_amount_label"
+                        android:text="@string/mobileTransactionDetailsTotal"
                         android:textAppearance="@style/TextAppearance.Hyperwallet.Body1"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintStart_toStartOf="parent"

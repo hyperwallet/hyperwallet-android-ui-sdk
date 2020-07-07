@@ -45,7 +45,7 @@ public class ReceiptDetailActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle(R.string.title_activity_receipt_detail);
+        getSupportActionBar().setTitle(R.string.mobileTransactionDetailsHeader);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
