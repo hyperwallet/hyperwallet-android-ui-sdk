@@ -79,7 +79,7 @@
                     android:id="@+id/receipt_detail_static_layout"
                     android:layout_width="match_parent"
                     android:gravity="center"
-                    android:background="@drawable/content_border_bottom"
+                    android:background="@drawable/view_header_bottom_border"
                     android:layout_height="@dimen/row_height_single_entry">
 
                     <TextView
@@ -117,7 +117,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:background="@drawable/content_border_bottom"
+                    android:background="@drawable/view_header_bottom_border"
                     android:gravity="center"
                     android:layout_height="@dimen/row_height_single_entry">
 
@@ -149,7 +149,7 @@
                     android:id="@+id/client_id_layout"
                     android:layout_width="match_parent"
                     android:gravity="center"
-                    android:background="@drawable/content_border_bottom"
+                    android:background="@drawable/view_header_bottom_border"
                     android:layout_height="@dimen/row_height_single_entry">
 
                     <TextView
@@ -189,7 +189,7 @@
                     android:id="@+id/charity_layout"
                     android:layout_width="match_parent"
                     android:gravity="center"
-                    android:background="@drawable/content_border_bottom"
+                    android:background="@drawable/view_header_bottom_border"
                     android:layout_height="@dimen/row_height_single_entry">
 
                     <TextView
@@ -226,7 +226,7 @@
                     android:id="@+id/check_number_layout"
                     android:layout_width="match_parent"
                     android:gravity="center"
-                    android:background="@drawable/content_border_bottom"
+                    android:background="@drawable/view_header_bottom_border"
                     android:layout_height="@dimen/row_height_single_entry">
 
                     <TextView
@@ -264,7 +264,7 @@
                     android:visibility="gone"
                     android:layout_width="match_parent"
                     android:gravity="center"
-                    android:background="@drawable/content_border_bottom"
+                    android:background="@drawable/view_header_bottom_border"
                     android:layout_height="@dimen/row_height_single_entry">
 
                     <TextView
@@ -327,7 +327,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/grid_margin_left"
                     android:layout_marginEnd="@dimen/grid_margin_right"
-                    android:background="@drawable/content_border_bottom">
+                    android:background="@drawable/view_header_bottom_border">
 
                     <TextView
                         android:id="@+id/notes_value"
@@ -372,7 +372,7 @@
                     android:layout_marginStart="@dimen/grid_margin_left"
                     android:layout_marginEnd="@dimen/grid_margin_right"
                     android:gravity="center"
-                    android:background="@drawable/content_border_bottom"
+                    android:background="@drawable/view_header_bottom_border"
                     android:layout_height="@dimen/row_height_single_entry">
 
                     <TextView
@@ -412,7 +412,7 @@
                     android:layout_marginStart="@dimen/grid_margin_left"
                     android:layout_marginEnd="@dimen/grid_margin_right"
                     android:gravity="center"
-                    android:background="@drawable/content_border_bottom"
+                    android:background="@drawable/view_header_bottom_border"
                     android:layout_height="@dimen/row_height_single_entry">
 
                     <TextView
@@ -452,7 +452,7 @@
                     android:layout_marginStart="@dimen/grid_margin_left"
                     android:layout_marginEnd="@dimen/grid_margin_right"
                     android:gravity="center"
-                    android:background="@drawable/content_border_bottom"
+                    android:background="@drawable/view_header_bottom_border"
                     android:layout_height="@dimen/row_height_single_entry">
 
                     <TextView
