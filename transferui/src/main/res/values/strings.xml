@@ -48,7 +48,7 @@
     <string name="mobileTransferMax">Transfer max amount</string>
     <string name="transfer_summary_placeholder">Available balance: 2,422.90 CAD</string>
     <string name="transfer_notes_placeholder">Partial transfer</string>
-    <string name="transfer_item_icon_placeholder">\uE000</string>
+    <string name="transfer_item_icon_placeholder">\ue000</string>
     <string name="transfer_item_title_placeholder">Transfer Type</string>
     <string name="transfer_item_country_placeholder">Country Name</string>
     <string name="transfer_item_identification_placeholder">Editing on XXXX</string>

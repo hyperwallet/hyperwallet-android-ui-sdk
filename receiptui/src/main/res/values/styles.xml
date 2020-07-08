@@ -27,7 +27,7 @@
         <item name="android:layout_marginTop">@dimen/item_text_top_bottom_margin</item>
         <item name="android:layout_marginBottom">@dimen/item_text_top_bottom_margin</item>
         <item name="android:background">@drawable/circle_positive</item>
-        <item name="android:fontFamily">@font/icomoon</item>
+        <item name="android:fontFamily">@font/hw_mobile_ui_sdk_icons</item>
         <item name="android:gravity">center</item>
         <item name="android:text">@string/font_icon_placeholder</item>
         <item name="android:textColor">@color/positiveColor</item>
