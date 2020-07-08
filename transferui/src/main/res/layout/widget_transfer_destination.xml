@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/grid_margin_left"
         android:layout_marginTop="@dimen/image_offset"
-        android:fontFamily="@font/icomoon"
+        android:fontFamily="@font/hw_mobile_ui_sdk_icons"
         android:gravity="center"
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/font_default_icon_size"
