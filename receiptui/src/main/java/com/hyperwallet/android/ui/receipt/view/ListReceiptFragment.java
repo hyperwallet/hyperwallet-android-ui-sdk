@@ -50,6 +50,7 @@ import com.hyperwallet.android.ui.receipt.viewmodel.ReceiptViewModel;
 
 import java.text.DecimalFormat;
 import java.util.Calendar;
+import java.util.Currency;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
@@ -239,12 +240,13 @@ public class ListReceiptFragment extends Fragment {
                 DecimalFormat decimalFormat = new DecimalFormat(AMOUNT_FORMAT);
                 double amount = Double.parseDouble(receipt.getAmount());
                 String formattedAmount = decimalFormat.format(amount);
+                String currencyString = Currency.getInstance(receipt.getCurrency()).getSymbol(Locale.getDefault());
 
                 if (CREDIT.equals(receipt.getEntry())) {
                     transactionAmount.setTextColor(transactionAmount.getContext()
                             .getResources().getColor(R.color.positiveColor));
                     transactionAmount.setText(transactionAmount.getContext()
-                            .getString(R.string.credit_sign, formattedAmount));
+                            .getString(R.string.credit_sign, currencyString, formattedAmount));
                     transactionTypeIcon.setTextColor(transactionTypeIcon.getContext()
                             .getResources().getColor(R.color.positiveColor));
                     transactionTypeIcon.setText(transactionTypeIcon.getContext().getText(R.string.credit));
@@ -254,7 +256,7 @@ public class ListReceiptFragment extends Fragment {
                     transactionTypeIcon.setTextColor(transactionTypeIcon.getContext()
                             .getResources().getColor(R.color.negativeColor));
                     transactionAmount.setText(transactionAmount.getContext()
-                            .getString(R.string.debit_sign, formattedAmount));
+                            .getString(R.string.debit_sign, currencyString, formattedAmount));
                     transactionTypeIcon.setText(transactionTypeIcon.getContext().getText(R.string.debit));
                 }
 

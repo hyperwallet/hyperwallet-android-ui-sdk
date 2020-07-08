@@ -50,6 +50,7 @@ import com.hyperwallet.android.ui.receipt.R;
 import com.hyperwallet.android.ui.receipt.viewmodel.ReceiptDetailViewModel;
 
 import java.text.DecimalFormat;
+import java.util.Currency;
 import java.util.Date;
 import java.util.Locale;
 
@@ -119,12 +120,13 @@ public class ReceiptDetailFragment extends Fragment {
         DecimalFormat decimalFormat = new DecimalFormat(AMOUNT_FORMAT);
         double amount = Double.parseDouble(receipt.getAmount());
         String formattedAmount = decimalFormat.format(amount);
+        String currencyString = Currency.getInstance(receipt.getCurrency()).getSymbol(Locale.getDefault());
 
         if (CREDIT.equals(receipt.getEntry())) {
             transactionAmount.setTextColor(transactionAmount.getContext()
                     .getResources().getColor(R.color.positiveColor));
             transactionAmount.setText(transactionAmount.getContext()
-                    .getString(R.string.credit_sign, formattedAmount));
+                    .getString(R.string.credit_sign, currencyString, formattedAmount));
             transactionTypeIcon.setTextColor(transactionTypeIcon.getContext()
                     .getResources().getColor(R.color.positiveColor));
             transactionTypeIcon.setText(transactionTypeIcon.getContext().getText(R.string.credit));
@@ -132,7 +134,7 @@ public class ReceiptDetailFragment extends Fragment {
             transactionAmount.setTextColor(transactionAmount.getContext()
                     .getResources().getColor(R.color.negativeColor));
             transactionAmount.setText(transactionAmount.getContext()
-                    .getString(R.string.debit_sign, formattedAmount));
+                    .getString(R.string.debit_sign, currencyString, formattedAmount));
             transactionTypeIcon.setTextColor(transactionTypeIcon.getContext()
                     .getResources().getColor(R.color.negativeColor));
             transactionTypeIcon.setText(transactionTypeIcon.getContext().getText(R.string.debit));
@@ -165,18 +167,19 @@ public class ReceiptDetailFragment extends Fragment {
 
             //TODO localization of currencies in consideration
             DecimalFormat decimalFormat = new DecimalFormat(AMOUNT_FORMAT);
+            String currencyString = Currency.getInstance(receipt.getCurrency()).getSymbol(Locale.getDefault());
 
             TextView amountView = view.findViewById(R.id.details_amount_value);
             amountView.setText(view.getContext().getString(R.string.concat_string_view_format,
-                    decimalFormat.format(amount), receipt.getCurrency()));
+                    currencyString, decimalFormat.format(amount), receipt.getCurrency()));
 
             TextView fee = view.findViewById(R.id.details_fee_value);
             fee.setText(view.getContext().getString(R.string.concat_string_view_format,
-                    decimalFormat.format(feeAmount), receipt.getCurrency()));
+                    currencyString, decimalFormat.format(feeAmount), receipt.getCurrency()));
 
             TextView transfer = view.findViewById(R.id.details_transfer_amount_value);
             transfer.setText(view.getContext().getString(R.string.concat_string_view_format,
-                    decimalFormat.format(transferAmount), receipt.getCurrency()));
+                    currencyString, decimalFormat.format(transferAmount), receipt.getCurrency()));
         }
     }
 
@@ -187,7 +190,7 @@ public class ReceiptDetailFragment extends Fragment {
 
         Date date = DateUtils.fromDateTimeString(receipt.getCreatedOn());
         String timezone = DateUtils.toDateFormat(date, DETAIL_TIMEZONE);
-        dateView.setText(view.getContext().getString(R.string.concat_string_view_format,
+        dateView.setText(view.getContext().getString(R.string.concat_date_string_view_format,
                 formatDateTime(view.getContext(), date.getTime(),
                         FORMAT_SHOW_DATE | FORMAT_SHOW_TIME | FORMAT_SHOW_YEAR
                                 | FORMAT_SHOW_WEEKDAY | FORMAT_ABBREV_WEEKDAY), timezone));
