@@ -17,17 +17,6 @@
         app:layout_constraintBottom_toTopOf="@+id/list_item_currency_horizontal_divider"
         app:layout_constraintLeft_toLeftOf="@+id/list_item_currency_horizontal_divider" />
 
-    <TextView
-        android:id="@+id/currency_code"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/grid_padding_bottom"
-        android:paddingStart="@dimen/item_vertical_padding"
-        android:paddingEnd="@dimen/item_vertical_padding"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-        app:layout_constraintBottom_toTopOf="@+id/list_item_currency_horizontal_divider"
-        app:layout_constraintRight_toRightOf="@+id/list_item_currency_horizontal_divider" />
-
     <ImageView
         android:id="@+id/currency_item_selected_image"
         android:layout_width="wrap_content"

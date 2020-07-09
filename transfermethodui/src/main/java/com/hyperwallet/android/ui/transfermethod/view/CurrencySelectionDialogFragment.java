@@ -331,7 +331,6 @@ public class CurrencySelectionDialogFragment extends DialogFragment implements T
 
         class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
             private final TextView mCurrencyName;
-            private final TextView mCurrencyCode;
             private final ImageView mCurrencyItemSelectedImage;
             private final CurrencySelectionItemClickListener mCurrencySelectionItemClickListener;
 
@@ -341,7 +340,6 @@ public class CurrencySelectionDialogFragment extends DialogFragment implements T
                 itemView.setOnClickListener(this);
 
                 mCurrencyName = itemView.findViewById(R.id.currency_name);
-                mCurrencyCode = itemView.findViewById(R.id.currency_code);
                 mCurrencyItemSelectedImage = itemView.findViewById(R.id.currency_item_selected_image);
                 mCurrencySelectionItemClickListener = currencySelectionItemClickListener;
             }
@@ -358,13 +356,10 @@ public class CurrencySelectionDialogFragment extends DialogFragment implements T
             void bind(String currencyName) {
                 itemView.setOnClickListener(this);
                 mCurrencyName.setText(currencyName);
-                mCurrencyCode.setText(mCurrencyNameCodeMap.get(currencyName));
                 if (currencyName.equals(mSelectedCurrencyName)) {
                     mCurrencyItemSelectedImage.setVisibility(View.VISIBLE);
-                    mCurrencyCode.setVisibility(View.GONE);
                 } else {
                     mCurrencyItemSelectedImage.setVisibility(View.GONE);
-                    mCurrencyCode.setVisibility(View.VISIBLE);
                 }
             }
 
