@@ -49,14 +49,12 @@ import com.hyperwallet.android.ui.common.util.DateUtils;
 import com.hyperwallet.android.ui.receipt.R;
 import com.hyperwallet.android.ui.receipt.viewmodel.ReceiptDetailViewModel;
 
-import java.text.DecimalFormat;
 import java.util.Currency;
 import java.util.Date;
 import java.util.Locale;
 
 public class ReceiptDetailFragment extends Fragment {
 
-    private static final String AMOUNT_FORMAT = "###0.00";
     private static final String DETAIL_TIMEZONE = "zzz";
 
     private ReceiptDetailViewModel mReceiptDetailViewModel;
@@ -115,18 +113,13 @@ public class ReceiptDetailFragment extends Fragment {
         TextView transactionDate = view.findViewById(R.id.transaction_date);
         TextView transactionAmount = view.findViewById(R.id.transaction_amount);
         TextView transactionCurrency = view.findViewById(R.id.transaction_currency);
-
-        //TODO localization of currencies in consideration
-        DecimalFormat decimalFormat = new DecimalFormat(AMOUNT_FORMAT);
-        double amount = Double.parseDouble(receipt.getAmount());
-        String formattedAmount = decimalFormat.format(amount);
         String currencyString = Currency.getInstance(receipt.getCurrency()).getSymbol(Locale.getDefault());
 
         if (CREDIT.equals(receipt.getEntry())) {
             transactionAmount.setTextColor(transactionAmount.getContext()
                     .getResources().getColor(R.color.positiveColor));
             transactionAmount.setText(transactionAmount.getContext()
-                    .getString(R.string.credit_sign, currencyString, formattedAmount));
+                    .getString(R.string.credit_sign, currencyString, receipt.getAmount()));
             transactionTypeIcon.setTextColor(transactionTypeIcon.getContext()
                     .getResources().getColor(R.color.positiveColor));
             transactionTypeIcon.setText(transactionTypeIcon.getContext().getText(R.string.credit));
@@ -134,7 +127,7 @@ public class ReceiptDetailFragment extends Fragment {
             transactionAmount.setTextColor(transactionAmount.getContext()
                     .getResources().getColor(R.color.negativeColor));
             transactionAmount.setText(transactionAmount.getContext()
-                    .getString(R.string.debit_sign, currencyString, formattedAmount));
+                    .getString(R.string.debit_sign, currencyString, receipt.getAmount()));
             transactionTypeIcon.setTextColor(transactionTypeIcon.getContext()
                     .getResources().getColor(R.color.negativeColor));
             transactionTypeIcon.setText(transactionTypeIcon.getContext().getText(R.string.debit));
@@ -164,22 +157,20 @@ public class ReceiptDetailFragment extends Fragment {
             double feeAmount = Double.parseDouble(receipt.getFee());
             double amount = Double.parseDouble(receipt.getAmount());
             double transferAmount = amount - feeAmount;
-
-            //TODO localization of currencies in consideration
-            DecimalFormat decimalFormat = new DecimalFormat(AMOUNT_FORMAT);
-            String currencyString = Currency.getInstance(receipt.getCurrency()).getSymbol(Locale.getDefault());
+            String transferAmountTotal = transferAmount > 0 ? Double.toString(transferAmount) : "0";
+            String currencySymbol = Currency.getInstance(receipt.getCurrency()).getSymbol(Locale.getDefault());
 
             TextView amountView = view.findViewById(R.id.details_amount_value);
             amountView.setText(view.getContext().getString(R.string.concat_string_view_format,
-                    currencyString, decimalFormat.format(amount), receipt.getCurrency()));
+                    currencySymbol, receipt.getAmount(), receipt.getCurrency()));
 
             TextView fee = view.findViewById(R.id.details_fee_value);
             fee.setText(view.getContext().getString(R.string.concat_string_view_format,
-                    currencyString, decimalFormat.format(feeAmount), receipt.getCurrency()));
+                    currencySymbol, receipt.getFee(), receipt.getCurrency()));
 
             TextView transfer = view.findViewById(R.id.details_transfer_amount_value);
             transfer.setText(view.getContext().getString(R.string.concat_string_view_format,
-                    currencyString, decimalFormat.format(transferAmount), receipt.getCurrency()));
+                    currencySymbol, transferAmountTotal, receipt.getCurrency()));
         }
     }
 
