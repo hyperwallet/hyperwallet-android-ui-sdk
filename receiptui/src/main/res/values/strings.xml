@@ -20,9 +20,7 @@
     <string name="concat_string_view_format">%s%s %s</string>
     <string name="concat_date_string_view_format">%s %s</string>
 
-    <string name="empty_transaction_information">Seems like, you don\'t have any Transactions,
-        yet.
-    </string>
+    <string name="mobileNoTransactions">There\'s no activity to display.</string>
     <string name="title_transfer_funds">Transfer Funds</string>
     <string name="font_icon_placeholder">\ue908</string>
     <string name="text_placeholder">Placeholder</string>

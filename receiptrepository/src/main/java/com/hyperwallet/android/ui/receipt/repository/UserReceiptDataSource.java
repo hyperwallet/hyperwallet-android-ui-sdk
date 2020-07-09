@@ -77,7 +77,6 @@ public class UserReceiptDataSource extends PageKeyedDataSource<Integer, Receipt>
                 new HyperwalletListener<PageList<Receipt>>() {
                     @Override
                     public void onSuccess(@Nullable PageList<Receipt> result) {
-                        mIsFetchingData.postValue(Boolean.FALSE);
                         mErrors.postValue(null);
 
                         if (result != null) {
@@ -86,6 +85,7 @@ public class UserReceiptDataSource extends PageKeyedDataSource<Integer, Receipt>
                             callback.onResult(result.getDataList(), previous, next);
                         }
                         // reset
+                        mIsFetchingData.postValue(Boolean.FALSE);
                         mLoadInitialCallback = null;
                         mLoadInitialParams = null;
                         EspressoIdlingResource.decrement();

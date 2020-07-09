@@ -57,10 +57,14 @@ import java.util.Objects;
 
 public class ListReceiptFragment extends Fragment {
 
+    private static final String SHOULD_SHOW_NO_TRANSACTION_PLACEHOLDER = "SHOULD_SHOW_NO_TRANSACTION_PLACEHOLDER";
+
     private ListReceiptAdapter mListReceiptAdapter;
     private RecyclerView mListReceiptsView;
     private ReceiptViewModel mReceiptViewModel;
     private View mProgressBar;
+    private View mEmptyTransactionPlaceholder;
+    private Boolean mShouldShowNoTransactionPlaceholder = Boolean.TRUE;
 
     /**
      * Please don't use this constructor this is reserved for Android Core Framework
@@ -98,9 +102,10 @@ public class ListReceiptFragment extends Fragment {
             transactionHeaderView.setVisibility(View.GONE);
         }
 
+        mEmptyTransactionPlaceholder = view.findViewById(R.id.empty_transaction_list_view);
+        mListReceiptsView = view.findViewById(R.id.list_receipts);
         mProgressBar = view.findViewById(R.id.list_receipt_progress_bar);
         mListReceiptAdapter = new ListReceiptAdapter(mReceiptViewModel, new ListReceiptItemDiffCallback());
-        mListReceiptsView = view.findViewById(R.id.list_receipts);
         mListReceiptsView.setHasFixedSize(true);
         mListReceiptsView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mListReceiptsView.setAdapter(mListReceiptAdapter);
@@ -113,11 +118,43 @@ public class ListReceiptFragment extends Fragment {
         mReceiptViewModel.init();
     }
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putBoolean(SHOULD_SHOW_NO_TRANSACTION_PLACEHOLDER, mShouldShowNoTransactionPlaceholder);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            mShouldShowNoTransactionPlaceholder = savedInstanceState.getBoolean(SHOULD_SHOW_NO_TRANSACTION_PLACEHOLDER);
+        }
+        super.onViewStateRestored(savedInstanceState);
+    }
+
     private void registerObservers() {
         mReceiptViewModel.getReceiptList().observe(getViewLifecycleOwner(), new Observer<PagedList<Receipt>>() {
             @Override
-            public void onChanged(PagedList<Receipt> receipts) {
+            public void onChanged(final PagedList<Receipt> receipts) {
                 mListReceiptAdapter.submitList(receipts);
+                receipts.addWeakCallback(null, new PagedList.Callback() {
+                    @Override
+                    public void onChanged(int position, int count) {
+                    }
+
+                    @Override
+                    public void onInserted(int position, int count) {
+                        if (receipts.size() > 0) {
+                            mShouldShowNoTransactionPlaceholder = Boolean.FALSE;
+                        } else {
+                            mShouldShowNoTransactionPlaceholder = Boolean.TRUE;
+                        }
+                    }
+
+                    @Override
+                    public void onRemoved(int position, int count) {
+                    }
+                });
             }
         });
 
@@ -125,9 +162,17 @@ public class ListReceiptFragment extends Fragment {
             @Override
             public void onChanged(Boolean loading) {
                 if (loading) {
+                    mEmptyTransactionPlaceholder.setVisibility(View.GONE);
                     mProgressBar.setVisibility(View.VISIBLE);
                 } else {
                     mProgressBar.setVisibility(View.GONE);
+                    if (mShouldShowNoTransactionPlaceholder) {
+                        mEmptyTransactionPlaceholder.setVisibility(View.VISIBLE);
+                        mListReceiptsView.setVisibility(View.GONE);
+                    } else {
+                        mEmptyTransactionPlaceholder.setVisibility(View.GONE);
+                        mListReceiptsView.setVisibility(View.VISIBLE);
+                    }
                 }
             }
         });
