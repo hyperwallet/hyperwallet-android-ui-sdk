@@ -98,9 +98,11 @@
         <item name="android:textAlignment">center</item>
     </style>
 
-    <style name="TextAppearance.Hyperwallet.Caption" parent="TextAppearance.MaterialComponents.Caption">
+    <style name="TextAppearance.Hyperwallet.Caption" parent="Base.TextAppearance.Hyperwallet.Caption">
         <item name="android:textSize">@dimen/font_body1</item>
     </style>
+
+    <style name="Base.TextAppearance.Hyperwallet.Caption" parent="TextAppearance.MaterialComponents.Caption" />
 
     <style name="TextAppearance.Hyperwallet.InputLabel" parent="TextAppearance.MaterialComponents.Caption">
         <item name="android:textSize">@dimen/font_body2</item>

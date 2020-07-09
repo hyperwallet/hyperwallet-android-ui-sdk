@@ -15,7 +15,7 @@
         android:id="@+id/icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/grid_margin_left"
+        android:layout_marginStart="@dimen/item_vertical_margin"
         android:fontFamily="@font/hw_mobile_ui_sdk_icons"
         android:gravity="center"
         android:textColor="@color/colorPrimary"
@@ -74,7 +74,6 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/divider_height"
         android:background="?android:attr/listDivider"
-        android:layout_marginStart="@dimen/divider_offset"
         android:layout_marginTop="@dimen/divider_padding_top"
         app:layout_constraintStart_toStartOf="@+id/title"
         app:layout_constraintTop_toBottomOf="@+id/description_2"/>

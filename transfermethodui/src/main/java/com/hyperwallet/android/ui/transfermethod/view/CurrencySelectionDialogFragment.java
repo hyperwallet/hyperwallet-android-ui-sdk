@@ -112,7 +112,7 @@ public class CurrencySelectionDialogFragment extends DialogFragment implements T
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Toolbar toolbar = view.findViewById(R.id.currency_selection_toolbar);
-        toolbar.setTitle(R.string.select_transfer_method_currency);
+        toolbar.setTitle(R.string.mobileCurrencyLabel);
         toolbar.setNavigationIcon(R.drawable.ic_close_14dp);
 
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);

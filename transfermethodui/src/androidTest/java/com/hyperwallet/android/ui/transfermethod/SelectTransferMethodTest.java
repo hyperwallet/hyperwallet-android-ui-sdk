@@ -26,7 +26,6 @@ import static com.hyperwallet.android.model.transfermethod.TransferMethod.Transf
 import static com.hyperwallet.android.model.user.User.ProfileTypes.BUSINESS;
 import static com.hyperwallet.android.model.user.User.ProfileTypes.INDIVIDUAL;
 import static com.hyperwallet.android.ui.testutils.util.EspressoUtils.atPosition;
-import static com.hyperwallet.android.ui.testutils.util.EspressoUtils.withDrawable;
 import static com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_COUNTRY;
 import static com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_CURRENCY;
 import static com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_PROFILE_TYPE;
@@ -103,17 +102,12 @@ public class SelectTransferMethodTest {
                 matches(withText(R.string.activity_select_transfer_method_title)));
 
         onView(withId(R.id.select_transfer_method_country_label)).check(
-                matches(withText(R.string.select_transfer_method_country)));
+                matches(withText(R.string.mobileCountryRegion)));
         onView(withId(R.id.select_transfer_method_country_value)).check(matches(withText("United States")));
-        onView(allOf(hasSibling(withId(R.id.select_transfer_method_country_value)),
-                withDrawable(R.drawable.ic_keyboard_arrow_right_12dp))).check(matches(isDisplayed()));
 
         onView(withId(R.id.select_transfer_method_currency_label)).check(
-                matches(withText(R.string.select_transfer_method_currency)));
+                matches(withText(R.string.mobileCurrencyLabel)));
         onView(withId(R.id.select_transfer_method_currency_value)).check(matches(withText("USD")));
-        onView(allOf(hasSibling(withId(R.id.select_transfer_method_currency_value)),
-                withDrawable(R.drawable.ic_keyboard_arrow_right_12dp))).check(matches(isDisplayed()));
-
     }
 
     @Test
@@ -128,7 +122,7 @@ public class SelectTransferMethodTest {
         onView(withId(R.id.select_transfer_method_country_value)).perform(click());
 
         onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.country_selection_toolbar)))).check(
-                matches(withText(R.string.select_transfer_method_country)));
+                matches(withText(R.string.mobileCountryRegion)));
         onView(withId(R.id.search_button)).check(doesNotExist());
         onView(withId(R.id.country_selection_list)).check(new RecyclerViewCountAssertion(5));
         onView(allOf(withId(R.id.country_name), withText("Canada"))).check(matches(isDisplayed()));
@@ -156,7 +150,7 @@ public class SelectTransferMethodTest {
         onView(withId(R.id.select_transfer_method_country_value)).perform(click());
 
         onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.country_selection_toolbar)))).check(
-                matches(withText(R.string.select_transfer_method_country)));
+                matches(withText(R.string.mobileCountryRegion)));
         onView(withId(R.id.search_button)).perform(click());
         onView(withId(R.id.search_src_text)).perform(typeText("United States"));
         onView(withId(R.id.country_selection_list)).check(new RecyclerViewCountAssertion(1));
@@ -180,7 +174,7 @@ public class SelectTransferMethodTest {
 
         onView(withId(R.id.select_transfer_method_currency_value)).perform(click());
         onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.currency_selection_toolbar)))).check(
-                matches(withText(R.string.select_transfer_method_currency)));
+                matches(withText(R.string.mobileCurrencyLabel)));
         onView(withId(R.id.search_button)).check(doesNotExist());
         onView(withId(R.id.currency_selection_list)).check(new RecyclerViewCountAssertion(1));
         onView(allOf(withId(R.id.currency_name), withText("United States Dollar"))).check(matches(isDisplayed()));

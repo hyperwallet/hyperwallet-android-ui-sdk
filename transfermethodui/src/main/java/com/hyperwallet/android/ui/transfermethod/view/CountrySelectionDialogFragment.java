@@ -107,7 +107,7 @@ public class CountrySelectionDialogFragment extends DialogFragment implements To
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Toolbar toolbar = view.findViewById(R.id.country_selection_toolbar);
-        toolbar.setTitle(R.string.select_transfer_method_country);
+        toolbar.setTitle(R.string.mobileCountryRegion);
         toolbar.setNavigationIcon(R.drawable.ic_close_14dp);
 
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);

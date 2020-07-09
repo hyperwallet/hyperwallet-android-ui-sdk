@@ -8,8 +8,8 @@
     <string name="select_transfer_method_title">@string/title_activity_select_transfer_method
     </string>
 
-    <string name="select_transfer_method_country">Country</string>
-    <string name="select_transfer_method_currency">Currency</string>
+    <string name="mobileCountryRegion">Country/Region</string>
+    <string name="mobileCurrencyLabel">Currency</string>
     <string name="activity_select_transfer_method_title">Add Account</string>
     <string name="title_activity_add_transfer_method">Add Transfer Method</string>
     <string name="title_add_bank_account">Bank Account</string>
@@ -28,6 +28,7 @@
     <string name="add_transfer_method_fee_label">Transaction Fee:</string>
     <string name="add_transfer_method_processing_time_label">Processing Time:</string>
 
+    <string name="feeAndProcessingTimeInformation">%s \u2022 %s</string>
     <string name="select_transfer_method_item_fee_information">Transaction Fee: %s</string>
     <string name="select_transfer_method_item_processing_time_information">Processing Time: %s
     </string>
@@ -81,5 +82,10 @@
     <string name="item_select_description">Selected item</string>
 
     <string name="error_unmapped_field">Unmapped field, Please contact support.</string>
+
+    <string name="country_placeholder">Canada</string>
+    <string name="currency_placeholder">CAD</string>
+    <string name="mobileCountryCurrencyLabel">LOCATION AND CURRENCY</string>
+    <string name="mobileTransferMethodLabel">TRANSFER METHOD</string>
 
 </resources>
