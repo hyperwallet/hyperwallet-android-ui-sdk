@@ -500,7 +500,8 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
                 } else if (isFeeAvailable(selectionItem.getFees())
                         && !isProcessingTimeAvailable(selectionItem.getProcessingTime())) {
                     mDescriptionFeesAndProcessingTime.setVisibility(View.VISIBLE);
-                    mDescriptionFeesAndProcessingTime.setText(formattedFee);
+                    mDescriptionFeesAndProcessingTime.setText(mDescriptionFeesAndProcessingTime.getContext()
+                            .getString(R.string.feeInformation, formattedFee));
                 } else if (isProcessingTimeAvailable(selectionItem.getProcessingTime())
                         && !isFeeAvailable(selectionItem.getFees())) {
                     mDescriptionFeesAndProcessingTime.setVisibility(View.VISIBLE);

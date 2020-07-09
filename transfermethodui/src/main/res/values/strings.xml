@@ -28,10 +28,8 @@
     <string name="add_transfer_method_fee_label">Transaction Fee:</string>
     <string name="add_transfer_method_processing_time_label">Processing Time:</string>
 
-    <string name="feeAndProcessingTimeInformation">%s \u2022 %s</string>
-    <string name="select_transfer_method_item_fee_information">Transaction Fee: %s</string>
-    <string name="select_transfer_method_item_processing_time_information">Processing Time: %s
-    </string>
+    <string name="feeAndProcessingTimeInformation">%s fee \u2022 %s</string>
+    <string name="feeInformation">%s fee</string>
 
     <string name="title_activity_list_transfer_method">Accounts</string>
     <string name="empty_list_transfer_method_information">You didn\'t add an account yet. Once
