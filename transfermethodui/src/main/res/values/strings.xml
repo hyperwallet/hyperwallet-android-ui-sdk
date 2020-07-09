@@ -49,15 +49,15 @@
     <string name="menu_remove_account">Remove Account</string>
 
     <!--Fee formatter-->
-    <string name="fee_flat_formatter">%1$s %2$s</string>
+    <string name="fee_flat_formatter">%1$s%2$s</string>
     <string name="fee_percent_no_min_and_max_formatter">%1$s%%</string>
     <string name="fee_percent_only_min_formatter">%1$s%% (Min:%2$s %3$s)</string>
     <string name="fee_percent_only_max_formatter">%1$s%% (Max:%2$s %3$s)</string>
     <string name="fee_percent_formatter">%1$s%% (Min:%2$s %3$s, Max:%2$s %4$s)</string>
-    <string name="fee_mix_no_min_and_max_formatter">%1$s %2$s + %3$s%%</string>
-    <string name="fee_mix_only_min_formatter">%1$s %2$s + %3$s%% (Min:%1$s %4$s)</string>
-    <string name="fee_mix_only_max_formatter">%1$s %2$s + %3$s%% (Max:%1$s %4$s)</string>
-    <string name="fee_mix_formatter">%1$s %2$s + %3$s%% (Min:%1$s %4$s, Max:%1$s %5$s)</string>
+    <string name="fee_mix_no_min_and_max_formatter">%1$s%2$s + %3$s%%</string>
+    <string name="fee_mix_only_min_formatter">%1$s%2$s + %3$s%% (Min:%1$s %4$s)</string>
+    <string name="fee_mix_only_max_formatter">%1$s%2$s + %3$s%% (Max:%1$s %4$s)</string>
+    <string name="fee_mix_formatter">%1$s%2$s + %3$s%% (Min:%1$s %4$s, Max:%1$s %5$s)</string>
 
     <string name="account_holder">Account Holder</string>
     <string name="account_information">Account Information</string>

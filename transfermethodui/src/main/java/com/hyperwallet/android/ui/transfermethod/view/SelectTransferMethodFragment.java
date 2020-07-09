@@ -488,20 +488,18 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
 
             void bind(TransferMethodSelectionItem selectionItem) {
                 mTitle.setText(selectionItem.getTransferMethodName());
-                mIcon.setText(
-                        getStringFontIcon(mIcon.getContext(), selectionItem.getTransferMethodType()));
+                mIcon.setText(getStringFontIcon(mIcon.getContext(), selectionItem.getTransferMethodType()));
+                String formattedFee = FeeFormatter.getFormattedFee(mTitle.getContext(), selectionItem.getFees());
 
                 if (isFeeAvailable(selectionItem.getFees())
                         && isProcessingTimeAvailable(selectionItem.getProcessingTime())) {
                     mDescriptionFeesAndProcessingTime.setVisibility(View.VISIBLE);
-                    String formattedFee = FeeFormatter.getFormattedFee(mTitle.getContext(), selectionItem.getFees());
                     mDescriptionFeesAndProcessingTime.setText(mDescriptionFeesAndProcessingTime.getContext()
                             .getString(R.string.feeAndProcessingTimeInformation, formattedFee,
                                     selectionItem.getProcessingTime().getValue()));
                 } else if (isFeeAvailable(selectionItem.getFees())
                         && !isProcessingTimeAvailable(selectionItem.getProcessingTime())) {
                     mDescriptionFeesAndProcessingTime.setVisibility(View.VISIBLE);
-                    String formattedFee = FeeFormatter.getFormattedFee(mTitle.getContext(), selectionItem.getFees());
                     mDescriptionFeesAndProcessingTime.setText(formattedFee);
                 } else if (isProcessingTimeAvailable(selectionItem.getProcessingTime())
                         && !isFeeAvailable(selectionItem.getFees())) {
