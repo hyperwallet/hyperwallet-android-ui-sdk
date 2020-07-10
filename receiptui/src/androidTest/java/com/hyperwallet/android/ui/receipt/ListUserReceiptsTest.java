@@ -67,7 +67,7 @@ public class ListUserReceiptsTest {
 
     private String usdCurrencySymbol = "$";
     private String cadCurrencySymbol = "CA$";
-    private String wonCurrencySymbol = "₩";
+    private String krwCurrencySymbol = "₩";
     private String debitSymbol = "-";
     private String monthLabel1 = "June 2019";
     private String monthLabel2 = "December 2018";
@@ -142,11 +142,11 @@ public class ListUserReceiptsTest {
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(3, hasDescendant(withText(R.string.transfer_to_prepaid_card)))));
         onView(withId(R.id.list_receipts)).check(
-                matches(atPosition(3, hasDescendant(withText(debitSymbol + usdCurrencySymbol + "18.05")))));
+                matches(atPosition(3, hasDescendant(withText(debitSymbol + krwCurrencySymbol + "40000")))));
 
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(3, hasDescendant(withText("December 1, 2018")))));
-        onView(withId(R.id.list_receipts)).check(matches(atPosition(3, hasDescendant(withText("USD")))));
+        onView(withId(R.id.list_receipts)).check(matches(atPosition(3, hasDescendant(withText("KRW")))));
 
         onView(withId(R.id.list_receipts)).check(new RecyclerViewCountAssertion(4));
     }
@@ -324,8 +324,8 @@ public class ListUserReceiptsTest {
         onView(withId(R.id.transaction_header_text)).check(matches(withText(R.string.mobileTransactionTypeLabel)));
         onView(withId(R.id.transaction_type_icon)).check(matches(withText(R.string.debit)));
         onView(withId(R.id.transaction_title)).check(matches(withText(R.string.transfer_to_prepaid_card)));
-        onView(withId(R.id.transaction_amount)).check(matches(withText(debitSymbol + usdCurrencySymbol + "18.05")));
-        onView(withId(R.id.transaction_currency)).check(matches(withText("USD")));
+        onView(withId(R.id.transaction_amount)).check(matches(withText(debitSymbol + krwCurrencySymbol + "40000")));
+        onView(withId(R.id.transaction_currency)).check(matches(withText("KRW")));
         onView(withId(R.id.transaction_date)).check(matches(withText("December 1, 2018")));
 
         onView(withId(R.id.receipt_details_header_label)).check(
