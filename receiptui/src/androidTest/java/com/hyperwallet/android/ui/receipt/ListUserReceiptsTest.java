@@ -403,7 +403,7 @@ public class ListUserReceiptsTest {
     @Test
     public void testListReceipt_displaysNetworkErrorDialogOnConnectionTimeout() {
         mMockWebServer.getServer().enqueue(new MockResponse().setResponseCode(HTTP_OK).setBody(sResourceManager
-                .getResourceContent("receipt_debit_response.json")).setBodyDelay(10000, TimeUnit.MILLISECONDS));
+                .getResourceContent("receipt_debit_response.json")).setBodyDelay(10500, TimeUnit.MILLISECONDS));
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("receipt_debit_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();

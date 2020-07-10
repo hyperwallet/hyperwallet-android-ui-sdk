@@ -308,7 +308,7 @@ public class ListPrepaidCardReceiptsTest {
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(0, hasDescendant(withText(R.string.adjustment)))));
         onView(withId(R.id.list_receipts)).check(
-                matches(atPosition(0, hasDescendant(withText("- 8,90")))));
+                matches(atPosition(0, hasDescendant(withText(debitSymbol + usdCurrencySymbol + "8.90")))));
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(0, hasDescendant(withText("1. Juni 2019")))));
         onView(withId(R.id.list_receipts)).check(
