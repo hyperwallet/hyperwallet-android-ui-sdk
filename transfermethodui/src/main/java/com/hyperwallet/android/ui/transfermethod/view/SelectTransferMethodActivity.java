@@ -66,7 +66,7 @@ public class SelectTransferMethodActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_select_transfer_method);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.activity_select_transfer_method_title);
+        toolbar.setTitle(R.string.mobileAddTransferMethodHeader);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);

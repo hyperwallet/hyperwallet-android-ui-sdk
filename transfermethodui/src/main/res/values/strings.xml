@@ -10,7 +10,7 @@
 
     <string name="mobileCountryRegion">Country/Region</string>
     <string name="mobileCurrencyLabel">Currency</string>
-    <string name="activity_select_transfer_method_title">Add Account</string>
+    <string name="mobileAddTransferMethodHeader">Add a transfer method</string>
     <string name="title_activity_add_transfer_method">Add Transfer Method</string>
     <string name="title_add_bank_account">Bank Account</string>
     <string name="title_add_bank_card">Debit Card</string>
