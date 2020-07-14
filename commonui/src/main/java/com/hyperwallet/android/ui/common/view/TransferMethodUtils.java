@@ -161,8 +161,8 @@ public class TransferMethodUtils {
                 return getFourDigitsIdentification(context, transferMethod, BANK_ACCOUNT_ID,
                         R.string.endingIn);
             case PAYPAL_ACCOUNT:
-                final String transferIdentification = transferMethod.getField(EMAIL);
-                return transferIdentification != null ? transferIdentification : "";
+                final String email = transferMethod.getField(EMAIL);
+                return context.getString(R.string.to, email != null ? email : "");
             default:
                 return "";
         }

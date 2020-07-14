@@ -4,6 +4,7 @@
 
     <TextView android:id="@+id/transaction_type_icon"
         style="@style/ReceiptTypeIcon"
+        android:layout_marginStart="@dimen/widget_default_margin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintStart_toStartOf="parent"
