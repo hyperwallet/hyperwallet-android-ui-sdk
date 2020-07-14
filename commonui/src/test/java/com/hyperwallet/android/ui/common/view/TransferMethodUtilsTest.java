@@ -149,8 +149,12 @@ public class TransferMethodUtilsTest {
         TransferMethod transferMethod = new PayPalAccount.Builder().email(
                 "sunshine.carreiro@hyperwallet.com").build();
 
+        when(mContext.getString(ArgumentMatchers.eq(R.string.to),
+                eq("sunshine.carreiro@hyperwallet.com"))).thenReturn(
+                "to sunshine.carreiro@hyperwallet.com");
+
         String actual = getTransferMethodDetail(mContext, transferMethod, PAYPAL_ACCOUNT);
-        assertThat(actual, is("sunshine.carreiro@hyperwallet.com"));
+        assertThat(actual, is("to sunshine.carreiro@hyperwallet.com"));
     }
 
     @Test

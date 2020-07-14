@@ -53,8 +53,8 @@
       "entry": "DEBIT",
       "sourceToken": "test-user-token",
       "destinationToken": "trm-12345",
-      "amount": "18.05",
-      "currency": "USD"
+      "amount": "40000",
+      "currency": "KRW"
     }
   ],
   "links": [

@@ -56,6 +56,7 @@
 
     <!-- row height dimension -->
     <dimen name="row_height_single_entry">60dp</dimen>
+    <dimen name="row_height_double_entry">80dp</dimen>
     <dimen name="row_height_triple_entry">88dp</dimen>
 
     <!-- specificity -->

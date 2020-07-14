@@ -2,24 +2,25 @@
     <string name="app_name">receipt</string>
     <string name="title_activity_receipt_list">Transactions</string>
     <string name="title_activity_receipt_detail">Transaction Details</string>
-    <string name="transaction_header_text">Transaction</string>
-    <string name="fee_details_header_text">Fee Specification</string>
-    <string name="details_amount_label">Amount:</string>
-    <string name="fee_label">Fee:</string>
-    <string name="transfer_amount_label">Transfer Amount:</string>
-    <string name="receipt_header_label">Receipt</string>
-    <string name="journalId">Receipt ID:</string>
-    <string name="createdOn">Date:</string>
-    <string name="clientPaymentId">Client Transaction ID:</string>
-    <string name="notes">Notes</string>
-    <string name="charityName">Charity Name:</string>
-    <string name="checkNumber">Check Number:</string>
-    <string name="website">Promo Website:</string>
-    <string name="concat_string_view_format">%s %s</string>
+    <string name="mobileTransactionDetailsHeader">Transaction details</string>
+    <string name="transactions">Transactions</string>
+    <string name="mobileTransactionTypeLabel">TRANSACTION</string>
+    <string name="mobileFeeInfoLabel">FEE INFO</string>
+    <string name="amount">Amount</string>
+    <string name="mobileFeeLabel">Fee</string>
+    <string name="mobileTransactionDetailsTotal">Transaction total</string>
+    <string name="mobileTransactionDetailsLabel">DETAILS</string>
+    <string name="mobileJournalNumberLabel">Receipt ID</string>
+    <string name="date">Date</string>
+    <string name="mobileMerchantTxnLabel">Transaction ID</string>
+    <string name="mobileConfirmNotesLabel">NOTE</string>
+    <string name="mobileCharityName">Charity name</string>
+    <string name="mobileCheckNumber">Check number</string>
+    <string name="mobilePromoWebsite">Promo website</string>
+    <string name="concat_string_view_format">%s%s %s</string>
+    <string name="concat_date_string_view_format">%s %s</string>
 
-    <string name="empty_transaction_information">Seems like, you don\'t have any Transactions,
-        yet.
-    </string>
+    <string name="mobileNoTransactions">There\'s no activity to display.</string>
     <string name="title_transfer_funds">Transfer Funds</string>
     <string name="font_icon_placeholder">\ue908</string>
     <string name="text_placeholder">Placeholder</string>
@@ -27,8 +28,8 @@
     <!-- entry types -->
     <string name="debit">\ue908</string>
     <string name="credit">\ue907</string>
-    <string name="debit_sign">- %s</string>
-    <string name="credit_sign">+ %s</string>
+    <string name="debit_sign">-%s%s</string>
+    <string name="credit_sign">%s%s</string>
 
     <!--Generic fee types-->
     <string name="unknown_type">Unknown Transaction Type</string>
