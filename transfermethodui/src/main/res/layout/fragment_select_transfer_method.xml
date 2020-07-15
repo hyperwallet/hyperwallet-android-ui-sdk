@@ -1,144 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/colorInputFormBackground"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.hyperwallet.android.ui.transfermethod.view.SelectTransferMethodFragment">
-    <ProgressBar
+
+    <RelativeLayout
         android:id="@+id/select_transfer_method_progress_bar"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:indeterminate="true"
-        android:theme="@style/Widget.Hyperwallet.ProgressBar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/regularColorPrimary"
+        android:clickable="true"
+        android:visibility="gone"
+        android:focusable="true">
+
+        <ProgressBar
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:indeterminate="true"
+            android:indeterminateTintMode="multiply"
+            android:theme="@style/Widget.Hyperwallet.ProgressBar" />
+    </RelativeLayout>
+
+    <LinearLayout
         android:id="@+id/country_selection_layout_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/regularColorPrimary"
-        android:elevation="@dimen/component_elevation"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-        <androidx.constraintlayout.widget.ConstraintLayout
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"
+                android:gravity="bottom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/grid_margin_top"
+                android:layout_marginStart="@dimen/grid_margin_left"
+                android:text="@string/mobileCountryCurrencyLabel" />
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/select_transfer_method_country_container"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/row_height_single_entry"
+            android:background="@drawable/view_header_bottom_border"
             android:layout_marginStart="@dimen/grid_margin_left"
-            android:layout_marginTop="@dimen/grid_margin_top"
+            android:layout_marginEnd="@dimen/grid_margin_right"
+            android:layout_marginTop="@dimen/margin_top_header_value"
             android:clickable="true"
             android:focusable="true"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:orientation="vertical">
+
             <TextView
                 android:id="@+id/select_transfer_method_country_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/select_transfer_method_country"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-                app:layout_constraintBottom_toBottomOf="@+id/select_transfer_method_country_image"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/select_transfer_method_country_image"/>
+                android:text="@string/mobileCountryRegion"
+                android:textAppearance="@style/SelectTransfer.Header.Label" />
+
             <TextView
                 android:id="@+id/select_transfer_method_country_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/item_vertical_margin"
                 android:layout_marginEnd="@dimen/grid_margin_right"
-                android:textAllCaps="true"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-                app:layout_constraintBottom_toBottomOf="@+id/select_transfer_method_country_image"
-                app:layout_constraintRight_toLeftOf="@+id/select_transfer_method_country_image"
-                app:layout_constraintTop_toTopOf="@+id/select_transfer_method_country_image"/>
-            <ImageView
-                android:id="@+id/select_transfer_method_country_image"
-                android:layout_width="@dimen/keyboard_arrow_width"
-                android:layout_height="@dimen/keyboard_arrow_height"
-                android:layout_marginEnd="@dimen/grid_margin_right"
-                android:src="@drawable/ic_keyboard_arrow_right_12dp"
-                android:contentDescription="@string/select_transfer_method_country_button_description"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/horizontal_rule_container"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/grid_margin_top"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/select_transfer_method_country_container">
-            <View
-                android:id="@+id/underline_view"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/divider_height"
-                android:layout_marginStart="@dimen/grid_margin_left"
-                android:layout_marginEnd="@dimen/grid_margin_right"
-                android:background="@color/colorSecondaryLight"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-        <androidx.constraintlayout.widget.ConstraintLayout
+                tools:text="@string/country_placeholder"
+                android:textAppearance="@style/TextAppearance.Hyperwallet.Subtitle1" />
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/select_transfer_method_currency_container"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/row_height_single_entry"
+            android:background="@drawable/view_header_bottom_border"
             android:layout_marginStart="@dimen/grid_padding_left"
+            android:layout_marginEnd="@dimen/grid_margin_right"
             android:layout_marginTop="@dimen/grid_margin_top"
-            android:layout_marginBottom="@dimen/grid_margin_bottom"
-            android:paddingBottom="@dimen/grid_margin_bottom"
             android:clickable="true"
             android:focusable="true"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/horizontal_rule_container">
+            android:orientation="vertical">
+
             <TextView
                 android:id="@+id/select_transfer_method_currency_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/select_transfer_method_currency"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-                app:layout_constraintBottom_toBottomOf="@+id/select_transfer_method_currency_button"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/select_transfer_method_currency_button"/>
+                android:text="@string/mobileCurrencyLabel"
+                android:textAppearance="@style/SelectTransfer.Header.Label" />
+
             <TextView
                 android:id="@+id/select_transfer_method_currency_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/grid_margin_right"
+                android:layout_marginTop="@dimen/item_vertical_margin"
                 android:textAllCaps="true"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-                app:layout_constraintBottom_toBottomOf="@+id/select_transfer_method_currency_button"
-                app:layout_constraintRight_toLeftOf="@+id/select_transfer_method_currency_button"
-                app:layout_constraintTop_toTopOf="@+id/select_transfer_method_currency_button"/>
-            <ImageView
-                android:id="@+id/select_transfer_method_currency_button"
-                android:layout_width="@dimen/keyboard_arrow_width"
-                android:layout_height="@dimen/keyboard_arrow_height"
-                android:layout_marginEnd="@dimen/grid_margin_right"
-                android:src="@drawable/ic_keyboard_arrow_right_12dp"
-                android:contentDescription="@string/select_transfer_method_currency_button_description"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                tools:text="@string/currency_placeholder"
+                android:textAppearance="@style/TextAppearance.Hyperwallet.Subtitle1" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/grid_margin_top"
+                android:layout_marginStart="@dimen/grid_margin_left"
+                android:layout_marginBottom="@dimen/margin_top_header_value"
+                android:text="@string/mobileTransferMethodLabel" />
+        </LinearLayout>
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/select_transfer_method_types_list"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/country_selection_layout_container" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="wrap_content" />
+</LinearLayout>

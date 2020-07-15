@@ -36,8 +36,15 @@
         <item name="android:textColor">@color/regularColorPrimary</item>
     </style>
 
-    <style name="ThemeOverlay.Hyperwallet.Selector.ActionBar"
-        parent="@style/ThemeOverlay.AppCompat.ActionBar">
+    <style name="ThemeOverlay.Hyperwallet.Selector.ActionBar" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+        <item name="android:background">@color/regularColorPrimary</item>
+        <item name="android:titleTextAppearance">
+            @style/TextAppearance.Hyperwallet.TitleTextAppearance
+        </item>
+        <item name="android:popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+    </style>
+
+    <style name="ThemeOverlay.Hyperwallet.Searchable.Selector.ActionBar" parent="@style/ThemeOverlay.AppCompat.ActionBar">
         <item name="android:background">@color/regularColorPrimary</item>
         <item name="android:titleTextAppearance">
             @style/TextAppearance.Hyperwallet.TitleTextAppearance
@@ -98,9 +105,11 @@
         <item name="android:textAlignment">center</item>
     </style>
 
-    <style name="TextAppearance.Hyperwallet.Caption" parent="TextAppearance.MaterialComponents.Caption">
+    <style name="TextAppearance.Hyperwallet.Caption" parent="Base.TextAppearance.Hyperwallet.Caption">
         <item name="android:textSize">@dimen/font_body1</item>
     </style>
+
+    <style name="Base.TextAppearance.Hyperwallet.Caption" parent="TextAppearance.MaterialComponents.Caption" />
 
     <style name="TextAppearance.Hyperwallet.InputLabel" parent="TextAppearance.MaterialComponents.Caption">
         <item name="android:textSize">@dimen/font_body2</item>

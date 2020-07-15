@@ -47,7 +47,6 @@ import com.hyperwallet.android.model.Error;
 import com.hyperwallet.android.model.StatusTransition;
 import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import com.hyperwallet.android.ui.R;
-import com.hyperwallet.android.ui.common.view.HorizontalDividerItemDecorator;
 import com.hyperwallet.android.ui.common.view.OneClickListener;
 import com.hyperwallet.android.ui.transfermethod.TransferMethodLocalBroadcast;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
@@ -173,7 +172,6 @@ public class ListTransferMethodFragment extends Fragment implements ListTransfer
         recyclerView = view.findViewById(R.id.list_transfer_method_item);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.addItemDecoration(new HorizontalDividerItemDecorator(requireContext(), false));
     }
 
     @Override

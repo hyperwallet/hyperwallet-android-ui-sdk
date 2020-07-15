@@ -21,7 +21,6 @@ package com.hyperwallet.android.ui.transfermethod.view;
 import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.ADD_TRANSFER_METHOD_REQUEST_CODE;
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getStringFontIcon;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -40,10 +39,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hyperwallet.android.model.Error;
+import com.hyperwallet.android.model.graphql.ProcessingTime;
 import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.common.insight.HyperwalletInsight;
 import com.hyperwallet.android.ui.common.util.PageGroups;
-import com.hyperwallet.android.ui.common.view.HorizontalDividerItemDecorator;
 import com.hyperwallet.android.ui.common.view.OneClickListener;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
 import com.hyperwallet.android.ui.user.repository.UserRepositoryFactory;
@@ -185,7 +184,6 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
         mRecyclerView.setAdapter(mTransferMethodTypesAdapter);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mRecyclerView.addItemDecoration(new HorizontalDividerItemDecorator(requireContext(), true));
     }
 
     @Override
@@ -473,8 +471,7 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
 
         class ViewHolder extends RecyclerView.ViewHolder {
             final TextView mTitle;
-            final TextView mDescriptionProcessingTime;
-            final TextView mDescriptionFees;
+            final TextView mDescriptionFeesAndProcessingTime;
             final TextView mIcon;
             final TransferMethodSelectionItemListener mTransferMethodSelectionItemListener;
 
@@ -483,35 +480,34 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
                 super(itemView);
                 mTitle = itemView.findViewById(R.id.transfer_method_type_title);
                 mIcon = itemView.findViewById(R.id.transfer_method_type_icon);
-                mDescriptionFees = itemView.findViewById(R.id.transfer_method_type_description_1);
-                mDescriptionProcessingTime = itemView.findViewById(R.id.transfer_method_type_description_2);
+                mDescriptionFeesAndProcessingTime = itemView.findViewById(R.id.transfer_method_type_description_1);
                 mTransferMethodSelectionItemListener = transferMethodSelectionItemListener;
                 itemView.findViewById(R.id.transfer_method_context_button).setVisibility(View.GONE);
+                itemView.findViewById(R.id.transfer_method_type_description_2).setVisibility(View.GONE);
             }
 
-            @SuppressLint("StringFormatInvalid")
             void bind(TransferMethodSelectionItem selectionItem) {
                 mTitle.setText(selectionItem.getTransferMethodName());
-                mIcon.setText(
-                        getStringFontIcon(mIcon.getContext(), selectionItem.getTransferMethodType()));
+                mIcon.setText(getStringFontIcon(mIcon.getContext(), selectionItem.getTransferMethodType()));
+                String formattedFee = FeeFormatter.getFormattedFee(mTitle.getContext(), selectionItem.getFees());
 
-                if (selectionItem.getFees() != null && !selectionItem.getFees().isEmpty()) {
-                    String formattedFee = FeeFormatter.getFormattedFee(mTitle.getContext(), selectionItem.getFees());
-                    mDescriptionFees.setText(mDescriptionFees.getContext()
-                            .getString(R.string.select_transfer_method_item_fee_information, formattedFee));
-                    mDescriptionFees.setVisibility(View.VISIBLE);
-                } else {
-                    mDescriptionFees.setVisibility(View.GONE);
-                }
-
-                if (selectionItem.getProcessingTime() != null && !TextUtils.isEmpty(
-                        selectionItem.getProcessingTime().getValue())) {
-                    mDescriptionProcessingTime.setText(mDescriptionProcessingTime.getContext()
-                            .getString(R.string.select_transfer_method_item_processing_time_information,
+                if (isFeeAvailable(selectionItem.getFees())
+                        && isProcessingTimeAvailable(selectionItem.getProcessingTime())) {
+                    mDescriptionFeesAndProcessingTime.setVisibility(View.VISIBLE);
+                    mDescriptionFeesAndProcessingTime.setText(mDescriptionFeesAndProcessingTime.getContext()
+                            .getString(R.string.feeAndProcessingTimeInformation, formattedFee,
                                     selectionItem.getProcessingTime().getValue()));
-                    mDescriptionProcessingTime.setVisibility(View.VISIBLE);
+                } else if (isFeeAvailable(selectionItem.getFees())
+                        && !isProcessingTimeAvailable(selectionItem.getProcessingTime())) {
+                    mDescriptionFeesAndProcessingTime.setVisibility(View.VISIBLE);
+                    mDescriptionFeesAndProcessingTime.setText(mDescriptionFeesAndProcessingTime.getContext()
+                            .getString(R.string.feeInformation, formattedFee));
+                } else if (isProcessingTimeAvailable(selectionItem.getProcessingTime())
+                        && !isFeeAvailable(selectionItem.getFees())) {
+                    mDescriptionFeesAndProcessingTime.setVisibility(View.VISIBLE);
+                    mDescriptionFeesAndProcessingTime.setText(selectionItem.getProcessingTime().getValue());
                 } else {
-                    mDescriptionProcessingTime.setVisibility(View.INVISIBLE);
+                    mDescriptionFeesAndProcessingTime.setVisibility(View.INVISIBLE);
                 }
 
                 itemView.setOnClickListener(new OneClickListener() {
@@ -531,6 +527,14 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
                 int position = getAdapterPosition();
                 TransferMethodSelectionItem transferMethodType = getItem(position);
                 mTransferMethodSelectionItemListener.onTransferMethodSelected(transferMethodType);
+            }
+
+            private boolean isFeeAvailable(@Nullable final List<?> fees) {
+                return fees != null && !fees.isEmpty();
+            }
+
+            private boolean isProcessingTimeAvailable(@Nullable final ProcessingTime processingTime) {
+                return processingTime != null && !TextUtils.isEmpty(processingTime.getValue());
             }
         }
     }

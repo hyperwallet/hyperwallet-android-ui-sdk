@@ -8,9 +8,9 @@
     <string name="select_transfer_method_title">@string/title_activity_select_transfer_method
     </string>
 
-    <string name="select_transfer_method_country">Country</string>
-    <string name="select_transfer_method_currency">Currency</string>
-    <string name="activity_select_transfer_method_title">Add Account</string>
+    <string name="mobileCountryRegion">Country/Region</string>
+    <string name="mobileCurrencyLabel">Currency</string>
+    <string name="mobileAddTransferMethodHeader">Add a transfer method</string>
     <string name="title_activity_add_transfer_method">Add Transfer Method</string>
     <string name="title_add_bank_account">Bank Account</string>
     <string name="title_add_bank_card">Debit Card</string>
@@ -28,9 +28,8 @@
     <string name="add_transfer_method_fee_label">Transaction Fee:</string>
     <string name="add_transfer_method_processing_time_label">Processing Time:</string>
 
-    <string name="select_transfer_method_item_fee_information">Transaction Fee: %s</string>
-    <string name="select_transfer_method_item_processing_time_information">Processing Time: %s
-    </string>
+    <string name="feeAndProcessingTimeInformation">%s fee \u2022 %s</string>
+    <string name="feeInformation">%s fee</string>
 
     <string name="title_activity_list_transfer_method">Accounts</string>
     <string name="empty_list_transfer_method_information">You didn\'t add an account yet. Once
@@ -48,15 +47,15 @@
     <string name="menu_remove_account">Remove Account</string>
 
     <!--Fee formatter-->
-    <string name="fee_flat_formatter">%1$s %2$s</string>
+    <string name="fee_flat_formatter">%1$s%2$s</string>
     <string name="fee_percent_no_min_and_max_formatter">%1$s%%</string>
     <string name="fee_percent_only_min_formatter">%1$s%% (Min:%2$s %3$s)</string>
     <string name="fee_percent_only_max_formatter">%1$s%% (Max:%2$s %3$s)</string>
     <string name="fee_percent_formatter">%1$s%% (Min:%2$s %3$s, Max:%2$s %4$s)</string>
-    <string name="fee_mix_no_min_and_max_formatter">%1$s %2$s + %3$s%%</string>
-    <string name="fee_mix_only_min_formatter">%1$s %2$s + %3$s%% (Min:%1$s %4$s)</string>
-    <string name="fee_mix_only_max_formatter">%1$s %2$s + %3$s%% (Max:%1$s %4$s)</string>
-    <string name="fee_mix_formatter">%1$s %2$s + %3$s%% (Min:%1$s %4$s, Max:%1$s %5$s)</string>
+    <string name="fee_mix_no_min_and_max_formatter">%1$s%2$s + %3$s%%</string>
+    <string name="fee_mix_only_min_formatter">%1$s%2$s + %3$s%% (Min:%1$s %4$s)</string>
+    <string name="fee_mix_only_max_formatter">%1$s%2$s + %3$s%% (Max:%1$s %4$s)</string>
+    <string name="fee_mix_formatter">%1$s%2$s + %3$s%% (Min:%1$s %4$s, Max:%1$s %5$s)</string>
 
     <string name="account_holder">Account Holder</string>
     <string name="account_information">Account Information</string>
@@ -81,5 +80,10 @@
     <string name="item_select_description">Selected item</string>
 
     <string name="error_unmapped_field">Unmapped field, Please contact support.</string>
+
+    <string name="country_placeholder">Canada</string>
+    <string name="currency_placeholder">CAD</string>
+    <string name="mobileCountryCurrencyLabel">LOCATION AND CURRENCY</string>
+    <string name="mobileTransferMethodLabel">TRANSFER METHOD</string>
 
 </resources>
