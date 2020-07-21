@@ -14,6 +14,7 @@
     <color name="colorButtonDisabled">#DBDBDB</color>
     <color name="colorButtonTextDisabled">#ACACAC</color>
     <color name="colorInputFormBackground">#F7F7F7</color>
+    <color name="colorDisabledBackground">#F8F8F8</color>
 
     <!-- Regular Colors -->
     <color name="regularColorPrimary">#FFFFFF</color>

@@ -166,6 +166,7 @@
         <item name="hintTextAppearance">@style/HintTextDisabled</item>
         <item name="android:textColor">@color/colorSecondary</item>
         <item name="android:textColorHint">@color/colorSecondary</item>
+        <item name="android:background">@color/colorDisabledBackground</item>
     </style>
 
     <style name="Widget.Hyperwallet.TextInputEditText"
