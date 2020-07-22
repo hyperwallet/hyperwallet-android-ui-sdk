@@ -413,7 +413,7 @@ public class ListUserReceiptsTest {
         onView(withText(R.string.error_dialog_connectivity_title)).check(matches(isDisplayed()));
         onView(withText(R.string.io_exception)).check(matches(isDisplayed()));
         onView(withId(android.R.id.button1)).check(matches(withText(R.string.try_again_button_label)));
-        onView(withId(android.R.id.button2)).check(matches(withText(R.string.cancel_button_label)));
+        onView(withId(android.R.id.button2)).check(matches(withText(R.string.cancelButtonLabel)));
 
         // retry button clicked
         onView(withId(android.R.id.button1)).perform(click());

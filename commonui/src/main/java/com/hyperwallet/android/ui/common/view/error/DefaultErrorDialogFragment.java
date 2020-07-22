@@ -142,7 +142,7 @@ public class DefaultErrorDialogFragment extends DialogFragment {
                 break;
             case ErrorTypes.CONNECTION_ERROR:
                 builder.setTitle(requireContext().getString(R.string.error_dialog_connectivity_title))
-                        .setNegativeButton(getResources().getString(R.string.cancel_button_label),
+                        .setNegativeButton(getResources().getString(R.string.cancelButtonLabel),
                                 new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {

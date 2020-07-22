@@ -32,10 +32,16 @@ import com.hyperwallet.android.ui.R;
 public class TransferMethodConfirmDeactivationDialogFragment extends DialogFragment {
 
     public static final String TAG = "Hyperwallet:" + TransferMethodConfirmDeactivationDialogFragment.class.getName();
+    private static final String ARGUMENT_KEY_TRANSFER_DESTINATION = "ARGUMENT_KEY_TRANSFER_DESTINATION";
 
-    public static TransferMethodConfirmDeactivationDialogFragment newInstance() {
+    public static TransferMethodConfirmDeactivationDialogFragment newInstance(
+            @NonNull final String transferDestination) {
+        Bundle bundle = new Bundle();
+        bundle.putString(ARGUMENT_KEY_TRANSFER_DESTINATION, transferDestination);
+
         TransferMethodConfirmDeactivationDialogFragment dialogFragment =
                 new TransferMethodConfirmDeactivationDialogFragment();
+        dialogFragment.setArguments(bundle);
         return dialogFragment;
     }
 
@@ -57,11 +63,12 @@ public class TransferMethodConfirmDeactivationDialogFragment extends DialogFragm
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(
                 new ContextThemeWrapper(requireContext(), R.style.Theme_Hyperwallet_Confirmation_Dialog));
-        builder.setMessage(R.string.transfer_method_remove_confirmation)
-                .setTitle(R.string.transfer_method_remove_confirmation_title)
-                .setNegativeButton(R.string.cancel_button_label, null);
+        builder.setMessage(requireContext().getString(R.string.mobileRemoveEAconfirm,
+                getArguments().getString(ARGUMENT_KEY_TRANSFER_DESTINATION)))
+                .setTitle(R.string.mobileAreYouSure)
+                .setNegativeButton(R.string.cancelButtonLabel, null);
         if (getActivity() instanceof OnTransferMethodDeactivateCallback) {
-            builder.setPositiveButton(R.string.remove_button_label, new DialogInterface.OnClickListener() {
+            builder.setPositiveButton(R.string.remove, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dismissAllowingStateLoss();

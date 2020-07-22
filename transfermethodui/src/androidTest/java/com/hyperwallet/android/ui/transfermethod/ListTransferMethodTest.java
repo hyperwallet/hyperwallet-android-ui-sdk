@@ -96,7 +96,7 @@ public class ListTransferMethodTest {
 
         // assert
         onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
-                .check(matches(withText(R.string.title_activity_list_transfer_method)));
+                .check(matches(withText(R.string.mobileTransferMethodsHeader)));
         onView(withId(R.id.fab)).check(matches(isDisplayed()));
 
         onView(withId(R.id.list_transfer_method_item)).check(
@@ -106,7 +106,7 @@ public class ListTransferMethodTest {
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(0, hasDescendant(withText("United States")))));
         onView(withId(R.id.list_transfer_method_item)).check(
-                matches(atPosition(0, hasDescendant(withText("Ending on 1332")))));
+                matches(atPosition(0, hasDescendant(withText("ending in 1332")))));
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(0, hasDescendant(withDrawable(R.drawable.ic_three_dots_16dp)))));
 
@@ -117,7 +117,7 @@ public class ListTransferMethodTest {
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(1, hasDescendant(withText("United States")))));
         onView(withId(R.id.list_transfer_method_item)).check(
-                matches(atPosition(1, hasDescendant(withText("Ending on 0006")))));
+                matches(atPosition(1, hasDescendant(withText("ending in 0006")))));
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(1, hasDescendant(withDrawable(R.drawable.ic_three_dots_16dp)))));
 
@@ -128,7 +128,7 @@ public class ListTransferMethodTest {
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(2, hasDescendant(withText("United States")))));
         onView(withId(R.id.list_transfer_method_item)).check(
-                matches(atPosition(2, hasDescendant(withText("Ending on 8337")))));
+                matches(atPosition(2, hasDescendant(withText("ending in 8337")))));
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(2, hasDescendant(withDrawable(R.drawable.ic_three_dots_16dp)))));
 
@@ -148,7 +148,7 @@ public class ListTransferMethodTest {
                 matches(atPosition(4, hasDescendant(withText(R.string.prepaid_card)))));
         onView(withId(R.id.list_transfer_method_item)).check(matches(atPosition(4, hasDescendant(withText("Canada")))));
         onView(withId(R.id.list_transfer_method_item)).check(
-                matches(atPosition(4, hasDescendant(withText("Ending on 3187")))));
+                matches(atPosition(4, hasDescendant(withText("ending in 3187")))));
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(4, hasDescendant(withDrawable(R.drawable.ic_three_dots_16dp)))));
 
@@ -178,7 +178,7 @@ public class ListTransferMethodTest {
         // assert
         onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
         onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
-                .check(matches(withText(R.string.title_activity_list_transfer_method)));
+                .check(matches(withText(R.string.mobileTransferMethodsHeader)));
         onView(withId(R.id.fab)).check(matches(isDisplayed()));
 
         onView(withId(R.id.list_transfer_method_item)).check(
@@ -188,7 +188,7 @@ public class ListTransferMethodTest {
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(0, hasDescendant(withText("United States")))));
         onView(withId(R.id.list_transfer_method_item)).check(
-                matches(atPosition(0, hasDescendant(withText("Ending on 1332")))));
+                matches(atPosition(0, hasDescendant(withText("ending in 1332")))));
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(0, hasDescendant(withDrawable(R.drawable.ic_three_dots_16dp)))));
         onView(withId(R.id.list_transfer_method_item)).check(new RecyclerViewCountAssertion(1));
@@ -204,7 +204,7 @@ public class ListTransferMethodTest {
 
         onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
         onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
-                .check(matches(withText(R.string.title_activity_list_transfer_method)));
+                .check(matches(withText(R.string.mobileTransferMethodsHeader)));
         onView(withId(R.id.fab)).check(matches(isDisplayed()));
 
         onView(withId(R.id.empty_transfer_method_list_layout)).check(matches(isDisplayed()));
@@ -241,7 +241,7 @@ public class ListTransferMethodTest {
         // assert
         onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
         onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
-                .check(matches(withText(R.string.title_activity_list_transfer_method)));
+                .check(matches(withText(R.string.mobileTransferMethodsHeader)));
         onView(withId(R.id.fab)).check(matches(isDisplayed()));
 
         onView(withId(R.id.list_transfer_method_item)).check(
@@ -251,20 +251,20 @@ public class ListTransferMethodTest {
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(0, hasDescendant(withText("United States")))));
         onView(withId(R.id.list_transfer_method_item)).check(
-                matches(atPosition(0, hasDescendant(withText("Ending on 1332")))));
+                matches(atPosition(0, hasDescendant(withText("ending in 1332")))));
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(0, hasDescendant(withDrawable(R.drawable.ic_three_dots_16dp)))));
 
         onView(allOf(instanceOf(ImageButton.class), hasSibling(withText(R.string.bank_account)))).perform(click())
                 .inRoot(Matchers.<Root>instanceOf(MenuItem.class));
         onView(withDrawable(R.drawable.ic_trash)).check(matches(isDisplayed()));
-        onView(withText(R.string.menu_remove_account)).check(matches(isDisplayed())).perform(click());
+        onView(withText(R.string.remove)).check(matches(isDisplayed())).perform(click());
 
         // confirmation dialog is shown before deletion
-        onView(withText(R.string.transfer_method_remove_confirmation_title)).check(matches(isDisplayed()));
-        onView(withText(R.string.transfer_method_remove_confirmation)).check(matches(isDisplayed()));
-        onView(withId(android.R.id.button1)).check(matches(withText(R.string.remove_button_label)));
-        onView(withId(android.R.id.button2)).check(matches(withText(R.string.cancel_button_label)));
+        onView(withText(R.string.mobileAreYouSure)).check(matches(isDisplayed()));
+        onView(withText(R.string.mobileRemoveEAconfirm)).check(matches(isDisplayed()));
+        onView(withId(android.R.id.button1)).check(matches(withText(R.string.remove)));
+        onView(withId(android.R.id.button2)).check(matches(withText(R.string.cancelButtonLabel)));
 
         onView(withId(android.R.id.button1)).perform(click());
 
@@ -280,7 +280,7 @@ public class ListTransferMethodTest {
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(0, hasDescendant(withText("United States")))));
         onView(withId(R.id.list_transfer_method_item)).check(
-                matches(atPosition(0, hasDescendant(withText("Ending on 0006")))));
+                matches(atPosition(0, hasDescendant(withText("ending in 0006")))));
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(0, hasDescendant(withDrawable(R.drawable.ic_three_dots_16dp)))));
 
@@ -317,7 +317,7 @@ public class ListTransferMethodTest {
         // assert
         onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
         onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
-                .check(matches(withText(R.string.title_activity_list_transfer_method)));
+                .check(matches(withText(R.string.mobileTransferMethodsHeader)));
         onView(withId(R.id.fab)).check(matches(isDisplayed()));
 
         onView(withId(R.id.list_transfer_method_item)).check(
@@ -327,20 +327,20 @@ public class ListTransferMethodTest {
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(0, hasDescendant(withText("United States")))));
         onView(withId(R.id.list_transfer_method_item)).check(
-                matches(atPosition(0, hasDescendant(withText("Ending on 0006")))));
+                matches(atPosition(0, hasDescendant(withText("ending in 0006")))));
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(0, hasDescendant(withDrawable(R.drawable.ic_three_dots_16dp)))));
 
         onView(allOf(instanceOf(ImageButton.class), hasSibling(withText(R.string.bank_card)))).perform(click())
                 .inRoot(Matchers.<Root>instanceOf(MenuItem.class));
         onView(withDrawable(R.drawable.ic_trash)).check(matches(isDisplayed()));
-        onView(withText(R.string.menu_remove_account)).check(matches(isDisplayed())).perform(click());
+        onView(withText(R.string.remove)).check(matches(isDisplayed())).perform(click());
 
         // confirmation dialog is shown before deletion
-        onView(withText(R.string.transfer_method_remove_confirmation_title)).check(matches(isDisplayed()));
-        onView(withText(R.string.transfer_method_remove_confirmation)).check(matches(isDisplayed()));
-        onView(withId(android.R.id.button1)).check(matches(withText(R.string.remove_button_label)));
-        onView(withId(android.R.id.button2)).check(matches(withText(R.string.cancel_button_label)));
+        onView(withText(R.string.mobileAreYouSure)).check(matches(isDisplayed()));
+        onView(withText(R.string.mobileRemoveEAconfirm)).check(matches(isDisplayed()));
+        onView(withId(android.R.id.button1)).check(matches(withText(R.string.remove)));
+        onView(withId(android.R.id.button2)).check(matches(withText(R.string.cancelButtonLabel)));
 
         onView(withId(android.R.id.button1)).perform(click());
 
@@ -383,7 +383,7 @@ public class ListTransferMethodTest {
         // assert
         onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
         onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
-                .check(matches(withText(R.string.title_activity_list_transfer_method)));
+                .check(matches(withText(R.string.mobileTransferMethodsHeader)));
         onView(withId(R.id.fab)).check(matches(isDisplayed()));
 
         onView(withId(R.id.list_transfer_method_item)).check(
@@ -398,13 +398,13 @@ public class ListTransferMethodTest {
         onView(allOf(instanceOf(ImageButton.class), hasSibling(withText(R.string.paypal_account)))).perform(click())
                 .inRoot(Matchers.<Root>instanceOf(MenuItem.class));
         onView(withDrawable(R.drawable.ic_trash)).check(matches(isDisplayed()));
-        onView(withText(R.string.menu_remove_account)).check(matches(isDisplayed())).perform(click());
+        onView(withText(R.string.remove)).check(matches(isDisplayed())).perform(click());
 
         // confirmation dialog is shown before deletion
-        onView(withText(R.string.transfer_method_remove_confirmation_title)).check(matches(isDisplayed()));
-        onView(withText(R.string.transfer_method_remove_confirmation)).check(matches(isDisplayed()));
-        onView(withId(android.R.id.button1)).check(matches(withText(R.string.remove_button_label)));
-        onView(withId(android.R.id.button2)).check(matches(withText(R.string.cancel_button_label)));
+        onView(withText(R.string.mobileAreYouSure)).check(matches(isDisplayed()));
+        onView(withText(R.string.mobileRemoveEAconfirm)).check(matches(isDisplayed()));
+        onView(withId(android.R.id.button1)).check(matches(withText(R.string.remove)));
+        onView(withId(android.R.id.button2)).check(matches(withText(R.string.cancelButtonLabel)));
 
         onView(withId(android.R.id.button1)).perform(click());
 
@@ -428,7 +428,7 @@ public class ListTransferMethodTest {
         // assert
         onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
         onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
-                .check(matches(withText(R.string.title_activity_list_transfer_method)));
+                .check(matches(withText(R.string.mobileTransferMethodsHeader)));
         onView(withId(R.id.fab)).check(matches(isDisplayed()));
 
         onView(withId(R.id.list_transfer_method_item)).check(
@@ -438,26 +438,26 @@ public class ListTransferMethodTest {
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(0, hasDescendant(withText("United States")))));
         onView(withId(R.id.list_transfer_method_item)).check(
-                matches(atPosition(0, hasDescendant(withText("Ending on 1332")))));
+                matches(atPosition(0, hasDescendant(withText("ending in 1332")))));
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(0, hasDescendant(withDrawable(R.drawable.ic_three_dots_16dp)))));
 
         onView(allOf(instanceOf(ImageButton.class), hasSibling(withText(R.string.bank_account)))).perform(click())
                 .inRoot(Matchers.<Root>instanceOf(MenuItem.class));
         onView(withDrawable(R.drawable.ic_trash)).check(matches(isDisplayed()));
-        onView(withText(R.string.menu_remove_account)).check(matches(isDisplayed())).perform(click());
+        onView(withText(R.string.remove)).check(matches(isDisplayed())).perform(click());
 
         // confirmation dialog is shown before deletion
-        onView(withText(R.string.transfer_method_remove_confirmation_title)).check(matches(isDisplayed()));
-        onView(withText(R.string.transfer_method_remove_confirmation)).check(matches(isDisplayed()));
-        onView(withId(android.R.id.button1)).check(matches(withText(R.string.remove_button_label)));
-        onView(withId(android.R.id.button2)).check(matches(withText(R.string.cancel_button_label)));
+        onView(withText(R.string.mobileAreYouSure)).check(matches(isDisplayed()));
+        onView(withText(R.string.mobileRemoveEAconfirm)).check(matches(isDisplayed()));
+        onView(withId(android.R.id.button1)).check(matches(withText(R.string.remove)));
+        onView(withId(android.R.id.button2)).check(matches(withText(R.string.cancelButtonLabel)));
 
         onView(withId(android.R.id.button2)).perform(click());
 
         // confirmation dialog should be dismissed and does not exist in ui
-        onView(withText(R.string.transfer_method_remove_confirmation_title)).check(doesNotExist());
-        onView(withText(R.string.transfer_method_remove_confirmation)).check(doesNotExist());
+        onView(withText(R.string.mobileAreYouSure)).check(doesNotExist());
+        onView(withText(R.string.mobileRemoveEAconfirm)).check(doesNotExist());
 
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(0, hasDescendant(withText(R.string.bank_account_font_icon)))));
@@ -466,7 +466,7 @@ public class ListTransferMethodTest {
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(0, hasDescendant(withText("United States")))));
         onView(withId(R.id.list_transfer_method_item)).check(
-                matches(atPosition(0, hasDescendant(withText("Ending on 1332")))));
+                matches(atPosition(0, hasDescendant(withText("ending in 1332")))));
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(0, hasDescendant(withDrawable(R.drawable.ic_three_dots_16dp)))));
     }
@@ -481,13 +481,13 @@ public class ListTransferMethodTest {
         onView(allOf(instanceOf(ImageButton.class), hasSibling(withText(R.string.paper_check)))).perform(click())
                 .inRoot(Matchers.<Root>instanceOf(MenuItem.class));
         onView(withDrawable(R.drawable.ic_trash)).check(matches(isDisplayed()));
-        onView(withText(R.string.menu_remove_account)).check(matches(isDisplayed())).perform(click());
+        onView(withText(R.string.remove)).check(matches(isDisplayed())).perform(click());
 
         // confirmation dialog is shown before deletion
-        onView(withText(R.string.transfer_method_remove_confirmation_title)).check(matches(isDisplayed()));
-        onView(withText(R.string.transfer_method_remove_confirmation)).check(matches(isDisplayed()));
-        onView(withId(android.R.id.button1)).check(matches(withText(R.string.remove_button_label)));
-        onView(withId(android.R.id.button2)).check(matches(withText(R.string.cancel_button_label)));
+        onView(withText(R.string.mobileAreYouSure)).check(matches(isDisplayed()));
+        onView(withText(R.string.mobileRemoveEAconfirm)).check(matches(isDisplayed()));
+        onView(withId(android.R.id.button1)).check(matches(withText(R.string.remove)));
+        onView(withId(android.R.id.button2)).check(matches(withText(R.string.cancelButtonLabel)));
 
         onView(withId(android.R.id.button1)).perform(click());
 

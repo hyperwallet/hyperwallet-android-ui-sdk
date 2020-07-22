@@ -2,7 +2,6 @@
     <string name="error_dialog_title">Error</string>
     <string name="error_dialog_connectivity_title">Connectivity Issue</string>
     <string name="error_dialog_unexpected_title">Unexpected Error</string>
-    <string name="cancel_button_label">Cancel</string>
     <string name="ok">OK</string>
     <string name="try_again_button_label">Try again</string>
     <string name="not_available">Not Available</string>
@@ -31,4 +30,9 @@
     <string name="not_translated_in_braces">(not translated)</string>
 
     <string name="authentication_error_header">Authentication Error</string>
+
+    <string name="mobileTransferMethodsHeader">Transfer methods</string>
+    <string name="cancelButtonLabel">Cancel</string>
+    <string name="remove">Remove</string>
+    <string name="mobileAreYouSure">Are you sure?</string>
 </resources>
