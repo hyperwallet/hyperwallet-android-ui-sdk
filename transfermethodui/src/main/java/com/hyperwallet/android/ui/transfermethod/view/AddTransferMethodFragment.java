@@ -333,12 +333,14 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
         mDynamicContainer.removeAllViews();
 
         try {
+            Locale locale = new Locale.Builder().setRegion(mCountry).build();
+
             // group
             for (FieldGroup group : fields) {
                 View sectionHeader = LayoutInflater.from(mDynamicContainer.getContext())
                         .inflate(R.layout.item_widget_section_header, mDynamicContainer, false);
                 TextView sectionTitle = sectionHeader.findViewById(R.id.section_header_title);
-                sectionTitle.setText(getSectionHeaderText(group));
+                sectionTitle.setText(getSectionHeaderText(group, locale));
                 sectionHeader.setId(View.generateViewId());
                 mDynamicContainer.addView(sectionHeader);
 
@@ -378,7 +380,12 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
         }
     }
 
-    private String getSectionHeaderText(@NonNull final FieldGroup group) {
+    private String getSectionHeaderText(@NonNull final FieldGroup group, @NonNull final Locale locale) {
+        if (FieldGroup.GroupTypes.ACCOUNT_INFORMATION.equals(group.getGroupName())) {
+            return requireContext().getString(R.string.account_information,
+                    locale.getDisplayName().toUpperCase(), mCurrency);
+        }
+
         return requireContext().getString(requireContext().getResources()
                 .getIdentifier(group.getGroupName().toLowerCase(Locale.ROOT), "string",
                         requireContext().getPackageName()));

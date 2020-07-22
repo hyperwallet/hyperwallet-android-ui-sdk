@@ -56,7 +56,7 @@
     <string name="fee_mix_formatter">%1$s%2$s + %3$s%% (Min:%1$s %4$s, Max:%1$s %5$s)</string>
 
     <string name="account_holder">ACCOUNT HOLDER INFO</string>
-    <string name="account_information">ACCOUNT INFO</string>
+    <string name="account_information">ACCOUNT INFO: %s(%s)</string>
     <string name="address">ADDRESS</string>
     <string name="contact_information">CONTACT INFO</string>
     <string name="identification">IDENTIFICATION</string>
