@@ -31,7 +31,6 @@
     <string name="feeAndProcessingTimeInformation">%s fee \u2022 %s</string>
     <string name="feeInformation">%s fee</string>
 
-    <string name="title_activity_list_transfer_method">Transfer methods</string>
     <string name="empty_list_transfer_method_information">You didn\'t add an account yet. Once
         created, it will show up here!
     </string>
@@ -78,6 +77,7 @@
     <string name="currency_placeholder">CAD</string>
     <string name="mobileCountryCurrencyLabel">LOCATION AND CURRENCY</string>
     <string name="mobileTransferMethodLabel">TRANSFER METHOD</string>
+    <string name="mobileTransferMethodsHeader">Transfer methods</string>
 
     <string name="mobileRemoveEAconfirm">Confirm that you want to remove your %s</string>
 </resources>

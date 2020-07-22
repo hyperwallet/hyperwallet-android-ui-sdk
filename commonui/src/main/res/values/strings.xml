@@ -30,8 +30,6 @@
     <string name="not_translated_in_braces">(not translated)</string>
 
     <string name="authentication_error_header">Authentication Error</string>
-
-    <string name="mobileTransferMethodsHeader">Transfer methods</string>
     <string name="cancelButtonLabel">Cancel</string>
     <string name="remove">Remove</string>
     <string name="mobileAreYouSure">Are you sure?</string>
