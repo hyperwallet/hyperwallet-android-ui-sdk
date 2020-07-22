@@ -43,6 +43,7 @@ import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.IdlingRegistry;
 import androidx.test.espresso.intent.rule.IntentsTestRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
 import com.hyperwallet.android.model.StatusTransition;
@@ -146,7 +147,9 @@ public class TransferPPCFundsTest {
         onView(withId(R.id.transfer_all_funds)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_all_funds)).check(matches(not(isSelected())));
         onView(withId(R.id.transfer_summary)).perform(nestedScrollTo()).check(matches(isDisplayed()));
-        onView(withId(R.id.transfer_summary)).check(matches(withText("Available balance: 998.00 USD")));
+        String availableFundUSD = String.format(InstrumentationRegistry.getInstrumentation().getTargetContext()
+                .getString(R.string.mobileAvailableBalance), "998.00" , "USD");
+        onView(withId(R.id.transfer_summary)).check(matches(withText(availableFundUSD)));
 
         onView(withId(R.id.transfer_action_button)).perform(nestedScrollTo());
         onView(withId(R.id.transfer_notes)).perform(nestedScrollTo()).check(matches(isDisplayed()));
@@ -189,7 +192,9 @@ public class TransferPPCFundsTest {
         onView(withId(R.id.transfer_all_funds)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_all_funds)).check(matches(not(isSelected())));
         onView(withId(R.id.transfer_summary)).perform(nestedScrollTo()).check(matches(isDisplayed()));
-        onView(withId(R.id.transfer_summary)).check(matches(withText("Available balance: 998.00 USD")));
+        String availableFundUSD = String.format(InstrumentationRegistry.getInstrumentation().getTargetContext()
+                .getString(R.string.mobileAvailableBalance), "998.00" , "USD");
+        onView(withId(R.id.transfer_summary)).check(matches(withText(availableFundUSD)));
 
         onView(withId(R.id.transfer_action_button)).check(matches(isEnabled()));
     }
@@ -251,7 +256,9 @@ public class TransferPPCFundsTest {
         onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("ending in 5121")));
 
         onView(withId(R.id.transfer_summary)).perform(nestedScrollTo()).check(matches(isDisplayed()));
-        onView(withId(R.id.transfer_summary)).check(matches(withText("Available balance: 1,157.40 CAD")));
+        String availableFundCAD = String.format(InstrumentationRegistry.getInstrumentation().getTargetContext()
+                .getString(R.string.mobileAvailableBalance), "1,157.40" , "CAD");
+        onView(withId(R.id.transfer_summary)).check(matches(withText(availableFundCAD)));
 
         onView(withId(R.id.transfer_amount)).perform(nestedScrollTo(), replaceText("150.00"));
         onView(withId(R.id.transfer_action_button)).perform(nestedScrollTo(), click());
@@ -336,7 +343,9 @@ public class TransferPPCFundsTest {
         onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("ending in 0616")));
 
         onView(withId(R.id.transfer_summary)).perform(nestedScrollTo()).check(matches(isDisplayed()));
-        onView(withId(R.id.transfer_summary)).check(matches(withText("Available balance: 998.00 USD")));
+        String availableFundUSD = String.format(InstrumentationRegistry.getInstrumentation().getTargetContext()
+                .getString(R.string.mobileAvailableBalance), "998.00" , "USD");
+        onView(withId(R.id.transfer_summary)).check(matches(withText(availableFundUSD)));
 
         onView(withId(R.id.transfer_amount)).perform(nestedScrollTo(), replaceText("100.00"));
         onView(withId(R.id.transfer_action_button)).perform(nestedScrollTo(), click());
@@ -404,7 +413,9 @@ public class TransferPPCFundsTest {
         onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("ending in 0616")));
 
         onView(withId(R.id.transfer_summary)).perform(nestedScrollTo()).check(matches(isDisplayed()));
-        onView(withId(R.id.transfer_summary)).check(matches(withText("Available balance: 998.00 USD")));
+        String availableFundUSD = String.format(InstrumentationRegistry.getInstrumentation().getTargetContext()
+                .getString(R.string.mobileAvailableBalance), "998.00" , "USD");
+        onView(withId(R.id.transfer_summary)).check(matches(withText(availableFundUSD)));
 
         onView(withId(R.id.transfer_amount)).perform(nestedScrollTo(), replaceText("100.00"));
         onView(withId(R.id.transfer_notes)).perform(nestedScrollTo(), replaceText("QA Automation Test"));
@@ -474,7 +485,9 @@ public class TransferPPCFundsTest {
         onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("ending in 0616")));
 
         onView(withId(R.id.transfer_summary)).perform(nestedScrollTo()).check(matches(isDisplayed()));
-        onView(withId(R.id.transfer_summary)).check(matches(withText("Available balance: 998.00 USD")));
+        String availableFundUSD = String.format(InstrumentationRegistry.getInstrumentation().getTargetContext()
+                .getString(R.string.mobileAvailableBalance), "998.00" , "USD");
+        onView(withId(R.id.transfer_summary)).check(matches(withText(availableFundUSD)));
 
         onView(withId(R.id.transfer_amount)).perform(nestedScrollTo(), replaceText("100.00"));
         onView(withId(R.id.transfer_notes)).perform(nestedScrollTo(), replaceText("QA Automation Test"));
