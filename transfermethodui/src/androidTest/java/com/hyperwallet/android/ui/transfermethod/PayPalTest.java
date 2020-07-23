@@ -136,10 +136,16 @@ public class PayPalTest {
         onView(withId(R.id.add_transfer_method_static_container)).check(
                 matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
 
+        onView(withId(R.id.transfer_method_information)).check(
+                matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+
+        onView(withId(R.id.transfer_method_information)).check(
+                matches(withText(R.string.mobileFeesAndProcessingTime)));
+
         onView(withId(R.id.add_transfer_method_information)).check(
                 matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
         onView(withId(R.id.add_transfer_method_information)).check(
-                matches(withText("$0.25 USD \\u2022 IMMEDIATE")));
+                matches(withText("$0.25 fee \u2022 IMMEDIATE")));
     }
 
     @Test
