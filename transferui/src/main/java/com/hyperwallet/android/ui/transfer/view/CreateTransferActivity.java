@@ -20,6 +20,7 @@ import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.SCHEDUL
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -51,6 +52,7 @@ public class CreateTransferActivity extends AppCompatActivity implements OnNetwo
 
     public static final String TAG = "transfer-funds:create-transfer";
     public static final String EXTRA_TRANSFER_SOURCE_TOKEN = "TRANSFER_SOURCE_TOKEN";
+    public static final String EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT = "EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT";
 
     private CreateTransferViewModel mCreateTransferViewModel;
 
@@ -88,7 +90,12 @@ public class CreateTransferActivity extends AppCompatActivity implements OnNetwo
         }
 
         mCreateTransferViewModel = ViewModelProviders.of(this, factory).get(CreateTransferViewModel.class);
-        registerErrorObservers();
+        if (getIntent().getBooleanExtra(EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT, false)) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+            mCreateTransferViewModel.setPortraitMode(true);
+        }
+
+        registerObservers();
 
         if (savedInstanceState == null) {
             ActivityUtils.initFragment(this, CreateTransferFragment.newInstance(), R.id.create_transfer_fragment);
@@ -121,6 +128,11 @@ public class CreateTransferActivity extends AppCompatActivity implements OnNetwo
                     mCreateTransferViewModel.getTransferDestination().getValue());
             intent.putExtra(ScheduleTransferActivity.EXTRA_SHOW_FX_CHANGE_WARNING,
                     mCreateTransferViewModel.getShowFxRateChange().getValue());
+
+            intent.putExtra(ScheduleTransferActivity.EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT,
+                    mCreateTransferViewModel.isPortraitMode()
+                            || getIntent().getBooleanExtra(EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT, false));
+
             startActivityForResult(intent, SCHEDULE_TRANSFER_REQUEST_CODE);
         }
     }
@@ -144,7 +156,7 @@ public class CreateTransferActivity extends AppCompatActivity implements OnNetwo
         super.onDestroy();
     }
 
-    private void registerErrorObservers() {
+    private void registerObservers() {
         mCreateTransferViewModel.getLoadTransferRequiredDataErrors().observe(this,
                 new Observer<Event<Errors>>() {
                     @Override

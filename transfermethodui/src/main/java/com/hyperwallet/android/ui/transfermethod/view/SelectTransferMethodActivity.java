@@ -20,6 +20,7 @@ package com.hyperwallet.android.ui.transfermethod.view;
 import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.ADD_TRANSFER_METHOD_REQUEST_CODE;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -50,6 +51,7 @@ public class SelectTransferMethodActivity extends AppCompatActivity implements
         OnNetworkErrorCallback {
 
     public static final String TAG = "transfer-method:add:select-transfer-method";
+    public static final String EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT = "EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT";
 
     private static final String ARGUMENT_RETRY_ACTION = "ARGUMENT_RETRY_ACTION";
     private static final short RETRY_LOAD_COUNTRY_SELECTION = 103;
@@ -77,8 +79,14 @@ public class SelectTransferMethodActivity extends AppCompatActivity implements
             }
         });
 
+        if (getIntent().getBooleanExtra(EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT, false)) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
+
         if (savedInstanceState == null) {
-            ActivityUtils.initFragment(this, SelectTransferMethodFragment.newInstance(),
+            ActivityUtils.initFragment(this,
+                    SelectTransferMethodFragment.newInstance(
+                            getIntent().getBooleanExtra(EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT, false)),
                     R.id.select_transfer_method_fragment);
         } else {
             mRetryCode = savedInstanceState.getShort(ARGUMENT_RETRY_ACTION);
@@ -210,7 +218,8 @@ public class SelectTransferMethodActivity extends AppCompatActivity implements
         SelectTransferMethodFragment fragment = (SelectTransferMethodFragment)
                 fragmentManager.findFragmentById(R.id.select_transfer_method_fragment);
         if (fragment == null) {
-            fragment = SelectTransferMethodFragment.newInstance();
+            fragment = SelectTransferMethodFragment
+                    .newInstance(getIntent().getBooleanExtra(EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT, false));
         }
         return fragment;
     }

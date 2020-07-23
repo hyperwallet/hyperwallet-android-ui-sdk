@@ -53,13 +53,36 @@ public final class HyperwalletTransferUi {
         return sInstance;
     }
 
-    public Intent getIntentCreateTransfer(@NonNull final Context context) {
-        return new Intent(context, CreateTransferActivity.class);
+    /**
+     * Create intent for Creating Transfer
+     *
+     * @param context              app context
+     * @param lockScreenToPortrait if set <code>true</code> screen will be locked to Portrait mode;
+     *                             otherwise <code>false</code> screen will follow whatever the
+     *                             device orientation is directed.
+     * @return Intent to start Create Transfer activity
+     */
+    public Intent getIntentCreateTransfer(@NonNull final Context context, final boolean lockScreenToPortrait) {
+        Intent intent = new Intent(context, CreateTransferActivity.class);
+        intent.putExtra(CreateTransferActivity.EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT, lockScreenToPortrait);
+        return intent;
     }
 
-    public Intent getIntentCreateTransfer(@NonNull final Context context, @NonNull final String sourceToken) {
+    /**
+     * Create intent for Creating Transfer
+     *
+     * @param context              app context
+     * @param sourceToken          source token of the transfer
+     * @param lockScreenToPortrait if set <code>true</code> screen will be locked to Portrait mode;
+     *                             otherwise <code>false</code> screen will follow whatever the
+     *                             device orientation is directed.
+     * @return Intent to start Create Transfer activity
+     */
+    public Intent getIntentCreateTransfer(@NonNull final Context context, @NonNull final String sourceToken,
+            final boolean lockScreenToPortrait) {
         Intent intent = new Intent(context, CreateTransferActivity.class);
         intent.putExtra(CreateTransferActivity.EXTRA_TRANSFER_SOURCE_TOKEN, sourceToken);
+        intent.putExtra(CreateTransferActivity.EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT, lockScreenToPortrait);
         return intent;
     }
 

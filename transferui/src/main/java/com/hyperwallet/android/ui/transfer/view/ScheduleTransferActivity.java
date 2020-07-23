@@ -18,6 +18,7 @@ package com.hyperwallet.android.ui.transfer.view;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.View;
@@ -57,6 +58,7 @@ public class ScheduleTransferActivity extends AppCompatActivity implements OnNet
     public static final String EXTRA_TRANSFER = "TRANSFER";
     public static final String EXTRA_TRANSFER_METHOD = "TRANSFER_METHOD";
     public static final String EXTRA_SHOW_FX_CHANGE_WARNING = "SHOW_FX_CHANGE_WARNING";
+    public static final String EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT = "EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT";
 
     private ScheduleTransferViewModel mScheduleTransferViewModel;
 
@@ -76,6 +78,10 @@ public class ScheduleTransferActivity extends AppCompatActivity implements OnNet
                 finish();
             }
         });
+
+        if (getIntent().getBooleanExtra(EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT, false)) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
 
         Parcelable transferParcel = getIntent().getParcelableExtra(EXTRA_TRANSFER);
         Parcelable transferMethodParcel = getIntent().getParcelableExtra(EXTRA_TRANSFER_METHOD);

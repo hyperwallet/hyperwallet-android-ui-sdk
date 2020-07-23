@@ -17,6 +17,7 @@
 package com.hyperwallet.android.ui.receipt.view;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -43,6 +44,7 @@ public class ListPrepaidCardReceiptActivity extends AppCompatActivity implements
 
     public static final String TAG = "receipts:prepaidcard:list-receipts";
     public static final String EXTRA_PREPAID_CARD_TOKEN = "PREPAID_CARD_TOKEN";
+    public static final String EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT = "EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT";
 
     private ReceiptViewModel mReceiptViewModel;
 
@@ -62,6 +64,10 @@ public class ListPrepaidCardReceiptActivity extends AppCompatActivity implements
                 finish();
             }
         });
+
+        if (getIntent().getBooleanExtra(EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT, false)) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
 
         String token = getIntent().getStringExtra(EXTRA_PREPAID_CARD_TOKEN);
         if (TextUtils.isEmpty(token)) {
@@ -111,6 +117,8 @@ public class ListPrepaidCardReceiptActivity extends AppCompatActivity implements
         if (!event.isContentConsumed()) {
             Intent intent = new Intent(this, ReceiptDetailActivity.class);
             intent.putExtra(ReceiptDetailActivity.EXTRA_RECEIPT, event.getContent());
+            intent.putExtra(ReceiptDetailActivity.EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT,
+                    getIntent().getBooleanExtra(EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT, false));
             startActivity(intent);
         }
     }

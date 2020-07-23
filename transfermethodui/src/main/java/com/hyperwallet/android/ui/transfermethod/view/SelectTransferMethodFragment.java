@@ -58,6 +58,7 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
 
     private static final String ARGUMENT_COUNTRY_CODE_SELECTED = "ARGUMENT_COUNTRY_CODE_SELECTED";
     private static final String ARGUMENT_CURRENCY_CODE_SELECTED = "ARGUMENT_CURRENCY_CODE_SELECTED";
+    private static final String ARGUMENT_SCREEN_ORIENTATION_PORTRAIT = "ARGUMENT_SCREEN_ORIENTATION_PORTRAIT";
     private static final boolean FORCE_UPDATE = false;
 
     private TextView mCountryValue;
@@ -75,17 +76,19 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
     private RecyclerView mRecyclerView;
     private String mSelectedCountryCode;
     private String mSelectedCurrencyCode;
+    private boolean mIsPortraitMode;
     private TransferMethodTypesAdapter mTransferMethodTypesAdapter;
 
     public SelectTransferMethodFragment() {
     }
 
-    public static SelectTransferMethodFragment newInstance() {
+    public static SelectTransferMethodFragment newInstance(final boolean isPortraitMode) {
         SelectTransferMethodFragment selectTransferMethodFragment = new SelectTransferMethodFragment();
 
         Bundle arguments = new Bundle();
         arguments.putString(ARGUMENT_COUNTRY_CODE_SELECTED, selectTransferMethodFragment.mSelectedCountryCode);
         arguments.putString(ARGUMENT_CURRENCY_CODE_SELECTED, selectTransferMethodFragment.mSelectedCurrencyCode);
+        arguments.putBoolean(ARGUMENT_SCREEN_ORIENTATION_PORTRAIT, isPortraitMode);
         selectTransferMethodFragment.setArguments(arguments);
         return selectTransferMethodFragment;
     }
@@ -203,9 +206,11 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
         if (savedInstanceState != null) {
             mSelectedCurrencyCode = savedInstanceState.getString(ARGUMENT_CURRENCY_CODE_SELECTED);
             mSelectedCountryCode = savedInstanceState.getString(ARGUMENT_COUNTRY_CODE_SELECTED);
+            mIsPortraitMode = savedInstanceState.getBoolean(ARGUMENT_SCREEN_ORIENTATION_PORTRAIT, false);
         } else {
             mSelectedCurrencyCode = getArguments().getString(ARGUMENT_CURRENCY_CODE_SELECTED);
             mSelectedCountryCode = getArguments().getString(ARGUMENT_COUNTRY_CODE_SELECTED);
+            mIsPortraitMode = getArguments().getBoolean(ARGUMENT_SCREEN_ORIENTATION_PORTRAIT, false);
         }
         mCountryValue.setText(getCountryDisplay(mSelectedCountryCode));
         mCurrencyValue.setText(mSelectedCurrencyCode);
@@ -216,6 +221,7 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
     public void onSaveInstanceState(@NonNull Bundle outState) {
         outState.putString(ARGUMENT_COUNTRY_CODE_SELECTED, mSelectedCountryCode);
         outState.putString(ARGUMENT_CURRENCY_CODE_SELECTED, mSelectedCurrencyCode);
+        outState.putBoolean(ARGUMENT_SCREEN_ORIENTATION_PORTRAIT, mIsPortraitMode);
         super.onSaveInstanceState(outState);
     }
 
@@ -328,6 +334,7 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
         intent.putExtra(AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_CURRENCY, currency);
         intent.putExtra(AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_TYPE, transferMethodType);
         intent.putExtra(AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_PROFILE_TYPE, profileType);
+        intent.putExtra(AddTransferMethodActivity.EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT, mIsPortraitMode);
         getActivity().startActivityForResult(intent, ADD_TRANSFER_METHOD_REQUEST_CODE);
     }
 
