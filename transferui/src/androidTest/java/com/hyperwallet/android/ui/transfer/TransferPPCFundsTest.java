@@ -805,15 +805,16 @@ public class TransferPPCFundsTest {
         onView(withId(android.R.id.button1)).check(matches(withText(R.string.try_again_button_label)));
         onView(withId(android.R.id.button2)).check(matches(withText(R.string.cancel_button_label)));
 
+        // When click on Try again
         onView(withId(android.R.id.button1)).perform(click());
-
-        assertThat("Result code is incorrect",
-                mActivityTestRule.getActivityResult().getResultCode(), is(Activity.RESULT_OK));
 
         gate.await(5, SECONDS);
         LocalBroadcastManager.getInstance(mActivityTestRule.getActivity().getApplicationContext()).unregisterReceiver(
                 br);
         assertThat("Action is not broadcasted", gate.getCount(), is(0L));
+
+        // Then assert the Success Dialog
+        verifyTransferConfirmationDialog("Bank Account");
     }
 
     private void verifyTransferConfirmationDialog(String transferType) {

@@ -868,7 +868,52 @@ public class TransferUserFundsTest {
     }
 
     @Test
-    public void testTransferFunds_createTransferConfirmationConnectionError() throws InterruptedException {
+    public void testTransferFunds_createTransferConfirmationConnectionErrorCancel() throws InterruptedException {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("create_transfer_quote_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("create_transfer_no_fx_response.json")).mock();
+        mMockWebServer.getServer().enqueue(new MockResponse().setResponseCode(HTTP_OK).setBody(sResourceManager
+                .getResourceContent("schedule_transfer_success_response.json")).setBodyDelay(10500, TimeUnit
+                .MILLISECONDS));
+
+        mActivityTestRule.launchActivity(null);
+
+        onView(withId(R.id.transfer_funds_header)).check(
+                matches(withText(R.string.mobileTransferFundsHeader)));
+        onView(withId(R.id.transfer_amount)).perform(nestedScrollTo(), replaceText("100.00"));
+        onView(withId(R.id.transfer_action_button)).perform(nestedScrollTo(), click());
+
+        onView(withId(R.id.list_foreign_exchange)).check(matches(not(isDisplayed())));
+        onView(withId(R.id.amount_label)).check(matches(withText(R.string.mobileConfirmDetailsAmount)));
+        onView(withId(R.id.amount_value)).check(matches(withText("102.00 USD")));
+        onView(withId(R.id.fee_label)).check(matches(withText(R.string.mobileConfirmDetailsFee)));
+        onView(withId(R.id.fee_value)).check(matches(withText("2.00 USD")));
+        onView(withId(R.id.transfer_label)).check(matches(withText(R.string.mobileConfirmDetailsTotal)));
+        onView(withId(R.id.transfer_value)).check(matches(withText("100.00 USD")));
+        onView(withId(R.id.notes_container)).check(matches(not(isDisplayed())));
+        onView(withId(R.id.notes_value)).check(matches(not(isDisplayed())));
+
+        onView(withId(R.id.transfer_confirm_button)).perform(nestedScrollTo(), click());
+
+        onView(withText(R.string.error_dialog_connectivity_title)).check(matches(isDisplayed()));
+        onView(withText(R.string.io_exception)).check(matches(isDisplayed()));
+        onView(withId(android.R.id.button1)).check(matches(withText(R.string.try_again_button_label)));
+        onView(withId(android.R.id.button2)).check(matches(withText(R.string.cancel_button_label)));
+
+        // When tap on 'Cancel' button
+        onView(withId(android.R.id.button2)).perform(click());
+
+        // Then navigate back to the Transfer Funds
+        onView(withId(R.id.transfer_funds_header)).check(
+                matches(withText(R.string.mobileTransferFundsHeader)));
+        onView(withId(R.id.transfer_amount)).check(matches(withText("100.00")));
+    }
+
+    @Test
+    public void testTransferFunds_createTransferConfirmationConnectionErrorTryAgain() throws InterruptedException {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
@@ -924,13 +969,14 @@ public class TransferUserFundsTest {
 
         onView(withId(android.R.id.button1)).perform(click());
 
-        assertThat("Result code is incorrect",
-                mActivityTestRule.getActivityResult().getResultCode(), is(Activity.RESULT_OK));
-
         gate.await(5, SECONDS);
         LocalBroadcastManager.getInstance(mActivityTestRule.getActivity().getApplicationContext()).unregisterReceiver(
                 br);
         assertThat("Action is not broadcasted", gate.getCount(), is(0L));
+
+        // Assert the Success Dialog
+        verifyTransferConfirmationDialog("Bank Account");
+
     }
 
     private void verifyTransferConfirmationDialog(String transferType) {
