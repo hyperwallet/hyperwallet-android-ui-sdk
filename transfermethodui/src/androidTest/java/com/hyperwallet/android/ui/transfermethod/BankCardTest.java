@@ -11,6 +11,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibilit
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static androidx.test.espresso.matcher.ViewMatchers.withInputType;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.allOf;
@@ -32,15 +33,20 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.text.InputType;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.IdlingRegistry;
+import androidx.test.espresso.action.ViewActions;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
@@ -49,7 +55,11 @@ import com.hyperwallet.android.ui.testutils.rule.HyperwalletMockWebServer;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
 import com.hyperwallet.android.ui.transfermethod.rule.HyperwalletInsightMockRule;
 import com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity;
+import com.hyperwallet.android.ui.transfermethod.view.widget.ExpiryDateWidget;
 
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
+import org.hamcrest.TypeSafeMatcher;
 import org.json.JSONObject;
 import org.junit.After;
 import org.junit.Before;
@@ -58,6 +68,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.Locale;
+import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
 
 import okhttp3.mockwebserver.RecordedRequest;
@@ -79,6 +91,10 @@ public class BankCardTest {
     private static final String CARD_NUMBER_LABEL = "Card Number";
     private static final String EXPIRY_DATE_LABEL = "Expiration Date";
     private static final String CVV_LABEL = "CVV (Card Security Code)";
+    //private static final String dateOfExpiryPlaceholder =  InstrumentationRegistry.getInstrumentation().getTargetContext()
+     //       .getString(R.string.api_expiry_date_format);
+
+    private Locale localeUS = new Locale.Builder().setRegion("US").build();
 
     @ClassRule
     public static HyperwalletExternalResourceManager sResourceManager = new HyperwalletExternalResourceManager();
@@ -123,7 +139,8 @@ public class BankCardTest {
         onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
                 .check(matches(withText(R.string.title_add_bank_card)));
 
-        onView(allOf(withId(R.id.section_header_title), withText("Account Information - United States (USD)")))
+        String formattedAccountInfo = getAccountInfo(localeUS, "USD");
+        onView(allOf(withId(R.id.section_header_title), withText(formattedAccountInfo)))
                 .perform(nestedScrollTo())
                 .check(matches(isDisplayed()));
         onView(withId(R.id.cardNumber)).perform(nestedScrollTo()).check(matches(isDisplayed()));
@@ -137,7 +154,7 @@ public class BankCardTest {
         onView(withId(R.id.cvvLabel)).check(matches(withHint(CVV_LABEL)));
 
         onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo()).check(
-                matches(withText(R.string.button_create_transfer_method)));
+                matches(withText(R.string.createTransferMethodButtonLabel)));
     }
 
     @Test
@@ -147,17 +164,16 @@ public class BankCardTest {
         onView(withId(R.id.add_transfer_method_static_container)).check(
                 matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
 
-        onView(withId(R.id.add_transfer_method_fee_label)).check(
+        onView(withId(R.id.transfer_method_information)).check(
                 matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        onView(withId(R.id.add_transfer_method_fee_label)).check(
-                matches(withText(R.string.add_transfer_method_fee_label)));
-        onView(withId(R.id.add_transfer_method_fee_value)).check(matches(withText("USD 1.75")));
 
-        onView(withId(R.id.add_transfer_method_processing_label)).check(
+        onView(withId(R.id.transfer_method_information)).check(
+                matches(withText(R.string.mobileFeesAndProcessingTime)));
+
+        onView(withId(R.id.add_transfer_method_information)).check(
                 matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        onView(withId(R.id.add_transfer_method_processing_label)).check(
-                matches(withText(R.string.add_transfer_method_processing_time_label)));
-        onView(withId(R.id.add_transfer_method_processing_time_value)).check(matches(withText("IMMEDIATE")));
+        onView(withId(R.id.add_transfer_method_information)).check(
+                matches(withText("$1.75 fee \u2022 IMMEDIATE")));
     }
 
     @Test
@@ -290,10 +306,16 @@ public class BankCardTest {
 
         onView(withId(R.id.cardNumber)).perform(nestedScrollTo(), typeText(DEFAULT_CARD_NUMBER));
         onView(withId(R.id.cardNumber)).check(matches(withText(DEFAULT_CARD_NUMBER_FORMATTED)));
+        onView(withId(R.id.dateOfExpiry)).perform(ViewActions.click());
+        String dateOfExpiryPlaceholder =  InstrumentationRegistry.getInstrumentation().getTargetContext()
+                .getString(R.string.api_expiry_date_format);
+
+        // onView(withId(R.id.dateOfExpiry)).check(matches(dateExpiryWithHint(dateOfExpiryPlaceholder)));
         onView(withId(R.id.dateOfExpiry)).perform(nestedScrollTo(), typeText(VALID_EXPIRATION_DATE));
         onView(withId(R.id.dateOfExpiry)).check(matches(withText(VALID_EXPIRATION_DATE_FORMATTED)));
         onView(withId(R.id.cvv)).perform(nestedScrollTo(), typeText("34459"));
         onView(withId(R.id.cvv)).check(matches(withText("344")));
+        onView(withId(R.id.cvv)).check(matches(allOf(withInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD))));
 
         onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo(), click());
 
@@ -385,6 +407,31 @@ public class BankCardTest {
         JSONObject bankCard = new JSONObject(createBankCardRequest.getBody().readUtf8());
 
         assertThat("Card number is incorrect", bankCard.getString("cardNumber"), is(VALID_CARD_NUMBER));
+    }
+
+    private static Matcher<View> dateExpiryWithHint(final String expectedHint) {
+        return new TypeSafeMatcher<View>() {
+
+            @Override
+            public boolean matchesSafely(View view) {
+                if (!(view instanceof TextInputLayout)) {
+                    return false;
+                }
+
+                String hint = Objects.toString(((TextInputLayout) view).getHint());
+                return expectedHint.equals(hint);
+            }
+
+            @Override
+            public void describeTo(Description description) {
+                description.appendText(expectedHint);
+            }
+        };
+    }
+
+    private String getAccountInfo(Locale locale, String mCurrency) {
+       return InstrumentationRegistry.getInstrumentation().getTargetContext().getString(R.string.account_information,
+                locale.getDisplayName().toUpperCase(), mCurrency);
     }
 
 }
