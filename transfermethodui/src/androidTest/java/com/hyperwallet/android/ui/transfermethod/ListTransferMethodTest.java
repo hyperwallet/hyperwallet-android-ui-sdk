@@ -38,6 +38,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.test.espresso.IdlingRegistry;
 import androidx.test.espresso.Root;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
 import com.hyperwallet.android.model.StatusTransition;
@@ -106,7 +107,7 @@ public class ListTransferMethodTest {
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(0, hasDescendant(withText("United States")))));
         onView(withId(R.id.list_transfer_method_item)).check(
-                matches(atPosition(0, hasDescendant(withText("Ending on 1332")))));
+                matches(atPosition(0, hasDescendant(withText(getEndingIn("1332"))))));
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(0, hasDescendant(withDrawable(R.drawable.ic_three_dots_16dp)))));
 
@@ -117,7 +118,7 @@ public class ListTransferMethodTest {
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(1, hasDescendant(withText("United States")))));
         onView(withId(R.id.list_transfer_method_item)).check(
-                matches(atPosition(1, hasDescendant(withText("Ending on 0006")))));
+                matches(atPosition(1, hasDescendant(withText(getEndingIn("0006"))))));
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(1, hasDescendant(withDrawable(R.drawable.ic_three_dots_16dp)))));
 
@@ -128,7 +129,7 @@ public class ListTransferMethodTest {
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(2, hasDescendant(withText("United States")))));
         onView(withId(R.id.list_transfer_method_item)).check(
-                matches(atPosition(2, hasDescendant(withText("Ending on 8337")))));
+                matches(atPosition(2, hasDescendant(withText(getEndingIn("8337"))))));
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(2, hasDescendant(withDrawable(R.drawable.ic_three_dots_16dp)))));
 
@@ -148,7 +149,7 @@ public class ListTransferMethodTest {
                 matches(atPosition(4, hasDescendant(withText(R.string.prepaid_card)))));
         onView(withId(R.id.list_transfer_method_item)).check(matches(atPosition(4, hasDescendant(withText("Canada")))));
         onView(withId(R.id.list_transfer_method_item)).check(
-                matches(atPosition(4, hasDescendant(withText("Ending on 3187")))));
+                matches(atPosition(4, hasDescendant(withText(getEndingIn("3187"))))));
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(4, hasDescendant(withDrawable(R.drawable.ic_three_dots_16dp)))));
 
@@ -159,7 +160,7 @@ public class ListTransferMethodTest {
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(5, hasDescendant(withText("United States")))));
         onView(withId(R.id.list_transfer_method_item)).check(
-                matches(atPosition(5, hasDescendant(withText("honey.thigpen@ukbuilder.com")))));
+                matches(atPosition(5, hasDescendant(withText("to honey.thigpen@ukbuilder.com")))));
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(5, hasDescendant(withDrawable(R.drawable.ic_three_dots_16dp)))));
 
@@ -188,7 +189,7 @@ public class ListTransferMethodTest {
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(0, hasDescendant(withText("United States")))));
         onView(withId(R.id.list_transfer_method_item)).check(
-                matches(atPosition(0, hasDescendant(withText("Ending on 1332")))));
+                matches(atPosition(0, hasDescendant(withText(getEndingIn("1332"))))));
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(0, hasDescendant(withDrawable(R.drawable.ic_three_dots_16dp)))));
         onView(withId(R.id.list_transfer_method_item)).check(new RecyclerViewCountAssertion(1));
@@ -251,7 +252,7 @@ public class ListTransferMethodTest {
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(0, hasDescendant(withText("United States")))));
         onView(withId(R.id.list_transfer_method_item)).check(
-                matches(atPosition(0, hasDescendant(withText("Ending on 1332")))));
+                matches(atPosition(0, hasDescendant(withText(getEndingIn("1332"))))));
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(0, hasDescendant(withDrawable(R.drawable.ic_three_dots_16dp)))));
 
@@ -280,7 +281,7 @@ public class ListTransferMethodTest {
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(0, hasDescendant(withText("United States")))));
         onView(withId(R.id.list_transfer_method_item)).check(
-                matches(atPosition(0, hasDescendant(withText("Ending on 0006")))));
+                matches(atPosition(0, hasDescendant(withText(getEndingIn("0006"))))));
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(0, hasDescendant(withDrawable(R.drawable.ic_three_dots_16dp)))));
 
@@ -327,7 +328,7 @@ public class ListTransferMethodTest {
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(0, hasDescendant(withText("United States")))));
         onView(withId(R.id.list_transfer_method_item)).check(
-                matches(atPosition(0, hasDescendant(withText("Ending on 0006")))));
+                matches(atPosition(0, hasDescendant(withText(getEndingIn("0006"))))));
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(0, hasDescendant(withDrawable(R.drawable.ic_three_dots_16dp)))));
 
@@ -438,7 +439,7 @@ public class ListTransferMethodTest {
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(0, hasDescendant(withText("United States")))));
         onView(withId(R.id.list_transfer_method_item)).check(
-                matches(atPosition(0, hasDescendant(withText("Ending on 1332")))));
+                matches(atPosition(0, hasDescendant(withText(getEndingIn("1332"))))));
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(0, hasDescendant(withDrawable(R.drawable.ic_three_dots_16dp)))));
 
@@ -466,7 +467,7 @@ public class ListTransferMethodTest {
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(0, hasDescendant(withText("United States")))));
         onView(withId(R.id.list_transfer_method_item)).check(
-                matches(atPosition(0, hasDescendant(withText("Ending on 1332")))));
+                matches(atPosition(0, hasDescendant(withText(getEndingIn("1332"))))));
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(0, hasDescendant(withDrawable(R.drawable.ic_three_dots_16dp)))));
     }
@@ -500,6 +501,12 @@ public class ListTransferMethodTest {
         // verify activity is finished
         assertThat("Result code is incorrect",
                 mActivityTestRule.getActivityResult().getResultCode(), is(RESULT_ERROR));
+    }
+
+    private String getEndingIn(String ending) {
+        return String.format(InstrumentationRegistry.getInstrumentation().getTargetContext()
+                .getString(R.string.endingIn),ending);
+
     }
 
 }

@@ -42,6 +42,7 @@ import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.IdlingRegistry;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
 import com.hyperwallet.android.model.transfermethod.TransferMethod;
@@ -62,6 +63,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.Locale;
 import java.util.concurrent.CountDownLatch;
 
 import okhttp3.mockwebserver.RecordedRequest;
@@ -72,6 +74,7 @@ public class BankAccountTest {
     private static final String ACCOUNT_NUMBER = "8017110254";
     private static final String ROUTING_NUMBER = "211179539";
     private static final String INVALID_ROUTING_NUMBER = "211179531";
+    private Locale localeUS = new Locale.Builder().setRegion("US").build();
 
     @ClassRule
     public static HyperwalletExternalResourceManager sResourceManager = new HyperwalletExternalResourceManager();
@@ -117,7 +120,8 @@ public class BankAccountTest {
         onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
                 .check(matches(withText(R.string.title_add_bank_account)));
 
-        onView(allOf(withId(R.id.section_header_title), withText("Account Information - United States (USD)")))
+        String formattedAccountInfo = getAccountInfo(localeUS, "USD");
+        onView(allOf(withId(R.id.section_header_title), withText(formattedAccountInfo)))
                 .perform(nestedScrollTo())
                 .check(matches(isDisplayed()));
         onView(withId(R.id.branchId)).perform(nestedScrollTo()).check(matches(isDisplayed()));
@@ -130,7 +134,7 @@ public class BankAccountTest {
         onView(withId(R.id.bankAccountPurposeLabel)).check(matches(isDisplayed()));
         onView(withId(R.id.bankAccountPurposeLabel)).check(matches(withHint("Account Type")));
 
-        onView(allOf(withId(R.id.section_header_title), withText("Account Holder")))
+        onView(allOf(withId(R.id.section_header_title), withText(R.string.account_holder)))
                 .perform(nestedScrollTo())
                 .check(matches(isDisplayed()));
         onView(withId(R.id.firstName)).perform(nestedScrollTo()).check(matches(isDisplayed()));
@@ -146,7 +150,7 @@ public class BankAccountTest {
         onView(withId(R.id.dateOfBirthLabel)).check(matches(isDisplayed()));
         onView(withId(R.id.dateOfBirthLabel)).check(matches(withHint("Date of Birth")));
 
-        onView(allOf(withId(R.id.section_header_title), withText("Contact Information")))
+        onView(allOf(withId(R.id.section_header_title), withText(R.string.contact_information)))
                 .perform(nestedScrollTo())
                 .check(matches(isDisplayed()));
         onView(withId(R.id.phoneNumber)).perform(nestedScrollTo()).check(matches(isDisplayed()));
@@ -156,7 +160,7 @@ public class BankAccountTest {
         onView(withId(R.id.mobileNumberLabel)).check(matches(isDisplayed()));
         onView(withId(R.id.mobileNumberLabel)).check(matches(withHint("Mobile Number")));
 
-        onView(allOf(withId(R.id.section_header_title), withText("Address")))
+        onView(allOf(withId(R.id.section_header_title), withText(R.string.address)))
                 .perform(nestedScrollTo())
                 .check(matches(isDisplayed()));
         onView(withId(R.id.country)).perform(nestedScrollTo()).check(matches(isDisplayed()));
@@ -176,7 +180,7 @@ public class BankAccountTest {
         onView(withId(R.id.postalCodeLabel)).check(matches(withHint("Zip/Postal Code")));
 
         onView(withId(R.id.add_transfer_method_button))
-                .perform(nestedScrollTo()).check(matches(withText(R.string.button_create_transfer_method)));
+                .perform(nestedScrollTo()).check(matches(withText(R.string.createTransferMethodButtonLabel)));
     }
 
     @Test
@@ -186,18 +190,16 @@ public class BankAccountTest {
         onView(withId(R.id.add_transfer_method_static_container))
                 .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
 
-        onView(withId(R.id.add_transfer_method_fee_label))
-                .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        onView(withId(R.id.add_transfer_method_fee_label)).check(
-                matches(withText(R.string.add_transfer_method_fee_label)));
-        onView(withId(R.id.add_transfer_method_fee_value)).check(matches(withText("USD 2.00")));
+        onView(withId(R.id.transfer_method_information)).check(
+                matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
 
-        onView(withId(R.id.add_transfer_method_processing_label))
+        onView(withId(R.id.transfer_method_information)).check(
+                matches(withText(R.string.mobileFeesAndProcessingTime)));
+
+        onView(withId(R.id.add_transfer_method_information))
                 .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        onView(withId(R.id.add_transfer_method_processing_label))
-                .check(matches(withText(R.string.add_transfer_method_processing_time_label)));
-        onView(withId(R.id.add_transfer_method_processing_time_value))
-                .check(matches(withText("1-2 Business days")));
+        onView(withId(R.id.add_transfer_method_information)).check(
+                matches(withText("$2.00 fee \u2022 1-2 Business days")));
     }
 
     @Test
@@ -455,5 +457,10 @@ public class BankAccountTest {
         JSONObject bankCard = new JSONObject(createBankCardRequest.getBody().readUtf8());
 
         assertThat("Postal Code is incorrect", bankCard.getString("postalCode"), is("V3K5K5"));
+    }
+
+    private String getAccountInfo(Locale locale, String mCurrency) {
+        return InstrumentationRegistry.getInstrumentation().getTargetContext().getString(R.string.account_information,
+                locale.getDisplayName().toUpperCase(), mCurrency);
     }
 }

@@ -19,10 +19,13 @@
 package com.hyperwallet.android.ui.transfermethod.view;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.hyperwallet.android.model.graphql.Fee;
+import com.hyperwallet.android.model.graphql.ProcessingTime;
 import com.hyperwallet.android.ui.R;
 
 import java.util.Currency;
@@ -109,5 +112,14 @@ public class FeeFormatter {
                     fee.getCurrency(), minimumAmount, maximumAmount);
         }
         return formattedFee;
+    }
+
+
+    protected static boolean isFeeAvailable(@Nullable final List<?> fees) {
+        return fees != null && !fees.isEmpty();
+    }
+
+    protected static boolean isProcessingTimeAvailable(@Nullable final ProcessingTime processingTime) {
+        return processingTime != null && !TextUtils.isEmpty(processingTime.getValue());
     }
 }

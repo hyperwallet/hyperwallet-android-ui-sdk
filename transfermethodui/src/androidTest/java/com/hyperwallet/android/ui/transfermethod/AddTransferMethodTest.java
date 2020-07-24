@@ -102,13 +102,7 @@ public class AddTransferMethodTest {
 
         onView(withId(R.id.add_transfer_method_static_container)).check(
                 matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
-        onView(withId(R.id.add_transfer_method_fee_label)).check(
-                matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
-        onView(withId(R.id.add_transfer_method_processing_label)).check(
-                matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
-        onView(withId(R.id.add_transfer_method_fee_value)).check(
-                matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
-        onView(withId(R.id.add_transfer_method_processing_time_value)).check(
+        onView(withId(R.id.add_transfer_method_information)).check(
                 matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
     }
 

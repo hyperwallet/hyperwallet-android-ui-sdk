@@ -29,6 +29,7 @@ import androidx.annotation.Nullable;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.hyperwallet.android.model.graphql.field.Field;
+import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import com.hyperwallet.android.ui.R;
 
 public class NumberWidget extends AbstractMaskedInputWidget {
@@ -74,7 +75,13 @@ public class NumberWidget extends AbstractMaskedInputWidget {
 
             editText.addTextChangedListener(new InputMaskTextWatcher(editText));
             editText.setText(mDefaultValue);
-            editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+            if (TransferMethod.TransferMethodFields.CVV.equals(mField.getName())) {
+                editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+            } else {
+                editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+            }
+
             editText.setOnKeyListener(new DefaultKeyListener(mDefaultFocusView, editText));
             editText.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI | EditorInfo.IME_ACTION_NEXT);
             editText.setCustomSelectionActionModeCallback(new ActionModeCallbackInterceptor());
