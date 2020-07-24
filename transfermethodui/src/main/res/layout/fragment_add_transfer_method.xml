@@ -64,7 +64,7 @@
                 android:layout_width="match_parent"
                 android:gravity="center_vertical"
                 android:layout_height="@dimen/row_height_single_entry"
-                android:background="@color/colorDisabledBackground"
+                android:background="@color/colorBackgroundDisabled"
                 android:orientation="vertical">
 
                 <TextView
