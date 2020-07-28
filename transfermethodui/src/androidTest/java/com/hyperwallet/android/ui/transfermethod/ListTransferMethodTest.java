@@ -484,7 +484,7 @@ public class ListTransferMethodTest {
     }
 
     @Test
-    public void testListTransferMethod_removeUnsupportedTypeDisplaysUnexpectedErrorDialog() {
+    public void testListTransferMethod_removeUnsupportedTypeDisplaysUnexpectedError() {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_response.json")).mock();
 
@@ -524,5 +524,4 @@ public class ListTransferMethodTest {
         return String.format(InstrumentationRegistry.getInstrumentation().getTargetContext()
                 .getString(R.string.mobileRemoveEAconfirm), type);
     }
-
 }
