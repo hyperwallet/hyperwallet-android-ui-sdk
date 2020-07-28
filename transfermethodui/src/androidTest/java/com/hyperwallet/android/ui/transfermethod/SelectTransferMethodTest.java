@@ -292,7 +292,7 @@ public class SelectTransferMethodTest {
         onView(withId(R.id.select_transfer_method_types_list)).check(
                 matches(atPosition(0, hasDescendant(withText(R.string.bank_account)))));
         String bankCardFee = InstrumentationRegistry.getInstrumentation().getTargetContext()
-                .getString(R.string.feeAndProcessingTimeInformation,usdDollarSymbol + "2.00");
+                .getString(R.string.feeInformation,usdDollarSymbol + "2.00");
 
         onView(withId(R.id.select_transfer_method_types_list)).check(
                 matches(atPosition(0, hasDescendant(withText(bankCardFee)))));

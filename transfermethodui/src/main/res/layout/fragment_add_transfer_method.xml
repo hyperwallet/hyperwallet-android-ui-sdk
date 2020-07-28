@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
     android:focusableInTouchMode="true"
-              tools:context="com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodFragment">
+    android:background="@color/regularColorPrimary"
+    tools:context="com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodFragment">
 
     <FrameLayout
         android:id="@+id/add_transfer_method_progress_bar_layout"
@@ -41,70 +42,39 @@
                 android:id="@+id/add_transfer_method_dynamic_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/regularColorPrimary"
                 android:orientation="vertical" />
 
             <LinearLayout
                 android:id="@+id/add_transfer_method_static_container_header"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/section_header_height"
-                android:background="@drawable/view_border_top_bottom"
-                android:paddingTop="@dimen/grid_padding_top">
+                android:layout_height="@dimen/section_header_height">
 
                 <TextView
-                    android:id="@+id/transfer_method_information_header"
+                    android:id="@+id/transfer_method_information"
+                    android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginStart="@dimen/grid_margin_left"
-                    android:layout_marginTop="@dimen/grid_margin_top"
-                    android:text="@string/transfer_method_information_header"
+                    android:text="@string/mobileFeesAndProcessingTime"
                     android:textAppearance="@style/TextAppearance.Hyperwallet.Body2" />
             </LinearLayout>
 
             <RelativeLayout
                 android:id="@+id/add_transfer_method_static_container"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/content_border_bottom"
+                android:gravity="center_vertical"
+                android:layout_height="@dimen/row_height_single_entry"
+                android:background="@color/colorBackgroundDisabled"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/add_transfer_method_fee_label"
+                    android:id="@+id/add_transfer_method_information"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/grid_padding_left"
-                    android:layout_marginTop="@dimen/grid_margin_top"
-                    android:text="@string/add_transfer_method_fee_label"
-                    android:textAppearance="@style/TextAppearance.Hyperwallet.Body2" />
+                    tools:text="@string/feesAndProcessTimePlaceholder"
+                    android:textAppearance="@style/TextAppearance.Hyperwallet.Body1" />
 
-                <TextView
-                    android:id="@+id/add_transfer_method_fee_value"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/grid_padding_left"
-                    android:layout_marginTop="@dimen/grid_margin_top"
-                    android:layout_toEndOf="@+id/add_transfer_method_fee_label"
-                    android:textAppearance="@style/TextAppearance.Hyperwallet.Body2" />
-
-                <TextView
-                    android:id="@+id/add_transfer_method_processing_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/add_transfer_method_fee_label"
-                    android:layout_marginStart="@dimen/grid_margin_left"
-                    android:layout_marginBottom="@dimen/grid_margin_bottom"
-                    android:text="@string/add_transfer_method_processing_time_label"
-                    android:textAppearance="@style/TextAppearance.Hyperwallet.Body2" />
-
-                <TextView
-                    android:id="@+id/add_transfer_method_processing_time_value"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/add_transfer_method_fee_label"
-                    android:layout_marginStart="@dimen/grid_padding_left"
-                    android:layout_marginTop="0dp"
-                    android:layout_toEndOf="@+id/add_transfer_method_processing_label"
-                    android:textAppearance="@style/TextAppearance.Hyperwallet.Body2" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -124,7 +94,8 @@
                     android:layout_marginEnd="@dimen/button_right_margin"
                     android:layout_marginBottom="@dimen/button_bottom_margin"
                     android:maxWidth="@dimen/create_button_max_width"
-                    android:text="@string/button_create_transfer_method"
+                    android:text="@string/createTransferMethodButtonLabel"
+                    android:textAllCaps="false"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
