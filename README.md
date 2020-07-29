@@ -33,8 +33,8 @@ HyperwalletReceiptUi.getInstance(hyperwalletAuthenticationTokenProvider);
 HyperwalletTransferMethodUi.getInstance(hyperwalletAuthenticationTokenProvider);
 
 // use UI SDK functions
-mHyperwalletTransferMethodUi.getIntentListTransferMethodActivity(MainActivity.this);
-mHyperwalletReceiptUi.getIntentListUserReceiptActivity(MainActivity.this);
+mHyperwalletTransferMethodUi.getIntentListTransferMethodActivity(MainActivity.this, false);
+mHyperwalletReceiptUi.getIntentListUserReceiptActivity(MainActivity.this, false);
 ```
 
 ## Authentication
@@ -104,37 +104,45 @@ protected void onCreate(Bundle savedInstanceState) {
 ```
 
 ### List the user's transfer methods
+The second argument is boolean flag to control view orientation, <code>lockScreenToPortrait</code> set to <code>true</code> 
+will lock the screen to Portrait orientation otherwise it will just follow device orientation.
 ```java
 @Override
 public void onClick(View view) {
-    Intent intent = mHyperwalletTransferMethodUi.getIntentListTransferMethodActivity(MainActivity.this);
+    Intent intent = mHyperwalletTransferMethodUi.getIntentListTransferMethodActivity(MainActivity.this, false);
     startActivity(intent);
 }
 ```
 
 
 ### Select a transfer method type available by country and currency
+The second argument is boolean flag to control view orientation, <code>lockScreenToPortrait</code> set to <code>true</code> 
+will lock the screen to Portrait orientation otherwise it will just follow device orientation.
 ```java
 @Override
 public void onClick(View view) {
-    Intent intent = mHyperwalletTransferMethodUi.getIntentSelectTransferMethodActivity(MainActivity.this);
+    Intent intent = mHyperwalletTransferMethodUi.getIntentSelectTransferMethodActivity(MainActivity.this, false);
     startActivity(intent);
 }
 ```
 
 ### Create a transfer using the logged in user as the source of funds
+The second argument is boolean flag to control view orientation, <code>lockScreenToPortrait</code> set to <code>true</code> 
+will lock the screen to Portrait orientation otherwise it will just follow device orientation.
 ```java
 public void onClick(View view) {
-    Intent intent = mHyperwalletTransferUi.getIntentCreateTransfer(MainActivity.this);
+    Intent intent = mHyperwalletTransferUi.getIntentCreateTransfer(MainActivity.this, false);
     startActivity(intent);
 }
 ```
 ### Create a transfer from a specific account as the source of funds
-The two argument version allows you to choose the source of funds, typically used for EA to EA transfers or PPC to EA transfers.
-Your configuration must support this as not all banks and currencies are compatible with each other.
+The three argument version allows you to choose the source of funds, typically used for EA to EA transfers or PPC to EA transfers.
+Your configuration must support this as not all banks and currencies are compatible with each other. 
+The third argument is boolean flag to control view orientation, <code>lockScreenToPortrait</code> set to <code>true</code> 
+will lock the screen to Portrait orientation otherwise it will just follow device orientation.
 ```java
 public void onClick(View view) {
-    Intent intent = mHyperwalletTransferUi.getIntentCreateTransfer(MainActivity.this, "trm-12345");
+    Intent intent = mHyperwalletTransferUi.getIntentCreateTransfer(MainActivity.this, "trm-12345", false);
     startActivity(intent);
 }
 ```
@@ -149,23 +157,29 @@ public void onClick(View view) {
             "US",
             "USD",
             "BANK_ACCOUNT",
-            "INDIVIDUAL");
+            "INDIVIDUAL",
+            false);
     startActivity(intent);
 }
 ```
 
 ### List the user's receipts
+The second argument is boolean flag to control view orientation, <code>lockScreenToPortrait</code> set to <code>true</code> 
+will lock the screen to Portrait orientation otherwise it will just follow device orientation.
 ```java
 public void onClick(View view) {
-    Intent intent = mHyperwalletReceiptUi.getIntentListUserReceiptActivity(MainActivity.this);
+    Intent intent = mHyperwalletReceiptUi.getIntentListUserReceiptActivity(MainActivity.this, false);
     startActivity(intent);
 }
 ```
 
 ### List the prepaid card's receipts
+The second argument is a token that represents a Prepaid card.
+The third argument is boolean flag to control view orientation, <code>lockScreenToPortrait</code> set to <code>true</code> 
+will lock the screen to Portrait orientation otherwise it will just follow device orientation.
 ```java
 public void onClick(View view) {
-    Intent intent = mHyperwalletReceiptUi.getIntentListPrepaidCardReceiptActivity(MainActivity.this, "trm-12345");
+    Intent intent = mHyperwalletReceiptUi.getIntentListPrepaidCardReceiptActivity(MainActivity.this, "trm-12345", false);
     startActivity(intent);
 }
 ```

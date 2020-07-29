@@ -16,6 +16,7 @@
  */
 package com.hyperwallet.android.ui.receipt.view;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.View;
@@ -35,6 +36,7 @@ import com.hyperwallet.android.ui.receipt.viewmodel.ReceiptDetailViewModel;
 public class ReceiptDetailActivity extends AppCompatActivity {
 
     public static final String EXTRA_RECEIPT = "RECEIPT";
+    public static final String EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT = "EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT";
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
@@ -52,6 +54,10 @@ public class ReceiptDetailActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        if (getIntent().getBooleanExtra(EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT, false)) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
 
         Parcelable parcel = getIntent().getParcelableExtra(EXTRA_RECEIPT);
         if (parcel instanceof Receipt) {

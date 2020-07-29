@@ -20,6 +20,7 @@ import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.SELECT_
 import static com.hyperwallet.android.ui.transfermethod.view.ListTransferMethodFragment.ARGUMENT_IS_TRANSFER_METHODS_RELOAD_NEEDED;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 
@@ -50,6 +51,7 @@ public class ListTransferMethodActivity extends AppCompatActivity implements
         OnTransferMethodDeactivateCallback, OnNetworkErrorCallback {
 
     public static final String TAG = "transfer-method:list:list-transfer-methods";
+    public static final String EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT = "EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT";
 
     private static final String ARGUMENT_RETRY_ACTION = "ARGUMENT_RETRY_ACTION";
     private static final String ARGUMENT_TRANSFER_METHOD = "ARGUMENT_TRANSFER_METHOD";
@@ -77,6 +79,10 @@ public class ListTransferMethodActivity extends AppCompatActivity implements
                 finish();
             }
         });
+
+        if (getIntent().getBooleanExtra(EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT, false)) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new OneClickListener() {
@@ -129,6 +135,8 @@ public class ListTransferMethodActivity extends AppCompatActivity implements
     public void showSelectTransferMethodView() {
         Intent myIntent = new Intent(ListTransferMethodActivity.this, SelectTransferMethodActivity.class);
         myIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        myIntent.putExtra(SelectTransferMethodActivity.EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT,
+                getIntent().getBooleanExtra(EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT, false));
         startActivityForResult(myIntent, SELECT_TRANSFER_METHOD_REQUEST_CODE);
     }
 

@@ -48,20 +48,31 @@ public final class HyperwalletReceiptUi {
     }
 
     /**
-     * @param context A Context of the application consuming this Intent.
+     * @param context              A Context of the application consuming this Intent.
+     * @param lockScreenToPortrait if set <code>true</code> screen will be locked to Portrait mode;
+     *                             otherwise <code>false</code> screen will follow whatever the
+     *                             device orientation is directed.
      * @return an Intent with the data necessary to launch the {@link ListUserReceiptActivity}
      */
-    public Intent getIntentListUserReceiptActivity(@NonNull final Context context) {
-        return new Intent(context, ListUserReceiptActivity.class);
+    public Intent getIntentListUserReceiptActivity(@NonNull final Context context, final boolean lockScreenToPortrait) {
+        Intent intent = new Intent(context, ListUserReceiptActivity.class);
+        intent.putExtra(ListUserReceiptActivity.EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT, lockScreenToPortrait);
+        return intent;
     }
 
     /**
-     * @param context A Context of the application consuming this Intent.
+     * @param context              A Context of the application consuming this Intent.
+     * @param token                Token representing Prepaid card
+     * @param lockScreenToPortrait if set <code>true</code> screen will be locked to Portrait mode;
+     *                             otherwise <code>false</code> screen will follow whatever the
+     *                             device orientation is directed.
      * @return an Intent with the data necessary to launch the {@link ListPrepaidCardReceiptActivity}
      */
-    public Intent getIntentListPrepaidCardReceiptActivity(@NonNull final Context context, @NonNull final String token) {
+    public Intent getIntentListPrepaidCardReceiptActivity(@NonNull final Context context,
+            @NonNull final String token, final boolean lockScreenToPortrait) {
         Intent intent = new Intent(context, ListPrepaidCardReceiptActivity.class);
         intent.putExtra(ListPrepaidCardReceiptActivity.EXTRA_PREPAID_CARD_TOKEN, token);
+        intent.putExtra(ListPrepaidCardReceiptActivity.EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT, lockScreenToPortrait);
         return intent;
     }
 

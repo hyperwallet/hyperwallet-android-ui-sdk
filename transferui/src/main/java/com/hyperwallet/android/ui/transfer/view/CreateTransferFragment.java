@@ -29,6 +29,7 @@ import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.SELECT_
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getStringFontIcon;
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getStringResourceByName;
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getTransferMethodDetail;
+import static com.hyperwallet.android.ui.transfer.view.CreateTransferActivity.EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT;
 
 import android.content.Context;
 import android.content.Intent;
@@ -173,6 +174,8 @@ public class CreateTransferFragment extends Fragment {
                 Intent intent = new Intent(requireContext(), ListTransferDestinationActivity.class);
                 intent.putExtra(ListTransferDestinationActivity.EXTRA_SELECTED_DESTINATION_TOKEN,
                         activeDestination.getField(TOKEN));
+                intent.putExtra(ListTransferDestinationActivity.EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT,
+                        mCreateTransferViewModel.isPortraitMode());
                 startActivityForResult(intent, SELECT_TRANSFER_DESTINATION_REQUEST_CODE);
             }
         });
@@ -187,6 +190,7 @@ public class CreateTransferFragment extends Fragment {
                 Intent intent = new Intent();
                 intent.setAction(HyperwalletIntent.ACTION_SELECT_TRANSFER_METHOD);
                 intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                intent.putExtra(EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT, mCreateTransferViewModel.isPortraitMode());
 
                 if (intent.resolveActivity(requireContext().getPackageManager()) != null) {
                     startActivityForResult(intent, ADD_TRANSFER_METHOD_REQUEST_CODE);
