@@ -29,20 +29,12 @@
     <string name="feeAndProcessingTimeInformation">%s fee \u2022 %s</string>
     <string name="feeInformation">%s fee</string>
 
-    <string name="title_activity_list_transfer_method">Accounts</string>
     <string name="empty_list_transfer_method_information">You didn\'t add an account yet. Once
         created, it will show up here!
     </string>
-    <string name="transfer_method_remove_confirmation">Are you sure that you want to remove this
-        account?
-    </string>
-    <string name="transfer_method_remove_confirmation_title">Remove account</string>
-
-    <string name="remove_button_label">Remove</string>
 
     <!-- menu title -->
     <string name="menu_transfer_funds">Transfer Funds</string>
-    <string name="menu_remove_account">Remove Account</string>
 
     <!--Fee formatter-->
     <string name="fee_flat_formatter">%1$s%2$s</string>
@@ -83,5 +75,7 @@
     <string name="feesAndProcessTimePlaceholder">$20.00 USD fee \u2022 1\-3 Business Days </string>
     <string name="mobileCountryCurrencyLabel">LOCATION AND CURRENCY</string>
     <string name="mobileTransferMethodLabel">TRANSFER METHOD</string>
+    <string name="mobileTransferMethodsHeader">Transfer methods</string>
 
+    <string name="mobileRemoveEAconfirm">Confirm that you want to remove your %s</string>
 </resources>

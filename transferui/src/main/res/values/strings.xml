@@ -5,7 +5,6 @@
     <string name="transfer_destination">Destination</string>
     <string name="mobileTransferToLabel">TRANSFER TO</string>
     <string name="mobileTransferFundsHeader">Transfer funds</string>
-    <string name="mobileTransferMethodsHeader">Transfer methods</string>
     <string name="mobileFXlabel">FOREIGN EXCHANGE</string>
     <string name="transfer_header_label">Transfer</string>
     <string name="noTransferMethodAdded">Transfer method is required</string>
@@ -64,4 +63,5 @@
     <string name="mobileTransferSuccessMsg">Your transfer is being processed</string>
     <string name="mobileTransferSuccessDetails">The funds are on the way to your %s</string>
     <string name="doneButtonLabel">Done</string>
+    <string name="mobileTransferMethodsHeader">Transfer methods</string>
 </resources>

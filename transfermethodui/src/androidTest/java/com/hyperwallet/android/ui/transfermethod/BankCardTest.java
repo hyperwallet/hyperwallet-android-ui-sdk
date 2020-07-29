@@ -35,6 +35,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.text.InputType;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -310,7 +311,7 @@ public class BankCardTest {
         String dateOfExpiryPlaceholder =  InstrumentationRegistry.getInstrumentation().getTargetContext()
                 .getString(R.string.api_expiry_date_format);
 
-        // onView(withId(R.id.dateOfExpiry)).check(matches(dateExpiryWithHint(dateOfExpiryPlaceholder)));
+        onView(withId(R.id.dateOfExpiry)).check(matches(dateExpiryWithHint(dateOfExpiryPlaceholder)));
         onView(withId(R.id.dateOfExpiry)).perform(nestedScrollTo(), typeText(VALID_EXPIRATION_DATE));
         onView(withId(R.id.dateOfExpiry)).check(matches(withText(VALID_EXPIRATION_DATE_FORMATTED)));
         onView(withId(R.id.cvv)).perform(nestedScrollTo(), typeText("34459"));
@@ -414,11 +415,11 @@ public class BankCardTest {
 
             @Override
             public boolean matchesSafely(View view) {
-                if (!(view instanceof TextInputLayout)) {
+                if (!(view instanceof EditText)) {
                     return false;
                 }
 
-                String hint = Objects.toString(((TextInputLayout) view).getHint());
+                String hint = Objects.toString(((EditText) view).getHint());
                 return expectedHint.equals(hint);
             }
 
