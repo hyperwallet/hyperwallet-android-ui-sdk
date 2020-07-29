@@ -16,6 +16,7 @@
  */
 package com.hyperwallet.android.ui.transfermethod.view;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -48,6 +49,7 @@ public class AddTransferMethodActivity extends AppCompatActivity implements
     public static final String EXTRA_TRANSFER_METHOD_TYPE = "TRANSFER_METHOD_TYPE";
     public static final String EXTRA_TRANSFER_METHOD_PROFILE_TYPE = "TRANSFER_METHOD_PROFILE_TYPE";
     private static final String ARGUMENT_RETRY_ACTION = "ARGUMENT_RETRY_ACTION";
+    public static final String EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT = "EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT";
     private static final short RETRY_SHOW_ERROR_ADD_TRANSFER_METHOD = 100;
     private static final short RETRY_SHOW_ERROR_LOAD_TMC_FIELDS = 101;
 
@@ -66,13 +68,16 @@ public class AddTransferMethodActivity extends AppCompatActivity implements
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle(TransferMethodUtils.getTransferMethodName(this,
                 getIntent().getStringExtra(EXTRA_TRANSFER_METHOD_TYPE)));
-
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+
+        if (getIntent().getBooleanExtra(EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT, false)) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
 
         if (savedInstanceState == null) {
             ActivityUtils.initFragment(this, AddTransferMethodFragment.newInstance(

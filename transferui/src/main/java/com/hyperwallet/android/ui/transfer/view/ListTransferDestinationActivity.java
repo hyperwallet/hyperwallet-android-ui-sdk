@@ -21,6 +21,7 @@ import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.ADD_TRA
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -49,6 +50,7 @@ public class ListTransferDestinationActivity extends AppCompatActivity implement
 
     public static final String TAG = "transfer-funds:create-transfer";
     public static final String EXTRA_SELECTED_DESTINATION_TOKEN = "SELECTED_DESTINATION_TOKEN";
+    public static final String EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT = "EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT";
 
     private ListTransferDestinationViewModel mListTransferDestinationViewModel;
 
@@ -77,6 +79,11 @@ public class ListTransferDestinationActivity extends AppCompatActivity implement
         final Intent intent = new Intent();
         intent.setAction(HyperwalletIntent.ACTION_SELECT_TRANSFER_METHOD);
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+        if (getIntent().getBooleanExtra(EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT, false)) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+            intent.putExtra(EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT, true);
+        }
 
         if (intent.resolveActivity(getPackageManager()) != null) {
             button.setOnClickListener(new OneClickListener() {

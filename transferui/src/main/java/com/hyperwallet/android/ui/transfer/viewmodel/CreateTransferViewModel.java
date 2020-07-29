@@ -77,6 +77,7 @@ public class CreateTransferViewModel extends ViewModel {
     private String mSourceToken;
     private boolean mIsInitialized;
     private String initialAmount;
+    private boolean mIsPortraitMode;
 
     /**
      * Initialize Create Transfer View Model with designated transfer source token
@@ -152,6 +153,14 @@ public class CreateTransferViewModel extends ViewModel {
                 && !isTransferSourceTokenUnknown() && mIsInitialized) {
             loadTransferDestination(mSourceToken);
         }
+    }
+
+    public boolean isPortraitMode() {
+        return mIsPortraitMode;
+    }
+
+    public void setPortraitMode(final boolean portraitMode) {
+        mIsPortraitMode = portraitMode;
     }
 
     public LiveData<Boolean> isTransferAllAvailableFunds() {
