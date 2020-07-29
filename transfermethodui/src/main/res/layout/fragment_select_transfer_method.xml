@@ -27,100 +27,106 @@
             android:theme="@style/Widget.Hyperwallet.ProgressBar" />
     </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/country_selection_layout_container"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
         <LinearLayout
+            android:id="@+id/country_selection_layout_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"
-                android:gravity="bottom"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/grid_margin_top"
-                android:layout_marginStart="@dimen/grid_margin_left"
-                android:text="@string/mobileCountryCurrencyLabel" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/select_transfer_method_country_container"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/row_height_single_entry"
-            android:background="@drawable/view_header_bottom_border"
-            android:layout_marginStart="@dimen/grid_margin_left"
-            android:layout_marginEnd="@dimen/grid_margin_right"
-            android:layout_marginTop="@dimen/margin_top_header_value"
-            android:clickable="true"
-            android:focusable="true"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/select_transfer_method_country_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/mobileCountryRegion"
-                android:textAppearance="@style/SelectTransfer.Header.Label" />
-
-            <TextView
-                android:id="@+id/select_transfer_method_country_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/item_vertical_margin"
-                android:layout_marginEnd="@dimen/grid_margin_right"
-                tools:text="@string/country_placeholder"
-                android:textAppearance="@style/TextAppearance.Hyperwallet.Subtitle1" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/select_transfer_method_currency_container"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/row_height_single_entry"
-            android:background="@drawable/view_header_bottom_border"
-            android:layout_marginStart="@dimen/grid_padding_left"
-            android:layout_marginEnd="@dimen/grid_margin_right"
-            android:layout_marginTop="@dimen/grid_margin_top"
-            android:clickable="true"
-            android:focusable="true"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/select_transfer_method_currency_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/mobileCurrencyLabel"
-                android:textAppearance="@style/SelectTransfer.Header.Label" />
-
-            <TextView
-                android:id="@+id/select_transfer_method_currency_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/grid_margin_right"
-                android:layout_marginTop="@dimen/item_vertical_margin"
-                android:textAllCaps="true"
-                tools:text="@string/currency_placeholder"
-                android:textAppearance="@style/TextAppearance.Hyperwallet.Subtitle1" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/grid_margin_top"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"
+                    android:gravity="bottom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/grid_margin_top"
+                    android:layout_marginStart="@dimen/grid_margin_left"
+                    android:text="@string/mobileCountryCurrencyLabel" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/select_transfer_method_country_container"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/row_height_single_entry"
+                android:background="@drawable/view_header_bottom_border"
                 android:layout_marginStart="@dimen/grid_margin_left"
-                android:layout_marginBottom="@dimen/margin_top_header_value"
-                android:text="@string/mobileTransferMethodLabel" />
+                android:layout_marginEnd="@dimen/grid_margin_right"
+                android:layout_marginTop="@dimen/margin_top_header_value"
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/select_transfer_method_country_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mobileCountryRegion"
+                    android:textAppearance="@style/SelectTransfer.Header.Label" />
+
+                <TextView
+                    android:id="@+id/select_transfer_method_country_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/item_vertical_margin"
+                    android:layout_marginEnd="@dimen/grid_margin_right"
+                    tools:text="@string/country_placeholder"
+                    android:textAppearance="@style/TextAppearance.Hyperwallet.Subtitle1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/select_transfer_method_currency_container"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/row_height_single_entry"
+                android:background="@drawable/view_header_bottom_border"
+                android:layout_marginStart="@dimen/grid_padding_left"
+                android:layout_marginEnd="@dimen/grid_margin_right"
+                android:layout_marginTop="@dimen/grid_margin_top"
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/select_transfer_method_currency_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mobileCurrencyLabel"
+                    android:textAppearance="@style/SelectTransfer.Header.Label" />
+
+                <TextView
+                    android:id="@+id/select_transfer_method_currency_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/grid_margin_right"
+                    android:layout_marginTop="@dimen/item_vertical_margin"
+                    android:textAllCaps="true"
+                    tools:text="@string/currency_placeholder"
+                    android:textAppearance="@style/TextAppearance.Hyperwallet.Subtitle1" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/grid_margin_top"
+                    android:layout_marginStart="@dimen/grid_margin_left"
+                    android:layout_marginBottom="@dimen/margin_top_header_value"
+                    android:text="@string/mobileTransferMethodLabel" />
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/select_transfer_method_types_list"
