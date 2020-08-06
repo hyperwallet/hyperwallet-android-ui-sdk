@@ -30,6 +30,7 @@ import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getStri
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getStringResourceByName;
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getTransferMethodDetail;
 import static com.hyperwallet.android.ui.transfer.view.CreateTransferActivity.EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT;
+import static com.hyperwallet.android.ui.transfer.view.ListTransferDestinationActivity.EXTRA_SELECTED_DESTINATION;
 
 import android.content.Context;
 import android.content.Intent;
@@ -61,7 +62,6 @@ import com.hyperwallet.android.ui.transfer.viewmodel.CreateTransferViewModel;
 
 import java.util.Currency;
 import java.util.Locale;
-
 
 /**
  * Create Transfer Fragment
@@ -217,8 +217,7 @@ public class CreateTransferFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == SELECT_TRANSFER_DESTINATION_REQUEST_CODE && data != null) {
-                TransferMethod selectedTransferMethod = data.getParcelableExtra(
-                        ListTransferDestinationActivity.EXTRA_SELECTED_DESTINATION_TOKEN);
+                TransferMethod selectedTransferMethod = data.getParcelableExtra(EXTRA_SELECTED_DESTINATION);
                 mCreateTransferViewModel.setTransferAmount(null);
                 mCreateTransferViewModel.setTransferNotes(null);
                 mCreateTransferViewModel.setTransferAllAvailableFunds(Boolean.FALSE);
