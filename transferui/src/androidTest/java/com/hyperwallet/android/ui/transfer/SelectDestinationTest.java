@@ -22,11 +22,13 @@ import static org.hamcrest.Matchers.not;
 import static java.net.HttpURLConnection.HTTP_OK;
 
 import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.ACTION_SELECT_TRANSFER_METHOD;
+import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.EXTRA_TRANSFER_METHOD_ADDED;
 import static com.hyperwallet.android.ui.testutils.util.EspressoUtils.atPosition;
 import static com.hyperwallet.android.ui.testutils.util.EspressoUtils.nestedScrollTo;
 
 import android.app.Activity;
 import android.app.Instrumentation;
+import android.content.Intent;
 import android.widget.TextView;
 
 import androidx.test.espresso.IdlingRegistry;
@@ -36,6 +38,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
+import com.hyperwallet.android.model.transfermethod.BankAccount;
+import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletMockWebServer;
@@ -218,14 +222,41 @@ public class SelectDestinationTest {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("transfer_method_list_added_bank_account_response.json")).mock();
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("create_transfer_quote_fx_response.json")).mock();
 
         mIntentsTestRule.launchActivity(null);
 
+        final BankAccount bankAccount = new BankAccount
+                .Builder("CA", "CAD", "12345121")
+                .addressLine1("950 Granville Street")
+                .bankAccountPurpose(BankAccount.Purpose.SAVINGS)
+                .bankAccountRelationship("SELF")
+                .bankId("010")
+                .bankName("GREATER WATERBURY HEALTHCARE FCU")
+                .branchId("00600")
+                .branchName("TEST BRANCH")
+                .city("Vancouver")
+                .country("CA")
+                .countryOfBirth("US")
+                .countryOfNationality("CA")
+                .dateOfBirth("1980-01-01")
+                .gender("MALE")
+                .governmentId("987654321")
+                .firstName("Marsden")
+                .lastName("Griffin")
+                .mobileNumber("604 666 6666")
+                .phoneNumber("+1 604 6666666")
+                .postalCode("V6Z1L2")
+                .stateProvince("BC")
+                .token("test-fake-token")
+                .build();
+        bankAccount.setField(TransferMethod.TransferMethodFields.STATUS, "ACTIVATED");
+
+        Intent intent = new Intent();
+        intent.putExtra(EXTRA_TRANSFER_METHOD_ADDED, bankAccount);
+
         Instrumentation.ActivityResult result =
-                new Instrumentation.ActivityResult(Activity.RESULT_OK, null);
+                new Instrumentation.ActivityResult(Activity.RESULT_OK, intent);
         intending(hasAction(ACTION_SELECT_TRANSFER_METHOD)).respondWith(result);
 
         onView(withId(R.id.transfer_destination_title)).perform(click());
@@ -244,7 +275,7 @@ public class SelectDestinationTest {
 
         onView(withId(R.id.transfer_summary)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         String availableFundCAD = getAvailableFund("1,157.40", "CAD");
-        onView(withId(R.id.transfer_summary)).check(matches(withText(availableFundCAD )));
+        onView(withId(R.id.transfer_summary)).check(matches(withText(availableFundCAD)));
 
     }
 

@@ -148,7 +148,7 @@ public class ListTransferDestinationActivity extends AppCompatActivity implement
                     @Override
                     public void onChanged(Event<TransferMethod> destination) {
                         Intent intent = new Intent();
-                        intent.putExtra(EXTRA_SELECTED_DESTINATION_TOKEN, destination.getContent());
+                        intent.putExtra(EXTRA_SELECTED_DESTINATION, destination.getContent());
                         setResult(Activity.RESULT_OK, intent);
                         finish();
                     }
