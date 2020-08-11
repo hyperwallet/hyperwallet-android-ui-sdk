@@ -18,6 +18,7 @@
 package com.hyperwallet.android.ui.transfer.view;
 
 import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.ADD_TRANSFER_METHOD_REQUEST_CODE;
+import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.EXTRA_TRANSFER_METHOD_ADDED;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -50,6 +51,7 @@ public class ListTransferDestinationActivity extends AppCompatActivity implement
 
     public static final String TAG = "transfer-funds:create-transfer";
     public static final String EXTRA_SELECTED_DESTINATION_TOKEN = "SELECTED_DESTINATION_TOKEN";
+    public static final String EXTRA_SELECTED_DESTINATION = "EXTRA_SELECTED_DESTINATION";
     public static final String EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT = "EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT";
 
     private ListTransferDestinationViewModel mListTransferDestinationViewModel;
@@ -103,8 +105,11 @@ public class ListTransferDestinationActivity extends AppCompatActivity implement
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == ADD_TRANSFER_METHOD_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            mListTransferDestinationViewModel.loadNewlyAddedTransferDestination();
+        if (requestCode == ADD_TRANSFER_METHOD_REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
+            Intent intent = new Intent();
+            intent.putExtra(EXTRA_SELECTED_DESTINATION, data.getParcelableExtra(EXTRA_TRANSFER_METHOD_ADDED));
+            setResult(Activity.RESULT_OK, intent);
+            finish();
         }
     }
 
@@ -143,7 +148,7 @@ public class ListTransferDestinationActivity extends AppCompatActivity implement
                     @Override
                     public void onChanged(Event<TransferMethod> destination) {
                         Intent intent = new Intent();
-                        intent.putExtra(EXTRA_SELECTED_DESTINATION_TOKEN, destination.getContent());
+                        intent.putExtra(EXTRA_SELECTED_DESTINATION, destination.getContent());
                         setResult(Activity.RESULT_OK, intent);
                         finish();
                     }

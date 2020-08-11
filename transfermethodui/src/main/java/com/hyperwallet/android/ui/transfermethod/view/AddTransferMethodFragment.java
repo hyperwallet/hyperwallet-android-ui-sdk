@@ -24,6 +24,8 @@ import static com.hyperwallet.android.model.transfermethod.TransferMethod.Transf
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.BANK_CARD;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.PAYPAL_ACCOUNT;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.WIRE_ACCOUNT;
+import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.EXTRA_TRANSFER_METHOD_ADDED;
+import static com.hyperwallet.android.ui.transfermethod.TransferMethodLocalBroadcast.TransferMethodLocalBroadcastAction.ACTION_HYPERWALLET_TRANSFER_METHOD_ADDED;
 import static com.hyperwallet.android.ui.transfermethod.view.FeeFormatter.isFeeAvailable;
 import static com.hyperwallet.android.ui.transfermethod.view.FeeFormatter.isProcessingTimeAvailable;
 
@@ -324,7 +326,11 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
         Intent intent = TransferMethodLocalBroadcast.createBroadcastIntentTransferMethodAdded(
                 transferMethod);
         LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
-        getActivity().setResult(Activity.RESULT_OK);
+
+        Intent activityResult = new Intent();
+        activityResult.setAction(ACTION_HYPERWALLET_TRANSFER_METHOD_ADDED);
+        activityResult.putExtra(EXTRA_TRANSFER_METHOD_ADDED, transferMethod);
+        getActivity().setResult(Activity.RESULT_OK, activityResult);
         getActivity().finish();
     }
 
