@@ -42,7 +42,7 @@
                 android:layout_marginStart="@dimen/default_info_margin"
                 android:layout_marginEnd="@dimen/default_info_margin"
                 android:gravity="center"
-                android:text="@string/empty_list_transfer_method_information"
+                android:text="@string/emptyStateAddTransferMethod"
                 android:textAppearance="@style/TextAppearance.Hyperwallet.Headline6" />
 
             <Button
@@ -56,7 +56,7 @@
                 android:layout_marginEnd="@dimen/grid_margin_right"
                 android:layout_marginBottom="@dimen/grid_margin_bottom"
                 android:maxWidth="@dimen/create_button_max_width"
-                android:text="@string/title_account_add" />
+                android:text="@string/mobileAddTransferMethodHeader" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
