@@ -211,7 +211,7 @@ public class ListTransferMethodTest {
         onView(withId(R.id.fab)).check(matches(isDisplayed()));
 
         onView(withId(R.id.empty_transfer_method_list_layout)).check(matches(isDisplayed()));
-        onView(withText(R.string.empty_list_transfer_method_information)).check(matches(isDisplayed()));
+        onView(withText(R.string.emptyStateAddTransferMethod)).check(matches(isDisplayed()));
 
     }
 
@@ -357,7 +357,7 @@ public class ListTransferMethodTest {
         assertThat("Action is not broadcasted", gate.getCount(), is(0L));
 
         onView(withId(R.id.empty_transfer_method_list_layout)).check(matches(isDisplayed()));
-        onView(withText(R.string.empty_list_transfer_method_information)).check(matches(isDisplayed()));
+        onView(withText(R.string.emptyStateAddTransferMethod)).check(matches(isDisplayed()));
 
     }
 
@@ -423,7 +423,7 @@ public class ListTransferMethodTest {
         assertThat("Action is not broadcasted", gate.getCount(), is(0L));
 
         onView(withId(R.id.empty_transfer_method_list_layout)).check(matches(isDisplayed()));
-        onView(withText(R.string.empty_list_transfer_method_information)).check(matches(isDisplayed()));
+        onView(withText(R.string.emptyStateAddTransferMethod)).check(matches(isDisplayed()));
 
     }
 

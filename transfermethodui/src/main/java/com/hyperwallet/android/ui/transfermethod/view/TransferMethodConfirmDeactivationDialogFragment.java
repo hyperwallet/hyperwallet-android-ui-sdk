@@ -63,9 +63,8 @@ public class TransferMethodConfirmDeactivationDialogFragment extends DialogFragm
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(
                 new ContextThemeWrapper(requireContext(), R.style.Theme_Hyperwallet_Confirmation_Dialog));
-        builder.setMessage(requireContext().getString(R.string.mobileRemoveEAconfirm,
-                getArguments().getString(ARGUMENT_KEY_TRANSFER_DESTINATION)))
-                .setTitle(R.string.mobileAreYouSure)
+        builder.setMessage(requireContext().getString(R.string.mobileAreYouSure))
+                .setTitle(R.string.mobileRemoveEAconfirm)
                 .setNegativeButton(R.string.cancelButtonLabel, null);
         if (getActivity() instanceof OnTransferMethodDeactivateCallback) {
             builder.setPositiveButton(R.string.remove, new DialogInterface.OnClickListener() {

@@ -29,9 +29,7 @@
     <string name="feeAndProcessingTimeInformation">%s fee \u2022 %s</string>
     <string name="feeInformation">%s fee</string>
 
-    <string name="empty_list_transfer_method_information">You didn\'t add an account yet. Once
-        created, it will show up here!
-    </string>
+    <string name="emptyStateAddTransferMethod">Add a transfer method to get started.</string>
 
     <!-- menu title -->
     <string name="menu_transfer_funds">Transfer Funds</string>
@@ -77,5 +75,5 @@
     <string name="mobileTransferMethodLabel">TRANSFER METHOD</string>
     <string name="mobileTransferMethodsHeader">Transfer methods</string>
 
-    <string name="mobileRemoveEAconfirm">Confirm that you want to remove your %s</string>
+    <string name="mobileRemoveEAconfirm">Remove transfer method</string>
 </resources>
