@@ -16,13 +16,16 @@
  */
 package com.hyperwallet.android.ui.receipt.view;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.View;
+import android.view.WindowManager;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.hyperwallet.android.model.receipt.Receipt;
@@ -33,6 +36,7 @@ import com.hyperwallet.android.ui.receipt.viewmodel.ReceiptDetailViewModel;
 public class ReceiptDetailActivity extends AppCompatActivity {
 
     public static final String EXTRA_RECEIPT = "RECEIPT";
+    public static final String EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT = "EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT";
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
@@ -43,13 +47,17 @@ public class ReceiptDetailActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle(R.string.title_activity_receipt_detail);
+        getSupportActionBar().setTitle(R.string.mobileTransactionDetailsHeader);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+
+        if (getIntent().getBooleanExtra(EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT, false)) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
 
         Parcelable parcel = getIntent().getParcelableExtra(EXTRA_RECEIPT);
         if (parcel instanceof Receipt) {
@@ -70,5 +78,14 @@ public class ReceiptDetailActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
+        getWindow().getDecorView().setSystemUiVisibility(0);
+        super.onBackPressed();
     }
 }

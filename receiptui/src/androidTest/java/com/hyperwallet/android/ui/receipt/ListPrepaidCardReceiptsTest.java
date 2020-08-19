@@ -75,6 +75,13 @@ public class ListPrepaidCardReceiptsTest {
             };
     private TimeZone mDefaultTimeZone;
 
+    private String usdCurrencySymbol = "$";
+    private String cadCurrencySymbol = "CA$";
+    private String wonCurrencySymbol = "₩";
+    private String debitSymbol = "-";
+    private String monthLabel1 = "June 2019";
+    private String monthLabel2 = "March 2019";
+
     @Before
     public void setup() {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
@@ -107,13 +114,13 @@ public class ListPrepaidCardReceiptsTest {
         onView(withId(R.id.list_receipts)).check(matches(isDisplayed()));
 
         onView(withId(R.id.list_receipts))
-                .check(matches(atPosition(0, hasDescendant(withText("June 2019")))));
+                .check(matches(atPosition(0, hasDescendant(withText(monthLabel1)))));
         onView(withId(R.id.list_receipts)).check(matches(atPosition(0,
                 hasDescendant(withText(R.string.debit)))));
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(0, hasDescendant(withText(R.string.prepaid_card_sale)))));
         onView(withId(R.id.list_receipts)).check(
-                matches(atPosition(0, hasDescendant(withText("- 10.00")))));
+                matches(atPosition(0, hasDescendant(withText(debitSymbol + usdCurrencySymbol + "10.00")))));
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(0, hasDescendant(withText("June 6, 2019")))));
         onView(withId(R.id.list_receipts)).check(matches(atPosition(0, hasDescendant(withText("USD")))));
@@ -123,7 +130,7 @@ public class ListPrepaidCardReceiptsTest {
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(1, hasDescendant(withText(R.string.deposit)))));
         onView(withId(R.id.list_receipts)).check(
-                matches(atPosition(1, hasDescendant(withText("+ 5.00")))));
+                matches(atPosition(1, hasDescendant(withText(usdCurrencySymbol + "5.00")))));
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(1, hasDescendant(withText("June 6, 2019")))));
         onView(withId(R.id.list_receipts)).check(matches(atPosition(1, hasDescendant(withText("USD")))));
@@ -133,19 +140,19 @@ public class ListPrepaidCardReceiptsTest {
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(2, hasDescendant(withText(R.string.adjustment)))));
         onView(withId(R.id.list_receipts)).check(
-                matches(atPosition(2, hasDescendant(withText("- 8.90")))));
+                matches(atPosition(2, hasDescendant(withText(debitSymbol + usdCurrencySymbol + "8.90")))));
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(2, hasDescendant(withText("June 1, 2019")))));
         onView(withId(R.id.list_receipts)).check(matches(atPosition(2, hasDescendant(withText("USD")))));
 
         onView(withId(R.id.list_receipts))
-                .check(matches(atPosition(3, hasDescendant(withText("March 2019")))));
+                .check(matches(atPosition(3, hasDescendant(withText(monthLabel2)))));
         onView(withId(R.id.list_receipts)).check(matches(atPosition(3,
                 hasDescendant(withText(R.string.debit)))));
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(3, hasDescendant(withText(R.string.adjustment)))));
         onView(withId(R.id.list_receipts)).check(
-                matches(atPosition(3, hasDescendant(withText("- 7.90")))));
+                matches(atPosition(3, hasDescendant(withText(debitSymbol + usdCurrencySymbol + "7.90")))));
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(3, hasDescendant(withText("March 31, 2019")))));
         onView(withId(R.id.list_receipts)).check(matches(atPosition(3, hasDescendant(withText("USD")))));
@@ -155,7 +162,7 @@ public class ListPrepaidCardReceiptsTest {
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(4, hasDescendant(withText(R.string.adjustment)))));
         onView(withId(R.id.list_receipts)).check(
-                matches(atPosition(4, hasDescendant(withText("+ 6.90")))));
+                matches(atPosition(4, hasDescendant(withText(usdCurrencySymbol + "6.90")))));
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(4, hasDescendant(withText("February 28, 2019")))));
         onView(withId(R.id.list_receipts)).check(matches(atPosition(4, hasDescendant(withText("USD")))));
@@ -166,7 +173,7 @@ public class ListPrepaidCardReceiptsTest {
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(5, hasDescendant(withText(R.string.adjustment)))));
         onView(withId(R.id.list_receipts)).check(
-                matches(atPosition(5, hasDescendant(withText("+ 3.90")))));
+                matches(atPosition(5, hasDescendant(withText(usdCurrencySymbol + "3.90")))));
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(5, hasDescendant(withText("February 23, 2019")))));
         onView(withId(R.id.list_receipts)).check(matches(atPosition(5, hasDescendant(withText("USD")))));
@@ -177,7 +184,7 @@ public class ListPrepaidCardReceiptsTest {
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(6, hasDescendant(withText(R.string.adjustment)))));
         onView(withId(R.id.list_receipts)).check(
-                matches(atPosition(6, hasDescendant(withText("+ 9.92")))));
+                matches(atPosition(6, hasDescendant(withText(usdCurrencySymbol + "9.92")))));
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(6, hasDescendant(withText("February 21, 2019")))));
         onView(withId(R.id.list_receipts)).check(matches(atPosition(6, hasDescendant(withText("USD")))));
@@ -199,13 +206,13 @@ public class ListPrepaidCardReceiptsTest {
                 .check(matches(withText(R.string.title_activity_receipt_list)));
         onView(withId(R.id.list_receipts)).check(matches(isDisplayed()));
         onView(withId(R.id.list_receipts))
-                .check(matches(atPosition(0, hasDescendant(withText("June 2019")))));
+                .check(matches(atPosition(0, hasDescendant(withText(monthLabel1)))));
         onView(withId(R.id.list_receipts)).check(matches(atPosition(0,
                 hasDescendant(withText(com.hyperwallet.android.ui.receipt.R.string.credit)))));
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(0, hasDescendant(withText(R.string.deposit)))));
         onView(withId(R.id.list_receipts)).check(
-                matches(atPosition(0, hasDescendant(withText("+ 15.00")))));
+                matches(atPosition(0, hasDescendant(withText(cadCurrencySymbol + "15.00")))));
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(0, hasDescendant(withText("June 6, 2019")))));
         onView(withId(R.id.list_receipts)).check(matches(atPosition(0, hasDescendant(withText("CAD")))));
@@ -228,13 +235,13 @@ public class ListPrepaidCardReceiptsTest {
         onView(withId(R.id.list_receipts)).check(matches(isDisplayed()));
 
         onView(withId(R.id.list_receipts))
-                .check(matches(atPosition(0, hasDescendant(withText("June 2019")))));
+                .check(matches(atPosition(0, hasDescendant(withText(monthLabel1)))));
         onView(withId(R.id.list_receipts)).check(matches(atPosition(0,
                 hasDescendant(withText(com.hyperwallet.android.ui.receipt.R.string.debit)))));
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(0, hasDescendant(withText(R.string.adjustment)))));
         onView(withId(R.id.list_receipts)).check(
-                matches(atPosition(0, hasDescendant(withText("- 8.90")))));
+                matches(atPosition(0, hasDescendant(withText(debitSymbol + usdCurrencySymbol + "8.90")))));
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(0, hasDescendant(withText("June 1, 2019")))));
         onView(withId(R.id.list_receipts)).check(matches(atPosition(0, hasDescendant(withText("USD")))));
@@ -257,13 +264,13 @@ public class ListPrepaidCardReceiptsTest {
         onView(withId(R.id.list_receipts)).check(matches(isDisplayed()));
 
         onView(withId(R.id.list_receipts))
-                .check(matches(atPosition(0, hasDescendant(withText("June 2019")))));
+                .check(matches(atPosition(0, hasDescendant(withText(monthLabel1)))));
         onView(withId(R.id.list_receipts)).check(matches(atPosition(0,
                 hasDescendant(withText(com.hyperwallet.android.ui.receipt.R.string.credit)))));
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(0, hasDescendant(withText(R.string.unknown_type)))));
         onView(withId(R.id.list_receipts)).check(
-                matches(atPosition(0, hasDescendant(withText("+ 15.00")))));
+                matches(atPosition(0, hasDescendant(withText(cadCurrencySymbol + "15.00")))));
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(0, hasDescendant(withText("June 6, 2019")))));
         onView(withId(R.id.list_receipts)).check(matches(atPosition(0, hasDescendant(withText("CAD")))));
@@ -301,7 +308,7 @@ public class ListPrepaidCardReceiptsTest {
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(0, hasDescendant(withText(R.string.adjustment)))));
         onView(withId(R.id.list_receipts)).check(
-                matches(atPosition(0, hasDescendant(withText("- 8,90")))));
+                matches(atPosition(0, hasDescendant(withText(debitSymbol + usdCurrencySymbol + "8.90")))));
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(0, hasDescendant(withText("1. Juni 2019")))));
         onView(withId(R.id.list_receipts)).check(
@@ -325,7 +332,7 @@ public class ListPrepaidCardReceiptsTest {
         onView(withText(R.string.error_dialog_connectivity_title)).check(matches(isDisplayed()));
         onView(withText(R.string.io_exception)).check(matches(isDisplayed()));
         onView(withId(android.R.id.button1)).check(matches(withText(R.string.try_again_button_label)));
-        onView(withId(android.R.id.button2)).check(matches(withText(R.string.cancel_button_label)));
+        onView(withId(android.R.id.button2)).check(matches(withText(R.string.cancelButtonLabel)));
 
         // retry button clicked
         onView(withId(android.R.id.button1)).perform(click());
@@ -337,13 +344,13 @@ public class ListPrepaidCardReceiptsTest {
         onView(withId(R.id.list_receipts)).check(matches(isDisplayed()));
 
         onView(withId(R.id.list_receipts))
-                .check(matches(atPosition(0, hasDescendant(withText("June 2019")))));
+                .check(matches(atPosition(0, hasDescendant(withText(monthLabel1)))));
         onView(withId(R.id.list_receipts)).check(matches(atPosition(0,
                 hasDescendant(withText(com.hyperwallet.android.ui.receipt.R.string.debit)))));
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(0, hasDescendant(withText(R.string.adjustment)))));
         onView(withId(R.id.list_receipts)).check(
-                matches(atPosition(0, hasDescendant(withText("- 8.90")))));
+                matches(atPosition(0, hasDescendant(withText(debitSymbol + usdCurrencySymbol + "8.90")))));
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(0, hasDescendant(withText("June 1, 2019")))));
         onView(withId(R.id.list_receipts)).check(matches(atPosition(0, hasDescendant(withText("USD")))));
@@ -367,40 +374,42 @@ public class ListPrepaidCardReceiptsTest {
 
         onView(withId(R.id.list_receipts)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
 
-        onView(withId(R.id.transaction_header_text)).check(matches(withText(R.string.transaction_header_text)));
+        onView(withId(R.id.transaction_header_text)).check(matches(withText(R.string.mobileTransactionTypeLabel)));
         onView(withId(R.id.transaction_type_icon)).check(matches(withText(R.string.debit)));
         onView(withId(R.id.transaction_title)).check(matches(withText(R.string.prepaid_card_sale)));
-        onView(withId(R.id.transaction_amount)).check(matches(withText("- 10.00")));
+        onView(withId(R.id.transaction_amount)).check(matches(withText(debitSymbol + usdCurrencySymbol + "10.00")));
         onView(withId(R.id.transaction_currency)).check(matches(withText("USD")));
         onView(withId(R.id.transaction_date)).check(matches(withText("June 6, 2019")));
 
-        onView(withId(R.id.receipt_details_header_label)).check(matches(withText(R.string.receipt_header_label)));
-        onView(withId(R.id.receipt_id_label)).check(matches(withText(R.string.journalId)));
+        onView(withId(R.id.receipt_details_header_label)).check(
+                matches(withText(R.string.mobileTransactionDetailsLabel)));
+        onView(withId(R.id.receipt_id_label)).check(matches(withText(R.string.mobileJournalNumberLabel)));
         onView(withId(R.id.receipt_id_value)).check(matches(withText("FISVL_5240220")));
-        onView(withId(R.id.date_label)).check(matches(withText(R.string.createdOn)));
+        onView(withId(R.id.date_label)).check(matches(withText(R.string.date)));
         onView(withId(R.id.date_value)).check(matches(withText("Thu, June 6, 2019, 3:48 PM PDT")));
 
-        onView(withId(R.id.client_id_label)).check(matches(withText(R.string.clientPaymentId)));
+        onView(withId(R.id.client_id_label)).check(matches(withText(R.string.mobileMerchantTxnLabel)));
         onView(withId(R.id.client_id_value)).check(matches(withText("AOxXefx9")));
-        onView(withId(R.id.charity_label)).check(matches(withText(R.string.charityName)));
+        onView(withId(R.id.charity_label)).check(matches(withText(R.string.mobileCharityName)));
         onView(withId(R.id.charity_value)).check(matches(withText("Sample Charity")));
-        onView(withId(R.id.check_number_label)).check(matches(withText(R.string.checkNumber)));
+        onView(withId(R.id.check_number_label)).check(matches(withText(R.string.mobileCheckNumber)));
         onView(withId(R.id.check_number_value)).check(matches(withText("Sample Check Number")));
-        onView(withId(R.id.website_label)).check(matches(withText(R.string.website)));
+        onView(withId(R.id.website_label)).check(matches(withText(R.string.mobilePromoWebsite)));
         onView(withId(R.id.website_value)).check(matches(withText("https://localhost:8181")));
         onView(withText("A Person")).check(doesNotExist());
 
-        onView(withId(R.id.receipt_notes_header_label)).check(matches(withText(R.string.notes)));
+        onView(withId(R.id.receipt_notes_header_label)).check(matches(withText(R.string.mobileConfirmNotesLabel)));
         onView(withId(R.id.notes_value)).check(
                 matches(withText("Sample prepaid card payment for the period of June 15th, 2019 to July 23, 2019")));
 
-        onView(withId(R.id.details_header_text)).check(matches(withText(R.string.fee_details_header_text)));
-        onView(withId(R.id.details_amount_label)).check(matches(withText(R.string.details_amount_label)));
-        onView(withId(R.id.details_amount_value)).check(matches(withText("10.00 USD")));
-        onView(withId(R.id.details_fee_label)).check(matches(withText(R.string.fee_label)));
-        onView(withId(R.id.details_fee_value)).check(matches(withText("3.00 USD")));
-        onView(withId(R.id.details_transfer_amount_label)).check(matches(withText(R.string.transfer_amount_label)));
-        onView(withId(R.id.details_transfer_amount_value)).check(matches(withText("7.00 USD")));
+        onView(withId(R.id.details_header_text)).check(matches(withText(R.string.mobileFeeInfoLabel)));
+        onView(withId(R.id.details_amount_label)).check(matches(withText(R.string.amount)));
+        onView(withId(R.id.details_amount_value)).check(matches(withText(usdCurrencySymbol + "10.00 USD")));
+        onView(withId(R.id.details_fee_label)).check(matches(withText(R.string.mobileFeeLabel)));
+        onView(withId(R.id.details_fee_value)).check(matches(withText(usdCurrencySymbol + "3.00 USD")));
+        onView(withId(R.id.details_transfer_amount_label)).check(
+                matches(withText(R.string.mobileTransactionDetailsTotal)));
+        onView(withId(R.id.details_transfer_amount_value)).check(matches(withText(usdCurrencySymbol + "7.00 USD")));
     }
 
     @Test
@@ -419,17 +428,18 @@ public class ListPrepaidCardReceiptsTest {
 
         onView(withId(R.id.list_receipts)).perform(RecyclerViewActions.actionOnItemAtPosition(1, click()));
 
-        onView(withId(R.id.transaction_header_text)).check(matches(withText(R.string.transaction_header_text)));
+        onView(withId(R.id.transaction_header_text)).check(matches(withText(R.string.mobileTransactionTypeLabel)));
         onView(withId(R.id.transaction_type_icon)).check(matches(withText(R.string.credit)));
         onView(withId(R.id.transaction_title)).check(matches(withText(R.string.deposit)));
-        onView(withId(R.id.transaction_amount)).check(matches(withText("+ 5.00")));
+        onView(withId(R.id.transaction_amount)).check(matches(withText( usdCurrencySymbol + "5.00")));
         onView(withId(R.id.transaction_currency)).check(matches(withText("USD")));
         onView(withId(R.id.transaction_date)).check(matches(withText("June 6, 2019")));
 
-        onView(withId(R.id.receipt_details_header_label)).check(matches(withText(R.string.receipt_header_label)));
-        onView(withId(R.id.receipt_id_label)).check(matches(withText(R.string.journalId)));
+        onView(withId(R.id.receipt_details_header_label)).check(
+                matches(withText(R.string.mobileTransactionDetailsLabel)));
+        onView(withId(R.id.receipt_id_label)).check(matches(withText(R.string.mobileJournalNumberLabel)));
         onView(withId(R.id.receipt_id_value)).check(matches(withText("FISVL_5240221")));
-        onView(withId(R.id.date_label)).check(matches(withText(R.string.createdOn)));
+        onView(withId(R.id.date_label)).check(matches(withText(R.string.date)));
         onView(withId(R.id.date_value)).check(matches(withText("Thu, June 6, 2019, 3:48 PM PDT")));
 
         onView(withId(R.id.client_id_label)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));

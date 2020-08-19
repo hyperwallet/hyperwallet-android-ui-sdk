@@ -17,6 +17,11 @@
  */
 package com.hyperwallet.android.ui.transfermethod;
 
+import static com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_COUNTRY;
+import static com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_CURRENCY;
+import static com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_PROFILE_TYPE;
+import static com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_TYPE;
+
 import android.content.Context;
 import android.content.Intent;
 
@@ -24,19 +29,14 @@ import androidx.annotation.NonNull;
 
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.HyperwalletAuthenticationTokenProvider;
-import com.hyperwallet.android.exception.HyperwalletInitializationException;
 import com.hyperwallet.android.ui.common.insight.HyperwalletInsight;
 import com.hyperwallet.android.ui.common.intent.HyperwalletIntent;
 import com.hyperwallet.android.ui.transfermethod.exception.HyperwalletTransferMethodUiInitializationException;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
 import com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity;
 import com.hyperwallet.android.ui.transfermethod.view.ListTransferMethodActivity;
+import com.hyperwallet.android.ui.transfermethod.view.SelectTransferMethodActivity;
 import com.hyperwallet.android.ui.user.repository.UserRepositoryFactory;
-
-import static com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_COUNTRY;
-import static com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_CURRENCY;
-import static com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_PROFILE_TYPE;
-import static com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_TYPE;
 
 /**
  * Class responsible for initializing the Hyperwallet UI SDK. It contains methods to interact with the activities and
@@ -77,43 +77,57 @@ public final class HyperwalletTransferMethodUi {
     }
 
     /**
-     * @param context A Context of the application consuming this Intent.
+     * @param context              A Context of the application consuming this Intent.
+     * @param lockScreenToPortrait if set <code>true</code> screen will be locked to Portrait mode;
+     *                             otherwise <code>false</code> screen will follow whatever the
+     *                             device orientation is directed.
      * @return an Intent with the data necessary to launch the {@link ListTransferMethodActivity}
      */
-    public Intent getIntentListTransferMethodActivity(@NonNull final Context context) {
-        return new Intent(context, ListTransferMethodActivity.class);
-    }
-
-
-    /**
-     * @param context A Context of the application consuming this Intent.
-     * @return an Intent with Action specified to start implicit activity
-     * {@link HyperwalletIntent#ACTION_SELECT_TRANSFER_METHOD}
-     */
-    public Intent getIntentSelectTransferMethodActivity(@NonNull final Context context) {
-        Intent intent = new Intent();
-        intent.setAction(HyperwalletIntent.ACTION_SELECT_TRANSFER_METHOD);
+    public Intent getIntentListTransferMethodActivity(@NonNull final Context context,
+            final boolean lockScreenToPortrait) {
+        Intent intent = new Intent(context, ListTransferMethodActivity.class);
+        intent.putExtra(ListTransferMethodActivity.EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT, lockScreenToPortrait);
         return intent;
     }
 
     /**
-     * @param context            A Context of the application consuming this Intent.
-     * @param country            The transfer method country code. ISO 3166-1 alpha-2 format.
-     * @param currency           The transfer method currency code. ISO 4217 format.
-     * @param transferMethodType The type of transfer method. For a complete list of transfer methods, see {@link
-     *                       com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes}
-     * @param profileType        The type of the account holder profile. For a complete list of options, see
-     *                           {@link com.hyperwallet.android.model.user.User.ProfileTypes}
+     * @param context              A Context of the application consuming this Intent.\
+     * @param lockScreenToPortrait if set <code>true</code> screen will be locked to Portrait mode;
+     *                             otherwise <code>false</code> screen will follow whatever the
+     *                             device orientation is directed.
+     * @return an Intent with Action specified to start implicit activity
+     * {@link HyperwalletIntent#ACTION_SELECT_TRANSFER_METHOD}
+     */
+    public Intent getIntentSelectTransferMethodActivity(@NonNull final Context context,
+            final boolean lockScreenToPortrait) {
+        Intent intent = new Intent();
+        intent.setAction(HyperwalletIntent.ACTION_SELECT_TRANSFER_METHOD);
+        intent.putExtra(SelectTransferMethodActivity.EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT, lockScreenToPortrait);
+        return intent;
+    }
+
+    /**
+     * @param context              A Context of the application consuming this Intent.
+     * @param country              The transfer method country code. ISO 3166-1 alpha-2 format.
+     * @param currency             The transfer method currency code. ISO 4217 format.
+     * @param transferMethodType   The type of transfer method. For a complete list of transfer methods, see {@link
+     *                             com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes}
+     * @param profileType          The type of the account holder profile. For a complete list of options, see
+     *                             {@link com.hyperwallet.android.model.user.User.ProfileTypes}
+     * @param lockScreenToPortrait if set <code>true</code> screen will be locked to Portrait mode;
+     *                             otherwise <code>false</code> screen will follow whatever the
+     *                             device orientation is directed.
      * @return an Intent with the data necessary to launch the {@link AddTransferMethodActivity}
      */
     public Intent getIntentAddTransferMethodActivity(@NonNull final Context context, @NonNull final String country,
             @NonNull final String currency, @NonNull final String transferMethodType,
-            @NonNull final String profileType) {
+            @NonNull final String profileType, final boolean lockScreenToPortrait) {
         Intent intent = new Intent(context, AddTransferMethodActivity.class);
         intent.putExtra(EXTRA_TRANSFER_METHOD_COUNTRY, country);
         intent.putExtra(EXTRA_TRANSFER_METHOD_CURRENCY, currency);
         intent.putExtra(EXTRA_TRANSFER_METHOD_TYPE, transferMethodType);
         intent.putExtra(EXTRA_TRANSFER_METHOD_PROFILE_TYPE, profileType);
+        intent.putExtra(AddTransferMethodActivity.EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT, lockScreenToPortrait);
         return intent;
     }
 

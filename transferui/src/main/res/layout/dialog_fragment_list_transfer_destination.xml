@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/country_selection_layout_container"
@@ -16,7 +15,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:theme="@style/ThemeOverlay.Hyperwallet.Selector.ActionBar"/>
+        app:theme="@style/ThemeOverlay.Hyperwallet.Selector.ActionBar" />
 
     <View
         android:id="@+id/toolbar_divider"
@@ -25,7 +24,7 @@
         android:background="@color/colorSecondaryLight"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/transfer_destination_selection_toolbar"/>
+        app:layout_constraintTop_toBottomOf="@+id/transfer_destination_selection_toolbar" />
 
     <androidx.recyclerview.widget.RecyclerView
         style="@style/Selector.Hyperwallet.RecyclerView"
@@ -35,7 +34,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_divider"/>
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_divider" />
 
     <FrameLayout
         android:id="@+id/progress_bar"

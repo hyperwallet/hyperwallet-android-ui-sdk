@@ -1,21 +1,27 @@
 <resources>
     <string name="title_activity_create_transfer">Transfer Funds</string>
+    <string name="mobileConfirmationHeader">Confirm the details</string>
+    <string name="mobileConfirmNotesLabel">NOTE</string>
     <string name="transfer_destination">Destination</string>
-    <string name="transfer_foreign_exchange">Foreign Exchange</string>
+    <string name="mobileTransferToLabel">TRANSFER TO</string>
+    <string name="mobileTransferFundsHeader">Transfer funds</string>
+    <string name="mobileFXlabel">FOREIGN EXCHANGE</string>
     <string name="transfer_header_label">Transfer</string>
-    <string name="transfer_destination_required_error">Destination account required</string>
+    <string name="noTransferMethodAdded">Transfer method is required</string>
     <string name="transfer_amount_hint">Amount</string>
     <string name="transfer_currency_placeholder">USD</string>
+    <string name="transfer_currency_code_placeholder">$</string>
     <string name="transfer_all_funds_label">Transfer all Funds</string>
-    <string name="transfer_summary_label">Available for Transfer: %s %s</string>
-    <string name="transfer_summary">Summary</string>
-    <string name="transfer_notes_header_label">Notes</string>
+    <string name="mobileAvailableBalance">Available funds: %s %s</string>
+    <string name="mobileSummaryLabel">SUMMARY</string>
+    <string name="mobileNoteLabel">Note</string>
     <string name="transfer_notes_label">Description</string>
     <string name="transfer_notes_additional_info_label">Description is optional</string>
-    <string name="transfer_next_action_label">Next</string>
-    <string name="transfer_confirm_action_label">Confirm</string>
+    <string name="continueButtonLabel">Continue</string>
+    <string name="defaultTransferAmount">0</string>
+    <string name="transfer">Transfer</string>
     <string name="add_text">+</string>
-    <string name="add_transfer_label">Add Account</string>
+    <string name="mobileAddTransferMethod">Add transfer method</string>
     <string name="add_transfer_description_1">An account hasn\'t been setup yet,</string>
     <string name="add_transfer_description_2">please add an account first.</string>
     <string name="transfer_destination_selection_description">Transfer method selection</string>
@@ -24,25 +30,24 @@
     <string name="amount_currency_format">%s %s</string>
     <string name="exchange_rate_format">1 %s = %s %s</string>
 
-    <string name="module_transfermethodui_unavailable_error">Functionality to add an account
-        has not been included in this application.</string>
-    <string name="validation_amount_required">Amount is required.</string>
-    <string name="validation_destination_required">Destination account is required.</string>
+    <string name="module_transfermethodui_unavailable_error">Functionality to add an account has not been included in this application.</string>
+    <string name="transferAmountInvalid">Enter a valid transfer amount</string>
 
-    <string name="foreign_exchange_sell_label">You sell:</string>
-    <string name="foreign_exchange_buy_label">You buy:</string>
-    <string name="foreign_exchange_rate_label">Exchange Rate:</string>
+    <string name="mobileFXsell">From</string>
+    <string name="mobileFXbuy">To</string>
+    <string name="mobileFXRateLabel">Exchange rate</string>
 
-    <string name="summary_amount_label">Amount:</string>
-    <string name="summary_amount_fee_label">Fee:</string>
-    <string name="summary_amount_transfer_label">You will receive:</string>
+    <string name="mobileConfirmDetailsAmount">Amount</string>
+    <string name="mobileConfirmDetailsFee">Fee</string>
+    <string name="mobileConfirmDetailsTotal">You will receive</string>
     <string name="exchange_rate_change_warning">Due to changes in the FX rate,
         you will now receive %1$s %2$s.</string>
 
 
-    <string name="transfer_summary_placeholder">Available for Transfer: 2,422.90 CAD</string>
+    <string name="mobileTransferMax">Transfer max amount</string>
+    <string name="transfer_summary_placeholder">Available balance: 2,422.90 CAD</string>
     <string name="transfer_notes_placeholder">Partial transfer</string>
-    <string name="transfer_item_icon_placeholder">\uE000</string>
+    <string name="transfer_item_icon_placeholder">\ue000</string>
     <string name="transfer_item_title_placeholder">Transfer Type</string>
     <string name="transfer_item_country_placeholder">Country Name</string>
     <string name="transfer_item_identification_placeholder">Editing on XXXX</string>
@@ -54,4 +59,9 @@
     <string name="summary_amount_transfer_placeholder">9.75 CAD</string>
     <string name="exchange_rate_change_warning_placeholder">Due to changes in the FX rate,
         you will now receive 10.00 CAD.</string>
+
+    <string name="mobileTransferSuccessMsg">Your transfer is being processed</string>
+    <string name="mobileTransferSuccessDetails">The funds are on the way to your %s</string>
+    <string name="doneButtonLabel">Done</string>
+    <string name="mobileTransferMethodsHeader">Transfer methods</string>
 </resources>

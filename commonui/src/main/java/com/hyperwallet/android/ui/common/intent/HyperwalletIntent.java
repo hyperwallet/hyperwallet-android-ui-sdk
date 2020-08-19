@@ -69,4 +69,10 @@ public final class HyperwalletIntent {
      * SDK Broadcast error action
      */
     public static final String AUTHENTICATION_ERROR_ACTION = "HYPERWALLET_AUTHENTICATION_ERROR_ACTION";
+
+
+    /**
+     * Transfer method added, extra activity parcelable transfer method payload
+     */
+    public static final String EXTRA_TRANSFER_METHOD_ADDED = "EXTRA_TRANSFER_METHOD_ADDED";
 }

@@ -9,7 +9,6 @@
         android:id="@+id/foreign_exchange_divider"
         android:layout_width="match_parent"
         android:layout_height="@dimen/grid_margin_top"
-        android:background="@drawable/view_border_top_bottom"
         android:paddingTop="@dimen/grid_padding_top"/>
 
     <include layout="@layout/foreign_exchange"/>

@@ -15,6 +15,8 @@
     <dimen name="font_caption">12sp</dimen>
     <dimen name="font_overline">10sp</dimen>
     <dimen name="font_default_icon_size">24sp</dimen>
+    <dimen name="font_currency_symbol">26sp</dimen>
+    <dimen name="font_currency_code">17sp</dimen>
 
     <!-- vertical grid -->
     <dimen name="grid_column_gutter">16dp</dimen>
@@ -52,6 +54,11 @@
     <dimen name="widget_default_margin">8dp</dimen>
     <dimen name="widget_start_margin">12dp</dimen>
 
+    <!-- row height dimension -->
+    <dimen name="row_height_single_entry">60dp</dimen>
+    <dimen name="row_height_double_entry">80dp</dimen>
+    <dimen name="row_height_triple_entry">88dp</dimen>
+
     <!-- specificity -->
     <dimen name="collapsing_header_size">136dp</dimen>
     <dimen name="divider_height">1dp</dimen>
@@ -79,4 +86,10 @@
     <dimen name="circle_white_density">3dp</dimen>
     <dimen name="component_elevation">4dp</dimen>
     <dimen name="negative_padding">3dp</dimen>
+    <dimen name="negative_margin">-8dp</dimen>
+    <dimen name="edit_text_offset">20dp</dimen>
+    <dimen name="edit_text_top_offset">35dp</dimen>
+    <dimen name="image_offset">32dp</dimen>
+    <dimen name="divider_offset">58dp</dimen>
+    <dimen name="margin_top_header_value">10dp</dimen>
 </resources>

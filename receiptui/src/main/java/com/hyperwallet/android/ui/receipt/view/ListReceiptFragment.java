@@ -48,18 +48,22 @@ import com.hyperwallet.android.ui.common.view.OneClickListener;
 import com.hyperwallet.android.ui.receipt.R;
 import com.hyperwallet.android.ui.receipt.viewmodel.ReceiptViewModel;
 
-import java.text.DecimalFormat;
 import java.util.Calendar;
+import java.util.Currency;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
 
 public class ListReceiptFragment extends Fragment {
 
+    private static final String SHOULD_SHOW_NO_TRANSACTION_PLACEHOLDER = "SHOULD_SHOW_NO_TRANSACTION_PLACEHOLDER";
+
     private ListReceiptAdapter mListReceiptAdapter;
     private RecyclerView mListReceiptsView;
     private ReceiptViewModel mReceiptViewModel;
     private View mProgressBar;
+    private View mEmptyTransactionPlaceholder;
+    private Boolean mShouldShowNoTransactionPlaceholder = Boolean.TRUE;
 
     /**
      * Please don't use this constructor this is reserved for Android Core Framework
@@ -91,12 +95,18 @@ public class ListReceiptFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull final View view, @Nullable final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        View transactionHeaderView = view.findViewById(R.id.transactions_header);
+        if (getActivity() instanceof ListPrepaidCardReceiptActivity
+                || getActivity() instanceof ListUserReceiptActivity) {
+            transactionHeaderView.setVisibility(View.GONE);
+        }
+
+        mEmptyTransactionPlaceholder = view.findViewById(R.id.empty_transaction_list_view);
+        mListReceiptsView = view.findViewById(R.id.list_receipts);
         mProgressBar = view.findViewById(R.id.list_receipt_progress_bar);
         mListReceiptAdapter = new ListReceiptAdapter(mReceiptViewModel, new ListReceiptItemDiffCallback());
-        mListReceiptsView = view.findViewById(R.id.list_receipts);
         mListReceiptsView.setHasFixedSize(true);
         mListReceiptsView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mListReceiptsView.addItemDecoration(new ReceiptItemDividerDecorator(requireContext()));
         mListReceiptsView.setAdapter(mListReceiptAdapter);
         registerObservers();
     }
@@ -107,11 +117,43 @@ public class ListReceiptFragment extends Fragment {
         mReceiptViewModel.init();
     }
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putBoolean(SHOULD_SHOW_NO_TRANSACTION_PLACEHOLDER, mShouldShowNoTransactionPlaceholder);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            mShouldShowNoTransactionPlaceholder = savedInstanceState.getBoolean(SHOULD_SHOW_NO_TRANSACTION_PLACEHOLDER);
+        }
+        super.onViewStateRestored(savedInstanceState);
+    }
+
     private void registerObservers() {
         mReceiptViewModel.getReceiptList().observe(getViewLifecycleOwner(), new Observer<PagedList<Receipt>>() {
             @Override
-            public void onChanged(PagedList<Receipt> receipts) {
+            public void onChanged(final PagedList<Receipt> receipts) {
                 mListReceiptAdapter.submitList(receipts);
+                receipts.addWeakCallback(null, new PagedList.Callback() {
+                    @Override
+                    public void onChanged(int position, int count) {
+                    }
+
+                    @Override
+                    public void onInserted(int position, int count) {
+                        if (receipts.size() > 0) {
+                            mShouldShowNoTransactionPlaceholder = Boolean.FALSE;
+                        } else {
+                            mShouldShowNoTransactionPlaceholder = Boolean.TRUE;
+                        }
+                    }
+
+                    @Override
+                    public void onRemoved(int position, int count) {
+                    }
+                });
             }
         });
 
@@ -119,9 +161,17 @@ public class ListReceiptFragment extends Fragment {
             @Override
             public void onChanged(Boolean loading) {
                 if (loading) {
+                    mEmptyTransactionPlaceholder.setVisibility(View.GONE);
                     mProgressBar.setVisibility(View.VISIBLE);
                 } else {
                     mProgressBar.setVisibility(View.GONE);
+                    if (mShouldShowNoTransactionPlaceholder) {
+                        mEmptyTransactionPlaceholder.setVisibility(View.VISIBLE);
+                        mListReceiptsView.setVisibility(View.GONE);
+                    } else {
+                        mEmptyTransactionPlaceholder.setVisibility(View.GONE);
+                        mListReceiptsView.setVisibility(View.VISIBLE);
+                    }
                 }
             }
         });
@@ -230,30 +280,23 @@ public class ListReceiptFragment extends Fragment {
                 TextView transactionAmount = itemView.findViewById(R.id.transaction_amount);
                 TextView transactionCurrency = itemView.findViewById(R.id.transaction_currency);
 
-                //TODO localization of currencies in consideration
-                DecimalFormat decimalFormat = new DecimalFormat(AMOUNT_FORMAT);
-                double amount = Double.parseDouble(receipt.getAmount());
-                String formattedAmount = decimalFormat.format(amount);
+                String currencySymbol = Currency.getInstance(receipt.getCurrency()).getSymbol(Locale.getDefault());
 
                 if (CREDIT.equals(receipt.getEntry())) {
                     transactionAmount.setTextColor(transactionAmount.getContext()
                             .getResources().getColor(R.color.positiveColor));
                     transactionAmount.setText(transactionAmount.getContext()
-                            .getString(R.string.credit_sign, formattedAmount));
+                            .getString(R.string.credit_sign, currencySymbol, receipt.getAmount()));
                     transactionTypeIcon.setTextColor(transactionTypeIcon.getContext()
                             .getResources().getColor(R.color.positiveColor));
-                    transactionTypeIcon.setBackground(transactionTypeIcon.getContext()
-                            .getDrawable(R.drawable.circle_positive));
                     transactionTypeIcon.setText(transactionTypeIcon.getContext().getText(R.string.credit));
                 } else if (DEBIT.equals(receipt.getEntry())) {
                     transactionAmount.setTextColor(transactionAmount.getContext()
-                            .getResources().getColor(R.color.colorAccent));
-                    transactionAmount.setText(transactionAmount.getContext()
-                            .getString(R.string.debit_sign, formattedAmount));
+                            .getResources().getColor(R.color.negativeColor));
                     transactionTypeIcon.setTextColor(transactionTypeIcon.getContext()
-                            .getResources().getColor(R.color.colorAccent));
-                    transactionTypeIcon.setBackground(transactionTypeIcon.getContext()
-                            .getDrawable(R.drawable.circle_negative));
+                            .getResources().getColor(R.color.negativeColor));
+                    transactionAmount.setText(transactionAmount.getContext()
+                            .getString(R.string.debit_sign, currencySymbol, receipt.getAmount()));
                     transactionTypeIcon.setText(transactionTypeIcon.getContext().getText(R.string.debit));
                 }
 

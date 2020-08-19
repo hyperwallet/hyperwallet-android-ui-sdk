@@ -17,6 +17,7 @@
 package com.hyperwallet.android.ui.receipt.view;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 
@@ -42,6 +43,7 @@ import com.hyperwallet.android.ui.receipt.viewmodel.ReceiptViewModel;
 public class ListUserReceiptActivity extends AppCompatActivity implements OnNetworkErrorCallback {
 
     public static final String TAG = "receipts:user:list-receipts";
+    public static final String EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT = "EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT";
 
     private ReceiptViewModel mReceiptViewModel;
 
@@ -61,6 +63,10 @@ public class ListUserReceiptActivity extends AppCompatActivity implements OnNetw
                 finish();
             }
         });
+
+        if (getIntent().getBooleanExtra(EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT, false)) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
 
         mReceiptViewModel = ViewModelProviders.of(this, new ListUserReceiptViewModel
                 .ListReceiptViewModelFactory(new UserReceiptRepositoryImpl()))
@@ -115,6 +121,8 @@ public class ListUserReceiptActivity extends AppCompatActivity implements OnNetw
         if (!event.isContentConsumed()) {
             Intent intent = new Intent(this, ReceiptDetailActivity.class);
             intent.putExtra(ReceiptDetailActivity.EXTRA_RECEIPT, event.getContent());
+            intent.putExtra(ReceiptDetailActivity.EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT,
+                    getIntent().getBooleanExtra(EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT, false));
             startActivity(intent);
         }
     }

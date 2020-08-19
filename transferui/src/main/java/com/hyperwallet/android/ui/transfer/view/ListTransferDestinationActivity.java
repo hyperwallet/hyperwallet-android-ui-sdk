@@ -18,9 +18,11 @@
 package com.hyperwallet.android.ui.transfer.view;
 
 import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.ADD_TRANSFER_METHOD_REQUEST_CODE;
+import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.EXTRA_TRANSFER_METHOD_ADDED;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -49,6 +51,8 @@ public class ListTransferDestinationActivity extends AppCompatActivity implement
 
     public static final String TAG = "transfer-funds:create-transfer";
     public static final String EXTRA_SELECTED_DESTINATION_TOKEN = "SELECTED_DESTINATION_TOKEN";
+    public static final String EXTRA_SELECTED_DESTINATION = "EXTRA_SELECTED_DESTINATION";
+    public static final String EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT = "EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT";
 
     private ListTransferDestinationViewModel mListTransferDestinationViewModel;
 
@@ -78,6 +82,11 @@ public class ListTransferDestinationActivity extends AppCompatActivity implement
         intent.setAction(HyperwalletIntent.ACTION_SELECT_TRANSFER_METHOD);
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
+        if (getIntent().getBooleanExtra(EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT, false)) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+            intent.putExtra(EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT, true);
+        }
+
         if (intent.resolveActivity(getPackageManager()) != null) {
             button.setOnClickListener(new OneClickListener() {
                 @Override
@@ -96,8 +105,11 @@ public class ListTransferDestinationActivity extends AppCompatActivity implement
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == ADD_TRANSFER_METHOD_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            mListTransferDestinationViewModel.loadNewlyAddedTransferDestination();
+        if (requestCode == ADD_TRANSFER_METHOD_REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
+            Intent intent = new Intent();
+            intent.putExtra(EXTRA_SELECTED_DESTINATION, data.getParcelableExtra(EXTRA_TRANSFER_METHOD_ADDED));
+            setResult(Activity.RESULT_OK, intent);
+            finish();
         }
     }
 
@@ -121,13 +133,22 @@ public class ListTransferDestinationActivity extends AppCompatActivity implement
         mListTransferDestinationViewModel.loadTransferDestinationList();
     }
 
+    @Override
+    protected void onStop() {
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
+        getWindow().getDecorView().setSystemUiVisibility(0);
+        super.onStop();
+    }
+
     private void registerObservers() {
         mListTransferDestinationViewModel.getSelectedTransferDestination().observe(this,
                 new Observer<Event<TransferMethod>>() {
                     @Override
                     public void onChanged(Event<TransferMethod> destination) {
                         Intent intent = new Intent();
-                        intent.putExtra(EXTRA_SELECTED_DESTINATION_TOKEN, destination.getContent());
+                        intent.putExtra(EXTRA_SELECTED_DESTINATION, destination.getContent());
                         setResult(Activity.RESULT_OK, intent);
                         finish();
                     }

@@ -19,13 +19,18 @@
 package com.hyperwallet.android.ui.transfermethod.view;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.hyperwallet.android.model.graphql.Fee;
+import com.hyperwallet.android.model.graphql.ProcessingTime;
 import com.hyperwallet.android.ui.R;
 
+import java.util.Currency;
 import java.util.List;
+import java.util.Locale;
 
 public class FeeFormatter {
 
@@ -43,8 +48,8 @@ public class FeeFormatter {
             String formattedString) {
         Fee fee = fees.get(0);
         if (Fee.FeeRate.FLAT.equals(fee.getFeeRateType())) {
-            formattedString = context.getResources().getString(R.string.fee_flat_formatter, fee.getCurrency(),
-                    fee.getValue());
+            formattedString = context.getResources().getString(R.string.fee_flat_formatter,
+                    Currency.getInstance(fee.getCurrency()).getSymbol(Locale.getDefault()), fee.getValue());
         } else if (Fee.FeeRate.PERCENT.equals(fee.getFeeRateType())) {
             formattedString = getPercentFormattedFee(context, fee);
         }
@@ -69,15 +74,19 @@ public class FeeFormatter {
             String maximumAmount = percentFee.getMax();
             if (maximumAmount.isEmpty() && minimumAmount.isEmpty()) {
                 formattedString = context.getResources().getString(R.string.fee_mix_no_min_and_max_formatter,
-                        flatFee.getCurrency(), flatFee.getValue(), percentFee.getValue());
+                        Currency.getInstance(flatFee.getCurrency()).getSymbol(Locale.getDefault()),
+                        flatFee.getValue(), percentFee.getValue());
             } else if (maximumAmount.isEmpty()) {
                 formattedString = context.getResources().getString(R.string.fee_mix_only_min_formatter,
-                        flatFee.getCurrency(), flatFee.getValue(), percentFee.getValue(), minimumAmount);
+                        Currency.getInstance(flatFee.getCurrency()).getSymbol(Locale.getDefault()),
+                        flatFee.getValue(), percentFee.getValue(), minimumAmount);
             } else if (minimumAmount.isEmpty()) {
                 formattedString = context.getResources().getString(R.string.fee_mix_only_max_formatter,
-                        flatFee.getCurrency(), flatFee.getValue(), percentFee.getValue(), maximumAmount);
+                        Currency.getInstance(flatFee.getCurrency()).getSymbol(Locale.getDefault()),
+                        flatFee.getValue(), percentFee.getValue(), maximumAmount);
             } else {
-                formattedString = context.getResources().getString(R.string.fee_mix_formatter, flatFee.getCurrency(),
+                formattedString = context.getResources().getString(R.string.fee_mix_formatter,
+                        Currency.getInstance(flatFee.getCurrency()).getSymbol(Locale.getDefault()),
                         flatFee.getValue(), percentFee.getValue(), minimumAmount, maximumAmount);
             }
         }
@@ -103,5 +112,14 @@ public class FeeFormatter {
                     fee.getCurrency(), minimumAmount, maximumAmount);
         }
         return formattedFee;
+    }
+
+
+    protected static boolean isFeeAvailable(@Nullable final List<?> fees) {
+        return fees != null && !fees.isEmpty();
+    }
+
+    protected static boolean isProcessingTimeAvailable(@Nullable final ProcessingTime processingTime) {
+        return processingTime != null && !TextUtils.isEmpty(processingTime.getValue());
     }
 }

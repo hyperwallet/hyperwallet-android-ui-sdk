@@ -24,6 +24,10 @@ import static com.hyperwallet.android.model.transfermethod.TransferMethod.Transf
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.BANK_CARD;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.PAYPAL_ACCOUNT;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.WIRE_ACCOUNT;
+import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.EXTRA_TRANSFER_METHOD_ADDED;
+import static com.hyperwallet.android.ui.transfermethod.TransferMethodLocalBroadcast.TransferMethodLocalBroadcastAction.ACTION_HYPERWALLET_TRANSFER_METHOD_ADDED;
+import static com.hyperwallet.android.ui.transfermethod.view.FeeFormatter.isFeeAvailable;
+import static com.hyperwallet.android.ui.transfermethod.view.FeeFormatter.isProcessingTimeAvailable;
 
 import android.app.Activity;
 import android.content.Context;
@@ -37,7 +41,6 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -323,7 +326,11 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
         Intent intent = TransferMethodLocalBroadcast.createBroadcastIntentTransferMethodAdded(
                 transferMethod);
         LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
-        getActivity().setResult(Activity.RESULT_OK);
+
+        Intent activityResult = new Intent();
+        activityResult.setAction(ACTION_HYPERWALLET_TRANSFER_METHOD_ADDED);
+        activityResult.putExtra(EXTRA_TRANSFER_METHOD_ADDED, transferMethod);
+        getActivity().setResult(Activity.RESULT_OK, activityResult);
         getActivity().finish();
     }
 
@@ -333,6 +340,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
 
         try {
             Locale locale = new Locale.Builder().setRegion(mCountry).build();
+
             // group
             for (FieldGroup group : fields) {
                 View sectionHeader = LayoutInflater.from(mDynamicContainer.getContext())
@@ -379,9 +387,9 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
     }
 
     private String getSectionHeaderText(@NonNull final FieldGroup group, @NonNull final Locale locale) {
-        if (group.getGroupName().equals(FieldGroup.GroupTypes.ACCOUNT_INFORMATION)) {
-            return requireContext().getResources()
-                    .getString(R.string.account_information_section_header, locale.getDisplayName(), mCurrency);
+        if (FieldGroup.GroupTypes.ACCOUNT_INFORMATION.equals(group.getGroupName())) {
+            return requireContext().getString(R.string.account_information,
+                    locale.getDisplayName().toUpperCase(), mCurrency);
         }
 
         return requireContext().getString(requireContext().getResources()
@@ -394,49 +402,27 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
             @Nullable final ProcessingTime processingTime) {
         View header = getView().findViewById(R.id.add_transfer_method_static_container_header);
         View container = getView().findViewById(R.id.add_transfer_method_static_container);
-        View feeLabel = getView().findViewById(R.id.add_transfer_method_fee_label);
-        TextView feeValue = getView().findViewById(R.id.add_transfer_method_fee_value);
-        View processingTimeLabel = getView().findViewById(R.id.add_transfer_method_processing_label);
-        TextView processingTimeValue = getView().findViewById(R.id.add_transfer_method_processing_time_value);
+        TextView feeAndProcessingTime = getView().findViewById(R.id.add_transfer_method_information);
 
-        int defaultMargin = (int) requireContext().getResources().getDimension(R.dimen.default_margin);
-
-        if (fees != null && !fees.isEmpty()) {
-            String formattedFee = FeeFormatter.getFormattedFee(requireContext(), fees);
-            feeValue.setText(formattedFee);
-            feeLabel.setVisibility(View.VISIBLE);
-            feeValue.setVisibility(View.VISIBLE);
+        if (isFeeAvailable(fees) && isProcessingTimeAvailable(processingTime)) {
+            String formattedFee = FeeFormatter.getFormattedFee(header.getContext(), fees);
+            feeAndProcessingTime.setVisibility(View.VISIBLE);
+            feeAndProcessingTime.setText(
+                    feeAndProcessingTime.getContext().getString(R.string.feeAndProcessingTimeInformation, formattedFee,
+                            processingTime.getValue()));
+        } else if (isFeeAvailable(fees) && !isProcessingTimeAvailable(processingTime)) {
+            String formattedFee = FeeFormatter.getFormattedFee(header.getContext(), fees);
+            feeAndProcessingTime.setVisibility(View.VISIBLE);
+            feeAndProcessingTime.setText(
+                    feeAndProcessingTime.getContext().getString(R.string.feeInformation, formattedFee));
+        } else if (isProcessingTimeAvailable(processingTime) && !isFeeAvailable(fees)) {
+            feeAndProcessingTime.setVisibility(View.VISIBLE);
+            feeAndProcessingTime.setText(processingTime.getValue());
         } else {
-            feeLabel.setVisibility(View.GONE);
-            feeValue.setVisibility(View.GONE);
+            feeAndProcessingTime.setVisibility(View.GONE);
         }
 
-        if (processingTime != null && !TextUtils.isEmpty(processingTime.getValue())) {
-            processingTimeValue.setText(processingTime.getValue());
-            processingTimeLabel.setVisibility(View.VISIBLE);
-            processingTimeValue.setVisibility(View.VISIBLE);
-            if (feeValue.getVisibility() == View.GONE) {
-                // we need to set new margin parameters when top views are not visible
-                RelativeLayout.LayoutParams labelLayout =
-                        (RelativeLayout.LayoutParams) processingTimeLabel.getLayoutParams();
-                RelativeLayout.LayoutParams valueLayout =
-                        (RelativeLayout.LayoutParams) processingTimeValue.getLayoutParams();
-                labelLayout.setMargins(defaultMargin, defaultMargin, 0, defaultMargin);
-                valueLayout.setMargins(defaultMargin, defaultMargin, 0, 0);
-            }
-        } else {
-            if (feeValue.getVisibility() == View.VISIBLE) {
-                // add margin to fees when only fee is shown
-                RelativeLayout.LayoutParams labelLayout = (RelativeLayout.LayoutParams) feeLabel.getLayoutParams();
-                RelativeLayout.LayoutParams valueLayout = (RelativeLayout.LayoutParams) feeValue.getLayoutParams();
-                labelLayout.setMargins(defaultMargin, defaultMargin, 0, defaultMargin);
-                valueLayout.setMargins(defaultMargin, defaultMargin, 0, 0);
-            }
-            processingTimeLabel.setVisibility(View.GONE);
-            processingTimeValue.setVisibility(View.GONE);
-        }
-
-        if (feeValue.getVisibility() == View.VISIBLE || processingTimeValue.getVisibility() == View.VISIBLE) {
+        if (feeAndProcessingTime.getVisibility() == View.VISIBLE) {
             header.setVisibility(View.VISIBLE);
             container.setVisibility(View.VISIBLE);
         } else {

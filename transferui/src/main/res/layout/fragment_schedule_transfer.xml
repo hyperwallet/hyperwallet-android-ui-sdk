@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorInputFormBackground"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.ScheduleTransferFragment">
@@ -21,25 +22,28 @@
                 android:id="@+id/transfer_destination_header_container"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/section_header_height"
-                android:background="@drawable/view_border_top_bottom"
                 android:paddingTop="@dimen/grid_padding_top">
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginStart="@dimen/grid_margin_left"
                     android:layout_marginTop="@dimen/grid_margin_top"
-                    android:text="@string/transfer_destination"
+                    android:text="@string/mobileTransferToLabel"
                     android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"/>
             </LinearLayout>
 
             <RelativeLayout
                 android:id="@+id/destination_data_container"
-                android:background="@color/regularColorPrimary"
+                android:background="@drawable/content_border_bottom"
+                android:layout_marginStart="@dimen/grid_margin_left"
+                android:layout_marginEnd="@dimen/grid_margin_right"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <include android:id="@+id/transfer_destination"
-                         layout="@layout/widget_transfer_destination_view"
-                         android:visibility="visible"/>
+
+                <include
+                    android:id="@+id/transfer_destination"
+                    layout="@layout/widget_transfer_destination_view"
+                    android:visibility="visible" />
             </RelativeLayout>
 
             <androidx.recyclerview.widget.RecyclerView
@@ -51,7 +55,6 @@
                 android:id="@+id/summary_header_container"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/section_header_height"
-                android:background="@drawable/view_border_top_bottom"
                 android:paddingTop="@dimen/grid_padding_top">
 
                 <TextView
@@ -59,19 +62,19 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="@dimen/grid_margin_left"
                     android:layout_marginTop="@dimen/grid_margin_top"
-                    android:text="@string/transfer_summary"
+                    android:text="@string/mobileSummaryLabel"
                     android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"/>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/content_border_bottom"
                 android:orientation="vertical">
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/amount_container"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="@dimen/row_height_single_entry">
 
                     <TextView
                         android:id="@+id/amount_label"
@@ -80,8 +83,8 @@
                         android:layout_marginStart="@dimen/grid_margin_left"
                         android:layout_marginTop="@dimen/grid_margin_top"
                         android:layout_marginBottom="@dimen/grid_margin_bottom"
-                        android:text="@string/summary_amount_label"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                        android:text="@string/mobileConfirmDetailsAmount"
+                        android:textAppearance="@style/TextAppearance.Hyperwallet.Body1"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"/>
@@ -94,7 +97,7 @@
                         android:layout_marginTop="@dimen/grid_margin_top"
                         android:layout_marginEnd="@dimen/grid_margin_right"
                         android:layout_marginBottom="@dimen/grid_margin_bottom"
-                        android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"
+                        android:textAppearance="@style/TextAppearance.Hyperwallet.Caption"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -112,10 +115,11 @@
                         app:layout_constraintTop_toBottomOf="@+id/amount_value"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/fee_container"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="@dimen/row_height_single_entry">
 
                     <TextView
                         android:id="@+id/fee_label"
@@ -124,8 +128,8 @@
                         android:layout_marginStart="@dimen/grid_margin_left"
                         android:layout_marginTop="@dimen/grid_margin_top"
                         android:layout_marginBottom="@dimen/grid_margin_bottom"
-                        android:text="@string/summary_amount_fee_label"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                        android:text="@string/mobileConfirmDetailsFee"
+                        android:textAppearance="@style/TextAppearance.Hyperwallet.Body1"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"/>
@@ -138,7 +142,7 @@
                         android:layout_marginTop="@dimen/grid_margin_top"
                         android:layout_marginEnd="@dimen/grid_margin_right"
                         android:layout_marginBottom="@dimen/grid_margin_bottom"
-                        android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"
+                        android:textAppearance="@style/TextAppearance.Hyperwallet.Caption"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -155,10 +159,11 @@
                         app:layout_constraintTop_toBottomOf="@+id/fee_value"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/transfer_container"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="@dimen/row_height_single_entry">
 
                     <TextView
                         android:id="@+id/transfer_label"
@@ -167,8 +172,8 @@
                         android:layout_marginStart="@dimen/grid_margin_left"
                         android:layout_marginTop="@dimen/grid_margin_top"
                         android:layout_marginBottom="@dimen/grid_margin_bottom"
-                        android:text="@string/summary_amount_transfer_label"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                        android:text="@string/mobileConfirmDetailsTotal"
+                        android:textAppearance="@style/TextAppearance.Hyperwallet.Body1"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"/>
@@ -181,11 +186,21 @@
                         android:layout_marginTop="@dimen/grid_margin_top"
                         android:layout_marginEnd="@dimen/grid_margin_right"
                         android:layout_marginBottom="@dimen/grid_margin_bottom"
-                        android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"
+                        android:textAppearance="@style/TextAppearance.Hyperwallet.Caption"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        tools:text="@string/summary_amount_transfer_placeholder"/>
+                        tools:text="@string/summary_amount_transfer_placeholder" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/divider_height"
+                        android:layout_marginStart="@dimen/grid_margin_left"
+                        android:layout_marginTop="@dimen/divider_padding_top"
+                        android:layout_marginEnd="@dimen/grid_margin_right"
+                        android:background="?android:attr/listDivider"
+                        app:layout_constraintStart_toStartOf="@+id/transfer_value"
+                        app:layout_constraintTop_toBottomOf="@+id/transfer_value" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -221,33 +236,49 @@
                     android:id="@+id/notes_header_container"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/section_header_height"
-                    android:background="@drawable/view_header_bottom_border"
                     android:paddingTop="@dimen/grid_padding_top">
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginStart="@dimen/grid_margin_left"
                         android:layout_marginTop="@dimen/grid_margin_top"
-                        android:text="@string/transfer_notes_header_label"
+                        android:text="@string/mobileConfirmNotesLabel"
                         android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"/>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/content_border_bottom"
                     android:orientation="vertical">
-                    <TextView
-                        android:id="@+id/notes_value"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:maxLines="3"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-                        tools:text="@string/transfer_notes_placeholder"
-                        android:layout_marginStart="@dimen/grid_margin_left"
-                        android:layout_marginTop="@dimen/grid_margin_top"
-                        android:layout_marginEnd="@dimen/grid_margin_right"
-                        android:layout_marginBottom="@dimen/grid_margin_bottom"/>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/row_height_single_entry">
+
+                        <TextView
+                            android:id="@+id/notes_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:maxLines="3"
+                            android:textAppearance="@style/TextAppearance.Hyperwallet.Body1"
+                            tools:text="@string/transfer_notes_placeholder"
+                            android:layout_marginStart="@dimen/grid_margin_left"
+                            android:layout_marginEnd="@dimen/grid_margin_right"
+                            android:layout_marginBottom="@dimen/grid_margin_bottom"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/divider_height"
+                            android:layout_marginStart="@dimen/grid_margin_left"
+                            android:layout_marginTop="@dimen/divider_padding_top"
+                            android:layout_marginEnd="@dimen/grid_margin_right"
+                            android:background="?android:attr/listDivider"
+                            app:layout_constraintStart_toStartOf="@+id/notes_value"
+                            app:layout_constraintTop_toBottomOf="@+id/notes_value" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
                 </LinearLayout>
             </LinearLayout>
 
@@ -269,11 +300,12 @@
                     android:layout_marginEnd="@dimen/button_right_margin"
                     android:layout_marginBottom="@dimen/button_bottom_margin"
                     android:maxWidth="@dimen/create_button_max_width"
-                    android:text="@string/transfer_confirm_action_label"
+                    android:text="@string/transfer"
+                    android:textAllCaps="false"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ProgressBar
                     android:id="@+id/transfer_confirm_button_progress_bar"
@@ -290,15 +322,23 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <ProgressBar
+    <RelativeLayout
         android:id="@+id/progress"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:indeterminate="true"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:theme="@style/Widget.Hyperwallet.ProgressBar"
-        android:visibility="gone"/>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/regularColorPrimary"
+        android:clickable="true"
+        android:visibility="gone"
+        android:focusable="true">
+
+        <ProgressBar
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:indeterminate="true"
+            android:indeterminateTintMode="multiply"
+            android:theme="@style/Widget.Hyperwallet.ProgressBar" />
+    </RelativeLayout>
 </RelativeLayout>

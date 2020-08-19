@@ -2,28 +2,35 @@
     <string name="error_dialog_title">Error</string>
     <string name="error_dialog_connectivity_title">Connectivity Issue</string>
     <string name="error_dialog_unexpected_title">Unexpected Error</string>
-    <string name="cancel_button_label">Cancel</string>
-    <string name="close_button_label">Close</string>
+    <string name="ok">OK</string>
     <string name="try_again_button_label">Try again</string>
     <string name="not_available">Not Available</string>
 
     <!-- title and font icon -->
     <string name="bank_account">Bank Account</string>
     <string name="bank_card">Debit Card</string>
-    <string name="wire_account">Wire Transfer</string>
+    <string name="wire_account">Wire Transfer Account</string>
     <string name="paper_check">Paper Check</string>
     <string name="prepaid_card">Prepaid Card</string>
     <string name="paypal_account">PayPal</string>
+    <string name="venmo_account">Venmo</string>
+    <string name="cash_pickup_mg">MoneyGram</string>
 
-    <string name="bank_account_font_icon">\uE000</string>
-    <string name="bank_card_font_icon">\uE005</string>
-    <string name="wire_account_font_icon">\uE00D</string>
-    <string name="paper_check_font_icon">\uE002</string>
-    <string name="prepaid_card_font_icon">\uE00A</string>
-    <string name="paypal_account_font_icon">\uE021</string>
+    <string name="bank_account_font_icon">\ue900</string>
+    <string name="bank_card_font_icon">\ue903</string>
+    <string name="wire_account_font_icon">\ue90a</string>
+    <string name="paper_check_font_icon">\ue902</string>
+    <string name="prepaid_card_font_icon">\ue901</string>
+    <string name="paypal_account_font_icon">\ue906</string>
+    <string name="venmo_account_font_icon">\ue909</string>
+    <string name="cash_pickup_mg_font_icon">\ue905</string>
 
-    <string name="transfer_method_list_item_description">Ending on %s</string>
+    <string name="endingIn">ending in %s</string>
+    <string name="to">to %s</string>
     <string name="not_translated_in_braces">(not translated)</string>
 
     <string name="authentication_error_header">Authentication Error</string>
+    <string name="cancelButtonLabel">Cancel</string>
+    <string name="remove">Remove</string>
+    <string name="mobileAreYouSure">Are you sure?</string>
 </resources>

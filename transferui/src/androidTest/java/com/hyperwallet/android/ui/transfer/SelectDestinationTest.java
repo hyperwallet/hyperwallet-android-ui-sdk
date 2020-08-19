@@ -22,19 +22,24 @@ import static org.hamcrest.Matchers.not;
 import static java.net.HttpURLConnection.HTTP_OK;
 
 import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.ACTION_SELECT_TRANSFER_METHOD;
+import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.EXTRA_TRANSFER_METHOD_ADDED;
 import static com.hyperwallet.android.ui.testutils.util.EspressoUtils.atPosition;
 import static com.hyperwallet.android.ui.testutils.util.EspressoUtils.nestedScrollTo;
 
 import android.app.Activity;
 import android.app.Instrumentation;
+import android.content.Intent;
 import android.widget.TextView;
 
 import androidx.test.espresso.IdlingRegistry;
 import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.espresso.intent.rule.IntentsTestRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
+import com.hyperwallet.android.model.transfermethod.BankAccount;
+import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletMockWebServer;
@@ -102,15 +107,14 @@ public class SelectDestinationTest {
         onView(withId(R.id.transfer_destination)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_icon)).check(matches(withText(R.string.bank_account_font_icon)));
         onView(withId(R.id.transfer_destination_title)).check(matches(withText(R.string.bank_account)));
-        onView(withId(R.id.transfer_destination_selection)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_description_1)).check(matches(withText("United States")));
-        onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("Ending on 0616")));
+        onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("ending in 0616")));
 
         onView(withId(R.id.transfer_destination_title)).perform(click());
 
         onView(allOf(instanceOf(TextView.class),
                 withParent(withId(R.id.transfer_destination_selection_toolbar)))).check(
-                matches(withText(R.string.transfer_destination)));
+                matches(withText(R.string.mobileTransferMethodsHeader)));
 
         onView(withId(R.id.transfer_destination_list)).check(
                 matches(atPosition(0, hasDescendant(withText(R.string.bank_account_font_icon)))));
@@ -119,7 +123,7 @@ public class SelectDestinationTest {
         onView(withId(R.id.transfer_destination_list)).check(
                 matches(atPosition(0, hasDescendant(withText("United States")))));
         onView(withId(R.id.transfer_destination_list)).check(
-                matches(atPosition(0, hasDescendant(withText("Ending on 1332")))));
+                matches(atPosition(0, hasDescendant(withText("ending in 1332")))));
 
         onView(withId(R.id.transfer_destination_list)).check(
                 matches(atPosition(1, hasDescendant(withText(R.string.bank_card_font_icon)))));
@@ -128,7 +132,7 @@ public class SelectDestinationTest {
         onView(withId(R.id.transfer_destination_list)).check(
                 matches(atPosition(1, hasDescendant(withText("United States")))));
         onView(withId(R.id.transfer_destination_list)).check(
-                matches(atPosition(1, hasDescendant(withText("Ending on 0006")))));
+                matches(atPosition(1, hasDescendant(withText("ending in 0006")))));
 
         onView(withId(R.id.transfer_destination_list)).check(
                 matches(atPosition(2, hasDescendant(withText(R.string.wire_account_font_icon)))));
@@ -137,7 +141,7 @@ public class SelectDestinationTest {
         onView(withId(R.id.transfer_destination_list)).check(
                 matches(atPosition(2, hasDescendant(withText("United States")))));
         onView(withId(R.id.transfer_destination_list)).check(
-                matches(atPosition(2, hasDescendant(withText("Ending on 8337")))));
+                matches(atPosition(2, hasDescendant(withText("ending in 8337")))));
 
         onView(withId(R.id.transfer_destination_list)).check(
                 matches(atPosition(3, hasDescendant(withText(R.string.paper_check_font_icon)))));
@@ -153,7 +157,7 @@ public class SelectDestinationTest {
                 matches(atPosition(4, hasDescendant(withText(R.string.prepaid_card)))));
         onView(withId(R.id.transfer_destination_list)).check(matches(atPosition(4, hasDescendant(withText("Canada")))));
         onView(withId(R.id.transfer_destination_list)).check(
-                matches(atPosition(4, hasDescendant(withText("Ending on 3187")))));
+                matches(atPosition(4, hasDescendant(withText("ending in 3187")))));
 
         onView(withId(R.id.transfer_destination_list)).check(
                 matches(atPosition(5, hasDescendant(withText(R.string.paypal_account_font_icon)))));
@@ -162,7 +166,7 @@ public class SelectDestinationTest {
         onView(withId(R.id.transfer_destination_list)).check(
                 matches(atPosition(5, hasDescendant(withText("United States")))));
         onView(withId(R.id.transfer_destination_list)).check(
-                matches(atPosition(5, hasDescendant(withText("honey.thigpen@ukbuilder.com")))));
+                matches(atPosition(5, hasDescendant(withText("to honey.thigpen@ukbuilder.com")))));
 
         onView(withId(R.id.transfer_destination_list)).check(new RecyclerViewCountAssertion(6));
 
@@ -183,18 +187,18 @@ public class SelectDestinationTest {
         onView(withId(R.id.transfer_destination)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_icon)).check(matches(withText(R.string.bank_account_font_icon)));
         onView(withId(R.id.transfer_destination_title)).check(matches(withText(R.string.bank_account)));
-        onView(withId(R.id.transfer_destination_selection)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_description_1)).check(matches(withText("United States")));
-        onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("Ending on 0616")));
+        onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("ending in 0616")));
 
         onView(withId(R.id.transfer_summary)).perform(nestedScrollTo()).check(matches(isDisplayed()));
-        onView(withId(R.id.transfer_summary)).check(matches(withText("Available for Transfer: 998.00 USD")));
+        String availableFundUSD = getAvailableFund("998.00", "USD");
+        onView(withId(R.id.transfer_summary)).check(matches(withText(availableFundUSD)));
 
         onView(withId(R.id.transfer_destination_title)).perform(click());
 
         onView(allOf(instanceOf(TextView.class),
                 withParent(withId(R.id.transfer_destination_selection_toolbar)))).check(
-                matches(withText(R.string.transfer_destination)));
+                matches(withText(R.string.mobileTransferMethodsHeader)));
 
         onView(withContentDescription(R.string.abc_action_bar_up_description)).perform(click());
 
@@ -202,12 +206,11 @@ public class SelectDestinationTest {
         onView(withId(R.id.transfer_destination)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_icon)).check(matches(withText(R.string.bank_account_font_icon)));
         onView(withId(R.id.transfer_destination_title)).check(matches(withText(R.string.bank_account)));
-        onView(withId(R.id.transfer_destination_selection)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_description_1)).check(matches(withText("United States")));
-        onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("Ending on 0616")));
+        onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("ending in 0616")));
 
         onView(withId(R.id.transfer_summary)).perform(nestedScrollTo()).check(matches(isDisplayed()));
-        onView(withId(R.id.transfer_summary)).check(matches(withText("Available for Transfer: 998.00 USD")));
+        onView(withId(R.id.transfer_summary)).check(matches(withText(availableFundUSD)));
     }
 
     @Test
@@ -219,20 +222,47 @@ public class SelectDestinationTest {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("transfer_method_list_added_bank_account_response.json")).mock();
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("create_transfer_quote_fx_response.json")).mock();
 
         mIntentsTestRule.launchActivity(null);
 
+        final BankAccount bankAccount = new BankAccount
+                .Builder("CA", "CAD", "12345121")
+                .addressLine1("950 Granville Street")
+                .bankAccountPurpose(BankAccount.Purpose.SAVINGS)
+                .bankAccountRelationship("SELF")
+                .bankId("010")
+                .bankName("GREATER WATERBURY HEALTHCARE FCU")
+                .branchId("00600")
+                .branchName("TEST BRANCH")
+                .city("Vancouver")
+                .country("CA")
+                .countryOfBirth("US")
+                .countryOfNationality("CA")
+                .dateOfBirth("1980-01-01")
+                .gender("MALE")
+                .governmentId("987654321")
+                .firstName("Marsden")
+                .lastName("Griffin")
+                .mobileNumber("604 666 6666")
+                .phoneNumber("+1 604 6666666")
+                .postalCode("V6Z1L2")
+                .stateProvince("BC")
+                .token("test-fake-token")
+                .build();
+        bankAccount.setField(TransferMethod.TransferMethodFields.STATUS, "ACTIVATED");
+
+        Intent intent = new Intent();
+        intent.putExtra(EXTRA_TRANSFER_METHOD_ADDED, bankAccount);
+
         Instrumentation.ActivityResult result =
-                new Instrumentation.ActivityResult(Activity.RESULT_OK, null);
+                new Instrumentation.ActivityResult(Activity.RESULT_OK, intent);
         intending(hasAction(ACTION_SELECT_TRANSFER_METHOD)).respondWith(result);
 
         onView(withId(R.id.transfer_destination_title)).perform(click());
         onView(allOf(instanceOf(TextView.class),
                 withParent(withId(R.id.transfer_destination_selection_toolbar)))).check(
-                matches(withText(R.string.transfer_destination)));
+                matches(withText(R.string.mobileTransferMethodsHeader)));
         onView(withId(R.id.create_transfer_method_fab)).perform(click());
         intended(hasAction(ACTION_SELECT_TRANSFER_METHOD));
 
@@ -240,12 +270,12 @@ public class SelectDestinationTest {
         onView(withId(R.id.transfer_destination)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_icon)).check(matches(withText(R.string.bank_account_font_icon)));
         onView(withId(R.id.transfer_destination_title)).check(matches(withText(R.string.bank_account)));
-        onView(withId(R.id.transfer_destination_selection)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_description_1)).check(matches(withText("Canada")));
-        onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("Ending on 5121")));
+        onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("ending in 5121")));
 
         onView(withId(R.id.transfer_summary)).perform(nestedScrollTo()).check(matches(isDisplayed()));
-        onView(withId(R.id.transfer_summary)).check(matches(withText("Available for Transfer: 1,157.40 CAD")));
+        String availableFundCAD = getAvailableFund("1,157.40", "CAD");
+        onView(withId(R.id.transfer_summary)).check(matches(withText(availableFundCAD)));
 
     }
 
@@ -266,12 +296,12 @@ public class SelectDestinationTest {
         onView(withId(R.id.transfer_destination)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_icon)).check(matches(withText(R.string.bank_account_font_icon)));
         onView(withId(R.id.transfer_destination_title)).check(matches(withText(R.string.bank_account)));
-        onView(withId(R.id.transfer_destination_selection)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_description_1)).check(matches(withText("United States")));
-        onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("Ending on 0616")));
+        onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("ending in 0616")));
 
         onView(withId(R.id.transfer_summary)).perform(nestedScrollTo()).check(matches(isDisplayed()));
-        onView(withId(R.id.transfer_summary)).check(matches(withText("Available for Transfer: 998.00 USD")));
+        String availableFundUSD = getAvailableFund("998.00", "USD");
+        onView(withId(R.id.transfer_summary)).check(matches(withText(availableFundUSD)));
 
         onView(withId(R.id.transfer_destination_title)).perform(click());
 
@@ -279,19 +309,19 @@ public class SelectDestinationTest {
         onView(withId(R.id.transfer_destination)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_icon)).check(matches(withText(R.string.paypal_account_font_icon)));
         onView(withId(R.id.transfer_destination_title)).check(matches(withText(R.string.paypal_account)));
-        onView(withId(R.id.transfer_destination_selection)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_description_1)).check(matches(withText("United States")));
-        onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("honey.thigpen@ukbuilder.com")));
+        onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("to honey.thigpen@ukbuilder.com")));
 
         onView(withId(R.id.transfer_amount)).perform(nestedScrollTo()).check(matches(isDisplayed()));
-        onView(withId(R.id.transfer_amount)).check(matches(withText("")));
+        onView(withId(R.id.transfer_amount)).check(matches(withText(R.string.defaultTransferAmount)));
         onView(withId(R.id.transfer_amount_currency)).check(matches(withText("USD")));
 
         //Check that the toggle is disabled by default
-        onView(withId(R.id.switchButton)).perform(nestedScrollTo()).check(matches(isDisplayed()));
-        onView(withId(R.id.switchButton)).check(matches(not(isSelected())));
+        onView(withId(R.id.transfer_all_funds)).perform(nestedScrollTo()).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_all_funds)).check(matches(not(isSelected())));
         onView(withId(R.id.transfer_summary)).perform(nestedScrollTo()).check(matches(isDisplayed()));
-        onView(withId(R.id.transfer_summary)).check(matches(withText("Available for Transfer: 1000.00 USD")));
+        String availableFundUSD2 = getAvailableFund("1000.00", "USD");
+        onView(withId(R.id.transfer_summary)).check(matches(withText(availableFundUSD2)));
 
         onView(withId(R.id.transfer_notes)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_notes)).check(matches(withText("")));
@@ -315,23 +345,22 @@ public class SelectDestinationTest {
         onView(withId(R.id.transfer_destination)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_icon)).check(matches(withText(R.string.bank_account_font_icon)));
         onView(withId(R.id.transfer_destination_title)).check(matches(withText(R.string.bank_account)));
-        onView(withId(R.id.transfer_destination_selection)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_description_1)).check(matches(withText("United States")));
-        onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("Ending on 0616")));
+        onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("ending in 0616")));
 
         onView(withId(R.id.transfer_destination_title)).perform(click());
 
         onView(withText(R.string.error_dialog_connectivity_title)).check(matches(isDisplayed()));
         onView(withText(R.string.io_exception)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(android.R.id.button1)).check(matches(withText(R.string.try_again_button_label)));
-        onView(withId(android.R.id.button2)).check(matches(withText(R.string.cancel_button_label)));
+        onView(withId(android.R.id.button2)).check(matches(withText(R.string.cancelButtonLabel)));
 
         onView(withId(android.R.id.button1)).perform(click());
         onView(withText(R.string.error_dialog_connectivity_title)).check(doesNotExist());
 
         onView(allOf(instanceOf(TextView.class),
                 withParent(withId(R.id.transfer_destination_selection_toolbar)))).check(
-                matches(withText(R.string.transfer_destination)));
+                matches(withText(R.string.mobileTransferMethodsHeader)));
 
         onView(withId(R.id.transfer_destination_list)).check(
                 matches(atPosition(0, hasDescendant(withText(R.string.bank_account_font_icon)))));
@@ -340,7 +369,7 @@ public class SelectDestinationTest {
         onView(withId(R.id.transfer_destination_list)).check(
                 matches(atPosition(0, hasDescendant(withText("United States")))));
         onView(withId(R.id.transfer_destination_list)).check(
-                matches(atPosition(0, hasDescendant(withText("Ending on 1332")))));
+                matches(atPosition(0, hasDescendant(withText("ending in 1332")))));
 
         onView(withId(R.id.transfer_destination_list)).check(
                 matches(atPosition(1, hasDescendant(withText(R.string.bank_card_font_icon)))));
@@ -349,7 +378,7 @@ public class SelectDestinationTest {
         onView(withId(R.id.transfer_destination_list)).check(
                 matches(atPosition(1, hasDescendant(withText("United States")))));
         onView(withId(R.id.transfer_destination_list)).check(
-                matches(atPosition(1, hasDescendant(withText("Ending on 0006")))));
+                matches(atPosition(1, hasDescendant(withText("ending in 0006")))));
 
         onView(withId(R.id.transfer_destination_list)).check(
                 matches(atPosition(2, hasDescendant(withText(R.string.wire_account_font_icon)))));
@@ -358,7 +387,7 @@ public class SelectDestinationTest {
         onView(withId(R.id.transfer_destination_list)).check(
                 matches(atPosition(2, hasDescendant(withText("United States")))));
         onView(withId(R.id.transfer_destination_list)).check(
-                matches(atPosition(2, hasDescendant(withText("Ending on 8337")))));
+                matches(atPosition(2, hasDescendant(withText("ending in 8337")))));
 
         onView(withId(R.id.transfer_destination_list)).check(
                 matches(atPosition(3, hasDescendant(withText(R.string.paper_check_font_icon)))));
@@ -374,7 +403,7 @@ public class SelectDestinationTest {
                 matches(atPosition(4, hasDescendant(withText(R.string.prepaid_card)))));
         onView(withId(R.id.transfer_destination_list)).check(matches(atPosition(4, hasDescendant(withText("Canada")))));
         onView(withId(R.id.transfer_destination_list)).check(
-                matches(atPosition(4, hasDescendant(withText("Ending on 3187")))));
+                matches(atPosition(4, hasDescendant(withText("ending in 3187")))));
 
         onView(withId(R.id.transfer_destination_list)).check(
                 matches(atPosition(5, hasDescendant(withText(R.string.paypal_account_font_icon)))));
@@ -383,10 +412,16 @@ public class SelectDestinationTest {
         onView(withId(R.id.transfer_destination_list)).check(
                 matches(atPosition(5, hasDescendant(withText("United States")))));
         onView(withId(R.id.transfer_destination_list)).check(
-                matches(atPosition(5, hasDescendant(withText("honey.thigpen@ukbuilder.com")))));
+                matches(atPosition(5, hasDescendant(withText("to honey.thigpen@ukbuilder.com")))));
 
         onView(withId(R.id.transfer_destination_list)).check(new RecyclerViewCountAssertion(6));
 
+    }
+
+    private String getAvailableFund(String amount, String currency) {
+        String availableFund = String.format(InstrumentationRegistry.getInstrumentation().getTargetContext()
+                .getString(R.string.mobileAvailableBalance), amount , currency);
+        return availableFund;
     }
 
 }

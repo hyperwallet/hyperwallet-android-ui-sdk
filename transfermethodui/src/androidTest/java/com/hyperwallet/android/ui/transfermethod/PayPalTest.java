@@ -112,7 +112,7 @@ public class PayPalTest {
         onView(withId(R.id.emailLabel)).check(matches(withHint("Email")));
 
         onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo()).check(
-                matches(withText(R.string.button_create_transfer_method)));
+                matches(withText(R.string.createTransferMethodButtonLabel)));
     }
 
     @Test
@@ -136,18 +136,16 @@ public class PayPalTest {
         onView(withId(R.id.add_transfer_method_static_container)).check(
                 matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
 
-        onView(withId(R.id.add_transfer_method_fee_label)).check(
+        onView(withId(R.id.transfer_method_information)).check(
                 matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        onView(withId(R.id.add_transfer_method_fee_label)).check(
-                matches(withText(R.string.add_transfer_method_fee_label)));
-        onView(withId(R.id.add_transfer_method_fee_value)).check(matches(withText("USD 0.25")));
 
-        onView(withId(R.id.add_transfer_method_processing_label)).check(
+        onView(withId(R.id.transfer_method_information)).check(
+                matches(withText(R.string.mobileFeesAndProcessingTime)));
+
+        onView(withId(R.id.add_transfer_method_information)).check(
                 matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        onView(withId(R.id.add_transfer_method_processing_label)).check(
-                matches(withText(R.string.add_transfer_method_processing_time_label)));
-        onView(withId(R.id.add_transfer_method_processing_time_value)).check(matches(withText("IMMEDIATE")));
-
+        onView(withId(R.id.add_transfer_method_information)).check(
+                matches(withText("$0.25 fee \u2022 IMMEDIATE")));
     }
 
     @Test
@@ -223,7 +221,7 @@ public class PayPalTest {
         onView(withText(containsString(
                 "PayPal transfer method email address should be same as profile email address.")))
                 .inRoot(isDialog()).check(matches(isDisplayed()));
-        onView(withId(android.R.id.button1)).check(matches(withText(R.string.close_button_label)));
+        onView(withId(android.R.id.button1)).check(matches(withText(R.string.ok)));
         onView(withId(android.R.id.button1)).perform(click());
 
         // should display the add tm form

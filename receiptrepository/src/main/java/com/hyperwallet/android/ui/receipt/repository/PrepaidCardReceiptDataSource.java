@@ -86,7 +86,6 @@ public class PrepaidCardReceiptDataSource extends PageKeyedDataSource<Date, Rece
                 new HyperwalletListener<PageList<Receipt>>() {
                     @Override
                     public void onSuccess(@Nullable PageList<Receipt> result) {
-                        mIsFetchingData.postValue(Boolean.FALSE);
                         mErrors.postValue(null);
 
                         if (result != null) {
@@ -94,6 +93,7 @@ public class PrepaidCardReceiptDataSource extends PageKeyedDataSource<Date, Rece
                         }
 
                         // reset
+                        mIsFetchingData.postValue(Boolean.FALSE);
                         mLoadInitialCallback = null;
                         mLoadInitialParams = null;
                         EspressoIdlingResource.decrement();
@@ -140,7 +140,6 @@ public class PrepaidCardReceiptDataSource extends PageKeyedDataSource<Date, Rece
                 new HyperwalletListener<PageList<Receipt>>() {
                     @Override
                     public void onSuccess(@Nullable PageList<Receipt> result) {
-                        mIsFetchingData.postValue(Boolean.FALSE);
                         mErrors.postValue(null);
 
                         if (result != null) {
@@ -148,6 +147,7 @@ public class PrepaidCardReceiptDataSource extends PageKeyedDataSource<Date, Rece
                         }
 
                         // reset
+                        mIsFetchingData.postValue(Boolean.FALSE);
                         mLoadAfterCallback = null;
                         mLoadAfterParams = null;
                         EspressoIdlingResource.decrement();

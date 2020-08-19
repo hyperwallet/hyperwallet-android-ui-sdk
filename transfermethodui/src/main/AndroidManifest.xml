@@ -15,20 +15,21 @@
         <activity
             android:name="com.hyperwallet.android.ui.transfermethod.view.SelectTransferMethodActivity"
             android:label="@string/title_activity_select_transfer_method"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:exported="false">
+            android:theme="@style/AppTheme.NoActionBar">
+            <!-- This setting is removed temporarily [android:exported="false"] since it will not work functionally
+                 team is looking into fixing the security issue from another ticket -->
             <meta-data
                 android:name="android.app.searchable"
-                android:resource="@xml/searchable"/>
+                android:resource="@xml/searchable" />
             <intent-filter>
-                <action android:name="com.hyperwallet.intent.action.SELECT_TRANSFER_METHOD"/>
-                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="com.hyperwallet.intent.action.SELECT_TRANSFER_METHOD" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
         <activity
             android:name="com.hyperwallet.android.ui.transfermethod.view.ListTransferMethodActivity"
-            android:label="@string/title_activity_list_transfer_method"
+            android:label="@string/mobileTransferMethodsHeader"
             android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 

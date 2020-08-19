@@ -76,6 +76,8 @@ public class CreateTransferViewModel extends ViewModel {
 
     private String mSourceToken;
     private boolean mIsInitialized;
+    private String initialAmount;
+    private boolean mIsPortraitMode;
 
     /**
      * Initialize Create Transfer View Model with designated transfer source token
@@ -124,7 +126,9 @@ public class CreateTransferViewModel extends ViewModel {
         mShowFxRateChange.setValue(Boolean.FALSE);
     }
 
-    public void init() {
+    public void init(@NonNull final String defaultAmount) {
+        initialAmount = defaultAmount;
+
         if (!mIsInitialized) {
             mIsInitialized = true;
             if (mSourceToken == null) {
@@ -149,6 +153,14 @@ public class CreateTransferViewModel extends ViewModel {
                 && !isTransferSourceTokenUnknown() && mIsInitialized) {
             loadTransferDestination(mSourceToken);
         }
+    }
+
+    public boolean isPortraitMode() {
+        return mIsPortraitMode;
+    }
+
+    public void setPortraitMode(final boolean portraitMode) {
+        mIsPortraitMode = portraitMode;
     }
 
     public LiveData<Boolean> isTransferAllAvailableFunds() {
@@ -192,6 +204,10 @@ public class CreateTransferViewModel extends ViewModel {
         return mIsCreateQuoteLoading;
     }
 
+    public void setCreateQuoteLoading(final Boolean loading) {
+        mIsCreateQuoteLoading.postValue(loading);
+    }
+
     public LiveData<Transfer> getQuoteAvailableFunds() {
         return mQuoteAvailableFunds;
     }
@@ -233,7 +249,7 @@ public class CreateTransferViewModel extends ViewModel {
 
     public void createTransfer() {
         mIsCreateQuoteLoading.postValue(Boolean.TRUE);
-        String amount = mTransferAvailableFunds.getValue() ? null : mTransferAmount.getValue();
+        String amount = isTransferRequestSameWithQuote() ? null : mTransferAmount.getValue();
 
         Transfer transfer = new Transfer.Builder()
                 .clientTransferID(CLIENT_IDENTIFICATION_PREFIX + UUID.randomUUID().toString())
@@ -249,13 +265,14 @@ public class CreateTransferViewModel extends ViewModel {
             public void onTransferCreated(@Nullable Transfer transfer) {
                 mShowFxRateChange.setValue(hasTransferAmountChanged(transfer));
                 mCreateTransfer.postValue(new Event<>(transfer));
-                mIsCreateQuoteLoading.postValue(Boolean.FALSE);
+                mTransferAvailableFunds.setValue(Boolean.FALSE);
             }
 
             @Override
             public void onError(@NonNull final Errors errors) {
                 processCreateTransferError(errors);
                 mIsCreateQuoteLoading.postValue(Boolean.FALSE);
+                mTransferAvailableFunds.setValue(Boolean.FALSE);
             }
         });
     }
@@ -302,6 +319,12 @@ public class CreateTransferViewModel extends ViewModel {
         } else {
             mCreateTransferError.postValue(new Event<>(errors));
         }
+    }
+
+    private boolean isTransferRequestSameWithQuote() {
+        return mQuoteAvailableFunds.getValue() != null
+                && !TextUtils.isEmpty(mQuoteAvailableFunds.getValue().getDestinationAmount())
+                && mQuoteAvailableFunds.getValue().getDestinationAmount().equals(mTransferAmount.getValue());
     }
 
     private boolean isTransferSourceTokenUnknown() {

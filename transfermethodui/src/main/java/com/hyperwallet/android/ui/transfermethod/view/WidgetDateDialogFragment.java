@@ -109,7 +109,7 @@ public class WidgetDateDialogFragment extends DialogFragment {
                 calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
 
         datePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE,
-                getString(R.string.cancel_button_label),
+                getString(R.string.cancelButtonLabel),
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

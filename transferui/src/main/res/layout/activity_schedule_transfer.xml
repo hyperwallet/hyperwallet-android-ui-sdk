@@ -16,6 +16,8 @@
             style="@style/Widget.Hyperwallet.CollapsingToolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:expandedTitleTextAppearance="@style/TextAppearance.Hyperwallet.CollapsingToolbar.Expanded"
+            app:collapsedTitleTextAppearance="@style/TextAppearance.Hyperwallet.Title"
             app:expandedTitleMarginStart="@dimen/grid_margin_left"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
@@ -24,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
-                app:popupTheme="@style/AppTheme.PopupOverlay"/>
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 

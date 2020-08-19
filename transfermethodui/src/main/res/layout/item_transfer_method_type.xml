@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/regularColorPrimary"
+    android:layout_marginStart="@dimen/grid_margin_left"
+    android:layout_marginEnd="@dimen/grid_margin_right"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -11,17 +12,16 @@
         android:id="@+id/transfer_method_type_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/grid_margin_left"
-        android:layout_marginTop="@dimen/grid_margin_top"
-        android:background="@drawable/circle"
-        android:fontFamily="@font/icomoon"
+        android:layout_marginStart="@dimen/item_vertical_margin"
+        android:fontFamily="@font/hw_mobile_ui_sdk_icons"
         android:gravity="center"
-        tools:text="@string/not_available"
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/font_default_icon_size"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/not_available" />
 
     <TextView
         android:id="@+id/transfer_method_type_title"
@@ -56,9 +56,7 @@
         android:id="@+id/transfer_method_context_button"
         android:layout_width="@dimen/icon_default_width"
         android:layout_height="@dimen/icon_default_height"
-        android:layout_marginTop="@dimen/icon_margin_top"
         android:layout_marginEnd="@dimen/item_vertical_margin"
-        android:layout_marginBottom="@dimen/button_bottom_margin"
         android:background="?android:selectableItemBackground"
         android:contentDescription="@string/transfer_method_context_button_description"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -71,7 +69,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/divider_height"
         android:layout_marginTop="@dimen/divider_padding_top"
-        android:visibility="invisible"
+        android:background="?android:attr/listDivider"
         app:layout_constraintStart_toStartOf="@+id/transfer_method_type_title"
         app:layout_constraintTop_toBottomOf="@+id/transfer_method_type_description_2"/>
 

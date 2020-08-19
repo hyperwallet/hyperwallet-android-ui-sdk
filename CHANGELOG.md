@@ -1,6 +1,12 @@
 Changelog
 =========
 
+[1.0.0-beta06](https://github.com/hyperwallet/hyperwallet-android-ui-sdk/releases/tag/1.0.0-beta06)
+-------------------
+* Security fixes
+* Bug fixes
+* UI and usability enhancements
+
 [1.0.0-beta05](https://github.com/hyperwallet/hyperwallet-android-ui-sdk/releases/tag/1.0.0-beta05)
 -------------------
 * Added Analytics to Transfer Method Module
@@ -24,6 +30,3 @@ Changelog
 - Initial release
 * UI components to create Bank Account and Bank Card for United States (USD)
 * UI components to list and deactivate accounts
-
-
-

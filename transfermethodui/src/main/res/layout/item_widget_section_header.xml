@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/section_header_layout"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/section_header_height"
-                android:background="@drawable/view_border_top_bottom"
-                android:paddingTop="@dimen/grid_padding_top">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/section_header_layout"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/edit_text_top_offset">
+
     <TextView
         android:id="@+id/section_header_title"
+        android:gravity="center_vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        tools:text="@string/account_holder"
         android:layout_marginStart="@dimen/grid_margin_left"
-        android:layout_marginTop="@dimen/grid_margin_top"
-        android:textAppearance="@style/TextAppearance.Hyperwallet.Body2"/>
+        android:textAppearance="@style/TextAppearance.Hyperwallet.Body2" />
 </RelativeLayout>

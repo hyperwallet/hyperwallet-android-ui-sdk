@@ -15,9 +15,8 @@
         android:id="@+id/icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/grid_margin_left"
-        android:background="@drawable/circle"
-        android:fontFamily="@font/icomoon"
+        android:layout_marginStart="@dimen/item_vertical_margin"
+        android:fontFamily="@font/hw_mobile_ui_sdk_icons"
         android:gravity="center"
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/font_default_icon_size"
@@ -66,9 +65,9 @@
         android:src="@drawable/ic_check_14dp"
         android:visibility="gone"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/title"
-        app:layout_constraintBottom_toBottomOf="@id/title"
-        tools:visibility="visible"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:visibility="visible" />
 
     <View
         android:id="@+id/divider"

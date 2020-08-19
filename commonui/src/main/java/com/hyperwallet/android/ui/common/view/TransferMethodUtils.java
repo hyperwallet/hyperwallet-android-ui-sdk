@@ -29,6 +29,7 @@ import static com.hyperwallet.android.model.transfermethod.TransferMethod.Transf
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -154,14 +155,14 @@ public class TransferMethodUtils {
                 return getFourDigitsIdentification(context,
                         transferMethod,
                         CARD_NUMBER,
-                        R.string.transfer_method_list_item_description);
+                        R.string.endingIn);
             case BANK_ACCOUNT:
             case WIRE_ACCOUNT:
                 return getFourDigitsIdentification(context, transferMethod, BANK_ACCOUNT_ID,
-                        R.string.transfer_method_list_item_description);
+                        R.string.endingIn);
             case PAYPAL_ACCOUNT:
-                final String transferIdentification = transferMethod.getField(EMAIL);
-                return transferIdentification != null ? transferIdentification : "";
+                final String email = transferMethod.getField(EMAIL);
+                return context.getString(R.string.to, email != null ? email : "");
             default:
                 return "";
         }
@@ -174,9 +175,9 @@ public class TransferMethodUtils {
         final String transferIdentification = transferMethod.getField(fieldKey);
 
         final String identificationText =
-                transferIdentification != null && transferIdentification.length() > LAST_FOUR_DIGIT
+                !TextUtils.isEmpty(transferIdentification) && transferIdentification.length() > LAST_FOUR_DIGIT
                         ? transferIdentification.substring(transferIdentification.length() - LAST_FOUR_DIGIT)
-                        : "";
+                        : !TextUtils.isEmpty(transferIdentification) ? transferIdentification : "";
 
         return context.getString(stringResId, identificationText);
     }

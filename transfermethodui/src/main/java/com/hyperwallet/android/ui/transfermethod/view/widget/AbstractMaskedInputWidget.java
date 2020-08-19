@@ -194,8 +194,13 @@ abstract class AbstractMaskedInputWidget extends AbstractWidget {
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             if (before != count) {
                 String displayedValue = formatToDisplay(s.toString());
+                int cursorIndex = start + count + (displayedValue.length() - s.length());
                 mEditText.setText(displayedValue);
-                mEditText.setSelection(displayedValue.length());
+                if (cursorIndex >= 0 && cursorIndex <= displayedValue.length()) {
+                    mEditText.setSelection(cursorIndex);
+                } else if (cursorIndex < 0) {
+                    mEditText.setSelection(0);
+                }
 
                 mValue = formatToApi(displayedValue);
                 mListener.saveTextChanged(getName(), getValue());

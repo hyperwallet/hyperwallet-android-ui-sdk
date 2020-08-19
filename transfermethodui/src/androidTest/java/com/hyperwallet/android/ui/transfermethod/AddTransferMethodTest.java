@@ -102,13 +102,7 @@ public class AddTransferMethodTest {
 
         onView(withId(R.id.add_transfer_method_static_container)).check(
                 matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
-        onView(withId(R.id.add_transfer_method_fee_label)).check(
-                matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
-        onView(withId(R.id.add_transfer_method_processing_label)).check(
-                matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
-        onView(withId(R.id.add_transfer_method_fee_value)).check(
-                matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
-        onView(withId(R.id.add_transfer_method_processing_time_value)).check(
+        onView(withId(R.id.add_transfer_method_information)).check(
                 matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
     }
 
@@ -133,7 +127,7 @@ public class AddTransferMethodTest {
                 "The account information you provided is already registered. Based on the external account "
                         + "configuration duplications are not allowed.")))
                 .inRoot(isDialog()).check(matches(isDisplayed()));
-        onView(withId(android.R.id.button1)).check(matches(withText(R.string.close_button_label)));
+        onView(withId(android.R.id.button1)).check(matches(withText(R.string.ok)));
         onView(withId(android.R.id.button1)).perform(click());
 
         // should display the add tm form
@@ -163,7 +157,7 @@ public class AddTransferMethodTest {
         // check dialog content
         onView(withText(R.string.error_dialog_unexpected_title)).inRoot(isDialog()).check(matches(isDisplayed()));
         onView(withText(R.string.unexpected_exception)).inRoot(isDialog()).check(matches(isDisplayed()));
-        onView(withId(android.R.id.button1)).check(matches(withText(R.string.close_button_label)));
+        onView(withId(android.R.id.button1)).check(matches(withText(R.string.ok)));
         onView(withId(android.R.id.button1)).perform(click());
 
         // verify activity is finished
@@ -189,7 +183,7 @@ public class AddTransferMethodTest {
         // check dialog content
         onView(withText(R.string.error_dialog_unexpected_title)).inRoot(isDialog()).check(matches(isDisplayed()));
         onView(withText(R.string.error_unsupported_transfer_type)).inRoot(isDialog()).check(matches(isDisplayed()));
-        onView(withId(android.R.id.button1)).check(matches(withText(R.string.close_button_label)));
+        onView(withId(android.R.id.button1)).check(matches(withText(R.string.ok)));
         onView(withId(android.R.id.button1)).perform(click());
 
         // verify activity is finished
@@ -219,7 +213,7 @@ public class AddTransferMethodTest {
         onView(withText(R.string.error_dialog_connectivity_title)).check(matches(isDisplayed()));
         onView(withText(R.string.io_exception)).check(matches(isDisplayed()));
         onView(withId(android.R.id.button1)).check(matches(withText(R.string.try_again_button_label)));
-        onView(withId(android.R.id.button2)).check(matches(withText(R.string.cancel_button_label)));
+        onView(withId(android.R.id.button2)).check(matches(withText(R.string.cancelButtonLabel)));
 
         // retry button clicked
         onView(withId(android.R.id.button1)).perform(click());
@@ -228,7 +222,7 @@ public class AddTransferMethodTest {
         onView(withText(R.string.error_dialog_connectivity_title)).check(matches(isDisplayed()));
         onView(withText(R.string.io_exception)).check(matches(isDisplayed()));
         onView(withId(android.R.id.button1)).check(matches(withText(R.string.try_again_button_label)));
-        onView(withId(android.R.id.button2)).check(matches(withText(R.string.cancel_button_label)));
+        onView(withId(android.R.id.button2)).check(matches(withText(R.string.cancelButtonLabel)));
 
         // cancel button clicked
         onView(withId(android.R.id.button2)).perform(click());

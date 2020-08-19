@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="?android:attr/selectableItemBackground"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="@dimen/row_height_triple_entry">
 
     <TextView
         android:id="@+id/transfer_destination_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/grid_margin_left"
-        android:layout_marginTop="@dimen/grid_margin_top"
-        android:background="@drawable/circle"
-        android:fontFamily="@font/icomoon"
+        android:layout_marginTop="@dimen/image_offset"
+        android:fontFamily="@font/hw_mobile_ui_sdk_icons"
         android:gravity="center"
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/font_default_icon_size"
@@ -32,19 +30,6 @@
         tools:text="@string/not_available"
         android:textAppearance="@style/TextAppearance.Hyperwallet.Subtitle1"
         app:layout_constraintLeft_toRightOf="@+id/transfer_destination_icon"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <ImageView
-        android:id="@+id/transfer_destination_selection"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/transfer_destination_selection_description"
-        android:layout_marginTop="@dimen/grid_margin_top"
-        android:layout_marginEnd="@dimen/grid_margin_right"
-        android:layout_marginBottom="8dp"
-        android:src="@drawable/ic_keyboard_arrow_down_12dp"
-        app:layout_constraintBottom_toBottomOf="@+id/transfer_destination_title"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView

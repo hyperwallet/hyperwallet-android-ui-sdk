@@ -7,14 +7,60 @@
         <item name="android:elevation">@dimen/progress_bar_elevation</item>
     </style>
 
-    <style name="TextAppearance.Hyperwallet.Positive"
-           parent="TextAppearance.MaterialComponents.Subtitle1">
+    <style name="TextAppearance.Hyperwallet.Positive" parent="TextAppearance.MaterialComponents.Subtitle1">
         <item name="android:textColor">@color/positiveColor</item>
     </style>
 
-    <style name="TextAppearance.Hyperwallet.Negative"
-           parent="TextAppearance.MaterialComponents.Subtitle1">
-        <item name="android:textColor">@color/colorAccent</item>
+    <style name="TextAppearance.Hyperwallet.Negative" parent="TextAppearance.MaterialComponents.Subtitle1">
+        <item name="android:textColor">@color/negativeColor</item>
     </style>
 
+    <style name="HeaderTitleAppearance">
+        <item name="android:background">@drawable/item_view_border_header</item>
+    </style>
+
+    <style name="TextAppearance.Hyperwallet.HeaderTitle" parent="@style/TextAppearance.MaterialComponents.Body2" />
+
+    <style name="ReceiptTypeIcon">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/item_text_top_bottom_margin</item>
+        <item name="android:layout_marginBottom">@dimen/item_text_top_bottom_margin</item>
+        <item name="android:background">@drawable/circle_positive</item>
+        <item name="android:fontFamily">@font/hw_mobile_ui_sdk_icons</item>
+        <item name="android:gravity">center</item>
+        <item name="android:text">@string/font_icon_placeholder</item>
+        <item name="android:textColor">@color/positiveColor</item>
+        <item name="android:textSize">@dimen/font_default_icon_size</item>
+    </style>
+
+    <style name="ReceiptTitle">
+        <item name="android:layout_marginStart">@dimen/grid_margin_left</item>
+        <item name="android:layout_marginTop">@dimen/grid_margin_top</item>
+        <item name="android:layout_marginEnd">@dimen/ellipsis_spacing</item>
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Subtitle1
+        </item>
+    </style>
+
+    <style name="ReceiptDate">
+        <item name="android:layout_marginStart">@dimen/grid_margin_left</item>
+        <item name="android:layout_marginTop">@dimen/item_text_top_bottom_margin</item>
+        <item name="android:layout_marginEnd">@dimen/grid_margin_right</item>
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Caption</item>
+    </style>
+
+    <style name="ReceiptAmount">
+        <item name="android:layout_marginTop">@dimen/grid_margin_top</item>
+        <item name="android:textAppearance">@style/TextAppearance.Hyperwallet.Positive</item>
+    </style>
+
+    <style name="ReceiptCurrency">
+        <item name="android:layout_marginTop">@dimen/item_text_top_bottom_margin</item>
+        <item name="android:layout_marginBottom">@dimen/grid_margin_right</item>
+        <item name="android:textAppearance">@style/TextAppearance.Hyperwallet.Body2</item>
+    </style>
+
+    <style name="ReceiptItem">
+        <item name="android:background">@drawable/view_item_ripple</item>
+    </style>
 </resources>

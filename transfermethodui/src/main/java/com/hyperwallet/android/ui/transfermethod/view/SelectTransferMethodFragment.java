@@ -20,12 +20,12 @@ package com.hyperwallet.android.ui.transfermethod.view;
 
 import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.ADD_TRANSFER_METHOD_REQUEST_CODE;
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getStringFontIcon;
+import static com.hyperwallet.android.ui.transfermethod.view.FeeFormatter.isFeeAvailable;
+import static com.hyperwallet.android.ui.transfermethod.view.FeeFormatter.isProcessingTimeAvailable;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +43,6 @@ import com.hyperwallet.android.model.Error;
 import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.common.insight.HyperwalletInsight;
 import com.hyperwallet.android.ui.common.util.PageGroups;
-import com.hyperwallet.android.ui.common.view.HorizontalDividerItemDecorator;
 import com.hyperwallet.android.ui.common.view.OneClickListener;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
 import com.hyperwallet.android.ui.user.repository.UserRepositoryFactory;
@@ -59,6 +58,7 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
 
     private static final String ARGUMENT_COUNTRY_CODE_SELECTED = "ARGUMENT_COUNTRY_CODE_SELECTED";
     private static final String ARGUMENT_CURRENCY_CODE_SELECTED = "ARGUMENT_CURRENCY_CODE_SELECTED";
+    private static final String ARGUMENT_SCREEN_ORIENTATION_PORTRAIT = "ARGUMENT_SCREEN_ORIENTATION_PORTRAIT";
     private static final boolean FORCE_UPDATE = false;
 
     private TextView mCountryValue;
@@ -76,17 +76,19 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
     private RecyclerView mRecyclerView;
     private String mSelectedCountryCode;
     private String mSelectedCurrencyCode;
+    private boolean mIsPortraitMode;
     private TransferMethodTypesAdapter mTransferMethodTypesAdapter;
 
     public SelectTransferMethodFragment() {
     }
 
-    public static SelectTransferMethodFragment newInstance() {
+    public static SelectTransferMethodFragment newInstance(final boolean isPortraitMode) {
         SelectTransferMethodFragment selectTransferMethodFragment = new SelectTransferMethodFragment();
 
         Bundle arguments = new Bundle();
         arguments.putString(ARGUMENT_COUNTRY_CODE_SELECTED, selectTransferMethodFragment.mSelectedCountryCode);
         arguments.putString(ARGUMENT_CURRENCY_CODE_SELECTED, selectTransferMethodFragment.mSelectedCurrencyCode);
+        arguments.putBoolean(ARGUMENT_SCREEN_ORIENTATION_PORTRAIT, isPortraitMode);
         selectTransferMethodFragment.setArguments(arguments);
         return selectTransferMethodFragment;
     }
@@ -185,7 +187,6 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
         mRecyclerView.setAdapter(mTransferMethodTypesAdapter);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mRecyclerView.addItemDecoration(new HorizontalDividerItemDecorator(requireContext(), true));
     }
 
     @Override
@@ -205,9 +206,11 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
         if (savedInstanceState != null) {
             mSelectedCurrencyCode = savedInstanceState.getString(ARGUMENT_CURRENCY_CODE_SELECTED);
             mSelectedCountryCode = savedInstanceState.getString(ARGUMENT_COUNTRY_CODE_SELECTED);
+            mIsPortraitMode = savedInstanceState.getBoolean(ARGUMENT_SCREEN_ORIENTATION_PORTRAIT, false);
         } else {
             mSelectedCurrencyCode = getArguments().getString(ARGUMENT_CURRENCY_CODE_SELECTED);
             mSelectedCountryCode = getArguments().getString(ARGUMENT_COUNTRY_CODE_SELECTED);
+            mIsPortraitMode = getArguments().getBoolean(ARGUMENT_SCREEN_ORIENTATION_PORTRAIT, false);
         }
         mCountryValue.setText(getCountryDisplay(mSelectedCountryCode));
         mCurrencyValue.setText(mSelectedCurrencyCode);
@@ -218,6 +221,7 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
     public void onSaveInstanceState(@NonNull Bundle outState) {
         outState.putString(ARGUMENT_COUNTRY_CODE_SELECTED, mSelectedCountryCode);
         outState.putString(ARGUMENT_CURRENCY_CODE_SELECTED, mSelectedCurrencyCode);
+        outState.putBoolean(ARGUMENT_SCREEN_ORIENTATION_PORTRAIT, mIsPortraitMode);
         super.onSaveInstanceState(outState);
     }
 
@@ -330,6 +334,7 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
         intent.putExtra(AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_CURRENCY, currency);
         intent.putExtra(AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_TYPE, transferMethodType);
         intent.putExtra(AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_PROFILE_TYPE, profileType);
+        intent.putExtra(AddTransferMethodActivity.EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT, mIsPortraitMode);
         getActivity().startActivityForResult(intent, ADD_TRANSFER_METHOD_REQUEST_CODE);
     }
 
@@ -473,8 +478,7 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
 
         class ViewHolder extends RecyclerView.ViewHolder {
             final TextView mTitle;
-            final TextView mDescriptionProcessingTime;
-            final TextView mDescriptionFees;
+            final TextView mDescriptionFeesAndProcessingTime;
             final TextView mIcon;
             final TransferMethodSelectionItemListener mTransferMethodSelectionItemListener;
 
@@ -483,35 +487,34 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
                 super(itemView);
                 mTitle = itemView.findViewById(R.id.transfer_method_type_title);
                 mIcon = itemView.findViewById(R.id.transfer_method_type_icon);
-                mDescriptionFees = itemView.findViewById(R.id.transfer_method_type_description_1);
-                mDescriptionProcessingTime = itemView.findViewById(R.id.transfer_method_type_description_2);
+                mDescriptionFeesAndProcessingTime = itemView.findViewById(R.id.transfer_method_type_description_1);
                 mTransferMethodSelectionItemListener = transferMethodSelectionItemListener;
                 itemView.findViewById(R.id.transfer_method_context_button).setVisibility(View.GONE);
+                itemView.findViewById(R.id.transfer_method_type_description_2).setVisibility(View.GONE);
             }
 
-            @SuppressLint("StringFormatInvalid")
             void bind(TransferMethodSelectionItem selectionItem) {
                 mTitle.setText(selectionItem.getTransferMethodName());
-                mIcon.setText(
-                        getStringFontIcon(mIcon.getContext(), selectionItem.getTransferMethodType()));
+                mIcon.setText(getStringFontIcon(mIcon.getContext(), selectionItem.getTransferMethodType()));
+                String formattedFee = FeeFormatter.getFormattedFee(mTitle.getContext(), selectionItem.getFees());
 
-                if (selectionItem.getFees() != null && !selectionItem.getFees().isEmpty()) {
-                    String formattedFee = FeeFormatter.getFormattedFee(mTitle.getContext(), selectionItem.getFees());
-                    mDescriptionFees.setText(mDescriptionFees.getContext()
-                            .getString(R.string.select_transfer_method_item_fee_information, formattedFee));
-                    mDescriptionFees.setVisibility(View.VISIBLE);
-                } else {
-                    mDescriptionFees.setVisibility(View.GONE);
-                }
-
-                if (selectionItem.getProcessingTime() != null && !TextUtils.isEmpty(
-                        selectionItem.getProcessingTime().getValue())) {
-                    mDescriptionProcessingTime.setText(mDescriptionProcessingTime.getContext()
-                            .getString(R.string.select_transfer_method_item_processing_time_information,
+                if (isFeeAvailable(selectionItem.getFees())
+                        && isProcessingTimeAvailable(selectionItem.getProcessingTime())) {
+                    mDescriptionFeesAndProcessingTime.setVisibility(View.VISIBLE);
+                    mDescriptionFeesAndProcessingTime.setText(mDescriptionFeesAndProcessingTime.getContext()
+                            .getString(R.string.feeAndProcessingTimeInformation, formattedFee,
                                     selectionItem.getProcessingTime().getValue()));
-                    mDescriptionProcessingTime.setVisibility(View.VISIBLE);
+                } else if (isFeeAvailable(selectionItem.getFees())
+                        && !isProcessingTimeAvailable(selectionItem.getProcessingTime())) {
+                    mDescriptionFeesAndProcessingTime.setVisibility(View.VISIBLE);
+                    mDescriptionFeesAndProcessingTime.setText(mDescriptionFeesAndProcessingTime.getContext()
+                            .getString(R.string.feeInformation, formattedFee));
+                } else if (isProcessingTimeAvailable(selectionItem.getProcessingTime())
+                        && !isFeeAvailable(selectionItem.getFees())) {
+                    mDescriptionFeesAndProcessingTime.setVisibility(View.VISIBLE);
+                    mDescriptionFeesAndProcessingTime.setText(selectionItem.getProcessingTime().getValue());
                 } else {
-                    mDescriptionProcessingTime.setVisibility(View.INVISIBLE);
+                    mDescriptionFeesAndProcessingTime.setVisibility(View.INVISIBLE);
                 }
 
                 itemView.setOnClickListener(new OneClickListener() {

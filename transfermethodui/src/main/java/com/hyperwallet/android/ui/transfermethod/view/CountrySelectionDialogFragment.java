@@ -107,7 +107,7 @@ public class CountrySelectionDialogFragment extends DialogFragment implements To
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Toolbar toolbar = view.findViewById(R.id.country_selection_toolbar);
-        toolbar.setTitle(R.string.select_transfer_method_country);
+        toolbar.setTitle(R.string.mobileCountryRegion);
         toolbar.setNavigationIcon(R.drawable.ic_close_14dp);
 
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
@@ -314,7 +314,6 @@ public class CountrySelectionDialogFragment extends DialogFragment implements To
         }
 
         class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-            private final TextView mCountryCode;
             private final CountrySelectionItemClickListener mCountrySelectionItemClickListener;
             private final ImageView mCountryItemSelectedImage;
             private final TextView mCountryName;
@@ -323,7 +322,6 @@ public class CountrySelectionDialogFragment extends DialogFragment implements To
                     @NonNull final CountrySelectionItemClickListener countrySelectionItemClickListener) {
                 super(itemView);
                 mCountryName = itemView.findViewById(R.id.country_name);
-                mCountryCode = itemView.findViewById(R.id.country_code);
                 mCountryItemSelectedImage = itemView.findViewById(R.id.country_item_selected_image);
                 mCountrySelectionItemClickListener = countrySelectionItemClickListener;
             }
@@ -340,13 +338,10 @@ public class CountrySelectionDialogFragment extends DialogFragment implements To
             void bind(String countryName) {
                 itemView.setOnClickListener(this);
                 mCountryName.setText(countryName);
-                mCountryCode.setText(mCountryNameCodeMap.get(countryName));
                 if (countryName.equals(mSelectedCountryName)) {
                     mCountryItemSelectedImage.setVisibility(View.VISIBLE);
-                    mCountryCode.setVisibility(View.GONE);
                 } else {
                     mCountryItemSelectedImage.setVisibility(View.GONE);
-                    mCountryCode.setVisibility(View.VISIBLE);
                 }
             }
 
