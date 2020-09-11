@@ -38,7 +38,7 @@ subprojects {
         targetVersion = 28
         codeVersion = 1
 
-        hyperwalletCoreVersion = '1.0.0-beta06'
+        hyperwalletCoreVersion = '1.0.0-beta07-SNAPSHOT'
         hyperwalletInsightVersion = '1.0.0-beta02'
         //
         androidMaterialVersion = '1.0.0'
