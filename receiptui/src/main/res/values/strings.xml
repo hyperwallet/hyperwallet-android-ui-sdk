@@ -157,4 +157,9 @@
     <string name="prepaid_card_emergency_card">Emergency card</string>
     <string name="prepaid_card_income">Income</string>
     <string name="prepaid_card_load_fee">Fee for load pan</string>
+    <string name="prepaid_card_refund_fee">Refund Fee</string>
+    <string name="prepaid_card_monthly_maintenance_fee">Monthly Maintenance Fee</string>
+    <string name="prepaid_card_transaction_fee">Transaction Fee</string>
+    <string name="prepaid_card_sms_fee">SMS Fee</string>
+    <string name="prepaid_card_declined_authorization_fee">Declined Authorization Fee</string>
 </resources>
