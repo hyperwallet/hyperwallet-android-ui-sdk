@@ -162,4 +162,7 @@
     <string name="prepaid_card_transaction_fee">Transaction Fee</string>
     <string name="prepaid_card_sms_fee">SMS Fee</string>
     <string name="prepaid_card_declined_authorization_fee">Declined Authorization Fee</string>
+    <string name="fispc">Purchase</string>
+    <string name="visa">Visa</string>
+    <string name="mastercard">Mastercard</string>
 </resources>
