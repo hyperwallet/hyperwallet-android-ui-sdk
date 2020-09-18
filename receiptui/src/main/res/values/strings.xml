@@ -134,4 +134,35 @@
     <string name="transfer_to_wire">Wire Transfer</string>
     <string name="wire_transfer_fee">Wire Transfer Fee</string>
     <string name="wire_transfer_return">Wire Transfer Return</string>
+
+    <!-- New exposed receipt types -->
+    <string name="paypal_account_transfer_return">Cashout Return</string>
+    <string name="venmo_account_transfer_return">Cashout Return</string>
+    <string name="prepaid_card_account_deposit">Portal deposit</string>
+    <string name="prepaid_card_annual_fee_discount">Annual fee discount</string>
+    <string name="prepaid_card_bill_reprint_fee">Bill re-print</string>
+    <string name="prepaid_card_atm_or_cash_advance_fee">ATM Fee/Cash Advance Fee</string>
+    <string name="prepaid_card_cash_advance_chargeback">Cash Advance Chargeback</string>
+    <string name="prepaid_card_cash_advance_chargeback_reversal">Cash Advance Chargeback Reversal</string>
+    <string name="prepaid_card_cash_advance_repress">Cash Advance Repress</string>
+    <string name="prepaid_card_cash_advance_repress_reversal">Advance Repress Reversal</string>
+    <string name="prepaid_card_chargeback">Chargeback</string>
+    <string name="prepaid_card_chargeback_refund">Chargeback Refund</string>
+    <string name="prepaid_card_chargeback_refund_reversal">Chargeback Refund Reversal</string>
+    <string name="prepaid_card_chargeback_reversal">Chargeback Reversal</string>
+    <string name="prepaid_card_commission_or_fee">Fee / Commission</string>
+    <string name="prepaid_card_debit_transfer">Debit/Transfers</string>
+    <string name="prepaid_card_document_request_fee">Requests for copies of documents</string>
+    <string name="prepaid_card_emergency_cash">Emergency money</string>
+    <string name="prepaid_card_emergency_card">Emergency card</string>
+    <string name="prepaid_card_income">Income</string>
+    <string name="prepaid_card_load_fee">Fee for load pan</string>
+    <string name="prepaid_card_refund_fee">Refund Fee</string>
+    <string name="prepaid_card_monthly_maintenance_fee">Monthly Maintenance Fee</string>
+    <string name="prepaid_card_transaction_fee">Transaction Fee</string>
+    <string name="prepaid_card_sms_fee">SMS Fee</string>
+    <string name="prepaid_card_declined_authorization_fee">Declined Authorization Fee</string>
+    <string name="fispc">Purchase</string>
+    <string name="visa">Visa</string>
+    <string name="mastercard">Mastercard</string>
 </resources>
