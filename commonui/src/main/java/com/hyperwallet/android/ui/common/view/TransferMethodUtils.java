@@ -17,6 +17,7 @@
 package com.hyperwallet.android.ui.common.view;
 
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.BANK_ACCOUNT_ID;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.CARD_BRAND;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.CARD_NUMBER;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.EMAIL;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TYPE;
@@ -151,11 +152,14 @@ public class TransferMethodUtils {
 
         switch (type) {
             case BANK_CARD:
+                return getFourDigitsIdentification(context, transferMethod, CARD_NUMBER,
+                        R.string.endingIn);
             case PREPAID_CARD:
-                return getFourDigitsIdentification(context,
+                return getFourDigitsIdentificationWithCardBrand(context,
                         transferMethod,
                         CARD_NUMBER,
-                        R.string.endingIn);
+                        CARD_BRAND,
+                        R.string.card_brand_with_four_digits);
             case BANK_ACCOUNT:
             case WIRE_ACCOUNT:
                 return getFourDigitsIdentification(context, transferMethod, BANK_ACCOUNT_ID,
@@ -169,9 +173,9 @@ public class TransferMethodUtils {
     }
 
     private static String getFourDigitsIdentification(@NonNull final Context context,
-            @NonNull final TransferMethod transferMethod,
-            @NonNull @TransferMethod.TransferMethodFieldKey final String fieldKey,
-            @StringRes final int stringResId) {
+                                                        @NonNull final TransferMethod transferMethod,
+                                                        @NonNull @TransferMethod.TransferMethodFieldKey final String fieldKey,
+                                                        @StringRes final int stringResId) {
         final String transferIdentification = transferMethod.getField(fieldKey);
 
         final String identificationText =
@@ -180,5 +184,22 @@ public class TransferMethodUtils {
                         : !TextUtils.isEmpty(transferIdentification) ? transferIdentification : "";
 
         return context.getString(stringResId, identificationText);
+    }
+
+    private static String getFourDigitsIdentificationWithCardBrand(@NonNull final Context context,
+                                                      @NonNull final TransferMethod transferMethod,
+                                                      @NonNull @TransferMethod.TransferMethodFieldKey final String card_no_fieldKey,
+                                                                  @NonNull @TransferMethod.TransferMethodFieldKey final String card_brand_fieldKey,
+                                                      @StringRes final int stringResId) {
+        final String transferIdentification = transferMethod.getField(card_no_fieldKey);
+        final String cardBrandIdentification = transferMethod.getField(card_brand_fieldKey);
+        final String cardBrand = cardBrandIdentification !=null ? getStringResourceByName(context,cardBrandIdentification):"";
+
+        final String identificationText =
+                !TextUtils.isEmpty(transferIdentification) && transferIdentification.length() > LAST_FOUR_DIGIT
+                        ? transferIdentification.substring(transferIdentification.length() - LAST_FOUR_DIGIT)
+                        : !TextUtils.isEmpty(transferIdentification) ? transferIdentification : "";
+
+        return context.getString(stringResId,cardBrand,identificationText);
     }
 }

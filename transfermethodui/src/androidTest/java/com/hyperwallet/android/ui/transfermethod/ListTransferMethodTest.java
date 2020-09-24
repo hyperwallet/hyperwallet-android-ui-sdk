@@ -149,11 +149,9 @@ public class ListTransferMethodTest {
                 matches(atPosition(4, hasDescendant(withText(R.string.prepaid_card_font_icon)))));
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(4, hasDescendant(withText(R.string.prepaid_card)))));
-        onView(withId(R.id.list_transfer_method_item)).check(matches(atPosition(4, hasDescendant(withText("Canada")))));
         onView(withId(R.id.list_transfer_method_item)).check(
-                matches(atPosition(4, hasDescendant(withText(getEndingIn("3187"))))));
-        onView(withId(R.id.list_transfer_method_item)).check(
-                matches(atPosition(4, hasDescendant(withDrawable(R.drawable.ic_three_dots_16dp)))));
+                matches(atPosition(4, hasDescendant(withText(getCardBrandWithFourDigits("Visa","3187"))))));
+        onView(withId(R.id.list_transfer_method_item)).check(matches(atPosition(4, hasDescendant(withText("Log in using a web browser to manage your card")))));
 
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(5, hasDescendant(withText(R.string.paypal_account_font_icon)))));
@@ -517,6 +515,12 @@ public class ListTransferMethodTest {
     private String getEndingIn(String ending) {
         return String.format(InstrumentationRegistry.getInstrumentation().getTargetContext()
                 .getString(R.string.endingIn),ending);
+
+    }
+
+    private String getCardBrandWithFourDigits(String cardBrand,String ending) {
+        return String.format(InstrumentationRegistry.getInstrumentation().getTargetContext()
+                .getString(R.string.card_brand_with_four_digits),cardBrand,ending);
 
     }
 

@@ -15,6 +15,8 @@
     <string name="paypal_account">PayPal</string>
     <string name="venmo_account">Venmo</string>
     <string name="cash_pickup_mg">MoneyGram</string>
+    <string name="visa">Visa</string>
+    <string name="mastercard">Mastercard</string>
 
     <string name="bank_account_font_icon">\ue900</string>
     <string name="bank_card_font_icon">\ue903</string>
@@ -26,6 +28,7 @@
     <string name="cash_pickup_mg_font_icon">\ue905</string>
 
     <string name="endingIn">ending in %s</string>
+    <string name="card_brand_with_four_digits">%1s \u00b7\u00b7\u00b7\u00b7 %2s</string>
     <string name="to">to %s</string>
     <string name="not_translated_in_braces">(not translated)</string>
 
@@ -33,4 +36,5 @@
     <string name="cancelButtonLabel">Cancel</string>
     <string name="remove">Remove</string>
     <string name="mobileAreYouSure">Are you sure?</string>
+    <string name="prepaid_card_management_info">"Log in using a web browser to manage your card"</string>
 </resources>

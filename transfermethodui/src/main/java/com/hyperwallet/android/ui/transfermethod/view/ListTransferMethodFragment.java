@@ -18,6 +18,7 @@ package com.hyperwallet.android.ui.transfermethod.view;
 
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TRANSFER_METHOD_COUNTRY;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TYPE;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.PREPAID_CARD;
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getStringFontIcon;
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getStringResourceByName;
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getTransferMethodDetail;
@@ -361,8 +362,18 @@ public class ListTransferMethodFragment extends Fragment implements ListTransfer
                 Locale locale = new Locale.Builder().setRegion(
                         transferMethod.getField(TRANSFER_METHOD_COUNTRY)).build();
                 mIcon.setText(getStringFontIcon(mIcon.getContext(), type));
-                mTransferMethodCountry.setText(locale.getDisplayName());
-                mTransferMethodIdentification.setText(transferMethodIdentification);
+                if(type.equals(PREPAID_CARD))
+                {
+                    mImageButton.setVisibility(View.GONE);
+                    mTransferMethodCountry.setText(transferMethodIdentification);
+                    mTransferMethodIdentification.setText(mTransferMethodIdentification.getContext().getString(R.string.prepaid_card_management_info));
+
+                }
+                else {
+                    mImageButton.setVisibility(View.VISIBLE);
+                    mTransferMethodCountry.setText(locale.getDisplayName());
+                    mTransferMethodIdentification.setText(transferMethodIdentification);
+                }
 
                 mImageButton.setOnClickListener(new View.OnClickListener() {
                     @Override
