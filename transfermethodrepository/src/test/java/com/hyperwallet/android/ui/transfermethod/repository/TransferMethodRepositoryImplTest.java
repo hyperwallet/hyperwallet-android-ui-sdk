@@ -36,6 +36,7 @@ import com.hyperwallet.android.model.transfermethod.BankCard;
 import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import com.hyperwallet.android.model.transfermethod.TransferMethodQueryParam;
 import com.hyperwallet.android.model.transfermethod.PayPalAccount;
+import com.hyperwallet.android.model.transfermethod.VenmoAccount;
 
 import org.hamcrest.Matchers;
 import org.junit.Before;
@@ -78,6 +79,8 @@ public class TransferMethodRepositoryImplTest {
     private ArgumentCaptor<Errors> mErrorsArgumentCaptor;
     @Captor
     private ArgumentCaptor<BankAccount> mBankAccountArgumentCaptor;
+    @Captor
+    private ArgumentCaptor<VenmoAccount> mVenmoAccountArgumentCaptor;
     @Captor
     private ArgumentCaptor<BankCard> mBankCardArgumentCaptor;
     @Captor
@@ -782,4 +785,75 @@ public class TransferMethodRepositoryImplTest {
         assertThat(mQueryParamCaptor.getValue().getStatus(), is(ACTIVATED));
         assertThat(mQueryParamCaptor.getValue().getSortBy(), is("-createdOn"));
     }
+    //======================= VENMO ============================
+    @Test
+    public void testCreateTransferMethod_VenmoWithSuccess() {
+        VenmoAccount venmoAccount = new VenmoAccount.Builder("CA","CAD","3423423432").build();
+
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                HyperwalletListener listener = (HyperwalletListener) invocation.getArguments()[1];
+                VenmoAccount returnVenmoAccount = new VenmoAccount.Builder("CA","CAD","3423423432").build();
+                listener.onSuccess(returnVenmoAccount);
+                return listener;
+            }
+        }).when(mHyperwallet).createVenmoAccount(any(VenmoAccount.class),
+                ArgumentMatchers.<HyperwalletListener<VenmoAccount>>any());
+
+        // test
+        mTransferMethodRepository.createTransferMethod(venmoAccount, mLoadTransferMethodCallback);
+
+        verify(mLoadTransferMethodCallback).onTransferMethodLoaded(mVenmoAccountArgumentCaptor.capture());
+        verify(mLoadTransferMethodCallback, never()).onError(any(Errors.class));
+
+        VenmoAccount transferMethod = mVenmoAccountArgumentCaptor.getValue();
+        assertThat(transferMethod, is(notNullValue()));
+        assertThat(transferMethod.getField(TYPE), is(TransferMethod.TransferMethodTypes.VENMO_ACCOUNT));
+        // assertThat(transferMethod.getField(BANK_NAME), is("Mock Bank Response"));
+        assertThat(transferMethod.getField(TRANSFER_METHOD_COUNTRY), is("CA"));
+        assertThat(transferMethod.getField(TRANSFER_METHOD_CURRENCY), is("CAD"));
+        assertThat(transferMethod.getField(TransferMethod.TransferMethodFields.VENMO_ACCOUNT_ID), is("3423423432"));
+    }
+
+
+    @Test
+    public void testDeactivateTransferMethod_venmoAccountWithSuccess() {
+        VenmoAccount venmoAccount = new VenmoAccount
+                .Builder("CA", "CAD", "3423423432")
+                .token("test-fake-token")
+                .build();
+        venmoAccount.setField(STATUS, StatusTransition.StatusDefinition.ACTIVATED);
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                StatusTransition statusTransition = new StatusTransition.Builder()
+                        .transition(DE_ACTIVATED)
+                        .notes("Closing this account.").build();
+                HyperwalletListener listener = (HyperwalletListener) invocation.getArguments()[2];
+                listener.onSuccess(statusTransition);
+                return listener;
+            }
+        }).when(mHyperwallet).deactivateVenmoAccount(anyString(), ArgumentMatchers.<String>isNull(),
+                ArgumentMatchers.<HyperwalletListener<StatusTransition>>any());
+/*
+        Examples of correct argument capturing:
+        ArgumentCaptor<Person> argument = ArgumentCaptor.forClass(Person.class);
+        verify(mock).doSomething(argument.capture());
+        assertEquals("John", argument.getValue().getName());
+
+ */
+        // test
+        mTransferMethodRepository.deactivateTransferMethod(venmoAccount, mDeactivateTransferMethodCallback);
+        // DeactivateTransferMethodCallback
+        verify(mDeactivateTransferMethodCallback).onTransferMethodDeactivated(
+                mStatusTransitionArgumentCaptor.capture());
+        verify(mDeactivateTransferMethodCallback, never()).onError(any(Errors.class));
+
+        StatusTransition statusTransition = mStatusTransitionArgumentCaptor.getValue();
+        assertThat(statusTransition, is(notNullValue()));
+        assertThat(statusTransition.getTransition(), is(DE_ACTIVATED));
+        assertThat(statusTransition.getNotes(), is("Closing this account."));
+    }
+
 }
