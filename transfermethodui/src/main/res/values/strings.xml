@@ -76,4 +76,5 @@
     <string name="mobileTransferMethodsHeader">Transfer methods</string>
 
     <string name="mobileRemoveEAconfirm">Remove transfer method</string>
+    <string name="prepaid_card_management_info">"Log in using a web browser to manage your card"</string>
 </resources>
