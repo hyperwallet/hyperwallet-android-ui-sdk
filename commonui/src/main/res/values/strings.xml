@@ -28,7 +28,6 @@
     <string name="cash_pickup_mg_font_icon">\ue905</string>
 
     <string name="endingIn">ending in %s</string>
-    <string name="card_brand_with_four_digits">%1s \u00b7\u00b7\u00b7\u00b7 %2s</string>
     <string name="to">to %s</string>
     <string name="not_translated_in_braces">(not translated)</string>
 

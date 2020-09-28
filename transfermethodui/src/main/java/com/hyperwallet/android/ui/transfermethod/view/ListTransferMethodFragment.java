@@ -362,14 +362,12 @@ public class ListTransferMethodFragment extends Fragment implements ListTransfer
                 Locale locale = new Locale.Builder().setRegion(
                         transferMethod.getField(TRANSFER_METHOD_COUNTRY)).build();
                 mIcon.setText(getStringFontIcon(mIcon.getContext(), type));
-                if(type.equals(PREPAID_CARD))
-                {
+                if (type.equals(PREPAID_CARD)) {
                     mImageButton.setVisibility(View.GONE);
                     mTransferMethodCountry.setText(transferMethodIdentification);
-                    mTransferMethodIdentification.setText(mTransferMethodIdentification.getContext().getString(R.string.prepaid_card_management_info));
-
-                }
-                else {
+                    mTransferMethodIdentification.setText(
+                            mTransferMethodIdentification.getContext().getString(R.string.prepaidCardManagementInfo));
+                } else {
                     mImageButton.setVisibility(View.VISIBLE);
                     mTransferMethodCountry.setText(locale.getDisplayName());
                     mTransferMethodIdentification.setText(transferMethodIdentification);

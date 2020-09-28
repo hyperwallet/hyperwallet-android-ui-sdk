@@ -519,8 +519,7 @@ public class ListTransferMethodTest {
     }
 
     private String getCardBrandWithFourDigits(String cardBrand,String ending) {
-        return String.format(InstrumentationRegistry.getInstrumentation().getTargetContext()
-                .getString(R.string.card_brand_with_four_digits),cardBrand,ending);
+        return cardBrand+"\u0020\u2022\u2022\u2022\u2022\u0020"+ending;
 
     }
 
