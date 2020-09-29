@@ -150,8 +150,9 @@ public class ListTransferMethodTest {
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(4, hasDescendant(withText(R.string.prepaid_card)))));
         onView(withId(R.id.list_transfer_method_item)).check(
-                matches(atPosition(4, hasDescendant(withText(getCardBrandWithFourDigits("Visa","3187"))))));
-        onView(withId(R.id.list_transfer_method_item)).check(matches(atPosition(4, hasDescendant(withText("Log in using a web browser to manage your card")))));
+                matches(atPosition(4, hasDescendant(withText(getCardBrandWithFourDigits("Visa", "3187"))))));
+        onView(withId(R.id.list_transfer_method_item)).check(
+                matches(atPosition(4, hasDescendant(withText("Log in using a web browser to manage your card")))));
 
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(5, hasDescendant(withText(R.string.paypal_account_font_icon)))));
@@ -263,8 +264,9 @@ public class ListTransferMethodTest {
 
         // confirmation dialog is shown before deletion
         onView(withText(R.string.mobileAreYouSure)).check(matches(isDisplayed()));
-        String confirmMessageBody = getRemoveConfirmationMessage(InstrumentationRegistry.getInstrumentation().getTargetContext()
-                .getString(R.string.bank_account));
+        String confirmMessageBody = getRemoveConfirmationMessage(
+                InstrumentationRegistry.getInstrumentation().getTargetContext()
+                        .getString(R.string.bank_account));
         onView(withText(confirmMessageBody)).check(matches(isDisplayed()));
         onView(withId(android.R.id.button1)).check(matches(withText(R.string.remove)));
         onView(withId(android.R.id.button2)).check(matches(withText(R.string.cancelButtonLabel)));
@@ -341,8 +343,9 @@ public class ListTransferMethodTest {
 
         // confirmation dialog is shown before deletion
         onView(withText(R.string.mobileAreYouSure)).check(matches(isDisplayed()));
-        String confirmMessageBody = getRemoveConfirmationMessage(InstrumentationRegistry.getInstrumentation().getTargetContext()
-                .getString(R.string.bank_card));
+        String confirmMessageBody = getRemoveConfirmationMessage(
+                InstrumentationRegistry.getInstrumentation().getTargetContext()
+                        .getString(R.string.bank_card));
         onView(withText(confirmMessageBody)).check(matches(isDisplayed()));
         onView(withId(android.R.id.button1)).check(matches(withText(R.string.remove)));
         onView(withId(android.R.id.button2)).check(matches(withText(R.string.cancelButtonLabel)));
@@ -407,8 +410,9 @@ public class ListTransferMethodTest {
 
         // confirmation dialog is shown before deletion
         onView(withText(R.string.mobileAreYouSure)).check(matches(isDisplayed()));
-        String confirmMessageBody = getRemoveConfirmationMessage(InstrumentationRegistry.getInstrumentation().getTargetContext()
-                .getString(R.string.paypal_account));
+        String confirmMessageBody = getRemoveConfirmationMessage(
+                InstrumentationRegistry.getInstrumentation().getTargetContext()
+                        .getString(R.string.paypal_account));
         onView(withText(confirmMessageBody)).check(matches(isDisplayed()));
         onView(withId(android.R.id.button1)).check(matches(withText(R.string.remove)));
         onView(withId(android.R.id.button2)).check(matches(withText(R.string.cancelButtonLabel)));
@@ -456,8 +460,9 @@ public class ListTransferMethodTest {
 
         // confirmation dialog is shown before deletion
         onView(withText(R.string.mobileAreYouSure)).check(matches(isDisplayed()));
-        String confirmMessageBody = getRemoveConfirmationMessage(InstrumentationRegistry.getInstrumentation().getTargetContext()
-                .getString(R.string.bank_account));
+        String confirmMessageBody = getRemoveConfirmationMessage(
+                InstrumentationRegistry.getInstrumentation().getTargetContext()
+                        .getString(R.string.bank_account));
         onView(withText(confirmMessageBody)).check(matches(isDisplayed()));
         onView(withId(android.R.id.button1)).check(matches(withText(R.string.remove)));
         onView(withId(android.R.id.button2)).check(matches(withText(R.string.cancelButtonLabel)));
@@ -494,8 +499,9 @@ public class ListTransferMethodTest {
         onView(withText(R.string.remove)).check(matches(isDisplayed())).perform(click());
 
         // Assert Remove confirmation dialog is not shown
-        String confirmMessageBody = getRemoveConfirmationMessage(InstrumentationRegistry.getInstrumentation().getTargetContext()
-                .getString(R.string.paper_check));
+        String confirmMessageBody = getRemoveConfirmationMessage(
+                InstrumentationRegistry.getInstrumentation().getTargetContext()
+                        .getString(R.string.paper_check));
         onView(withText(R.string.mobileAreYouSure)).check(matches(isDisplayed()));
         onView(withText(confirmMessageBody)).check(matches(isDisplayed()));
 
@@ -514,13 +520,12 @@ public class ListTransferMethodTest {
 
     private String getEndingIn(String ending) {
         return String.format(InstrumentationRegistry.getInstrumentation().getTargetContext()
-                .getString(R.string.endingIn),ending);
+                .getString(R.string.endingIn), ending);
 
     }
 
-    private String getCardBrandWithFourDigits(String cardBrand,String ending) {
-        return cardBrand+"\u0020\u2022\u2022\u2022\u2022\u0020"+ending;
-
+    private String getCardBrandWithFourDigits(String cardBrand, String endingDigits) {
+        return cardBrand + "\u0020\u2022\u2022\u2022\u2022\u0020" + endingDigits;
     }
 
     private String getRemoveConfirmationMessage(String type) {
