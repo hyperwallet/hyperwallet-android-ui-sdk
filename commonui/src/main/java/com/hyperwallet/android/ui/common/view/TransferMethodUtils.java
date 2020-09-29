@@ -156,9 +156,7 @@ public class TransferMethodUtils {
                         R.string.endingIn);
             case PREPAID_CARD:
                 return getFourDigitsIdentificationWithCardBrand(context,
-                        transferMethod,
-                        CARD_NUMBER,
-                        CARD_BRAND);
+                        transferMethod);
             case BANK_ACCOUNT:
             case WIRE_ACCOUNT:
                 return getFourDigitsIdentification(context, transferMethod, BANK_ACCOUNT_ID,
@@ -186,11 +184,9 @@ public class TransferMethodUtils {
     }
 
     private static String getFourDigitsIdentificationWithCardBrand(@NonNull final Context context,
-            @NonNull final TransferMethod transferMethod,
-            @NonNull @TransferMethod.TransferMethodFieldKey final String cardNumberFieldKey,
-            @NonNull @TransferMethod.TransferMethodFieldKey final String cardBrandFieldKey) {
-        final String transferIdentification = transferMethod.getField(cardNumberFieldKey);
-        final String cardBrandIdentification = transferMethod.getField(cardBrandFieldKey);
+            @NonNull final TransferMethod transferMethod) {
+        final String transferIdentification = transferMethod.getField(CARD_NUMBER);
+        final String cardBrandIdentification = transferMethod.getField(CARD_BRAND);
         final String cardBrand = cardBrandIdentification != null ? getStringResourceByName(context,
                 cardBrandIdentification) : "";
 
