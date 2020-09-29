@@ -1,0 +1,73 @@
+{
+  "count": 1,
+  "offset": 0,
+  "limit": 5,
+  "data": [
+    {
+      "token": "trm-token",
+      "type": "PREPAID_CARD",
+      "status": "ACTIVATED",
+      "verificationStatus": "VERIFIED",
+      "createdOn": "2019-06-20T22:49:12",
+      "transferMethodCountry": "CA",
+      "transferMethodCurrency": "USD",
+      "cardType": "VIRTUAL",
+      "cardPackage": "L1",
+      "cardNumber": "************8766",
+      "cardBrand": "VISA",
+      "dateOfExpiry": "2023-06",
+      "userToken": "usr-02d381d3-bf7e-43fe-9d00-02e26b28df57",
+      "links": [
+        {
+          "params": {
+            "rel": "self"
+          },
+          "href": "https://localhost:8181/rest/v3/users/usr-token/transfer-methods/trm-token"
+        }
+      ]
+    },
+    {
+      "token": "trm-token",
+      "type": "PREPAID_CARD",
+      "status": "ACTIVATED",
+      "verificationStatus": "VERIFIED",
+      "createdOn": "2019-06-20T22:49:12",
+      "transferMethodCountry": "CA",
+      "transferMethodCurrency": "USD",
+      "cardType": "VIRTUAL",
+      "cardPackage": "L1",
+      "cardNumber": "************8767",
+      "cardBrand": "MASTERCARD",
+      "dateOfExpiry": "2023-06",
+      "userToken": "usr-02d381d3-bf7e-43fe-9d00-02e26b28df57",
+      "links": [
+        {
+          "params": {
+            "rel": "self"
+          },
+          "href": "https://localhost:8181/rest/v3/users/usr-token/transfer-methods/trm-token"
+        }
+      ]
+    }
+  ],
+  "links": [
+    {
+      "params": {
+        "rel": "self"
+      },
+      "href": "https://localhost:8181/rest/v3/users/test-user-token/bank-accounts?offset=0&limit=10"
+    },
+    {
+      "params": {
+        "rel": "next"
+      },
+      "href": "https://localhost:8181/rest/v3/users/test-user-token/bank-accounts?offset=10&limit=10"
+    },
+    {
+      "params": {
+        "rel": "last"
+      },
+      "href": "https://localhost:8181/rest/v3/users/test-user-token/bank-accounts?offset=14&limit=10"
+    }
+  ]
+}
