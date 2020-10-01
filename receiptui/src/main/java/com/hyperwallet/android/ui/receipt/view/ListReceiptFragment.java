@@ -101,6 +101,9 @@ public class ListReceiptFragment extends Fragment {
             transactionHeaderView.setVisibility(View.GONE);
         }
 
+        // Todo: Hide Transaction header from savedInstanceState Bundle.
+        transactionHeaderView.setVisibility(View.GONE);
+
         mEmptyTransactionPlaceholder = view.findViewById(R.id.empty_transaction_list_view);
         mListReceiptsView = view.findViewById(R.id.list_receipts);
         mProgressBar = view.findViewById(R.id.list_receipt_progress_bar);

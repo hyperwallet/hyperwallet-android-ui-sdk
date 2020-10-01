@@ -165,4 +165,9 @@
     <string name="fispc">Purchase</string>
     <string name="visa">Visa</string>
     <string name="mastercard">Mastercard</string>
+
+    <!-- Prepaid Cards Receipt   -->
+    <string name="mobileAvailableBalances">Available funds</string>
+    <string name="prepaidCardTabLabel">%1$s%2$s</string>
+
 </resources>

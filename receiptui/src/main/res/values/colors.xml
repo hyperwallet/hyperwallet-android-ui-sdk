@@ -4,4 +4,6 @@
     <color name="positiveColor">#5FBF00</color>
     <color name="positiveColorSecondary">#F1FAE8</color>
     <color name="negativeColor">@color/colorAccent</color>
+
+    <color name="linkColor">#0070BA</color>
 </resources>

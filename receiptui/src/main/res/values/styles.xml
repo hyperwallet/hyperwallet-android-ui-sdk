@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <style name="Widget.Hyperwallet.ProgressBar.Receipts"
            parent="@style/Widget.AppCompat.ProgressBar">
         <item name="colorAccent">@color/colorPrimary</item>
@@ -62,5 +62,17 @@
 
     <style name="ReceiptItem">
         <item name="android:background">@drawable/view_item_ripple</item>
+    </style>
+
+    <style name="TextAppearance.Hyperwallet.Tab" parent="@style/TextAppearance.MaterialComponents.Caption" tools:ignore="UnusedResources">
+<!--        <item name="android:fontFamily">@font/worksans_semibold</item>-->
+<!--        <item name="fontFamily">@font/worksans_semibold</item>-->
+        <item name="android:textSize">@dimen/font_body1</item>
+    </style>
+
+    <style name="Widget.Hyperwallet.TabLayout" parent="Widget.MaterialComponents.TabLayout">
+        <item name="tabTextAppearance">@style/TextAppearance.Hyperwallet.Tab</item>
+        <item name="tabIndicatorColor">@color/linkColor</item>
+        <item name="tabSelectedTextColor">@color/linkColor</item>
     </style>
 </resources>
