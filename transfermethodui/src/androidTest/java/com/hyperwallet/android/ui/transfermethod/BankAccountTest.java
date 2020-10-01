@@ -45,6 +45,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
+import com.google.android.libraries.cloudtesting.screenshots.ScreenShotter;
 import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
@@ -120,7 +121,7 @@ public class BankAccountTest {
         onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
                 .check(matches(withText(R.string.title_add_bank_account)));
 
-        ScreenShotter.takeScreenshot("AddTransferMethod_Bankaccount", this /* activity */);
+        ScreenShotter.takeScreenshot("AddTransferMethod_Bankaccount", this.mActivityTestRule.getActivity() /* activity */);
 
         String formattedAccountInfo = getAccountInfo(localeUS, "USD");
         onView(allOf(withId(R.id.section_header_title), withText(formattedAccountInfo)))
