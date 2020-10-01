@@ -120,6 +120,8 @@ public class BankAccountTest {
         onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
                 .check(matches(withText(R.string.title_add_bank_account)));
 
+        ScreenShotter.takeScreenshot("AddTransferMethod_Bankaccount", this /* activity */);
+
         String formattedAccountInfo = getAccountInfo(localeUS, "USD");
         onView(allOf(withId(R.id.section_header_title), withText(formattedAccountInfo)))
                 .perform(nestedScrollTo())
