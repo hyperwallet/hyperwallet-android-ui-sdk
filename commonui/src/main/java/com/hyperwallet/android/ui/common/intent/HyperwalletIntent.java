@@ -75,4 +75,10 @@ public final class HyperwalletIntent {
      * Transfer method added, extra activity parcelable transfer method payload
      */
     public static final String EXTRA_TRANSFER_METHOD_ADDED = "EXTRA_TRANSFER_METHOD_ADDED";
+
+    /**
+     * Select transfer source request code
+     */
+    public static final short SELECT_TRANSFER_SOURCE_REQUEST_CODE = 104;
+
 }

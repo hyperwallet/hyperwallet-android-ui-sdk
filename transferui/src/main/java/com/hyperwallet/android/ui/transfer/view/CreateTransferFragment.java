@@ -26,11 +26,13 @@ import static com.hyperwallet.android.model.transfermethod.TransferMethod.Transf
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TYPE;
 import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.ADD_TRANSFER_METHOD_REQUEST_CODE;
 import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.SELECT_TRANSFER_DESTINATION_REQUEST_CODE;
+import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.SELECT_TRANSFER_SOURCE_REQUEST_CODE;
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getStringFontIcon;
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getStringResourceByName;
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getTransferMethodDetail;
 import static com.hyperwallet.android.ui.transfer.view.CreateTransferActivity.EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT;
 import static com.hyperwallet.android.ui.transfer.view.ListTransferDestinationActivity.EXTRA_SELECTED_DESTINATION;
+import static com.hyperwallet.android.ui.transfer.view.ListTransferSourceActivity.EXTRA_SELECTED_SOURCE;
 
 import android.content.Context;
 import android.content.Intent;
@@ -57,10 +59,13 @@ import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import com.hyperwallet.android.ui.common.intent.HyperwalletIntent;
 import com.hyperwallet.android.ui.common.repository.Event;
 import com.hyperwallet.android.ui.common.view.OneClickListener;
+import com.hyperwallet.android.ui.transfer.ProgramModel;
 import com.hyperwallet.android.ui.transfer.R;
+import com.hyperwallet.android.ui.transfer.TransferSourceWrapper;
 import com.hyperwallet.android.ui.transfer.viewmodel.CreateTransferViewModel;
 
 import java.util.Currency;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -81,10 +86,12 @@ public class CreateTransferFragment extends Fragment {
     private EditText mTransferNotes;
     private View mTransferDestination;
     private View mAddTransferDestination;
+    private View mTransferSource;
     private View mTransferHeaderContainerError;
     private TextView mTransferDestinationError;
     private View mTransferAmountErrorContainer;
     private TextView mTransferAmountError;
+    private TextView mTransferSourceAmount;
 
     /**
      * Please don't use this constructor this is reserved for Android Core Framework
@@ -180,6 +187,21 @@ public class CreateTransferFragment extends Fragment {
             }
         });
 
+        // transfer source
+        mTransferSource = view.findViewById(R.id.transfer_source);
+        mTransferSourceAmount = view.findViewById(R.id.transfer_source_description_1);
+        mTransferSource.setOnClickListener(new OneClickListener() {
+            @Override
+            public void onOneClick(View v) {
+                TransferSourceWrapper activeSource =
+                        mCreateTransferViewModel.getTransferSelectedSource().getValue();
+                Intent intent = new Intent(requireContext(), ListTransferSourceActivity.class);
+                intent.putExtra(ListTransferSourceActivity.EXTRA_SELECTED_SOURCE_TOKEN,
+                        activeSource.getToken());
+                startActivityForResult(intent, SELECT_TRANSFER_SOURCE_REQUEST_CODE);
+            }
+        });
+
         // add transfer destination
         mTransferDestinationError = view.findViewById(R.id.transfer_destination_error);
         mTransferHeaderContainerError = view.findViewById(R.id.transfer_header_container_with_error);
@@ -201,6 +223,7 @@ public class CreateTransferFragment extends Fragment {
         });
 
         registerTransferDestinationObservers();
+        registerTransferSourceObservers();
         registerAvailableFundsObserver();
         registerTransferAmountObservers();
         registerErrorObservers();
@@ -224,6 +247,10 @@ public class CreateTransferFragment extends Fragment {
                 mCreateTransferViewModel.setTransferDestination(selectedTransferMethod);
             } else if (requestCode == ADD_TRANSFER_METHOD_REQUEST_CODE) {
                 mCreateTransferViewModel.refreshTransferDestination();
+            } else if (requestCode == SELECT_TRANSFER_SOURCE_REQUEST_CODE && data != null) {
+                TransferSourceWrapper selectedTransferSource = data.getParcelableExtra(EXTRA_SELECTED_SOURCE);
+                mCreateTransferViewModel.setSelectedTransferSource(selectedTransferSource);
+                showTransferSource(selectedTransferSource);
             }
         }
     }
@@ -479,6 +506,42 @@ public class CreateTransferFragment extends Fragment {
                         }
                     }
                 });
+        mCreateTransferViewModel.getTransferSelectedSource().observe(getViewLifecycleOwner(),
+                new Observer<TransferSourceWrapper>() {
+                    @Override
+                    public void onChanged(TransferSourceWrapper transferSourceWrapper) {
+                        showTransferSource(transferSourceWrapper);
+                    }
+                });
+    }
+
+    private void registerTransferSourceObservers() {
+        mCreateTransferViewModel.isLoading().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(final Boolean loading) {
+                if (loading) {
+                    mProgressBar.setVisibility(View.VISIBLE);
+                    disableInputControls();
+                } else {
+                    mProgressBar.setVisibility(View.GONE);
+                    enableInputControls();
+                }
+            }
+        });
+//        mCreateTransferViewModel.getTransferSources().observe(getViewLifecycleOwner(),
+//                new Observer<List<TransferSourceWrapper>>() {
+//                    @Override
+//                    public void onChanged(final List<TransferSourceWrapper> transferSourceWrapperList) {
+//                        if (transferSourceWrapperList != null) {
+//                            mTransferHeaderContainerError.setVisibility(View.GONE);
+//                            if (isWalletModel) {
+//                                TransferSourceWrapper selectedSource = transferSourceWrapperList.get(0);
+//                                showTransferSource(selectedSource);
+//                            }
+//                            enableInputControls();
+//                        }
+//                    }
+//                });
     }
 
     private void registerAvailableFundsObserver() {
@@ -486,10 +549,17 @@ public class CreateTransferFragment extends Fragment {
             @Override
             public void onChanged(final Transfer transfer) {
                 if (transfer != null) {
+                    System.out.println(
+                            "Token " + transfer.getSourceToken() + "---" + transfer.getSourceAmount() + "----"
+                                    + transfer.getDestinationAmount());
                     String summary = requireContext().getString(R.string.mobileAvailableBalance,
                             transfer.getDestinationAmount(), transfer.getDestinationCurrency());
                     mTransferAllFundsSummary.setText(summary);
                     mTransferAllFundsSummary.setVisibility(View.VISIBLE);
+                    String totalAmount = requireContext().getString(R.string.total,
+                            Currency.getInstance(transfer.getDestinationCurrency()).getSymbol(),
+                            transfer.getDestinationAmount(), transfer.getDestinationCurrency());
+                    mTransferSourceAmount.setText(totalAmount);
                 } else {
                     mTransferAllFundsSummary.setVisibility(View.GONE);
                 }
@@ -602,5 +672,15 @@ public class CreateTransferFragment extends Fragment {
         mTransferCurrencyCode.setText(
                 Currency.getInstance(transferMethod.getField(TRANSFER_METHOD_CURRENCY)).getSymbol(Locale.getDefault()));
         mTransferDestination.setVisibility(View.VISIBLE);
+    }
+
+    private void showTransferSource(@NonNull final TransferSourceWrapper transferSourceWrapper) {
+        TextView transferSourceIcon = getView().findViewById(R.id.transfer_source_icon);
+        TextView transferSourceTitle = getView().findViewById(R.id.transfer_source_title);
+        TextView transferSourceIdentifier = getView().findViewById(R.id.transfer_source_description_2);
+
+        transferSourceIdentifier.setText(transferSourceWrapper.getIdentification());
+        transferSourceTitle.setText(transferSourceWrapper.getTitle());
+        transferSourceIcon.setText(getStringFontIcon(transferSourceIcon.getContext(), transferSourceWrapper.getType()));
     }
 }

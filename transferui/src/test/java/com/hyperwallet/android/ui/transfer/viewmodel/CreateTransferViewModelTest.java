@@ -35,6 +35,8 @@ import com.hyperwallet.android.ui.testutils.rule.HyperwalletMockWebServer;
 import com.hyperwallet.android.ui.transfer.repository.TransferRepository;
 import com.hyperwallet.android.ui.transfer.repository.TransferRepositoryFactory;
 import com.hyperwallet.android.ui.transfer.view.CreateTransferActivity;
+import com.hyperwallet.android.ui.transfermethod.repository.PrepaidCardRepository;
+import com.hyperwallet.android.ui.transfermethod.repository.PrepaidCardRepositoryFactory;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepository;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
 import com.hyperwallet.android.ui.user.repository.UserRepository;
@@ -75,6 +77,9 @@ public class CreateTransferViewModelTest {
     private UserRepository mUserRepository;
     @Mock
     private TransferRepository mTransferRepository;
+
+    @Mock
+    private PrepaidCardRepository mPrepaidCardRepository;
 
     private Transfer mTransfer;
     private TransferMethod mTransferMethod;
@@ -162,7 +167,8 @@ public class CreateTransferViewModelTest {
     @Test
     public void testInit_withFundingSource() {
         CreateTransferViewModel viewModel = spy(new CreateTransferViewModel.CreateTransferViewModelFactory(
-                mTransfer.getToken(), mTransferRepository, mTransferMethodRepository, mUserRepository
+                mTransfer.getToken(), mTransferRepository, mTransferMethodRepository, mUserRepository,
+                mPrepaidCardRepository
         ).create(CreateTransferViewModel.class));
         viewModel.init("0");
 
@@ -199,7 +205,7 @@ public class CreateTransferViewModelTest {
     @Test
     public void testInit_withoutFundingSource() {
         CreateTransferViewModel viewModel = spy(new CreateTransferViewModel.CreateTransferViewModelFactory(
-                mTransferRepository, mTransferMethodRepository, mUserRepository
+                mTransferRepository, mTransferMethodRepository, mUserRepository, mPrepaidCardRepository
         ).create(CreateTransferViewModel.class));
         viewModel.init("0");
 
@@ -272,7 +278,7 @@ public class CreateTransferViewModelTest {
     public void testCreateQuoteTransfer_isSuccessful() {
         CreateTransferViewModel.CreateTransferViewModelFactory factory =
                 new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
-                        mTransferMethodRepository, mUserRepository);
+                        mTransferMethodRepository, mUserRepository, mPrepaidCardRepository);
 
         CreateTransferViewModel viewModel = factory.create(CreateTransferViewModel.class);
 
@@ -308,7 +314,7 @@ public class CreateTransferViewModelTest {
     public void testCreateQuoteTransfer_isSuccessfulWithAllAvailableFunds() {
         CreateTransferViewModel.CreateTransferViewModelFactory factory =
                 new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
-                        mTransferMethodRepository, mUserRepository);
+                        mTransferMethodRepository, mUserRepository,mPrepaidCardRepository);
 
         CreateTransferViewModel viewModel = factory.create(CreateTransferViewModel.class);
 
@@ -352,7 +358,7 @@ public class CreateTransferViewModelTest {
 
         CreateTransferViewModel.CreateTransferViewModelFactory factory =
                 new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
-                        mTransferMethodRepository, mUserRepository);
+                        mTransferMethodRepository, mUserRepository,mPrepaidCardRepository);
 
         CreateTransferViewModel viewModel = factory.create(CreateTransferViewModel.class);
         viewModel.setTransferAllAvailableFunds(true);
@@ -394,7 +400,7 @@ public class CreateTransferViewModelTest {
 
         CreateTransferViewModel.CreateTransferViewModelFactory factory =
                 new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
-                        mTransferMethodRepository, mUserRepository);
+                        mTransferMethodRepository, mUserRepository,mPrepaidCardRepository);
 
         CreateTransferViewModel viewModel = factory.create(CreateTransferViewModel.class);
         viewModel.setTransferAllAvailableFunds(true);
@@ -432,7 +438,7 @@ public class CreateTransferViewModelTest {
 
         CreateTransferViewModel.CreateTransferViewModelFactory factory =
                 new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
-                        mTransferMethodRepository, mUserRepository);
+                        mTransferMethodRepository, mUserRepository,mPrepaidCardRepository);
 
         CreateTransferViewModel viewModel = factory.create(CreateTransferViewModel.class);
         viewModel.setTransferAllAvailableFunds(true);
@@ -463,7 +469,7 @@ public class CreateTransferViewModelTest {
     public void testRetry_isTransferSourceTokenUnknown() {
         CreateTransferViewModel.CreateTransferViewModelFactory factory =
                 new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
-                        mTransferMethodRepository, mUserRepository);
+                        mTransferMethodRepository, mUserRepository,mPrepaidCardRepository);
 
         doAnswer(new Answer() {
             @Override
@@ -486,7 +492,7 @@ public class CreateTransferViewModelTest {
     public void testRetry_isTransferDestinationUnknownOnError() {
         CreateTransferViewModel.CreateTransferViewModelFactory factory =
                 new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
-                        mTransferMethodRepository, mUserRepository);
+                        mTransferMethodRepository, mUserRepository,mPrepaidCardRepository);
 
         doAnswer(new Answer() {
             @Override
@@ -512,7 +518,7 @@ public class CreateTransferViewModelTest {
     public void testRetry_isTransferDestinationUnknownNotFound() {
         CreateTransferViewModel.CreateTransferViewModelFactory factory =
                 new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
-                        mTransferMethodRepository, mUserRepository);
+                        mTransferMethodRepository, mUserRepository,mPrepaidCardRepository);
 
         doAnswer(new Answer() {
             @Override
@@ -538,7 +544,7 @@ public class CreateTransferViewModelTest {
     public void testRetry_isQuoteInvalidWithQuoteObjectNull() {
         CreateTransferViewModel.CreateTransferViewModelFactory factory =
                 new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
-                        mTransferMethodRepository, mUserRepository);
+                        mTransferMethodRepository, mUserRepository,mPrepaidCardRepository);
 
         doAnswer(new Answer() {
             @Override
@@ -567,7 +573,7 @@ public class CreateTransferViewModelTest {
     public void testRetry_isQuoteInvalidWithQuoteSourceNotValid() {
         CreateTransferViewModel.CreateTransferViewModelFactory factory =
                 new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
-                        mTransferMethodRepository, mUserRepository);
+                        mTransferMethodRepository, mUserRepository,mPrepaidCardRepository);
         // test
         CreateTransferViewModel viewModel = factory.create(CreateTransferViewModel.class);
         viewModel.init("0");
@@ -584,7 +590,7 @@ public class CreateTransferViewModelTest {
     public void testRetry_isQuoteInvalidWithQuoteDestinationNotValid() {
         CreateTransferViewModel.CreateTransferViewModelFactory factory =
                 new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
-                        mTransferMethodRepository, mUserRepository);
+                        mTransferMethodRepository, mUserRepository,mPrepaidCardRepository);
 
         final Transfer transfer = new Transfer.Builder()
                 .token("trf-transfer-token")
@@ -625,7 +631,7 @@ public class CreateTransferViewModelTest {
     public void testRetry_isTransferAmountKnown() {
         CreateTransferViewModel.CreateTransferViewModelFactory factory =
                 new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
-                        mTransferMethodRepository, mUserRepository);
+                        mTransferMethodRepository, mUserRepository,mPrepaidCardRepository);
 
         final Transfer transfer = new Transfer.Builder()
                 .token("trf-transfer-token")
@@ -684,7 +690,7 @@ public class CreateTransferViewModelTest {
                 new CreateTransferViewModel.CreateTransferViewModelFactory(
                         TransferRepositoryFactory.getInstance().getTransferRepository(),
                         TransferMethodRepositoryFactory.getInstance().getTransferMethodRepository(),
-                        UserRepositoryFactory.getInstance().getUserRepository());
+                        UserRepositoryFactory.getInstance().getUserRepository(), PrepaidCardRepositoryFactory.getInstance().getPrepaidCardRepository());
         mExpectedException.expect(IllegalArgumentException.class);
         mExpectedException.expectMessage(
                 "Expecting ViewModel class: com.hyperwallet.android.ui.transfer.viewmodel.CreateTransferViewModel");
@@ -697,7 +703,7 @@ public class CreateTransferViewModelTest {
                 new CreateTransferViewModel.CreateTransferViewModelFactory(
                         TransferRepositoryFactory.getInstance().getTransferRepository(),
                         TransferMethodRepositoryFactory.getInstance().getTransferMethodRepository(),
-                        UserRepositoryFactory.getInstance().getUserRepository());
+                        UserRepositoryFactory.getInstance().getUserRepository(), PrepaidCardRepositoryFactory.getInstance().getPrepaidCardRepository());
         CreateTransferViewModel viewModel = factory.create(CreateTransferViewModel.class);
         assertThat(viewModel, is(notNullValue()));
     }
@@ -710,7 +716,7 @@ public class CreateTransferViewModelTest {
     public void testRefresh_callsRefreshWithQuote() {
         CreateTransferViewModel.CreateTransferViewModelFactory factory =
                 new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
-                        mTransferMethodRepository, mUserRepository);
+                        mTransferMethodRepository, mUserRepository,mPrepaidCardRepository);
 
         // test
         CreateTransferViewModel viewModel = factory.create(CreateTransferViewModel.class);
@@ -725,7 +731,7 @@ public class CreateTransferViewModelTest {
     public void testRefresh_callsRefreshWithoutQuote() {
         CreateTransferViewModel.CreateTransferViewModelFactory factory =
                 new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
-                        mTransferMethodRepository, mUserRepository);
+                        mTransferMethodRepository, mUserRepository,mPrepaidCardRepository);
 
         // test
         CreateTransferViewModel viewModel = factory.create(CreateTransferViewModel.class);
