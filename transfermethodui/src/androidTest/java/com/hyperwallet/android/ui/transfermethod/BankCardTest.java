@@ -47,6 +47,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
+import com.google.android.libraries.cloudtesting.screenshots.ScreenShotter;
 import com.google.android.material.textfield.TextInputLayout;
 import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import com.hyperwallet.android.ui.R;
@@ -144,12 +145,18 @@ public class BankCardTest {
         onView(allOf(withId(R.id.section_header_title), withText(formattedAccountInfo)))
                 .perform(nestedScrollTo())
                 .check(matches(isDisplayed()));
+
+        ScreenShotter.takeScreenshot("AddTransferMethod_Bankcard_displayElements", this.mActivityTestRule.getActivity());
+
         onView(withId(R.id.cardNumber)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.cardNumberLabel)).check(matches(isDisplayed()));
         onView(withId(R.id.cardNumberLabel)).check(matches(withHint(CARD_NUMBER_LABEL)));
         onView(withId(R.id.dateOfExpiry)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.dateOfExpiryLabel)).check(matches(isDisplayed()));
         onView(withId(R.id.dateOfExpiryLabel)).check(matches(withHint(EXPIRY_DATE_LABEL)));
+
+        onView(withId(R.id.dateOfExpiry)).perform(nestedScrollTo(), typeText(VALID_EXPIRATION_DATE));
+        ScreenShotter.takeScreenshot("AddTransferMethod_Bankcard_DateOfExpiry_Hint", this.mActivityTestRule.getActivity());
         onView(withId(R.id.cvv)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.cvvLabel)).check(matches(isDisplayed()));
         onView(withId(R.id.cvvLabel)).check(matches(withHint(CVV_LABEL)));

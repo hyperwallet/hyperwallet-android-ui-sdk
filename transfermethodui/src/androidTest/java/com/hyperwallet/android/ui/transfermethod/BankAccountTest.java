@@ -143,12 +143,22 @@ public class BankAccountTest {
         onView(withId(R.id.firstName)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.firstNameLabel)).check(matches(isDisplayed()));
         onView(withId(R.id.firstNameLabel)).check(matches(withHint("First Name")));
+
+        onView(withId(R.id.firstName)).perform(nestedScrollTo(), replaceText("MobileQA"));
+        ScreenShotter.takeScreenshot("AddTransferMethod_Bankaccount_FirstName_Hint", this.mActivityTestRule.getActivity() /* activity */);
+
         onView(withId(R.id.middleName)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.middleNameLabel)).check(matches(isDisplayed()));
         onView(withId(R.id.middleNameLabel)).check(matches(withHint("Middle Name")));
+
+
         onView(withId(R.id.lastName)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.lastNameLabel)).check(matches(isDisplayed()));
         onView(withId(R.id.lastNameLabel)).check(matches(withHint("Last Name")));
+
+        onView(withId(R.id.lastName)).perform(nestedScrollTo(), replaceText("MobileQA"));
+        ScreenShotter.takeScreenshot("AddTransferMethod_Bankaccount_LastName_Hint", this.mActivityTestRule.getActivity() /* activity */);
+
         onView(withId(R.id.dateOfBirth)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.dateOfBirthLabel)).check(matches(isDisplayed()));
         onView(withId(R.id.dateOfBirthLabel)).check(matches(withHint("Date of Birth")));

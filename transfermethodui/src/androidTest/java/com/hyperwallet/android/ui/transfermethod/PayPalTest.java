@@ -114,6 +114,10 @@ public class PayPalTest {
         onView(withId(R.id.emailLabel)).check(matches(isDisplayed()));
         onView(withId(R.id.emailLabel)).check(matches(withHint("Email")));
 
+        // Enter Email and check the Hint
+        onView(withId(R.id.email)).perform(nestedScrollTo(), replaceText("sunshine.carreiro@hyperwallet.com"));
+        ScreenShotter.takeScreenshot("AddTransferMethod_PP_Hint", this.mActivityTestRule.getActivity());
+
         onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo()).check(
                 matches(withText(R.string.createTransferMethodButtonLabel)));
     }
