@@ -43,6 +43,7 @@ import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
+import com.google.android.libraries.cloudtesting.screenshots.ScreenShotter;
 import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
@@ -106,6 +107,8 @@ public class PayPalTest {
 
         onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
                 .check(matches(withText(R.string.paypal_account)));
+
+        ScreenShotter.takeScreenshot("AddTransferMethod_PP_displayElements", this.mActivityTestRule.getActivity());
 
         onView(withId(R.id.email)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.emailLabel)).check(matches(isDisplayed()));
@@ -173,6 +176,9 @@ public class PayPalTest {
                 .registerReceiver(br, new IntentFilter("ACTION_HYPERWALLET_TRANSFER_METHOD_ADDED"));
 
         onView(withId(R.id.email)).perform(nestedScrollTo(), replaceText("sunshine.carreiro@hyperwallet.com"));
+
+        ScreenShotter.takeScreenshot("AddTransferMethod_PP_returnsToken", this.mActivityTestRule.getActivity());
+
         onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo(), click());
 
         assertThat("Result code is incorrect",
@@ -189,6 +195,8 @@ public class PayPalTest {
         mActivityTestRule.launchActivity(null);
 
         onView(withId(R.id.email)).perform(nestedScrollTo(), replaceText("abc1test"));
+
+        ScreenShotter.takeScreenshot("AddTransferMethod_PP_invalidPattern", this.mActivityTestRule.getActivity());
 
         onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo(), click());
 
@@ -212,6 +220,8 @@ public class PayPalTest {
                 .getResourceContent("paypal_invalid_email_response.json")).mock();
 
         mActivityTestRule.launchActivity(null);
+
+        ScreenShotter.takeScreenshot("AddTransferMethod_PP_invalidEmail", this.mActivityTestRule.getActivity());
 
         onView(withId(R.id.email)).perform(nestedScrollTo(), replaceText("invalidEmail@gmail.com"));
         onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo(), click());
