@@ -177,8 +177,6 @@ public class PayPalTest {
 
         onView(withId(R.id.email)).perform(nestedScrollTo(), replaceText("sunshine.carreiro@hyperwallet.com"));
 
-        ScreenShotter.takeScreenshot("AddTransferMethod_PP_returnsToken", this.mActivityTestRule.getActivity());
-
         onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo(), click());
 
         assertThat("Result code is incorrect",
@@ -195,8 +193,6 @@ public class PayPalTest {
         mActivityTestRule.launchActivity(null);
 
         onView(withId(R.id.email)).perform(nestedScrollTo(), replaceText("abc1test"));
-
-        ScreenShotter.takeScreenshot("AddTransferMethod_PP_invalidPattern", this.mActivityTestRule.getActivity());
 
         onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo(), click());
 
@@ -220,8 +216,6 @@ public class PayPalTest {
                 .getResourceContent("paypal_invalid_email_response.json")).mock();
 
         mActivityTestRule.launchActivity(null);
-
-        ScreenShotter.takeScreenshot("AddTransferMethod_PP_invalidEmail", this.mActivityTestRule.getActivity());
 
         onView(withId(R.id.email)).perform(nestedScrollTo(), replaceText("invalidEmail@gmail.com"));
         onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo(), click());
