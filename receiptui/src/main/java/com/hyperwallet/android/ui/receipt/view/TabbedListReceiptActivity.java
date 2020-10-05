@@ -31,6 +31,8 @@ import com.hyperwallet.android.ui.common.view.error.OnNetworkErrorCallback;
 import com.hyperwallet.android.ui.receipt.R;
 
 public class TabbedListReceiptActivity extends AppCompatActivity implements OnNetworkErrorCallback {
+    public static final String TAG = "receipts:prepaid:tabbed-list-receipts";
+
     public static final String EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT = "EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT";
     public static final String EXTRA_PREPAID_CARD_TOKEN = "PREPAID_CARD_TOKEN";
 

@@ -35,18 +35,23 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
+import com.hyperwallet.android.model.Errors;
 import com.hyperwallet.android.model.transfermethod.PrepaidCard;
+import com.hyperwallet.android.ui.common.repository.Event;
+import com.hyperwallet.android.ui.common.util.PageGroups;
+import com.hyperwallet.android.ui.common.view.ActivityUtils;
 import com.hyperwallet.android.ui.receipt.R;
 import com.hyperwallet.android.ui.receipt.repository.PrepaidCardRepositoryImpl;
 import com.hyperwallet.android.ui.receipt.viewmodel.TabbedListReceiptViewModel;
 import com.hyperwallet.android.ui.user.repository.UserRepositoryImpl;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class TabbedListReceiptFragment extends Fragment {
 
-    public static final String TAG = TabbedListReceiptFragment.class.getSimpleName();
     private ListReceiptsViewPagerAdapter listReceiptsViewPagerAdapter;
     private ViewPager viewPager;
     private TabLayout tabLayout;
@@ -97,19 +102,56 @@ public class TabbedListReceiptFragment extends Fragment {
         viewPager.setAdapter(listReceiptsViewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
         receiptViewModel.initialize();
+        registerObservers();
+    }
+
+    private void registerObservers() {
         receiptViewModel.prepaidCards.observe(this, new Observer<List<PrepaidCard>>() {
             @Override
             public void onChanged(List<PrepaidCard> prepaidCards) {
                 if (!prepaidCards.isEmpty()) {
-                    for (PrepaidCard prepaidCard : prepaidCards) {
-                        // TODO: isWalletModel, isCardModel & Comparaby logic
+                    boolean isWalletModel = true;
+                    boolean isCardModel = false;
+
+                    if (isWalletModel) {
                         tabLayout.setVisibility(View.VISIBLE);
-                        listReceiptsViewPagerAdapter.addItem(prepaidCard);
-                        listReceiptsViewPagerAdapter.notifyDataSetChanged();
+                        sortToken(prepaidCards);
+                        for (PrepaidCard prepaidCard : prepaidCards) {
+                            listReceiptsViewPagerAdapter.addItem(prepaidCard);
+                        }
+                    } else if (isCardModel) {
+                        if (prepaidCards.size() > 1) {
+                            tabLayout.setVisibility(View.VISIBLE);
+                            sortToken(prepaidCards);
+                            for (PrepaidCard prepaidCard : prepaidCards) {
+                                listReceiptsViewPagerAdapter.addItem(prepaidCard);
+                            }
+                        } else {
+                            tabLayout.setVisibility(View.GONE);
+                            listReceiptsViewPagerAdapter.addItem(prepaidCards.get(0));
+                        }
                     }
+                    listReceiptsViewPagerAdapter.notifyDataSetChanged();
                 } else {
                     tabLayout.setVisibility(View.GONE);
                 }
+            }
+        });
+        receiptViewModel.errors.observe(this, new Observer<Event<Errors>>() {
+            @Override
+            public void onChanged(Event<Errors> errorsEvent) {
+                ActivityUtils.showError(getActivity(), TabbedListReceiptActivity.TAG, PageGroups.RECEIPTS,
+                        errorsEvent.getContent().getErrors());
+            }
+        });
+
+    }
+
+    private void sortToken(List<PrepaidCard> prepaidCards) {
+        Collections.sort(prepaidCards, new Comparator<PrepaidCard>() {
+            @Override
+            public int compare(PrepaidCard a, PrepaidCard b) {
+                return a.getPrimaryCardToken().compareTo(b.getPrimaryCardToken());
             }
         });
     }
@@ -161,13 +203,12 @@ public class TabbedListReceiptFragment extends Fragment {
         @Override
         public Fragment getItem(int position) {
             if (sources.get(position) instanceof PrepaidCard) {
-                // Todo: Pass token for accessing the PPC
-//                PrepaidCard prepaidCard = (PrepaidCard) sources.get(position);
-//                String token = "";
-//                if (prepaidCard != null && prepaidCard.getField(TOKEN) != null) {
-//                    token = prepaidCard.getField(TOKEN);
-//                }
-                return ListReceiptFragment.newInstance();
+                PrepaidCard prepaidCard = (PrepaidCard) sources.get(position);
+                String token = "";
+                if (prepaidCard != null && prepaidCard.getField(TOKEN) != null) {
+                    token = prepaidCard.getField(TOKEN);
+                }
+                return ListReceiptFragment.newInstance(token);
             }
             return ListReceiptFragment.newInstance();
         }

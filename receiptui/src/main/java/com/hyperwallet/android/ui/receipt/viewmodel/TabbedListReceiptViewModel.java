@@ -36,7 +36,7 @@ public class TabbedListReceiptViewModel extends ViewModel {
     private PrepaidCardRepository prepaidCardRepository;
     public MutableLiveData<User> user = new MutableLiveData<User>();
     public MutableLiveData<List<PrepaidCard>> prepaidCards = new MutableLiveData<List<PrepaidCard>>();
-    private MutableLiveData errors = new MutableLiveData<Event<Errors>>();
+    public MutableLiveData errors = new MutableLiveData<Event<Errors>>();
 
     public TabbedListReceiptViewModel(
             UserRepository mUserRepository,
@@ -59,7 +59,7 @@ public class TabbedListReceiptViewModel extends ViewModel {
 
             @Override
             public void onError(@NonNull Errors errors) {
-
+                TabbedListReceiptViewModel.this.errors.postValue(errors);
             }
         });
     }
@@ -70,17 +70,14 @@ public class TabbedListReceiptViewModel extends ViewModel {
             public void onPrepaidCardLoaded(@NonNull List<PrepaidCard> prepaidCardList) {
                 if (!prepaidCardList.isEmpty()) {
                     TabbedListReceiptViewModel.this.prepaidCards.postValue(prepaidCardList);
-                } else {
-                    // loading false
                 }
             }
 
             @Override
             public void onError(@NonNull Errors errors) {
                 if (errors != null) {
-                    // Todo: Handle Error case
+                    TabbedListReceiptViewModel.this.errors.postValue(new Event(errors));
                 }
-                //   retryCode = RETRY_LOAD_PPC_LIST
             }
         });
     }

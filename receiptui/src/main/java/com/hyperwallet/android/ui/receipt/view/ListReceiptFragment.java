@@ -46,6 +46,10 @@ import com.hyperwallet.android.model.receipt.Receipt;
 import com.hyperwallet.android.ui.common.util.DateUtils;
 import com.hyperwallet.android.ui.common.view.OneClickListener;
 import com.hyperwallet.android.ui.receipt.R;
+import com.hyperwallet.android.ui.receipt.repository.PrepaidCardReceiptRepositoryImpl;
+import com.hyperwallet.android.ui.receipt.repository.UserReceiptRepositoryImpl;
+import com.hyperwallet.android.ui.receipt.viewmodel.ListPrepaidCardReceiptViewModel;
+import com.hyperwallet.android.ui.receipt.viewmodel.ListUserReceiptViewModel;
 import com.hyperwallet.android.ui.receipt.viewmodel.ReceiptViewModel;
 
 import java.util.Calendar;
@@ -57,6 +61,7 @@ import java.util.Objects;
 public class ListReceiptFragment extends Fragment {
 
     private static final String SHOULD_SHOW_NO_TRANSACTION_PLACEHOLDER = "SHOULD_SHOW_NO_TRANSACTION_PLACEHOLDER";
+    private static final String ARGUMENT_PREPAID_CARD_TOKEN = "ARGUMENT_PREPAID_CARD_TOKEN";
 
     private ListReceiptAdapter mListReceiptAdapter;
     private RecyclerView mListReceiptsView;
@@ -79,11 +84,30 @@ public class ListReceiptFragment extends Fragment {
         return fragment;
     }
 
+    static ListReceiptFragment newInstance(String token) {
+        ListReceiptFragment fragment = new ListReceiptFragment();
+        Bundle args = new Bundle();
+        args.putString(ARGUMENT_PREPAID_CARD_TOKEN, token);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mReceiptViewModel = ViewModelProviders.of(requireActivity()).get(
-                ReceiptViewModel.class);
+        String token = "";
+        if (getArguments() != null) {
+            token = getArguments().getString(ARGUMENT_PREPAID_CARD_TOKEN);
+        }
+        if (token.isEmpty()) {
+            mReceiptViewModel = ViewModelProviders.of(this, new ListUserReceiptViewModel
+                    .ListReceiptViewModelFactory(new UserReceiptRepositoryImpl()))
+                    .get(ReceiptViewModel.class);
+        } else {
+            mReceiptViewModel = ViewModelProviders.of(this, new ListPrepaidCardReceiptViewModel
+                    .ListPrepaidCardReceiptViewModelFactory(new PrepaidCardReceiptRepositoryImpl(token)))
+                    .get(ReceiptViewModel.class);
+        }
     }
 
     @Override
@@ -95,14 +119,6 @@ public class ListReceiptFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull final View view, @Nullable final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        View transactionHeaderView = view.findViewById(R.id.transactions_header);
-        if (getActivity() instanceof ListPrepaidCardReceiptActivity
-                || getActivity() instanceof ListUserReceiptActivity) {
-            transactionHeaderView.setVisibility(View.GONE);
-        }
-
-        // Todo: Hide Transaction header from savedInstanceState Bundle.
-        transactionHeaderView.setVisibility(View.GONE);
 
         mEmptyTransactionPlaceholder = view.findViewById(R.id.empty_transaction_list_view);
         mListReceiptsView = view.findViewById(R.id.list_receipts);
@@ -159,6 +175,7 @@ public class ListReceiptFragment extends Fragment {
                 });
             }
         });
+
 
         mReceiptViewModel.isLoadingData().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
