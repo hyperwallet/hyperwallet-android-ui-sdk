@@ -23,6 +23,7 @@ import static com.hyperwallet.android.model.transfermethod.TransferMethod.Transf
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.PREPAID_CARD;
 import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.ERROR_SDK_MODULE_UNAVAILABLE;
 
+import android.os.Handler;
 import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
@@ -33,6 +34,10 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.hyperwallet.android.Configuration;
+import com.hyperwallet.android.Hyperwallet;
+import com.hyperwallet.android.exception.HyperwalletException;
+import com.hyperwallet.android.listener.HyperwalletListener;
 import com.hyperwallet.android.model.Error;
 import com.hyperwallet.android.model.Errors;
 import com.hyperwallet.android.model.transfer.Transfer;
@@ -50,6 +55,8 @@ import com.hyperwallet.android.ui.user.repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -92,9 +99,8 @@ public class CreateTransferViewModel extends ViewModel {
     private String initialAmount;
     private boolean mIsPortraitMode;
     private ProgramModel mProgramModel = ProgramModel.WALLET_MODEL;
-    private boolean isWalletModel = getProgramModel() == ProgramModel.WALLET_MODEL;
-    private boolean isCardModel = getProgramModel() == ProgramModel.PAY2CARD_MODEL
-            || getProgramModel() == ProgramModel.CARD_ONLY_MODEL;
+    private boolean isWalletModel;
+    private boolean isCardModel;
 
 
     /**
@@ -123,6 +129,9 @@ public class CreateTransferViewModel extends ViewModel {
         mIsLoading.postValue(Boolean.TRUE);
         mIsCreateQuoteLoading.setValue(Boolean.FALSE);
         mShowFxRateChange.setValue(Boolean.FALSE);
+        isWalletModel = getProgramModel() == ProgramModel.WALLET_MODEL;
+        isCardModel = getProgramModel() == ProgramModel.PAY2CARD_MODEL
+                || getProgramModel() == ProgramModel.CARD_ONLY_MODEL;
     }
 
     /**
@@ -146,6 +155,9 @@ public class CreateTransferViewModel extends ViewModel {
         mIsLoading.postValue(Boolean.TRUE);
         mIsCreateQuoteLoading.setValue(Boolean.FALSE);
         mShowFxRateChange.setValue(Boolean.FALSE);
+        isWalletModel = getProgramModel() == ProgramModel.WALLET_MODEL;
+        isCardModel = getProgramModel() == ProgramModel.PAY2CARD_MODEL
+                || getProgramModel() == ProgramModel.CARD_ONLY_MODEL;
     }
 
     public void init(@NonNull final String defaultAmount) {
@@ -503,15 +515,14 @@ public class CreateTransferViewModel extends ViewModel {
                 TransferSourceWrapper sourceWrapperForAvailableFunds = new TransferSourceWrapper();
                 sourceWrapperForAvailableFunds.setToken(sourceToken);
                 sourceWrapperForAvailableFunds.setType(BANK_ACCOUNT);
-                sourceWrapperForAvailableFunds.setAmount("");
                 sources.add(sourceWrapperForAvailableFunds);
                 if (prepaidCardList != null) {
+                    if (prepaidCardList.size() > 1) {
+                        sortPrepaidCard(prepaidCardList);
+                    }
                     for (PrepaidCard prepaidCard : prepaidCardList) {
                         TransferSourceWrapper sourceWrapper = new TransferSourceWrapper();
-                        sourceWrapper.setTitle(prepaidCard.getType());
-                        sourceWrapper.setAmount("");
                         sourceWrapper.setToken(prepaidCard.getField(TOKEN));
-                        sourceWrapper.setPrimary(prepaidCard.getPrimaryCardToken() == null);
                         sourceWrapper.setType(PREPAID_CARD);
                         sourceWrapper.setIdentification(prepaidCard);
                         sources.add(sourceWrapper);
@@ -521,12 +532,8 @@ public class CreateTransferViewModel extends ViewModel {
                     mSelectedTransferSource.postValue(sources.get(0));
                 } else if (isCardModel) {
                     sources.remove(0);
-                    for (TransferSourceWrapper transferSourceWrapper : sources) {
-                        if (transferSourceWrapper.isPrimary()) {
-                            mSelectedTransferSource.postValue(transferSourceWrapper);
-                            mSourceToken = transferSourceWrapper.getToken();
-                        }
-                    }
+                    mSelectedTransferSource.postValue(sources.get(0));
+                    mSourceToken = sources.get(0).getToken();
                     loadTransferDestination(mSourceToken);
                 }
                 mTransferSources.postValue(sources);
@@ -546,7 +553,40 @@ public class CreateTransferViewModel extends ViewModel {
     }
 
     public ProgramModel getProgramModel() {
+
+        Hyperwallet.getDefault().getConfiguration(new HyperwalletListener<Configuration>() {
+            @Override
+            public void onSuccess(@Nullable Configuration result) {
+                result.getProgramModel();
+                System.out.println("Program Model " + result.getProgramModel());
+                mProgramModel = ProgramModel.valueOf(result.getProgramModel());
+            }
+
+            @Override
+            public void onFailure(HyperwalletException exception) {
+            }
+
+            @Override
+            public Handler getHandler() {
+                return null;
+            }
+        });
         return mProgramModel;
+    }
+
+    private void sortPrepaidCard(List<PrepaidCard> prepaidCards) {
+        Collections.sort(prepaidCards, new Comparator<PrepaidCard>() {
+            @Override
+            public int compare(PrepaidCard firstPrepaid, PrepaidCard secondPrepaid) {
+                if (firstPrepaid.getPrimaryCardToken() != null || secondPrepaid.getPrimaryCardToken() == null) {
+                    return 1;
+                }
+                if (firstPrepaid.getPrimaryCardToken() == null || secondPrepaid.getPrimaryCardToken() != null) {
+                    return -1;
+                }
+                return 0;
+            }
+        });
     }
 
     public static class CreateTransferViewModelFactory implements ViewModelProvider.Factory {

@@ -184,7 +184,6 @@
                 android:layout_height="wrap_content">
             <include
                 android:id="@+id/transfer_source"
-                android:visibility="visible"
                 layout="@layout/widget_transfer_source" />
             </RelativeLayout>
 

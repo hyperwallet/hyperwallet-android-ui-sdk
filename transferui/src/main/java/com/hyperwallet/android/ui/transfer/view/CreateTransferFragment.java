@@ -94,7 +94,7 @@ public class CreateTransferFragment extends Fragment {
     private TextView mTransferDestinationError;
     private View mTransferAmountErrorContainer;
     private TextView mTransferAmountError;
-    private TextView mTransferSourceAmount;
+    //private TextView mTransferSourceAmount;
 
     /**
      * Please don't use this constructor this is reserved for Android Core Framework
@@ -194,7 +194,7 @@ public class CreateTransferFragment extends Fragment {
 
         // transfer source
         mTransferSource = view.findViewById(R.id.transfer_source);
-        mTransferSourceAmount = view.findViewById(R.id.transfer_source_description_1);
+       // mTransferSourceAmount = view.findViewById(R.id.transfer_source_description_1);
         mTransferSource.setOnClickListener(new OneClickListener() {
             @Override
             public void onOneClick(View v) {
@@ -561,10 +561,10 @@ public class CreateTransferFragment extends Fragment {
                     String totalAmount = requireContext().getString(R.string.total,
                             Currency.getInstance(transfer.getDestinationCurrency()).getSymbol(),
                             transfer.getDestinationAmount(), transfer.getDestinationCurrency());
-                    mTransferSourceAmount.setText(totalAmount);
+                   // mTransferSourceAmount.setText(totalAmount);
                 } else {
                     mTransferAllFundsSummary.setVisibility(View.GONE);
-                    mTransferSourceAmount.setText("");
+                   // mTransferSourceAmount.setText("");
                 }
             }
         });
@@ -680,7 +680,7 @@ public class CreateTransferFragment extends Fragment {
     private void showTransferSource(@NonNull final TransferSourceWrapper transferSourceWrapper) {
         TextView transferSourceIcon = getView().findViewById(R.id.transfer_source_icon);
         TextView transferSourceTitle = getView().findViewById(R.id.transfer_source_title);
-        TextView transferSourceIdentifier = getView().findViewById(R.id.transfer_source_description_2);
+        TextView transferSourceIdentifier = getView().findViewById(R.id.transfer_source_description_1);
         if (transferSourceWrapper.getType().equals(PREPAID_CARD)) {
             transferSourceTitle.setText(
                     getTransferMethodName(transferSourceIdentifier.getContext(), transferSourceWrapper.getType()));

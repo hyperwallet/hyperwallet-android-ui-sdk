@@ -199,7 +199,6 @@ public class ListTransferSourceFragment extends DialogFragment {
     private static class TransferSourceViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final TextView mTitle;
         private final TextView mIcon;
-        private final TextView mTransferSourceAmount;
         private final TextView mTransferSourceIdentification;
         private final ImageView mSelectedIcon;
         private final ListTransferSourceViewModel mViewModel;
@@ -211,8 +210,8 @@ public class ListTransferSourceFragment extends DialogFragment {
 
             mIcon = itemView.findViewById(R.id.icon);
             mTitle = itemView.findViewById(R.id.title);
-            mTransferSourceAmount = itemView.findViewById(R.id.description_1);
-            mTransferSourceIdentification = itemView.findViewById(R.id.description_2);
+            mTransferSourceIdentification = itemView.findViewById(R.id.description_1);
+            itemView.findViewById(R.id.description_2).setVisibility(View.GONE);
             mSelectedIcon = itemView.findViewById(R.id.item_selected_image);
             mViewModel = viewModel;
         }
@@ -233,7 +232,6 @@ public class ListTransferSourceFragment extends DialogFragment {
                     : getTransferMethodDetail(mTransferSourceIdentification.getContext(),
                             source.getIdentification(), source.getType()));
             mIcon.setText(getStringFontIcon(mIcon.getContext(), source.getType()));
-            mTransferSourceAmount.setText(source.getAmount());
 
             if (selected) {
                 mSelectedIcon.setVisibility(View.VISIBLE);
