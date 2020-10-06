@@ -17,6 +17,7 @@
 package com.hyperwallet.android.ui.common.view;
 
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.BANK_ACCOUNT_ID;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.CARD_BRAND;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.CARD_NUMBER;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.EMAIL;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TYPE;
@@ -151,11 +152,11 @@ public class TransferMethodUtils {
 
         switch (type) {
             case BANK_CARD:
-            case PREPAID_CARD:
-                return getFourDigitsIdentification(context,
-                        transferMethod,
-                        CARD_NUMBER,
+                return getFourDigitsIdentification(context, transferMethod, CARD_NUMBER,
                         R.string.endingIn);
+            case PREPAID_CARD:
+                return getFourDigitsIdentificationWithCardBrand(context,
+                        transferMethod);
             case BANK_ACCOUNT:
             case WIRE_ACCOUNT:
                 return getFourDigitsIdentification(context, transferMethod, BANK_ACCOUNT_ID,
@@ -180,5 +181,20 @@ public class TransferMethodUtils {
                         : !TextUtils.isEmpty(transferIdentification) ? transferIdentification : "";
 
         return context.getString(stringResId, identificationText);
+    }
+
+    private static String getFourDigitsIdentificationWithCardBrand(@NonNull final Context context,
+            @NonNull final TransferMethod transferMethod) {
+        final String transferIdentification = transferMethod.getField(CARD_NUMBER);
+        final String cardBrandIdentification = transferMethod.getField(CARD_BRAND);
+        final String cardBrand = cardBrandIdentification != null ? getStringResourceByName(context,
+                cardBrandIdentification) : "";
+
+        final String identificationText =
+                !TextUtils.isEmpty(transferIdentification) && transferIdentification.length() > LAST_FOUR_DIGIT
+                        ? transferIdentification.substring(transferIdentification.length() - LAST_FOUR_DIGIT)
+                        : !TextUtils.isEmpty(transferIdentification) ? transferIdentification : "";
+
+        return cardBrand + "\u0020\u2022\u2022\u2022\u2022\u0020" + identificationText;
     }
 }
