@@ -16,13 +16,15 @@
  */
 package com.hyperwallet.android.ui.transfer.view;
 
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.PREPAID_CARD;
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getStringFontIcon;
+import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getTransferMethodName;
+import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getTransferMethodDetail;
 
 import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +40,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -55,25 +56,29 @@ public class ListTransferSourceFragment extends DialogFragment {
 
     public static final String TAG = "HW:" + ListTransferSourceFragment.class.getSimpleName();
     public static final String ARGUMENT_SELECTED_TRANSFER_SOURCE_TOKEN = "SELECTED_TRANSFER_SOURCE_TOKEN";
+    public static final String ARGUMENT_TRANSFER_SOURCE_LIST = "SELECTED_TRANSFER_SOURCE_LIST";
     private ListTransferSourceViewModel mListTransferSourceViewModel;
     private RecyclerView mRecyclerView;
     private ListTransferSourceAdapter mListTransferSourceAdapter;
-    private View mProgressBar;
     private String mActiveTransferSourceToken;
+    private List<TransferSourceWrapper> mTransferSourceList = new ArrayList<>();
 
     /**
      * Please don't use this constructor this is reserved for Android Core Framework
      *
-     * @see #newInstance(String)
+     * @see #newInstance(String, ArrayList)
      */
     public ListTransferSourceFragment() {
     }
 
-    static ListTransferSourceFragment newInstance(@NonNull final String activeTransferSourceToken) {
+    static ListTransferSourceFragment newInstance(@NonNull final String activeTransferSourceToken,
+            @NonNull final ArrayList<TransferSourceWrapper> transferSourceWrapperList) {
         Bundle bundle = new Bundle();
         bundle.putString(ARGUMENT_SELECTED_TRANSFER_SOURCE_TOKEN, activeTransferSourceToken);
+        bundle.putParcelableArrayList(ARGUMENT_TRANSFER_SOURCE_LIST, transferSourceWrapperList);
         ListTransferSourceFragment fragment = new ListTransferSourceFragment();
         fragment.mActiveTransferSourceToken = activeTransferSourceToken;
+        fragment.mTransferSourceList = transferSourceWrapperList;
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -112,12 +117,10 @@ public class ListTransferSourceFragment extends DialogFragment {
         });
 
         onView();
-        mProgressBar = view.findViewById(R.id.progress_bar);
         mRecyclerView = view.findViewById(R.id.transfer_source_list);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        registerObservers();
     }
 
     @Override
@@ -130,32 +133,9 @@ public class ListTransferSourceFragment extends DialogFragment {
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
         mActiveTransferSourceToken = getArguments().getString(ARGUMENT_SELECTED_TRANSFER_SOURCE_TOKEN);
-        mListTransferSourceAdapter = new ListTransferSourceAdapter(mListTransferSourceViewModel,
+        mListTransferSourceAdapter = new ListTransferSourceAdapter(mListTransferSourceViewModel, mTransferSourceList,
                 mActiveTransferSourceToken);
         mRecyclerView.setAdapter(mListTransferSourceAdapter);
-    }
-
-    private void registerObservers() {
-        mListTransferSourceViewModel.getTransferSourceList().observe(getViewLifecycleOwner(),
-                new Observer<List<TransferSourceWrapper>>() {
-                    @Override
-                    public void onChanged(List<TransferSourceWrapper> transferMethods) {
-                        if (mListTransferSourceAdapter != null) {
-                            mListTransferSourceAdapter.replaceData(transferMethods);
-                        }
-                    }
-                });
-
-        mListTransferSourceViewModel.isLoading().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean loading) {
-                if (loading) {
-                    mProgressBar.setVisibility(View.VISIBLE);
-                } else {
-                    mProgressBar.setVisibility(View.GONE);
-                }
-            }
-        });
     }
 
     private void hideSoftKey(@NonNull View focusedView) {
@@ -176,14 +156,16 @@ public class ListTransferSourceFragment extends DialogFragment {
 
     private static class ListTransferSourceAdapter extends RecyclerView.Adapter<TransferSourceViewHolder> {
 
-        private List<TransferSourceWrapper> mTransferSourceList = new ArrayList<>();
+        private List<TransferSourceWrapper> mTransferSourceList;
         private final ListTransferSourceViewModel mViewModel;
         private final String mSelectedSource;
 
         ListTransferSourceAdapter(
-                @NonNull final ListTransferSourceViewModel viewModel, @NonNull final String selectedSource) {
+                @NonNull final ListTransferSourceViewModel viewModel,
+                @NonNull final List<TransferSourceWrapper> transferSourceList, @NonNull final String selectedSource) {
             mViewModel = viewModel;
             mSelectedSource = selectedSource;
+            mTransferSourceList = transferSourceList;
         }
 
         @NonNull
@@ -212,11 +194,6 @@ public class ListTransferSourceFragment extends DialogFragment {
             holder.recycle();
         }
 
-        void replaceData(@NonNull final List<TransferSourceWrapper> sources) {
-            mTransferSourceList.clear();
-            mTransferSourceList.addAll(sources);
-            notifyDataSetChanged();
-        }
     }
 
     private static class TransferSourceViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -247,10 +224,16 @@ public class ListTransferSourceFragment extends DialogFragment {
 
         void bind(@NonNull final TransferSourceWrapper source, final boolean selected) {
             mSource = source;
-            mTitle.setText(source.getTitle());
+            if (source.getType().equals(PREPAID_CARD)) {
+                mTitle.setText(getTransferMethodName(mTitle.getContext(), source.getType()));
+            } else {
+                mTitle.setText(mTitle.getContext().getString(R.string.availableFunds));
+            }
+            mTransferSourceIdentification.setText(source.getIdentification() == null ? ""
+                    : getTransferMethodDetail(mTransferSourceIdentification.getContext(),
+                            source.getIdentification(), source.getType()));
             mIcon.setText(getStringFontIcon(mIcon.getContext(), source.getType()));
             mTransferSourceAmount.setText(source.getAmount());
-            mTransferSourceIdentification.setText(source.getIdentification());
 
             if (selected) {
                 mSelectedIcon.setVisibility(View.VISIBLE);

@@ -39,6 +39,7 @@ import com.hyperwallet.android.ui.transfer.TransferSourceWrapper;
 import com.hyperwallet.android.ui.transfer.viewmodel.ListTransferSourceViewModel;
 import com.hyperwallet.android.ui.transfermethod.repository.PrepaidCardRepositoryFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ListTransferSourceActivity extends AppCompatActivity implements OnNetworkErrorCallback {
@@ -46,9 +47,9 @@ public class ListTransferSourceActivity extends AppCompatActivity implements OnN
     public static final String TAG = "transfer-funds:create-transfer";
     public static final String EXTRA_SELECTED_SOURCE = "EXTRA_SELECTED_SOURCE";
     public static final String EXTRA_SELECTED_SOURCE_TOKEN = "SELECTED_SOURCE_TOKEN";
+    public static final String EXTRA_TRANSFER_SOURCE_LIST = "TRANSFER_SOURCE_LIST";
 
     private ListTransferSourceViewModel mListTransferSourceViewModel;
-    private List<TransferSourceWrapper> sources;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,8 +57,7 @@ public class ListTransferSourceActivity extends AppCompatActivity implements OnN
         setContentView(R.layout.activity_list_transfer_source);
 
         mListTransferSourceViewModel = ViewModelProviders.of(this,
-                new ListTransferSourceViewModel.ListTransferSourceViewModelFactory(
-                        PrepaidCardRepositoryFactory.getInstance().getPrepaidCardRepository()))
+                new ListTransferSourceViewModel.ListTransferSourceViewModelFactory())
                 .get(ListTransferSourceViewModel.class);
 
         String transferToken = getIntent().getStringExtra(EXTRA_SELECTED_SOURCE_TOKEN);
@@ -65,8 +65,11 @@ public class ListTransferSourceActivity extends AppCompatActivity implements OnN
             throw new IllegalArgumentException(
                     "EXTRA_SELECTED_SOURCE_TOKEN intent data is needed to start this activity");
         }
+
+        ArrayList<TransferSourceWrapper> sourceList = getIntent().getParcelableArrayListExtra(
+                EXTRA_TRANSFER_SOURCE_LIST);
         if (savedInstanceState == null) {
-            ActivityUtils.initFragment(this, ListTransferSourceFragment.newInstance(transferToken),
+            ActivityUtils.initFragment(this, ListTransferSourceFragment.newInstance(transferToken, sourceList),
                     R.id.list_source_fragment);
         }
 
@@ -90,7 +93,7 @@ public class ListTransferSourceActivity extends AppCompatActivity implements OnN
 
     @Override
     public void retry() {
-        mListTransferSourceViewModel.loadTransferSourceList();
+
     }
 
     @Override

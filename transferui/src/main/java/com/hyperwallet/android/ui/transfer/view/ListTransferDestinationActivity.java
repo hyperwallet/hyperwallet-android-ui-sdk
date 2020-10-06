@@ -52,6 +52,7 @@ public class ListTransferDestinationActivity extends AppCompatActivity implement
     public static final String TAG = "transfer-funds:create-transfer";
     public static final String EXTRA_SELECTED_DESTINATION_TOKEN = "SELECTED_DESTINATION_TOKEN";
     public static final String EXTRA_SELECTED_DESTINATION = "EXTRA_SELECTED_DESTINATION";
+    public static final String EXTRA_SOURCE_IS_PPC_TYPE = "EXTRA_SOURCE_IS_PPC_TYPE";
     public static final String EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT = "EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT";
 
     private ListTransferDestinationViewModel mListTransferDestinationViewModel;
@@ -62,6 +63,7 @@ public class ListTransferDestinationActivity extends AppCompatActivity implement
         setContentView(R.layout.activity_list_transfer_destination);
 
         String transferToken = getIntent().getStringExtra(EXTRA_SELECTED_DESTINATION_TOKEN);
+        boolean sourceIsPrepaidCard = getIntent().getBooleanExtra(EXTRA_SOURCE_IS_PPC_TYPE, false);
         if (TextUtils.isEmpty(transferToken)) {
             throw new IllegalArgumentException(
                     "EXTRA_SELECTED_DESTINATION_TOKEN intent data is needed to start this activity");
@@ -73,7 +75,8 @@ public class ListTransferDestinationActivity extends AppCompatActivity implement
                 .get(ListTransferDestinationViewModel.class);
 
         if (savedInstanceState == null) {
-            ActivityUtils.initFragment(this, ListTransferDestinationFragment.newInstance(transferToken),
+            ActivityUtils.initFragment(this,
+                    ListTransferDestinationFragment.newInstance(transferToken, sourceIsPrepaidCard),
                     R.id.list_destination_fragment);
         }
 

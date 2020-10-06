@@ -18,6 +18,9 @@ package com.hyperwallet.android.ui.transfer.viewmodel;
 
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TOKEN;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TRANSFER_METHOD_CURRENCY;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TYPE;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.BANK_ACCOUNT;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.PREPAID_CARD;
 import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.ERROR_SDK_MODULE_UNAVAILABLE;
 
 import android.text.TextUtils;
@@ -51,8 +54,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-import javax.xml.transform.Source;
-
 /**
  * Create Transfer View Model
  */
@@ -83,7 +84,7 @@ public class CreateTransferViewModel extends ViewModel {
     private final MutableLiveData<Event<Error>> mInvalidAmountError = new MutableLiveData<>();
     private final MutableLiveData<Event<Error>> mInvalidDestinationError = new MutableLiveData<>();
 
-    private final MutableLiveData<List<TransferSourceWrapper>> mTransferSources = new MutableLiveData<>();
+    private final MutableLiveData<ArrayList<TransferSourceWrapper>> mTransferSources = new MutableLiveData<>();
     private final MutableLiveData<TransferSourceWrapper> mSelectedTransferSource = new MutableLiveData<>();
 
     private String mSourceToken;
@@ -92,8 +93,8 @@ public class CreateTransferViewModel extends ViewModel {
     private boolean mIsPortraitMode;
     private ProgramModel mProgramModel = ProgramModel.WALLET_MODEL;
     private boolean isWalletModel = getProgramModel() == ProgramModel.WALLET_MODEL;
-    private boolean isCardModel =
-            getProgramModel() == ProgramModel.PAY2CARD_MODEL || getProgramModel() == ProgramModel.CARD_ONLY_MODEL;
+    private boolean isCardModel = getProgramModel() == ProgramModel.PAY2CARD_MODEL
+            || getProgramModel() == ProgramModel.CARD_ONLY_MODEL;
 
 
     /**
@@ -261,7 +262,7 @@ public class CreateTransferViewModel extends ViewModel {
         return mShowFxRateChange;
     }
 
-    public LiveData<List<TransferSourceWrapper>> getTransferSources() {
+    public LiveData<ArrayList<TransferSourceWrapper>> getTransferSources() {
         return mTransferSources;
     }
 
@@ -272,7 +273,12 @@ public class CreateTransferViewModel extends ViewModel {
     public void setSelectedTransferSource(@NonNull final TransferSourceWrapper source) {
         mSelectedTransferSource.postValue(source);
         mSourceToken = source.getToken();
-        quoteAvailableTransferFunds(source.getToken(), mTransferDestination.getValue());
+        if (source.getType().equals(PREPAID_CARD) && Objects.equals(mTransferDestination.getValue().getField(
+                TYPE), PREPAID_CARD)) {
+            loadTransferDestination(mSourceToken);
+        } else {
+            quoteAvailableTransferFunds(source.getToken(), mTransferDestination.getValue());
+        }
     }
 
     public void notifyModuleUnavailable() {
@@ -385,7 +391,9 @@ public class CreateTransferViewModel extends ViewModel {
             public void onUserLoaded(@NonNull User user) {
                 mSourceToken = user.getToken();
                 loadTransferSource(mSourceToken);
-                loadTransferDestination(mSourceToken);
+                if (isWalletModel) {
+                    loadTransferDestination(mSourceToken);
+                }
             }
 
             @Override
@@ -405,9 +413,41 @@ public class CreateTransferViewModel extends ViewModel {
                 mTransferDestination.postValue(transferMethod);
                 if (transferMethod == null) { // dismiss quote
                     mIsLoading.postValue(Boolean.FALSE);
+                } else if (mSelectedTransferSource.getValue() != null && Objects.equals(transferMethod.getField(TYPE),
+                        PREPAID_CARD) && mSelectedTransferSource.getValue().getType().equals(PREPAID_CARD)) {
+                    loadTransferDestinationListWithoutPPC(sourceToken);
                 } else {
                     quoteAvailableTransferFunds(sourceToken, transferMethod);
                 }
+            }
+
+            @Override
+            public void onError(Errors errors) {
+                mIsLoading.postValue(Boolean.FALSE);
+                mLoadTransferRequiredDataErrors.postValue(new Event<>(errors));
+            }
+        });
+    }
+
+    public void loadTransferDestinationListWithoutPPC(@NonNull final String sourceToken) {
+        mIsLoading.postValue(Boolean.TRUE);
+        mTransferMethodRepository.loadTransferMethods(new TransferMethodRepository.LoadTransferMethodListCallback() {
+            @Override
+            public void onTransferMethodListLoaded(List<TransferMethod> transferMethods) {
+                if (transferMethods != null) {
+                    for (int i = transferMethods.size() - 1; i >= 0; --i) {
+                        if (Objects.equals(transferMethods.get(i).getField(TYPE), PREPAID_CARD)) {
+                            transferMethods.remove(i);
+                        }
+                    }
+                    if (transferMethods.size() > 0) {
+                        mTransferDestination.postValue(transferMethods.get(0));
+                        quoteAvailableTransferFunds(sourceToken, transferMethods.get(0));
+                    } else {
+                        quoteAvailableTransferFunds(sourceToken, mTransferDestination.getValue());
+                    }
+                }
+                mIsLoading.postValue(Boolean.FALSE);
             }
 
             @Override
@@ -459,21 +499,37 @@ public class CreateTransferViewModel extends ViewModel {
             @Override
             public void onPrepaidCardLoaded(@Nullable List<PrepaidCard> prepaidCardList) {
                 mIsLoading.postValue(Boolean.FALSE);
-                List<TransferSourceWrapper> sources = new ArrayList<>();
-                sources.add(new TransferSourceWrapper("Available Funds", "", "",
-                        TransferMethod.TransferMethodTypes.BANK_ACCOUNT, sourceToken));
+                ArrayList<TransferSourceWrapper> sources = new ArrayList<>();
+                TransferSourceWrapper sourceWrapperForAvailableFunds = new TransferSourceWrapper();
+                sourceWrapperForAvailableFunds.setToken(sourceToken);
+                sourceWrapperForAvailableFunds.setType(BANK_ACCOUNT);
+                sourceWrapperForAvailableFunds.setAmount("");
+                sources.add(sourceWrapperForAvailableFunds);
                 if (prepaidCardList != null) {
                     for (PrepaidCard prepaidCard : prepaidCardList) {
-                        sources.add(new TransferSourceWrapper(prepaidCard.getType(), "",
-                                prepaidCard.getPrimaryCardToken(), TransferMethod.TransferMethodTypes.PREPAID_CARD,
-                                prepaidCard.getField(TOKEN)));
+                        TransferSourceWrapper sourceWrapper = new TransferSourceWrapper();
+                        sourceWrapper.setTitle(prepaidCard.getType());
+                        sourceWrapper.setAmount("");
+                        sourceWrapper.setToken(prepaidCard.getField(TOKEN));
+                        sourceWrapper.setPrimary(prepaidCard.getPrimaryCardToken() == null);
+                        sourceWrapper.setType(PREPAID_CARD);
+                        sourceWrapper.setIdentification(prepaidCard);
+                        sources.add(sourceWrapper);
                     }
                 }
                 if (isWalletModel) {
                     mSelectedTransferSource.postValue(sources.get(0));
-                } else {
-                    //card Model
+                } else if (isCardModel) {
+                    sources.remove(0);
+                    for (TransferSourceWrapper transferSourceWrapper : sources) {
+                        if (transferSourceWrapper.isPrimary()) {
+                            mSelectedTransferSource.postValue(transferSourceWrapper);
+                            mSourceToken = transferSourceWrapper.getToken();
+                        }
+                    }
+                    loadTransferDestination(mSourceToken);
                 }
+                mTransferSources.postValue(sources);
             }
 
             @Override

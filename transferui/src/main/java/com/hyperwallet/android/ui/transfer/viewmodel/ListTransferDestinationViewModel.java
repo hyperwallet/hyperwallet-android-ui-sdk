@@ -16,6 +16,9 @@
  */
 package com.hyperwallet.android.ui.transfer.viewmodel;
 
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TYPE;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.PREPAID_CARD;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -25,10 +28,13 @@ import androidx.lifecycle.ViewModelProvider;
 import com.hyperwallet.android.model.Errors;
 import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import com.hyperwallet.android.ui.common.repository.Event;
+import com.hyperwallet.android.ui.transfer.TransferSourceWrapper;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepository;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * List Transfer Destination ViewModel
@@ -43,6 +49,7 @@ public class ListTransferDestinationViewModel extends ViewModel {
     private final TransferMethodRepository mTransferMethodRepository;
 
     private boolean mIsInitialized;
+    private boolean mIsSourcePrepaidCard;
 
     ListTransferDestinationViewModel(@NonNull final TransferMethodRepository repository) {
         mTransferMethodRepository = repository;
@@ -53,6 +60,10 @@ public class ListTransferDestinationViewModel extends ViewModel {
             mIsInitialized = true;
             loadTransferDestinationList();
         }
+    }
+
+    public void setSourceIsPrepaidCard(boolean sourceIsPrepaidCard) {
+        mIsSourcePrepaidCard = sourceIsPrepaidCard;
     }
 
     public void selectedTransferDestination(@NonNull final TransferMethod transferMethod) {
@@ -103,6 +114,13 @@ public class ListTransferDestinationViewModel extends ViewModel {
             @Override
             public void onTransferMethodListLoaded(List<TransferMethod> transferMethods) {
                 if (transferMethods != null) {
+                    if (mIsSourcePrepaidCard) {
+                        for (int i = transferMethods.size() - 1; i >= 0; --i) {
+                            if (Objects.equals(transferMethods.get(i).getField(TYPE), PREPAID_CARD)) {
+                                transferMethods.remove(i);
+                            }
+                        }
+                    }
                     mTransferDestinationList.postValue(transferMethods);
                 } else {
                     mTransferDestinationList.setValue(new ArrayList<TransferMethod>());

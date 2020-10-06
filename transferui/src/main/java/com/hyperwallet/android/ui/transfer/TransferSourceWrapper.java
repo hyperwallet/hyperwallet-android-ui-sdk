@@ -3,31 +3,37 @@ package com.hyperwallet.android.ui.transfer;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.hyperwallet.android.model.transfermethod.TransferMethod;
+
 public class TransferSourceWrapper implements Parcelable {
 
     private String title;
     private String amount;
-    private String identification;
+    private TransferMethod identification;
     private String type;
     private String token;
+    private boolean isPrimary = false;
 
     public TransferSourceWrapper() {
-    }
-
-    public TransferSourceWrapper(String title, String amount, String identification, String type, String token) {
-        this.title = title;
-        this.amount = amount;
-        this.identification = identification;
-        this.type = type;
-        this.token = token;
     }
 
     protected TransferSourceWrapper(Parcel in) {
         title = in.readString();
         amount = in.readString();
-        identification = in.readString();
+        identification = in.readParcelable(TransferMethod.class.getClassLoader());
         type = in.readString();
         token = in.readString();
+        isPrimary = in.readByte() != 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(title);
+        dest.writeString(amount);
+        dest.writeParcelable(identification, flags);
+        dest.writeString(type);
+        dest.writeString(token);
+        dest.writeByte((byte) (isPrimary ? 1 : 0));
     }
 
     public static final Creator<TransferSourceWrapper> CREATOR = new Creator<TransferSourceWrapper>() {
@@ -41,6 +47,15 @@ public class TransferSourceWrapper implements Parcelable {
             return new TransferSourceWrapper[size];
         }
     };
+
+    public boolean isPrimary() {
+        return isPrimary;
+    }
+
+    public void setPrimary(boolean primary) {
+        isPrimary = primary;
+    }
+
 
     public String getTitle() {
         return title;
@@ -74,25 +89,18 @@ public class TransferSourceWrapper implements Parcelable {
         this.amount = amount;
     }
 
-    public String getIdentification() {
+    public TransferMethod getIdentification() {
         return identification;
     }
 
-    public void setIdentification(String identification) {
+    public void setIdentification(TransferMethod identification) {
         this.identification = identification;
     }
+
 
     @Override
     public int describeContents() {
         return 0;
     }
 
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(title);
-        parcel.writeString(amount);
-        parcel.writeString(identification);
-        parcel.writeString(type);
-        parcel.writeString(token);
-    }
 }
