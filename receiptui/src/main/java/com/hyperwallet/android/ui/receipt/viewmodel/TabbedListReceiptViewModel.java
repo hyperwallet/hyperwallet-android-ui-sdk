@@ -16,11 +16,18 @@
  */
 package com.hyperwallet.android.ui.receipt.viewmodel;
 
+import android.os.Handler;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.hyperwallet.android.Configuration;
+import com.hyperwallet.android.Hyperwallet;
+import com.hyperwallet.android.exception.HyperwalletException;
+import com.hyperwallet.android.listener.HyperwalletListener;
 import com.hyperwallet.android.model.Errors;
 import com.hyperwallet.android.model.transfermethod.PrepaidCard;
 import com.hyperwallet.android.model.user.User;
@@ -31,12 +38,12 @@ import com.hyperwallet.android.ui.user.repository.UserRepository;
 import java.util.List;
 
 public class TabbedListReceiptViewModel extends ViewModel {
-    public static final String TAG = TabbedListReceiptViewModel.class.getSimpleName();
     private UserRepository userRepository;
     private PrepaidCardRepository prepaidCardRepository;
     public MutableLiveData<User> user = new MutableLiveData<User>();
     public MutableLiveData<List<PrepaidCard>> prepaidCards = new MutableLiveData<List<PrepaidCard>>();
     public MutableLiveData errors = new MutableLiveData<Event<Errors>>();
+    private ProgramModel programModel;
 
     public TabbedListReceiptViewModel(
             UserRepository mUserRepository,
@@ -46,6 +53,7 @@ public class TabbedListReceiptViewModel extends ViewModel {
     }
 
     public void initialize() {
+        getProgramModel();
         loadUser();
     }
 
@@ -59,10 +67,33 @@ public class TabbedListReceiptViewModel extends ViewModel {
 
             @Override
             public void onError(@NonNull Errors errors) {
-                TabbedListReceiptViewModel.this.errors.postValue(errors);
+                TabbedListReceiptViewModel.this.errors.postValue(new Event(errors));
             }
         });
     }
+
+    public ProgramModel getProgramModel() {
+        Hyperwallet.getDefault().getConfiguration(new HyperwalletListener<Configuration>() {
+            @Override
+            public void onSuccess(@Nullable Configuration result) {
+                if (result != null) {
+                    programModel = ProgramModel.valueOf(result.getProgramModel());
+                }
+            }
+
+            @Override
+            public void onFailure(HyperwalletException exception) {
+
+            }
+
+            @Override
+            public Handler getHandler() {
+                return null;
+            }
+        });
+        return programModel;
+    }
+
 
     private void loadPrepaidCards() {
         prepaidCardRepository.loadPrepaidCards(new PrepaidCardRepository.LoadPrepaidCardsCallback() {
@@ -80,6 +111,10 @@ public class TabbedListReceiptViewModel extends ViewModel {
                 }
             }
         });
+    }
+
+    public void retry() {
+        loadUser();
     }
 
     public static class TabbedListReceiptViewModelFactory implements ViewModelProvider.Factory {

@@ -18,23 +18,30 @@ package com.hyperwallet.android.ui.receipt.view;
 
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
+import com.hyperwallet.android.model.Errors;
+import com.hyperwallet.android.ui.common.repository.Event;
+import com.hyperwallet.android.ui.common.util.PageGroups;
 import com.hyperwallet.android.ui.common.view.ActivityUtils;
 import com.hyperwallet.android.ui.common.view.error.OnNetworkErrorCallback;
 import com.hyperwallet.android.ui.receipt.R;
+import com.hyperwallet.android.ui.receipt.repository.PrepaidCardRepositoryImpl;
+import com.hyperwallet.android.ui.receipt.viewmodel.TabbedListReceiptViewModel;
+import com.hyperwallet.android.ui.user.repository.UserRepositoryImpl;
 
 public class TabbedListReceiptActivity extends AppCompatActivity implements OnNetworkErrorCallback {
     public static final String TAG = "receipts:prepaid:tabbed-list-receipts";
 
     public static final String EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT = "EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT";
-    public static final String EXTRA_PREPAID_CARD_TOKEN = "PREPAID_CARD_TOKEN";
+    private TabbedListReceiptViewModel receiptViewModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,16 +64,26 @@ public class TabbedListReceiptActivity extends AppCompatActivity implements OnNe
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
 
-        String token = getIntent().getStringExtra(EXTRA_PREPAID_CARD_TOKEN);
-        if (TextUtils.isEmpty(token)) {
-            throw new IllegalArgumentException("Activity " + TabbedListReceiptActivity.class.getName()
-                    + " requires parameter: " + EXTRA_PREPAID_CARD_TOKEN + " value");
-        }
+        receiptViewModel = ViewModelProviders.of(this, new TabbedListReceiptViewModel
+                .TabbedListReceiptViewModelFactory(new UserRepositoryImpl(), new PrepaidCardRepositoryImpl()))
+                .get(TabbedListReceiptViewModel.class);
+
+        registerObservers();
 
         if (savedInstanceState == null) {
             ActivityUtils.initFragment(this, TabbedListReceiptFragment.newInstance(),
                     R.id.tabbed_list_receipt_fragment);
         }
+    }
+
+    private void registerObservers() {
+        receiptViewModel.errors.observe(this, new Observer<Event<Errors>>() {
+            @Override
+            public void onChanged(Event<Errors> errorsEvent) {
+                ActivityUtils.showError(TabbedListReceiptActivity.this, TabbedListReceiptActivity.TAG,
+                        PageGroups.RECEIPTS, errorsEvent.getContent().getErrors());
+            }
+        });
     }
 
     @Override

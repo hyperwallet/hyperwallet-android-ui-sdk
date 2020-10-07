@@ -23,8 +23,10 @@ import static android.text.format.DateUtils.formatDateTime;
 
 import static com.hyperwallet.android.model.receipt.Receipt.Entries.CREDIT;
 import static com.hyperwallet.android.model.receipt.Receipt.Entries.DEBIT;
+import static com.hyperwallet.android.ui.receipt.view.TabbedListReceiptActivity.EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,6 +45,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hyperwallet.android.model.receipt.Receipt;
+import com.hyperwallet.android.ui.common.repository.Event;
 import com.hyperwallet.android.ui.common.util.DateUtils;
 import com.hyperwallet.android.ui.common.view.OneClickListener;
 import com.hyperwallet.android.ui.receipt.R;
@@ -195,6 +198,12 @@ public class ListReceiptFragment extends Fragment {
                 }
             }
         });
+        mReceiptViewModel.getDetailNavigation().observe(getActivity(), new Observer<Event<Receipt>>() {
+            @Override
+            public void onChanged(Event<Receipt> receiptEvent) {
+                navigate(receiptEvent);
+            }
+        });
     }
 
     void retry() {
@@ -213,6 +222,16 @@ public class ListReceiptFragment extends Fragment {
         public boolean areContentsTheSame(@NonNull final Receipt oldItem, @NonNull final Receipt newItem) {
             return oldItem.hashCode() == newItem.hashCode()
                     && Objects.equals(oldItem, newItem);
+        }
+    }
+
+    private void navigate(@NonNull final Event<Receipt> event) {
+        if (!event.isContentConsumed()) {
+            Intent intent = new Intent(getActivity(), ReceiptDetailActivity.class);
+            intent.putExtra(ReceiptDetailActivity.EXTRA_RECEIPT, event.getContent());
+            intent.putExtra(ReceiptDetailActivity.EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT,
+                    getActivity().getIntent().getBooleanExtra(EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT, false));
+            startActivity(intent);
         }
     }
 

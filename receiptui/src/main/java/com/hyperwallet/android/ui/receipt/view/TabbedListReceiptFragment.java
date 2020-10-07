@@ -24,6 +24,7 @@ import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -35,15 +36,9 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
-import com.hyperwallet.android.model.Errors;
 import com.hyperwallet.android.model.transfermethod.PrepaidCard;
-import com.hyperwallet.android.ui.common.repository.Event;
-import com.hyperwallet.android.ui.common.util.PageGroups;
-import com.hyperwallet.android.ui.common.view.ActivityUtils;
 import com.hyperwallet.android.ui.receipt.R;
-import com.hyperwallet.android.ui.receipt.repository.PrepaidCardRepositoryImpl;
 import com.hyperwallet.android.ui.receipt.viewmodel.TabbedListReceiptViewModel;
-import com.hyperwallet.android.ui.user.repository.UserRepositoryImpl;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -55,6 +50,8 @@ public class TabbedListReceiptFragment extends Fragment {
     private ListReceiptsViewPagerAdapter listReceiptsViewPagerAdapter;
     private ViewPager viewPager;
     private TabLayout tabLayout;
+    private LinearLayout header;
+
     private TabbedListReceiptViewModel receiptViewModel;
 
     public TabbedListReceiptFragment() {
@@ -82,6 +79,7 @@ public class TabbedListReceiptFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         viewPager = (ViewPager) view.findViewById(R.id.receipts_pager);
         tabLayout = (TabLayout) view.findViewById(R.id.tab_layout);
+        header = (LinearLayout) view.findViewById(R.id.transactions_header);
     }
 
     void retry() {
@@ -91,10 +89,10 @@ public class TabbedListReceiptFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        receiptViewModel = ViewModelProviders.of(this, new TabbedListReceiptViewModel
-                .TabbedListReceiptViewModelFactory(new UserRepositoryImpl(),
-                new PrepaidCardRepositoryImpl()))
-                .get(TabbedListReceiptViewModel.class);
+        if (getActivity() instanceof TabbedListReceiptActivity) {
+            header.setVisibility(View.GONE);
+        }
+        receiptViewModel = ViewModelProviders.of(requireActivity()).get(TabbedListReceiptViewModel.class);
         listReceiptsViewPagerAdapter = new ListReceiptsViewPagerAdapter(getFragmentManager(),
                 FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, new ArrayList<Parcelable>(),
                 getResources());
@@ -137,21 +135,18 @@ public class TabbedListReceiptFragment extends Fragment {
                 }
             }
         });
-        receiptViewModel.errors.observe(this, new Observer<Event<Errors>>() {
-            @Override
-            public void onChanged(Event<Errors> errorsEvent) {
-                ActivityUtils.showError(getActivity(), TabbedListReceiptActivity.TAG, PageGroups.RECEIPTS,
-                        errorsEvent.getContent().getErrors());
-            }
-        });
 
     }
 
     private void sortToken(List<PrepaidCard> prepaidCards) {
         Collections.sort(prepaidCards, new Comparator<PrepaidCard>() {
             @Override
-            public int compare(PrepaidCard a, PrepaidCard b) {
-                return a.getPrimaryCardToken().compareTo(b.getPrimaryCardToken());
+            public int compare(PrepaidCard firstPrepaid, PrepaidCard secondPrepaid) {
+                if (firstPrepaid == null || secondPrepaid == null
+                        || firstPrepaid.getPrimaryCardToken() == null || secondPrepaid.getPrimaryCardToken() == null) {
+                    return 0;
+                }
+                return firstPrepaid.getPrimaryCardToken().compareTo(secondPrepaid.getPrimaryCardToken());
             }
         });
     }
