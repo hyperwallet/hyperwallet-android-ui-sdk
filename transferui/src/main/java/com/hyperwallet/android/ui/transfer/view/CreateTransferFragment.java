@@ -94,7 +94,6 @@ public class CreateTransferFragment extends Fragment {
     private TextView mTransferDestinationError;
     private View mTransferAmountErrorContainer;
     private TextView mTransferAmountError;
-    //private TextView mTransferSourceAmount;
 
     /**
      * Please don't use this constructor this is reserved for Android Core Framework
@@ -194,7 +193,6 @@ public class CreateTransferFragment extends Fragment {
 
         // transfer source
         mTransferSource = view.findViewById(R.id.transfer_source);
-       // mTransferSourceAmount = view.findViewById(R.id.transfer_source_description_1);
         mTransferSource.setOnClickListener(new OneClickListener() {
             @Override
             public void onOneClick(View v) {
@@ -519,6 +517,7 @@ public class CreateTransferFragment extends Fragment {
                 new Observer<TransferSourceWrapper>() {
                     @Override
                     public void onChanged(TransferSourceWrapper transferSourceWrapper) {
+                        mTransferAmount.setText(getResources().getText(R.string.defaultTransferAmount));
                         showTransferSource(transferSourceWrapper);
                     }
                 });
@@ -529,7 +528,6 @@ public class CreateTransferFragment extends Fragment {
                 new Observer<ArrayList<TransferSourceWrapper>>() {
                     @Override
                     public void onChanged(ArrayList<TransferSourceWrapper> transferSourceWrappers) {
-                        // mIsSingleSource = transferSourceWrappers.size() <= 1;
                         if (transferSourceWrappers.size() <= 1) {
                             mTransferSource.setOnClickListener(null);
                         }
@@ -561,10 +559,8 @@ public class CreateTransferFragment extends Fragment {
                     String totalAmount = requireContext().getString(R.string.total,
                             Currency.getInstance(transfer.getDestinationCurrency()).getSymbol(),
                             transfer.getDestinationAmount(), transfer.getDestinationCurrency());
-                   // mTransferSourceAmount.setText(totalAmount);
                 } else {
                     mTransferAllFundsSummary.setVisibility(View.GONE);
-                   // mTransferSourceAmount.setText("");
                 }
             }
         });

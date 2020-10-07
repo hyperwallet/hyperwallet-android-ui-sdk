@@ -37,17 +37,40 @@ public interface PrepaidCardRepository {
     void loadPrepaidCards(@NonNull final LoadPrepaidCardsCallback callback);
 
     /**
+     * get prepaid card information
+     *
+     * @param callback @see {@link PrepaidCardRepository.LoadPrepaidCardCallback}
+     */
+    void getPrepaidCard(@NonNull String token, LoadPrepaidCardCallback callback);
+
+    /**
      * Callback interface that responses to action when invoked to
      * Load prepaid cards information
      * <p>
      * When prepaid cards is properly loaded
-     * {@link PrepaidCardRepository.LoadPrepaidCardsCallback#onPrepaidCardLoaded(List<PrepaidCard>))}
+     * {@link PrepaidCardRepository.LoadPrepaidCardsCallback#onPrepaidCardListLoaded(List)}
      * is invoked otherwise {@link PrepaidCardRepository.LoadPrepaidCardsCallback#onError(Errors)}
      * is called to further log or show error information
      */
     interface LoadPrepaidCardsCallback {
 
-        void onPrepaidCardLoaded(@Nullable final List<PrepaidCard> prepaidCardList);
+        void onPrepaidCardListLoaded(@Nullable final List<PrepaidCard> prepaidCardList);
+
+        void onError(@NonNull final Errors errors);
+    }
+
+    /**
+     * Callback interface that responses to action when invoked to
+     * Load prepaid card information
+     * <p>
+     * When prepaid card is properly loaded
+     * {@link PrepaidCardRepository.LoadPrepaidCardCallback#onPrepaidCardLoaded(PrepaidCard)}
+     * is invoked otherwise {@link PrepaidCardRepository.LoadPrepaidCardCallback#onError(Errors)}
+     * is called to further log or show error information
+     */
+    interface LoadPrepaidCardCallback {
+
+        void onPrepaidCardLoaded(@Nullable final PrepaidCard prepaidCard);
 
         void onError(@NonNull final Errors errors);
     }

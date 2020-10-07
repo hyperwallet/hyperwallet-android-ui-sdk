@@ -32,6 +32,7 @@ import com.hyperwallet.android.listener.HyperwalletListener;
 import com.hyperwallet.android.model.paging.PageList;
 import com.hyperwallet.android.model.transfermethod.PrepaidCard;
 import com.hyperwallet.android.model.transfermethod.PrepaidCardQueryParam;
+import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
 
 public class PrepaidCardRepositoryImpl implements PrepaidCardRepository {
 
@@ -49,15 +50,17 @@ public class PrepaidCardRepositoryImpl implements PrepaidCardRepository {
                 .status(ACTIVATED)
                 .sortByCreatedOnAsc()
                 .build();
-
+        EspressoIdlingResource.increment();
         getHyperwallet().listPrepaidCards(queryParam, new HyperwalletListener<PageList<PrepaidCard>>() {
             @Override
             public void onSuccess(@Nullable PageList<PrepaidCard> result) {
-                callback.onPrepaidCardLoaded(result != null ? result.getDataList() : null);
+                EspressoIdlingResource.decrement();
+                callback.onPrepaidCardListLoaded(result != null ? result.getDataList() : null);
             }
 
             @Override
             public void onFailure(HyperwalletException exception) {
+                EspressoIdlingResource.decrement();
                 callback.onError(exception.getErrors());
             }
 
@@ -67,4 +70,27 @@ public class PrepaidCardRepositoryImpl implements PrepaidCardRepository {
             }
         });
     }
+
+    @Override
+    public void getPrepaidCard(@NonNull String token, final LoadPrepaidCardCallback callback) {
+
+        getHyperwallet().getPrepaidCard(token,
+                new HyperwalletListener<PrepaidCard>() {
+                    @Override
+                    public void onSuccess(@Nullable PrepaidCard result) {
+                        callback.onPrepaidCardLoaded(result);
+                    }
+
+                    @Override
+                    public void onFailure(HyperwalletException exception) {
+                        callback.onError(exception.getErrors());
+                    }
+
+                    @Override
+                    public Handler getHandler() {
+                        return null;
+                    }
+                });
+    }
+
 }
