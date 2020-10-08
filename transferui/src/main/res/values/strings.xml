@@ -67,7 +67,6 @@
     <string name="mobileTransferFromLabel">TRANSFER FROM</string>
     <string name="transferSource">Source</string>
     <string name="mobileTransferFromHeader">Transfer from</string>
-    <string name="total">Total: %s %s %s</string>
     <string name="availableFunds">Available Funds</string>
 
 </resources>

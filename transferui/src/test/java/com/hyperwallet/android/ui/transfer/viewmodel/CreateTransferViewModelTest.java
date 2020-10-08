@@ -173,7 +173,6 @@ public class CreateTransferViewModelTest {
         ).create(CreateTransferViewModel.class));
         viewModel.init("0");
 
-        verify(viewModel).getProgramModel();
         verify(viewModel).loadTransferDestination(any(String.class));
         verify(viewModel, never()).loadTransferSource();
 
@@ -210,7 +209,6 @@ public class CreateTransferViewModelTest {
                 mTransferRepository, mTransferMethodRepository, mUserRepository, mPrepaidCardRepository
         ).create(CreateTransferViewModel.class));
         viewModel.init("0");
-        viewModel.getProgramModel();
 
         verify(viewModel).loadTransferSource();
 

@@ -16,30 +16,14 @@
  */
 package com.hyperwallet.android.ui.transfer.viewmodel;
 
-import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TOKEN;
-import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TRANSFER_METHOD_CURRENCY;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.hyperwallet.android.model.Error;
-import com.hyperwallet.android.model.Errors;
-import com.hyperwallet.android.model.transfer.Transfer;
-import com.hyperwallet.android.model.transfermethod.PrepaidCard;
-import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import com.hyperwallet.android.ui.common.repository.Event;
 import com.hyperwallet.android.ui.transfer.TransferSourceWrapper;
-import com.hyperwallet.android.ui.transfer.repository.TransferRepository;
-import com.hyperwallet.android.ui.transfermethod.repository.PrepaidCardRepository;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
 
 /**
  * List Transfer Source ViewModel
@@ -47,17 +31,8 @@ import java.util.UUID;
 public class ListTransferSourceViewModel extends ViewModel {
     private final MutableLiveData<Event<TransferSourceWrapper>> mSelectedTransferSource =
             new MutableLiveData<>();
-    private final MutableLiveData<Event<Errors>> mTransferSourceError = new MutableLiveData<>();
-
-    private boolean mIsInitialized;
 
     ListTransferSourceViewModel() {
-    }
-
-    public void init() {
-        if (!mIsInitialized) {
-            mIsInitialized = true;
-        }
     }
 
     public void selectedTransferSource(@NonNull final TransferSourceWrapper source) {
@@ -68,12 +43,7 @@ public class ListTransferSourceViewModel extends ViewModel {
         return mSelectedTransferSource;
     }
 
-    public LiveData<Event<Errors>> getTransferSourceError() {
-        return mTransferSourceError;
-    }
-
     public static class ListTransferSourceViewModelFactory implements ViewModelProvider.Factory {
-
 
         public ListTransferSourceViewModelFactory() {
 

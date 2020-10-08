@@ -34,6 +34,7 @@ import com.hyperwallet.android.model.Errors;
 import com.hyperwallet.android.model.StatusTransition;
 import com.hyperwallet.android.model.TypeReference;
 import com.hyperwallet.android.model.balance.PrepaidCardBalanceQueryParam;
+import com.hyperwallet.android.model.graphql.keyed.TransferMethodConfigurationKeyResult;
 import com.hyperwallet.android.model.graphql.query.TransferMethodConfigurationKeysQuery;
 import com.hyperwallet.android.model.paging.PageList;
 import com.hyperwallet.android.model.transfer.Transfer;
@@ -50,6 +51,7 @@ import com.hyperwallet.android.util.JsonUtils;
 
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.Matchers;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Before;
@@ -68,6 +70,7 @@ import org.mockito.junit.MockitoRule;
 import org.mockito.stubbing.Answer;
 import org.robolectric.RobolectricTestRunner;
 
+import java.lang.reflect.InvocationTargetException;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
@@ -96,9 +99,8 @@ public class PrepaidCardRepositoryImplTest {
     private ArgumentCaptor<Errors> mErrorsArgumentCaptor;
     @Captor
     private ArgumentCaptor<PrepaidCard> mPrepaidCardArgumentCaptor;
-
     @Captor
-    private ArgumentCaptor<PageList<PrepaidCard>> mPrepaidCardListArgumentCaptor;
+    private ArgumentCaptor<List<PrepaidCard>> mPrepaidCardListArgumentCaptor;
 
     @Before
     public void setup() {
@@ -141,12 +143,37 @@ public class PrepaidCardRepositoryImplTest {
 
     }
 
-   /* @Test
-    public void testGetPrepaidCardList_returnsCard() throws JSONException {
+    @Test
+    public void testGetPrepaidCard_error() {
+        final Error returnedError = new Error("test message", "TEST_CODE");
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                HyperwalletListener listener = (HyperwalletListener) invocation.getArguments()[1];
+
+                List<Error> errorList = new ArrayList<>();
+                errorList.add(returnedError);
+
+                listener.onFailure(new HyperwalletException(new Errors(errorList)));
+                return listener;
+            }
+        }).when(mHyperwallet).getPrepaidCard(ArgumentMatchers.<String>any(),
+                any(HyperwalletListener.class));
+
+        mPrepaidCardRepository.getPrepaidCard("trm-fake-token", mLoadPrepaidCardCallback);
+
+        verify(mLoadPrepaidCardCallback, never()).onPrepaidCardLoaded(any(PrepaidCard.class));
+        verify(mLoadPrepaidCardCallback).onError(mErrorsArgumentCaptor.capture());
+
+        assertThat(mErrorsArgumentCaptor.getValue().getErrors(), hasItem(returnedError));
+    }
+
+    @Test
+    public void testGetPrepaidCardList_returnsCard()
+            throws JSONException, HyperwalletException {
         String responseJson = mResourceManager.getResourceContent("prepaid_cards_response.json");
         JSONObject jsonObject = new JSONObject(responseJson);
-        final PrepaidCard prepaidCardList = new PrepaidCard(jsonObject);
-
+        final PageList<PrepaidCard> prepaidCardList = new PageList<>(jsonObject, PrepaidCard.class);
 
         doAnswer(new Answer() {
             @Override
@@ -157,13 +184,12 @@ public class PrepaidCardRepositoryImplTest {
             }
         }).when(mHyperwallet).listPrepaidCards(ArgumentMatchers.<PrepaidCardQueryParam>any(),
                 any(HyperwalletListener.class));
-
         mPrepaidCardRepository.loadPrepaidCards(mLoadPrepaidCardListCallback);
-        verify(mLoadPrepaidCardListCallback).onPrepaidCardListLoaded(
-                mPrepaidCardListArgumentCaptor.getValue().getDataList());
+        verify(mPrepaidCardRepository).getHyperwallet();
+        verify(mLoadPrepaidCardListCallback).onPrepaidCardListLoaded(mPrepaidCardListArgumentCaptor.capture());
         verify(mLoadPrepaidCardListCallback, never()).onError(any(Errors.class));
 
-        List<PrepaidCard> prepaidCardResponse = (List<PrepaidCard>) mPrepaidCardListArgumentCaptor.getValue();
+        List<PrepaidCard> prepaidCardResponse = mPrepaidCardListArgumentCaptor.getValue();
 
         PrepaidCard prepaidCard = prepaidCardResponse.get(0);
         assertThat(prepaidCard.getField(TOKEN), is("trm-fake-token"));
@@ -192,5 +218,31 @@ public class PrepaidCardRepositoryImplTest {
         assertThat(secondaryPrepaidCard.getCardBrand(), is("VISA"));
         assertThat(secondaryPrepaidCard.getDateOfExpiry(), is("2023-06"));
         assertThat(secondaryPrepaidCard.getPrimaryCardToken(), is("trm-fake-token"));
-    }*/
+    }
+
+    @Test
+    public void testGetPrepaidCardList_error() {
+        final Error returnedError = new Error("test message", "TEST_CODE");
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                HyperwalletListener listener = (HyperwalletListener) invocation.getArguments()[1];
+
+                List<Error> errorList = new ArrayList<>();
+                errorList.add(returnedError);
+
+                listener.onFailure(new HyperwalletException(new Errors(errorList)));
+                return listener;
+            }
+        }).when(mHyperwallet).listPrepaidCards(ArgumentMatchers.<PrepaidCardQueryParam>any(),
+                any(HyperwalletListener.class));
+
+        mPrepaidCardRepository.loadPrepaidCards(mLoadPrepaidCardListCallback);
+
+        verify(mLoadPrepaidCardListCallback, never()).onPrepaidCardListLoaded(
+                (List<PrepaidCard>) any(PrepaidCard.class));
+        verify(mLoadPrepaidCardListCallback).onError(mErrorsArgumentCaptor.capture());
+
+        assertThat(mErrorsArgumentCaptor.getValue().getErrors(), hasItem(returnedError));
+    }
 }

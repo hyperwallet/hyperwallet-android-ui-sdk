@@ -28,12 +28,11 @@ import androidx.lifecycle.ViewModelProvider;
 import com.hyperwallet.android.model.Errors;
 import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import com.hyperwallet.android.ui.common.repository.Event;
-import com.hyperwallet.android.ui.transfer.TransferSourceWrapper;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepository;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Objects;
 
 /**
@@ -62,8 +61,8 @@ public class ListTransferDestinationViewModel extends ViewModel {
         }
     }
 
-    public void setSourceIsPrepaidCard(boolean sourceIsPrepaidCard) {
-        mIsSourcePrepaidCard = sourceIsPrepaidCard;
+    public void setIsSourcePrepaidCard(boolean isSourcePrepaidCard) {
+        mIsSourcePrepaidCard = isSourcePrepaidCard;
     }
 
     public void selectedTransferDestination(@NonNull final TransferMethod transferMethod) {
@@ -115,9 +114,10 @@ public class ListTransferDestinationViewModel extends ViewModel {
             public void onTransferMethodListLoaded(List<TransferMethod> transferMethods) {
                 if (transferMethods != null) {
                     if (mIsSourcePrepaidCard) {
-                        for (int i = transferMethods.size() - 1; i >= 0; --i) {
-                            if (Objects.equals(transferMethods.get(i).getField(TYPE), PREPAID_CARD)) {
-                                transferMethods.remove(i);
+                        ListIterator<TransferMethod> transferMethod = transferMethods.listIterator();
+                        while (transferMethod.hasNext()) {
+                            if (Objects.equals(transferMethod.next().getField(TYPE), PREPAID_CARD)) {
+                                transferMethod.remove();
                             }
                         }
                     }

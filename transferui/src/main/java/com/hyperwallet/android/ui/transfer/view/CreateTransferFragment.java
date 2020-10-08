@@ -61,14 +61,12 @@ import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import com.hyperwallet.android.ui.common.intent.HyperwalletIntent;
 import com.hyperwallet.android.ui.common.repository.Event;
 import com.hyperwallet.android.ui.common.view.OneClickListener;
-import com.hyperwallet.android.ui.transfer.ProgramModel;
 import com.hyperwallet.android.ui.transfer.R;
 import com.hyperwallet.android.ui.transfer.TransferSourceWrapper;
 import com.hyperwallet.android.ui.transfer.viewmodel.CreateTransferViewModel;
 
 import java.util.ArrayList;
 import java.util.Currency;
-import java.util.List;
 import java.util.Locale;
 
 /**
@@ -556,9 +554,6 @@ public class CreateTransferFragment extends Fragment {
                             transfer.getDestinationAmount(), transfer.getDestinationCurrency());
                     mTransferAllFundsSummary.setText(summary);
                     mTransferAllFundsSummary.setVisibility(View.VISIBLE);
-                    String totalAmount = requireContext().getString(R.string.total,
-                            Currency.getInstance(transfer.getDestinationCurrency()).getSymbol(),
-                            transfer.getDestinationAmount(), transfer.getDestinationCurrency());
                 } else {
                     mTransferAllFundsSummary.setVisibility(View.GONE);
                 }

@@ -58,6 +58,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -156,8 +157,7 @@ public class CreateTransferViewModel extends ViewModel {
 
     public void init(@NonNull final String defaultAmount) {
         initialAmount = defaultAmount;
-        isCardModel = getProgramModel() == ProgramModel.PAY2CARD_MODEL
-                || getProgramModel() == ProgramModel.CARD_ONLY_MODEL;
+        isCardModel = isPay2CardOrCardOnlyModel();
         if (!mIsInitialized) {
             mIsInitialized = true;
             if (mSourceToken == null) {
@@ -510,9 +510,10 @@ public class CreateTransferViewModel extends ViewModel {
             @Override
             public void onTransferMethodListLoaded(List<TransferMethod> transferMethods) {
                 if (transferMethods != null) {
-                    for (int i = transferMethods.size() - 1; i >= 0; --i) {
-                        if (Objects.equals(transferMethods.get(i).getField(TYPE), PREPAID_CARD)) {
-                            transferMethods.remove(i);
+                    ListIterator<TransferMethod> transferMethod = transferMethods.listIterator();
+                    while (transferMethod.hasNext()) {
+                        if (Objects.equals(transferMethod.next().getField(TYPE), PREPAID_CARD)) {
+                            transferMethod.remove();
                         }
                     }
                     if (transferMethods.size() > 0) {
@@ -601,7 +602,7 @@ public class CreateTransferViewModel extends ViewModel {
                 transfer.getDestinationAmount(), mTransferAmount.getValue());
     }
 
-    public ProgramModel getProgramModel() {
+    public Boolean isPay2CardOrCardOnlyModel() {
         Hyperwallet.getDefault().getConfiguration(new HyperwalletListener<Configuration>() {
             @Override
             public void onSuccess(@Nullable Configuration result) {
@@ -621,7 +622,7 @@ public class CreateTransferViewModel extends ViewModel {
                 return null;
             }
         });
-        return mProgramModel;
+        return mProgramModel == ProgramModel.CARD_ONLY_MODEL || mProgramModel == ProgramModel.PAY2CARD_MODEL;
     }
 
     private void sortPrepaidCard(List<PrepaidCard> prepaidCards) {

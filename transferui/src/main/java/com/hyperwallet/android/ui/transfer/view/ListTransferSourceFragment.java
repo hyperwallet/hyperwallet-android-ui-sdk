@@ -18,8 +18,8 @@ package com.hyperwallet.android.ui.transfer.view;
 
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.PREPAID_CARD;
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getStringFontIcon;
-import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getTransferMethodName;
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getTransferMethodDetail;
+import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getTransferMethodName;
 
 import android.app.Activity;
 import android.content.Context;
@@ -126,7 +126,6 @@ public class ListTransferSourceFragment extends DialogFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mListTransferSourceViewModel.init();
     }
 
     @Override

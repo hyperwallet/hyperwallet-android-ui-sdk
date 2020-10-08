@@ -29,18 +29,14 @@ import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.hyperwallet.android.model.Errors;
 import com.hyperwallet.android.ui.common.repository.Event;
-import com.hyperwallet.android.ui.common.util.PageGroups;
 import com.hyperwallet.android.ui.common.view.ActivityUtils;
 import com.hyperwallet.android.ui.common.view.error.OnNetworkErrorCallback;
 import com.hyperwallet.android.ui.transfer.R;
 import com.hyperwallet.android.ui.transfer.TransferSourceWrapper;
 import com.hyperwallet.android.ui.transfer.viewmodel.ListTransferSourceViewModel;
-import com.hyperwallet.android.ui.transfermethod.repository.PrepaidCardRepositoryFactory;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ListTransferSourceActivity extends AppCompatActivity implements OnNetworkErrorCallback {
 
@@ -114,17 +110,6 @@ public class ListTransferSourceActivity extends AppCompatActivity implements OnN
                         intent.putExtra(EXTRA_SELECTED_SOURCE, source.getContent());
                         setResult(Activity.RESULT_OK, intent);
                         finish();
-                    }
-                });
-
-        mListTransferSourceViewModel.getTransferSourceError().observe(this,
-                new Observer<Event<Errors>>() {
-                    @Override
-                    public void onChanged(Event<Errors> errorsEvent) {
-                        if (!errorsEvent.isContentConsumed()) {
-                            ActivityUtils.showError(ListTransferSourceActivity.this, TAG,
-                                    PageGroups.TRANSFER_FUNDS, errorsEvent.getContent().getErrors());
-                        }
                     }
                 });
     }
