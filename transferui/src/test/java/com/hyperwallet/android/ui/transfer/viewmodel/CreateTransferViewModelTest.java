@@ -6,6 +6,7 @@ import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
@@ -27,12 +28,12 @@ import com.hyperwallet.android.model.Error;
 import com.hyperwallet.android.model.Errors;
 import com.hyperwallet.android.model.TypeReference;
 import com.hyperwallet.android.model.transfer.Transfer;
+import com.hyperwallet.android.model.transfermethod.PrepaidCard;
 import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import com.hyperwallet.android.model.user.User;
 import com.hyperwallet.android.ui.testutils.TestAuthenticationProvider;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletMockWebServer;
-import com.hyperwallet.android.ui.transfer.ProgramModel;
 import com.hyperwallet.android.ui.transfer.repository.TransferRepository;
 import com.hyperwallet.android.ui.transfer.repository.TransferRepositoryFactory;
 import com.hyperwallet.android.ui.transfer.view.CreateTransferActivity;
@@ -50,6 +51,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.MockitoJUnit;
@@ -58,7 +60,9 @@ import org.mockito.stubbing.Answer;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @RunWith(RobolectricTestRunner.class)
 public class CreateTransferViewModelTest {
@@ -71,25 +75,27 @@ public class CreateTransferViewModelTest {
     public HyperwalletMockWebServer mMockWebServer = new HyperwalletMockWebServer(8080);
     @Rule
     public ExpectedException mExpectedException = ExpectedException.none();
-
     @Mock
     private TransferMethodRepository mTransferMethodRepository;
     @Mock
     private UserRepository mUserRepository;
     @Mock
     private TransferRepository mTransferRepository;
-
     @Mock
     private PrepaidCardRepository mPrepaidCardRepository;
 
     private Transfer mTransfer;
     private TransferMethod mTransferMethod;
+    private PrepaidCard mPrepaidCard;
 
     @Before
     public void setup() {
         Hyperwallet.getInstance(new TestAuthenticationProvider());
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(mResourceManager
                 .getResourceContent("authentication_token_response.json")).mock();
+
+        final String prepaidCardResponse = mResourceManager.getResourceContent("prepaid_card_response.json");
+        mPrepaidCard = new PrepaidCard(prepaidCardResponse);
 
         mTransfer = new Transfer.Builder()
                 .token("trf-transfer-token")
@@ -139,6 +145,40 @@ public class CreateTransferViewModelTest {
             }
         }).when(mTransferMethodRepository).loadLatestTransferMethod(any(TransferMethodRepository
                 .LoadTransferMethodCallback.class));
+
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                List<TransferMethod> transferMethodList = new ArrayList<>();
+                transferMethodList.add(mTransferMethod);
+                TransferMethodRepository.LoadTransferMethodListCallback callback = invocation.getArgument(0);
+                callback.onTransferMethodListLoaded(transferMethodList);
+                return callback;
+            }
+        }).when(mTransferMethodRepository).loadTransferMethods(any(TransferMethodRepository
+                .LoadTransferMethodListCallback.class));
+
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                List<PrepaidCard> prepaidCardList = new ArrayList<>();
+                prepaidCardList.add(mPrepaidCard);
+                PrepaidCardRepository.LoadPrepaidCardsCallback callback = invocation.getArgument(0);
+                callback.onPrepaidCardListLoaded(prepaidCardList);
+                return callback;
+            }
+        }).when(mPrepaidCardRepository).loadPrepaidCards(ArgumentMatchers.any(
+                PrepaidCardRepository.LoadPrepaidCardsCallback.class));
+
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                PrepaidCardRepository.LoadPrepaidCardCallback callback = invocation.getArgument(0);
+                callback.onPrepaidCardLoaded(mPrepaidCard);
+                return callback;
+            }
+        }).when(mPrepaidCardRepository).loadPrepaidCard(ArgumentMatchers.anyString(), ArgumentMatchers.any(
+                PrepaidCardRepository.LoadPrepaidCardCallback.class));
     }
 
     // @Test
@@ -165,15 +205,16 @@ public class CreateTransferViewModelTest {
         assertThat(viewModel.isCreateQuoteLoading().getValue(), is(false));
     }
 
-    //@Test
-    public void testInit_withFundingSource() {
+    // @Test
+    public void testInit_withFundingSourceWalletModel() {
         CreateTransferViewModel viewModel = spy(new CreateTransferViewModel.CreateTransferViewModelFactory(
                 mTransfer.getToken(), mTransferRepository, mTransferMethodRepository, mUserRepository,
                 mPrepaidCardRepository
         ).create(CreateTransferViewModel.class));
         viewModel.init("0");
 
-        verify(viewModel).loadTransferDestination(any(String.class));
+        doReturn(false).when(viewModel).isPay2CardOrCardOnlyModel();
+
         verify(viewModel, never()).loadTransferSource();
 
         assertThat(viewModel, is(notNullValue()));
@@ -204,13 +245,88 @@ public class CreateTransferViewModelTest {
     }
 
     // @Test
-    public void testInit_withoutFundingSource() {
+    public void testInit_withFundingSourceCardModel() {
+        CreateTransferViewModel viewModel = spy(new CreateTransferViewModel.CreateTransferViewModelFactory(
+                mTransfer.getToken(), mTransferRepository, mTransferMethodRepository, mUserRepository,
+                mPrepaidCardRepository
+        ).create(CreateTransferViewModel.class));
+        viewModel.init("0");
+
+        doReturn(true).when(viewModel).isPay2CardOrCardOnlyModel();
+
+        verify(viewModel, never()).loadTransferSource();
+
+        assertThat(viewModel, is(notNullValue()));
+        assertThat(viewModel.isTransferAllAvailableFunds().getValue(), is(false));
+        assertThat(viewModel.getTransferAmount().getValue(), is(nullValue()));
+        assertThat(viewModel.getTransferNotes().getValue(), is(nullValue()));
+        assertThat(viewModel.getTransferDestination().getValue().getField(TOKEN), is(mTransferMethod.getField(TOKEN)));
+        assertThat(viewModel.getTransferDestination().getValue().getField(TRANSFER_METHOD_CURRENCY),
+                is(mTransferMethod.getField(TRANSFER_METHOD_CURRENCY)));
+        assertThat(viewModel.isLoading().getValue(), is(false));
+        assertThat(viewModel.isCreateQuoteLoading().getValue(), is(false));
+        assertThat(viewModel.getQuoteAvailableFunds().getValue().getToken(), is(mTransfer.getToken()));
+        assertThat(viewModel.getQuoteAvailableFunds().getValue().getStatus(), is(mTransfer.getStatus()));
+        assertThat(viewModel.getQuoteAvailableFunds().getValue().getClientTransferId(),
+                is(mTransfer.getClientTransferId()));
+        assertThat(viewModel.getQuoteAvailableFunds().getValue().getSourceToken(), is(mTransfer.getSourceToken()));
+        assertThat(viewModel.getQuoteAvailableFunds().getValue().getSourceCurrency(),
+                is(mTransfer.getSourceCurrency()));
+        assertThat(viewModel.getQuoteAvailableFunds().getValue().getDestinationToken(),
+                is(mTransfer.getDestinationToken()));
+        assertThat(viewModel.getQuoteAvailableFunds().getValue().getDestinationAmount(),
+                is(mTransfer.getDestinationAmount()));
+        assertThat(viewModel.getQuoteAvailableFunds().getValue().getDestinationCurrency(),
+                is(mTransfer.getDestinationCurrency()));
+        assertThat(viewModel.getQuoteAvailableFunds().getValue().getMemo(), is(mTransfer.getMemo()));
+        assertThat(viewModel.getCreateTransfer().getValue(), is(nullValue()));
+        assertThat(viewModel.getShowFxRateChange().getValue(), is(false));
+    }
+
+    //@Test
+    public void testInit_withoutFundingSource_WalletModel() {
         CreateTransferViewModel viewModel = spy(new CreateTransferViewModel.CreateTransferViewModelFactory(
                 mTransferRepository, mTransferMethodRepository, mUserRepository, mPrepaidCardRepository
         ).create(CreateTransferViewModel.class));
         viewModel.init("0");
-
+        doReturn(false).when(viewModel).isPay2CardOrCardOnlyModel();
         verify(viewModel).loadTransferSource();
+
+        assertThat(viewModel, is(notNullValue()));
+        assertThat(viewModel.isTransferAllAvailableFunds().getValue(), is(false));
+        assertThat(viewModel.getTransferAmount().getValue(), is(nullValue()));
+        assertThat(viewModel.getTransferNotes().getValue(), is(nullValue()));
+        assertThat(viewModel.getTransferDestination().getValue().getField(TOKEN), is(mTransferMethod.getField(TOKEN)));
+        assertThat(viewModel.getTransferDestination().getValue().getField(TRANSFER_METHOD_CURRENCY),
+                is(mTransferMethod.getField(TRANSFER_METHOD_CURRENCY)));
+        assertThat(viewModel.isLoading().getValue(), is(false));
+        assertThat(viewModel.isCreateQuoteLoading().getValue(), is(false));
+        assertThat(viewModel.getQuoteAvailableFunds().getValue().getToken(), is(mTransfer.getToken()));
+        assertThat(viewModel.getQuoteAvailableFunds().getValue().getStatus(), is(mTransfer.getStatus()));
+        assertThat(viewModel.getQuoteAvailableFunds().getValue().getClientTransferId(),
+                is(mTransfer.getClientTransferId()));
+        assertThat(viewModel.getQuoteAvailableFunds().getValue().getSourceToken(), is(mTransfer.getSourceToken()));
+        assertThat(viewModel.getQuoteAvailableFunds().getValue().getSourceCurrency(),
+                is(mTransfer.getSourceCurrency()));
+        assertThat(viewModel.getQuoteAvailableFunds().getValue().getDestinationToken(),
+                is(mTransfer.getDestinationToken()));
+        assertThat(viewModel.getQuoteAvailableFunds().getValue().getDestinationAmount(),
+                is(mTransfer.getDestinationAmount()));
+        assertThat(viewModel.getQuoteAvailableFunds().getValue().getDestinationCurrency(),
+                is(mTransfer.getDestinationCurrency()));
+        assertThat(viewModel.getQuoteAvailableFunds().getValue().getMemo(), is(mTransfer.getMemo()));
+        assertThat(viewModel.getCreateTransfer().getValue(), is(nullValue()));
+        assertThat(viewModel.getShowFxRateChange().getValue(), is(false));
+    }
+
+    //@Test
+    public void testInit_withoutFundingSource_CardModel() {
+        CreateTransferViewModel viewModel = spy(new CreateTransferViewModel.CreateTransferViewModelFactory(
+                mTransferRepository, mTransferMethodRepository, mUserRepository, mPrepaidCardRepository
+        ).create(CreateTransferViewModel.class));
+        viewModel.init("0");
+        doReturn(true).when(viewModel).isPay2CardOrCardOnlyModel();
+        verify(viewModel).loadPrepaidCardList(any(ArrayList.class));
 
         assertThat(viewModel, is(notNullValue()));
         assertThat(viewModel.isTransferAllAvailableFunds().getValue(), is(false));
@@ -251,7 +367,7 @@ public class CreateTransferViewModelTest {
         assertThat(viewModel.isTransferAllAvailableFunds().getValue(), is(true));
     }
 
-    // @Test
+    //@Test
     public void testTransferAmount_verifyUpdatedTransferAmount() {
         CreateTransferActivity activity = Robolectric.buildActivity(CreateTransferActivity.class).setup().get();
         CreateTransferViewModel viewModel = spy(ViewModelProviders.of(activity).get(CreateTransferViewModel.class));
@@ -263,7 +379,7 @@ public class CreateTransferViewModelTest {
         assertThat(viewModel.getTransferAmount().getValue(), is("20.22"));
     }
 
-    //@Test
+    // @Test
     public void testTransferNotes_verifyUpdatedTransferNotes() {
         CreateTransferActivity activity = Robolectric.buildActivity(CreateTransferActivity.class).setup().get();
         CreateTransferViewModel viewModel = spy(ViewModelProviders.of(activity).get(CreateTransferViewModel.class));
@@ -275,13 +391,14 @@ public class CreateTransferViewModelTest {
         assertThat(viewModel.getTransferNotes().getValue(), is("Test transfer note"));
     }
 
-    //@Test
+    // @Test
     public void testCreateQuoteTransfer_isSuccessful() {
         CreateTransferViewModel.CreateTransferViewModelFactory factory =
                 new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
                         mTransferMethodRepository, mUserRepository, mPrepaidCardRepository);
 
         CreateTransferViewModel viewModel = factory.create(CreateTransferViewModel.class);
+
 
         viewModel.setTransferNotes("Create quote test notes");
         viewModel.setTransferAmount("123.23");
@@ -311,7 +428,7 @@ public class CreateTransferViewModelTest {
     }
 
 
-    //@Test
+    // @Test
     public void testCreateQuoteTransfer_isSuccessfulWithAllAvailableFunds() {
         CreateTransferViewModel.CreateTransferViewModelFactory factory =
                 new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
@@ -374,6 +491,7 @@ public class CreateTransferViewModelTest {
             }
         }).when(mTransferRepository).createTransfer(any(Transfer.class),
                 any(TransferRepository.CreateTransferCallback.class));
+
         viewModel.init("0");
         // test
         viewModel.createTransfer();
@@ -416,6 +534,8 @@ public class CreateTransferViewModelTest {
             }
         }).when(mTransferRepository).createTransfer(any(Transfer.class),
                 any(TransferRepository.CreateTransferCallback.class));
+
+
         viewModel.init("0");
         // test
         viewModel.createTransfer();
@@ -426,7 +546,7 @@ public class CreateTransferViewModelTest {
         assertThat(viewModel.getInvalidAmountError().getValue().getContent().getFieldName(), is("destinationAmount"));
     }
 
-    //@Test
+    // @Test
     public void testCreateQuoteTransfer_hasInvalidDestinationError() throws Exception {
         String errorResponse = mResourceManager.getResourceContent("errors/transfer_destination_input_invalid.json");
         final Errors errors = JsonUtils.fromJsonString(errorResponse,
@@ -466,8 +586,8 @@ public class CreateTransferViewModelTest {
                 is("destinationToken"));
     }
 
-    // @Test
-    public void testRetry_isTransferSourceTokenUnknown() {
+    //@Test
+    public void testRetry_isTransferSourceTokenUnknown_WalletModel() {
         CreateTransferViewModel.CreateTransferViewModelFactory factory =
                 new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
                         mTransferMethodRepository, mUserRepository, mPrepaidCardRepository);
@@ -489,8 +609,32 @@ public class CreateTransferViewModelTest {
         verify(mUserRepository, times(2)).loadUser(any(UserRepository.LoadUserCallback.class));
     }
 
-    @Test
-    public void testRetry_isTransferDestinationUnknownOnError() {
+    //@Test
+    public void testRetry_isTransferSourceTokenUnknown_CardModel() {
+        CreateTransferViewModel.CreateTransferViewModelFactory factory =
+                new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
+                        mTransferMethodRepository, mUserRepository, mPrepaidCardRepository);
+
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                PrepaidCardRepository.LoadPrepaidCardsCallback callback = invocation.getArgument(0);
+                callback.onError(null);
+                return callback;
+            }
+        }).when(mPrepaidCardRepository).loadPrepaidCards(any(PrepaidCardRepository.LoadPrepaidCardsCallback.class));
+
+        // test
+        CreateTransferViewModel viewModel = factory.create(CreateTransferViewModel.class);
+        viewModel.init("0");
+        viewModel.retry();
+
+        verify(mPrepaidCardRepository, times(2)).loadPrepaidCards(
+                any(PrepaidCardRepository.LoadPrepaidCardsCallback.class));
+    }
+
+    //@Test
+    public void testRetry_isTransferDestinationUnknownOnError_WalletModel() {
         CreateTransferViewModel.CreateTransferViewModelFactory factory =
                 new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
                         mTransferMethodRepository, mUserRepository, mPrepaidCardRepository);
@@ -505,18 +649,63 @@ public class CreateTransferViewModelTest {
         }).when(mTransferMethodRepository).loadLatestTransferMethod(any(TransferMethodRepository
                 .LoadTransferMethodCallback.class));
 
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                TransferMethodRepository.LoadTransferMethodListCallback callback = invocation.getArgument(0);
+                callback.onError(null);
+                return callback;
+            }
+        }).when(mTransferMethodRepository).loadTransferMethods(any(TransferMethodRepository
+                .LoadTransferMethodListCallback.class));
+
         // test
         CreateTransferViewModel viewModel = factory.create(CreateTransferViewModel.class);
         viewModel.init("0");
         viewModel.retry();
 
         verify(mUserRepository, times(1)).loadUser(any(UserRepository.LoadUserCallback.class));
-        verify(mTransferMethodRepository, times(2)).loadLatestTransferMethod(any(TransferMethodRepository
+        verify(mTransferMethodRepository, times(3)).loadLatestTransferMethod(any(TransferMethodRepository
                 .LoadTransferMethodCallback.class));
     }
 
     //@Test
-    public void testRetry_isTransferDestinationUnknownNotFound() {
+    public void testRetry_isTransferDestinationUnknownOnError_CardModel() {
+        CreateTransferViewModel.CreateTransferViewModelFactory factory =
+                new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
+                        mTransferMethodRepository, mUserRepository, mPrepaidCardRepository);
+
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                TransferMethodRepository.LoadTransferMethodCallback callback = invocation.getArgument(0);
+                callback.onError(null);
+                return callback;
+            }
+        }).when(mTransferMethodRepository).loadLatestTransferMethod(any(TransferMethodRepository
+                .LoadTransferMethodCallback.class));
+
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                TransferMethodRepository.LoadTransferMethodListCallback callback = invocation.getArgument(0);
+                callback.onError(null);
+                return callback;
+            }
+        }).when(mTransferMethodRepository).loadTransferMethods(any(TransferMethodRepository
+                .LoadTransferMethodListCallback.class));
+
+        // test
+        CreateTransferViewModel viewModel = factory.create(CreateTransferViewModel.class);
+        viewModel.init("0");
+        viewModel.retry();
+
+        verify(mTransferMethodRepository, times(2)).loadLatestTransferMethod(any(TransferMethodRepository
+                .LoadTransferMethodCallback.class));
+    }
+
+    // @Test
+    public void testRetry_isTransferDestinationUnknownNotFound_WalletModel() {
         CreateTransferViewModel.CreateTransferViewModelFactory factory =
                 new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
                         mTransferMethodRepository, mUserRepository, mPrepaidCardRepository);
@@ -531,18 +720,63 @@ public class CreateTransferViewModelTest {
         }).when(mTransferMethodRepository).loadLatestTransferMethod(any(TransferMethodRepository
                 .LoadTransferMethodCallback.class));
 
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                TransferMethodRepository.LoadTransferMethodListCallback callback = invocation.getArgument(0);
+                callback.onTransferMethodListLoaded(null);
+                return callback;
+            }
+        }).when(mTransferMethodRepository).loadTransferMethods(any(TransferMethodRepository
+                .LoadTransferMethodListCallback.class));
+
         // test
         CreateTransferViewModel viewModel = factory.create(CreateTransferViewModel.class);
         viewModel.init("0");
         viewModel.retry();
 
         verify(mUserRepository, times(1)).loadUser(any(UserRepository.LoadUserCallback.class));
-        verify(mTransferMethodRepository, times(2)).loadLatestTransferMethod(any(TransferMethodRepository
+        verify(mTransferMethodRepository, times(3)).loadLatestTransferMethod(any(TransferMethodRepository
                 .LoadTransferMethodCallback.class));
     }
 
     //@Test
-    public void testRetry_isQuoteInvalidWithQuoteObjectNull() {
+    public void testRetry_isTransferDestinationUnknownNotFound_CardModel() {
+        CreateTransferViewModel.CreateTransferViewModelFactory factory =
+                new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
+                        mTransferMethodRepository, mUserRepository, mPrepaidCardRepository);
+
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                TransferMethodRepository.LoadTransferMethodCallback callback = invocation.getArgument(0);
+                callback.onTransferMethodLoaded(null);
+                return callback;
+            }
+        }).when(mTransferMethodRepository).loadLatestTransferMethod(any(TransferMethodRepository
+                .LoadTransferMethodCallback.class));
+
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                TransferMethodRepository.LoadTransferMethodListCallback callback = invocation.getArgument(0);
+                callback.onTransferMethodListLoaded(null);
+                return callback;
+            }
+        }).when(mTransferMethodRepository).loadTransferMethods(any(TransferMethodRepository
+                .LoadTransferMethodListCallback.class));
+
+        // test
+        CreateTransferViewModel viewModel = factory.create(CreateTransferViewModel.class);
+        viewModel.init("0");
+        viewModel.retry();
+
+        verify(mTransferMethodRepository, times(2)).loadLatestTransferMethod(any(TransferMethodRepository
+                .LoadTransferMethodCallback.class));
+    }
+
+    @Test
+    public void testRetry_isQuoteInvalidWithQuoteObjectNull_WalletModel() {
         CreateTransferViewModel.CreateTransferViewModelFactory factory =
                 new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
                         mTransferMethodRepository, mUserRepository, mPrepaidCardRepository);
@@ -563,15 +797,46 @@ public class CreateTransferViewModelTest {
         viewModel.retry();
 
         verify(mUserRepository, times(1)).loadUser(any(UserRepository.LoadUserCallback.class));
-        verify(mTransferMethodRepository, times(1)).loadLatestTransferMethod(any(TransferMethodRepository
+        verify(mTransferMethodRepository, times(2)).loadLatestTransferMethod(any(TransferMethodRepository
                 .LoadTransferMethodCallback.class));
-        verify(mTransferRepository, times(2)).createTransfer(any(Transfer.class),
+        verify(mTransferRepository, times(3)).createTransfer(any(Transfer.class),
                 any(TransferRepository.CreateTransferCallback.class));
+        verify(mPrepaidCardRepository, times(1)).loadPrepaidCards(
+                any(PrepaidCardRepository.LoadPrepaidCardsCallback.class));
     }
 
 
     //@Test
-    public void testRetry_isQuoteInvalidWithQuoteSourceNotValid() {
+    public void testRetry_isQuoteInvalidWithQuoteObjectNull_CardModel() {
+        CreateTransferViewModel.CreateTransferViewModelFactory factory =
+                new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
+                        mTransferMethodRepository, mUserRepository, mPrepaidCardRepository);
+
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                TransferRepository.CreateTransferCallback callback = invocation.getArgument(1);
+                callback.onError(Errors.getEmptyInstance());
+                return callback;
+            }
+        }).when(mTransferRepository).createTransfer(any(Transfer.class),
+                any(TransferRepository.CreateTransferCallback.class));
+
+        // test
+        CreateTransferViewModel viewModel = factory.create(CreateTransferViewModel.class);
+        viewModel.init("0");
+        viewModel.retry();
+
+        verify(mTransferMethodRepository, times(2)).loadLatestTransferMethod(any(TransferMethodRepository
+                .LoadTransferMethodCallback.class));
+        verify(mTransferRepository, times(2)).createTransfer(any(Transfer.class),
+                any(TransferRepository.CreateTransferCallback.class));
+        verify(mPrepaidCardRepository, times(2)).loadPrepaidCards(
+                any(PrepaidCardRepository.LoadPrepaidCardsCallback.class));
+    }
+
+    //@Test
+    public void testRetry_isQuoteInvalidWithQuoteSourceNotValid_WalletModel() {
         CreateTransferViewModel.CreateTransferViewModelFactory factory =
                 new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
                         mTransferMethodRepository, mUserRepository, mPrepaidCardRepository);
@@ -581,14 +846,30 @@ public class CreateTransferViewModelTest {
         viewModel.retry();
 
         verify(mUserRepository, times(1)).loadUser(any(UserRepository.LoadUserCallback.class));
-        verify(mTransferMethodRepository, times(1)).loadLatestTransferMethod(any(TransferMethodRepository
+        verify(mTransferMethodRepository, times(2)).loadLatestTransferMethod(any(TransferMethodRepository
+                .LoadTransferMethodCallback.class));
+        verify(mTransferRepository, times(3)).createTransfer(any(Transfer.class),
+                any(TransferRepository.CreateTransferCallback.class));
+    }
+
+    //@Test
+    public void testRetry_isQuoteInvalidWithQuoteSourceNotValid_CardModel() {
+        CreateTransferViewModel.CreateTransferViewModelFactory factory =
+                new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
+                        mTransferMethodRepository, mUserRepository, mPrepaidCardRepository);
+        // test
+        CreateTransferViewModel viewModel = factory.create(CreateTransferViewModel.class);
+        viewModel.init("0");
+        viewModel.retry();
+
+        verify(mTransferMethodRepository, times(2)).loadLatestTransferMethod(any(TransferMethodRepository
                 .LoadTransferMethodCallback.class));
         verify(mTransferRepository, times(2)).createTransfer(any(Transfer.class),
                 any(TransferRepository.CreateTransferCallback.class));
     }
 
     //@Test
-    public void testRetry_isQuoteInvalidWithQuoteDestinationNotValid() {
+    public void testRetry_isQuoteInvalidWithQuoteDestinationNotValid_WalletModel() {
         CreateTransferViewModel.CreateTransferViewModelFactory factory =
                 new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
                         mTransferMethodRepository, mUserRepository, mPrepaidCardRepository);
@@ -622,14 +903,54 @@ public class CreateTransferViewModelTest {
         viewModel.retry();
 
         verify(mUserRepository, times(1)).loadUser(any(UserRepository.LoadUserCallback.class));
-        verify(mTransferMethodRepository, times(1)).loadLatestTransferMethod(any(TransferMethodRepository
+        verify(mTransferMethodRepository, times(2)).loadLatestTransferMethod(any(TransferMethodRepository
+                .LoadTransferMethodCallback.class));
+        verify(mTransferRepository, times(3)).createTransfer(any(Transfer.class),
+                any(TransferRepository.CreateTransferCallback.class));
+    }
+
+    //@Test
+    public void testRetry_isQuoteInvalidWithQuoteDestinationNotValid_CardModel() {
+        CreateTransferViewModel.CreateTransferViewModelFactory factory =
+                new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
+                        mTransferMethodRepository, mUserRepository, mPrepaidCardRepository);
+
+        final Transfer transfer = new Transfer.Builder()
+                .token("trf-transfer-token")
+                .status(Transfer.TransferStatuses.QUOTED)
+                .createdOn(new Date())
+                .clientTransferID("ClientId1234122")
+                .sourceToken("usr-token-source")
+                .sourceCurrency("CAD")
+                .destinationToken("trm-card-token")
+                .destinationAmount("123.23")
+                .destinationCurrency("CAD")
+                .memo("Create quote test notes")
+                .build();
+
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                TransferRepository.CreateTransferCallback callback = invocation.getArgument(1);
+                callback.onTransferCreated(transfer);
+                return callback;
+            }
+        }).when(mTransferRepository).createTransfer(any(Transfer.class),
+                any(TransferRepository.CreateTransferCallback.class));
+
+        // test
+        CreateTransferViewModel viewModel = factory.create(CreateTransferViewModel.class);
+        viewModel.init("0");
+        viewModel.retry();
+
+        verify(mTransferMethodRepository, times(2)).loadLatestTransferMethod(any(TransferMethodRepository
                 .LoadTransferMethodCallback.class));
         verify(mTransferRepository, times(2)).createTransfer(any(Transfer.class),
                 any(TransferRepository.CreateTransferCallback.class));
     }
 
-    // @Test
-    public void testRetry_isTransferAmountKnown() {
+    //@Test
+    public void testRetry_isTransferAmountKnown_WalletModel() {
         CreateTransferViewModel.CreateTransferViewModelFactory factory =
                 new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
                         mTransferMethodRepository, mUserRepository, mPrepaidCardRepository);
@@ -664,7 +985,48 @@ public class CreateTransferViewModelTest {
         viewModel.retry();
 
         verify(mUserRepository, times(1)).loadUser(any(UserRepository.LoadUserCallback.class));
-        verify(mTransferMethodRepository, times(1)).loadLatestTransferMethod(any(TransferMethodRepository
+        verify(mTransferMethodRepository, times(2)).loadLatestTransferMethod(any(TransferMethodRepository
+                .LoadTransferMethodCallback.class));
+        verify(mTransferRepository, times(3)).createTransfer(any(Transfer.class),
+                any(TransferRepository.CreateTransferCallback.class));
+    }
+
+    //@Test
+    public void testRetry_isTransferAmountKnown_CardModel() {
+        CreateTransferViewModel.CreateTransferViewModelFactory factory =
+                new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
+                        mTransferMethodRepository, mUserRepository, mPrepaidCardRepository);
+
+        final Transfer transfer = new Transfer.Builder()
+                .token("trf-transfer-token")
+                .status(Transfer.TransferStatuses.QUOTED)
+                .createdOn(new Date())
+                .clientTransferID("ClientId1234122")
+                .sourceToken("usr-token-source")
+                .sourceCurrency("CAD")
+                .destinationToken("trm-bank-token")
+                .destinationAmount("123.23")
+                .destinationCurrency("CAD")
+                .memo("Create quote test notes")
+                .build();
+
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                TransferRepository.CreateTransferCallback callback = invocation.getArgument(1);
+                callback.onTransferCreated(transfer);
+                return callback;
+            }
+        }).when(mTransferRepository).createTransfer(any(Transfer.class),
+                any(TransferRepository.CreateTransferCallback.class));
+
+        // test
+        CreateTransferViewModel viewModel = factory.create(CreateTransferViewModel.class);
+        viewModel.init("0");
+        viewModel.setTransferAmount("20.25");
+        viewModel.retry();
+
+        verify(mTransferMethodRepository, times(2)).loadLatestTransferMethod(any(TransferMethodRepository
                 .LoadTransferMethodCallback.class));
         verify(mTransferRepository, times(2)).createTransfer(any(Transfer.class),
                 any(TransferRepository.CreateTransferCallback.class));
@@ -685,7 +1047,7 @@ public class CreateTransferViewModelTest {
                 is(ERROR_SDK_MODULE_UNAVAILABLE));
     }
 
-    //@Test
+    @Test
     public void testCreateTransferViewModelFactory_createCreateTransferViewModelUnSuccessful() {
         CreateTransferViewModel.CreateTransferViewModelFactory factory =
                 new CreateTransferViewModel.CreateTransferViewModelFactory(
@@ -715,7 +1077,7 @@ public class CreateTransferViewModelTest {
     class FakeModel extends ViewModel {
     }
 
-    // @Test
+    //@Test
     public void testRefresh_callsRefreshWithQuote() {
         CreateTransferViewModel.CreateTransferViewModelFactory factory =
                 new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,

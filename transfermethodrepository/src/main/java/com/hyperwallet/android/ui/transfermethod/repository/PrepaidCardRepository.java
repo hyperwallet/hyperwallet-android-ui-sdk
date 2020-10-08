@@ -41,7 +41,7 @@ public interface PrepaidCardRepository {
      *
      * @param callback @see {@link PrepaidCardRepository.LoadPrepaidCardCallback}
      */
-    void getPrepaidCard(@NonNull String token, LoadPrepaidCardCallback callback);
+    void loadPrepaidCard(@NonNull String token, LoadPrepaidCardCallback callback);
 
     /**
      * Callback interface that responses to action when invoked to
@@ -54,7 +54,7 @@ public interface PrepaidCardRepository {
      */
     interface LoadPrepaidCardsCallback {
 
-        void onPrepaidCardListLoaded(@Nullable final List<PrepaidCard> prepaidCardList);
+        void onPrepaidCardListLoaded(@NonNull final List<PrepaidCard> prepaidCardList);
 
         void onError(@NonNull final Errors errors);
     }

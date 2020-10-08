@@ -34,6 +34,8 @@ import com.hyperwallet.android.model.transfermethod.PrepaidCard;
 import com.hyperwallet.android.model.transfermethod.PrepaidCardQueryParam;
 import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
 
+import java.util.ArrayList;
+
 public class PrepaidCardRepositoryImpl implements PrepaidCardRepository {
 
     private Handler mHandler = new Handler();
@@ -55,7 +57,7 @@ public class PrepaidCardRepositoryImpl implements PrepaidCardRepository {
             @Override
             public void onSuccess(@Nullable PageList<PrepaidCard> result) {
                 EspressoIdlingResource.decrement();
-                callback.onPrepaidCardListLoaded(result != null ? result.getDataList() : null);
+                callback.onPrepaidCardListLoaded(result != null ? result.getDataList() : new ArrayList<PrepaidCard>());
             }
 
             @Override
@@ -72,7 +74,7 @@ public class PrepaidCardRepositoryImpl implements PrepaidCardRepository {
     }
 
     @Override
-    public void getPrepaidCard(@NonNull String token, final LoadPrepaidCardCallback callback) {
+    public void loadPrepaidCard(@NonNull String token, final LoadPrepaidCardCallback callback) {
 
         getHyperwallet().getPrepaidCard(token,
                 new HyperwalletListener<PrepaidCard>() {
