@@ -6,10 +6,28 @@
     android:orientation="vertical"
     tools:context=".view.ListReceiptFragment">
 
+    <LinearLayout
+        android:id="@+id/transactions_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="16dp"
+        android:paddingBottom="@dimen/item_horizontal_padding">
+
+        <TextView
+            android:id="@+id/transactions_header_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/grid_margin_left"
+            android:text="@string/transactions"
+            android:textAppearance="@style/TextAppearance.Hyperwallet.Headline5" />
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_receipts"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_below="@+id/transactions_header" />
 
     <ProgressBar
         android:id="@+id/list_receipt_progress_bar"

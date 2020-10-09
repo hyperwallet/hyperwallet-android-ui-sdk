@@ -23,10 +23,8 @@ import static android.text.format.DateUtils.formatDateTime;
 
 import static com.hyperwallet.android.model.receipt.Receipt.Entries.CREDIT;
 import static com.hyperwallet.android.model.receipt.Receipt.Entries.DEBIT;
-import static com.hyperwallet.android.ui.receipt.view.TabbedListReceiptActivity.EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,14 +43,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hyperwallet.android.model.receipt.Receipt;
-import com.hyperwallet.android.ui.common.repository.Event;
 import com.hyperwallet.android.ui.common.util.DateUtils;
 import com.hyperwallet.android.ui.common.view.OneClickListener;
 import com.hyperwallet.android.ui.receipt.R;
-import com.hyperwallet.android.ui.receipt.repository.PrepaidCardReceiptRepositoryImpl;
-import com.hyperwallet.android.ui.receipt.repository.UserReceiptRepositoryImpl;
-import com.hyperwallet.android.ui.receipt.viewmodel.ListPrepaidCardReceiptViewModel;
-import com.hyperwallet.android.ui.receipt.viewmodel.ListUserReceiptViewModel;
 import com.hyperwallet.android.ui.receipt.viewmodel.ReceiptViewModel;
 
 import java.util.Calendar;
@@ -64,7 +57,6 @@ import java.util.Objects;
 public class ListReceiptFragment extends Fragment {
 
     private static final String SHOULD_SHOW_NO_TRANSACTION_PLACEHOLDER = "SHOULD_SHOW_NO_TRANSACTION_PLACEHOLDER";
-    private static final String ARGUMENT_PREPAID_CARD_TOKEN = "ARGUMENT_PREPAID_CARD_TOKEN";
 
     private ListReceiptAdapter mListReceiptAdapter;
     private RecyclerView mListReceiptsView;
@@ -87,30 +79,11 @@ public class ListReceiptFragment extends Fragment {
         return fragment;
     }
 
-    static ListReceiptFragment newInstance(String token) {
-        ListReceiptFragment fragment = new ListReceiptFragment();
-        Bundle args = new Bundle();
-        args.putString(ARGUMENT_PREPAID_CARD_TOKEN, token);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String token = "";
-        if (getArguments() != null) {
-            token = getArguments().getString(ARGUMENT_PREPAID_CARD_TOKEN);
-        }
-        if (token.isEmpty()) {
-            mReceiptViewModel = ViewModelProviders.of(this, new ListUserReceiptViewModel
-                    .ListReceiptViewModelFactory(new UserReceiptRepositoryImpl()))
-                    .get(ReceiptViewModel.class);
-        } else {
-            mReceiptViewModel = ViewModelProviders.of(this, new ListPrepaidCardReceiptViewModel
-                    .ListPrepaidCardReceiptViewModelFactory(new PrepaidCardReceiptRepositoryImpl(token)))
-                    .get(ReceiptViewModel.class);
-        }
+        mReceiptViewModel = ViewModelProviders.of(requireActivity()).get(
+                ReceiptViewModel.class);
     }
 
     @Override
@@ -122,6 +95,11 @@ public class ListReceiptFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull final View view, @Nullable final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        View transactionHeaderView = view.findViewById(R.id.transactions_header);
+        if (getActivity() instanceof ListPrepaidCardReceiptActivity
+                || getActivity() instanceof ListUserReceiptActivity) {
+            transactionHeaderView.setVisibility(View.GONE);
+        }
 
         mEmptyTransactionPlaceholder = view.findViewById(R.id.empty_transaction_list_view);
         mListReceiptsView = view.findViewById(R.id.list_receipts);
@@ -179,7 +157,6 @@ public class ListReceiptFragment extends Fragment {
             }
         });
 
-
         mReceiptViewModel.isLoadingData().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean loading) {
@@ -196,12 +173,6 @@ public class ListReceiptFragment extends Fragment {
                         mListReceiptsView.setVisibility(View.VISIBLE);
                     }
                 }
-            }
-        });
-        mReceiptViewModel.getDetailNavigation().observe(getActivity(), new Observer<Event<Receipt>>() {
-            @Override
-            public void onChanged(Event<Receipt> receiptEvent) {
-                navigate(receiptEvent);
             }
         });
     }
@@ -222,16 +193,6 @@ public class ListReceiptFragment extends Fragment {
         public boolean areContentsTheSame(@NonNull final Receipt oldItem, @NonNull final Receipt newItem) {
             return oldItem.hashCode() == newItem.hashCode()
                     && Objects.equals(oldItem, newItem);
-        }
-    }
-
-    private void navigate(@NonNull final Event<Receipt> event) {
-        if (!event.isContentConsumed()) {
-            Intent intent = new Intent(getActivity(), ReceiptDetailActivity.class);
-            intent.putExtra(ReceiptDetailActivity.EXTRA_RECEIPT, event.getContent());
-            intent.putExtra(ReceiptDetailActivity.EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT,
-                    getActivity().getIntent().getBooleanExtra(EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT, false));
-            startActivity(intent);
         }
     }
 

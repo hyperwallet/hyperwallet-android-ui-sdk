@@ -39,6 +39,8 @@ import com.google.android.material.tabs.TabLayout;
 import com.hyperwallet.android.model.transfermethod.PrepaidCard;
 import com.hyperwallet.android.ui.receipt.R;
 import com.hyperwallet.android.ui.receipt.viewmodel.TabbedListReceiptViewModel;
+import com.hyperwallet.android.ui.transfermethod.repository.PrepaidCardRepositoryImpl;
+import com.hyperwallet.android.ui.user.repository.UserRepositoryImpl;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -77,9 +79,9 @@ public class TabbedListReceiptFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        viewPager = (ViewPager) view.findViewById(R.id.receipts_pager);
-        tabLayout = (TabLayout) view.findViewById(R.id.tab_layout);
-        header = (LinearLayout) view.findViewById(R.id.transactions_header);
+        viewPager = view.findViewById(R.id.receipts_pager);
+        tabLayout = view.findViewById(R.id.tab_layout);
+        header = view.findViewById(R.id.transactions_header);
     }
 
     void retry() {
@@ -92,7 +94,9 @@ public class TabbedListReceiptFragment extends Fragment {
         if (getActivity() instanceof TabbedListReceiptActivity) {
             header.setVisibility(View.GONE);
         }
-        receiptViewModel = ViewModelProviders.of(requireActivity()).get(TabbedListReceiptViewModel.class);
+        receiptViewModel = ViewModelProviders.of(this, new TabbedListReceiptViewModel
+                .TabbedListReceiptViewModelFactory(new UserRepositoryImpl(), new PrepaidCardRepositoryImpl()))
+                .get(TabbedListReceiptViewModel.class);
         listReceiptsViewPagerAdapter = new ListReceiptsViewPagerAdapter(getFragmentManager(),
                 FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, new ArrayList<Parcelable>(),
                 getResources());
@@ -203,7 +207,7 @@ public class TabbedListReceiptFragment extends Fragment {
                 if (prepaidCard != null && prepaidCard.getField(TOKEN) != null) {
                     token = prepaidCard.getField(TOKEN);
                 }
-                return ListReceiptFragment.newInstance(token);
+                return ListReceiptFragment.newInstance();
             }
             return ListReceiptFragment.newInstance();
         }

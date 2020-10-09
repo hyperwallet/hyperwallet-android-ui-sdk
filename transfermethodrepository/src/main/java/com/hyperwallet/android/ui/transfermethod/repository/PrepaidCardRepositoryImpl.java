@@ -16,7 +16,7 @@
  * THE SOFTWARE.
  */
 
-package com.hyperwallet.android.ui.receipt.repository;
+package com.hyperwallet.android.ui.transfermethod.repository;
 
 import static com.hyperwallet.android.model.StatusTransition.StatusDefinition.ACTIVATED;
 

@@ -32,7 +32,7 @@ import com.hyperwallet.android.model.Errors;
 import com.hyperwallet.android.model.transfermethod.PrepaidCard;
 import com.hyperwallet.android.model.user.User;
 import com.hyperwallet.android.ui.common.repository.Event;
-import com.hyperwallet.android.ui.receipt.repository.PrepaidCardRepository;
+import com.hyperwallet.android.ui.transfermethod.repository.PrepaidCardRepository;
 import com.hyperwallet.android.ui.user.repository.UserRepository;
 
 import java.util.List;
@@ -42,8 +42,9 @@ public class TabbedListReceiptViewModel extends ViewModel {
     private PrepaidCardRepository prepaidCardRepository;
     public MutableLiveData<User> user = new MutableLiveData<User>();
     public MutableLiveData<List<PrepaidCard>> prepaidCards = new MutableLiveData<List<PrepaidCard>>();
-    public MutableLiveData errors = new MutableLiveData<Event<Errors>>();
+    public MutableLiveData<Event<Errors>> errors = new MutableLiveData<Event<Errors>>();
     private ProgramModel programModel;
+    private boolean mIsInitialized;
 
     public TabbedListReceiptViewModel(
             UserRepository mUserRepository,
@@ -53,8 +54,10 @@ public class TabbedListReceiptViewModel extends ViewModel {
     }
 
     public void initialize() {
-        getProgramModel();
-        loadUser();
+        if (!mIsInitialized) {
+            mIsInitialized = true;
+            loadUser();
+        }
     }
 
     private void loadUser() {

@@ -33,8 +33,8 @@ import com.hyperwallet.android.ui.common.util.PageGroups;
 import com.hyperwallet.android.ui.common.view.ActivityUtils;
 import com.hyperwallet.android.ui.common.view.error.OnNetworkErrorCallback;
 import com.hyperwallet.android.ui.receipt.R;
-import com.hyperwallet.android.ui.receipt.repository.PrepaidCardRepositoryImpl;
 import com.hyperwallet.android.ui.receipt.viewmodel.TabbedListReceiptViewModel;
+import com.hyperwallet.android.ui.transfermethod.repository.PrepaidCardRepositoryImpl;
 import com.hyperwallet.android.ui.user.repository.UserRepositoryImpl;
 
 public class TabbedListReceiptActivity extends AppCompatActivity implements OnNetworkErrorCallback {
