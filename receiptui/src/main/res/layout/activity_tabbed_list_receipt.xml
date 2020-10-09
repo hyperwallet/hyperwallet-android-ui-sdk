@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.TabbedListReceiptActivity">
+    tools:context=".view.TabbedListReceiptsActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -35,6 +35,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context=".view.TabbedListReceiptActivity"
+        tools:context=".view.TabbedListReceiptsActivity"
         tools:showIn="@layout/activity_tabbed_list_receipt"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

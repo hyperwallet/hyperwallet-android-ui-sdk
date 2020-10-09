@@ -37,50 +37,51 @@ import com.hyperwallet.android.ui.user.repository.UserRepository;
 
 import java.util.List;
 
-public class TabbedListReceiptViewModel extends ViewModel {
-    private UserRepository userRepository;
-    private PrepaidCardRepository prepaidCardRepository;
-    public MutableLiveData<User> user = new MutableLiveData<User>();
-    public MutableLiveData<List<PrepaidCard>> prepaidCards = new MutableLiveData<List<PrepaidCard>>();
-    public MutableLiveData<Event<Errors>> errors = new MutableLiveData<Event<Errors>>();
-    private ProgramModel programModel;
+public class TabbedListReceiptsViewModel extends ViewModel {
+    private UserRepository mUserRepository;
+    private PrepaidCardRepository mPrepaidCardRepository;
+    public MutableLiveData<User> mUser = new MutableLiveData<User>();
+    public MutableLiveData<List<PrepaidCard>> mPrepaidCards = new MutableLiveData<List<PrepaidCard>>();
+    public MutableLiveData<Event<Errors>> mErrors = new MutableLiveData<Event<Errors>>();
+    public ProgramModel mProgramModel;
     private boolean mIsInitialized;
 
-    public TabbedListReceiptViewModel(
+    public TabbedListReceiptsViewModel(
             UserRepository mUserRepository,
             PrepaidCardRepository prepaidCardRepository) {
-        this.userRepository = mUserRepository;
-        this.prepaidCardRepository = prepaidCardRepository;
+        this.mUserRepository = mUserRepository;
+        this.mPrepaidCardRepository = prepaidCardRepository;
     }
 
     public void initialize() {
         if (!mIsInitialized) {
             mIsInitialized = true;
+            getProgramModel();
             loadUser();
         }
     }
 
     private void loadUser() {
-        userRepository.loadUser(new UserRepository.LoadUserCallback() {
+        mUserRepository.loadUser(new UserRepository.LoadUserCallback() {
             @Override
             public void onUserLoaded(@NonNull User user) {
-                TabbedListReceiptViewModel.this.user.postValue(user);
+                TabbedListReceiptsViewModel.this.mUser.postValue(user);
                 loadPrepaidCards();
             }
 
             @Override
             public void onError(@NonNull Errors errors) {
-                TabbedListReceiptViewModel.this.errors.postValue(new Event(errors));
+                TabbedListReceiptsViewModel.this.mErrors.postValue(new Event(errors));
             }
         });
     }
 
-    public ProgramModel getProgramModel() {
+    private ProgramModel getProgramModel() {
         Hyperwallet.getDefault().getConfiguration(new HyperwalletListener<Configuration>() {
             @Override
             public void onSuccess(@Nullable Configuration result) {
                 if (result != null) {
-                    programModel = ProgramModel.valueOf(result.getProgramModel());
+                    mProgramModel = ProgramModel.valueOf(result.getProgramModel());
                 }
             }
 
@@ -94,23 +95,23 @@ public class TabbedListReceiptViewModel extends ViewModel {
                 return null;
             }
         });
-        return programModel;
+        return mProgramModel;
     }
 
 
     private void loadPrepaidCards() {
-        prepaidCardRepository.loadPrepaidCards(new PrepaidCardRepository.LoadPrepaidCardsCallback() {
+        mPrepaidCardRepository.loadPrepaidCards(new PrepaidCardRepository.LoadPrepaidCardsCallback() {
             @Override
             public void onPrepaidCardLoaded(@NonNull List<PrepaidCard> prepaidCardList) {
                 if (!prepaidCardList.isEmpty()) {
-                    TabbedListReceiptViewModel.this.prepaidCards.postValue(prepaidCardList);
+                    TabbedListReceiptsViewModel.this.mPrepaidCards.postValue(prepaidCardList);
                 }
             }
 
             @Override
             public void onError(@NonNull Errors errors) {
                 if (errors != null) {
-                    TabbedListReceiptViewModel.this.errors.postValue(new Event(errors));
+                    TabbedListReceiptsViewModel.this.mErrors.postValue(new Event(errors));
                 }
             }
         });
@@ -120,11 +121,11 @@ public class TabbedListReceiptViewModel extends ViewModel {
         loadUser();
     }
 
-    public static class TabbedListReceiptViewModelFactory implements ViewModelProvider.Factory {
+    public static class TabbedListReceiptsViewModelFactory implements ViewModelProvider.Factory {
         private final UserRepository userRepository;
         private final PrepaidCardRepository prepaidCardRepository;
 
-        public TabbedListReceiptViewModelFactory(
+        public TabbedListReceiptsViewModelFactory(
                 UserRepository userRepository,
                 PrepaidCardRepository prepaidCardRepository) {
             this.userRepository = userRepository;
@@ -134,11 +135,11 @@ public class TabbedListReceiptViewModel extends ViewModel {
         @NonNull
         @Override
         public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-            if (modelClass.isAssignableFrom(TabbedListReceiptViewModel.class)) {
-                return (T) new TabbedListReceiptViewModel(userRepository, prepaidCardRepository);
+            if (modelClass.isAssignableFrom(TabbedListReceiptsViewModel.class)) {
+                return (T) new TabbedListReceiptsViewModel(userRepository, prepaidCardRepository);
             }
             throw new IllegalArgumentException(
-                    "Expecting ViewModel class: " + TabbedListReceiptViewModel.class.getName());
+                    "Expecting ViewModel class: " + TabbedListReceiptsViewModel.class.getName());
         }
     }
 }

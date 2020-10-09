@@ -21,7 +21,7 @@
             android:label="@string/title_activity_receipt_list"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".view.TabbedListReceiptActivity"
+            android:name=".view.TabbedListReceiptsActivity"
             android:label="@string/title_activity_receipt_list"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>

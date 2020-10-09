@@ -33,15 +33,15 @@ import com.hyperwallet.android.ui.common.util.PageGroups;
 import com.hyperwallet.android.ui.common.view.ActivityUtils;
 import com.hyperwallet.android.ui.common.view.error.OnNetworkErrorCallback;
 import com.hyperwallet.android.ui.receipt.R;
-import com.hyperwallet.android.ui.receipt.viewmodel.TabbedListReceiptViewModel;
+import com.hyperwallet.android.ui.receipt.viewmodel.TabbedListReceiptsViewModel;
 import com.hyperwallet.android.ui.transfermethod.repository.PrepaidCardRepositoryImpl;
 import com.hyperwallet.android.ui.user.repository.UserRepositoryImpl;
 
-public class TabbedListReceiptActivity extends AppCompatActivity implements OnNetworkErrorCallback {
+public class TabbedListReceiptsActivity extends AppCompatActivity implements OnNetworkErrorCallback {
     public static final String TAG = "receipts:prepaid:tabbed-list-receipts";
 
     public static final String EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT = "EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT";
-    private TabbedListReceiptViewModel receiptViewModel;
+    private TabbedListReceiptsViewModel mTabbedListReceiptsViewModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,23 +64,22 @@ public class TabbedListReceiptActivity extends AppCompatActivity implements OnNe
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
 
-        receiptViewModel = ViewModelProviders.of(this, new TabbedListReceiptViewModel
-                .TabbedListReceiptViewModelFactory(new UserRepositoryImpl(), new PrepaidCardRepositoryImpl()))
-                .get(TabbedListReceiptViewModel.class);
+        mTabbedListReceiptsViewModel = ViewModelProviders.of(this, new TabbedListReceiptsViewModel.TabbedListReceiptsViewModelFactory(new UserRepositoryImpl(), new PrepaidCardRepositoryImpl()))
+                .get(TabbedListReceiptsViewModel.class);
 
         registerObservers();
 
         if (savedInstanceState == null) {
-            ActivityUtils.initFragment(this, TabbedListReceiptFragment.newInstance(),
+            ActivityUtils.initFragment(this, TabbedListReceiptsFragment.newInstance(),
                     R.id.tabbed_list_receipt_fragment);
         }
     }
 
     private void registerObservers() {
-        receiptViewModel.errors.observe(this, new Observer<Event<Errors>>() {
+        mTabbedListReceiptsViewModel.mErrors.observe(this, new Observer<Event<Errors>>() {
             @Override
             public void onChanged(Event<Errors> errorsEvent) {
-                ActivityUtils.showError(TabbedListReceiptActivity.this, TabbedListReceiptActivity.TAG,
+                ActivityUtils.showError(TabbedListReceiptsActivity.this, TabbedListReceiptsActivity.TAG,
                         PageGroups.RECEIPTS, errorsEvent.getContent().getErrors());
             }
         });
@@ -89,11 +88,11 @@ public class TabbedListReceiptActivity extends AppCompatActivity implements OnNe
     @Override
     public void retry() {
         FragmentManager fragmentManager = getSupportFragmentManager();
-        TabbedListReceiptFragment fragment = (TabbedListReceiptFragment)
+        TabbedListReceiptsFragment fragment = (TabbedListReceiptsFragment)
                 fragmentManager.findFragmentById(R.id.list_receipt_fragment);
 
         if (fragment == null) {
-            fragment = TabbedListReceiptFragment.newInstance();
+            fragment = TabbedListReceiptsFragment.newInstance();
         }
         fragment.retry();
     }
