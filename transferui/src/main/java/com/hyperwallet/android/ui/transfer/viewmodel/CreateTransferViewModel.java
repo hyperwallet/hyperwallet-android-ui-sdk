@@ -606,7 +606,7 @@ public class CreateTransferViewModel extends ViewModel {
         Hyperwallet.getDefault().getConfiguration(new HyperwalletListener<Configuration>() {
             @Override
             public void onSuccess(@Nullable Configuration result) {
-                if (result != null) {
+                if (result != null && !result.getProgramModel().equals("")) {
                     mProgramModel = ProgramModel.valueOf(result.getProgramModel());
                 }
             }
