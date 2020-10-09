@@ -217,7 +217,7 @@ public class CreateTransferViewModelTest {
     }
 
     @Test
-    public void testInit_withFundingSourceWalletModel() {
+    public void testInit_withFundingSource_walletModel() {
         CreateTransferViewModel viewModel = spy(new CreateTransferViewModel.CreateTransferViewModelFactory(
                 mTransfer.getToken(), mTransferRepository, mTransferMethodRepository, mUserRepository,
                 mPrepaidCardRepository
@@ -256,7 +256,7 @@ public class CreateTransferViewModelTest {
     }
 
     @Test
-    public void testInit_withFundingSourceCardModel() {
+    public void testInit_withFundingSource_cardModel() {
         CreateTransferViewModel viewModel = spy(new CreateTransferViewModel.CreateTransferViewModelFactory(
                 mTransfer.getToken(), mTransferRepository, mTransferMethodRepository, mUserRepository,
                 mPrepaidCardRepository
@@ -295,7 +295,7 @@ public class CreateTransferViewModelTest {
     }
 
     @Test
-    public void testInit_withoutFundingSource_WalletModel() {
+    public void testInit_withoutFundingSource_walletModel() {
         CreateTransferViewModel viewModel = spy(new CreateTransferViewModel.CreateTransferViewModelFactory(
                 mTransferRepository, mTransferMethodRepository, mUserRepository, mPrepaidCardRepository
         ).create(CreateTransferViewModel.class));
@@ -331,7 +331,7 @@ public class CreateTransferViewModelTest {
     }
 
     @Test
-    public void testInit_withoutFundingSource_CardModel() {
+    public void testInit_withoutFundingSource_cardModel() {
         CreateTransferViewModel viewModel = spy(new CreateTransferViewModel.CreateTransferViewModelFactory(
                 mTransferRepository, mTransferMethodRepository, mUserRepository, mPrepaidCardRepository
         ).create(CreateTransferViewModel.class));
@@ -598,7 +598,7 @@ public class CreateTransferViewModelTest {
     }
 
     @Test
-    public void testRetry_isTransferSourceTokenUnknown_WalletModel() {
+    public void testRetry_isTransferSourceTokenUnknown_walletModel() {
         CreateTransferViewModel.CreateTransferViewModelFactory factory =
                 new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
                         mTransferMethodRepository, mUserRepository, mPrepaidCardRepository);
@@ -621,7 +621,7 @@ public class CreateTransferViewModelTest {
     }
 
     @Test
-    public void testRetry_isTransferSourceTokenUnknown_CardModel() {
+    public void testRetry_isTransferSourceTokenUnknown_cardModel() {
         CreateTransferViewModel.CreateTransferViewModelFactory factory =
                 new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
                         mTransferMethodRepository, mUserRepository, mPrepaidCardRepository);
@@ -646,7 +646,7 @@ public class CreateTransferViewModelTest {
     }
 
     @Test
-    public void testRetry_isTransferDestinationUnknownOnError_WalletModel() {
+    public void testRetry_isTransferDestinationUnknownOnError_walletModel() {
         CreateTransferViewModel.CreateTransferViewModelFactory factory =
                 new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
                         mTransferMethodRepository, mUserRepository, mPrepaidCardRepository);
@@ -682,7 +682,7 @@ public class CreateTransferViewModelTest {
     }
 
     @Test
-    public void testRetry_isTransferDestinationUnknownOnError_CardModel() {
+    public void testRetry_isTransferDestinationUnknownOnError_cardModel() {
         CreateTransferViewModel.CreateTransferViewModelFactory factory =
                 new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
                         mTransferMethodRepository, mUserRepository, mPrepaidCardRepository);
@@ -718,7 +718,7 @@ public class CreateTransferViewModelTest {
     }
 
     @Test
-    public void testRetry_isTransferDestinationUnknownNotFound_WalletModel() {
+    public void testRetry_isTransferDestinationUnknownNotFound_walletModel() {
         CreateTransferViewModel.CreateTransferViewModelFactory factory =
                 new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
                         mTransferMethodRepository, mUserRepository, mPrepaidCardRepository);
@@ -754,7 +754,7 @@ public class CreateTransferViewModelTest {
     }
 
     @Test
-    public void testRetry_isTransferDestinationUnknownNotFound_CardModel() {
+    public void testRetry_isTransferDestinationUnknownNotFound_cardModel() {
         CreateTransferViewModel.CreateTransferViewModelFactory factory =
                 new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
                         mTransferMethodRepository, mUserRepository, mPrepaidCardRepository);
@@ -790,7 +790,7 @@ public class CreateTransferViewModelTest {
     }
 
     @Test
-    public void testRetry_isQuoteInvalidWithQuoteObjectNull_WalletModel() {
+    public void testRetry_isQuoteInvalidWithQuoteObjectNull_walletModel() {
         CreateTransferViewModel.CreateTransferViewModelFactory factory =
                 new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
                         mTransferMethodRepository, mUserRepository, mPrepaidCardRepository);
@@ -821,7 +821,7 @@ public class CreateTransferViewModelTest {
 
 
     @Test
-    public void testRetry_isQuoteInvalidWithQuoteObjectNull_CardModel() {
+    public void testRetry_isQuoteInvalidWithQuoteObjectNull_cardModel() {
         CreateTransferViewModel.CreateTransferViewModelFactory factory =
                 new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
                         mTransferMethodRepository, mUserRepository, mPrepaidCardRepository);
@@ -851,7 +851,7 @@ public class CreateTransferViewModelTest {
     }
 
     @Test
-    public void testRetry_isQuoteInvalidWithQuoteSourceNotValid_WalletModel() {
+    public void testRetry_isQuoteInvalidWithQuoteSourceNotValid_walletModel() {
         CreateTransferViewModel.CreateTransferViewModelFactory factory =
                 new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
                         mTransferMethodRepository, mUserRepository, mPrepaidCardRepository);
@@ -868,7 +868,7 @@ public class CreateTransferViewModelTest {
     }
 
     @Test
-    public void testRetry_isQuoteInvalidWithQuoteSourceNotValid_CardModel() {
+    public void testRetry_isQuoteInvalidWithQuoteSourceNotValid_cardModel() {
         CreateTransferViewModel.CreateTransferViewModelFactory factory =
                 new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
                         mTransferMethodRepository, mUserRepository, mPrepaidCardRepository);
@@ -885,7 +885,7 @@ public class CreateTransferViewModelTest {
     }
 
     @Test
-    public void testRetry_isQuoteInvalidWithQuoteDestinationNotValid_WalletModel() {
+    public void testRetry_isQuoteInvalidWithQuoteDestinationNotValid_walletModel() {
         CreateTransferViewModel.CreateTransferViewModelFactory factory =
                 new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
                         mTransferMethodRepository, mUserRepository, mPrepaidCardRepository);
@@ -926,7 +926,7 @@ public class CreateTransferViewModelTest {
     }
 
     @Test
-    public void testRetry_isQuoteInvalidWithQuoteDestinationNotValid_CardModel() {
+    public void testRetry_isQuoteInvalidWithQuoteDestinationNotValid_cardModel() {
         CreateTransferViewModel.CreateTransferViewModelFactory factory =
                 new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
                         mTransferMethodRepository, mUserRepository, mPrepaidCardRepository);
@@ -967,7 +967,7 @@ public class CreateTransferViewModelTest {
     }
 
     @Test
-    public void testRetry_isTransferAmountKnown_WalletModel() {
+    public void testRetry_isTransferAmountKnown_walletModel() {
         CreateTransferViewModel.CreateTransferViewModelFactory factory =
                 new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
                         mTransferMethodRepository, mUserRepository, mPrepaidCardRepository);
@@ -1009,7 +1009,7 @@ public class CreateTransferViewModelTest {
     }
 
     @Test
-    public void testRetry_isTransferAmountKnown_CardModel() {
+    public void testRetry_isTransferAmountKnown_cardModel() {
         CreateTransferViewModel.CreateTransferViewModelFactory factory =
                 new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
                         mTransferMethodRepository, mUserRepository, mPrepaidCardRepository);
