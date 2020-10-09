@@ -23,6 +23,7 @@ import static com.hyperwallet.android.model.transfermethod.TransferMethod.Transf
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.BANK_ACCOUNT;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.BANK_CARD;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.PAYPAL_ACCOUNT;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.VENMO_ACCOUNT;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.WIRE_ACCOUNT;
 import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.EXTRA_TRANSFER_METHOD_ADDED;
 import static com.hyperwallet.android.ui.transfermethod.TransferMethodLocalBroadcast.TransferMethodLocalBroadcastAction.ACTION_HYPERWALLET_TRANSFER_METHOD_ADDED;
@@ -60,6 +61,7 @@ import com.hyperwallet.android.model.transfermethod.BankAccount;
 import com.hyperwallet.android.model.transfermethod.BankCard;
 import com.hyperwallet.android.model.transfermethod.PayPalAccount;
 import com.hyperwallet.android.model.transfermethod.TransferMethod;
+import com.hyperwallet.android.model.transfermethod.VenmoAccount;
 import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.common.insight.HyperwalletInsight;
 import com.hyperwallet.android.ui.common.util.ErrorTypes;
@@ -554,6 +556,12 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                             .transferMethodCountry(mCountry)
                             .transferMethodCurrency(mCurrency)
                             .transferMethodType(WIRE_ACCOUNT)
+                            .build();
+                    break;
+                case VENMO_ACCOUNT:
+                    mTransferMethod = new VenmoAccount.Builder()
+                            .transferMethodCountry(mCountry)
+                            .transferMethodCurrency(mCurrency)
                             .build();
                     break;
                 default:

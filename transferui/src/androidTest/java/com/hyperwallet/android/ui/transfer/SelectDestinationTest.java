@@ -156,8 +156,9 @@ public class SelectDestinationTest {
         onView(withId(R.id.transfer_destination_list)).check(
                 matches(atPosition(4, hasDescendant(withText(R.string.prepaid_card)))));
         onView(withId(R.id.transfer_destination_list)).check(matches(atPosition(4, hasDescendant(withText("Canada")))));
+        String ppcInfo = getCardBrandWithFourDigits("Visa", "3187");
         onView(withId(R.id.transfer_destination_list)).check(
-                matches(atPosition(4, hasDescendant(withText("ending in 3187")))));
+                matches(atPosition(4, hasDescendant(withText(ppcInfo)))));
 
         onView(withId(R.id.transfer_destination_list)).check(
                 matches(atPosition(5, hasDescendant(withText(R.string.paypal_account_font_icon)))));
@@ -402,8 +403,9 @@ public class SelectDestinationTest {
         onView(withId(R.id.transfer_destination_list)).check(
                 matches(atPosition(4, hasDescendant(withText(R.string.prepaid_card)))));
         onView(withId(R.id.transfer_destination_list)).check(matches(atPosition(4, hasDescendant(withText("Canada")))));
+        String ppcInfo = getCardBrandWithFourDigits("Visa", "3187");
         onView(withId(R.id.transfer_destination_list)).check(
-                matches(atPosition(4, hasDescendant(withText("ending in 3187")))));
+                matches(atPosition(4, hasDescendant(withText(ppcInfo)))));
 
         onView(withId(R.id.transfer_destination_list)).check(
                 matches(atPosition(5, hasDescendant(withText(R.string.paypal_account_font_icon)))));
@@ -424,4 +426,7 @@ public class SelectDestinationTest {
         return availableFund;
     }
 
+    private String getCardBrandWithFourDigits(String cardBrand, String endingDigits) {
+        return cardBrand + "\u0020\u2022\u2022\u2022\u2022\u0020" + endingDigits;
+    }
 }
