@@ -21,11 +21,13 @@ import static com.hyperwallet.android.model.transfermethod.TransferMethod.Transf
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.CARD_NUMBER;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.EMAIL;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TYPE;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.VENMO_ACCOUNT_ID;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.BANK_ACCOUNT;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.BANK_CARD;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.PAPER_CHECK;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.PAYPAL_ACCOUNT;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.PREPAID_CARD;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.VENMO_ACCOUNT;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.WIRE_ACCOUNT;
 
 import android.content.Context;
@@ -127,6 +129,9 @@ public class TransferMethodUtils {
             case PAYPAL_ACCOUNT:
                 title = context.getString(R.string.paypal_account);
                 break;
+            case VENMO_ACCOUNT:
+                title = context.getString(R.string.venmo_account);
+                break;
             default:
                 title = transferMethodType.toLowerCase(Locale.ROOT) + context.getString(
                         R.string.not_translated_in_braces);
@@ -164,6 +169,9 @@ public class TransferMethodUtils {
             case PAYPAL_ACCOUNT:
                 final String email = transferMethod.getField(EMAIL);
                 return context.getString(R.string.to, email != null ? email : "");
+            case VENMO_ACCOUNT:
+                return getFourDigitsIdentification(context, transferMethod, VENMO_ACCOUNT_ID,
+                        R.string.endingIn);
             default:
                 return "";
         }
