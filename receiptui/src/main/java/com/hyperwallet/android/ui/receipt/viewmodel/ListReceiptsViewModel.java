@@ -61,11 +61,22 @@ public abstract class ListReceiptsViewModel extends ViewModel {
      */
     public abstract void retry();
 
+    /**
+     * @return binding live data of detail navigation information
+     */
+    public abstract LiveData<Event<Receipt>> getDetailNavigation();
+
+    /**
+     * @param receipt {@link Receipt} object to set on navigating to Receipt details view
+     */
+    public abstract void setDetailNavigation(@NonNull final Receipt receipt);
+
     public static class ListUserReceiptsViewModel extends ListReceiptsViewModel {
 
         private MutableLiveData<Event<Errors>> mErrorEvent = new MutableLiveData<>();
         private Observer<Event<Errors>> mErrorEventObserver;
         private UserReceiptRepository mUserReceiptRepository;
+        private MutableLiveData<Event<Receipt>> mDetailNavigation = new MutableLiveData<>();
 
         private boolean mIsInitialized;
 
@@ -115,6 +126,16 @@ public abstract class ListReceiptsViewModel extends ViewModel {
         public void retry() {
             mUserReceiptRepository.retryLoadReceipt();
         }
+
+        @Override
+        public LiveData<Event<Receipt>> getDetailNavigation() {
+            return mDetailNavigation;
+        }
+
+        @Override
+        public void setDetailNavigation(@NonNull Receipt receipt) {
+            mDetailNavigation.postValue(new Event<>(receipt));
+        }
     }
 
     public static class ListPrepaidCardReceiptsViewModel extends ListReceiptsViewModel {
@@ -122,6 +143,7 @@ public abstract class ListReceiptsViewModel extends ViewModel {
         private MutableLiveData<Event<Errors>> mErrorEvent = new MutableLiveData<>();
         private Observer<Event<Errors>> mErrorEventObserver;
         private PrepaidCardReceiptRepository mPrepaidCardReceiptRepository;
+        private MutableLiveData<Event<Receipt>> mDetailNavigation = new MutableLiveData<>();
 
         private boolean mIsInitialized;
 
@@ -168,6 +190,16 @@ public abstract class ListReceiptsViewModel extends ViewModel {
         @Override
         public void retry() {
             mPrepaidCardReceiptRepository.retryLoadReceipt();
+        }
+
+        @Override
+        public LiveData<Event<Receipt>> getDetailNavigation() {
+            return mDetailNavigation;
+        }
+
+        @Override
+        public void setDetailNavigation(@NonNull Receipt receipt) {
+            mDetailNavigation.postValue(new Event<>(receipt));
         }
     }
 

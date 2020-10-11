@@ -25,6 +25,7 @@ import static com.hyperwallet.android.model.receipt.Receipt.Entries.CREDIT;
 import static com.hyperwallet.android.model.receipt.Receipt.Entries.DEBIT;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,7 +44,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hyperwallet.android.model.receipt.Receipt;
+import com.hyperwallet.android.ui.common.repository.Event;
 import com.hyperwallet.android.ui.common.util.DateUtils;
+import com.hyperwallet.android.ui.common.view.OneClickListener;
 import com.hyperwallet.android.ui.receipt.R;
 import com.hyperwallet.android.ui.receipt.repository.PrepaidCardReceiptRepositoryImpl;
 import com.hyperwallet.android.ui.receipt.repository.UserReceiptRepositoryImpl;
@@ -178,6 +181,25 @@ public class ListReceiptsFragment extends Fragment {
                 }
             }
         });
+
+        mReceiptViewModel.getDetailNavigation().observe(this, new Observer<Event<Receipt>>() {
+            @Override
+            public void onChanged(@NonNull final Event<Receipt> event) {
+                navigate(event);
+            }
+        });
+    }
+
+    private void navigate(@NonNull final Event<Receipt> event) {
+        if (!event.isContentConsumed()) {
+            Intent intent = new Intent(getActivity(), ReceiptDetailActivity.class);
+
+            intent.putExtra(ReceiptDetailActivity.EXTRA_RECEIPT, event.getContent());
+            intent.putExtra(ReceiptDetailActivity.EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT,
+                    getActivity().getIntent().getBooleanExtra(
+                            TabbedListReceiptsActivity.EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT, false));
+            startActivity(intent);
+        }
     }
 
     void retry() {
@@ -244,7 +266,7 @@ public class ListReceiptsFragment extends Fragment {
                 return new ReceiptItemViewHolderWithHeader(mReceiptViewModel, headerView);
             }
             View dataView = layout.inflate(R.layout.item_receipt, viewGroup, false);
-            return new ReceiptItemViewHolder(mReceiptViewModel, dataView);
+            return new ReceiptItemViewHolder(dataView);
         }
 
         @Override
@@ -257,12 +279,18 @@ public class ListReceiptsFragment extends Fragment {
 
         class ReceiptItemViewHolder extends RecyclerView.ViewHolder {
 
-            ReceiptItemViewHolder(@NonNull final ListReceiptsViewModel receiptViewModel,
-                    @NonNull final View item) {
+            ReceiptItemViewHolder(@NonNull final View item) {
                 super(item);
             }
 
             void bind(@NonNull final Receipt receipt) {
+                itemView.setOnClickListener(new OneClickListener() {
+                    @Override
+                    public void onOneClick(View v) {
+                        mReceiptViewModel.setDetailNavigation(receipt);
+                    }
+                });
+
                 TextView transactionTypeIcon = itemView.findViewById(R.id.transaction_type_icon);
                 TextView transactionTitle = itemView.findViewById(R.id.transaction_title);
                 TextView transactionDate = itemView.findViewById(R.id.transaction_date);
@@ -314,7 +342,7 @@ public class ListReceiptsFragment extends Fragment {
 
             ReceiptItemViewHolderWithHeader(@NonNull final ListReceiptsViewModel receiptViewModel,
                     @NonNull final View item) {
-                super(receiptViewModel, item);
+                super(item);
                 mTransactionHeaderText = item.findViewById(R.id.item_date_header_title);
             }
 
