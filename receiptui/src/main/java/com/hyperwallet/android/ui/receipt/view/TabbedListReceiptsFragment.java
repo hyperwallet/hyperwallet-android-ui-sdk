@@ -37,8 +37,8 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.hyperwallet.android.model.transfermethod.PrepaidCard;
+import com.hyperwallet.android.ui.common.view.ProgramModel;
 import com.hyperwallet.android.ui.receipt.R;
-import com.hyperwallet.android.ui.receipt.viewmodel.ProgramModel;
 import com.hyperwallet.android.ui.receipt.viewmodel.TabbedListReceiptsViewModel;
 import com.hyperwallet.android.ui.transfermethod.repository.PrepaidCardRepositoryImpl;
 import com.hyperwallet.android.ui.user.repository.UserRepositoryImpl;
@@ -86,7 +86,7 @@ public class TabbedListReceiptsFragment extends Fragment {
     }
 
     void retry() {
-        // mReceiptViewModel.retry();
+        mTabbedListReceiptsViewModel.retry();
     }
 
     @Override
@@ -114,23 +114,16 @@ public class TabbedListReceiptsFragment extends Fragment {
             @Override
             public void onChanged(List<PrepaidCard> prepaidCards) {
                 if (!prepaidCards.isEmpty()) {
-                    boolean isWalletModel =
-                            mTabbedListReceiptsViewModel.mProgramModel.name() == ProgramModel.WALLET_MODEL.name();
-                    boolean isCardModel =
-                            mTabbedListReceiptsViewModel.mProgramModel.name() == ProgramModel.PAY2CARD_MODEL.name()
-                                    || mTabbedListReceiptsViewModel.mProgramModel.name()
-                                    == ProgramModel.CARD_ONLY_MODEL.name();
-
-                    if (isWalletModel) {
+                    if (ProgramModel.isWalletModel(mTabbedListReceiptsViewModel.mProgramModel)) {
                         mTabLayout.setVisibility(View.VISIBLE);
-                        sortToken(prepaidCards);
+                        mListReceiptsViewPagerAdapter.sortPrepaidCards(prepaidCards);
                         for (PrepaidCard prepaidCard : prepaidCards) {
                             mListReceiptsViewPagerAdapter.addItem(prepaidCard);
                         }
-                    } else if (isCardModel) {
+                    } else if (ProgramModel.isCardModel(mTabbedListReceiptsViewModel.mProgramModel)) {
                         if (prepaidCards.size() > 1) {
                             mTabLayout.setVisibility(View.VISIBLE);
-                            sortToken(prepaidCards);
+                            mListReceiptsViewPagerAdapter.sortPrepaidCards(prepaidCards);
                             for (PrepaidCard prepaidCard : prepaidCards) {
                                 mListReceiptsViewPagerAdapter.addItem(prepaidCard);
                             }
@@ -146,19 +139,6 @@ public class TabbedListReceiptsFragment extends Fragment {
             }
         });
 
-    }
-
-    private void sortToken(List<PrepaidCard> prepaidCards) {
-        Collections.sort(prepaidCards, new Comparator<PrepaidCard>() {
-            @Override
-            public int compare(PrepaidCard firstPrepaid, PrepaidCard secondPrepaid) {
-                if (firstPrepaid == null || secondPrepaid == null
-                        || firstPrepaid.getPrimaryCardToken() == null || secondPrepaid.getPrimaryCardToken() == null) {
-                    return 0;
-                }
-                return firstPrepaid.getPrimaryCardToken().compareTo(secondPrepaid.getPrimaryCardToken());
-            }
-        });
     }
 
     class ListReceiptsViewPagerAdapter extends FragmentStatePagerAdapter {
@@ -224,12 +204,30 @@ public class TabbedListReceiptsFragment extends Fragment {
             if (sources.get(position) instanceof PrepaidCard) {
                 PrepaidCard prepaidCard = (PrepaidCard) sources.get(position);
                 String cardNumber = prepaidCard.getCardNumber();
-                return resources.getString(R.string.prepaidCardTabLabel, prepaidCard.getCardBrand(),
+                String prepaidCardBrand = resources.getString(R.string.visa);
+                if (prepaidCard.getCardBrand().equalsIgnoreCase(resources.getString(R.string.mastercard))) {
+                    prepaidCardBrand = resources.getString(R.string.mastercard);
+                }
+                return resources.getString(R.string.prepaidCardTabLabel, prepaidCardBrand,
                         "\u0020\u2022\u2022\u2022\u2022\u0020").concat(
                         cardNumber.substring(cardNumber.length() - 4, cardNumber.length()));
             }
 
             return resources.getString(R.string.mobileAvailableBalances);
+        }
+
+        private void sortPrepaidCards(List<PrepaidCard> prepaidCards) {
+            Collections.sort(prepaidCards, new Comparator<PrepaidCard>() {
+                @Override
+                public int compare(PrepaidCard firstPrepaid, PrepaidCard secondPrepaid) {
+                    if (firstPrepaid == null || secondPrepaid == null
+                            || firstPrepaid.getPrimaryCardToken() == null
+                            || secondPrepaid.getPrimaryCardToken() == null) {
+                        return 0;
+                    }
+                    return firstPrepaid.getPrimaryCardToken().compareTo(secondPrepaid.getPrimaryCardToken());
+                }
+            });
         }
     }
 }

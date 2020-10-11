@@ -44,7 +44,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.hyperwallet.android.model.receipt.Receipt;
 import com.hyperwallet.android.ui.common.util.DateUtils;
-import com.hyperwallet.android.ui.common.view.OneClickListener;
 import com.hyperwallet.android.ui.receipt.R;
 import com.hyperwallet.android.ui.receipt.repository.PrepaidCardReceiptRepositoryImpl;
 import com.hyperwallet.android.ui.receipt.repository.UserReceiptRepositoryImpl;
@@ -134,8 +133,8 @@ public class ListReceiptsFragment extends Fragment {
         super.onViewStateRestored(savedInstanceState);
         if (savedInstanceState != null) {
             mPrepaidCardToken = savedInstanceState.getString(ARGUMENT_PREPAID_CARD_TOKEN);
-        } else {
-            //   mPrepaidCardToken = getArguments().getString(ARGUMENT_PREPAID_CARD_TOKEN);
+        } else if (getArguments() != null) {
+            mPrepaidCardToken = getArguments().getString(ARGUMENT_PREPAID_CARD_TOKEN);
         }
     }
 
@@ -151,11 +150,7 @@ public class ListReceiptsFragment extends Fragment {
 
                     @Override
                     public void onInserted(int position, int count) {
-                        if (receipts.size() > 0) {
-                            mShouldShowNoTransactionPlaceholder = Boolean.FALSE;
-                        } else {
-                            mShouldShowNoTransactionPlaceholder = Boolean.TRUE;
-                        }
+                        mShouldShowNoTransactionPlaceholder = (receipts.size() > 0) ? Boolean.FALSE : Boolean.TRUE;
                     }
 
                     @Override

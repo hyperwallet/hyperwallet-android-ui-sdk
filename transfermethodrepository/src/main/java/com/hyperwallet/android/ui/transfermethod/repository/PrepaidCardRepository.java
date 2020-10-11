@@ -40,13 +40,13 @@ public interface PrepaidCardRepository {
      * Load prepaid cards information
      * <p>
      * When prepaid cards is properly loaded
-     * {@link LoadPrepaidCardsCallback#onPrepaidCardLoaded(List<PrepaidCard>))}
+     * {@link LoadPrepaidCardsCallback#onPrepaidCardsLoaded(List<PrepaidCard>))}
      * is invoked otherwise {@link LoadPrepaidCardsCallback#onError(Errors)}
      * is called to further log or show error information
      */
     interface LoadPrepaidCardsCallback {
 
-        void onPrepaidCardLoaded(@NonNull final List<PrepaidCard> prepaidCardList);
+        void onPrepaidCardsLoaded(@NonNull final List<PrepaidCard> prepaidCardList);
 
         void onError(@NonNull final Errors errors);
     }

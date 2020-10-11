@@ -32,6 +32,7 @@ import com.hyperwallet.android.model.Errors;
 import com.hyperwallet.android.model.transfermethod.PrepaidCard;
 import com.hyperwallet.android.model.user.User;
 import com.hyperwallet.android.ui.common.repository.Event;
+import com.hyperwallet.android.ui.common.view.ProgramModel;
 import com.hyperwallet.android.ui.transfermethod.repository.PrepaidCardRepository;
 import com.hyperwallet.android.ui.user.repository.UserRepository;
 
@@ -80,7 +81,7 @@ public class TabbedListReceiptsViewModel extends ViewModel {
         Hyperwallet.getDefault().getConfiguration(new HyperwalletListener<Configuration>() {
             @Override
             public void onSuccess(@Nullable Configuration result) {
-                if (result != null) {
+                if (result != null && !result.getProgramModel().isEmpty()) {
                     mProgramModel = ProgramModel.valueOf(result.getProgramModel());
                 }
             }
@@ -102,7 +103,7 @@ public class TabbedListReceiptsViewModel extends ViewModel {
     private void loadPrepaidCards() {
         mPrepaidCardRepository.loadPrepaidCards(new PrepaidCardRepository.LoadPrepaidCardsCallback() {
             @Override
-            public void onPrepaidCardLoaded(@NonNull List<PrepaidCard> prepaidCardList) {
+            public void onPrepaidCardsLoaded(@NonNull List<PrepaidCard> prepaidCardList) {
                 if (!prepaidCardList.isEmpty()) {
                     TabbedListReceiptsViewModel.this.mPrepaidCards.postValue(prepaidCardList);
                 }
