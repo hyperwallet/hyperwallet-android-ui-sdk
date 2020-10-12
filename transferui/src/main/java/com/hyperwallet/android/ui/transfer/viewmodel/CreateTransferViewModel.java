@@ -90,7 +90,6 @@ public class CreateTransferViewModel extends ViewModel {
     private final MutableLiveData<Event<Errors>> mLoadTransferRequiredDataErrors = new MutableLiveData<>();
     private final MutableLiveData<Event<Errors>> mCreateTransferError = new MutableLiveData<>();
     private final MutableLiveData<Event<Errors>> mModuleUnavailableError = new MutableLiveData<>();
-    private final MutableLiveData<Event<Errors>> mSourceUnavailableError = new MutableLiveData<>();
     private final MutableLiveData<Event<Error>> mInvalidAmountError = new MutableLiveData<>();
     private final MutableLiveData<Event<Error>> mInvalidDestinationError = new MutableLiveData<>();
     private final MutableLiveData<ArrayList<TransferSource>> mTransferSources = new MutableLiveData<>();
@@ -266,10 +265,6 @@ public class CreateTransferViewModel extends ViewModel {
         return mModuleUnavailableError;
     }
 
-    public LiveData<Event<Errors>> getSourceUnavailableError() {
-        return mSourceUnavailableError;
-    }
-
     public LiveData<Boolean> getShowFxRateChange() {
         return mShowFxRateChange;
     }
@@ -306,7 +301,7 @@ public class CreateTransferViewModel extends ViewModel {
         Error error = new Error(R.string.noTransferFromSourceAvailableError,
                 ERROR_SDK_MODULE_UNAVAILABLE);
         Errors errors = new Errors(Arrays.asList(error));
-        mSourceUnavailableError.postValue(new Event<>(errors));
+        mModuleUnavailableError.postValue(new Event<>(errors));
     }
 
     public void createTransfer() {
