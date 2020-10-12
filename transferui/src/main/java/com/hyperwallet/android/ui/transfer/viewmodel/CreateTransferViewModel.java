@@ -157,7 +157,7 @@ public class CreateTransferViewModel extends ViewModel {
 
     public void init(@NonNull final String defaultAmount) {
         initialAmount = defaultAmount;
-        isCardModel = isPay2CardOrCardOnlyModel();
+        isCardModel = ProgramModel.isCardModel(getProgramModel());
         if (!mIsInitialized) {
             mIsInitialized = true;
             if (mSourceToken == null) {
@@ -618,7 +618,7 @@ public class CreateTransferViewModel extends ViewModel {
                 transfer.getDestinationAmount(), mTransferAmount.getValue());
     }
 
-    public Boolean isPay2CardOrCardOnlyModel() {
+    public ProgramModel getProgramModel() {
         Hyperwallet.getDefault().getConfiguration(new HyperwalletListener<Configuration>() {
             @Override
             public void onSuccess(@Nullable Configuration result) {
@@ -637,7 +637,7 @@ public class CreateTransferViewModel extends ViewModel {
                 return null;
             }
         });
-        return mProgramModel == ProgramModel.CARD_ONLY_MODEL || mProgramModel == ProgramModel.PAY2CARD_MODEL;
+        return mProgramModel;
     }
 
     @VisibleForTesting

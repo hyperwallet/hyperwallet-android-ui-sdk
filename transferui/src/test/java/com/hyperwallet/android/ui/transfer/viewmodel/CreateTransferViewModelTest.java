@@ -35,6 +35,7 @@ import com.hyperwallet.android.model.transfer.Transfer;
 import com.hyperwallet.android.model.transfermethod.PrepaidCard;
 import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import com.hyperwallet.android.model.user.User;
+import com.hyperwallet.android.ui.common.view.ProgramModel;
 import com.hyperwallet.android.ui.testutils.TestAuthenticationProvider;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletMockWebServer;
@@ -235,11 +236,12 @@ public class CreateTransferViewModelTest {
         ).create(CreateTransferViewModel.class));
         viewModel.init("0");
 
-        doReturn(false).when(viewModel).isPay2CardOrCardOnlyModel();
+        doReturn(ProgramModel.WALLET_MODEL).when(viewModel).getProgramModel();
 
         verify(viewModel, never()).loadTransferSource();
 
         assertThat(viewModel, is(notNullValue()));
+        assertThat(viewModel.getProgramModel(),is(ProgramModel.WALLET_MODEL));
         assertThat(viewModel.isTransferAllAvailableFunds().getValue(), is(false));
         assertThat(viewModel.getTransferAmount().getValue(), is(nullValue()));
         assertThat(viewModel.getTransferNotes().getValue(), is(nullValue()));
@@ -274,10 +276,10 @@ public class CreateTransferViewModelTest {
         ).create(CreateTransferViewModel.class));
         viewModel.init("0");
 
-        doReturn(true).when(viewModel).isPay2CardOrCardOnlyModel();
+        doReturn(ProgramModel.CARD_ONLY_MODEL).when(viewModel).getProgramModel();
 
         verify(viewModel, never()).loadTransferSource();
-
+        assertThat(viewModel.getProgramModel(),is(ProgramModel.CARD_ONLY_MODEL));
         assertThat(viewModel, is(notNullValue()));
         assertThat(viewModel.isTransferAllAvailableFunds().getValue(), is(false));
         assertThat(viewModel.getTransferAmount().getValue(), is(nullValue()));
@@ -311,10 +313,11 @@ public class CreateTransferViewModelTest {
                 mTransferRepository, mTransferMethodRepository, mUserRepository, mPrepaidCardRepository
         ).create(CreateTransferViewModel.class));
         viewModel.init("0");
-        doReturn(false).when(viewModel).isPay2CardOrCardOnlyModel();
+        doReturn(ProgramModel.WALLET_MODEL).when(viewModel).getProgramModel();
         verify(viewModel).loadTransferSource();
 
         assertThat(viewModel, is(notNullValue()));
+        assertThat(viewModel.getProgramModel(),is(ProgramModel.WALLET_MODEL));
         assertThat(viewModel.isTransferAllAvailableFunds().getValue(), is(false));
         assertThat(viewModel.getTransferAmount().getValue(), is(nullValue()));
         assertThat(viewModel.getTransferNotes().getValue(), is(nullValue()));
@@ -347,11 +350,12 @@ public class CreateTransferViewModelTest {
                 mTransferRepository, mTransferMethodRepository, mUserRepository, mPrepaidCardRepository
         ).create(CreateTransferViewModel.class));
         viewModel.init("0");
-        doReturn(true).when(viewModel).isPay2CardOrCardOnlyModel();
+        doReturn(ProgramModel.CARD_ONLY_MODEL).when(viewModel).getProgramModel();
         verify(viewModel).loadPrepaidCardList(any(ArrayList.class));
 
         assertThat(viewModel, is(notNullValue()));
         assertThat(viewModel.isTransferAllAvailableFunds().getValue(), is(false));
+        assertThat(viewModel.getProgramModel(),is(ProgramModel.CARD_ONLY_MODEL));
         assertThat(viewModel.getTransferAmount().getValue(), is(nullValue()));
         assertThat(viewModel.getTransferNotes().getValue(), is(nullValue()));
         assertThat(viewModel.getTransferDestination().getValue().getField(TOKEN), is(mTransferMethod.getField(TOKEN)));
@@ -624,7 +628,8 @@ public class CreateTransferViewModelTest {
         }).when(mUserRepository).loadUser(any(UserRepository.LoadUserCallback.class));
 
         // test
-        CreateTransferViewModel viewModel = factory.create(CreateTransferViewModel.class);
+        CreateTransferViewModel viewModel = spy(factory.create(CreateTransferViewModel.class));
+        doReturn(ProgramModel.WALLET_MODEL).when(viewModel).getProgramModel();
         viewModel.init("0");
         viewModel.retry();
 
@@ -648,7 +653,7 @@ public class CreateTransferViewModelTest {
 
         // test
         CreateTransferViewModel viewModel = spy(factory.create(CreateTransferViewModel.class));
-        doReturn(true).when(viewModel).isPay2CardOrCardOnlyModel();
+        doReturn(ProgramModel.CARD_ONLY_MODEL).when(viewModel).getProgramModel();
         viewModel.init("0");
         viewModel.retry();
 
@@ -683,7 +688,8 @@ public class CreateTransferViewModelTest {
                 .LoadTransferMethodListCallback.class));
 
         // test
-        CreateTransferViewModel viewModel = factory.create(CreateTransferViewModel.class);
+        CreateTransferViewModel viewModel = spy(factory.create(CreateTransferViewModel.class));
+        doReturn(ProgramModel.WALLET_MODEL).when(viewModel).getProgramModel();
         viewModel.init("0");
         viewModel.retry();
 
@@ -720,7 +726,7 @@ public class CreateTransferViewModelTest {
 
         // test
         CreateTransferViewModel viewModel = spy(factory.create(CreateTransferViewModel.class));
-        doReturn(true).when(viewModel).isPay2CardOrCardOnlyModel();
+        doReturn(ProgramModel.CARD_ONLY_MODEL).when(viewModel).getProgramModel();
         viewModel.init("0");
         viewModel.retry();
 
@@ -755,7 +761,8 @@ public class CreateTransferViewModelTest {
                 .LoadTransferMethodListCallback.class));
 
         // test
-        CreateTransferViewModel viewModel = factory.create(CreateTransferViewModel.class);
+        CreateTransferViewModel viewModel = spy(factory.create(CreateTransferViewModel.class));
+        doReturn(ProgramModel.WALLET_MODEL).when(viewModel).getProgramModel();
         viewModel.init("0");
         viewModel.retry();
 
@@ -792,7 +799,8 @@ public class CreateTransferViewModelTest {
 
         // test
         CreateTransferViewModel viewModel = spy(factory.create(CreateTransferViewModel.class));
-        doReturn(true).when(viewModel).isPay2CardOrCardOnlyModel();
+        doReturn(ProgramModel.CARD_ONLY_MODEL).when(viewModel).getProgramModel();
+        assertThat(viewModel.getProgramModel(),is(ProgramModel.CARD_ONLY_MODEL));
         viewModel.init("0");
         viewModel.retry();
 
@@ -817,7 +825,8 @@ public class CreateTransferViewModelTest {
                 any(TransferRepository.CreateTransferCallback.class));
 
         // test
-        CreateTransferViewModel viewModel = factory.create(CreateTransferViewModel.class);
+        CreateTransferViewModel viewModel = spy(factory.create(CreateTransferViewModel.class));
+        doReturn(ProgramModel.WALLET_MODEL).when(viewModel).getProgramModel();
         viewModel.init("0");
         viewModel.retry();
 
@@ -849,7 +858,7 @@ public class CreateTransferViewModelTest {
 
         // test
         CreateTransferViewModel viewModel = spy(factory.create(CreateTransferViewModel.class));
-        doReturn(true).when(viewModel).isPay2CardOrCardOnlyModel();
+        doReturn(ProgramModel.CARD_ONLY_MODEL).when(viewModel).getProgramModel();
         viewModel.init("0");
         viewModel.retry();
 
@@ -867,7 +876,8 @@ public class CreateTransferViewModelTest {
                 new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
                         mTransferMethodRepository, mUserRepository, mPrepaidCardRepository);
         // test
-        CreateTransferViewModel viewModel = factory.create(CreateTransferViewModel.class);
+        CreateTransferViewModel viewModel = spy(factory.create(CreateTransferViewModel.class));
+        doReturn(ProgramModel.WALLET_MODEL).when(viewModel).getProgramModel();
         viewModel.init("0");
         viewModel.retry();
 
@@ -885,7 +895,7 @@ public class CreateTransferViewModelTest {
                         mTransferMethodRepository, mUserRepository, mPrepaidCardRepository);
         // test
         CreateTransferViewModel viewModel = spy(factory.create(CreateTransferViewModel.class));
-        doReturn(true).when(viewModel).isPay2CardOrCardOnlyModel();
+        doReturn(ProgramModel.CARD_ONLY_MODEL).when(viewModel).getProgramModel();
         viewModel.init("0");
         viewModel.retry();
 
@@ -925,7 +935,8 @@ public class CreateTransferViewModelTest {
                 any(TransferRepository.CreateTransferCallback.class));
 
         // test
-        CreateTransferViewModel viewModel = factory.create(CreateTransferViewModel.class);
+        CreateTransferViewModel viewModel = spy(factory.create(CreateTransferViewModel.class));
+        doReturn(ProgramModel.WALLET_MODEL).when(viewModel).getProgramModel();
         viewModel.init("0");
         viewModel.retry();
 
@@ -967,7 +978,7 @@ public class CreateTransferViewModelTest {
 
         // test
         CreateTransferViewModel viewModel = spy(factory.create(CreateTransferViewModel.class));
-        doReturn(true).when(viewModel).isPay2CardOrCardOnlyModel();
+        doReturn(ProgramModel.CARD_ONLY_MODEL).when(viewModel).getProgramModel();
         viewModel.init("0");
         viewModel.retry();
 
@@ -1007,7 +1018,8 @@ public class CreateTransferViewModelTest {
                 any(TransferRepository.CreateTransferCallback.class));
 
         // test
-        CreateTransferViewModel viewModel = factory.create(CreateTransferViewModel.class);
+        CreateTransferViewModel viewModel = spy(factory.create(CreateTransferViewModel.class));
+        doReturn(ProgramModel.WALLET_MODEL).when(viewModel).getProgramModel();
         viewModel.init("0");
         viewModel.setTransferAmount("20.25");
         viewModel.retry();
@@ -1050,7 +1062,7 @@ public class CreateTransferViewModelTest {
 
         // test
         CreateTransferViewModel viewModel = spy(factory.create(CreateTransferViewModel.class));
-        doReturn(true).when(viewModel).isPay2CardOrCardOnlyModel();
+        doReturn(ProgramModel.CARD_ONLY_MODEL).when(viewModel).getProgramModel();
         viewModel.init("0");
         viewModel.setTransferAmount("20.25");
         viewModel.retry();
@@ -1114,7 +1126,7 @@ public class CreateTransferViewModelTest {
 
         // test
         CreateTransferViewModel viewModel = spy(factory.create(CreateTransferViewModel.class));
-        doReturn(true).when(viewModel).isPay2CardOrCardOnlyModel();
+        doReturn(ProgramModel.CARD_ONLY_MODEL).when(viewModel).getProgramModel();
         viewModel.init("0");
         viewModel.refresh();
 
