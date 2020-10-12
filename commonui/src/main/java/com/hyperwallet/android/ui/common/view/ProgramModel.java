@@ -1,4 +1,4 @@
-package com.hyperwallet.android.ui.transfer;
+package com.hyperwallet.android.ui.common.view;
 
 public enum ProgramModel {
     WALLET_MODEL,

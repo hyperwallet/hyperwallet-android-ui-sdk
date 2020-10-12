@@ -68,5 +68,6 @@
     <string name="transferSource">Source</string>
     <string name="mobileTransferFromHeader">Transfer from</string>
     <string name="availableFunds">Available Funds</string>
+    <string name="noTransferFromSourceAvailable">No Transfer from source available</string>
 
 </resources>

@@ -16,6 +16,8 @@ import static java.net.HttpURLConnection.HTTP_OK;
 
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TOKEN;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TRANSFER_METHOD_CURRENCY;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TYPE;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.BANK_ACCOUNT;
 import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.ERROR_SDK_MODULE_UNAVAILABLE;
 
 import android.content.Intent;
@@ -23,13 +25,12 @@ import android.content.Intent;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.hyperwallet.android.Configuration;
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.exception.HyperwalletException;
-import com.hyperwallet.android.listener.HyperwalletListener;
 import com.hyperwallet.android.model.Error;
 import com.hyperwallet.android.model.Errors;
 import com.hyperwallet.android.model.TypeReference;
+import com.hyperwallet.android.model.paging.PageList;
 import com.hyperwallet.android.model.transfer.Transfer;
 import com.hyperwallet.android.model.transfermethod.PrepaidCard;
 import com.hyperwallet.android.model.transfermethod.TransferMethod;
@@ -37,13 +38,12 @@ import com.hyperwallet.android.model.user.User;
 import com.hyperwallet.android.ui.testutils.TestAuthenticationProvider;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletMockWebServer;
+import com.hyperwallet.android.ui.transfer.TransferSource;
 import com.hyperwallet.android.ui.transfer.repository.TransferRepository;
 import com.hyperwallet.android.ui.transfer.repository.TransferRepositoryFactory;
-import com.hyperwallet.android.ui.transfer.repository.TransferRepositoryImpl;
 import com.hyperwallet.android.ui.transfer.view.CreateTransferActivity;
 import com.hyperwallet.android.ui.transfermethod.repository.PrepaidCardRepository;
 import com.hyperwallet.android.ui.transfermethod.repository.PrepaidCardRepositoryFactory;
-import com.hyperwallet.android.ui.transfermethod.repository.PrepaidCardRepositoryImpl;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepository;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
 import com.hyperwallet.android.ui.user.repository.UserRepository;
@@ -52,16 +52,14 @@ import com.hyperwallet.android.util.JsonUtils;
 
 import org.hamcrest.Matchers;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
 import org.mockito.ArgumentMatchers;
-import org.mockito.Captor;
 import org.mockito.Mock;
-import org.mockito.Spy;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
@@ -72,8 +70,6 @@ import org.robolectric.RobolectricTestRunner;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 
 @RunWith(RobolectricTestRunner.class)
 public class CreateTransferViewModelTest {
@@ -96,17 +92,29 @@ public class CreateTransferViewModelTest {
     private PrepaidCardRepository mPrepaidCardRepository;
 
     private Transfer mTransfer;
+    private TransferSource mTransferSource;
     private TransferMethod mTransferMethod;
     private PrepaidCard mPrepaidCard;
+    private List<PrepaidCard> mPrepaidCardList;
 
     @Before
-    public void setup() {
+    public void setup() throws HyperwalletException, JSONException {
         Hyperwallet.getInstance(new TestAuthenticationProvider());
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(mResourceManager
                 .getResourceContent("authentication_token_response.json")).mock();
 
         final String prepaidCardResponse = mResourceManager.getResourceContent("prepaid_card_response.json");
         mPrepaidCard = new PrepaidCard(prepaidCardResponse);
+
+        String responseJson = mResourceManager.getResourceContent("prepaid_cards_response.json");
+        JSONObject jsonObject = new JSONObject(responseJson);
+        final PageList<PrepaidCard> prepaidCardList = new PageList<>(jsonObject, PrepaidCard.class);
+        mPrepaidCardList = prepaidCardList.getDataList();
+
+
+        final String transferListResponse = mResourceManager.getResourceContent("transfer_method_list_response.json");
+        JSONObject jObject = new JSONObject(transferListResponse);
+        final PageList<TransferMethod> transferMethodList = new PageList<>(jObject, TransferMethod.class);
 
         mTransfer = new Transfer.Builder()
                 .token("trf-transfer-token")
@@ -124,6 +132,13 @@ public class CreateTransferViewModelTest {
         mTransferMethod = new TransferMethod();
         mTransferMethod.setField(TOKEN, "trm-bank-token");
         mTransferMethod.setField(TRANSFER_METHOD_CURRENCY, "CAD");
+
+
+        mTransferSource = new TransferSource();
+        mTransferSource.setToken("usr-fake");
+        mTransferSource.setType(BANK_ACCOUNT);
+        mTransferSource.setIdentification(null);
+
 
         doAnswer(new Answer() {
             @Override
@@ -160,10 +175,8 @@ public class CreateTransferViewModelTest {
         doAnswer(new Answer() {
             @Override
             public Object answer(InvocationOnMock invocation) {
-                List<TransferMethod> transferMethodList = new ArrayList<>();
-                transferMethodList.add(mTransferMethod);
                 TransferMethodRepository.LoadTransferMethodListCallback callback = invocation.getArgument(0);
-                callback.onTransferMethodListLoaded(transferMethodList);
+                callback.onTransferMethodListLoaded(transferMethodList.getDataList());
                 return callback;
             }
         }).when(mTransferMethodRepository).loadTransferMethods(any(TransferMethodRepository
@@ -172,10 +185,8 @@ public class CreateTransferViewModelTest {
         doAnswer(new Answer() {
             @Override
             public Object answer(InvocationOnMock invocation) {
-                List<PrepaidCard> prepaidCardList = new ArrayList<>();
-                prepaidCardList.add(mPrepaidCard);
                 PrepaidCardRepository.LoadPrepaidCardsCallback callback = invocation.getArgument(0);
-                callback.onPrepaidCardListLoaded(prepaidCardList);
+                callback.onPrepaidCardListLoaded(mPrepaidCardList);
                 return callback;
             }
         }).when(mPrepaidCardRepository).loadPrepaidCards(ArgumentMatchers.any(
@@ -842,11 +853,11 @@ public class CreateTransferViewModelTest {
         viewModel.init("0");
         viewModel.retry();
 
-        verify(mTransferMethodRepository, times(2)).loadLatestTransferMethod(any(TransferMethodRepository
+        verify(mTransferMethodRepository, times(1)).loadLatestTransferMethod(any(TransferMethodRepository
                 .LoadTransferMethodCallback.class));
         verify(mTransferRepository, times(2)).createTransfer(any(Transfer.class),
                 any(TransferRepository.CreateTransferCallback.class));
-        verify(mPrepaidCardRepository, times(2)).loadPrepaidCards(
+        verify(mPrepaidCardRepository, times(1)).loadPrepaidCards(
                 any(PrepaidCardRepository.LoadPrepaidCardsCallback.class));
     }
 
@@ -878,7 +889,7 @@ public class CreateTransferViewModelTest {
         viewModel.init("0");
         viewModel.retry();
 
-        verify(mTransferMethodRepository, times(2)).loadLatestTransferMethod(any(TransferMethodRepository
+        verify(mTransferMethodRepository, times(1)).loadLatestTransferMethod(any(TransferMethodRepository
                 .LoadTransferMethodCallback.class));
         verify(mTransferRepository, times(2)).createTransfer(any(Transfer.class),
                 any(TransferRepository.CreateTransferCallback.class));
@@ -960,7 +971,7 @@ public class CreateTransferViewModelTest {
         viewModel.init("0");
         viewModel.retry();
 
-        verify(mTransferMethodRepository, times(2)).loadLatestTransferMethod(any(TransferMethodRepository
+        verify(mTransferMethodRepository, times(1)).loadLatestTransferMethod(any(TransferMethodRepository
                 .LoadTransferMethodCallback.class));
         verify(mTransferRepository, times(2)).createTransfer(any(Transfer.class),
                 any(TransferRepository.CreateTransferCallback.class));
@@ -1044,7 +1055,7 @@ public class CreateTransferViewModelTest {
         viewModel.setTransferAmount("20.25");
         viewModel.retry();
 
-        verify(mTransferMethodRepository, times(2)).loadLatestTransferMethod(any(TransferMethodRepository
+        verify(mTransferMethodRepository, times(1)).loadLatestTransferMethod(any(TransferMethodRepository
                 .LoadTransferMethodCallback.class));
         verify(mTransferRepository, times(2)).createTransfer(any(Transfer.class),
                 any(TransferRepository.CreateTransferCallback.class));
@@ -1123,5 +1134,31 @@ public class CreateTransferViewModelTest {
 
         verify(mTransferRepository, never()).createTransfer(any(Transfer.class),
                 any(TransferRepository.CreateTransferCallback.class));
+    }
+
+    @Test
+    public void testSortingPrepaidCard() throws JSONException, HyperwalletException {
+        CreateTransferViewModel.CreateTransferViewModelFactory factory =
+                new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
+                        mTransferMethodRepository, mUserRepository, mPrepaidCardRepository);
+
+        // test
+        CreateTransferViewModel viewModel = factory.create(CreateTransferViewModel.class);
+        viewModel.sortPrepaidCard(mPrepaidCardList);
+        assertThat(mPrepaidCardList.get(0).getPrimaryCardToken(), is(nullValue()));
+        assertThat(mPrepaidCardList.get(1).getPrimaryCardToken(), is("trm-fake-token"));
+    }
+
+    @Test
+    public void testTransferDestinationWithOutPPc() {
+        CreateTransferViewModel.CreateTransferViewModelFactory factory =
+                new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
+                        mTransferMethodRepository, mUserRepository, mPrepaidCardRepository);
+
+        // test
+        CreateTransferViewModel viewModel = factory.create(CreateTransferViewModel.class);
+        viewModel.loadTransferDestinationListWithoutPPC("trm-fake-token");
+        assertThat(viewModel.getTransferDestination().getValue().getField(TYPE), is(BANK_ACCOUNT));
+
     }
 }

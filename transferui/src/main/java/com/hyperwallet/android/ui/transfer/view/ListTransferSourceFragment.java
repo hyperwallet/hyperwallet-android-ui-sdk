@@ -45,7 +45,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hyperwallet.android.ui.transfer.R;
-import com.hyperwallet.android.ui.transfer.TransferSourceWrapper;
+import com.hyperwallet.android.ui.transfer.TransferSource;
 import com.hyperwallet.android.ui.transfer.viewmodel.ListTransferSourceViewModel;
 
 import java.util.ArrayList;
@@ -61,7 +61,7 @@ public class ListTransferSourceFragment extends DialogFragment {
     private RecyclerView mRecyclerView;
     private ListTransferSourceAdapter mListTransferSourceAdapter;
     private String mActiveTransferSourceToken;
-    private List<TransferSourceWrapper> mTransferSourceList = new ArrayList<>();
+    private List<TransferSource> mTransferSourceList = new ArrayList<>();
 
     /**
      * Please don't use this constructor this is reserved for Android Core Framework
@@ -72,13 +72,13 @@ public class ListTransferSourceFragment extends DialogFragment {
     }
 
     static ListTransferSourceFragment newInstance(@NonNull final String activeTransferSourceToken,
-            @NonNull final ArrayList<TransferSourceWrapper> transferSourceWrapperList) {
+            @NonNull final ArrayList<TransferSource> transferSourceList) {
         Bundle bundle = new Bundle();
         bundle.putString(ARGUMENT_SELECTED_TRANSFER_SOURCE_TOKEN, activeTransferSourceToken);
-        bundle.putParcelableArrayList(ARGUMENT_TRANSFER_SOURCE_LIST, transferSourceWrapperList);
+        bundle.putParcelableArrayList(ARGUMENT_TRANSFER_SOURCE_LIST, transferSourceList);
         ListTransferSourceFragment fragment = new ListTransferSourceFragment();
         fragment.mActiveTransferSourceToken = activeTransferSourceToken;
-        fragment.mTransferSourceList = transferSourceWrapperList;
+        fragment.mTransferSourceList = transferSourceList;
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -155,13 +155,13 @@ public class ListTransferSourceFragment extends DialogFragment {
 
     private static class ListTransferSourceAdapter extends RecyclerView.Adapter<TransferSourceViewHolder> {
 
-        private List<TransferSourceWrapper> mTransferSourceList;
+        private List<TransferSource> mTransferSourceList;
         private final ListTransferSourceViewModel mViewModel;
         private final String mSelectedSource;
 
         ListTransferSourceAdapter(
                 @NonNull final ListTransferSourceViewModel viewModel,
-                @NonNull final List<TransferSourceWrapper> transferSourceList, @NonNull final String selectedSource) {
+                @NonNull final List<TransferSource> transferSourceList, @NonNull final String selectedSource) {
             mViewModel = viewModel;
             mSelectedSource = selectedSource;
             mTransferSourceList = transferSourceList;
@@ -179,7 +179,7 @@ public class ListTransferSourceFragment extends DialogFragment {
 
         @Override
         public void onBindViewHolder(@NonNull TransferSourceViewHolder holder, int position) {
-            TransferSourceWrapper source = mTransferSourceList.get(position);
+            TransferSource source = mTransferSourceList.get(position);
             holder.bind(source, Objects.equals(source.getToken(), mSelectedSource));
         }
 
@@ -201,7 +201,7 @@ public class ListTransferSourceFragment extends DialogFragment {
         private final TextView mTransferSourceIdentification;
         private final ImageView mSelectedIcon;
         private final ListTransferSourceViewModel mViewModel;
-        private TransferSourceWrapper mSource;
+        private TransferSource mSource;
 
         TransferSourceViewHolder(@NonNull final View itemView,
                 @NonNull final ListTransferSourceViewModel viewModel) {
@@ -220,7 +220,7 @@ public class ListTransferSourceFragment extends DialogFragment {
             mViewModel.selectedTransferSource(mSource);
         }
 
-        void bind(@NonNull final TransferSourceWrapper source, final boolean selected) {
+        void bind(@NonNull final TransferSource source, final boolean selected) {
             mSource = source;
             if (source.getType().equals(PREPAID_CARD)) {
                 mTitle.setText(getTransferMethodName(mTitle.getContext(), source.getType()));
