@@ -303,10 +303,10 @@ public class CreateTransferViewModel extends ViewModel {
     }
 
     public void notifySourceUnavailable() {
-        Error error = new Error(R.string.noTransferFromSourceAvailable,
+        Error error = new Error(R.string.noTransferFromSourceAvailableError,
                 ERROR_SDK_MODULE_UNAVAILABLE);
         Errors errors = new Errors(Arrays.asList(error));
-        mModuleUnavailableError.postValue(new Event<>(errors));
+        mSourceUnavailableError.postValue(new Event<>(errors));
     }
 
     public void createTransfer() {

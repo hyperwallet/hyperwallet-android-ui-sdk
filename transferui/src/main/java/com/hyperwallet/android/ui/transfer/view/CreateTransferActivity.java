@@ -174,7 +174,6 @@ public class CreateTransferActivity extends AppCompatActivity implements OnNetwo
         mCreateTransferViewModel.getCreateTransferError().observe(this, new Observer<Event<Errors>>() {
             @Override
             public void onChanged(Event<Errors> event) {
-                System.out.println("event source unavailable");
                 if (event != null && !event.isContentConsumed()) {
                     ActivityUtils.showError(CreateTransferActivity.this, TAG, PageGroups.TRANSFER_FUNDS,
                             event.getContent().getErrors());
@@ -201,7 +200,7 @@ public class CreateTransferActivity extends AppCompatActivity implements OnNetwo
         mCreateTransferViewModel.getSourceUnavailableError().observe(this, new Observer<Event<Errors>>() {
             @Override
             public void onChanged(Event<Errors> event) {
-                if (event != null && !event.isContentConsumed()) {
+                if (!event.isContentConsumed()) {
                     ActivityUtils.showError(CreateTransferActivity.this, TAG, PageGroups.TRANSFER_FUNDS,
                             event.getContent().getErrors());
                 }
