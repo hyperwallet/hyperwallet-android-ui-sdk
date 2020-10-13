@@ -121,7 +121,6 @@ public class TabbedListReceiptsTest {
 
     }
 
-
     private void setLocale(Locale locale) {
         Context context = ApplicationProvider.getApplicationContext();
         Locale.setDefault(locale);
