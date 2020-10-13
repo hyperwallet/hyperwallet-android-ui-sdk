@@ -75,7 +75,9 @@ public class TabbedListReceiptsTest {
             };
     private TimeZone mDefaultTimeZone;
 
-    private String usdCurrencySymbol = "$";
+    private String monthLabel1 = "June 2019";
+    private String cadCurrencySymbol = "CA$";
+
 
 
     @Before
@@ -98,26 +100,29 @@ public class TabbedListReceiptsTest {
     @Test
     public void testPrimaryPrepaidCardActive() {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("prepaid_card_receipt_list_response.json")).mock();
+                .getResourceContent("prepaid_card_receipt_credit_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();
 
         // run test
         mActivityTestRule.launchActivity(null);
 
         // assert
+        onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
+                .check(matches(withText(R.string.title_activity_receipt_list)));
+        onView(withId(R.id.list_receipts)).check(matches(isDisplayed()));
+        onView(withId(R.id.list_receipts))
+                .check(matches(atPosition(0, hasDescendant(withText(monthLabel1)))));
+        onView(withId(R.id.list_receipts)).check(matches(atPosition(0,
+                hasDescendant(withText(com.hyperwallet.android.ui.receipt.R.string.credit)))));
+        onView(withId(R.id.list_receipts)).check(
+                matches(atPosition(0, hasDescendant(withText(R.string.deposit)))));
+        onView(withId(R.id.list_receipts)).check(
+                matches(atPosition(0, hasDescendant(withText(cadCurrencySymbol + "15.00")))));
+        onView(withId(R.id.list_receipts)).check(
+                matches(atPosition(0, hasDescendant(withText("June 6, 2019")))));
+        onView(withId(R.id.list_receipts)).check(matches(atPosition(0, hasDescendant(withText("CAD")))));
 
-    }
-
-    @Test
-    public void testSecondaryPrepaidCardActive() {
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("prepaid_card_receipt_list_response.json")).mock();
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();
-
-        // run test
-        mActivityTestRule.launchActivity(null);
-
-        // assert
+        onView(withId(R.id.list_receipts)).check(new RecyclerViewCountAssertion(1));
 
     }
 

@@ -288,7 +288,8 @@ public class ListPrepaidCardReceiptsTest {
         onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
         onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
                 .check(matches(withText(R.string.title_activity_receipt_list)));
-        //todo: check empty view when it will be ready
+        onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.list_receipts))))
+                .check(matches(withText(R.string.mobileNoTransactions)));
     }
 
     @Test
