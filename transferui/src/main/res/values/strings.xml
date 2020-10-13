@@ -64,4 +64,9 @@
     <string name="mobileTransferSuccessDetails">The funds are on the way to your %s</string>
     <string name="doneButtonLabel">Done</string>
     <string name="mobileTransferMethodsHeader">Transfer methods</string>
+    <string name="mobileTransferFromLabel">TRANSFER FROM</string>
+    <string name="transferSource">Source</string>
+    <string name="mobileTransferFromHeader">Transfer from</string>
+    <string name="availableFunds">Available Funds</string>
+
 </resources>

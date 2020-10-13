@@ -20,6 +20,10 @@
             android:name=".view.CreateTransferActivity"
             android:label="@string/title_activity_create_transfer"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".view.ListTransferSourceActivity"
+            android:label="@string/transferSource"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

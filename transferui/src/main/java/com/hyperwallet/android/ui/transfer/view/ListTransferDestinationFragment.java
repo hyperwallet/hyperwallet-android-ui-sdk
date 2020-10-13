@@ -60,26 +60,30 @@ public class ListTransferDestinationFragment extends DialogFragment {
 
     public static final String TAG = "HW:" + ListTransferDestinationFragment.class.getSimpleName();
     public static final String ARGUMENT_SELECTED_TRANSFER_TOKEN = "SELECTED_TRANSFER_TOKEN";
-
+    public static final String ARGUMENT_IS_SOURCE_PREPAID_CARD = "IS_SOURCE_PREPAID_CARD";
     private ListTransferDestinationViewModel mListTransferDestinationViewModel;
     private RecyclerView mRecyclerView;
     private ListTransferDestinationAdapter mListTransferDestinationAdapter;
     private View mProgressBar;
     private String mActiveTransferToken;
+    private boolean mIsSourcePrepaidCard;
 
     /**
      * Please don't use this constructor this is reserved for Android Core Framework
      *
-     * @see #newInstance(String)
+     * @see #newInstance(String, boolean)
      */
     public ListTransferDestinationFragment() {
     }
 
-    static ListTransferDestinationFragment newInstance(@NonNull final String activeTransferToken) {
+    static ListTransferDestinationFragment newInstance(@NonNull final String activeTransferToken,
+            final boolean isSourcePrepaidCard) {
         Bundle bundle = new Bundle();
         bundle.putString(ARGUMENT_SELECTED_TRANSFER_TOKEN, activeTransferToken);
+        bundle.putBoolean(ARGUMENT_IS_SOURCE_PREPAID_CARD, isSourcePrepaidCard);
         ListTransferDestinationFragment fragment = new ListTransferDestinationFragment();
         fragment.mActiveTransferToken = activeTransferToken;
+        fragment.mIsSourcePrepaidCard = isSourcePrepaidCard;
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -137,6 +141,8 @@ public class ListTransferDestinationFragment extends DialogFragment {
         super.onViewStateRestored(savedInstanceState);
 
         mActiveTransferToken = getArguments().getString(ARGUMENT_SELECTED_TRANSFER_TOKEN);
+        mIsSourcePrepaidCard = getArguments().getBoolean(ARGUMENT_IS_SOURCE_PREPAID_CARD);
+        mListTransferDestinationViewModel.setIsSourcePrepaidCard(mIsSourcePrepaidCard);
         mListTransferDestinationAdapter = new ListTransferDestinationAdapter(mActiveTransferToken,
                 mListTransferDestinationViewModel);
         mRecyclerView.setAdapter(mListTransferDestinationAdapter);

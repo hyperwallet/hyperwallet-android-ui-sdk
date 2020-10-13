@@ -61,6 +61,11 @@ public final class HyperwalletIntent {
     public static final short SCHEDULE_TRANSFER_REQUEST_CODE = 103;
 
     /**
+     * Select transfer source request code
+     */
+    public static final short SELECT_TRANSFER_SOURCE_REQUEST_CODE = 104;
+
+    /**
      * SDK Broadcast payload error
      */
     public static final String AUTHENTICATION_ERROR_PAYLOAD = "HYPERWALLET_AUTHENTICATION_ERROR_PAYLOAD";
@@ -75,4 +80,6 @@ public final class HyperwalletIntent {
      * Transfer method added, extra activity parcelable transfer method payload
      */
     public static final String EXTRA_TRANSFER_METHOD_ADDED = "EXTRA_TRANSFER_METHOD_ADDED";
+
+
 }
