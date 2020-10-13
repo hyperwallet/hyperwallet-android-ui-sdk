@@ -41,11 +41,23 @@ import java.util.List;
 public class TabbedListReceiptsViewModel extends ViewModel {
     private UserRepository mUserRepository;
     private PrepaidCardRepository mPrepaidCardRepository;
-    public MutableLiveData<User> mUser = new MutableLiveData<User>();
-    public MutableLiveData<List<PrepaidCard>> mPrepaidCards = new MutableLiveData<List<PrepaidCard>>();
-    public MutableLiveData<Event<Errors>> mErrors = new MutableLiveData<Event<Errors>>();
+    private MutableLiveData<User> mUser = new MutableLiveData<User>();
+    private MutableLiveData<List<PrepaidCard>> mPrepaidCards = new MutableLiveData<List<PrepaidCard>>();
+    private MutableLiveData<Event<Errors>> mErrors = new MutableLiveData<Event<Errors>>();
     public ProgramModel mProgramModel;
     private boolean mIsInitialized;
+
+    public MutableLiveData<User> getUser() {
+        return mUser;
+    }
+
+    public MutableLiveData<List<PrepaidCard>> getPrepaidCards() {
+        return mPrepaidCards;
+    }
+
+    public MutableLiveData<Event<Errors>> getErrors() {
+        return mErrors;
+    }
 
     public TabbedListReceiptsViewModel(
             UserRepository mUserRepository,
@@ -98,7 +110,6 @@ public class TabbedListReceiptsViewModel extends ViewModel {
         });
         return mProgramModel;
     }
-
 
     private void loadPrepaidCards() {
         mPrepaidCardRepository.loadPrepaidCards(new PrepaidCardRepository.LoadPrepaidCardsCallback() {

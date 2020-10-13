@@ -1,5 +1,8 @@
 package com.hyperwallet.android.ui.receipt.viewmodel;
 
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
@@ -46,6 +49,21 @@ public class TabbedListReceiptsViewModelTest {
         mTabbedListReceiptsViewModelFactory = new TabbedListReceiptsViewModel.TabbedListReceiptsViewModelFactory(
                 mUserRepository, mPrepaidCardRepository);
         mTabbedListReceiptsViewModel = mTabbedListReceiptsViewModelFactory.create(TabbedListReceiptsViewModel.class);
+    }
+
+    @Test
+    public void testGetUser_returnsLiveData() {
+        assertThat(mTabbedListReceiptsViewModel.getUser(), is(notNullValue()));
+    }
+
+    @Test
+    public void testGetErrors_returnsLiveData() {
+        assertThat(mTabbedListReceiptsViewModel.getErrors(), is(notNullValue()));
+    }
+
+    @Test
+    public void testGetReceiptList_returnsLiveData() {
+        assertThat(mTabbedListReceiptsViewModel.getPrepaidCards(), is(notNullValue()));
     }
 
     @Test

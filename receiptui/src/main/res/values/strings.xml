@@ -168,6 +168,5 @@
 
     <!-- Prepaid Cards Receipt   -->
     <string name="mobileAvailableBalances">Available funds</string>
-    <string name="prepaidCardTabLabel">%1$s%2$s</string>
 
 </resources>

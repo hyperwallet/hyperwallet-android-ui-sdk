@@ -64,7 +64,9 @@ public class TabbedListReceiptsActivity extends AppCompatActivity implements OnN
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
 
-        mTabbedListReceiptsViewModel = ViewModelProviders.of(this, new TabbedListReceiptsViewModel.TabbedListReceiptsViewModelFactory(new UserRepositoryImpl(), new PrepaidCardRepositoryImpl()))
+        mTabbedListReceiptsViewModel = ViewModelProviders.of(this,
+                new TabbedListReceiptsViewModel.TabbedListReceiptsViewModelFactory(new UserRepositoryImpl(),
+                        new PrepaidCardRepositoryImpl()))
                 .get(TabbedListReceiptsViewModel.class);
 
         registerObservers();
@@ -76,7 +78,7 @@ public class TabbedListReceiptsActivity extends AppCompatActivity implements OnN
     }
 
     private void registerObservers() {
-        mTabbedListReceiptsViewModel.mErrors.observe(this, new Observer<Event<Errors>>() {
+        mTabbedListReceiptsViewModel.getErrors().observe(this, new Observer<Event<Errors>>() {
             @Override
             public void onChanged(Event<Errors> errorsEvent) {
                 ActivityUtils.showError(TabbedListReceiptsActivity.this, TabbedListReceiptsActivity.TAG,

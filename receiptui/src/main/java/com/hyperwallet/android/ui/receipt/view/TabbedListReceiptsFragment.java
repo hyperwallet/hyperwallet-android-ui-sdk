@@ -110,7 +110,7 @@ public class TabbedListReceiptsFragment extends Fragment {
     }
 
     private void registerObservers() {
-        mTabbedListReceiptsViewModel.mPrepaidCards.observe(this, new Observer<List<PrepaidCard>>() {
+        mTabbedListReceiptsViewModel.getPrepaidCards().observe(this, new Observer<List<PrepaidCard>>() {
             @Override
             public void onChanged(List<PrepaidCard> prepaidCards) {
                 if (!prepaidCards.isEmpty()) {
@@ -208,8 +208,7 @@ public class TabbedListReceiptsFragment extends Fragment {
                 if (prepaidCard.getCardBrand().equalsIgnoreCase(resources.getString(R.string.mastercard))) {
                     prepaidCardBrand = resources.getString(R.string.mastercard);
                 }
-                return resources.getString(R.string.prepaidCardTabLabel, prepaidCardBrand,
-                        "\u0020\u2022\u2022\u2022\u2022\u0020").concat(
+                return prepaidCardBrand.concat("\u0020\u2022\u2022\u2022\u2022\u0020").concat(
                         cardNumber.substring(cardNumber.length() - 4, cardNumber.length()));
             }
 

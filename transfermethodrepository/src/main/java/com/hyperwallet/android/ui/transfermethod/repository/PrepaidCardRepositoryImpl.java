@@ -50,7 +50,7 @@ public class PrepaidCardRepositoryImpl implements PrepaidCardRepository {
         getHyperwallet().listPrepaidCards(queryParam, new HyperwalletListener<PageList<PrepaidCard>>() {
             @Override
             public void onSuccess(@Nullable PageList<PrepaidCard> result) {
-                callback.onPrepaidCardsLoaded(result.getDataList());
+                callback.onPrepaidCardsLoaded(result != null ? result.getDataList() : null);
             }
 
             @Override
