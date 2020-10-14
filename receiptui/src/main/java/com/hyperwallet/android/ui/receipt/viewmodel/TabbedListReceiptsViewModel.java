@@ -56,6 +56,11 @@ public class TabbedListReceiptsViewModel extends ViewModel {
         return mPrepaidCards;
     }
 
+    @VisibleForTesting
+    Hyperwallet getHyperwallet() {
+        return Hyperwallet.getDefault();
+    }
+
     public MutableLiveData<Event<Errors>> getErrors() {
         return mErrors;
     }
@@ -71,7 +76,10 @@ public class TabbedListReceiptsViewModel extends ViewModel {
         if (!mIsInitialized) {
             mIsInitialized = true;
             getProgramModel();
-            loadUser();
+            if (!ProgramModel.isCardModel(mProgramModel)) {
+                loadUser();
+            }
+            loadPrepaidCards();
         }
     }
 
@@ -91,8 +99,8 @@ public class TabbedListReceiptsViewModel extends ViewModel {
         });
     }
 
-    private ProgramModel getProgramModel() {
-        Hyperwallet.getDefault().getConfiguration(new HyperwalletListener<Configuration>() {
+    ProgramModel getProgramModel() {
+        getHyperwallet().getConfiguration(new HyperwalletListener<Configuration>() {
             @Override
             public void onSuccess(@Nullable Configuration result) {
                 if (result != null && !result.getProgramModel().isEmpty()) {
@@ -113,7 +121,8 @@ public class TabbedListReceiptsViewModel extends ViewModel {
         return mProgramModel;
     }
 
-    private void loadPrepaidCards() {
+    @VisibleForTesting
+    void loadPrepaidCards() {
         mPrepaidCardRepository.loadPrepaidCards(new PrepaidCardRepository.LoadPrepaidCardsCallback() {
             @Override
             public void onPrepaidCardListLoaded(@NonNull List<PrepaidCard> prepaidCardList) {
