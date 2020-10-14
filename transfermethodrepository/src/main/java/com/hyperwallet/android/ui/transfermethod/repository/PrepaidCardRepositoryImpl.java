@@ -74,7 +74,7 @@ public class PrepaidCardRepositoryImpl implements PrepaidCardRepository {
     }
 
     @Override
-    public void loadPrepaidCard(@NonNull String token, final LoadPrepaidCardCallback callback) {
+    public void loadPrepaidCard(@NonNull final String token, final LoadPrepaidCardCallback callback) {
 
         getHyperwallet().getPrepaidCard(token,
                 new HyperwalletListener<PrepaidCard>() {

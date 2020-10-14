@@ -62,7 +62,7 @@ import com.hyperwallet.android.ui.common.intent.HyperwalletIntent;
 import com.hyperwallet.android.ui.common.repository.Event;
 import com.hyperwallet.android.ui.common.view.OneClickListener;
 import com.hyperwallet.android.ui.transfer.R;
-import com.hyperwallet.android.ui.transfer.TransferSourceWrapper;
+import com.hyperwallet.android.ui.transfer.TransferSource;
 import com.hyperwallet.android.ui.transfer.viewmodel.CreateTransferViewModel;
 
 import java.util.ArrayList;
@@ -178,14 +178,17 @@ public class CreateTransferFragment extends Fragment {
             public void onOneClick(View v) {
                 TransferMethod activeDestination =
                         mCreateTransferViewModel.getTransferDestination().getValue();
-                Intent intent = new Intent(requireContext(), ListTransferDestinationActivity.class);
-                intent.putExtra(ListTransferDestinationActivity.EXTRA_SELECTED_DESTINATION_TOKEN,
-                        activeDestination.getField(TOKEN));
-                intent.putExtra(ListTransferDestinationActivity.EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT,
-                        mCreateTransferViewModel.isPortraitMode());
-                intent.putExtra(ListTransferDestinationActivity.EXTRA_SOURCE_IS_PPC_TYPE,
-                        mCreateTransferViewModel.getTransferSelectedSource().getValue().getType().equals(PREPAID_CARD));
-                startActivityForResult(intent, SELECT_TRANSFER_DESTINATION_REQUEST_CODE);
+                if (activeDestination != null) {
+                    Intent intent = new Intent(requireContext(), ListTransferDestinationActivity.class);
+                    intent.putExtra(ListTransferDestinationActivity.EXTRA_SELECTED_DESTINATION_TOKEN,
+                            activeDestination.getField(TOKEN));
+                    intent.putExtra(ListTransferDestinationActivity.EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT,
+                            mCreateTransferViewModel.isPortraitMode());
+                    intent.putExtra(ListTransferDestinationActivity.EXTRA_SOURCE_IS_PREPAID_CARD_TYPE,
+                            mCreateTransferViewModel.getTransferSelectedSource().getValue().getType().equals(
+                                    PREPAID_CARD));
+                    startActivityForResult(intent, SELECT_TRANSFER_DESTINATION_REQUEST_CODE);
+                }
             }
         });
 
@@ -194,9 +197,9 @@ public class CreateTransferFragment extends Fragment {
         mTransferSource.setOnClickListener(new OneClickListener() {
             @Override
             public void onOneClick(View v) {
-                TransferSourceWrapper activeSource =
+                TransferSource activeSource =
                         mCreateTransferViewModel.getTransferSelectedSource().getValue();
-                ArrayList<TransferSourceWrapper> sourceList =
+                ArrayList<TransferSource> sourceList =
                         mCreateTransferViewModel.getTransferSources().getValue();
                 Intent intent = new Intent(requireContext(), ListTransferSourceActivity.class);
                 intent.putParcelableArrayListExtra(ListTransferSourceActivity.EXTRA_TRANSFER_SOURCE_LIST,
@@ -253,7 +256,7 @@ public class CreateTransferFragment extends Fragment {
             } else if (requestCode == ADD_TRANSFER_METHOD_REQUEST_CODE) {
                 mCreateTransferViewModel.refreshTransferDestination();
             } else if (requestCode == SELECT_TRANSFER_SOURCE_REQUEST_CODE && data != null) {
-                TransferSourceWrapper selectedTransferSource = data.getParcelableExtra(EXTRA_SELECTED_SOURCE);
+                TransferSource selectedTransferSource = data.getParcelableExtra(EXTRA_SELECTED_SOURCE);
                 mCreateTransferViewModel.setSelectedTransferSource(selectedTransferSource);
                 showTransferSource(selectedTransferSource);
             }
@@ -512,21 +515,21 @@ public class CreateTransferFragment extends Fragment {
                     }
                 });
         mCreateTransferViewModel.getTransferSelectedSource().observe(getViewLifecycleOwner(),
-                new Observer<TransferSourceWrapper>() {
+                new Observer<TransferSource>() {
                     @Override
-                    public void onChanged(TransferSourceWrapper transferSourceWrapper) {
+                    public void onChanged(TransferSource transferSource) {
                         mTransferAmount.setText(getResources().getText(R.string.defaultTransferAmount));
-                        showTransferSource(transferSourceWrapper);
+                        showTransferSource(transferSource);
                     }
                 });
     }
 
     private void registerTransferSourceObservers() {
         mCreateTransferViewModel.getTransferSources().observe(getViewLifecycleOwner(),
-                new Observer<ArrayList<TransferSourceWrapper>>() {
+                new Observer<ArrayList<TransferSource>>() {
                     @Override
-                    public void onChanged(ArrayList<TransferSourceWrapper> transferSourceWrappers) {
-                        if (transferSourceWrappers.size() <= 1) {
+                    public void onChanged(ArrayList<TransferSource> transferSources) {
+                        if (transferSources.size() <= 1) {
                             mTransferSource.setOnClickListener(null);
                         }
                     }
@@ -668,19 +671,19 @@ public class CreateTransferFragment extends Fragment {
         mTransferDestination.setVisibility(View.VISIBLE);
     }
 
-    private void showTransferSource(@NonNull final TransferSourceWrapper transferSourceWrapper) {
+    private void showTransferSource(@NonNull final TransferSource transferSource) {
         TextView transferSourceIcon = getView().findViewById(R.id.transfer_source_icon);
         TextView transferSourceTitle = getView().findViewById(R.id.transfer_source_title);
         TextView transferSourceIdentifier = getView().findViewById(R.id.transfer_source_description_1);
-        if (transferSourceWrapper.getType().equals(PREPAID_CARD)) {
+        if (transferSource.getType().equals(PREPAID_CARD)) {
             transferSourceTitle.setText(
-                    getTransferMethodName(transferSourceIdentifier.getContext(), transferSourceWrapper.getType()));
+                    getTransferMethodName(transferSourceIdentifier.getContext(), transferSource.getType()));
         } else {
             transferSourceTitle.setText(transferSourceIdentifier.getContext().getString(R.string.availableFunds));
         }
-        transferSourceIdentifier.setText(transferSourceWrapper.getIdentification() == null ? ""
+        transferSourceIdentifier.setText(transferSource.getIdentification() == null ? ""
                 : getTransferMethodDetail(transferSourceIdentifier.getContext(),
-                        transferSourceWrapper.getIdentification(), transferSourceWrapper.getType()));
-        transferSourceIcon.setText(getStringFontIcon(transferSourceIcon.getContext(), transferSourceWrapper.getType()));
+                        transferSource.getIdentification(), transferSource.getType()));
+        transferSourceIcon.setText(getStringFontIcon(transferSourceIcon.getContext(), transferSource.getType()));
     }
 }

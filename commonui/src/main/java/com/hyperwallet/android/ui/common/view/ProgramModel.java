@@ -14,3 +14,4 @@ public enum ProgramModel {
                 || ProgramModel.CARD_ONLY_MODEL == programModel;
     }
 }
+

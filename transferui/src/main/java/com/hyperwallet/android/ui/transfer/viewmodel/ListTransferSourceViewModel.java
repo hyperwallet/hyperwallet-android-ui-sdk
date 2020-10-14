@@ -23,23 +23,23 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.hyperwallet.android.ui.common.repository.Event;
-import com.hyperwallet.android.ui.transfer.TransferSourceWrapper;
+import com.hyperwallet.android.ui.transfer.TransferSource;
 
 /**
  * List Transfer Source ViewModel
  */
 public class ListTransferSourceViewModel extends ViewModel {
-    private final MutableLiveData<Event<TransferSourceWrapper>> mSelectedTransferSource =
+    private final MutableLiveData<Event<TransferSource>> mSelectedTransferSource =
             new MutableLiveData<>();
 
     ListTransferSourceViewModel() {
     }
 
-    public void selectedTransferSource(@NonNull final TransferSourceWrapper source) {
+    public void selectedTransferSource(@NonNull final TransferSource source) {
         mSelectedTransferSource.postValue(new Event<>(source));
     }
 
-    public LiveData<Event<TransferSourceWrapper>> getTransferSourceSelection() {
+    public LiveData<Event<TransferSource>> getTransferSourceSelection() {
         return mSelectedTransferSource;
     }
 

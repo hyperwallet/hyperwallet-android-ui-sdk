@@ -33,7 +33,7 @@ import com.hyperwallet.android.ui.common.repository.Event;
 import com.hyperwallet.android.ui.common.view.ActivityUtils;
 import com.hyperwallet.android.ui.common.view.error.OnNetworkErrorCallback;
 import com.hyperwallet.android.ui.transfer.R;
-import com.hyperwallet.android.ui.transfer.TransferSourceWrapper;
+import com.hyperwallet.android.ui.transfer.TransferSource;
 import com.hyperwallet.android.ui.transfer.viewmodel.ListTransferSourceViewModel;
 
 import java.util.ArrayList;
@@ -62,7 +62,7 @@ public class ListTransferSourceActivity extends AppCompatActivity implements OnN
                     "EXTRA_SELECTED_SOURCE_TOKEN intent data is needed to start this activity");
         }
 
-        ArrayList<TransferSourceWrapper> sourceList = getIntent().getParcelableArrayListExtra(
+        ArrayList<TransferSource> sourceList = getIntent().getParcelableArrayListExtra(
                 EXTRA_TRANSFER_SOURCE_LIST);
         if (savedInstanceState == null) {
             ActivityUtils.initFragment(this, ListTransferSourceFragment.newInstance(transferToken, sourceList),
@@ -103,9 +103,9 @@ public class ListTransferSourceActivity extends AppCompatActivity implements OnN
 
     private void registerObservers() {
         mListTransferSourceViewModel.getTransferSourceSelection().observe(this,
-                new Observer<Event<TransferSourceWrapper>>() {
+                new Observer<Event<TransferSource>>() {
                     @Override
-                    public void onChanged(Event<TransferSourceWrapper> source) {
+                    public void onChanged(Event<TransferSource> source) {
                         Intent intent = new Intent();
                         intent.putExtra(EXTRA_SELECTED_SOURCE, source.getContent());
                         setResult(Activity.RESULT_OK, intent);

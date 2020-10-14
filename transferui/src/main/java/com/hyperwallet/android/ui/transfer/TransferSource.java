@@ -5,37 +5,37 @@ import android.os.Parcelable;
 
 import com.hyperwallet.android.model.transfermethod.TransferMethod;
 
-public class TransferSourceWrapper implements Parcelable {
+public class TransferSource implements Parcelable {
 
     private TransferMethod identification;
     private String type;
     private String token;
 
-    public TransferSourceWrapper() {
+    public TransferSource() {
     }
 
-    protected TransferSourceWrapper(Parcel in) {
+    protected TransferSource(final Parcel in) {
         identification = in.readParcelable(TransferMethod.class.getClassLoader());
         type = in.readString();
         token = in.readString();
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
+    public void writeToParcel(final Parcel dest, int flags) {
         dest.writeParcelable(identification, flags);
         dest.writeString(type);
         dest.writeString(token);
     }
 
-    public static final Creator<TransferSourceWrapper> CREATOR = new Creator<TransferSourceWrapper>() {
+    public static final Creator<TransferSource> CREATOR = new Creator<TransferSource>() {
         @Override
-        public TransferSourceWrapper createFromParcel(Parcel in) {
-            return new TransferSourceWrapper(in);
+        public TransferSource createFromParcel(Parcel in) {
+            return new TransferSource(in);
         }
 
         @Override
-        public TransferSourceWrapper[] newArray(int size) {
-            return new TransferSourceWrapper[size];
+        public TransferSource[] newArray(int size) {
+            return new TransferSource[size];
         }
     };
 
@@ -44,7 +44,7 @@ public class TransferSourceWrapper implements Parcelable {
         return token;
     }
 
-    public void setToken(String token) {
+    public void setToken(final String token) {
         this.token = token;
     }
 
@@ -52,7 +52,7 @@ public class TransferSourceWrapper implements Parcelable {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(final String type) {
         this.type = type;
     }
 
@@ -60,7 +60,7 @@ public class TransferSourceWrapper implements Parcelable {
         return identification;
     }
 
-    public void setIdentification(TransferMethod identification) {
+    public void setIdentification(final TransferMethod identification) {
         this.identification = identification;
     }
 
