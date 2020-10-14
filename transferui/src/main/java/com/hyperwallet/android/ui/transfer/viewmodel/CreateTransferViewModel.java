@@ -640,11 +640,11 @@ public class CreateTransferViewModel extends ViewModel {
         Collections.sort(prepaidCards, new Comparator<PrepaidCard>() {
             @Override
             public int compare(PrepaidCard firstPrepaid, PrepaidCard secondPrepaid) {
-                if (firstPrepaid.getPrimaryCardToken() != null || secondPrepaid.getPrimaryCardToken() == null) {
-                    return 1;
-                }
-                if (firstPrepaid.getPrimaryCardToken() == null || secondPrepaid.getPrimaryCardToken() != null) {
+                if (firstPrepaid.getPrimaryCardToken() == null && secondPrepaid.getPrimaryCardToken() != null) {
                     return -1;
+                }
+                if (firstPrepaid.getPrimaryCardToken() != null && secondPrepaid.getPrimaryCardToken() == null) {
+                    return 1;
                 }
                 return 0;
             }
