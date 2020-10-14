@@ -36,8 +36,14 @@ import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
 import com.hyperwallet.android.ui.common.repository.Event;
 import com.hyperwallet.android.util.DateUtil;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 
 /**
  * PrepaidCardReceiptDataSource mediates communication to HW API Platform particularly on
@@ -89,7 +95,8 @@ public class PrepaidCardReceiptDataSource extends PageKeyedDataSource<Date, Rece
                         mErrors.postValue(null);
 
                         if (result != null) {
-                            callback.onResult(result.getDataList(), mCalendarYearBeforeNow.getTime(), null);
+                            callback.onResult(sortPrepaidCardReceiptsByDateAndDesc(result),
+                                    mCalendarYearBeforeNow.getTime(), null);
                         }
 
                         // reset
@@ -111,6 +118,33 @@ public class PrepaidCardReceiptDataSource extends PageKeyedDataSource<Date, Rece
                         return null;
                     }
                 });
+    }
+
+    private List<Receipt> sortPrepaidCardReceiptsByDateAndDesc(@Nullable PageList<Receipt> result) {
+        final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        List<Receipt> resultDataList = result != null ? result.getDataList() : new ArrayList<Receipt>();
+        Collections.sort(resultDataList, new Comparator<Receipt>() {
+
+            @Override
+            public int compare(Receipt firstReceipt, Receipt secondReceipt) {
+                Date firstDate = null;
+                Date secondDate = null;
+                try {
+                    firstDate = format.parse(firstReceipt.getCreatedOn());
+                    secondDate = format.parse(secondReceipt.getCreatedOn());
+                } catch (ParseException pe) {
+
+                }
+
+                if (firstDate == null || secondDate == null) {
+                    return 0;
+                }
+
+                return (int) (secondDate.compareTo(firstDate));
+            }
+        });
+
+        return resultDataList;
     }
 
     /**

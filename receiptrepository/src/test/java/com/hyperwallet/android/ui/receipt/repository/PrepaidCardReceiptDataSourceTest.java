@@ -118,12 +118,12 @@ public class PrepaidCardReceiptDataSourceTest {
         // assert receipts information
         List<Receipt> receipts = mListArgumentCaptor.getValue();
         assertThat(receipts, Matchers.<Receipt>hasSize(7));
-        assertThat(receipts.get(0).getJournalId(), is("FISVL_5240220"));
-        assertThat(receipts.get(0).getType(), is(PREPAID_CARD_SALE));
-        assertThat(receipts.get(0).getCreatedOn(), is("2019-06-06T22:48:41"));
-        assertThat(receipts.get(0).getEntry(), is(DEBIT));
+        assertThat(receipts.get(0).getJournalId(), is("FISVL_5240221"));
+        assertThat(receipts.get(0).getType(), is(DEPOSIT));
+        assertThat(receipts.get(0).getCreatedOn(), is("2019-06-06T22:48:51"));
+        assertThat(receipts.get(0).getEntry(), is(CREDIT));
         assertThat(receipts.get(0).getDestinationToken(), is("test-fake-token"));
-        assertThat(receipts.get(0).getAmount(), is("10.00"));
+        assertThat(receipts.get(0).getAmount(), is("5.00"));
         assertThat(receipts.get(0).getCurrency(), is("USD"));
         assertThat(receipts.get(0).getDetails(), is(notNullValue()));
         assertThat(receipts.get(0).getDetails().getCardNumber(), is("************0673"));
