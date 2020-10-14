@@ -614,7 +614,7 @@ public class CreateTransferViewModel extends ViewModel {
     }
 
     public ProgramModel getProgramModel() {
-        Hyperwallet.getDefault().getConfiguration(new HyperwalletListener<Configuration>() {
+        getHyperwallet().getConfiguration(new HyperwalletListener<Configuration>() {
             @Override
             public void onSuccess(@Nullable Configuration result) {
                 if (result != null && !result.getProgramModel().equals("")) {
@@ -633,6 +633,11 @@ public class CreateTransferViewModel extends ViewModel {
             }
         });
         return mProgramModel;
+    }
+
+    @VisibleForTesting
+    Hyperwallet getHyperwallet() {
+        return Hyperwallet.getDefault();
     }
 
     @VisibleForTesting

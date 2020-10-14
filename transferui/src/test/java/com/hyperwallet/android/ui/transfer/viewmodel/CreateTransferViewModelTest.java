@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
@@ -26,6 +27,7 @@ import android.content.Intent;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.hyperwallet.android.Configuration;
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.exception.HyperwalletException;
 import com.hyperwallet.android.listener.HyperwalletListener;
@@ -51,7 +53,6 @@ import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodReposi
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
 import com.hyperwallet.android.ui.user.repository.UserRepository;
 import com.hyperwallet.android.ui.user.repository.UserRepositoryFactory;
-import com.hyperwallet.android.util.DateUtil;
 import com.hyperwallet.android.util.JsonUtils;
 
 import org.hamcrest.MatcherAssert;
@@ -101,11 +102,30 @@ public class CreateTransferViewModelTest {
     private PrepaidCard mPrepaidCard;
     private List<PrepaidCard> mPrepaidCardList;
 
+    @Mock
+    private Hyperwallet mHyperwallet;
+
+    private static Configuration mConfiguration;
+    private static String mJwtToken;
+
+
     @Before
     public void setup() throws HyperwalletException, JSONException {
         Hyperwallet.getInstance(new TestAuthenticationProvider());
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(mResourceManager
                 .getResourceContent("authentication_token_response.json")).mock();
+
+        try {
+            mJwtToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9."
+                    +
+                    "eyJzdWIiOiJ1c3ItdG9rZW4iLCJpYXQiOjE1Nzk3MzAzOTIsImV4cCI6MTY3OTczMDk5MiwiYXVkIjoidXNyLXRva2VuIiwiaXNzIjoicHJnLXRva2VuIiwicmVzdC11cmkiOiJodHRwOi"
+                    +
+                    "8vbG9jYWxob3N0OjgwODAvcmVzdC92My8iLCJncmFwaHFsLXVyaSI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODA4MC9ncmFwaHFsIiwicHJvZ3JhbS1tb2RlbCI6IldBTExFVF9NT0RFTCJ9."
+                    + "jpMquopCyBPT1n32OoZLu1PylxtTepuS_KrCZ-xLgDgy9JtcqMDy7zbiBDmj7AQqpGR9loaZq3YQDCjwp8Sy_Q";
+            mConfiguration = new Configuration(mJwtToken);
+        } catch (JSONException e) {
+            fail("Unable to parse json response");
+        }
 
         final String prepaidCardResponse = mResourceManager.getResourceContent("prepaid_card_response.json");
         mPrepaidCard = new PrepaidCard(prepaidCardResponse);
@@ -201,11 +221,13 @@ public class CreateTransferViewModelTest {
             @Override
             public Object answer(InvocationOnMock invocation) {
                 PrepaidCardRepository.LoadPrepaidCardCallback callback = invocation.getArgument(0);
-                callback.onPrepaidCardLoaded(mPrepaidCard);
+                callback.onPrepaidCardLoaded(new PrepaidCard());
                 return callback;
             }
         }).when(mPrepaidCardRepository).loadPrepaidCard(ArgumentMatchers.any(String.class), ArgumentMatchers.any(
                 PrepaidCardRepository.LoadPrepaidCardCallback.class));
+
+
     }
 
     @Test
@@ -1286,15 +1308,100 @@ public class CreateTransferViewModelTest {
 
     @Test
     public void testCreateTransferViewModel_prepaidCardValue() {
-        String ppcToken = "trm-ppc-token";
-        Intent intent = new Intent();
-        intent.putExtra(CreateTransferActivity.EXTRA_TRANSFER_SOURCE_TOKEN, ppcToken);
+        CreateTransferViewModel viewModel = spy(new CreateTransferViewModel.CreateTransferViewModelFactory(
+                "trm-ppc-token", mTransferRepository, mTransferMethodRepository, mUserRepository,
+                mPrepaidCardRepository
+        ).create(CreateTransferViewModel.class));
 
-        CreateTransferActivity activity = Robolectric.buildActivity(CreateTransferActivity.class, intent).setup().get();
-        CreateTransferViewModel viewModel = spy(ViewModelProviders.of(activity).get(CreateTransferViewModel.class));
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                PrepaidCardRepository.LoadPrepaidCardCallback callback = invocation.getArgument(1);
+                callback.onPrepaidCardLoaded(mPrepaidCard);
+                return callback;
+            }
+        }).when(mPrepaidCardRepository).loadPrepaidCard(ArgumentMatchers.any(String.class), ArgumentMatchers.any(
+                PrepaidCardRepository.LoadPrepaidCardCallback.class));
 
-        viewModel.loadPrepaidCard("trm-ppc-token");
-        //assertThat(viewModel.getTransferSelectedSource().getValue(), is(notNullValue()));
+
+        viewModel.init("0");
+
+        assertThat(viewModel.getTransferSelectedSource().getValue(), is(notNullValue()));
+        assertThat(viewModel.getTransferSources().getValue(), is(notNullValue()));
+        verify(mPrepaidCardRepository, times(1)).loadPrepaidCard(any(String.class),
+                any(PrepaidCardRepository.LoadPrepaidCardCallback.class));
+    }
+
+    @Test
+    public void testCreateTransferViewModel_prepaidCardValue_null() {
+        CreateTransferViewModel viewModel = spy(new CreateTransferViewModel.CreateTransferViewModelFactory(
+                "trm-ppc-token", mTransferRepository, mTransferMethodRepository, mUserRepository,
+                mPrepaidCardRepository
+        ).create(CreateTransferViewModel.class));
+
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                PrepaidCardRepository.LoadPrepaidCardCallback callback = invocation.getArgument(1);
+                callback.onPrepaidCardLoaded(null);
+                return callback;
+            }
+        }).when(mPrepaidCardRepository).loadPrepaidCard(ArgumentMatchers.any(String.class), ArgumentMatchers.any(
+                PrepaidCardRepository.LoadPrepaidCardCallback.class));
+
+
+        viewModel.init("0");
+
+        assertThat(viewModel.getTransferSelectedSource().getValue(), is(nullValue()));
+        assertThat(viewModel.getTransferSources().getValue(), is(new ArrayList<TransferSource>()));
+        verify(mPrepaidCardRepository, times(1)).loadPrepaidCard(any(String.class),
+                any(PrepaidCardRepository.LoadPrepaidCardCallback.class));
+    }
+
+    @Test
+    public void testCreateTransferViewModel_prepaidCardValue_error() {
+        CreateTransferViewModel viewModel = spy(new CreateTransferViewModel.CreateTransferViewModelFactory(
+                "trm-ppc-token", mTransferRepository, mTransferMethodRepository, mUserRepository,
+                mPrepaidCardRepository
+        ).create(CreateTransferViewModel.class));
+
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                PrepaidCardRepository.LoadPrepaidCardCallback callback = invocation.getArgument(1);
+                callback.onError(Errors.getEmptyInstance());
+                return callback;
+            }
+        }).when(mPrepaidCardRepository).loadPrepaidCard(ArgumentMatchers.any(String.class), ArgumentMatchers.any(
+                PrepaidCardRepository.LoadPrepaidCardCallback.class));
+
+        viewModel.init("0");
+
+        verify(mPrepaidCardRepository, times(1)).loadPrepaidCard(any(String.class),
+                any(PrepaidCardRepository.LoadPrepaidCardCallback.class));
+    }
+
+    @Test
+    public void testProgramModel() {
+        CreateTransferViewModel viewModel = spy(
+                new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
+                        mTransferMethodRepository, mUserRepository,
+                        mPrepaidCardRepository
+                ).create(CreateTransferViewModel.class));
+        doReturn(mHyperwallet).when(viewModel).getHyperwallet();
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                HyperwalletListener listener = (HyperwalletListener) invocation.getArgument(0);
+                listener.onSuccess(mConfiguration);
+                return listener;
+            }
+        }).when(mHyperwallet).getConfiguration(any(HyperwalletListener.class));
+
+        viewModel.getProgramModel();
+        MatcherAssert.assertThat(mConfiguration, Matchers.is(Matchers.notNullValue()));
+        MatcherAssert.assertThat(mConfiguration.getProgramModel(), Matchers.is("WALLET_MODEL"));
+        assertThat(viewModel.getProgramModel(), is(notNullValue()));
 
     }
 }
