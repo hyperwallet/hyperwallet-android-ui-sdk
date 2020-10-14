@@ -26,7 +26,7 @@
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/receipts_pager"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/receipt_view_pager_height"
+        android:layout_height="match_parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/transactions_header">
 

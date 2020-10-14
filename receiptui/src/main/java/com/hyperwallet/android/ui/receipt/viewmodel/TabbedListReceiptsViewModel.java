@@ -20,6 +20,7 @@ import android.os.Handler;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
@@ -74,7 +75,8 @@ public class TabbedListReceiptsViewModel extends ViewModel {
         }
     }
 
-    private void loadUser() {
+    @VisibleForTesting
+    void loadUser() {
         mUserRepository.loadUser(new UserRepository.LoadUserCallback() {
             @Override
             public void onUserLoaded(@NonNull User user) {
@@ -114,7 +116,7 @@ public class TabbedListReceiptsViewModel extends ViewModel {
     private void loadPrepaidCards() {
         mPrepaidCardRepository.loadPrepaidCards(new PrepaidCardRepository.LoadPrepaidCardsCallback() {
             @Override
-            public void onPrepaidCardsLoaded(@NonNull List<PrepaidCard> prepaidCardList) {
+            public void onPrepaidCardListLoaded(@NonNull List<PrepaidCard> prepaidCardList) {
                 if (!prepaidCardList.isEmpty()) {
                     TabbedListReceiptsViewModel.this.mPrepaidCards.postValue(prepaidCardList);
                 }
