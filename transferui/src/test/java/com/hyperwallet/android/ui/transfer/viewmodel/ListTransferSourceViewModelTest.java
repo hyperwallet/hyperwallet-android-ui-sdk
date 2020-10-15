@@ -12,10 +12,13 @@ import static com.hyperwallet.android.model.transfermethod.TransferMethod.Transf
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TRANSFER_METHOD_CURRENCY;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.PREPAID_CARD;
 
+import androidx.lifecycle.ViewModel;
+
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.HyperwalletAuthenticationTokenProvider;
 import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import com.hyperwallet.android.ui.transfer.TransferSource;
+import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -52,6 +55,28 @@ public class ListTransferSourceViewModelTest {
         mListTransferSourceViewModel.selectedTransferSource(transferSource);
         assertThat(mListTransferSourceViewModel.getTransferSourceSelection().getValue().getContent(),
                 is(transferSource));
+    }
+
+    @Test
+    public void testSelectTransferSourceViewModelFactory_createSelectTransferSourceViewModelUnSuccessful() {
+        class DummyViewModel extends ViewModel {
+        }
+
+        ListTransferSourceViewModel.ListTransferSourceViewModelFactory factory =
+                new ListTransferSourceViewModel.ListTransferSourceViewModelFactory();
+        mThrown.expect(IllegalArgumentException.class);
+        mThrown.expectMessage(
+                "Expecting ViewModel class: com.hyperwallet.android.ui.transfer.viewmodel"
+                        + ".ListTransferSourceViewModel");
+        factory.create(DummyViewModel.class);
+    }
+
+    @Test
+    public void testSelectTransferSourceViewModelFactory_createSelectTransferSourceViewModelSuccessful() {
+        ListTransferSourceViewModel.ListTransferSourceViewModelFactory factory =
+                new ListTransferSourceViewModel.ListTransferSourceViewModelFactory();
+        ListTransferSourceViewModel viewModel = factory.create(ListTransferSourceViewModel.class);
+        assertThat(viewModel, is(notNullValue()));
     }
 
     @Test

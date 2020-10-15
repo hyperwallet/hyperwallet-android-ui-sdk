@@ -614,7 +614,7 @@ public class CreateTransferViewModel extends ViewModel {
     }
 
     public ProgramModel getProgramModel() {
-        Hyperwallet.getDefault().getConfiguration(new HyperwalletListener<Configuration>() {
+        getHyperwallet().getConfiguration(new HyperwalletListener<Configuration>() {
             @Override
             public void onSuccess(@Nullable Configuration result) {
                 if (result != null && !result.getProgramModel().equals("")) {
@@ -636,15 +636,20 @@ public class CreateTransferViewModel extends ViewModel {
     }
 
     @VisibleForTesting
+    Hyperwallet getHyperwallet() {
+        return Hyperwallet.getDefault();
+    }
+
+    @VisibleForTesting
     void sortPrepaidCard(List<PrepaidCard> prepaidCards) {
         Collections.sort(prepaidCards, new Comparator<PrepaidCard>() {
             @Override
             public int compare(PrepaidCard firstPrepaid, PrepaidCard secondPrepaid) {
-                if (firstPrepaid.getPrimaryCardToken() != null || secondPrepaid.getPrimaryCardToken() == null) {
-                    return 1;
-                }
-                if (firstPrepaid.getPrimaryCardToken() == null || secondPrepaid.getPrimaryCardToken() != null) {
+                if (firstPrepaid.getPrimaryCardToken() == null && secondPrepaid.getPrimaryCardToken() != null) {
                     return -1;
+                }
+                if (firstPrepaid.getPrimaryCardToken() != null && secondPrepaid.getPrimaryCardToken() == null) {
+                    return 1;
                 }
                 return 0;
             }

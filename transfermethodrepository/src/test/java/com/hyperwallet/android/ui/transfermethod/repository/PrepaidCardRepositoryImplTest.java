@@ -1,6 +1,7 @@
 package com.hyperwallet.android.ui.transfermethod.repository;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.mockito.Mockito.any;
@@ -113,6 +114,27 @@ public class PrepaidCardRepositoryImplTest {
     }
 
     @Test
+    public void loadPrepaidCard_returnsEmptyPrepaidCard() {
+
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                HyperwalletListener listener = invocation.getArgument(1);
+                listener.onSuccess(null);
+                return listener;
+            }
+        }).when(mHyperwallet).getPrepaidCard(ArgumentMatchers.<String>any(), any(HyperwalletListener.class));
+
+
+        mPrepaidCardRepository.loadPrepaidCard("trm-fake-token", mLoadPrepaidCardCallback);
+
+        verify(mLoadPrepaidCardCallback).onPrepaidCardLoaded(mPrepaidCardArgumentCaptor.capture());
+        verify(mLoadPrepaidCardCallback, never()).onError(any(Errors.class));
+
+        assertThat(mPrepaidCardArgumentCaptor.getValue(), is(nullValue()));
+    }
+
+    @Test
     public void testGetPrepaidCard_error() {
         final Error returnedError = new Error("test message", "TEST_CODE");
         doAnswer(new Answer() {
@@ -187,6 +209,28 @@ public class PrepaidCardRepositoryImplTest {
         assertThat(secondaryPrepaidCard.getCardBrand(), is("VISA"));
         assertThat(secondaryPrepaidCard.getDateOfExpiry(), is("2023-06"));
         assertThat(secondaryPrepaidCard.getPrimaryCardToken(), is("trm-fake-token"));
+    }
+
+    @Test
+    public void loadPrepaidCards_returnsEmptyPrepaidCards() {
+
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                HyperwalletListener listener = invocation.getArgument(1);
+                listener.onSuccess(null);
+                return listener;
+            }
+        }).when(mHyperwallet).listPrepaidCards(ArgumentMatchers.<PrepaidCardQueryParam>any(),
+                any(HyperwalletListener.class));
+        mPrepaidCardRepository.loadPrepaidCard("trm-fake-token", mLoadPrepaidCardCallback);
+
+        mPrepaidCardRepository.loadPrepaidCards(mLoadPrepaidCardListCallback);
+        verify(mLoadPrepaidCardListCallback).onPrepaidCardListLoaded(mPrepaidCardListArgumentCaptor.capture());
+        verify(mLoadPrepaidCardListCallback, never()).onError(any(Errors.class));
+
+
+        assertThat(mPrepaidCardListArgumentCaptor.getValue().isEmpty(), is(true));
     }
 
     @Test
