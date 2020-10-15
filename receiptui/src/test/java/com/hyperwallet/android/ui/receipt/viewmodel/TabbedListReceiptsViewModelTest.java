@@ -2,6 +2,7 @@ package com.hyperwallet.android.ui.receipt.viewmodel;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 import static org.mockito.ArgumentMatchers.any;
@@ -157,7 +158,7 @@ public class TabbedListReceiptsViewModelTest {
     }
 
     @Test
-    public void testProgramModel() {
+    public void testProgramModel_success() {
         TabbedListReceiptsViewModel viewModel = spy(
                 new TabbedListReceiptsViewModel.TabbedListReceiptsViewModelFactory(mUserRepository,
                         mPrepaidCardRepository
@@ -175,6 +176,28 @@ public class TabbedListReceiptsViewModelTest {
         MatcherAssert.assertThat(mConfiguration, Matchers.is(Matchers.notNullValue()));
         MatcherAssert.assertThat(mConfiguration.getProgramModel(), Matchers.is("WALLET_MODEL"));
         assertThat(viewModel.getProgramModel(), is(notNullValue()));
+    }
+
+
+    @Test
+    public void testProgramModel_nullConfiguration() {
+        TabbedListReceiptsViewModel viewModel = spy(
+                new TabbedListReceiptsViewModel.TabbedListReceiptsViewModelFactory(mUserRepository,
+                        mPrepaidCardRepository
+                ).create(TabbedListReceiptsViewModel.class));
+        doReturn(mHyperwallet).when(viewModel).getHyperwallet();
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                HyperwalletListener listener = (HyperwalletListener) invocation.getArgument(0);
+                listener.onSuccess(null);
+                return listener;
+            }
+        }).when(mHyperwallet).getConfiguration(any(HyperwalletListener.class));
+        viewModel.getProgramModel();
+        MatcherAssert.assertThat(mConfiguration, Matchers.is(Matchers.notNullValue()));
+        MatcherAssert.assertThat(mConfiguration.getProgramModel(), Matchers.is("WALLET_MODEL"));
+        assertThat(viewModel.getProgramModel(), is(nullValue()));
     }
 
 
@@ -201,5 +224,21 @@ public class TabbedListReceiptsViewModelTest {
         assertThat(mTabbedListReceiptsViewModel.getPrepaidCards(), is(notNullValue()));
         assertThat(mTabbedListReceiptsViewModel.getPrepaidCards().getValue(), is(notNullValue()));
         assertThat(mTabbedListReceiptsViewModel.getPrepaidCards().getValue().size(), is(2));
+    }
+
+    @Test
+    public void testPrepaidcard_errorCallback() throws JSONException, HyperwalletException {
+
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                PrepaidCardRepository.LoadPrepaidCardsCallback callback = invocation.getArgument(0);
+                callback.onError(null);
+                return callback;
+            }
+        }).when(mPrepaidCardRepository).loadPrepaidCards(any(
+                PrepaidCardRepository.LoadPrepaidCardsCallback.class));
+        mTabbedListReceiptsViewModel.loadPrepaidCards();
+        assertThat(mTabbedListReceiptsViewModel.getPrepaidCards().getValue(), is(nullValue()));
     }
 }

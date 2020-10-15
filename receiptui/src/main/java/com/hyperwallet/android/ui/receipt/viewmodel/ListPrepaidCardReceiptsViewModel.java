@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModel;
 import androidx.paging.PagedList;
 
 import com.hyperwallet.android.model.Errors;
@@ -73,5 +74,15 @@ public class ListPrepaidCardReceiptsViewModel extends ListReceiptsViewModel {
     @Override
     public void setDetailNavigation(@NonNull Receipt receipt) {
         mDetailNavigation.postValue(new Event<>(receipt));
+    }
+
+    /**
+     * @see ViewModel#onCleared()
+     */
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        mPrepaidCardReceiptRepository.getErrors().removeObserver(mErrorEventObserver);
+        mPrepaidCardReceiptRepository.cleanup();
     }
 }

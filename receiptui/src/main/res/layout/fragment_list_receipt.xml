@@ -60,7 +60,7 @@
                 android:layout_marginStart="@dimen/default_info_margin"
                 android:layout_marginEnd="@dimen/default_info_margin"
                 android:gravity="center"
-                android:text="@string/mobileNoTransactions"
+                android:text="@string/mobileNoTransactionsUser"
                 android:textAppearance="@style/TextAppearance.Hyperwallet.Headline6"/>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

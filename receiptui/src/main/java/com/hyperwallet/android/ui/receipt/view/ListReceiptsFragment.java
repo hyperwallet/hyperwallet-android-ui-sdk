@@ -51,6 +51,7 @@ import com.hyperwallet.android.ui.receipt.R;
 import com.hyperwallet.android.ui.receipt.repository.PrepaidCardReceiptRepositoryImpl;
 import com.hyperwallet.android.ui.receipt.repository.UserReceiptRepositoryImpl;
 import com.hyperwallet.android.ui.receipt.viewmodel.ListReceiptsViewModel;
+import com.hyperwallet.android.ui.receipt.viewmodel.ListUserReceiptsViewModel;
 
 import java.util.Calendar;
 import java.util.Currency;
@@ -69,6 +70,7 @@ public class ListReceiptsFragment extends Fragment {
     private ListReceiptsViewModel mReceiptViewModel;
     private View mProgressBar;
     private View mEmptyTransactionPlaceholder;
+    private TextView mEmptyTransactionTextView;
     private Boolean mShouldShowNoTransactionPlaceholder = Boolean.TRUE;
 
     static ListReceiptsFragment newInstance() {
@@ -106,6 +108,7 @@ public class ListReceiptsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         mEmptyTransactionPlaceholder = view.findViewById(R.id.empty_transaction_list_view);
+        mEmptyTransactionTextView = view.findViewById(R.id.text_noTransaction);
         mListReceiptsView = view.findViewById(R.id.list_receipts);
         mProgressBar = view.findViewById(R.id.list_receipt_progress_bar);
         mListReceiptsAdapter = new ListReceiptsAdapter(mReceiptViewModel, new ListReceiptsItemDiffCallback());
@@ -172,6 +175,11 @@ public class ListReceiptsFragment extends Fragment {
                 } else {
                     mProgressBar.setVisibility(View.GONE);
                     if (mShouldShowNoTransactionPlaceholder) {
+                        if (mReceiptViewModel instanceof ListUserReceiptsViewModel) {
+                            mEmptyTransactionTextView.setText(R.string.mobileNoTransactionsUser);
+                        } else {
+                            mEmptyTransactionTextView.setText(R.string.mobileNoTransactionsPrepaidCard);
+                        }
                         mEmptyTransactionPlaceholder.setVisibility(View.VISIBLE);
                         mListReceiptsView.setVisibility(View.GONE);
                     } else {

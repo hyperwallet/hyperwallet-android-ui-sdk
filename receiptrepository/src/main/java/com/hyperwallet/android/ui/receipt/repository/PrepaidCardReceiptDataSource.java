@@ -120,31 +120,34 @@ public class PrepaidCardReceiptDataSource extends PageKeyedDataSource<Date, Rece
                 });
     }
 
-    private List<Receipt> sortPrepaidCardReceiptsByDateAndDesc(@Nullable PageList<Receipt> result) {
-        final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+    @VisibleForTesting
+    List<Receipt> sortPrepaidCardReceiptsByDateAndDesc(@Nullable PageList<Receipt> result) {
         List<Receipt> resultDataList = result != null ? result.getDataList() : new ArrayList<Receipt>();
         Collections.sort(resultDataList, new Comparator<Receipt>() {
 
             @Override
             public int compare(Receipt firstReceipt, Receipt secondReceipt) {
-                Date firstDate = null;
-                Date secondDate = null;
-                try {
-                    firstDate = format.parse(firstReceipt.getCreatedOn());
-                    secondDate = format.parse(secondReceipt.getCreatedOn());
-                } catch (ParseException pe) {
-
-                }
-
-                if (firstDate == null || secondDate == null) {
-                    return 0;
-                }
+                Date firstDate = parseDate(firstReceipt.getCreatedOn());
+                Date secondDate = parseDate(secondReceipt.getCreatedOn());
 
                 return (int) (secondDate.compareTo(firstDate));
             }
         });
 
         return resultDataList;
+    }
+
+    @VisibleForTesting
+    Date parseDate(String receipt) {
+        final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        Date date = null;
+        try {
+            date = format.parse(receipt);
+        } catch (ParseException pe) {
+            throw new IllegalArgumentException("An exception occurred when attempting to parse " +
+                    "the date " + receipt, pe);
+        }
+        return date;
     }
 
     /**
