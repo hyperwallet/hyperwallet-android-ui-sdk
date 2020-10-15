@@ -159,6 +159,33 @@
                         android:text="@string/mobileTransferMax" />
                 </LinearLayout>
             </LinearLayout>
+            <LinearLayout
+                android:id="@+id/source_header_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/grid_padding_top"
+                android:paddingBottom="@dimen/item_horizontal_padding">
+
+                <TextView
+                    android:id="@+id/source_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/grid_margin_left"
+                    android:text="@string/mobileTransferFromLabel"
+                    android:textAppearance="@style/TextAppearance.Hyperwallet.Body2" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/source_data_container"
+                android:background="@drawable/content_border_bottom"
+                android:layout_marginStart="@dimen/grid_margin_left"
+                android:layout_marginEnd="@dimen/grid_margin_right"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <include
+                android:id="@+id/transfer_source"
+                layout="@layout/widget_transfer_source" />
+            </RelativeLayout>
 
             <LinearLayout
                 android:id="@+id/destination_header_container"
