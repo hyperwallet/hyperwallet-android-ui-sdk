@@ -43,6 +43,7 @@ import com.hyperwallet.android.ui.common.view.TransferMethodUtils;
 import com.hyperwallet.android.ui.common.view.error.OnNetworkErrorCallback;
 import com.hyperwallet.android.ui.transfer.R;
 import com.hyperwallet.android.ui.transfer.TransferLocalBroadcast;
+import com.hyperwallet.android.ui.transfer.TransferSource;
 import com.hyperwallet.android.ui.transfer.repository.TransferRepositoryFactory;
 import com.hyperwallet.android.ui.transfer.viewmodel.ScheduleTransferViewModel;
 
@@ -58,6 +59,7 @@ public class ScheduleTransferActivity extends AppCompatActivity implements OnNet
     public static final String EXTRA_TRANSFER = "TRANSFER";
     public static final String EXTRA_TRANSFER_METHOD = "TRANSFER_METHOD";
     public static final String EXTRA_SHOW_FX_CHANGE_WARNING = "SHOW_FX_CHANGE_WARNING";
+    public static final String EXTRA_TRANSFER_METHOD_SOURCE = "TRANSFER_METHOD_SOURCE";
     public static final String EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT = "EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT";
 
     private ScheduleTransferViewModel mScheduleTransferViewModel;
@@ -85,14 +87,17 @@ public class ScheduleTransferActivity extends AppCompatActivity implements OnNet
 
         Parcelable transferParcel = getIntent().getParcelableExtra(EXTRA_TRANSFER);
         Parcelable transferMethodParcel = getIntent().getParcelableExtra(EXTRA_TRANSFER_METHOD);
+        Parcelable transferSourceParcel = getIntent().getParcelableExtra(EXTRA_TRANSFER_METHOD_SOURCE);
         boolean showFxRateChangeWarningParcel = getIntent().getBooleanExtra(EXTRA_SHOW_FX_CHANGE_WARNING, false);
-        if (transferParcel instanceof Transfer && transferMethodParcel instanceof TransferMethod) {
+        if (transferParcel instanceof Transfer && transferMethodParcel instanceof TransferMethod
+                && transferSourceParcel instanceof TransferSource) {
             mScheduleTransferViewModel = ViewModelProviders.of(this,
                     new ScheduleTransferViewModel.ScheduleTransferViewModelFactory(
                             TransferRepositoryFactory.getInstance().getTransferRepository()))
                     .get(ScheduleTransferViewModel.class);
             mScheduleTransferViewModel.setTransfer((Transfer) transferParcel);
             mScheduleTransferViewModel.setTransferDestination((TransferMethod) transferMethodParcel);
+            mScheduleTransferViewModel.setTransferSource((TransferSource) transferSourceParcel);
             mScheduleTransferViewModel.setShowFxChangeWarning(showFxRateChangeWarningParcel);
             registerObservers();
         } else {
