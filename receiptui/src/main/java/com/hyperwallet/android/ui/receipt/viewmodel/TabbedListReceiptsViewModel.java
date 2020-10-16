@@ -70,12 +70,12 @@ public class TabbedListReceiptsViewModel extends ViewModel {
             PrepaidCardRepository prepaidCardRepository) {
         this.mUserRepository = mUserRepository;
         this.mPrepaidCardRepository = prepaidCardRepository;
+        getProgramModel();
     }
 
     public void initialize() {
         if (!mIsInitialized) {
             mIsInitialized = true;
-            getProgramModel();
             if (!ProgramModel.isCardModel(mProgramModel)) {
                 loadUser();
             }
@@ -89,7 +89,6 @@ public class TabbedListReceiptsViewModel extends ViewModel {
             @Override
             public void onUserLoaded(@NonNull User user) {
                 TabbedListReceiptsViewModel.this.mUser.postValue(user);
-                loadPrepaidCards();
             }
 
             @Override
