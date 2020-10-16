@@ -1,0 +1,198 @@
+{
+  "data": [
+    {
+      "token": "rcp-2a6942fe-c510-11e9-ac86-022c9a557efe",
+      "journalId": "FISPC_819018006018",
+      "type": "FISPC",
+      "createdOn": "2020-05-27T22:24:06",
+      "entry": "DEBIT",
+      "sourceToken": "trm-token",
+      "amount": "6.47",
+      "currency": "USD",
+      "details":
+
+      { "cardNumber": "************2730" }
+    ,
+      "links": [
+        {
+          "params":
+
+          { "rel": "self" }
+        ,
+          "href": "https://localhost:8080/rest/v3/users/usr-token/prepaid-cards/trm-token/receipts/rcp-2a6942fe-c510-11e9-ac86-022c9a557efe"
+        }
+      ]
+    },
+    {
+      "token": "rcp-2a6942fe-c510-11e9-ac86-022c9a557efe",
+      "journalId": "FISPC_819018006018",
+      "type": "FISPC",
+      "createdOn": "2020-06-26T22:05:50",
+      "entry": "DEBIT",
+      "sourceToken": "trm-token",
+      "amount": "6.47",
+      "currency": "USD",
+      "details":
+
+      { "cardNumber": "************2730" }
+    ,
+      "links": [
+        {
+          "params":
+
+          { "rel": "self" }
+        ,
+          "href": "https://localhost:8080/rest/v3/users/usr-token/prepaid-cards/trm-token/receipts/rcp-2a6942fe-c510-11e9-ac86-022c9a557efe"
+        }
+      ]
+    },
+    {
+      "token": "rcp-2a6942fe-c510-11e9-ac86-022c9a557efe",
+      "journalId": "FISPC_819018006018",
+      "type": "FISPC",
+      "createdOn": "2020-06-26T22:06:01",
+      "entry": "DEBIT",
+      "sourceToken": "trm-token",
+      "amount": "6.47",
+      "currency": "USD",
+      "details":
+
+      { "cardNumber": "************2730" }
+    ,
+      "links": [
+        {
+          "params":
+
+          { "rel": "self" }
+        ,
+          "href": "https://localhost:8080/rest/v3/users/usr-token/prepaid-cards/trm-token/receipts/rcp-2a6942fe-c510-11e9-ac86-022c9a557efe"
+        }
+      ]
+    },
+    {
+      "token": "rcp-2a6942fe-c510-11e9-ac86-022c9a557efe",
+      "journalId": "FISPC_819018006018",
+      "type": "FISPC",
+      "createdOn": "2020-07-11T22:19:22",
+      "entry": "DEBIT",
+      "sourceToken": "trm-token",
+      "amount": "6.47",
+      "currency": "USD",
+      "details":
+
+      { "cardNumber": "************2730" }
+    ,
+      "links": [
+        {
+          "params":
+
+          { "rel": "self" }
+        ,
+          "href": "https://localhost:8080/rest/v3/users/usr-token/prepaid-cards/trm-token/receipts/rcp-2a6942fe-c510-11e9-ac86-022c9a557efe"
+        }
+      ]
+    },
+    {
+      "token": "rcp-2a6942fe-c510-11e9-ac86-022c9a557efe",
+      "journalId": "FISPC_819018006018",
+      "type": "FISPC",
+      "createdOn": "2020-07-12T22:17:59",
+      "entry": "DEBIT",
+      "sourceToken": "trm-token",
+      "amount": "6.47",
+      "currency": "USD",
+      "details":
+
+      { "cardNumber": "************2730" }
+    ,
+      "links": [
+        {
+          "params":
+
+          { "rel": "self" }
+        ,
+          "href": "https://localhost:8080/rest/v3/users/usr-token/prepaid-cards/trm-token/receipts/rcp-2a6942fe-c510-11e9-ac86-022c9a557efe"
+        }
+      ]
+    },
+    {
+      "token": "rcp-2a6942fe-c510-11e9-ac86-022c9a557efe",
+      "journalId": "FISPC_819018006018",
+      "type": "FISPC",
+      "createdOn": "2020-07-12T22:18:09",
+      "entry": "DEBIT",
+      "sourceToken": "trm-token",
+      "amount": "6.47",
+      "currency": "USD",
+      "details":
+
+      { "cardNumber": "************2730" }
+    ,
+      "links": [
+        {
+          "params":
+
+          { "rel": "self" }
+        ,
+          "href": "https://localhost:8080/rest/v3/users/usr-token/prepaid-cards/trm-token/receipts/rcp-2a6942fe-c510-11e9-ac86-022c9a557efe"
+        }
+      ]
+    },
+    {
+      "token": "rcp-2a6942fe-c510-11e9-ac86-022c9a557efe",
+      "journalId": "FISPC_819018006018",
+      "type": "FISPC",
+      "createdOn": "2020-07-22T22:18:26",
+      "entry": "DEBIT",
+      "sourceToken": "trm-token",
+      "amount": "6.47",
+      "currency": "USD",
+      "details":
+
+      { "cardNumber": "************2730" }
+    ,
+      "links": [
+        {
+          "params":
+
+          { "rel": "self" }
+        ,
+          "href": "https://localhost:8080/rest/v3/users/usr-token/prepaid-cards/trm-token/receipts/rcp-2a6942fe-c510-11e9-ac86-022c9a557efe"
+        }
+      ]
+    },
+    {
+      "journalId": "FISVL_6349512",
+      "type": "DEPOSIT",
+      "createdOn": "2020-08-27T09:19:24",
+      "entry": "CREDIT",
+      "destinationToken": "trm-token",
+      "amount": "998.15",
+      "currency": "CAD",
+      "details":
+
+      { "cardNumber": "************2730" }
+    },
+    {
+      "journalId": "FISA_6349537",
+      "type": "ADJUSTMENT",
+      "createdOn": "2020-08-26T09:52:31",
+      "entry": "DEBIT",
+      "sourceToken": "trm-token",
+      "amount": "20.99",
+      "currency": "USD",
+      "details":
+
+      { "cardNumber": "************2730" }
+    }
+  ],
+  "links": [
+    {
+      "params":
+
+      { "rel": "self" }
+    ,
+      "href": "https://localhost:8080/rest/v3/users/usr-token/prepaid-cards/trm-token/receipts/rcp-2a6942fe-c510-11e9-ac86-022c9a557efe"
+    }
+  ]
+}

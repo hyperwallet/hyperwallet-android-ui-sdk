@@ -100,7 +100,7 @@ public class TabbedListReceiptsTest {
     @Test
     public void testPrimaryPrepaidCardActive() {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("prepaid_card_receipt_credit_response.json")).mock();
+                .getResourceContent("prepaidcard/prepaidcard_balance_cad_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();
 
         // run test
@@ -125,6 +125,117 @@ public class TabbedListReceiptsTest {
         onView(withId(R.id.list_receipts)).check(new RecyclerViewCountAssertion(1));
 
     }
+
+    /*Given user has Available funds and Primary PPC and Available funds has no transactions
+    When user selects the "Transaction" tab
+    Then user can see the tabs for Available funds and Place holder text
+    */
+    @Test
+    public void testListReceiptFragment_verifyAvailbleFundsEmptyReceipt() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("prepaidcard/prepaidcard_balance_cad_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();
+
+        // run test
+        mActivityTestRule.launchActivity(null);
+
+        // assert
+        onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
+                .check(matches(withText(R.string.title_activity_receipt_list)));
+        onView(withId(R.id.list_receipts)).check(matches(isDisplayed()));
+
+        // Tab navigation need to implement to validate transaction screen
+    }
+
+    /*
+ Given user has Available funds and Primary PPC and PPC has no transactions
+ When user selects the "Transaction" tab
+ Then user can see the tabs for PPC and Place holder text
+ */
+    @Test
+    public void testListReceiptFragment_verifyPrimaryPPCEmptyReceipt() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("prepaidcard/prepaidcard_balance_cad_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();
+
+        // run test
+        mActivityTestRule.launchActivity(null);
+
+        // assert
+        onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
+                .check(matches(withText(R.string.title_activity_receipt_list)));
+        onView(withId(R.id.list_receipts)).check(matches(isDisplayed()));
+
+        // Tab navigation need to implement to validate transaction screen
+    }
+
+    /*
+Given user has Available funds and Primary PPC and Available funds has receipts
+When user selects the "Transaction" tab
+Then user can see the tabs for Available funds and receipts
+*/
+    @Test
+    public void testListReceiptFragment_verifyAvailbleFundsReceipt() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("prepaidcard/prepaidcard_balance_cad_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();
+
+        // run test
+        mActivityTestRule.launchActivity(null);
+
+        // assert
+        onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
+                .check(matches(withText(R.string.title_activity_receipt_list)));
+        onView(withId(R.id.list_receipts)).check(matches(isDisplayed()));
+
+        // Tab navigation need to implement to validate transaction screen
+    }
+
+   /*
+Given user has Available funds and Primary PPC
+When user selects the "Transaction" tab
+Then user can see the tabs for Primary PPC and receipts
+*/
+    @Test
+    public void testListReceiptFragment_verifyPrimaryPPCReceipt() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("prepaidcard/prepaidcard_balance_cad_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();
+
+        // run test
+        mActivityTestRule.launchActivity(null);
+
+        // assert
+        onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
+                .check(matches(withText(R.string.title_activity_receipt_list)));
+        onView(withId(R.id.list_receipts)).check(matches(isDisplayed()));
+
+        // Tab navigation need to implement to validate transaction screen
+    }
+
+
+    /*
+     Given user has Available funds and Secondary PPC
+     When user selects the "Transaction" tab
+     Then user can see the tabs for Secondary PPC
+     */
+    @Test
+    public void testListReceiptFragment_verifySecondaryPPCTabs() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("prepaidcard/prepaidcard_balance_cad_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();
+
+        // run test
+        mActivityTestRule.launchActivity(null);
+
+        // assert
+        onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
+                .check(matches(withText(R.string.title_activity_receipt_list)));
+        onView(withId(R.id.list_receipts)).check(matches(isDisplayed()));
+
+        // Tab navigation need to implement to validate transaction screen
+    }
+
 
     private void setLocale(Locale locale) {
         Context context = ApplicationProvider.getApplicationContext();
