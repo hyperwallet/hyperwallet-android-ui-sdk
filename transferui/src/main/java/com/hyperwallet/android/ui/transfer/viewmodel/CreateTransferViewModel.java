@@ -25,7 +25,6 @@ import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.ERROR_S
 
 import android.os.Handler;
 import android.text.TextUtils;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -50,7 +49,6 @@ import com.hyperwallet.android.ui.common.view.ProgramModel;
 import com.hyperwallet.android.ui.transfer.R;
 import com.hyperwallet.android.ui.transfer.TransferSource;
 import com.hyperwallet.android.ui.transfer.repository.TransferRepository;
-import com.hyperwallet.android.ui.transfer.view.CreateTransferActivity;
 import com.hyperwallet.android.ui.transfermethod.repository.PrepaidCardRepository;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepository;
 import com.hyperwallet.android.ui.user.repository.UserRepository;
