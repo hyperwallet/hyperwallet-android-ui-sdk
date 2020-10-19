@@ -20,6 +20,7 @@ import android.os.Handler;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
@@ -55,6 +56,11 @@ public class TabbedListReceiptsViewModel extends ViewModel {
         return mPrepaidCards;
     }
 
+    @VisibleForTesting
+    Hyperwallet getHyperwallet() {
+        return Hyperwallet.getDefault();
+    }
+
     public MutableLiveData<Event<Errors>> getErrors() {
         return mErrors;
     }
@@ -64,22 +70,25 @@ public class TabbedListReceiptsViewModel extends ViewModel {
             PrepaidCardRepository prepaidCardRepository) {
         this.mUserRepository = mUserRepository;
         this.mPrepaidCardRepository = prepaidCardRepository;
+        getProgramModel();
     }
 
     public void initialize() {
         if (!mIsInitialized) {
             mIsInitialized = true;
-            getProgramModel();
-            loadUser();
+            if (!ProgramModel.isCardModel(mProgramModel)) {
+                loadUser();
+            }
+            loadPrepaidCards();
         }
     }
 
-    private void loadUser() {
+    @VisibleForTesting
+    void loadUser() {
         mUserRepository.loadUser(new UserRepository.LoadUserCallback() {
             @Override
             public void onUserLoaded(@NonNull User user) {
                 TabbedListReceiptsViewModel.this.mUser.postValue(user);
-                loadPrepaidCards();
             }
 
             @Override
@@ -89,8 +98,8 @@ public class TabbedListReceiptsViewModel extends ViewModel {
         });
     }
 
-    private ProgramModel getProgramModel() {
-        Hyperwallet.getDefault().getConfiguration(new HyperwalletListener<Configuration>() {
+    ProgramModel getProgramModel() {
+        getHyperwallet().getConfiguration(new HyperwalletListener<Configuration>() {
             @Override
             public void onSuccess(@Nullable Configuration result) {
                 if (result != null && !result.getProgramModel().isEmpty()) {
@@ -111,10 +120,11 @@ public class TabbedListReceiptsViewModel extends ViewModel {
         return mProgramModel;
     }
 
-    private void loadPrepaidCards() {
+    @VisibleForTesting
+    void loadPrepaidCards() {
         mPrepaidCardRepository.loadPrepaidCards(new PrepaidCardRepository.LoadPrepaidCardsCallback() {
             @Override
-            public void onPrepaidCardsLoaded(@NonNull List<PrepaidCard> prepaidCardList) {
+            public void onPrepaidCardListLoaded(@NonNull List<PrepaidCard> prepaidCardList) {
                 if (!prepaidCardList.isEmpty()) {
                     TabbedListReceiptsViewModel.this.mPrepaidCards.postValue(prepaidCardList);
                 }

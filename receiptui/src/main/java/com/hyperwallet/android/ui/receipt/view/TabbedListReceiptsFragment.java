@@ -102,7 +102,9 @@ public class TabbedListReceiptsFragment extends Fragment {
         mListReceiptsViewPagerAdapter = new ListReceiptsViewPagerAdapter(getFragmentManager(),
                 FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, new ArrayList<Parcelable>(),
                 getResources());
-        mListReceiptsViewPagerAdapter.addInitialItem(null);
+        if (ProgramModel.isWalletModel(mTabbedListReceiptsViewModel.mProgramModel)) {
+            mListReceiptsViewPagerAdapter.addInitialItem(null);
+        }
         mViewPager.setAdapter(mListReceiptsViewPagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
         mTabbedListReceiptsViewModel.initialize();

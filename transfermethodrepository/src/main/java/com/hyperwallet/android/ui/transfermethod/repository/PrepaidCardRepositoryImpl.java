@@ -32,6 +32,9 @@ import com.hyperwallet.android.listener.HyperwalletListener;
 import com.hyperwallet.android.model.paging.PageList;
 import com.hyperwallet.android.model.transfermethod.PrepaidCard;
 import com.hyperwallet.android.model.transfermethod.PrepaidCardQueryParam;
+import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
+
+import java.util.ArrayList;
 
 public class PrepaidCardRepositoryImpl implements PrepaidCardRepository {
 
@@ -45,16 +48,21 @@ public class PrepaidCardRepositoryImpl implements PrepaidCardRepository {
     @Override
     public void loadPrepaidCards(@NonNull final LoadPrepaidCardsCallback callback) {
 
-        PrepaidCardQueryParam queryParam = new PrepaidCardQueryParam.Builder().status(ACTIVATED).build();
-
+        PrepaidCardQueryParam queryParam = new PrepaidCardQueryParam.Builder()
+                .status(ACTIVATED)
+                .sortByCreatedOnAsc()
+                .build();
+        EspressoIdlingResource.increment();
         getHyperwallet().listPrepaidCards(queryParam, new HyperwalletListener<PageList<PrepaidCard>>() {
             @Override
             public void onSuccess(@Nullable PageList<PrepaidCard> result) {
-                callback.onPrepaidCardsLoaded(result != null ? result.getDataList() : null);
+                EspressoIdlingResource.decrement();
+                callback.onPrepaidCardListLoaded(result != null ? result.getDataList() : new ArrayList<PrepaidCard>());
             }
 
             @Override
             public void onFailure(HyperwalletException exception) {
+                EspressoIdlingResource.decrement();
                 callback.onError(exception.getErrors());
             }
 
@@ -64,4 +72,27 @@ public class PrepaidCardRepositoryImpl implements PrepaidCardRepository {
             }
         });
     }
+
+    @Override
+    public void loadPrepaidCard(@NonNull final String token, final LoadPrepaidCardCallback callback) {
+
+        getHyperwallet().getPrepaidCard(token,
+                new HyperwalletListener<PrepaidCard>() {
+                    @Override
+                    public void onSuccess(@Nullable PrepaidCard result) {
+                        callback.onPrepaidCardLoaded(result);
+                    }
+
+                    @Override
+                    public void onFailure(HyperwalletException exception) {
+                        callback.onError(exception.getErrors());
+                    }
+
+                    @Override
+                    public Handler getHandler() {
+                        return null;
+                    }
+                });
+    }
+
 }
