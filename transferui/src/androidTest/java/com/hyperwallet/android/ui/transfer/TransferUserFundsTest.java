@@ -39,7 +39,10 @@ import android.content.Intent;
 import android.content.IntentFilter;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.test.espresso.Espresso;
 import androidx.test.espresso.IdlingRegistry;
+import androidx.test.espresso.action.ViewActions;
+import androidx.test.espresso.assertion.ViewAssertions;
 import androidx.test.espresso.intent.rule.IntentsTestRule;
 import androidx.test.espresso.matcher.RootMatchers;
 import androidx.test.espresso.matcher.ViewMatchers;
@@ -87,6 +90,8 @@ public class TransferUserFundsTest {
 
     @Before
     public void setup() {
+//        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+//                .getResourceContent("authentication_token_wallet_model_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("authentication_token_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
@@ -110,6 +115,10 @@ public class TransferUserFundsTest {
 
         mActivityTestRule.launchActivity(null);
 
+        // Transfer From
+        verifyTransferFromAvailbleFunds();
+
+        // Transfer To
         onView(withId(R.id.add_transfer_destination)).check(matches(not(isDisplayed())));
         onView(withId(R.id.transfer_destination)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_icon)).check(matches(withText(R.string.bank_account_font_icon)));
@@ -140,6 +149,10 @@ public class TransferUserFundsTest {
 
         mActivityTestRule.launchActivity(null);
 
+        // Transfer From
+        verifyTransferFromAvailbleFunds();
+
+        // Transfer To
         onView(withId(R.id.add_transfer_destination)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.add_transfer_destination_icon)).check(matches(withText(R.string.add_text)));
         onView(withId(R.id.add_transfer_destination_title)).check(matches(withText(R.string.mobileAddTransferMethod)));
@@ -163,6 +176,10 @@ public class TransferUserFundsTest {
         Instrumentation.ActivityResult result = new Instrumentation.ActivityResult(Activity.RESULT_OK, null);
         intending(hasAction(ACTION_SELECT_TRANSFER_METHOD)).respondWith(result);
 
+        // Transfer From
+        verifyTransferFromAvailbleFunds();
+
+        // Transfer To
         onView(withId(R.id.add_transfer_destination)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.add_transfer_destination_icon)).check(matches(withText(R.string.add_text)));
         onView(withId(R.id.add_transfer_destination_title)).check(matches(withText(R.string.mobileAddTransferMethod)));
@@ -225,6 +242,11 @@ public class TransferUserFundsTest {
 
         onView(withId(R.id.transfer_funds_header)).check(
                 matches(withText(R.string.mobileTransferFundsHeader)));
+
+        // Transfer From
+        verifyTransferFromAvailbleFunds();
+
+        // Transfer To
         onView(withId(R.id.add_transfer_destination)).check(matches(not(isDisplayed())));
         onView(withId(R.id.transfer_destination)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_icon)).check(matches(withText(R.string.bank_account_font_icon)));
@@ -315,6 +337,11 @@ public class TransferUserFundsTest {
 
         onView(withId(R.id.transfer_funds_header)).check(
                 matches(withText(R.string.mobileTransferFundsHeader)));
+
+        // Transfer From
+        verifyTransferFromAvailbleFunds();
+
+        // Transfer To
         onView(withId(R.id.add_transfer_destination)).check(matches(not(isDisplayed())));
         onView(withId(R.id.transfer_destination)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_icon)).check(matches(withText(R.string.bank_account_font_icon)));
@@ -979,6 +1006,122 @@ public class TransferUserFundsTest {
 
     }
 
+    @Test
+    public void testTransferFragment_verifyTransferFromPrepaidCard() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_list_with_ppc_response")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("create_transfer_quote_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("ppc/prepaid_card_response.json")).mock();
+
+        mActivityTestRule.launchActivity(null);
+
+        // Transfer From
+        verifyTransferFromAvailbleFunds();
+        onView(ViewMatchers.withId(R.id.source_data_container))
+                        .perform(ViewActions.click());
+        // Select PPC from the Select From list
+        onView(ViewMatchers.withText(R.string.prepaid_card))
+                        .perform(ViewActions.click());
+
+
+        // Verify Transfer From is Available Funds
+        // Select PPC from the Select From list
+        verifyTransferFromPPC();
+        onView(ViewMatchers.withText(R.id.transfer_source_description_1)).check(matches(withText("?")));
+    }
+
+    @Test
+    public void testTransferFragment_verifyTransferFromPrepaidCardConfirmation() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_list_with_ppc_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("prepaid_card_response.json")).mock();
+
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("create_transfer_quote_all_funds_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("create_transfer_all_funds_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("schedule_transfer_success_response.json")).mock();
+
+        mActivityTestRule.launchActivity(null);
+
+        final CountDownLatch gate = new CountDownLatch(1);
+        final BroadcastReceiver br = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                gate.countDown();
+                StatusTransition transition = intent.getParcelableExtra(
+                        "hyperwallet-local-broadcast-payload");
+                assertThat("Token is incorrect", transition.getToken(), is("sts-token"));
+                assertThat("To Status is incorrect", transition.getToStatus(), is("SCHEDULED"));
+                assertThat("From Status is incorrect", transition.getFromStatus(), is("QUOTED"));
+                assertThat("Transition is incorrect", transition.getTransition(), is("SCHEDULED"));
+                assertThat("Created on is incorrect", transition.getCreatedOn(), is("2019-08-12T17:39:35"));
+            }
+        };
+
+        LocalBroadcastManager.getInstance(mActivityTestRule.getActivity().getApplicationContext())
+                .registerReceiver(br, new IntentFilter("ACTION_HYPERWALLET_TRANSFER_SCHEDULED"));
+
+        // Transfer From
+        verifyTransferFromAvailbleFunds();
+        onView(ViewMatchers.withId(R.id.source_data_container))
+                .perform(ViewActions.click());
+        // Select PPC from the Select From list
+        onView(ViewMatchers.withText(R.string.prepaid_card))
+                .perform(ViewActions.click());
+
+        // Verify Transfer From is Available Funds
+        // Select PPC from the Select From list
+        verifyTransferFromPPC();
+        onView(ViewMatchers.withText(R.id.transfer_source_description_1)).check(matches(withText("?")));
+
+        onView(withId(R.id.transfer_all_funds)).perform(nestedScrollTo(), click());
+        onView(withId(R.id.transfer_amount)).check(matches(withText("288.05")));
+
+        // tab Transfer button
+        onView(withId(R.id.transfer_action_button)).perform(nestedScrollTo(), click());
+
+        // Assert Transfer From
+        verifyTransferFromPPC();
+        onView(ViewMatchers.withText(R.id.transfer_source_description_1)).check(matches(withText("?")));
+
+        // Assert Transfer To
+        onView(withId(R.id.add_transfer_destination)).check(matches(not(isDisplayed())));
+        onView(withId(R.id.transfer_destination)).perform(nestedScrollTo()).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_destination_icon)).check(matches(withText(R.string.bank_account_font_icon)));
+        onView(withId(R.id.transfer_destination_title)).check(matches(withText(R.string.bank_account)));
+        onView(withId(R.id.transfer_destination_description_1)).check(matches(withText("United States")));
+        onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("ending in 0616")));
+
+        // tab Confirm button
+        onView(withId(R.id.transfer_confirm_button)).perform(nestedScrollTo(), click());
+
+        ///gate.await(5, SECONDS);
+        LocalBroadcastManager.getInstance(mActivityTestRule.getActivity().getApplicationContext()).unregisterReceiver(
+                br);
+        assertThat("Action is not broadcasted", gate.getCount(), is(0L));
+        // Assert Confirmation Dialog
+        verifyTransferConfirmationDialog("Bank Account");
+
+    }
+
+    @Test
+    public void testTransferFragment_verifyWhenNoSourceError() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody(sResourceManager
+                .getResourceContent("transfer_method_list_with_ppc_response")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody(sResourceManager
+                .getResourceContent("create_transfer_quote_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody(sResourceManager
+                .getResourceContent("ppc/prepaid_card_response.json")).mock();
+
+        mActivityTestRule.launchActivity(null);
+
+    }
+
     private void verifyTransferConfirmationDialog(String transferType) {
         // Your transfer is being processed
         onView(withText(R.string.mobileTransferSuccessMsg))
@@ -1001,5 +1144,26 @@ public class TransferUserFundsTest {
                 .getString(R.string.mobileAvailableBalance), amount , currency);
         return availableFund;
     }
+
+    private void verifyTransferFromAvailbleFunds() {
+        onView(withId(R.id.source_header)).check(matches(isDisplayed()));
+        onView(withId(R.id.source_header)).check(matches(withText(R.string.mobileTransferFromLabel)));
+
+        onView(withId(R.id.transfer_source)).perform(nestedScrollTo())
+                .check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_source_icon)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_source_title)).check(matches(withText(R.string.availableFunds)));
+    }
+
+    private void verifyTransferFromPPC() {
+        onView(withId(R.id.source_header)).check(matches(isDisplayed()));
+        onView(withId(R.id.source_header)).check(matches(withText(R.string.mobileTransferFromLabel)));
+
+        onView(withId(R.id.transfer_source)).perform(nestedScrollTo())
+                .check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_source_icon)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_source_title)).check(matches(withText(R.string.prepaid_card)));
+    }
+
 
 }

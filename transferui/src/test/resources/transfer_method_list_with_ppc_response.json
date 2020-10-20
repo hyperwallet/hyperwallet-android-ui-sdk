@@ -1,0 +1,105 @@
+{
+  "count": 3,
+  "offset": 0,
+  "limit": 5,
+  "data": [
+    {
+      "token": "test-fake-token",
+      "type": "BANK_ACCOUNT",
+      "status": "ACTIVATED",
+      "verificationStatus": "NOT_REQUIRED",
+      "createdOn": "2019-02-21T12:12:00",
+      "transferMethodCountry": "US",
+      "transferMethodCurrency": "USD",
+      "bankId": "021000021",
+      "branchId": "021000021",
+      "bankAccountId": "5288606281332",
+      "bankAccountRelationship": "SELF",
+      "bankAccountPurpose": "SAVINGS",
+      "profileType": "INDIVIDUAL",
+      "firstName": "Kevin",
+      "lastName": "Wilcox",
+      "dateOfBirth": "1999-01-01",
+      "gender": "MALE",
+      "phoneNumber": "6041231234",
+      "governmentId": "111222333",
+      "addressLine1": "950 Granville St",
+      "city": "San Jose",
+      "stateProvince": "California",
+      "country": "CA",
+      "postalCode": "H0H0H0",
+      "links": [
+        {
+          "params": {
+            "rel": "self"
+          },
+          "href": "https://localhost/rest/v3/users/test-user-token/bank-accounts/test-fake-token"
+        }
+      ]
+    },
+    {
+      "token": "trm-token",
+      "type": "PREPAID_CARD",
+      "status": "ACTIVATED",
+      "verificationStatus": "NOT_REQUIRED",
+      "createdOn": "2019-02-26T22:08:18",
+      "transferMethodCountry": "CA",
+      "transferMethodCurrency": "USD",
+      "cardType": "PERSONALIZED",
+      "cardPackage": "L1",
+      "cardNumber": "************9285",
+      "cardBrand": "VISA",
+      "dateOfExpiry": "2023-02",
+      "links": [
+        {
+          "params": {
+            "rel": "self"
+          },
+          "href": "https://localhost/rest/v3/users/test-user-token/bank-accounts/test-fake-token"
+        }
+      ]
+    },
+    {
+      "token": "trm-token2",
+      "type": "PREPAID_CARD",
+      "status": "ACTIVATED",
+      "verificationStatus": "NOT_REQUIRED",
+      "createdOn": "2019-02-26T22:08:18",
+      "transferMethodCountry": "CA",
+      "transferMethodCurrency": "USD",
+      "cardType": "PERSONALIZED",
+      "cardPackage": "L1",
+      "cardNumber": "************8884",
+      "cardBrand": "VISA",
+      "dateOfExpiry": "2023-02",
+      "links": [
+        {
+          "params": {
+            "rel": "self"
+          },
+          "href": "https://localhost/rest/v3/users/test-user-token/bank-accounts/test-fake-token"
+        }
+      ]
+    }
+  ],
+  "links": [
+    {
+      "params": {
+        "rel": "self"
+      },
+      "href": "https://localhost/rest/v3/users/test-user-token/bank-accounts?offset=0&limit=10"
+    },
+    {
+      "params": {
+        "rel": "next"
+      },
+      "href": "https://localhost/rest/v3/users/test-user-token/bank-accounts?offset=10&limit=10"
+    },
+    {
+      "params": {
+        "rel": "last"
+      },
+      "href": "https://localhost/rest/v3/users/test-user-token/bank-accounts?offset=14&limit=10"
+    }
+  ]
+}
