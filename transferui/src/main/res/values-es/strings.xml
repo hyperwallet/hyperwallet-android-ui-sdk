@@ -63,9 +63,4 @@
     <string name="doneButtonLabel">Hecho</string>
     <string name="mobileTransferMethodsHeader">Métodos de transferencia</string>
 
-    <string name="mobileTransferFromLabel">TRANSFER FROM</string>
-    <string name="transferSource">Source</string>
-    <string name="mobileTransferFromHeader">Transfer from</string>
-    <string name="availableFunds">Available Funds</string>
-    <string name="noTransferFromSourceAvailableError">No Transfer from source available</string>
 </resources>
