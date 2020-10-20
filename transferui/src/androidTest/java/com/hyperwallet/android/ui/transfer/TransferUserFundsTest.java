@@ -3,6 +3,7 @@ package com.hyperwallet.android.ui.transfer;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.replaceText;
+import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.intent.Intents.intended;
@@ -74,6 +75,8 @@ import okhttp3.mockwebserver.MockResponse;
 
 @RunWith(AndroidJUnit4.class)
 public class TransferUserFundsTest {
+    private final String MASK = "\u0020\u2022\u2022\u2022\u2022\u0020";
+    private final String VISA = "Visa";
 
     @ClassRule
     public static HyperwalletExternalResourceManager sResourceManager = new HyperwalletExternalResourceManager();
@@ -90,10 +93,10 @@ public class TransferUserFundsTest {
 
     @Before
     public void setup() {
-//        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-//                .getResourceContent("authentication_token_wallet_model_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("authentication_token_response.json")).mock();
+                .getResourceContent("authentication_token_wallet_model_response.json")).mock();
+//        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+//                .getResourceContent("authentication_token_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("user_response.json")).mock();
         IdlingRegistry.getInstance().register(EspressoIdlingResource.getIdlingResource());
@@ -1025,11 +1028,65 @@ public class TransferUserFundsTest {
         onView(ViewMatchers.withText(R.string.prepaid_card))
                         .perform(ViewActions.click());
 
-
         // Verify Transfer From is Available Funds
         // Select PPC from the Select From list
         verifyTransferFromPPC();
-        onView(ViewMatchers.withText(R.id.transfer_source_description_1)).check(matches(withText("?")));
+        String ppcInfo = VISA + MASK + "9285";
+        Espresso.onView(ViewMatchers.withId(R.id.transfer_destination_description_1))
+                .check(ViewAssertions.matches(ViewMatchers.withText(ppcInfo)));
+    }
+
+    @Test
+    public void testTransferFragment_verifyTransferToPrepaidCard() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_list_with_ppc_response")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("create_transfer_quote_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("ppc/prepaid_card_response.json")).mock();
+
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("create_transfer_quote_all_funds_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("create_transfer_all_funds_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("schedule_transfer_success_response.json")).mock();
+
+        mActivityTestRule.launchActivity(null);
+
+        // Select Transfer To as Prepaid Card
+        Espresso.onView(ViewMatchers.withId(R.id.destination_data_container))
+                .perform(ViewActions.click());
+        Espresso.onView(ViewMatchers.withText(R.string.prepaid_card))
+                .perform(ViewActions.click());
+        String ppcInfo = VISA + MASK + "9285";
+        Espresso.onView(ViewMatchers.withId(R.id.transfer_destination_description_1))
+                .check(ViewAssertions.matches(ViewMatchers.withText(ppcInfo)));
+
+        // Assert Transfer From will show Available funds
+        onView(withId(R.id.transfer_source_title)).check(matches(withText(R.string.availableFunds)));
+
+        // Select All funds
+        onView(withId(R.id.transfer_all_funds)).perform(nestedScrollTo(), click());
+        onView(withId(R.id.transfer_amount)).check(matches(withText("288.05")));
+
+        // Tab Transfer button
+        onView(withId(R.id.transfer_action_button)).perform(nestedScrollTo(), click());
+
+        // Assere Transfer From is Available funds
+        onView(withId(R.id.source_header)).check(matches(isDisplayed()));
+        onView(withId(R.id.source_header)).check(matches(withText(R.string.mobileTransferFromLabel)));
+        onView(withId(R.id.transfer_source)).perform(nestedScrollTo())
+                .check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_source_icon)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_source_title)).check(matches(withText(R.string.availableFunds)));
+
+        // Assert Transfer To is Prepaid Card
+        onView(withId(R.id.add_transfer_destination)).check(matches(not(isDisplayed())));
+        onView(withId(R.id.transfer_destination)).perform(nestedScrollTo()).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_destination_icon)).check(matches(withText(R.string.prepaid_card_font_icon)));
+        onView(withId(R.id.transfer_destination_title)).check(matches(withText(R.string.prepaid_card)));
+        onView(withId(R.id.transfer_destination_description_1)).check(matches(withText(ppcInfo)));
     }
 
     @Test
@@ -1087,7 +1144,8 @@ public class TransferUserFundsTest {
 
         // Assert Transfer From
         verifyTransferFromPPC();
-        onView(ViewMatchers.withText(R.id.transfer_source_description_1)).check(matches(withText("?")));
+        String ppcInfo = VISA + MASK + "9285";
+        onView(ViewMatchers.withId(R.id.transfer_source_description_1)).check(matches(withText(ppcInfo)));
 
         // Assert Transfer To
         onView(withId(R.id.add_transfer_destination)).check(matches(not(isDisplayed())));
@@ -1110,7 +1168,7 @@ public class TransferUserFundsTest {
     }
 
     @Test
-    public void testTransferFragment_verifyWhenNoSourceError() {
+    public void testTransferFragment_verifyWhenNoSourceErrorDialog() {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_with_ppc_response")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody(sResourceManager
@@ -1120,6 +1178,7 @@ public class TransferUserFundsTest {
 
         mActivityTestRule.launchActivity(null);
 
+        verifyTransferNoSourceDialog();
     }
 
     private void verifyTransferConfirmationDialog(String transferType) {
@@ -1130,6 +1189,21 @@ public class TransferUserFundsTest {
         // The funds are on the way to your Bank Account
         String detail = String.format(InstrumentationRegistry.getInstrumentation().getTargetContext()
                 .getString(R.string.mobileTransferSuccessDetails),transferType);
+        onView(withText(detail))
+                .inRoot(RootMatchers.isDialog());
+        // Done button
+        onView(ViewMatchers.withId(android.R.id.button1))
+                .check(matches(withText(R.string.doneButtonLabel)));
+        onView(ViewMatchers.withId(android.R.id.button1)).perform(click());
+    }
+
+    private void verifyTransferNoSourceDialog() {
+        // Your transfer is being processed
+//        onView(withText(R.string.mobileTransferSuccessMsg))
+//                .inRoot(RootMatchers.isDialog())
+//                .check(matches(ViewMatchers.isDisplayed()));
+        // The funds are on the way to your Bank Account
+        String detail = InstrumentationRegistry.getInstrumentation().getTargetContext().getString(R.string.noTransferFromSourceAvailableError);
         onView(withText(detail))
                 .inRoot(RootMatchers.isDialog());
         // Done button
