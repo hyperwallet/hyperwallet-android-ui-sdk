@@ -163,6 +163,4 @@
     <string name="prepaid_card_sms_fee">Tarifa por SMS</string>
     <string name="prepaid_card_declined_authorization_fee">Tarifa de autorización denegada</string>
     <string name="fispc">Compra</string>
-    <string name="visa">Visa</string>
-    <string name="mastercard">Mastercard</string>
 </resources>
