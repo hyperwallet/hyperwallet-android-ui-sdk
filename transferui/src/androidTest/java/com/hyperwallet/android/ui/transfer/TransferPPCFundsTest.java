@@ -104,8 +104,10 @@ public class TransferPPCFundsTest {
 
     @Before
     public void setup() {
+//        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+//                .getResourceContent("authentication_token_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("authentication_token_response.json")).mock();
+                .getResourceContent("authentication_token_wallet_model_response.json")).mock();
         IdlingRegistry.getInstance().register(EspressoIdlingResource.getIdlingResource());
     }
 
