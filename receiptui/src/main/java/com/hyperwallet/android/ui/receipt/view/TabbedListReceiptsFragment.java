@@ -40,8 +40,6 @@ import com.hyperwallet.android.model.transfermethod.PrepaidCard;
 import com.hyperwallet.android.ui.common.view.ProgramModel;
 import com.hyperwallet.android.ui.receipt.R;
 import com.hyperwallet.android.ui.receipt.viewmodel.TabbedListReceiptsViewModel;
-import com.hyperwallet.android.ui.transfermethod.repository.PrepaidCardRepositoryImpl;
-import com.hyperwallet.android.ui.user.repository.UserRepositoryImpl;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -95,10 +93,7 @@ public class TabbedListReceiptsFragment extends Fragment {
         if (getActivity() instanceof TabbedListReceiptsActivity) {
             mHeader.setVisibility(View.GONE);
         }
-        mTabbedListReceiptsViewModel = ViewModelProviders.of(this,
-                new TabbedListReceiptsViewModel.TabbedListReceiptsViewModelFactory(new UserRepositoryImpl(),
-                        new PrepaidCardRepositoryImpl()))
-                .get(TabbedListReceiptsViewModel.class);
+        mTabbedListReceiptsViewModel = ViewModelProviders.of(requireActivity()).get(TabbedListReceiptsViewModel.class);
         mListReceiptsViewPagerAdapter = new ListReceiptsViewPagerAdapter(getFragmentManager(),
                 FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, new ArrayList<Parcelable>(),
                 getResources());

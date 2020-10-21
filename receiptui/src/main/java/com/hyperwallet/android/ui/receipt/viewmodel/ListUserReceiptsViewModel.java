@@ -74,7 +74,7 @@ public class ListUserReceiptsViewModel extends ListReceiptsViewModel {
     }
 
     @Override
-    public void setDetailNavigation(@NonNull Receipt receipt) {
+    public void setDetailNavigation(@NonNull final Receipt receipt) {
         mDetailNavigation.postValue(new Event<>(receipt));
     }
 
