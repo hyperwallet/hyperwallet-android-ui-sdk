@@ -160,7 +160,12 @@ public class TabbedListReceiptsTest {
                 ViewActions.scrollTo()
         ).check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
 
-        onView(ViewMatchers.withId(R.id.receipts_pager)).perform(ViewActions.swipeLeft());
+        Espresso.onView(
+                allOf(
+                        ViewMatchers.withText(ppcTabTitle),
+                        ViewMatchers.isDescendantOfA(ViewMatchers.withId(R.id.tab_layout))
+                )
+        ).perform(ViewActions.click());
 
         // Tab navigation need to implement to validate transaction screen
         onView(withText(R.string.mobileNoTransactionsPrepaidCard)).check(matches(isDisplayed()));
