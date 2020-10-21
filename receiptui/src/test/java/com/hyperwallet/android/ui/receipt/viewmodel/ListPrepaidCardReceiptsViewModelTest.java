@@ -12,8 +12,6 @@ import com.hyperwallet.android.ui.receipt.repository.PrepaidCardReceiptRepositor
 import com.hyperwallet.android.ui.receipt.repository.UserReceiptRepository;
 import com.hyperwallet.android.ui.receipt.repository.UserReceiptRepositoryImpl;
 
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.MatcherAssert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -43,14 +41,13 @@ public class ListPrepaidCardReceiptsViewModelTest {
     }
 
     @Test
-    public void testGetReceiptList_returnsLiveData() {
+    public void testGetReceiptsList_returnsLiveData() {
         assertThat(mListPrepaidCardReceiptsViewModel.receipts(), is(notNullValue()));
     }
 
     @Test
     public void testGetDetailNavigation_returnsLiveData() {
-        MatcherAssert.assertThat(mListPrepaidCardReceiptsViewModel.getDetailNavigation(),
-                CoreMatchers.is(CoreMatchers.notNullValue()));
+        assertThat(mListPrepaidCardReceiptsViewModel.getDetailNavigation(), is(notNullValue()));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -59,7 +56,7 @@ public class ListPrepaidCardReceiptsViewModelTest {
     }
 
     @Test
-    public void testListUPrepaidCardReceiptViewModel() {
+    public void testListLoadPrepaidCardReceiptsViewModel() {
         verify(mPrepaidCardReceiptRepository, never()).loadPrepaidCardReceipts();
     }
 

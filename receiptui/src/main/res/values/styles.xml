@@ -65,8 +65,6 @@
     </style>
 
     <style name="TextAppearance.Hyperwallet.Tab" parent="@style/TextAppearance.MaterialComponents.Caption" tools:ignore="UnusedResources">
-<!--        <item name="android:fontFamily">@font/worksans_semibold</item>-->
-<!--        <item name="fontFamily">@font/worksans_semibold</item>-->
         <item name="android:textSize">@dimen/font_body1</item>
     </style>
 
