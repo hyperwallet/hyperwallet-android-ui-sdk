@@ -313,6 +313,17 @@ Listed below are the names of these styles:
 | TextAppearance.Hyperwallet.Positive | TextAppearance.MaterialComponents.Subtitle1 |
 | TextAppearance.Hyperwallet.Negative | TextAppearance.MaterialComponents.Subtitle1 |
 
+## Material Components Version and Theme
+Hyperwallet UI SDK supports Material Components Version `1.0.0`, if your App needs to use higher version it may lead to unexpected behavior around floating text hints if you are not using Bridge theme.
+As a workaround you may override the themes of UI SDK activities to use Bridge themes. An example below:
+
+```
+ <activity
+        android:name="com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity"
+        android:theme="@style/Theme.MaterialComponents.NoActionBar.Bridge"
+        tools:replace="android:theme" />
+```
+
 ## Error Handling
 In Hyperwallet UI SDK, we categorize HyperwalletException into three groups:
 * Unexpected Error
