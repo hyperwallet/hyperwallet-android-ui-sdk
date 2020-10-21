@@ -31,6 +31,7 @@ import com.hyperwallet.android.model.StatusTransition;
 import com.hyperwallet.android.model.transfer.Transfer;
 import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import com.hyperwallet.android.ui.common.repository.Event;
+import com.hyperwallet.android.ui.transfer.TransferSource;
 import com.hyperwallet.android.ui.transfer.repository.TransferRepository;
 
 import java.math.BigDecimal;
@@ -46,6 +47,7 @@ public class ScheduleTransferViewModel extends ViewModel {
 
     private Transfer mTransfer;
     private TransferMethod mTransferDestination;
+    private TransferSource mTransferSource;
     private boolean mShowFxChangeWarning;
     private TransferRepository mTransferRepository;
     private MutableLiveData<StatusTransition> mTransferStatusTransition = new MutableLiveData<>();
@@ -87,8 +89,16 @@ public class ScheduleTransferViewModel extends ViewModel {
         return mTransferDestination;
     }
 
+    public TransferSource getTransferSource() {
+        return mTransferSource;
+    }
+
     public void setTransferDestination(@NonNull final TransferMethod transferDestination) {
         mTransferDestination = transferDestination;
+    }
+
+    public void setTransferSource(@NonNull final TransferSource transferSource) {
+        mTransferSource = transferSource;
     }
 
     public LiveData<StatusTransition> getTransferStatusTransition() {
