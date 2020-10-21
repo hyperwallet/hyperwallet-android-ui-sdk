@@ -44,7 +44,7 @@
       "params": {
         "rel": "self"
       },
-      "href": "https://qamaster-hyperwallet.aws.paylution.net/rest/v3/users/test-user-token/prepaid-cards/test-fake-token/receipts"
+      "href": "https://qamaster-hyperwallet.aws.paylution.net/rest/v3/users/test-user-token/prepaid-cards/trm-token2/receipts"
     }
   ]
 }

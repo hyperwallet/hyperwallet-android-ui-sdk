@@ -23,7 +23,7 @@
           "params": {
             "rel": "self"
           },
-          "href": "https://localhost.com/rest/v3/users/usr-token/prepaid-cards/trm-token"
+          "href": "https://qamaster-hyperwallet.aws.paylution.net/rest/v3/users/usr-token/prepaid-cards/trm-token"
         }
       ]
     },
