@@ -40,6 +40,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.Espresso;
 import androidx.test.espresso.IdlingRegistry;
 import androidx.test.espresso.action.ViewActions;
@@ -59,6 +60,9 @@ import com.hyperwallet.android.ui.testutils.rule.HyperwalletSdkRule;
 import com.hyperwallet.android.ui.testutils.util.RecyclerViewCountAssertion;
 import com.hyperwallet.android.ui.transfer.repository.TransferRepositoryFactory;
 import com.hyperwallet.android.ui.transfer.view.CreateTransferActivity;
+import com.hyperwallet.android.ui.transfermethod.repository.PrepaidCardRepositoryFactory;
+import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepository;
+import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
 import com.hyperwallet.android.ui.user.repository.UserRepositoryFactory;
 
 import org.junit.After;
@@ -87,6 +91,7 @@ public class TransferUserFundsTest {
     @Rule
     public ActivityTestRule<CreateTransferActivity> mActivityTestRule =
             new ActivityTestRule<>(CreateTransferActivity.class, true, false);
+
     @Rule
     public IntentsTestRule<CreateTransferActivity> mActivityIntentsTestRule =
             new IntentsTestRule<>(CreateTransferActivity.class, true, false);
@@ -99,22 +104,31 @@ public class TransferUserFundsTest {
 //                .getResourceContent("authentication_token_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("user_response.json")).mock();
+
+//        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+//                .getResourceContent("ppc/prepaid_card_response.json")).mock();
         IdlingRegistry.getInstance().register(EspressoIdlingResource.getIdlingResource());
     }
 
     @After
     public void cleanup() {
         UserRepositoryFactory.clearInstance();
+        TransferMethodRepositoryFactory.clearInstance();
         TransferRepositoryFactory.clearInstance();
+        PrepaidCardRepositoryFactory.clearInstance();
         IdlingRegistry.getInstance().unregister(EspressoIdlingResource.getIdlingResource());
     }
 
     @Test
     public void testTransferFunds_verifyTransferScreen() {
+
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("create_transfer_quote_response.json")).mock();
+        // Mock Response for the PPC
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("ppc/prepaid_card_response.json")).mock();
 
         mActivityTestRule.launchActivity(null);
 
