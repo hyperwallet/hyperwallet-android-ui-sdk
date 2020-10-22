@@ -12,6 +12,7 @@ import static com.hyperwallet.android.model.transfer.Transfer.TransferStatuses.S
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TOKEN;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TRANSFER_METHOD_COUNTRY;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TRANSFER_METHOD_CURRENCY;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.BANK_ACCOUNT;
 
 import androidx.lifecycle.ViewModel;
 
@@ -22,6 +23,7 @@ import com.hyperwallet.android.model.TypeReference;
 import com.hyperwallet.android.model.transfer.Transfer;
 import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
+import com.hyperwallet.android.ui.transfer.TransferSource;
 import com.hyperwallet.android.ui.transfer.repository.TransferRepository;
 import com.hyperwallet.android.util.JsonUtils;
 
@@ -78,11 +80,17 @@ public class ScheduleTransferViewModelTest {
         transferMethod.setField(TRANSFER_METHOD_CURRENCY, "CAD");
         transferMethod.setField(TRANSFER_METHOD_COUNTRY, "CA");
 
+        TransferSource transferSource = new TransferSource();
+        transferSource.setType(BANK_ACCOUNT);
+        transferSource.setToken("usr-fake-token");
+        transferSource.setIdentification(null);
+
         ScheduleTransferViewModel.ScheduleTransferViewModelFactory factory =
                 new ScheduleTransferViewModel.ScheduleTransferViewModelFactory(mTransferRepository);
         mScheduleTransferViewModel = factory.create(ScheduleTransferViewModel.class);
         mScheduleTransferViewModel.setTransfer(transfer);
         mScheduleTransferViewModel.setTransferDestination(transferMethod);
+        mScheduleTransferViewModel.setTransferSource(transferSource);
     }
 
     @Test
@@ -99,6 +107,14 @@ public class ScheduleTransferViewModelTest {
         assertThat(mScheduleTransferViewModel.getTransferDestination().getField(TOKEN), is("trm-canadian-bank-token"));
         assertThat(mScheduleTransferViewModel.getTransferDestination().getField(TRANSFER_METHOD_COUNTRY), is("CA"));
         assertThat(mScheduleTransferViewModel.getTransferDestination().getField(TRANSFER_METHOD_CURRENCY), is("CAD"));
+    }
+
+    @Test
+    public void testGetTransferSource_returnsTransferSource() {
+        assertThat(mScheduleTransferViewModel.getTransferSource(), is(notNullValue()));
+        assertThat(mScheduleTransferViewModel.getTransferSource().getToken(), is("usr-fake-token"));
+        assertThat(mScheduleTransferViewModel.getTransferSource().getType(), is(BANK_ACCOUNT));
+        assertThat(mScheduleTransferViewModel.getTransferSource().getIdentification(), is(nullValue()));
     }
 
     @Test
