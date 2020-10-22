@@ -23,7 +23,7 @@
           "params": {
             "rel": "self"
           },
-          "href": "https://localhost.com/rest/v3/users/usr-token/prepaid-cards/trm-token"
+          "href": "https://localhost.com/rest/v3/users/usr-token/prepaid-cards/trm-token2"
         }
       ]
     },
@@ -46,7 +46,7 @@
           "params": {
             "rel": "self"
           },
-          "href": "https://localhost:8080/rest/v3/users/usr-7f512d44-9743-42c7-acf4-b1b35c8ce244/prepaid-cards/trm-token2"
+          "href": "https://localhost:8080/rest/v3/users/usr-7f512d44-9743-42c7-acf4-b1b35c8ce244/prepaid-cards/trm-token"
         }
       ]
     }

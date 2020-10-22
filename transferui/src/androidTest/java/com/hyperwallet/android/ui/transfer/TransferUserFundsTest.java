@@ -121,14 +121,21 @@ public class TransferUserFundsTest {
 
     @Test
     public void testTransferFunds_verifyTransferScreen() {
-
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("create_transfer_quote_response.json")).mock();
         // Mock Response for the PPC
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("ppc/prepaid_card_response.json")).mock();
+        // Mock the response by using trm-token to fetch the card info
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("ppc/get_prepaid_card_success_response.json")).mock();
+
+        // if there is sources, we load the transfer method destination
+        // transfer_method_list_with_ppc_response
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
+
+        //  only when transferMethods.size() > 0, get the quote by the source token
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("create_transfer_quote_response.json")).mock();
 
         mActivityTestRule.launchActivity(null);
 
@@ -1025,12 +1032,21 @@ public class TransferUserFundsTest {
 
     @Test
     public void testTransferFragment_verifyTransferFromPrepaidCard() {
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("transfer_method_list_with_ppc_response")).mock();
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("create_transfer_quote_response.json")).mock();
+        // Mock the response with PPC source
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("ppc/prepaid_card_response.json")).mock();
+
+        // Mock the response by using trm-token to fetch the card info
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("ppc/get_prepaid_card_success_response.json")).mock();
+
+        // if there is sources, we load the transfer method destination with PPC transfer method
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
+
+        //  only when transferMethods.size() > 0, get the quote by the source token
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("create_transfer_quote_response.json")).mock();
 
         mActivityTestRule.launchActivity(null);
 
@@ -1052,12 +1068,20 @@ public class TransferUserFundsTest {
 
     @Test
     public void testTransferFragment_verifyTransferToPrepaidCard() {
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("transfer_method_list_with_ppc_response")).mock();
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("create_transfer_quote_response.json")).mock();
+        // Mock the response with PPC source
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("ppc/prepaid_card_response.json")).mock();
+        // Mock the response by using trm-token to fetch the card info
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("ppc/get_prepaid_card_success_response.json")).mock();
+
+        // if there is sources, we load the transfer method destination with PPC transfer method
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_list_with_one_ppc_response.json")).mock();
+
+        //  only when transferMethods.size() > 0, get the quote by the source token
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("create_transfer_quote_response.json")).mock();
 
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("create_transfer_quote_all_funds_response.json")).mock();
@@ -1068,7 +1092,7 @@ public class TransferUserFundsTest {
 
         mActivityTestRule.launchActivity(null);
 
-        // Select Transfer To as Prepaid Card
+        // Select Transfer To as Prepaid Card from the Transfer method list
         Espresso.onView(ViewMatchers.withId(R.id.destination_data_container))
                 .perform(ViewActions.click());
         Espresso.onView(ViewMatchers.withText(R.string.prepaid_card))
@@ -1105,10 +1129,21 @@ public class TransferUserFundsTest {
 
     @Test
     public void testTransferFragment_verifyTransferFromPrepaidCardConfirmation() {
+
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("transfer_method_list_with_ppc_response.json")).mock();
+                .getResourceContent("ppc/prepaid_card_response.json")).mock();
+        // Mock the response by using trm-token to fetch the card info
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("prepaid_card_response.json")).mock();
+                .getResourceContent("ppc/get_prepaid_card_success_response.json")).mock();
+
+        // if there is sources, we load the transfer method destination
+        // transfer_method_list_with_ppc_response
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
+
+        //  only when transferMethods.size() > 0, get the quote by the source token
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("create_transfer_quote_response.json")).mock();
 
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("create_transfer_quote_all_funds_response.json")).mock();
@@ -1179,20 +1214,6 @@ public class TransferUserFundsTest {
         // Assert Confirmation Dialog
         verifyTransferConfirmationDialog("Bank Account");
 
-    }
-
-    @Test
-    public void testTransferFragment_verifyWhenNoSourceErrorDialog() {
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody(sResourceManager
-                .getResourceContent("transfer_method_list_with_ppc_response")).mock();
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody(sResourceManager
-                .getResourceContent("create_transfer_quote_response.json")).mock();
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody(sResourceManager
-                .getResourceContent("ppc/prepaid_card_response.json")).mock();
-
-        mActivityTestRule.launchActivity(null);
-
-        verifyTransferNoSourceDialog();
     }
 
     private void verifyTransferConfirmationDialog(String transferType) {
