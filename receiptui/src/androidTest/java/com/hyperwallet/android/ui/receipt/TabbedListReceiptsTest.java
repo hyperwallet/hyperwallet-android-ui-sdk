@@ -90,9 +90,6 @@ public class TabbedListReceiptsTest {
 
     @Before
     public void setup() {
-//        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-//                .getResourceContent("authentication_token_response.json")).mock();
-//        // authentication_token_walletmodel_response
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("authentication_token_walletmodel_response.json")).mock();
         mDefaultTimeZone = TimeZone.getDefault();
@@ -194,14 +191,6 @@ Then user can see the tabs for Available funds and receipts
                 .check(matches(withText(R.string.title_activity_receipt_list)));
 
         // Assert receipts
-//        String monthLabel1 = "June 2020";
-//        Espresso.onView(
-//                allOf(
-//                        ViewMatchers.withText("monthLabel1")
-//                )
-//        ).check(ViewAssertions.matches(ViewMatchers.isCompletelyDisplayed()));
-
-
         Espresso.onView(
                 allOf(
                         ViewMatchers.withText("June 20, 2020"),
@@ -212,7 +201,7 @@ Then user can see the tabs for Available funds and receipts
         Espresso.onView(
                 allOf(
                         ViewMatchers.withText(R.string.prepaid_card_sale),
-                        ViewMatchers.hasSibling(ViewMatchers.withText(usdCurrencySymbol + "-$10.00"))
+                        ViewMatchers.hasSibling(ViewMatchers.withText("-"+ usdCurrencySymbol + "10.00"))
                 )
         ).check(ViewAssertions.matches(ViewMatchers.isCompletelyDisplayed()));
     }
@@ -319,7 +308,7 @@ Then user can see the tabs for Available funds and receipts
                 )
         ).perform(ViewActions.click());
 
-        // now unable to load the receipts for second tab, but just assert the empty string
+        // assert the empty string
         onView(withText(R.string.mobileNoTransactionsPrepaidCard)).check(matches(isDisplayed()));
     }
 
