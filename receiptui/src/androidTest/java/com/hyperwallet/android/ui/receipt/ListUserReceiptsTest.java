@@ -249,6 +249,7 @@ public class ListUserReceiptsTest {
         onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
                 .check(matches(withText(R.string.title_activity_receipt_list)));
         //todo: check empty view when it will be ready
+        onView(withText(R.string.mobileNoTransactionsUser)).check(matches(isDisplayed()));
     }
 
     @Test

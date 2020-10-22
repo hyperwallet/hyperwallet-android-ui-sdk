@@ -1,0 +1,19 @@
+{
+  "count": 1,
+  "offset": 0,
+  "limit": 10,
+  "data": [
+    {
+      "currency": "USD",
+      "amount": "24.06"
+    }
+  ],
+  "links": [
+    {
+      "params": {
+        "rel": "self"
+      },
+      "href": "https://localhost:8080/rest/v3/users/usr-token/prepaid-cards/trm-token/balances?offset=0&limit=10"
+    }
+  ]
+}
