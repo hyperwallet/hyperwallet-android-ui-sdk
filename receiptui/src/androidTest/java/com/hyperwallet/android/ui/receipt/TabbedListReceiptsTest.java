@@ -11,6 +11,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
+import static java.lang.Thread.sleep;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.instanceOf;
 
@@ -27,7 +28,10 @@ import android.content.res.Resources;
 import android.widget.TextView;
 
 import androidx.test.core.app.ApplicationProvider;
+import androidx.test.espresso.Espresso;
 import androidx.test.espresso.IdlingRegistry;
+import androidx.test.espresso.action.ViewActions;
+import androidx.test.espresso.assertion.ViewAssertions;
 import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -57,6 +61,9 @@ import okhttp3.mockwebserver.MockResponse;
 @RunWith(AndroidJUnit4.class)
 public class TabbedListReceiptsTest {
 
+    private final String MASK = "\u0020\u2022\u2022\u2022\u2022\u0020";
+    private final String VISA = "Visa";
+
     @ClassRule
     public static HyperwalletExternalResourceManager sResourceManager = new HyperwalletExternalResourceManager();
     @Rule
@@ -70,22 +77,21 @@ public class TabbedListReceiptsTest {
                 protected Intent getActivityIntent() {
                     Intent intent = new Intent(ApplicationProvider.getApplicationContext(),
                             TabbedListReceiptsActivity.class);
-                    intent.putExtra(EXTRA_PREPAID_CARD_TOKEN, "trm-test-token");
+                    // intent.putExtra(EXTRA_PREPAID_CARD_TOKEN, "trm-test-token");
                     return intent;
                 }
             };
+
     private TimeZone mDefaultTimeZone;
 
     private String monthLabel1 = "June 2019";
     private String cadCurrencySymbol = "CA$";
-
-
+    private String usdCurrencySymbol = "$";
 
     @Before
     public void setup() {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("authentication_token_response.json")).mock();
-
+                .getResourceContent("authentication_token_walletmodel_response.json")).mock();
         mDefaultTimeZone = TimeZone.getDefault();
         TimeZone.setDefault(TimeZone.getTimeZone("US/Pacific"));
         setLocale(Locale.US);
@@ -104,9 +110,10 @@ public class TabbedListReceiptsTest {
     */
     @Test
     public void testListReceiptFragment_verifyAvailbleFundsEmptyReceipt() {
+
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("prepaidcard/prepaidcard_primarycard_only_response.json")).mock();
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();
 
         // run test
         mActivityTestRule.launchActivity(null);
@@ -127,51 +134,7 @@ public class TabbedListReceiptsTest {
     @Test
     public void testListReceiptFragment_verifyPrimaryPPCEmptyReceipt() {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("prepaidcard/prepaidcard_secondarycard_only_response.json")).mock();
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();
-
-        // run test
-        mActivityTestRule.launchActivity(null);
-
-        // assert
-        onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
-                .check(matches(withText(R.string.title_activity_receipt_list)));
-        onView(withId(R.id.list_receipts)).check(matches(isDisplayed()));
-
-        // Tab navigation need to implement to validate transaction screen
-        onView(withText(R.string.mobileNoTransactionsUser)).check(matches(isDisplayed()));
-    }
-
-    /*
-Given user has Available funds and Primary PPC and Available funds has receipts
-When user selects the "Transaction" tab
-Then user can see the tabs for Available funds and receipts
-*/
-    @Test
-    public void testListReceiptFragment_verifyAvailbleFundsReceipt() {
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("prepaidcard/prepaidcard_balance_cad_response.json")).mock();
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();
-
-        // run test
-        mActivityTestRule.launchActivity(null);
-
-        // assert
-        onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
-                .check(matches(withText(R.string.title_activity_receipt_list)));
-        onView(withId(R.id.list_receipts)).check(matches(isDisplayed()));
-
-        // Tab navigation need to implement to validate transaction screen
-        onView(withText(R.string.mobileNoTransactionsUser)).check(matches(isDisplayed()));
-    }
-
-    /*
- Given user has Available funds and Primary PPC
- When user selects the "Transaction" tab
- Then user can see the tabs for Primary PPC and receipts
- */
-    @Test
-    public void testListReceiptFragment_verifyPrimaryPPCReceipt() {
+                .getResourceContent("receipt_list_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("prepaidcard/prepaidcard_primarycard_only_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();
@@ -182,22 +145,42 @@ Then user can see the tabs for Available funds and receipts
         // assert
         onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
                 .check(matches(withText(R.string.title_activity_receipt_list)));
-        onView(withId(R.id.list_receipts)).check(matches(isDisplayed()));
+        //onView(withId(R.id.list_receipts)).check(matches(isDisplayed()));
+
+        String ppcTabTitle = VISA + MASK + "9285";
+        Espresso.onView(
+                allOf(
+                        ViewMatchers.withText(ppcTabTitle),
+                        ViewMatchers.isDescendantOfA(ViewMatchers.withId(R.id.tab_layout))
+                )
+        ).perform(
+                ViewActions.scrollTo()
+        ).check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
+
+        Espresso.onView(
+                allOf(
+                        ViewMatchers.withText(ppcTabTitle),
+                        ViewMatchers.isDescendantOfA(ViewMatchers.withId(R.id.tab_layout))
+                )
+        ).perform(ViewActions.click());
 
         // Tab navigation need to implement to validate transaction screen
-        onView(withText(R.string.mobileNoTransactionsUser)).check(matches(isDisplayed()));
+        onView(withText(R.string.mobileNoTransactionsPrepaidCard)).check(matches(isDisplayed()));
     }
 
-
     /*
-     Given user has Available funds and Secondary PPC
-     When user selects the "Transaction" tab
-     Then user can see the tabs for Secondary PPC
-     */
+Given user has Available funds and Primary PPC and Available funds has receipts
+When user selects the "Transaction" tab
+Then user can see the tabs for Available funds and receipts
+*/
     @Test
-    public void testListReceiptFragment_verifySecondaryPPCTabs() {
+    public void testListReceiptFragment_verifyAvailbleFundsReceipt() {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("prepaidcard/prepaidcard_secondary_response.json")).mock();
+                .getResourceContent("receipt_list_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("prepaidcard/prepaidcard_primarycard_only_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("prepaidcard/prepaidcard_receipts_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();
 
         // run test
@@ -207,8 +190,126 @@ Then user can see the tabs for Available funds and receipts
         onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
                 .check(matches(withText(R.string.title_activity_receipt_list)));
 
-        // Tab navigation need to implement to validate transaction screen
-        onView(withText(R.string.mobileNoTransactionsUser)).check(matches(isDisplayed()));
+        // Assert receipts
+        Espresso.onView(
+                allOf(
+                        ViewMatchers.withText("June 20, 2020"),
+                        ViewMatchers.hasSibling(ViewMatchers.withText("USD"))
+                )
+        ).check(ViewAssertions.matches(ViewMatchers.isCompletelyDisplayed()));
+
+        Espresso.onView(
+                allOf(
+                        ViewMatchers.withText(R.string.prepaid_card_sale),
+                        ViewMatchers.hasSibling(ViewMatchers.withText("-"+ usdCurrencySymbol + "10.00"))
+                )
+        ).check(ViewAssertions.matches(ViewMatchers.isCompletelyDisplayed()));
+    }
+
+    /*
+ Given user has Available funds and Primary PPC
+ When user selects the "Transaction" tab
+ Then user can see the tabs for Primary PPC and receipts
+ */
+    @Test
+    public void testListReceiptFragment_verifyPrimaryPPCReceipt() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("receipt_list_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("prepaidcard/prepaidcard_secondary_response2.json")).mock();
+
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("prepaidcard/prepaidcard_secondary_receipts_response.json")).mock();
+
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("prepaidcard/prepaidcard_receipts_response.json")).mock();
+
+        // run test
+        mActivityTestRule.launchActivity(null);
+
+        onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
+                .check(matches(withText(R.string.title_activity_receipt_list)));
+
+        String ppcTabTitle = VISA + MASK + "8884";
+        Espresso.onView(
+                allOf(
+                        ViewMatchers.withText(ppcTabTitle),
+                        ViewMatchers.isDescendantOfA(ViewMatchers.withId(R.id.tab_layout))
+                )
+        ).perform(
+                ViewActions.scrollTo()
+        ).check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
+
+        Espresso.onView(
+                allOf(
+                        ViewMatchers.withText(ppcTabTitle),
+                        ViewMatchers.isDescendantOfA(ViewMatchers.withId(R.id.tab_layout))
+                )
+        ).perform(ViewActions.click());
+
+        // Assert receipts
+        Espresso.onView(
+                allOf(
+                        ViewMatchers.withText("September 20, 2020"),
+                        ViewMatchers.hasSibling(ViewMatchers.withText("USD"))
+                )
+        ).check(ViewAssertions.matches(ViewMatchers.isCompletelyDisplayed()));
+
+        Espresso.onView(
+                allOf(
+                        ViewMatchers.withText(R.string.adjustment),
+                        ViewMatchers.hasSibling(ViewMatchers.withText(usdCurrencySymbol + "6.90"))
+                )
+        ).check(ViewAssertions.matches(ViewMatchers.isCompletelyDisplayed()));
+
+    }
+
+    /*
+     Given user has Available funds and Secondary PPC
+     When user selects the "Transaction" tab
+     Then user can see the tabs for Secondary PPC
+     */
+    @Test
+    public void testListReceiptFragment_verifySecondaryPPCTabs() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("receipt_list_response.json")).mock();
+
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("prepaidcard/prepaidcard_secondary_response2.json")).mock();
+
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("prepaidcard/prepaidcard_secondary_receipts_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("prepaidcard/prepaidcard_receipts_response.json")).mock();
+
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();
+
+        // run test
+        mActivityTestRule.launchActivity(null);
+
+        // assert
+        onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
+                .check(matches(withText(R.string.title_activity_receipt_list)));
+
+        String secondaryPPCTabTitle = VISA + MASK + "9285";
+        Espresso.onView(
+                allOf(
+                        ViewMatchers.withText(secondaryPPCTabTitle),
+                        ViewMatchers.isDescendantOfA(ViewMatchers.withId(R.id.tab_layout))
+                )
+        ).perform(
+                ViewActions.scrollTo()
+        ).check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
+
+        Espresso.onView(
+                allOf(
+                        ViewMatchers.withText(secondaryPPCTabTitle),
+                        ViewMatchers.isDescendantOfA(ViewMatchers.withId(R.id.tab_layout))
+                )
+        ).perform(ViewActions.click());
+
+        // assert the empty string
+        onView(withText(R.string.mobileNoTransactionsPrepaidCard)).check(matches(isDisplayed()));
     }
 
 

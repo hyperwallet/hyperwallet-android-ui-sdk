@@ -84,8 +84,11 @@ public class ListPrepaidCardReceiptsTest {
 
     @Before
     public void setup() {
+//        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+//                .getResourceContent("authentication_token_response.json")).mock();
+
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("authentication_token_response.json")).mock();
+                .getResourceContent("authentication_token_walletmodel_response.json")).mock();
 
         mDefaultTimeZone = TimeZone.getDefault();
         TimeZone.setDefault(TimeZone.getTimeZone("US/Pacific"));

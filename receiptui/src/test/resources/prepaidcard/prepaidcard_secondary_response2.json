@@ -23,7 +23,7 @@
           "params": {
             "rel": "self"
           },
-          "href": "https://localhost.com/rest/v3/users/usr-token/prepaid-cards/trm-token"
+          "href": "https://qamaster-hyperwallet.aws.paylution.net/rest/v3/users/usr-token/prepaid-cards/trm-token"
         }
       ]
     },
@@ -40,7 +40,7 @@
       "cardNumber": "************9285",
       "cardBrand": "VISA",
       "dateOfExpiry": "2024-08",
-      "userToken": "usr-7f512d44-9743-42c7-acf4-b1b35c8ce244",
+      "userToken": "usr-token",
       "links": [
         {
           "params": {
