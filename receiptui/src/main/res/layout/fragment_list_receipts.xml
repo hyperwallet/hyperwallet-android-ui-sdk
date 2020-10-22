@@ -4,24 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".view.ListReceiptFragment">
-
-    <LinearLayout
-        android:id="@+id/transactions_header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="16dp"
-        android:paddingBottom="@dimen/item_horizontal_padding">
-
-        <TextView
-            android:id="@+id/transactions_header_text"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/grid_margin_left"
-            android:text="@string/transactions"
-            android:textAppearance="@style/TextAppearance.Hyperwallet.Headline5" />
-    </LinearLayout>
+    tools:context=".view.ListReceiptsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_receipts"
@@ -54,6 +37,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/text_noTransaction"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

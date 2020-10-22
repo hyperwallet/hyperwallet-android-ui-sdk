@@ -56,7 +56,7 @@ public class ListUserReceiptViewModelTest {
     }
 
     @Test
-    public void testListUserReceiptViewModel() {
+    public void testListLoadUserReceiptsViewModel() {
         verify(mUserReceiptRepository, never()).loadUserReceipts();
     }
 
