@@ -70,7 +70,6 @@ public class TabbedListReceiptsViewModel extends ViewModel {
             PrepaidCardRepository prepaidCardRepository) {
         this.mUserRepository = mUserRepository;
         this.mPrepaidCardRepository = prepaidCardRepository;
-        getProgramModel();
     }
 
     public void initialize() {
@@ -98,6 +97,11 @@ public class TabbedListReceiptsViewModel extends ViewModel {
         });
     }
 
+    public void initProgramModel() {
+        getProgramModel();
+    }
+
+    @VisibleForTesting
     ProgramModel getProgramModel() {
         getHyperwallet().getConfiguration(new HyperwalletListener<Configuration>() {
             @Override
