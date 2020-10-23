@@ -20,16 +20,10 @@
     <string name="concat_string_view_format">%s%s %s</string>
     <string name="concat_date_string_view_format">%s %s</string>
 
-    <string name="mobileNoTransactions">No hay actividad para mostrar.</string>
+    <string name="mobileNoTransactionsUser" >No hay actividad para mostrar.</string>
     <string name="title_transfer_funds">Transferir fondos</string>
     <string name="font_icon_placeholder">\ue908</string>
     <string name="text_placeholder">Marcador de posición</string>
-
-    <!-- entry types -->
-    <string name="debit">\ue908</string>
-    <string name="credit">\ue907</string>
-    <string name="debit_sign">-%s%s</string>
-    <string name="credit_sign">%s%s</string>
 
     <!--Generic fee types-->
     <string name="unknown_type">Tipo de transacción desconocido</string>

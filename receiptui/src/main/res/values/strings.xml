@@ -27,10 +27,10 @@
     <string name="text_placeholder">Placeholder</string>
 
     <!-- entry types -->
-    <string name="debit">\ue908</string>
-    <string name="credit">\ue907</string>
-    <string name="debit_sign">-%s%s</string>
-    <string name="credit_sign">%s%s</string>
+    <string name="debit" translatable="false">\ue908</string>
+    <string name="credit" translatable="false">\ue907</string>
+    <string name="debit_sign" translatable="false">-%s%s</string>
+    <string name="credit_sign" translatable="false">%s%s</string>
 
     <!--Generic fee types-->
     <string name="unknown_type">Unknown Transaction Type</string>
