@@ -64,10 +64,10 @@
     <string name="mobileTransferSuccessDetails">The funds are on the way to your %s</string>
     <string name="doneButtonLabel">Done</string>
     <string name="mobileTransferMethodsHeader">Transfer methods</string>
-    <string name="mobileTransferFromLabel">TRANSFER FROM</string>
-    <string name="transferSource">Source</string>
-    <string name="mobileTransferFromHeader">Transfer from</string>
-    <string name="availableFunds">Available Funds</string>
-    <string name="noTransferFromSourceAvailableError">No Transfer from source available</string>
+    <string name="mobileTransferFromLabel" translatable="false">TRANSFER FROM</string>
+    <string name="transferSource" translatable="false">Source</string>
+    <string name="mobileTransferFromHeader" translatable="false">Transfer from</string>
+    <string name="availableFunds" translatable="false">Available Funds</string>
+    <string name="noTransferFromSourceAvailableError" translatable="false">No Transfer from source available</string>
 
 </resources>

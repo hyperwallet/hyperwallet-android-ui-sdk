@@ -20,17 +20,17 @@
     <string name="concat_string_view_format">%s%s %s</string>
     <string name="concat_date_string_view_format">%s %s</string>
 
-    <string name="mobileNoTransactionsUser">There\'s no activity to display.</string>
-    <string name="mobileNoTransactionsPrepaidCard">No transactions in the past 365 days</string>
+    <string name="mobileNoTransactionsUser" translatable="false">There\'s no activity to display.</string>
+    <string name="mobileNoTransactionsPrepaidCard" translatable="false">No transactions in the past 365 days</string>
     <string name="title_transfer_funds">Transfer Funds</string>
     <string name="font_icon_placeholder">\ue908</string>
     <string name="text_placeholder">Placeholder</string>
 
     <!-- entry types -->
-    <string name="debit">\ue908</string>
-    <string name="credit">\ue907</string>
-    <string name="debit_sign">-%s%s</string>
-    <string name="credit_sign">%s%s</string>
+    <string name="debit" translatable="false">\ue908</string>
+    <string name="credit" translatable="false">\ue907</string>
+    <string name="debit_sign" translatable="false">-%s%s</string>
+    <string name="credit_sign" translatable="false">%s%s</string>
 
     <!--Generic fee types-->
     <string name="unknown_type">Unknown Transaction Type</string>
@@ -164,10 +164,8 @@
     <string name="prepaid_card_sms_fee">SMS Fee</string>
     <string name="prepaid_card_declined_authorization_fee">Declined Authorization Fee</string>
     <string name="fispc">Purchase</string>
-    <string name="visa">Visa</string>
-    <string name="mastercard">Mastercard</string>
 
     <!-- Prepaid Cards Receipt   -->
-    <string name="mobileAvailableBalances">Available funds</string>
+    <string name="mobileAvailableBalances" translatable="false">Available funds</string>
 
 </resources>
