@@ -25,6 +25,7 @@ import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.HyperwalletAuthenticationTokenProvider;
 import com.hyperwallet.android.ui.receipt.view.ListPrepaidCardReceiptActivity;
 import com.hyperwallet.android.ui.receipt.view.ListUserReceiptActivity;
+import com.hyperwallet.android.ui.receipt.view.TabbedListReceiptsActivity;
 
 public final class HyperwalletReceiptUi {
 
@@ -73,6 +74,19 @@ public final class HyperwalletReceiptUi {
         Intent intent = new Intent(context, ListPrepaidCardReceiptActivity.class);
         intent.putExtra(ListPrepaidCardReceiptActivity.EXTRA_PREPAID_CARD_TOKEN, token);
         intent.putExtra(ListPrepaidCardReceiptActivity.EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT, lockScreenToPortrait);
+        return intent;
+    }
+
+    /**
+     * @param context              A Context of the application consuming this Intent.
+     * @param lockScreenToPortrait if set <code>true</code> screen will be locked to Portrait mode;
+     *                             otherwise <code>false</code> screen will follow whatever the
+     *                             device orientation is directed.
+     * @return an Intent with the data necessary to launch the {@link TabbedListReceiptsActivity}
+     */
+    public Intent getIntentListReceiptActivity(@NonNull final Context context, final boolean lockScreenToPortrait) {
+        Intent intent = new Intent(context, TabbedListReceiptsActivity.class);
+        intent.putExtra(TabbedListReceiptsActivity.EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT, lockScreenToPortrait);
         return intent;
     }
 

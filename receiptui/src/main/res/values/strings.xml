@@ -20,7 +20,8 @@
     <string name="concat_string_view_format">%s%s %s</string>
     <string name="concat_date_string_view_format">%s %s</string>
 
-    <string name="mobileNoTransactions">There\'s no activity to display.</string>
+    <string name="mobileNoTransactionsUser" translatable="false">There\'s no activity to display.</string>
+    <string name="mobileNoTransactionsPrepaidCard" translatable="false">No transactions in the past 365 days</string>
     <string name="title_transfer_funds">Transfer Funds</string>
     <string name="font_icon_placeholder">\ue908</string>
     <string name="text_placeholder">Placeholder</string>
@@ -163,4 +164,8 @@
     <string name="prepaid_card_sms_fee">SMS Fee</string>
     <string name="prepaid_card_declined_authorization_fee">Declined Authorization Fee</string>
     <string name="fispc">Purchase</string>
+
+    <!-- Prepaid Cards Receipt   -->
+    <string name="mobileAvailableBalances" translatable="false">Available funds</string>
+
 </resources>

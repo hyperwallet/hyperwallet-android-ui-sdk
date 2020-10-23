@@ -1,0 +1,50 @@
+{
+  "data": [
+    {
+      "journalId": "FISVL_5240220",
+      "type": "PREPAID_CARD_SALE",
+      "createdOn": "2020-06-20T22:48:41",
+      "entry": "DEBIT",
+      "destinationToken": "test-fake-token",
+      "amount": "10.00",
+      "fee": "3.00",
+      "currency": "USD",
+      "details": {
+        "cardNumber": "************0673",
+        "clientPaymentId": "AOxXefx9",
+        "payeeName": "A Person",
+        "website": "https://localhost:8181",
+        "notes": "Sample prepaid card payment for the period of June 15th, 2019 to July 23, 2019",
+        "charityName": "Sample Charity",
+        "checkNumber": "Sample Check Number"
+      }
+    },
+    {
+      "journalId": "FISVL_5240220",
+      "type": "PREPAID_CARD_SALE",
+      "createdOn": "2020-06-20T22:48:41",
+      "entry": "DEBIT",
+      "destinationToken": "test-fake-token",
+      "amount": "10000",
+      "fee": "3.00",
+      "currency": "KRW",
+      "details": {
+        "cardNumber": "************0674",
+        "clientPaymentId": "AOxXefx9",
+        "payeeName": "A Person",
+        "website": "https://localhost:8181",
+        "notes": "Sample prepaid card payment for the period of June 15th, 2019 to July 23, 2019",
+        "charityName": "Sample Charity",
+        "checkNumber": "Sample Check Number"
+      }
+    }
+  ],
+  "links": [
+    {
+      "params": {
+        "rel": "self"
+      },
+      "href": "https://qamaster-hyperwallet.aws.paylution.net/rest/v3/users/test-user-token/prepaid-cards/trm-token2/receipts"
+    }
+  ]
+}

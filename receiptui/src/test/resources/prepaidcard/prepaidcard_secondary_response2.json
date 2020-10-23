@@ -1,0 +1,62 @@
+{
+  "count": 2,
+  "offset": 0,
+  "limit": 10,
+  "data": [
+    {
+      "token": "trm-token2",
+      "primaryCardToken": "trm-token",
+      "type": "PREPAID_CARD",
+      "status": "ACTIVATED",
+      "verificationStatus": "NOT_REQUIRED",
+      "createdOn": "2020-08-27T17:09:29",
+      "transferMethodCountry": "US",
+      "transferMethodCurrency": "USD",
+      "cardType": "VIRTUAL",
+      "cardPackage": "L1",
+      "cardNumber": "************8884",
+      "cardBrand": "VISA",
+      "dateOfExpiry": "2024-08",
+      "userToken": "usr-token",
+      "links": [
+        {
+          "params": {
+            "rel": "self"
+          },
+          "href": "https://qamaster-hyperwallet.aws.paylution.net/rest/v3/users/usr-token/prepaid-cards/trm-token"
+        }
+      ]
+    },
+    {
+      "token": "trm-token",
+      "type": "PREPAID_CARD",
+      "status": "ACTIVATED",
+      "verificationStatus": "NOT_REQUIRED",
+      "createdOn": "2020-08-27T16:51:08",
+      "transferMethodCountry": "US",
+      "transferMethodCurrency": "USD",
+      "cardType": "VIRTUAL",
+      "cardPackage": "L1",
+      "cardNumber": "************9285",
+      "cardBrand": "VISA",
+      "dateOfExpiry": "2024-08",
+      "userToken": "usr-token",
+      "links": [
+        {
+          "params": {
+            "rel": "self"
+          },
+          "href": "https://localhost:8080/rest/v3/users/usr-7f512d44-9743-42c7-acf4-b1b35c8ce244/prepaid-cards/trm-token2"
+        }
+      ]
+    }
+  ],
+  "links": [
+    {
+      "params": {
+        "rel": "self"
+      },
+      "href": "https://localhost:8080/rest/v3/users/usr-token/prepaid-cards?offset=0&limit=10&sortBy=-createdOn&createdAfter=2018-01-01T17%3A12%3A00&status=ACTIVATED"
+    }
+  ]
+}
