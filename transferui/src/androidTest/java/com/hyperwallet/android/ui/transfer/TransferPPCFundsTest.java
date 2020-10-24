@@ -55,6 +55,7 @@ import com.hyperwallet.android.ui.testutils.rule.HyperwalletMockWebServer;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletSdkRule;
 import com.hyperwallet.android.ui.testutils.util.RecyclerViewCountAssertion;
 import com.hyperwallet.android.ui.transfer.repository.TransferRepositoryFactory;
+import com.hyperwallet.android.ui.transfer.rule.HyperwalletSdkMockRule;
 import com.hyperwallet.android.ui.transfer.view.CreateTransferActivity;
 import com.hyperwallet.android.ui.user.repository.UserRepositoryFactory;
 
@@ -75,8 +76,10 @@ public class TransferPPCFundsTest {
 
     @ClassRule
     public static HyperwalletExternalResourceManager sResourceManager = new HyperwalletExternalResourceManager();
+
     @Rule
-    public HyperwalletSdkRule mHyperwalletSdkRule = new HyperwalletSdkRule();
+    public HyperwalletSdkMockRule mHyperwalletMockRule = new HyperwalletSdkMockRule();
+
     @Rule
     public HyperwalletMockWebServer mMockWebServer = new HyperwalletMockWebServer(8080);
     @Rule
@@ -104,8 +107,6 @@ public class TransferPPCFundsTest {
 
     @Before
     public void setup() {
-//        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-//                .getResourceContent("authentication_token_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("authentication_token_wallet_model_response.json")).mock();
         IdlingRegistry.getInstance().register(EspressoIdlingResource.getIdlingResource());

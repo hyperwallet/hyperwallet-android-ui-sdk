@@ -59,11 +59,13 @@ import com.hyperwallet.android.ui.testutils.rule.HyperwalletMockWebServer;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletSdkRule;
 import com.hyperwallet.android.ui.testutils.util.RecyclerViewCountAssertion;
 import com.hyperwallet.android.ui.transfer.repository.TransferRepositoryFactory;
+import com.hyperwallet.android.ui.transfer.rule.HyperwalletSdkMockRule;
 import com.hyperwallet.android.ui.transfer.view.CreateTransferActivity;
 import com.hyperwallet.android.ui.transfermethod.repository.PrepaidCardRepositoryFactory;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepository;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
 import com.hyperwallet.android.ui.user.repository.UserRepositoryFactory;
+import com.hyperwallet.android.ui.transfer.rule;
 
 import org.junit.After;
 import org.junit.Before;
@@ -84,8 +86,10 @@ public class TransferUserFundsTest {
 
     @ClassRule
     public static HyperwalletExternalResourceManager sResourceManager = new HyperwalletExternalResourceManager();
+
     @Rule
-    public HyperwalletSdkRule mHyperwalletSdkRule = new HyperwalletSdkRule();
+    public HyperwalletSdkMockRule mHyperwalletMockRule = new HyperwalletSdkMockRule();
+
     @Rule
     public HyperwalletMockWebServer mMockWebServer = new HyperwalletMockWebServer(8080);
     @Rule
@@ -100,13 +104,8 @@ public class TransferUserFundsTest {
     public void setup() {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("authentication_token_wallet_model_response.json")).mock();
-//        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-//                .getResourceContent("authentication_token_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("user_response.json")).mock();
-
-//        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-//                .getResourceContent("ppc/prepaid_card_response.json")).mock();
         IdlingRegistry.getInstance().register(EspressoIdlingResource.getIdlingResource());
     }
 
@@ -121,13 +120,6 @@ public class TransferUserFundsTest {
 
     @Test
     public void testTransferFunds_verifyTransferScreen() {
-        // Mock Response for the PPC
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("ppc/prepaid_card_response.json")).mock();
-        // Mock the response by using trm-token to fetch the card info
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("ppc/get_prepaid_card_success_response.json")).mock();
-
         // if there is sources, we load the transfer method destination
         // transfer_method_list_with_ppc_response
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
@@ -136,6 +128,7 @@ public class TransferUserFundsTest {
         //  only when transferMethods.size() > 0, get the quote by the source token
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("create_transfer_quote_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();
 
         mActivityTestRule.launchActivity(null);
 
