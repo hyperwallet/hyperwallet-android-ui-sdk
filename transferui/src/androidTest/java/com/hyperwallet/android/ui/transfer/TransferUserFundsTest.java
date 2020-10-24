@@ -65,7 +65,6 @@ import com.hyperwallet.android.ui.transfermethod.repository.PrepaidCardRepositor
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepository;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
 import com.hyperwallet.android.ui.user.repository.UserRepositoryFactory;
-import com.hyperwallet.android.ui.transfer.rule;
 
 import org.junit.After;
 import org.junit.Before;
