@@ -57,6 +57,7 @@ import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.mockwebserver.MockResponse;
+import rule.HyperwalletSdkMockRule;
 
 @RunWith(AndroidJUnit4.class)
 public class TabbedListReceiptsTest {
@@ -67,7 +68,8 @@ public class TabbedListReceiptsTest {
     @ClassRule
     public static HyperwalletExternalResourceManager sResourceManager = new HyperwalletExternalResourceManager();
     @Rule
-    public HyperwalletSdkRule mHyperwalletSdkRule = new HyperwalletSdkRule();
+    public HyperwalletSdkMockRule mHyperwalletSdkMockRule = new HyperwalletSdkMockRule();
+
     @Rule
     public HyperwalletMockWebServer mMockWebServer = new HyperwalletMockWebServer(8080);
     @Rule
