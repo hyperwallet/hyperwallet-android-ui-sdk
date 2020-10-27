@@ -150,9 +150,9 @@ public class TabbedListReceiptsViewModelTest {
     }
 
     @Test
-    public void testRetry_loadInitial() {
+    public void testRetry_loadListReceipts() {
         mTabbedListReceiptsViewModel.retry();
-        verify(mTabbedListReceiptsViewModel).loadUser();
+        assertThat(mTabbedListReceiptsViewModel.getRetryListReceipts(), is(notNullValue()));
     }
 
     @Test
