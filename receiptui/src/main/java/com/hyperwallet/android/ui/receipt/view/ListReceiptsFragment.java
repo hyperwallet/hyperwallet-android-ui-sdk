@@ -43,6 +43,8 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.hyperwallet.android.model.Error;
+import com.hyperwallet.android.model.Errors;
 import com.hyperwallet.android.model.receipt.Receipt;
 import com.hyperwallet.android.ui.common.repository.Event;
 import com.hyperwallet.android.ui.common.util.DateUtils;
@@ -56,6 +58,7 @@ import com.hyperwallet.android.ui.receipt.viewmodel.ListUserReceiptsViewModel;
 import java.util.Calendar;
 import java.util.Currency;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -72,6 +75,7 @@ public class ListReceiptsFragment extends Fragment {
     private View mEmptyTransactionPlaceholder;
     private TextView mEmptyTransactionTextView;
     private Boolean mShouldShowNoTransactionPlaceholder = Boolean.TRUE;
+    private ListReceiptsFragmentCallback callback;
 
     static ListReceiptsFragment newInstance() {
         ListReceiptsFragment listReceiptsFragment = new ListReceiptsFragment();
@@ -116,6 +120,16 @@ public class ListReceiptsFragment extends Fragment {
         mListReceiptsView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mListReceiptsView.setAdapter(mListReceiptsAdapter);
         registerObservers();
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        callback = (ListReceiptsFragmentCallback) context;
+        super.onAttach(context);
+    }
+
+    public interface ListReceiptsFragmentCallback {
+        void onConnectionError(List<Error> errors);
     }
 
     @Override
@@ -186,6 +200,15 @@ public class ListReceiptsFragment extends Fragment {
                         mEmptyTransactionPlaceholder.setVisibility(View.GONE);
                         mListReceiptsView.setVisibility(View.VISIBLE);
                     }
+                }
+            }
+        });
+
+        mReceiptViewModel.errors().observe(this, new Observer<Event<Errors>>() {
+            @Override
+            public void onChanged(Event<Errors> errorsEvent) {
+                if (errorsEvent != null && !errorsEvent.isContentConsumed()) {
+                    callback.onConnectionError(errorsEvent.getContent().getErrors());
                 }
             }
         });
