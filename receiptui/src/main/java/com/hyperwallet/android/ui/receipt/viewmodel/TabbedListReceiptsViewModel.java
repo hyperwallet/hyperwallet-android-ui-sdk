@@ -149,7 +149,6 @@ public class TabbedListReceiptsViewModel extends ViewModel {
     }
 
     public void retry() {
-        // loadUser();
         getRetryListReceipts().postValue(true);
     }
 

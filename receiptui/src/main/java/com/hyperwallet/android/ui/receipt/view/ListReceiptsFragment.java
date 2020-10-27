@@ -129,7 +129,7 @@ public class ListReceiptsFragment extends Fragment {
     }
 
     public interface ListReceiptsFragmentCallback {
-        void onConnectionError(List<Error> errors);
+        void onHandleError(List<Error> errors);
     }
 
     @Override
@@ -208,7 +208,7 @@ public class ListReceiptsFragment extends Fragment {
             @Override
             public void onChanged(Event<Errors> errorsEvent) {
                 if (errorsEvent != null && !errorsEvent.isContentConsumed()) {
-                    callback.onConnectionError(errorsEvent.getContent().getErrors());
+                    callback.onHandleError(errorsEvent.getContent().getErrors());
                 }
             }
         });

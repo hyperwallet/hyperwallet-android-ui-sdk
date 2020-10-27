@@ -149,11 +149,11 @@ public class TabbedListReceiptsViewModelTest {
         mTabbedListReceiptsViewModelFactory.create(ReceiptDetailViewModel.class);
     }
 
-//    @Test
-//    public void testRetry_loadInitial() {
-//        mTabbedListReceiptsViewModel.retry();
-//        verify(mTabbedListReceiptsViewModel).retryListReceipts();
-//    }
+    @Test
+    public void testRetry_loadListReceipts() {
+        mTabbedListReceiptsViewModel.retry();
+        assertThat(mTabbedListReceiptsViewModel.getRetryListReceipts(), is(notNullValue()));
+    }
 
     @Test
     public void testGetProgramModel_success() {
