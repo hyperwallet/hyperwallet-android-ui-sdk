@@ -3,7 +3,6 @@ package com.hyperwallet.android.ui.transfer;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.replaceText;
-import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.intent.Intents.intended;
@@ -40,7 +39,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.Espresso;
 import androidx.test.espresso.IdlingRegistry;
 import androidx.test.espresso.action.ViewActions;
@@ -56,13 +54,11 @@ import com.hyperwallet.android.model.StatusTransition;
 import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletMockWebServer;
-import com.hyperwallet.android.ui.testutils.rule.HyperwalletSdkRule;
 import com.hyperwallet.android.ui.testutils.util.RecyclerViewCountAssertion;
 import com.hyperwallet.android.ui.transfer.repository.TransferRepositoryFactory;
 import com.hyperwallet.android.ui.transfer.rule.HyperwalletSdkMockRule;
 import com.hyperwallet.android.ui.transfer.view.CreateTransferActivity;
 import com.hyperwallet.android.ui.transfermethod.repository.PrepaidCardRepositoryFactory;
-import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepository;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
 import com.hyperwallet.android.ui.user.repository.UserRepositoryFactory;
 
@@ -122,18 +118,12 @@ public class TransferUserFundsTest {
 
         // load PPC list
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("ppc/prepaid_card_response.json")).mock();
-
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("ppc/prepaid_card_response.json")).mock();
+                .getResourceContent("ppc/prepaid_cards_response.json")).mock();
 
         // load transfer method list
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
 
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
-                ;
         //  only when transferMethods.size() > 0, get the quote by the source token
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("create_transfer_quote_response.json")).mock();
@@ -173,6 +163,9 @@ public class TransferUserFundsTest {
 
     @Test
     public void testTransferFunds_verifyAddDestinationDisplayedWhenUserHasNoExternalAccounts() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("ppc/prepaid_cards_response.json")).mock();
+
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();
 
         mActivityTestRule.launchActivity(null);
@@ -193,9 +186,11 @@ public class TransferUserFundsTest {
 
     @Test
     public void testTransferFunds_verifyDestinationUpdatedAfterAddingNewExternalAccount() {
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
+                .getResourceContent("ppc/prepaid_cards_response.json")).mock();
+
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();
+
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("create_transfer_quote_response.json")).mock();
 
@@ -238,13 +233,8 @@ public class TransferUserFundsTest {
     @Test
     public void testTransferFunds_createTransferWithFX() throws InterruptedException {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("ppc/prepaid_card_response.json")).mock();
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("ppc/prepaid_card_response.json")).mock();
+                .getResourceContent("ppc/prepaid_cards_response.json")).mock();
 
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("transfer_method_list_single_bank_account_cad_response.json")).mock();
-        // Need to know why we need extra mock injection
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_single_bank_account_cad_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
@@ -339,12 +329,8 @@ public class TransferUserFundsTest {
     @Test
     public void testTransferFunds_createTransferWithNoFX() throws InterruptedException {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("ppc/prepaid_card_response.json")).mock();
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("ppc/prepaid_card_response.json")).mock();
+                .getResourceContent("ppc/prepaid_cards_response.json")).mock();
 
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
 
@@ -418,12 +404,8 @@ public class TransferUserFundsTest {
     @Test
     public void testTransferFunds_createTransferWithNotes() throws InterruptedException {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("ppc/prepaid_card_response.json")).mock();
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("ppc/prepaid_card_response.json")).mock();
+                .getResourceContent("ppc/prepaid_cards_response.json")).mock();
 
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
 
@@ -494,12 +476,8 @@ public class TransferUserFundsTest {
     @Test
     public void testTransferFunds_createTransferWithEmptyFees() throws InterruptedException {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("ppc/prepaid_card_response.json")).mock();
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("ppc/prepaid_card_response.json")).mock();
+                .getResourceContent("ppc/prepaid_cards_response.json")).mock();
 
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
 
@@ -570,12 +548,8 @@ public class TransferUserFundsTest {
     @Test
     public void testTransferFunds_createTransferWithAllFunds() throws InterruptedException {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("ppc/prepaid_card_response.json")).mock();
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("ppc/prepaid_card_response.json")).mock();
+                .getResourceContent("ppc/prepaid_cards_response.json")).mock();
 
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
 
@@ -685,12 +659,8 @@ public class TransferUserFundsTest {
     @Test
     public void testTransferFunds_createTransferWithAllFundsAndFxChange() throws InterruptedException {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("ppc/prepaid_card_response.json")).mock();
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("ppc/prepaid_card_response.json")).mock();
+                .getResourceContent("ppc/prepaid_cards_response.json")).mock();
 
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
 
@@ -801,12 +771,7 @@ public class TransferUserFundsTest {
     @Test
     public void testTransferFunds_createTransferAmountNotSetError() {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("ppc/prepaid_card_response.json")).mock();
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("ppc/prepaid_card_response.json")).mock();
-
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
+                .getResourceContent("ppc/prepaid_cards_response.json")).mock();
 
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
@@ -823,12 +788,8 @@ public class TransferUserFundsTest {
     @Test
     public void testTransferFunds_createTransferInvalidAmountError() {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("ppc/prepaid_card_response.json")).mock();
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("ppc/prepaid_card_response.json")).mock();
+                .getResourceContent("ppc/prepaid_cards_response.json")).mock();
 
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
 
@@ -847,9 +808,7 @@ public class TransferUserFundsTest {
     @Test
     public void testTransferFunds_createTransferDestinationNotSetError() {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("ppc/prepaid_card_response.json")).mock();
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("ppc/prepaid_card_response.json")).mock();
+                .getResourceContent("ppc/prepaid_cards_response.json")).mock();
 
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();
 
@@ -866,12 +825,8 @@ public class TransferUserFundsTest {
     @Test
     public void testTransferFunds_createTransferLimitError() {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("ppc/prepaid_card_response.json")).mock();
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("ppc/prepaid_card_response.json")).mock();
+                .getResourceContent("ppc/prepaid_cards_response.json")).mock();
 
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
 
@@ -898,12 +853,8 @@ public class TransferUserFundsTest {
     @Test
     public void testTransferFunds_createTransferInsufficientFundsError() {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("ppc/prepaid_card_response.json")).mock();
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("ppc/prepaid_card_response.json")).mock();
+                .getResourceContent("ppc/prepaid_cards_response.json")).mock();
 
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
@@ -927,12 +878,8 @@ public class TransferUserFundsTest {
     @Test
     public void testTransferFunds_createTransferMinimumAmountError() {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("ppc/prepaid_card_response.json")).mock();
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("ppc/prepaid_card_response.json")).mock();
+                .getResourceContent("ppc/prepaid_cards_response.json")).mock();
 
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
 
@@ -958,12 +905,8 @@ public class TransferUserFundsTest {
     @Test
     public void testTransferFunds_createTransferInvalidSourceError() {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("ppc/prepaid_card_response.json")).mock();
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("ppc/prepaid_card_response.json")).mock();
+                .getResourceContent("ppc/prepaid_cards_response.json")).mock();
 
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
 
@@ -988,12 +931,8 @@ public class TransferUserFundsTest {
     @Test
     public void testTransferFunds_createTransferConnectionError() {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("ppc/prepaid_card_response.json")).mock();
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("ppc/prepaid_card_response.json")).mock();
+                .getResourceContent("ppc/prepaid_cards_response.json")).mock();
 
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
 
@@ -1031,12 +970,8 @@ public class TransferUserFundsTest {
     @Test
     public void testTransferFunds_createTransferConfirmationConnectionErrorCancel() throws InterruptedException {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("ppc/prepaid_card_response.json")).mock();
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("ppc/prepaid_card_response.json")).mock();
+                .getResourceContent("ppc/prepaid_cards_response.json")).mock();
 
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
 
@@ -1084,12 +1019,8 @@ public class TransferUserFundsTest {
     @Test
     public void testTransferFunds_createTransferConfirmationConnectionErrorTryAgain() throws InterruptedException {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("ppc/prepaid_card_response.json")).mock();
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("ppc/prepaid_card_response.json")).mock();
+                .getResourceContent("ppc/prepaid_cards_response.json")).mock();
 
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
 
@@ -1160,18 +1091,7 @@ public class TransferUserFundsTest {
     public void testTransferFragment_verifyTransferFromPrepaidCard() {
         // Mock the response with PPC source
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("ppc/prepaid_card_response.json")).mock();
-
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("ppc/prepaid_card_response.json")).mock();
-
-        // Mock the response by using trm-token to fetch the card info
-//        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-//                .getResourceContent("ppc/get_prepaid_card_success_response.json")).mock();
-
-        // if there is sources, we load the transfer method destination with PPC transfer method
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
+                .getResourceContent("ppc/prepaid_cards_response.json")).mock();
 
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
@@ -1205,18 +1125,7 @@ public class TransferUserFundsTest {
     public void testTransferFragment_verifyTransferToPrepaidCard() {
         // Mock the response with PPC source
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("ppc/prepaid_card_response.json")).mock();
-
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("ppc/prepaid_card_response.json")).mock();
-
-        // Mock the response by using trm-token to fetch the card info
-//        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-//                .getResourceContent("ppc/get_prepaid_card_success_response.json")).mock();
-
-        // if there is sources, we load the transfer method destination with PPC transfer method
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("transfer_method_list_with_one_ppc_response.json")).mock();
+                .getResourceContent("ppc/prepaid_cards_response.json")).mock();
 
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_with_one_ppc_response.json")).mock();
@@ -1242,19 +1151,7 @@ public class TransferUserFundsTest {
     public void testTransferFragment_verifyTransferFromPrepaidCardConfirmation() {
 
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("ppc/prepaid_card_response.json")).mock();
-
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("ppc/prepaid_card_response.json")).mock();
-
-        // Mock the response by using trm-token to fetch the card info
-//        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-//                .getResourceContent("ppc/get_prepaid_card_success_response.json")).mock();
-
-        // if there is sources, we load the transfer method destination
-        // transfer_method_list_with_ppc_response
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
+                .getResourceContent("ppc/prepaid_cards_response.json")).mock();
 
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
