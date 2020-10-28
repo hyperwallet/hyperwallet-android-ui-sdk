@@ -720,7 +720,7 @@ public class CreateTransferViewModelTest {
         viewModel.retry();
 
         verify(mUserRepository, times(1)).loadUser(any(UserRepository.LoadUserCallback.class));
-        verify(mTransferMethodRepository, times(3)).loadLatestTransferMethod(any(TransferMethodRepository
+        verify(mTransferMethodRepository, times(2)).loadLatestTransferMethod(any(TransferMethodRepository
                 .LoadTransferMethodCallback.class));
     }
 
@@ -793,7 +793,7 @@ public class CreateTransferViewModelTest {
         viewModel.retry();
 
         verify(mUserRepository, times(1)).loadUser(any(UserRepository.LoadUserCallback.class));
-        verify(mTransferMethodRepository, times(3)).loadLatestTransferMethod(any(TransferMethodRepository
+        verify(mTransferMethodRepository, times(2)).loadLatestTransferMethod(any(TransferMethodRepository
                 .LoadTransferMethodCallback.class));
     }
 
@@ -857,9 +857,9 @@ public class CreateTransferViewModelTest {
         viewModel.retry();
 
         verify(mUserRepository, times(1)).loadUser(any(UserRepository.LoadUserCallback.class));
-        verify(mTransferMethodRepository, times(2)).loadLatestTransferMethod(any(TransferMethodRepository
+        verify(mTransferMethodRepository, times(1)).loadLatestTransferMethod(any(TransferMethodRepository
                 .LoadTransferMethodCallback.class));
-        verify(mTransferRepository, times(3)).createTransfer(any(Transfer.class),
+        verify(mTransferRepository, times(2)).createTransfer(any(Transfer.class),
                 any(TransferRepository.CreateTransferCallback.class));
         verify(mPrepaidCardRepository, times(1)).loadPrepaidCards(
                 any(PrepaidCardRepository.LoadPrepaidCardsCallback.class));
@@ -908,9 +908,9 @@ public class CreateTransferViewModelTest {
         viewModel.retry();
 
         verify(mUserRepository, times(1)).loadUser(any(UserRepository.LoadUserCallback.class));
-        verify(mTransferMethodRepository, times(2)).loadLatestTransferMethod(any(TransferMethodRepository
+        verify(mTransferMethodRepository, times(1)).loadLatestTransferMethod(any(TransferMethodRepository
                 .LoadTransferMethodCallback.class));
-        verify(mTransferRepository, times(3)).createTransfer(any(Transfer.class),
+        verify(mTransferRepository, times(2)).createTransfer(any(Transfer.class),
                 any(TransferRepository.CreateTransferCallback.class));
     }
 
@@ -967,9 +967,9 @@ public class CreateTransferViewModelTest {
         viewModel.retry();
 
         verify(mUserRepository, times(1)).loadUser(any(UserRepository.LoadUserCallback.class));
-        verify(mTransferMethodRepository, times(2)).loadLatestTransferMethod(any(TransferMethodRepository
+        verify(mTransferMethodRepository, times(1)).loadLatestTransferMethod(any(TransferMethodRepository
                 .LoadTransferMethodCallback.class));
-        verify(mTransferRepository, times(3)).createTransfer(any(Transfer.class),
+        verify(mTransferRepository, times(2)).createTransfer(any(Transfer.class),
                 any(TransferRepository.CreateTransferCallback.class));
     }
 
@@ -1051,9 +1051,9 @@ public class CreateTransferViewModelTest {
         viewModel.retry();
 
         verify(mUserRepository, times(1)).loadUser(any(UserRepository.LoadUserCallback.class));
-        verify(mTransferMethodRepository, times(2)).loadLatestTransferMethod(any(TransferMethodRepository
+        verify(mTransferMethodRepository, times(1)).loadLatestTransferMethod(any(TransferMethodRepository
                 .LoadTransferMethodCallback.class));
-        verify(mTransferRepository, times(3)).createTransfer(any(Transfer.class),
+        verify(mTransferRepository, times(2)).createTransfer(any(Transfer.class),
                 any(TransferRepository.CreateTransferCallback.class));
     }
 
@@ -1284,7 +1284,7 @@ public class CreateTransferViewModelTest {
         doReturn(ProgramModel.WALLET_MODEL).when(viewModel).getProgramModel();
         viewModel.refreshTransferDestination();
         verify(mUserRepository, times(1)).loadUser(any(UserRepository.LoadUserCallback.class));
-        verify(mTransferMethodRepository, times(2)).loadLatestTransferMethod(any(TransferMethodRepository
+        verify(mTransferMethodRepository, times(1)).loadLatestTransferMethod(any(TransferMethodRepository
                 .LoadTransferMethodCallback.class));
         verify(mPrepaidCardRepository, times(1)).loadPrepaidCards(
                 any(PrepaidCardRepository.LoadPrepaidCardsCallback.class));

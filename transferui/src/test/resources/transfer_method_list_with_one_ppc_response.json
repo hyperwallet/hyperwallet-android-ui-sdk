@@ -1,0 +1,49 @@
+{
+  "count": 1,
+  "offset": 0,
+  "limit": 10,
+  "data": [
+    {
+      "token": "trm-token",
+      "type": "PREPAID_CARD",
+      "status": "ACTIVATED",
+      "verificationStatus": "NOT_REQUIRED",
+      "createdOn": "2019-07-24T21:08:43",
+      "transferMethodCountry": "US",
+      "transferMethodCurrency": "USD",
+      "cardType": "VIRTUAL",
+      "cardPackage": "L1",
+      "cardNumber": "************4281",
+      "cardBrand": "VISA",
+      "dateOfExpiry": "2023-07",
+      "links": [
+        {
+          "params": {
+            "rel": "self"
+          },
+          "href": "https://localhost.com/rest/v3/users/usr-token/transfer-methods/trm-token"
+        }
+      ]
+    }
+  ],
+  "links": [
+    {
+      "params": {
+        "rel": "self"
+      },
+      "href": "https://localhost.com/rest/v3/users/usr-token/transfer-methods?offset=0&limit=10&createdAfter=2018-01-01T17%3A12%3A00"
+    },
+    {
+      "params": {
+        "rel": "next"
+      },
+      "href": "https://localhost.com/rest/v3/users/usr-token/transfer-methods?offset=10&limit=10&createdAfter=2018-01-01T17%3A12%3A00"
+    },
+    {
+      "params": {
+        "rel": "last"
+      },
+      "href": "https://localhost.com/rest/v3/users/usr-token/transfer-methods?offset=22&limit=10&createdAfter=2018-01-01T17%3A12%3A00"
+    }
+  ]
+}
