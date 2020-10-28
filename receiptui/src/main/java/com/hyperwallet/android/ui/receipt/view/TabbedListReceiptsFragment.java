@@ -107,6 +107,11 @@ public class TabbedListReceiptsFragment extends Fragment {
         registerObservers();
     }
 
+    private void retryCurrentListFragment() {
+        int position = mViewPager.getCurrentItem();
+        ((ListReceiptsFragment) mViewPager.getAdapter().instantiateItem(mViewPager, position)).retry();
+    }
+
     private void registerObservers() {
         mTabbedListReceiptsViewModel.getPrepaidCards().observe(this, new Observer<List<PrepaidCard>>() {
             @Override
@@ -137,6 +142,12 @@ public class TabbedListReceiptsFragment extends Fragment {
             }
         });
 
+        mTabbedListReceiptsViewModel.getRetryListReceipts().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                retryCurrentListFragment();
+            }
+        });
     }
 
     class ListReceiptsViewPagerAdapter extends FragmentStatePagerAdapter {

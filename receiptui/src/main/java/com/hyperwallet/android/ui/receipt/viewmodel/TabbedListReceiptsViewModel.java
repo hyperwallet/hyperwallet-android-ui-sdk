@@ -45,6 +45,7 @@ public class TabbedListReceiptsViewModel extends ViewModel {
     private MutableLiveData<User> mUser = new MutableLiveData<User>();
     private MutableLiveData<List<PrepaidCard>> mPrepaidCards = new MutableLiveData<List<PrepaidCard>>();
     private MutableLiveData<Event<Errors>> mErrors = new MutableLiveData<Event<Errors>>();
+    private MutableLiveData<Boolean> retryListReceipts = new MutableLiveData<Boolean>();
     public ProgramModel mProgramModel;
     private boolean mIsInitialized;
 
@@ -63,6 +64,10 @@ public class TabbedListReceiptsViewModel extends ViewModel {
 
     public MutableLiveData<Event<Errors>> getErrors() {
         return mErrors;
+    }
+
+    public MutableLiveData<Boolean> getRetryListReceipts() {
+        return retryListReceipts;
     }
 
     public TabbedListReceiptsViewModel(
@@ -144,7 +149,7 @@ public class TabbedListReceiptsViewModel extends ViewModel {
     }
 
     public void retry() {
-        loadUser();
+        getRetryListReceipts().postValue(true);
     }
 
     public static class TabbedListReceiptsViewModelFactory implements ViewModelProvider.Factory {
