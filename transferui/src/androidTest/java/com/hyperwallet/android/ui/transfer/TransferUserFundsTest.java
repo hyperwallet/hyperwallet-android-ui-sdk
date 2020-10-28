@@ -192,6 +192,9 @@ public class TransferUserFundsTest {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();
 
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
+
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("create_transfer_quote_response.json")).mock();
 
         mActivityIntentsTestRule.launchActivity(null);
@@ -938,6 +941,7 @@ public class TransferUserFundsTest {
 
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("create_transfer_quote_response.json")).mock();
+
         mMockWebServer.getServer().enqueue(new MockResponse().setResponseCode(HTTP_OK).setBody(sResourceManager
                 .getResourceContent("create_transfer_no_fx_response.json")).setBodyDelay(10500, TimeUnit
                 .MILLISECONDS));
