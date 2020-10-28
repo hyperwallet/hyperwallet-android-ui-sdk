@@ -163,7 +163,6 @@ public class CreateTransferViewModel extends ViewModel {
                 loadTransferSource();
             } else {
                 loadTransferSource(mSourceToken);
-                loadTransferDestination(mSourceToken);
             }
         }
     }
@@ -413,7 +412,6 @@ public class CreateTransferViewModel extends ViewModel {
                     sourceWrapperForAvailableFunds.setType(BANK_ACCOUNT);
                     sources.add(sourceWrapperForAvailableFunds);
                     loadPrepaidCardList(sources);
-                    loadTransferDestination(mSourceToken);
                 }
 
                 @Override
