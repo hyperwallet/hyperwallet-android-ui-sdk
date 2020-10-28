@@ -119,11 +119,21 @@ public class TransferUserFundsTest {
 
     @Test
     public void testTransferFunds_verifyTransferScreen() {
-        // if there is sources, we load the transfer method destination
-        // transfer_method_list_with_ppc_response
+
+        // load PPC list
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("ppc/prepaid_card_response.json")).mock();
+
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("ppc/prepaid_card_response.json")).mock();
+
+        // load transfer method list
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
 
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
+                ;
         //  only when transferMethods.size() > 0, get the quote by the source token
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("create_transfer_quote_response.json")).mock();
@@ -131,26 +141,28 @@ public class TransferUserFundsTest {
 
         mActivityTestRule.launchActivity(null);
 
+        // Available max amount
+        onView(withId(R.id.transfer_all_funds)).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_all_funds)).check(matches(not(isSelected())));
+        onView(withId(R.id.transfer_amount)).perform(nestedScrollTo()).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_amount_currency)).check(matches(withText("USD")));
+
+        // onView(withId(R.id.transfer_summary)).check(matches(isDisplayed()));
+        String availableFundUSD = getAvailableFund("998.00", "USD");
+        onView(withId(R.id.transfer_summary)).check(matches(withText(availableFundUSD)));
+
         // Transfer From
         verifyTransferFromAvailbleFunds();
 
         // Transfer To
-        onView(withId(R.id.add_transfer_destination)).check(matches(not(isDisplayed())));
-        onView(withId(R.id.transfer_destination)).perform(nestedScrollTo()).check(matches(isDisplayed()));
+        // destination_data_container
+        onView(withId(R.id.transfer_destination)).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_icon)).check(matches(withText(R.string.bank_account_font_icon)));
         onView(withId(R.id.transfer_destination_title)).check(matches(withText(R.string.bank_account)));
         onView(withId(R.id.transfer_destination_description_1)).check(matches(withText("United States")));
         onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("ending in 0616")));
 
-        onView(withId(R.id.transfer_amount)).perform(nestedScrollTo()).check(matches(isDisplayed()));
-        onView(withId(R.id.transfer_amount_currency)).check(matches(withText("USD")));
-
-        //Check that the toggle is disabled by default
-        onView(withId(R.id.transfer_all_funds)).perform(nestedScrollTo()).check(matches(isDisplayed()));
-        onView(withId(R.id.transfer_all_funds)).check(matches(not(isSelected())));
-        onView(withId(R.id.transfer_summary)).perform(nestedScrollTo()).check(matches(isDisplayed()));
-        String availableFundUSD = getAvailableFund("998.00", "USD");
-        onView(withId(R.id.transfer_summary)).check(matches(withText(availableFundUSD)));
+        //Espresso.onView(ViewMatchers.withId(R.id.create_transfer_container)).perform(ViewActions.swipeUp());
 
         onView(withId(R.id.transfer_action_button)).perform(nestedScrollTo());
         onView(withId(R.id.transfer_notes)).perform(nestedScrollTo()).check(matches(isDisplayed()));
@@ -226,6 +238,14 @@ public class TransferUserFundsTest {
     @Test
     public void testTransferFunds_createTransferWithFX() throws InterruptedException {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("ppc/prepaid_card_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("ppc/prepaid_card_response.json")).mock();
+
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_list_single_bank_account_cad_response.json")).mock();
+        // Need to know why we need extra mock injection
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_single_bank_account_cad_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("create_transfer_quote_fx_response.json")).mock();
@@ -259,6 +279,8 @@ public class TransferUserFundsTest {
         onView(withId(R.id.transfer_funds_header)).check(
                 matches(withText(R.string.mobileTransferFundsHeader)));
 
+        onView(withId(R.id.transfer_summary)).perform(nestedScrollTo()).check(matches(isDisplayed()));
+
         // Transfer From
         verifyTransferFromAvailbleFunds();
 
@@ -270,14 +292,9 @@ public class TransferUserFundsTest {
         onView(withId(R.id.transfer_destination_description_1)).check(matches(withText("Canada")));
         onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("ending in 5121")));
 
-        onView(withId(R.id.transfer_summary)).perform(nestedScrollTo()).check(matches(isDisplayed()));
-        String availableFundCAD = getAvailableFund("1,157.40", "CAD");
-        onView(withId(R.id.transfer_summary)).check(matches(withText(availableFundCAD)));
-
         onView(withId(R.id.transfer_amount)).perform(nestedScrollTo(), replaceText("150.00"));
         onView(withId(R.id.transfer_action_button)).perform(nestedScrollTo(), click());
 
-        onView(withId(R.id.list_foreign_exchange)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.list_foreign_exchange)).check(new RecyclerViewCountAssertion(1));
         onView(withId(R.id.list_foreign_exchange)).check(
                 matches(atPosition(0, hasDescendant(
@@ -322,7 +339,15 @@ public class TransferUserFundsTest {
     @Test
     public void testTransferFunds_createTransferWithNoFX() throws InterruptedException {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("ppc/prepaid_card_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("ppc/prepaid_card_response.json")).mock();
+
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
+
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("create_transfer_quote_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
@@ -393,7 +418,15 @@ public class TransferUserFundsTest {
     @Test
     public void testTransferFunds_createTransferWithNotes() throws InterruptedException {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("ppc/prepaid_card_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("ppc/prepaid_card_response.json")).mock();
+
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
+
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("create_transfer_quote_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
@@ -461,7 +494,15 @@ public class TransferUserFundsTest {
     @Test
     public void testTransferFunds_createTransferWithEmptyFees() throws InterruptedException {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("ppc/prepaid_card_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("ppc/prepaid_card_response.json")).mock();
+
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
+
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("create_transfer_quote_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
@@ -529,7 +570,15 @@ public class TransferUserFundsTest {
     @Test
     public void testTransferFunds_createTransferWithAllFunds() throws InterruptedException {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("ppc/prepaid_card_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("ppc/prepaid_card_response.json")).mock();
+
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
+
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("create_transfer_quote_all_funds_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
@@ -636,7 +685,15 @@ public class TransferUserFundsTest {
     @Test
     public void testTransferFunds_createTransferWithAllFundsAndFxChange() throws InterruptedException {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("ppc/prepaid_card_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("ppc/prepaid_card_response.json")).mock();
+
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
+
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("create_transfer_quote_all_funds_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
@@ -744,7 +801,16 @@ public class TransferUserFundsTest {
     @Test
     public void testTransferFunds_createTransferAmountNotSetError() {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("ppc/prepaid_card_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("ppc/prepaid_card_response.json")).mock();
+
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
+
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
+
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("create_transfer_quote_response.json")).mock();
 
@@ -1028,13 +1094,64 @@ public class TransferUserFundsTest {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("ppc/prepaid_card_response.json")).mock();
 
-        // Mock the response by using trm-token to fetch the card info
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("ppc/get_prepaid_card_success_response.json")).mock();
+                .getResourceContent("ppc/prepaid_card_response.json")).mock();
+
+        // Mock the response by using trm-token to fetch the card info
+//        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+//                .getResourceContent("ppc/get_prepaid_card_success_response.json")).mock();
 
         // if there is sources, we load the transfer method destination with PPC transfer method
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
+
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
+
+        //  only when transferMethods.size() > 0, get the quote by the source token
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("create_transfer_quote_response.json")).mock();
+
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("create_transfer_quote_response.json")).mock();
+
+        mActivityTestRule.launchActivity(null);
+
+        // Transfer From
+        onView(ViewMatchers.withText(R.string.availableFunds))
+                .perform(ViewActions.click());
+
+        // Select PPC from the Select From list
+        String ppcInfo = VISA + MASK + "9285";
+        onView(ViewMatchers.withText(ppcInfo))
+                        .perform(ViewActions.click());
+
+        // Verify Transfer From is Available Funds
+        // Select PPC from the Select From list
+        verifyTransferFromPPC();
+        Espresso.onView(ViewMatchers.withText(ppcInfo))
+                .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
+    }
+
+    @Test
+    public void testTransferFragment_verifyTransferToPrepaidCard() {
+        // Mock the response with PPC source
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("ppc/prepaid_card_response.json")).mock();
+
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("ppc/prepaid_card_response.json")).mock();
+
+        // Mock the response by using trm-token to fetch the card info
+//        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+//                .getResourceContent("ppc/get_prepaid_card_success_response.json")).mock();
+
+        // if there is sources, we load the transfer method destination with PPC transfer method
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_list_with_one_ppc_response.json")).mock();
+
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_list_with_one_ppc_response.json")).mock();
 
         //  only when transferMethods.size() > 0, get the quote by the source token
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
@@ -1044,79 +1161,13 @@ public class TransferUserFundsTest {
 
         // Transfer From
         verifyTransferFromAvailbleFunds();
-        onView(ViewMatchers.withId(R.id.source_data_container))
-                        .perform(ViewActions.click());
-        // Select PPC from the Select From list
-        onView(ViewMatchers.withText(R.string.prepaid_card))
-                        .perform(ViewActions.click());
-
-        // Verify Transfer From is Available Funds
-        // Select PPC from the Select From list
-        verifyTransferFromPPC();
-        String ppcInfo = VISA + MASK + "9285";
-        Espresso.onView(ViewMatchers.withId(R.id.transfer_destination_description_1))
-                .check(ViewAssertions.matches(ViewMatchers.withText(ppcInfo)));
-    }
-
-    @Test
-    public void testTransferFragment_verifyTransferToPrepaidCard() {
-        // Mock the response with PPC source
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("ppc/prepaid_card_response.json")).mock();
-        // Mock the response by using trm-token to fetch the card info
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("ppc/get_prepaid_card_success_response.json")).mock();
-
-        // if there is sources, we load the transfer method destination with PPC transfer method
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("transfer_method_list_with_one_ppc_response.json")).mock();
-
-        //  only when transferMethods.size() > 0, get the quote by the source token
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("create_transfer_quote_response.json")).mock();
-
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("create_transfer_quote_all_funds_response.json")).mock();
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("create_transfer_all_funds_response.json")).mock();
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("schedule_transfer_success_response.json")).mock();
-
-        mActivityTestRule.launchActivity(null);
 
         // Select Transfer To as Prepaid Card from the Transfer method list
-        Espresso.onView(ViewMatchers.withId(R.id.destination_data_container))
-                .perform(ViewActions.click());
-        Espresso.onView(ViewMatchers.withText(R.string.prepaid_card))
-                .perform(ViewActions.click());
+        Espresso.onView(ViewMatchers.withText(R.string.prepaid_card));
         String ppcInfo = VISA + MASK + "9285";
         Espresso.onView(ViewMatchers.withId(R.id.transfer_destination_description_1))
-                .check(ViewAssertions.matches(ViewMatchers.withText(ppcInfo)));
-
-        // Assert Transfer From will show Available funds
-        onView(withId(R.id.transfer_source_title)).check(matches(withText(R.string.availableFunds)));
-
-        // Select All funds
-        onView(withId(R.id.transfer_all_funds)).perform(nestedScrollTo(), click());
-        onView(withId(R.id.transfer_amount)).check(matches(withText("288.05")));
-
-        // Tab Transfer button
-        onView(withId(R.id.transfer_action_button)).perform(nestedScrollTo(), click());
-
-        // Assere Transfer From is Available funds
-        onView(withId(R.id.source_header)).check(matches(isDisplayed()));
-        onView(withId(R.id.source_header)).check(matches(withText(R.string.mobileTransferFromLabel)));
-        onView(withId(R.id.transfer_source)).perform(nestedScrollTo())
-                .check(matches(isDisplayed()));
-        onView(withId(R.id.transfer_source_icon)).check(matches(isDisplayed()));
-        onView(withId(R.id.transfer_source_title)).check(matches(withText(R.string.availableFunds)));
-
-        // Assert Transfer To is Prepaid Card
-        onView(withId(R.id.add_transfer_destination)).check(matches(not(isDisplayed())));
-        onView(withId(R.id.transfer_destination)).perform(nestedScrollTo()).check(matches(isDisplayed()));
-        onView(withId(R.id.transfer_destination_icon)).check(matches(withText(R.string.prepaid_card_font_icon)));
-        onView(withId(R.id.transfer_destination_title)).check(matches(withText(R.string.prepaid_card)));
-        onView(withId(R.id.transfer_destination_description_1)).check(matches(withText(ppcInfo)));
+                .check(ViewAssertions.matches(ViewMatchers.withText("United States")));
+        Espresso.onView(ViewMatchers.withText(ppcInfo));
     }
 
     @Test
@@ -1124,12 +1175,19 @@ public class TransferUserFundsTest {
 
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("ppc/prepaid_card_response.json")).mock();
-        // Mock the response by using trm-token to fetch the card info
+
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("ppc/get_prepaid_card_success_response.json")).mock();
+                .getResourceContent("ppc/prepaid_card_response.json")).mock();
+
+        // Mock the response by using trm-token to fetch the card info
+//        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+//                .getResourceContent("ppc/get_prepaid_card_success_response.json")).mock();
 
         // if there is sources, we load the transfer method destination
         // transfer_method_list_with_ppc_response
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
+
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
 
@@ -1166,30 +1224,33 @@ public class TransferUserFundsTest {
 
         // Transfer From
         verifyTransferFromAvailbleFunds();
-        onView(ViewMatchers.withId(R.id.source_data_container))
+        onView(ViewMatchers.withText(R.string.availableFunds))
                 .perform(ViewActions.click());
+
         // Select PPC from the Select From list
-        onView(ViewMatchers.withText(R.string.prepaid_card))
+        String ppcInfo = VISA + MASK + "9285";
+        onView(ViewMatchers.withText(ppcInfo))
                 .perform(ViewActions.click());
 
         // Verify Transfer From is Available Funds
         // Select PPC from the Select From list
         verifyTransferFromPPC();
-        onView(ViewMatchers.withText(R.id.transfer_source_description_1)).check(matches(withText("?")));
+        Espresso.onView(ViewMatchers.withText(ppcInfo))
+                .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
 
         onView(withId(R.id.transfer_all_funds)).perform(nestedScrollTo(), click());
         onView(withId(R.id.transfer_amount)).check(matches(withText("288.05")));
 
-        // tab Transfer button
+        // tab Transfer button to navigate to Confirmation Details
         onView(withId(R.id.transfer_action_button)).perform(nestedScrollTo(), click());
 
+        // Confirmation Details
         // Assert Transfer From
         verifyTransferFromPPC();
-        String ppcInfo = VISA + MASK + "9285";
-        onView(ViewMatchers.withId(R.id.transfer_source_description_1)).check(matches(withText(ppcInfo)));
+        Espresso.onView(ViewMatchers.withText(ppcInfo))
+                .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
 
         // Assert Transfer To
-        onView(withId(R.id.add_transfer_destination)).check(matches(not(isDisplayed())));
         onView(withId(R.id.transfer_destination)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_destination_icon)).check(matches(withText(R.string.bank_account_font_icon)));
         onView(withId(R.id.transfer_destination_title)).check(matches(withText(R.string.bank_account)));
@@ -1257,6 +1318,7 @@ public class TransferUserFundsTest {
     }
 
     private void verifyTransferFromPPC() {
+        onView(withId(R.id.source_header)).perform(nestedScrollTo());
         onView(withId(R.id.source_header)).check(matches(isDisplayed()));
         onView(withId(R.id.source_header)).check(matches(withText(R.string.mobileTransferFromLabel)));
 
