@@ -1,0 +1,23 @@
+{
+  "token": "trm-token",
+  "type": "PREPAID_CARD",
+  "status": "ACTIVATED",
+  "verificationStatus": "NOT_REQUIRED",
+  "createdOn": "2020-05-08T23:03:10",
+  "transferMethodCountry": "CA",
+  "transferMethodCurrency": "USD",
+  "cardType": "VIRTUAL",
+  "cardPackage": "L1",
+  "cardNumber": "************9285",
+  "cardBrand": "VISA",
+  "dateOfExpiry": "2024-05",
+  "userToken": "usr-12345",
+  "links": [
+    {
+      "params": {
+        "rel": "self"
+      },
+      "href":"https://localhost/rest/v3/users/usr-12345/transfer-methods/trm-token"
+    }
+  ]
+}
