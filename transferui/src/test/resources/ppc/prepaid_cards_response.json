@@ -51,28 +51,12 @@
       ]
     }
   ],
-  "token": "trm-fake-token",
-  "type": "PREPAID_CARD",
-  "status": "ACTIVATED",
-  "verificationStatus": "VERIFIED",
-  "createdOn": "2019-06-20T22:49:12",
-  "transferMethodCountry": "US",
-  "transferMethodCurrency": "USD",
-  "cardType": "VIRTUAL",
-  "cardPackage": "L1",
-  "cardNumber": "************8766",
-  "cardBrand": "VISA",
-  "dateOfExpiry": "2023-06",
   "links": [
     {
       "params": {
         "rel": "self"
       },
-<<<<<<< HEAD
       "href": "https://localhost:8080/rest/v3/users/usr-token/prepaid-cards?offset=0&limit=10&sortBy=-createdOn&createdAfter=2018-01-01T17%3A12%3A00&status=ACTIVATED"
-=======
-      "href": "https://localhost:8181/rest/v3/users/test-user-token/prepaid-cards/trm-fake-token"
->>>>>>> 82d273df360ae71bff807a547a374af1863ff5c1
     }
   ]
 }
