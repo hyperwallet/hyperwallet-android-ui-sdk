@@ -22,7 +22,7 @@
 
     <string name="mobileNoTransactionsUser" translatable="false">There\'s no activity to display.</string>
     <string name="mobileNoTransactionsPrepaidCard" translatable="false">No transactions in the past 365 days</string>
-    <string name="title_transfer_funds">Transfer Funds</string>
+    <string name="title_transfer_funds">Transfer</string>
     <string name="font_icon_placeholder">\ue908</string>
     <string name="text_placeholder">Placeholder</string>
 
@@ -42,7 +42,7 @@
     <string name="generic_fee_refund">Generic Fee Refund</string>
     <string name="monthly_fee">Monthly Fee</string>
     <string name="monthly_fee_refund">Monthly Fee Refund</string>
-    <string name="payment_expiry_fee">Payment Expiry Fee</string>
+    <string name="payment_expiry_fee">Payment Expiration Fee</string>
     <string name="payment_fee">Payment Fee</string>
     <string name="processing_fee">Processing Fee</string>
     <string name="standard_shipping_fee">Standard Shipping Fee</string>
@@ -51,7 +51,7 @@
     <!--Generic payment types-->
     <string name="adjustment">Balance Adjustment</string>
     <string name="foreign_exchange">Foreign Exchange</string>
-    <string name="deposit">Funds Deposit</string>
+    <string name="deposit">Payment</string>
     <string name="manual_adjustment">Adjustment</string>
     <string name="payment_expiration">Payment Expired</string>
 
@@ -65,7 +65,7 @@
     <string name="card_activation_fee">Card Activation Fee</string>
     <string name="card_activation_fee_waiver">Card Activation Fee Waiver</string>
     <string name="card_fee">Card Fee</string>
-    <string name="manual_transfer_to_prepaid_card">Card Load</string>
+    <string name="manual_transfer_to_prepaid_card">Transfer to Card</string>
     <string name="prepaid_card_balance_inquiry_fee">Balance Inquiry Fee</string>
     <string name="prepaid_card_cash_advance">Cash Advance</string>
     <string name="prepaid_card_disputed_charge_refund">Disputed Charge Refund</string>
@@ -73,15 +73,15 @@
     <string name="prepaid_card_domestic_cash_withdrawal_fee">ATM Withdrawal</string>
     <string name="prepaid_card_exchange_rate_difference">PREPAID_CARD_EXCHANGE_RATE_DIFFERENCE
     </string>
-    <string name="prepaid_card_manual_unload">Card Unload</string>
+    <string name="prepaid_card_manual_unload">Transfer from Card</string>
     <string name="prepaid_card_overseas_cash_withdrawal_fee">ATM Withdrawal</string>
     <string name="prepaid_card_pin_change_fee">PIN Change Fee</string>
     <string name="prepaid_card_refund">Refund</string>
     <string name="prepaid_card_replacement_fee">Card Replacement Fee</string>
     <string name="prepaid_card_sale">Transaction</string>
     <string name="prepaid_card_sale_reversal">Reversed Transaction</string>
-    <string name="prepaid_card_unload">Card Unload</string>
-    <string name="transfer_to_prepaid_card">Card Load</string>
+    <string name="prepaid_card_unload">Transfer from Card</string>
+    <string name="transfer_to_prepaid_card">Transfer to Card</string>
     <!---->
     <!--Donation types-->
     <string name="donation">Donation</string>
@@ -106,7 +106,7 @@
     <!--User and program account types-->
     <string name="account_closure">Account Closure</string>
     <string name="account_closure_fee">Account Closure Fee</string>
-    <string name="account_unload">Funds Unloaded</string>
+    <string name="account_unload">Funds Return</string>
     <string name="dormant_user_fee">Dormant User Account Fee</string>
     <string name="dormant_user_fee_refund">Dormant User Account Fee Refund</string>
     <string name="payment">Payment</string>
@@ -117,7 +117,9 @@
     <string name="transfer_to_program_account">Transfer to Program</string>
     <string name="transfer_to_user">Transfer to User</string>
     <string name="transfer_to_paypal_account">PayPal</string>
-    <string name="transfer_to_bank_card">Debit Card</string>
+    <string name="transfer_to_bank_card">Bank Card</string>
+    <string name="transfer_to_debit_card">Debit Card</string>
+    <string name="prepaid_card_transfer_return">Prepaid Card Load Return</string>
     <!---->
     <!--Virtual incentive types-->
     <string name="virtual_incentive_cancellation">Promo Cancellation</string>
@@ -139,10 +141,10 @@
     <!-- New exposed receipt types -->
     <string name="paypal_account_transfer_return">Cashout Return</string>
     <string name="venmo_account_transfer_return">Cashout Return</string>
-    <string name="prepaid_card_account_deposit">Portal deposit</string>
+    <string name="prepaid_card_account_deposit">Account Deposit</string>
     <string name="prepaid_card_annual_fee_discount">Annual fee discount</string>
-    <string name="prepaid_card_bill_reprint_fee">Bill re-print</string>
-    <string name="prepaid_card_atm_or_cash_advance_fee">ATM Fee/Cash Advance Fee</string>
+    <string name="prepaid_card_bill_reprint_fee">Bill Reprint Fee</string>
+    <string name="prepaid_card_atm_or_cash_advance_fee">ATM/Cash Advance Fee</string>
     <string name="prepaid_card_cash_advance_chargeback">Cash Advance Chargeback</string>
     <string name="prepaid_card_cash_advance_chargeback_reversal">Cash Advance Chargeback Reversal</string>
     <string name="prepaid_card_cash_advance_repress">Cash Advance Repress</string>
@@ -151,13 +153,13 @@
     <string name="prepaid_card_chargeback_refund">Chargeback Refund</string>
     <string name="prepaid_card_chargeback_refund_reversal">Chargeback Refund Reversal</string>
     <string name="prepaid_card_chargeback_reversal">Chargeback Reversal</string>
-    <string name="prepaid_card_commission_or_fee">Fee / Commission</string>
+    <string name="prepaid_card_commission_or_fee">Fee/Commission</string>
     <string name="prepaid_card_debit_transfer">Debit/Transfers</string>
-    <string name="prepaid_card_document_request_fee">Requests for copies of documents</string>
-    <string name="prepaid_card_emergency_cash">Emergency money</string>
-    <string name="prepaid_card_emergency_card">Emergency card</string>
+    <string name="prepaid_card_document_request_fee">Document Request Fee</string>
+    <string name="prepaid_card_emergency_cash">Emergency Money</string>
+    <string name="prepaid_card_emergency_card">Emergency Card</string>
     <string name="prepaid_card_income">Income</string>
-    <string name="prepaid_card_load_fee">Fee for load pan</string>
+    <string name="prepaid_card_load_fee">PAN Fee</string>
     <string name="prepaid_card_refund_fee">Refund Fee</string>
     <string name="prepaid_card_monthly_maintenance_fee">Monthly Maintenance Fee</string>
     <string name="prepaid_card_transaction_fee">Transaction Fee</string>
