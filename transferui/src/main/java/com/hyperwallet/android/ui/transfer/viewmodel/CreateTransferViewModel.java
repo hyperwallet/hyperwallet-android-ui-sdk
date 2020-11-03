@@ -101,6 +101,7 @@ public class CreateTransferViewModel extends ViewModel {
     private boolean mIsPortraitMode;
     private ProgramModel mProgramModel;
     private boolean isCardModel;
+    private boolean updateTransferAllFunds;
 
 
     /**
@@ -193,6 +194,14 @@ public class CreateTransferViewModel extends ViewModel {
 
     public LiveData<Boolean> isTransferAllAvailableFunds() {
         return mTransferAvailableFunds;
+    }
+
+    public boolean isUpdateTransferAllFunds() {
+        return updateTransferAllFunds;
+    }
+
+    public void setUpdateTransferAllFunds(boolean updateTransferAllFunds) {
+        this.updateTransferAllFunds = updateTransferAllFunds;
     }
 
     public void setTransferAllAvailableFunds(@NonNull final Boolean transferAll) {
