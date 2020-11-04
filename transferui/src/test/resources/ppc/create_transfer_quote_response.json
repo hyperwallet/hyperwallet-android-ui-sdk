@@ -3,7 +3,7 @@
   "status": "QUOTED",
   "createdOn": "2019-08-14T21:08:22",
   "clientTransferId": "test-client-transfer-id",
-  "sourceToken": "test-fake-token",
+  "sourceToken": "trm-fake-token",
   "sourceAmount": "1,000.00",
   "sourceFeeAmount": "0.00",
   "sourceCurrency": "USD",
