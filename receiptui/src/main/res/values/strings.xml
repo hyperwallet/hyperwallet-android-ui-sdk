@@ -17,7 +17,6 @@
     <string name="mobileCharityName">Charity name</string>
     <string name="mobileCheckNumber">Check number</string>
     <string name="mobilePromoWebsite">Promo website</string>
-    <string name="concat_string_view_format">%s%s %s</string>
     <string name="concat_date_string_view_format">%s %s</string>
 
     <string name="mobileNoTransactionsUser" translatable="false">There\'s no activity to display.</string>

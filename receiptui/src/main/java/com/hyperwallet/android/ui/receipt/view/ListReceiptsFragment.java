@@ -48,6 +48,7 @@ import com.hyperwallet.android.model.Errors;
 import com.hyperwallet.android.model.receipt.Receipt;
 import com.hyperwallet.android.ui.common.repository.Event;
 import com.hyperwallet.android.ui.common.util.DateUtils;
+import com.hyperwallet.android.ui.common.util.Utils;
 import com.hyperwallet.android.ui.common.view.OneClickListener;
 import com.hyperwallet.android.ui.receipt.R;
 import com.hyperwallet.android.ui.receipt.repository.PrepaidCardReceiptRepositoryImpl;
@@ -333,8 +334,7 @@ public class ListReceiptsFragment extends Fragment {
                 if (CREDIT.equals(receipt.getEntry())) {
                     transactionAmount.setTextColor(transactionAmount.getContext()
                             .getResources().getColor(R.color.positiveColor));
-                    transactionAmount.setText(transactionAmount.getContext()
-                            .getString(R.string.credit_sign, currencySymbol, receipt.getAmount()));
+                    transactionAmount.setText(Utils.formatCurrency(receipt.getCurrency(), receipt.getAmount()));
                     transactionTypeIcon.setTextColor(transactionTypeIcon.getContext()
                             .getResources().getColor(R.color.positiveColor));
                     transactionTypeIcon.setText(transactionTypeIcon.getContext().getText(R.string.credit));
@@ -343,8 +343,7 @@ public class ListReceiptsFragment extends Fragment {
                             .getResources().getColor(R.color.negativeColor));
                     transactionTypeIcon.setTextColor(transactionTypeIcon.getContext()
                             .getResources().getColor(R.color.negativeColor));
-                    transactionAmount.setText(transactionAmount.getContext()
-                            .getString(R.string.debit_sign, currencySymbol, receipt.getAmount()));
+                    transactionAmount.setText("-" + Utils.formatCurrency(receipt.getCurrency(), receipt.getAmount()));
                     transactionTypeIcon.setText(transactionTypeIcon.getContext().getText(R.string.debit));
                 }
 
