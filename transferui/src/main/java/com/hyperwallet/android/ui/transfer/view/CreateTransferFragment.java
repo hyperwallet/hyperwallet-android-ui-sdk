@@ -564,6 +564,7 @@ public class CreateTransferFragment extends Fragment {
                         mCreateTransferViewModel.setUpdateTransferAllFunds(false);
                     }
                 } else {
+                    mTransferAmount.setText(getString(R.string.defaultTransferAmount));
                     mTransferAllFundsSummary.setVisibility(View.GONE);
                 }
             }
