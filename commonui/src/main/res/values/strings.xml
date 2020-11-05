@@ -12,8 +12,8 @@
     <string name="wire_account">Wire Transfer Account</string>
     <string name="paper_check">Paper Check</string>
     <string name="prepaid_card">Prepaid Card</string>
-    <string name="paypal_account">PayPal</string>
-    <string name="venmo_account">Venmo</string>
+    <string name="paypal_account">PayPal Account</string>
+    <string name="venmo_account">Venmo Account</string>
     <string name="cash_pickup_mg">MoneyGram</string>
     <string name="visa" translatable="false">Visa</string>
     <string name="mastercard" translatable="false">Mastercard</string>
