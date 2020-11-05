@@ -1,8 +1,80 @@
 {
-  "count": 1,
+  "count": 3,
   "offset": 0,
   "limit": 10,
   "data": [
+    {
+      "token": "trm-0c7a0312",
+      "type": "BANK_ACCOUNT",
+      "status": "ACTIVATED",
+      "verificationStatus": "NOT_REQUIRED",
+      "createdOn": "2019-06-24T22:22:15",
+      "transferMethodCountry": "US",
+      "transferMethodCurrency": "USD",
+      "branchId": "021000021",
+      "bankAccountId": "4111222233331234",
+      "bankAccountRelationship": "SELF",
+      "bankAccountPurpose": "SAVINGS",
+      "profileType": "INDIVIDUAL",
+      "firstName": "Stan",
+      "middleName": "Individual",
+      "lastName": "Fung",
+      "dateOfBirth": "2000-02-02",
+      "gender": "MALE",
+      "phoneNumber": "605-555-1323",
+      "mobileNumber": "605-555-1323",
+      "governmentId": "333333333",
+      "addressLine1": "1234 IndividualAddress St",
+      "addressLine2": "1234 AddressLineTwo St",
+      "city": "Test",
+      "stateProvince": "CA",
+      "country": "US",
+      "postalCode": "12345",
+      "links": [
+        {
+          "params": {
+            "rel": "self"
+          },
+          "href": "https://localhost.com/rest/v3/users/usr-token/transfer-methods/trm-token"
+        }
+      ]
+    },
+    {
+      "token": "trm-0c7a0333",
+      "type": "BANK_ACCOUNT",
+      "status": "ACTIVATED",
+      "verificationStatus": "NOT_REQUIRED",
+      "createdOn": "2019-06-25T22:22:15",
+      "transferMethodCountry": "CA",
+      "transferMethodCurrency": "CAD",
+      "branchId": "021000021",
+      "bankAccountId": "4111222233331235",
+      "bankAccountRelationship": "SELF",
+      "bankAccountPurpose": "SAVINGS",
+      "profileType": "INDIVIDUAL",
+      "firstName": "Stan",
+      "middleName": "Individual",
+      "lastName": "Fung",
+      "dateOfBirth": "2000-02-02",
+      "gender": "MALE",
+      "phoneNumber": "605-555-1323",
+      "mobileNumber": "605-555-1323",
+      "governmentId": "333333333",
+      "addressLine1": "1234 IndividualAddress St",
+      "addressLine2": "1234 AddressLineTwo St",
+      "city": "Test",
+      "stateProvince": "CA",
+      "country": "US",
+      "postalCode": "12345",
+      "links": [
+        {
+          "params": {
+            "rel": "self"
+          },
+          "href": "https://localhost.com/rest/v3/users/usr-token/transfer-methods/trm-token"
+        }
+      ]
+    },
     {
       "token": "trm-token",
       "type": "PREPAID_CARD",

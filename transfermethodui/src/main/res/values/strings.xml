@@ -21,9 +21,9 @@
         length is {1}.
     </string>
 
-    <string name="createTransferMethodButtonLabel">Create Transfer Method</string>
+    <string name="createTransferMethodButtonLabel">Add Transfer Method</string>
     <string name="default_account_label">Default Account</string>
-    <string name="default_account_sub_label">Select account as default method</string>
+    <string name="default_account_sub_label">Select a default transfer method</string>
     <string name="api_expiry_date_format">MM/YY</string>
 
     <string name="feeAndProcessingTimeInformation">%s fee \u2022 %s</string>
@@ -32,7 +32,7 @@
     <string name="emptyStateAddTransferMethod">Add a transfer method to get started.</string>
 
     <!-- menu title -->
-    <string name="menu_transfer_funds">Transfer Funds</string>
+    <string name="menu_transfer_funds">Transfer</string>
 
     <!--Fee formatter-->
     <string name="fee_flat_formatter">%1$s%2$s</string>
