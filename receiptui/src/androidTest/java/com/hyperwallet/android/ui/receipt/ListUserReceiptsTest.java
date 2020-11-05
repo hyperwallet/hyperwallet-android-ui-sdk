@@ -325,7 +325,7 @@ public class ListUserReceiptsTest {
         onView(withId(R.id.transaction_header_text)).check(matches(withText(R.string.mobileTransactionTypeLabel)));
         onView(withId(R.id.transaction_type_icon)).check(matches(withText(R.string.debit)));
         onView(withId(R.id.transaction_title)).check(matches(withText(R.string.transfer_to_prepaid_card)));
-        onView(withId(R.id.transaction_amount)).check(matches(withText(debitSymbol + krwCurrencySymbol + "40000")));
+        onView(withId(R.id.transaction_amount)).check(matches(withText(debitSymbol + krwCurrencySymbol + "40,000.00")));
         onView(withId(R.id.transaction_currency)).check(matches(withText("KRW")));
         onView(withId(R.id.transaction_date)).check(matches(withText("December 1, 2018")));
 
