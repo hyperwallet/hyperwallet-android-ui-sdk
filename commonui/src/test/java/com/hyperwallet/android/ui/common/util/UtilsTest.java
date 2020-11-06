@@ -30,7 +30,7 @@ public class UtilsTest {
             put("EUR", "EUR1,000,000.00");      // Austria Currency
             put("HKD", "HKD1,000,000.00");      // Hong Kong Currency
             put("HUF", "HUF1,000,000.00");      // Hungary Currency
-            put("INR", "Rs.1,000,000.00");       // India Currency
+            put("INR", "INR1,000,000.00");       // India Currency
             put("IDR", "IDR1,000,000");         // Indonesia Currency
             put("JMD", "JMD1,000,000.00");      // Jamaica Currency
             put("JPY", "JPY1,000,000");         // Japan Currency
