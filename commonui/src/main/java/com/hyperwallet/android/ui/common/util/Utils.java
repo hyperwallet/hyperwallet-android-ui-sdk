@@ -25,6 +25,7 @@ public class Utils {
         add("VND");
         add("CLP");
         add("UGX");
+        add("KRW");
     }};
 
     /**
@@ -36,7 +37,7 @@ public class Utils {
     }};
 
     /**
-     * Currencies with three Fraction
+     * Currencies with single Fraction
      */
     private static final List<String> SINGLE_DECIMAL_CURRENCY = new ArrayList<String>() {{
         add("AMD");
