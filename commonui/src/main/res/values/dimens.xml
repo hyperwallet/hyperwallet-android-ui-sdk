@@ -71,7 +71,7 @@
     <dimen name="horizontal_spacer_height">16dp</dimen>
     <dimen name="default_info_margin">40dp</dimen>
     <dimen name="description_max_layout_width">300dp</dimen>
-    <dimen name="section_header_height">64dp</dimen>
+    <dimen name="section_header_height">16dp</dimen>
     <dimen name="loader_inset_margin">155dp</dimen>
     <dimen name="edit_text_layout_padding_start_offset">4dp</dimen>
     <dimen name="progress_bar_elevation">7dp</dimen>
