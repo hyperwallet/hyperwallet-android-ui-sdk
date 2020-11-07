@@ -30,6 +30,7 @@
     <string name="credit" translatable="false">\ue907</string>
     <string name="debit_sign" translatable="false">-%s%s</string>
     <string name="credit_sign" translatable="false">%s%s</string>
+    <string name="debit_sign_transaction" translatable="false">-%s</string>
 
     <!--Generic fee types-->
     <string name="unknown_type">Unknown Transaction Type</string>
