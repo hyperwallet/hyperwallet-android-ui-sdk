@@ -35,6 +35,7 @@ import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getTran
 import static com.hyperwallet.android.ui.transfer.view.CreateTransferActivity.EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT;
 import static com.hyperwallet.android.ui.transfer.view.ListTransferDestinationActivity.EXTRA_SELECTED_DESTINATION;
 import static com.hyperwallet.android.ui.transfer.view.ListTransferSourceActivity.EXTRA_SELECTED_SOURCE;
+import static com.hyperwallet.android.ui.transfer.viewmodel.CreateTransferViewModel.REGEX_ONLY_NUMBER_AND_DECIMAL;
 
 import android.content.Context;
 import android.content.Intent;
@@ -90,6 +91,10 @@ public class CreateTransferFragment extends Fragment {
     private static final String REGEX_ONLY_NUMBER = "[^0-9]";
     private static final String REGEX_REMOVE_TRAILING_EMPTY_SPACE = "\\s+$";
     private static final String US_CURRENCY_CODE = "USD";
+    private static final String CURRENCY_FILE_NAME = "currency.json";
+    private final String CURRENCY_CODE = "currencycode";
+    private final String SYMBOL = "symbol";
+    private final String DECIMALS = "decimals";
 
     private View mProgressBar;
     private CreateTransferViewModel mCreateTransferViewModel;
@@ -310,7 +315,7 @@ public class CreateTransferFragment extends Fragment {
         }
 
         try {
-            if (Double.parseDouble(amount.replace(CURRENCY_NUMERIC_SEPARATOR, EMPTY_STRING)) == 0.0) {
+            if (Double.parseDouble(amount.replaceAll(REGEX_ONLY_NUMBER_AND_DECIMAL, EMPTY_STRING)) == 0.0) {
                 return false;
             }
         } catch (NumberFormatException e) {
@@ -536,7 +541,9 @@ public class CreateTransferFragment extends Fragment {
                             mTransferDestination.setVisibility(View.VISIBLE);
                             mCurrencyCode = transferMethod.getField(TRANSFER_METHOD_CURRENCY);
                             mNumberOfFractionDigits = getNumberOfFractionDigits(mCurrencyCode);
-                            mTransferAmount.setText(formattedAmount(stringToDouble(mTransferAmount.getText().toString()),mCurrencyCode));
+                            mTransferAmount.setText(
+                                    formattedAmount(stringToDouble(mTransferAmount.getText().toString()),
+                                            mCurrencyCode));
                             showTransferDestination(transferMethod);
                             enableInputControls();
                         } else {
@@ -725,6 +732,7 @@ public class CreateTransferFragment extends Fragment {
         decimalFormatSymbols.setCurrencySymbol("");
         currencyFormatter.setDecimalFormatSymbols(decimalFormatSymbols);
         mCreateTransferViewModel.setDecimalSeparator(Character.toString(decimalFormatSymbols.getDecimalSeparator()));
+        mCreateTransferViewModel.setGroupSeparator(Character.toString(decimalFormatSymbols.getGroupingSeparator()));
         return currencyFormatter.format(amount).replaceAll(REGEX_REMOVE_TRAILING_EMPTY_SPACE, EMPTY_STRING);
     }
 
@@ -740,7 +748,7 @@ public class CreateTransferFragment extends Fragment {
     private String readJSONFromAsset() {
         String json = null;
         try {
-            InputStream is = requireContext().getAssets().open("currency.json");
+            InputStream is = requireContext().getAssets().open(CURRENCY_FILE_NAME);
             int size = is.available();
             byte[] buffer = new byte[size];
             is.read(buffer);
@@ -760,9 +768,9 @@ public class CreateTransferFragment extends Fragment {
             for (int i = 0; i < jsonArr.length(); i++) {
                 JSONObject jsonObj = jsonArr.getJSONObject(i);
                 CurrencyDetails currencyDetails = new CurrencyDetails();
-                currencyDetails.setCurrencyCode(jsonObj.getString("currencycode"));
-                currencyDetails.setSymbol(jsonObj.getString("symbol"));
-                currencyDetails.setDecimals(jsonObj.getInt("decimals"));
+                currencyDetails.setCurrencyCode(jsonObj.getString(CURRENCY_CODE));
+                currencyDetails.setSymbol(jsonObj.getString(SYMBOL));
+                currencyDetails.setDecimals(jsonObj.getInt(DECIMALS));
                 mCurrencyDetailsList.add(currencyDetails);
             }
         } catch (JSONException e) {

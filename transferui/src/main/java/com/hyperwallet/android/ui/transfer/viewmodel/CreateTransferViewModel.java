@@ -16,6 +16,7 @@
  */
 package com.hyperwallet.android.ui.transfer.viewmodel;
 
+import static com.hyperwallet.android.model.transfer.Transfer.EMPTY_STRING;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TOKEN;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TRANSFER_METHOD_CURRENCY;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TYPE;
@@ -71,6 +72,9 @@ public class CreateTransferViewModel extends ViewModel {
     private static final String DESTINATION_AMOUNT_INPUT_FIELD = "destinationAmount";
     private static final String DESTINATION_TOKEN_INPUT_FIELD = "destinationToken";
     private static final String PRIVATE_TOKEN_PREFIX = "trm-";
+    public static final String CURRENCY_DOT_SEPARATOR = ".";
+    public static final String REGEX_ONLY_NUMBER_AND_DECIMAL = "[^0-9.]";
+
 
     private final TransferRepository mTransferRepository;
     private final TransferMethodRepository mTransferMethodRepository;
@@ -101,7 +105,8 @@ public class CreateTransferViewModel extends ViewModel {
     private boolean mIsPortraitMode;
     private ProgramModel mProgramModel;
     private boolean isCardModel;
-    private String decimalSeparator;
+    private String mDecimalSeparator;
+    private String mGroupSeparator;
 
 
     /**
@@ -277,9 +282,12 @@ public class CreateTransferViewModel extends ViewModel {
         return mSelectedTransferSource;
     }
 
-    public void setDecimalSeparator(String separator)
-    {
-        decimalSeparator = separator;
+    public void setDecimalSeparator(String separator) {
+        mDecimalSeparator = separator;
+    }
+
+    public void setGroupSeparator(String groupSeparator) {
+        mGroupSeparator = groupSeparator;
     }
 
     public void setSelectedTransferSource(@NonNull final TransferSource source) {
@@ -312,7 +320,9 @@ public class CreateTransferViewModel extends ViewModel {
     public void createTransfer() {
         mIsCreateQuoteLoading.postValue(Boolean.TRUE);
         String amount = isTransferRequestSameWithQuote() ? null : mTransferAmount.getValue();
-        //System.out.println("Transfer Amount" +amount.replace(decimalSeparator,".").replace("/[^0-9.]/g", ""));
+        if (amount != null) {
+            amount = amount.replace(mGroupSeparator, EMPTY_STRING).replace(mDecimalSeparator, CURRENCY_DOT_SEPARATOR);
+        }
         Transfer transfer = new Transfer.Builder()
                 .clientTransferID(CLIENT_IDENTIFICATION_PREFIX + UUID.randomUUID().toString())
                 .sourceToken(mSourceToken)
