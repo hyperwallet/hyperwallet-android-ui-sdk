@@ -39,7 +39,7 @@ public class UtilsTest {
             put("KES", "KES1,000,000.00");      // Kenya Currency
             put("LAK", "LAK1,000,000.00");         // Laos Currency
             put("MYR", "MYR1,000,000.00");      // Malaysia Currency
-            put("MXN", "MXN1,000,000.0");      // Mexico Currency
+            put("MXN", "MXN1,000,000.00");      // Mexico Currency
             put("MAD", "MAD1,000,000.00");      // Morocco Currency
             put("ILS", "₪1,000,000.00");      // Israel Currency
             put("TWD", "NT$1,000,000.00");      // Taiwan Currency
