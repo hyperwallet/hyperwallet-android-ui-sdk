@@ -65,7 +65,7 @@ public class UtilsTest {
             put("TND", "TND1,000,000.00");     // Tunisia Currency
             put("AED", "AED1,000,000.00");      // United Arab Emirates Currency
             put("UGX", "UGX1,000,000.00");         // Uganda Currency
-            put("USD", "USD1,000,000.00");      // United States Currency
+            put("USD", "$1,000,000.00");      // United States Currency
             put("VND", "VND1,000,000.00");         // Vietnam Currency
         }
     };
