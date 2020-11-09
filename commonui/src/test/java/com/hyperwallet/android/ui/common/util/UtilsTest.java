@@ -19,15 +19,15 @@ public class UtilsTest {
             put("BRL", "BRL1,000,000.00");      // Brazil Currency
             put("BGN", "BGN1,000,000.00");      // Bulgaria Currency
             put("KHR", "KHR1,000,000.00");      // Cambodia Currency
-            put("CAD", "CA$1,000,000.00");      // Canada Currency
+            put("CAD", "CAD1,000,000.00");      // Canada Currency
             put("CLP", "CLP1,000,000.00");         // Chile Currency
-            put("CNY", "CN¥1,000,000.00");      // China Currency
+            put("CNY", "CNY1,000,000.00");      // China Currency
             put("COP", "COP1,000,000.00");         // Colombia Currency
             put("HRK", "HRK1,000,000.00");      // Croatia Currency
             put("CZK", "CZK1,000,000.00");      // Czech Republic Currency
             put("DKK", "DKK1,000,000.00");      // Denmark Currency
             put("EGP", "EGP1,000,000.00");      // Egypt Currency
-            put("EUR", "€1,000,000.00");      // Austria Currency
+            put("EUR", "EUR1,000,000.00");      // Austria Currency
             put("HKD", "HKD1,000,000.00");      // Hong Kong Currency
             put("HUF", "HUF1,000,000.00");      // Hungary Currency
             put("INR", "INR1,000,000.00");       // India Currency
@@ -44,7 +44,7 @@ public class UtilsTest {
             put("ILS", "ILS1,000,000.00");      // Israel Currency
             put("TWD", "TWD1,000,000.00");      // Taiwan Currency
             put("TRY", "TRY1,000,000.00");      // Turkey Currency
-            put("NZD", "NZ$1,000,000.00");      // New Zealand Currency
+            put("NZD", "NZD1,000,000.00");      // New Zealand Currency
             put("NGN", "NGN1,000,000.00");      // Nigeria Currency
             put("NOK", "NOK1,000,000.00");      // Norway Currency
             put("PKR", "PKR1,000,000.00");         // Pakistan Currency
