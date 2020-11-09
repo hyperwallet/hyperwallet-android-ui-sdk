@@ -14,9 +14,9 @@ public class UtilsTest {
             put("ALL", "ALL1,000,000.00");         // Albania Currency
             put("ARS", "ARS1,000,000.00");      // Argentina Currency
             put("AMD", "AMD1,000,000.00");       // Armenia Currency
-            put("AUD", "A$1,000,000.00");      // Australia Currency
+            put("AUD", "AUD1,000,000.00");      // Australia Currency
             put("BDT", "BDT1,000,000.00");      // Bangladesh Currency
-            put("BRL", "R$1,000,000.00");      // Brazil Currency
+            put("BRL", "BRL1,000,000.00");      // Brazil Currency
             put("BGN", "BGN1,000,000.00");      // Bulgaria Currency
             put("KHR", "KHR1,000,000.00");      // Cambodia Currency
             put("CAD", "CA$1,000,000.00");      // Canada Currency
