@@ -61,14 +61,22 @@ import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import com.hyperwallet.android.ui.common.intent.HyperwalletIntent;
 import com.hyperwallet.android.ui.common.repository.Event;
 import com.hyperwallet.android.ui.common.view.OneClickListener;
+import com.hyperwallet.android.ui.transfer.CurrencyDetails;
 import com.hyperwallet.android.ui.transfer.R;
 import com.hyperwallet.android.ui.transfer.TransferSource;
 import com.hyperwallet.android.ui.transfer.viewmodel.CreateTransferViewModel;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.Currency;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -99,7 +107,7 @@ public class CreateTransferFragment extends Fragment {
     private TextView mTransferAmountError;
     private int mNumberOfFractionDigits = 0;
     private String mCurrencyCode;
-
+    private List<CurrencyDetails> mCurrencyDetailsList = new ArrayList<>();
 
     /**
      * Please don't use this constructor this is reserved for Android Core Framework
@@ -147,6 +155,8 @@ public class CreateTransferFragment extends Fragment {
         if (getActivity() instanceof CreateTransferActivity) {
             transferHeader.setVisibility(View.GONE);
         }
+        //Load currency List
+        LoadCurrencyList();
 
         // transfer all funds
         TextView transferAllFunds = view.findViewById(R.id.transfer_all_funds);
@@ -329,7 +339,7 @@ public class CreateTransferFragment extends Fragment {
         });
 
         mTransferAmount.addTextChangedListener(new TextWatcher() {
-            private static final int MAX_AMOUNT_WHOLE_NUMBER = 12;
+            private static final int MAX_AMOUNT_WHOLE_NUMBER = 14;
             private String current = "";
             private String temp = "";
 
@@ -404,7 +414,9 @@ public class CreateTransferFragment extends Fragment {
                         case 13:
                         case 14:
                         case 15:
-                        case 16:// stage two dimension changes
+                        case 16:
+                        case 17:
+                        case 18: // stage two dimension changes
                             mTransferCurrencyCode.setPadding(
                                     context.getResources().getDimensionPixelSize(R.dimen.amount_padding),
                                     context.getResources().getDimensionPixelSize(R.dimen.currency_code_padding_3),
@@ -523,6 +535,8 @@ public class CreateTransferFragment extends Fragment {
                             mTransferHeaderContainerError.setVisibility(View.GONE);
                             mTransferDestination.setVisibility(View.VISIBLE);
                             mCurrencyCode = transferMethod.getField(TRANSFER_METHOD_CURRENCY);
+                            mNumberOfFractionDigits = getNumberOfFractionDigits(mCurrencyCode);
+                            mTransferAmount.setText(formattedAmount(stringToDouble(mTransferAmount.getText().toString()),mCurrencyCode));
                             showTransferDestination(transferMethod);
                             enableInputControls();
                         } else {
@@ -705,11 +719,12 @@ public class CreateTransferFragment extends Fragment {
 
     private String formattedAmount(final double amount, final String currencyCode) {
         DecimalFormat currencyFormatter = (DecimalFormat) DecimalFormat.getCurrencyInstance();
-        mNumberOfFractionDigits = currencyFormatter.getMaximumFractionDigits();
+        currencyFormatter.setMinimumFractionDigits(mNumberOfFractionDigits);
         currencyFormatter.setCurrency(Currency.getInstance(currencyCode == null ? US_CURRENCY_CODE : currencyCode));
         DecimalFormatSymbols decimalFormatSymbols = currencyFormatter.getDecimalFormatSymbols();
         decimalFormatSymbols.setCurrencySymbol("");
         currencyFormatter.setDecimalFormatSymbols(decimalFormatSymbols);
+        mCreateTransferViewModel.setDecimalSeparator(Character.toString(decimalFormatSymbols.getDecimalSeparator()));
         return currencyFormatter.format(amount).replaceAll(REGEX_REMOVE_TRAILING_EMPTY_SPACE, EMPTY_STRING);
     }
 
@@ -720,5 +735,47 @@ public class CreateTransferFragment extends Fragment {
         } else {
             return 0.0;
         }
+    }
+
+    private String readJSONFromAsset() {
+        String json = null;
+        try {
+            InputStream is = requireContext().getAssets().open("currency.json");
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            json = new String(buffer, "UTF-8");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+        return json;
+    }
+
+    private void LoadCurrencyList() {
+        String currencyList = readJSONFromAsset();
+        try {
+            JSONArray jsonArr = new JSONArray(currencyList);
+            for (int i = 0; i < jsonArr.length(); i++) {
+                JSONObject jsonObj = jsonArr.getJSONObject(i);
+                CurrencyDetails currencyDetails = new CurrencyDetails();
+                currencyDetails.setCurrencyCode(jsonObj.getString("currencycode"));
+                currencyDetails.setSymbol(jsonObj.getString("symbol"));
+                currencyDetails.setDecimals(jsonObj.getInt("decimals"));
+                mCurrencyDetailsList.add(currencyDetails);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private int getNumberOfFractionDigits(String currencyCode) {
+        for (CurrencyDetails list : mCurrencyDetailsList) {
+            if (list.getCurrencyCode().equals(currencyCode)) {
+                return list.getDecimals();
+            }
+        }
+        return 0;
     }
 }

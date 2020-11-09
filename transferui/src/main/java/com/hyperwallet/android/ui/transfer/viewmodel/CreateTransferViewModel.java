@@ -101,6 +101,7 @@ public class CreateTransferViewModel extends ViewModel {
     private boolean mIsPortraitMode;
     private ProgramModel mProgramModel;
     private boolean isCardModel;
+    private String decimalSeparator;
 
 
     /**
@@ -276,6 +277,11 @@ public class CreateTransferViewModel extends ViewModel {
         return mSelectedTransferSource;
     }
 
+    public void setDecimalSeparator(String separator)
+    {
+        decimalSeparator = separator;
+    }
+
     public void setSelectedTransferSource(@NonNull final TransferSource source) {
         mSelectedTransferSource.postValue(source);
         mSourceToken = source.getToken();
@@ -306,7 +312,7 @@ public class CreateTransferViewModel extends ViewModel {
     public void createTransfer() {
         mIsCreateQuoteLoading.postValue(Boolean.TRUE);
         String amount = isTransferRequestSameWithQuote() ? null : mTransferAmount.getValue();
-
+        //System.out.println("Transfer Amount" +amount.replace(decimalSeparator,".").replace("/[^0-9.]/g", ""));
         Transfer transfer = new Transfer.Builder()
                 .clientTransferID(CLIENT_IDENTIFICATION_PREFIX + UUID.randomUUID().toString())
                 .sourceToken(mSourceToken)

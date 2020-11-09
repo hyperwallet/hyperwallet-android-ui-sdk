@@ -425,7 +425,7 @@ public class CreateTransferViewModelTest {
         CreateTransferViewModel viewModel = spy(ViewModelProviders.of(activity).get(CreateTransferViewModel.class));
 
         // default amount
-        assertThat(viewModel.getTransferAmount().getValue(), is("0.00"));
+        assertThat(viewModel.getTransferAmount().getValue(), is("0"));
 
         viewModel.setTransferAmount("20.22");
         assertThat(viewModel.getTransferAmount().getValue(), is("20.22"));
