@@ -25,6 +25,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.util.Pair;
 import android.widget.TextView;
 
 import androidx.test.core.app.ApplicationProvider;
@@ -89,6 +90,9 @@ public class TabbedListReceiptsTest {
     private String monthLabel1 = "June 2019";
     private String cadCurrencySymbol = "CA$";
     private String usdCurrencySymbol = "$";
+    private String debitSymbol = "-";
+    Pair KRW = new Pair("KRW", "₩");
+
 
     @Before
     public void setup() {
@@ -181,8 +185,10 @@ Then user can see the tabs for Available funds and receipts
                 .getResourceContent("receipt_list_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("prepaidcard/prepaidcard_primarycard_only_response.json")).mock();
+//        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+//                .getResourceContent("prepaidcard/prepaidcard_receipts_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("prepaidcard/prepaidcard_receipts_response.json")).mock();
+                .getResourceContent("prepaidcard/prepaidcard_receipts_multicurrency_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();
 
         // run test
@@ -313,6 +319,49 @@ Then user can see the tabs for Available funds and receipts
         // assert the empty string
         onView(withText(R.string.mobileNoTransactionsPrepaidCard)).check(matches(isDisplayed()));
     }
+
+
+    /*
+    Given user has Available funds
+    When user selects the "Transaction" tab
+    Then user can see the tabs for Available PPC for KRW currency
+    */
+    @Test
+    public void testListReceipt_clickTransactionDisplaysDetailsCurrencyFormatKRW() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("receipt_list_currency_format_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("prepaidcard/prepaidcard_secondary_response2.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("prepaidcard/prepaidcard_secondary_receipts_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();
+
+        // run test
+        mActivityTestRule.launchActivity(null);
+        // assert
+        onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
+                .check(matches(withText(R.string.title_activity_receipt_list)));
+
+        // Assert receipts
+        Espresso.onView(
+                allOf(
+                        ViewMatchers.withText("June 20, 2020"),
+                        ViewMatchers.hasSibling(ViewMatchers.withText("USD"))
+                )
+        ).check(ViewAssertions.matches(ViewMatchers.isCompletelyDisplayed()));
+
+        Espresso.onView(
+                allOf(
+                        ViewMatchers.withText(R.string.prepaid_card_sale),
+                        ViewMatchers.hasSibling(ViewMatchers.withText("-"+ usdCurrencySymbol + "10.00"))
+                )
+        ).check(ViewAssertions.matches(ViewMatchers.isCompletelyDisplayed()));
+
+
+        onView(withId(R.id.list_receipts)).check(
+                matches(atPosition(1, hasDescendant(withText("-"+ KRW.second.toString() + "10,000")))));
+    }
+
 
 
     private void setLocale(Locale locale) {
