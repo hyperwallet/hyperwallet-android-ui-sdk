@@ -266,7 +266,7 @@ Then user can see the tabs for Available funds and receipts
         Espresso.onView(
                 allOf(
                         ViewMatchers.withText(R.string.adjustment),
-                        ViewMatchers.hasSibling(ViewMatchers.withText(usdCurrencySymbol + "6.90"))
+                        ViewMatchers.hasSibling(ViewMatchers.withText(usdCurrencySymbol + "1,000,000.99"))
                 )
         ).check(ViewAssertions.matches(ViewMatchers.isCompletelyDisplayed()));
 
