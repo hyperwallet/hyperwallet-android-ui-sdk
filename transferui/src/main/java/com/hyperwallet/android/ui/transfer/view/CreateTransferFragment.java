@@ -542,7 +542,9 @@ public class CreateTransferFragment extends Fragment {
                             mTransferHeaderContainerError.setVisibility(View.GONE);
                             mTransferDestination.setVisibility(View.VISIBLE);
                             mCurrencyCode = transferMethod.getField(TRANSFER_METHOD_CURRENCY);
-                            mNumberOfFractionDigits = getNumberOfFractionDigits(mCurrencyCode);
+                            CurrencyDetails currencyDetails = getNumberOfFractionDigits(mCurrencyCode);
+                            mNumberOfFractionDigits = currencyDetails == null ? 0 : currencyDetails.getDecimals();
+                            mTransferCurrencyCode.setText(currencyDetails == null ? "" : currencyDetails.getSymbol());
                             mTransferAmount.setText(
                                     formattedAmount(stringToDouble(mTransferAmount.getText().toString()),
                                             mCurrencyCode));
@@ -708,8 +710,6 @@ public class CreateTransferFragment extends Fragment {
         transferCountry.setText(locale.getDisplayName());
 
         mTransferCurrency.setText(transferMethod.getField(TRANSFER_METHOD_CURRENCY));
-        mTransferCurrencyCode.setText(
-                Currency.getInstance(transferMethod.getField(TRANSFER_METHOD_CURRENCY)).getSymbol(Locale.getDefault()));
         mTransferDestination.setVisibility(View.VISIBLE);
     }
 
@@ -785,12 +785,12 @@ public class CreateTransferFragment extends Fragment {
         }
     }
 
-    private int getNumberOfFractionDigits(String currencyCode) {
+    private CurrencyDetails getNumberOfFractionDigits(String currencyCode) {
         for (CurrencyDetails list : mCurrencyDetailsList) {
             if (list.getCurrencyCode().equals(currencyCode)) {
-                return list.getDecimals();
+                return list;
             }
         }
-        return 0;
+        return null;
     }
 }
