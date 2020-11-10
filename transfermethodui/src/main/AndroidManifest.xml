@@ -14,7 +14,7 @@
 
         <activity
             android:name="com.hyperwallet.android.ui.transfermethod.view.SelectTransferMethodActivity"
-            android:label="@string/title_activity_select_transfer_method"
+            android:label="@string/mobileAddTransferMethodHeader"
             android:theme="@style/AppTheme.NoActionBar">
             <!-- This setting is removed temporarily [android:exported="false"] since it will not work functionally
                  team is looking into fixing the security issue from another ticket -->
