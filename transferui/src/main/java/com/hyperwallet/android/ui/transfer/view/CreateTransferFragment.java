@@ -273,15 +273,16 @@ public class CreateTransferFragment extends Fragment {
         if (resultCode == RESULT_OK) {
             if (requestCode == SELECT_TRANSFER_DESTINATION_REQUEST_CODE && data != null) {
                 TransferMethod selectedTransferMethod = data.getParcelableExtra(EXTRA_SELECTED_DESTINATION);
-                mCreateTransferViewModel.setTransferAmount(null);
-                mCreateTransferViewModel.setTransferNotes(null);
-                mCreateTransferViewModel.setTransferAllAvailableFunds(Boolean.FALSE);
+                mCreateTransferViewModel.setUpdateTransferAllFunds(
+                        mCreateTransferViewModel.isTransferAllAvailableFunds().getValue());
                 mCreateTransferViewModel.setTransferDestination(selectedTransferMethod);
                 mTransferAmount.setSelection(mTransferAmount.getText().toString().length());
             } else if (requestCode == ADD_TRANSFER_METHOD_REQUEST_CODE) {
                 mCreateTransferViewModel.refreshTransferDestination();
             } else if (requestCode == SELECT_TRANSFER_SOURCE_REQUEST_CODE && data != null) {
                 TransferSource selectedTransferSource = data.getParcelableExtra(EXTRA_SELECTED_SOURCE);
+                mCreateTransferViewModel.setUpdateTransferAllFunds(
+                        mCreateTransferViewModel.isTransferAllAvailableFunds().getValue());
                 mCreateTransferViewModel.setSelectedTransferSource(selectedTransferSource);
                 showTransferSource(selectedTransferSource);
             }
@@ -561,9 +562,11 @@ public class CreateTransferFragment extends Fragment {
                 new Observer<TransferSource>() {
                     @Override
                     public void onChanged(TransferSource transferSource) {
+
                         mTransferAmount.setText(formattedAmount(
                                 stringToDouble((String) getResources().getText(R.string.defaultTransferAmount)),
                                 mCurrencyCode));
+
                         showTransferSource(transferSource);
                     }
                 });
@@ -602,7 +605,14 @@ public class CreateTransferFragment extends Fragment {
                             transfer.getDestinationAmount(), transfer.getDestinationCurrency());
                     mTransferAllFundsSummary.setText(summary);
                     mTransferAllFundsSummary.setVisibility(View.VISIBLE);
+                    if (mCreateTransferViewModel.isUpdateTransferAllFunds()) {
+                        Boolean transferAllAvailableFunds =
+                                mCreateTransferViewModel.isTransferAllAvailableFunds().getValue();
+                        mCreateTransferViewModel.setTransferAllAvailableFunds(transferAllAvailableFunds);
+                        mCreateTransferViewModel.setUpdateTransferAllFunds(false);
+                    }
                 } else {
+                    mTransferAmount.setText(getString(R.string.defaultTransferAmount));
                     mTransferAllFundsSummary.setVisibility(View.GONE);
                 }
             }
