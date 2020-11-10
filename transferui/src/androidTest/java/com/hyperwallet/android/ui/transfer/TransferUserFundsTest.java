@@ -59,6 +59,7 @@ import com.hyperwallet.android.ui.testutils.rule.HyperwalletMockWebServer;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletSdkRule;
 import com.hyperwallet.android.ui.testutils.util.RecyclerViewCountAssertion;
 import com.hyperwallet.android.ui.transfer.repository.TransferRepositoryFactory;
+import com.hyperwallet.android.ui.transfer.rule.HyperwalletSdkMockRule;
 import com.hyperwallet.android.ui.transfer.view.CreateTransferActivity;
 import com.hyperwallet.android.ui.transfermethod.repository.PrepaidCardRepositoryFactory;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepository;
@@ -84,8 +85,10 @@ public class TransferUserFundsTest {
 
     @ClassRule
     public static HyperwalletExternalResourceManager sResourceManager = new HyperwalletExternalResourceManager();
+
     @Rule
-    public HyperwalletSdkRule mHyperwalletSdkRule = new HyperwalletSdkRule();
+    public HyperwalletSdkMockRule mHyperwalletMockRule = new HyperwalletSdkMockRule();
+
     @Rule
     public HyperwalletMockWebServer mMockWebServer = new HyperwalletMockWebServer(8080);
     @Rule
@@ -165,6 +168,79 @@ public class TransferUserFundsTest {
 
         onView(withId(R.id.transfer_action_button)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_action_button)).check(matches(isEnabled()));
+    }
+
+    @Test
+    public void testTransferFunds_verifyTransferScreenAmountCurrencyFormatUSD() {
+        // Mock Response for the PPC
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("ppc/prepaid_card_response.json")).mock();
+        // Mock the response by using trm-token to fetch the card info
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("ppc/get_prepaid_card_success_response.json")).mock();
+
+        // if there is sources, we load the transfer method destination
+        // transfer_method_list_with_ppc_response
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
+
+        //  only when transferMethods.size() > 0, get the quote by the source token
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("create_transfer_quote_usd_format_response.json")).mock();
+
+        onView(withId(R.id.transfer_all_funds)).perform(nestedScrollTo(), click());
+        // please add back assertion
+        // onView(withId(R.id.transfer_amount)).check(matches(withText("??")));
+
+    }
+
+    @Test
+    public void testTransferFunds_verifyTransferScreenAmountCurrencyFormatJOD() {
+        // Mock Response for the PPC
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("ppc/prepaid_card_response.json")).mock();
+        // Mock the response by using trm-token to fetch the card info
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("ppc/get_prepaid_card_success_response.json")).mock();
+
+        // if there is sources, we load the transfer method destination
+        // transfer_method_list_with_ppc_response
+        // not sure if this one needs to be update to use JOD bank account as well.
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
+
+        //  only when transferMethods.size() > 0, get the quote by the source token
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("create_transfer_quote_jod_format_response.json")).mock();
+
+        onView(withId(R.id.transfer_all_funds)).perform(nestedScrollTo(), click());
+        // please add back assertion
+        // onView(withId(R.id.transfer_amount)).check(matches(withText("??")));
+
+    }
+
+    @Test
+    public void testTransferFunds_verifyTransferScreenAmountCurrencyFormatJPY() {
+        // Mock Response for the PPC
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("ppc/prepaid_card_response.json")).mock();
+        // Mock the response by using trm-token to fetch the card info
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("ppc/get_prepaid_card_success_response.json")).mock();
+
+        // if there is sources, we load the transfer method destination
+        // transfer_method_list_with_ppc_response
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_list_single_bank_account_jpy_response.json")).mock();
+
+        //  only when transferMethods.size() > 0, get the quote by the source token
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("create_transfer_quote_jpy_format_response.json")).mock();
+
+        onView(withId(R.id.transfer_all_funds)).perform(nestedScrollTo(), click());
+        // please add back assertion
+        // onView(withId(R.id.transfer_amount)).check(matches(withText("??")));
+
     }
 
     @Test
@@ -885,6 +961,7 @@ public class TransferUserFundsTest {
 
     @Test
     public void testTransferFunds_createTransferConnectionError() {
+        /*
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
@@ -916,6 +993,30 @@ public class TransferUserFundsTest {
         onView(withId(R.id.fee_value)).check(matches(withText("2.00 USD")));
         onView(withId(R.id.transfer_label)).check(matches(withText(R.string.mobileConfirmDetailsTotal)));
         onView(withId(R.id.transfer_value)).check(matches(withText("100.00 USD")));
+        */
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("ppc/prepaid_card_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("ppc/create_transfer_quote_response.json")).mock();
+        mMockWebServer.getServer().enqueue(new MockResponse().setResponseCode(HTTP_OK).setBody(sResourceManager
+                .getResourceContent("ppc/create_transfer_no_fx_response.json")).setBodyDelay(10500, TimeUnit
+                .MILLISECONDS));
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("ppc/create_transfer_no_fx_response.json")).mock();
+        mActivityTestRule.launchActivity(null);
+        onView(withId(R.id.transfer_amount)).perform(nestedScrollTo(), replaceText("100.00"));
+        onView(withId(R.id.transfer_action_button)).perform(nestedScrollTo(), click());
+        onView(withText(R.string.error_dialog_connectivity_title)).check(matches(isDisplayed()));
+        onView(withText(R.string.io_exception)).check(matches(isDisplayed()));
+        onView(withId(android.R.id.button1)).check(matches(withText(R.string.try_again_button_label)));
+        onView(withId(android.R.id.button2)).check(matches(withText(R.string.cancelButtonLabel)));
+        onView(withId(android.R.id.button1)).perform(click());
+        onView(withText(R.string.error_dialog_connectivity_title)).check(doesNotExist());
+        String availableFundUSD = getAvailableFund("100.00", "USD");
+        onView(withId(R.id.transfer_summary)).check(matches(withText(availableFundUSD)));
+    }
     }
 
     @Test
