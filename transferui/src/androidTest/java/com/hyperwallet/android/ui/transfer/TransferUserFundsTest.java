@@ -84,7 +84,7 @@ import okhttp3.mockwebserver.MockResponse;
 public class TransferUserFundsTest {
     private final String MASK = "\u0020\u2022\u2022\u2022\u2022\u0020";
     private final String VISA = "Visa";
-    private final String JOD_CURRENCY_SYMBOL = "JOD";
+    private final String JOD_CURRENCY_SYMBOL = "د.ا";
     private final String USD_CURRENCY_SYMBOL = "$";
     private final String JPY_CURRENCY_SYMBOL = "\u00A5";
 
@@ -201,7 +201,8 @@ public class TransferUserFundsTest {
 
         onView(withId(R.id.transfer_all_funds)).perform(nestedScrollTo(), click());
         // Assert 12 digits amount with currency format based on default locale
-        onView(withId(R.id.transfer_amount)).check(matches(withText( USD_CURRENCY_SYMBOL + "1000,000,000.00")));
+        // onView(withId(R.id.transfer_amount)).check(matches(withText( USD_CURRENCY_SYMBOL + "1000,000,000.00")));
+        onView(withId(R.id.transfer_amount)).check(matches(withText( containsString("1000,000,000.00"))));
         onView(withId(R.id.transfer_amount_currency)).check(matches(withText("USD")));
 
         // Assert later when we fix the Available funds amount format DTSERWFOUR-170
@@ -230,7 +231,8 @@ public class TransferUserFundsTest {
 
         onView(withId(R.id.transfer_all_funds)).perform(nestedScrollTo(), click());
         // Assert 12 digits amount with currency format based on default locale
-        onView(withId(R.id.transfer_amount)).check(matches(withText(JOD_CURRENCY_SYMBOL + "1000,000,000.00")));
+        // onView(withId(R.id.transfer_amount)).check(matches(withText(JOD_CURRENCY_SYMBOL + "1000,000,000.00")));
+        onView(withId(R.id.transfer_amount)).check(matches(withText(containsString("1000,000,000.00"))));
         onView(withId(R.id.transfer_amount_currency)).check(matches(withText("JOD")));
         // Assert later when we fix the Available funds amount format DTSERWFOUR-170
 
