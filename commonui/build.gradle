@@ -16,6 +16,7 @@ dependencies {
     implementation project(':commonrepository')
 
     testImplementation "org.robolectric:robolectric:$robolectricVersion"
+    testImplementation "androidx.test:core:$coreTest"
 
     testImplementation project(':testutils')
 }

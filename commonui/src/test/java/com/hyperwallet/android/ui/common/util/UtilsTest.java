@@ -1,10 +1,22 @@
 package com.hyperwallet.android.ui.common.util;
 
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
+
+import android.content.Context;
+
+import androidx.test.core.app.ApplicationProvider;
+
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Config
+@RunWith(RobolectricTestRunner.class)
 public class UtilsTest {
     private Map<String, String> currenciesMap = new HashMap<String, String>() {
         {
@@ -17,7 +29,7 @@ public class UtilsTest {
             put("BGN", "BGN1,000,000.00");      // Bulgaria Currency
             put("KHR", "KHR1,000,000.00");      // Cambodia Currency
             put("CAD", "CAD1,000,000.00");      // Canada Currency
-            put("CLP", "CLP1,000,000.00");         // Chile Currency
+            put("CLP", "CLP1,000,000");         // Chile Currency
             put("CNY", "CNY1,000,000.00");      // China Currency
             put("COP", "COP1,000,000.00");         // Colombia Currency
             put("HRK", "HRK1,000,000.00");      // Croatia Currency
@@ -28,9 +40,9 @@ public class UtilsTest {
             put("HKD", "HKD1,000,000.00");      // Hong Kong Currency
             put("HUF", "HUF1,000,000.00");      // Hungary Currency
             put("INR", "INR1,000,000.00");       // India Currency
-            put("IDR", "IDR1,000,000.00");         // Indonesia Currency
+            put("IDR", "IDR1,000,000");         // Indonesia Currency
             put("JMD", "JMD1,000,000.00");      // Jamaica Currency
-            put("JPY", "JPY1,000,000.00");         // Japan Currency
+            put("JPY", "JPY1,000,000");         // Japan Currency
             put("JOD", "JOD1,000,000.00");     // Jordan Currency
             put("KZT", "KZT1,000,000.00");      // Kazakhstan Currency
             put("KES", "KES1,000,000.00");      // Kenya Currency
@@ -39,7 +51,7 @@ public class UtilsTest {
             put("MXN", "MXN1,000,000.00");      // Mexico Currency
             put("MAD", "MAD1,000,000.00");      // Morocco Currency
             put("ILS", "ILS1,000,000.00");      // Israel Currency
-            put("TWD", "TWD1,000,000.00");      // Taiwan Currency
+            put("TWD", "TWD1,000,000");      // Taiwan Currency
             put("TRY", "TRY1,000,000.00");      // Turkey Currency
             put("NZD", "NZD1,000,000.00");      // New Zealand Currency
             put("NGN", "NGN1,000,000.00");      // Nigeria Currency
@@ -54,14 +66,14 @@ public class UtilsTest {
             put("RSD", "RSD1,000,000.00");         // Serbia Currency
             put("SGD", "SGD1,000,000.00");      // Singapore Currency
             put("ZAR", "ZAR1,000,000.00");      // South Africa Currency
-            put("KRW", "KRW1,000,000.00");         // South Korea Currency
+            put("KRW", "KRW1,000,000");         // South Korea Currency
             put("LKR", "LKR1,000,000.00");      // Sri Lanka Currency
             put("SEK", "SEK1,000,000.00");      // Sweden Currency
             put("CHF", "CHF1,000,000.00");      // Switzerland Currency
             put("THB", "THB1,000,000.00");      // Thailand Currency
-            put("TND", "TND1,000,000.00");     // Tunisia Currency
+            put("TND", "TND1,000,000.000");     // Tunisia Currency
             put("AED", "AED1,000,000.00");      // United Arab Emirates Currency
-            put("UGX", "UGX1,000,000.00");         // Uganda Currency
+            put("UGX", "UGX1,000,000");         // Uganda Currency
             put("USD", "$1,000,000.00");      // United States Currency
             put("VND", "VND1,000,000.00");         // Vietnam Currency
         }
@@ -72,9 +84,9 @@ public class UtilsTest {
         String amount = "1000000";
 
         for (Map.Entry<String, String> currencyMap : currenciesMap.entrySet()) {
-            //  Todo: WIP will uncomment it after resolving the testcases.
-            //  String currency = CurrencyUtils.formatCurrency(currencyMap.getKey(), amount);
-            //  assertThat(currency, is(currencyMap.getValue()));
+            Context context = ApplicationProvider.getApplicationContext();
+            String currency = CurrencyParser.getInstance(context).formatCurrency(currencyMap.getKey(), amount);
+            assertThat(currency, is(currencyMap.getValue()));
         }
     }
 }
