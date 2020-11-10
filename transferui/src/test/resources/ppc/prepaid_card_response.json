@@ -4,30 +4,6 @@
   "limit": 10,
   "data": [
     {
-      "token": "trm-token2",
-      "primaryCardToken": "trm-token",
-      "type": "PREPAID_CARD",
-      "status": "ACTIVATED",
-      "verificationStatus": "NOT_REQUIRED",
-      "createdOn": "2020-08-27T17:09:29",
-      "transferMethodCountry": "US",
-      "transferMethodCurrency": "USD",
-      "cardType": "VIRTUAL",
-      "cardPackage": "L1",
-      "cardNumber": "************8884",
-      "cardBrand": "VISA",
-      "dateOfExpiry": "2024-08",
-      "userToken": "usr-token",
-      "links": [
-        {
-          "params": {
-            "rel": "self"
-          },
-          "href": "https://localhost.com/rest/v3/users/usr-token/prepaid-cards/trm-token2"
-        }
-      ]
-    },
-    {
       "token": "trm-token",
       "type": "PREPAID_CARD",
       "status": "ACTIVATED",

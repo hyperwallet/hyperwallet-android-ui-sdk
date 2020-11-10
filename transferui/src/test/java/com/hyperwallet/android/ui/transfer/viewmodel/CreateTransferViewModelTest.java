@@ -492,6 +492,8 @@ public class CreateTransferViewModelTest {
         viewModel.setTransferAllAvailableFunds(true);
         viewModel.setTransferAmount("124.23");
         viewModel.init("0");
+        viewModel.setGroupSeparator(",");
+        viewModel.setDecimalSeparator(".");
         // test
         viewModel.createTransfer();
 
@@ -1047,6 +1049,8 @@ public class CreateTransferViewModelTest {
         CreateTransferViewModel viewModel = spy(factory.create(CreateTransferViewModel.class));
         doReturn(ProgramModel.WALLET_MODEL).when(viewModel).getProgramModel();
         viewModel.init("0");
+        viewModel.setGroupSeparator(",");
+        viewModel.setDecimalSeparator(".");
         viewModel.setTransferAmount("20.25");
         viewModel.retry();
 
