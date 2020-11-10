@@ -1,0 +1,22 @@
+{
+  "token": "test-trf-token",
+  "status": "QUOTED",
+  "createdOn": "2019-08-01T22:36:34",
+  "clientTransferId": "test-client-transfer-id",
+  "sourceToken": "test-user-token",
+  "sourceAmount": "1,000,000,000.00",
+  "sourceCurrency": "JOD",
+  "destinationToken": "test-fake-token",
+  "destinationAmount": "9000.00",
+  "destinationFeeAmount": "200.00",
+  "destinationCurrency": "JOD",
+  "expiresOn": "2019-08-12T20:40:36",
+  "links": [
+    {
+      "params": {
+        "rel": "self"
+      },
+      "href": "https://localhost/rest/v3/transfers/test-trf-token"
+    }
+  ]
+}
