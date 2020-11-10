@@ -162,13 +162,13 @@ public class ReceiptDetailFragment extends Fragment {
             String currencySymbol = Currency.getInstance(receipt.getCurrency()).getSymbol(Locale.getDefault());
 
             TextView amountView = view.findViewById(R.id.details_amount_value);
-            amountView.setText(Utils.formatCurrency(receipt.getCurrency(), receipt.getAmount()) + " " + receipt.getCurrency());
+            amountView.setText(CurrencyParser.getInstance(view.getContext()).formatCurrency(receipt.getCurrency(), receipt.getAmount()) + " " + receipt.getCurrency());
 
             TextView fee = view.findViewById(R.id.details_fee_value);
-            fee.setText(Utils.formatCurrency(receipt.getCurrency(), receipt.getFee()) + " " + receipt.getCurrency());
+            fee.setText(CurrencyParser.getInstance(view.getContext()).formatCurrency(receipt.getCurrency(), receipt.getFee()) + " " + receipt.getCurrency());
 
             TextView transfer = view.findViewById(R.id.details_transfer_amount_value);
-            transfer.setText(Utils.formatCurrency(receipt.getCurrency(), transferAmountTotal) + " " + receipt.getCurrency());
+            transfer.setText(CurrencyParser.getInstance(view.getContext()).formatCurrency(receipt.getCurrency(), transferAmountTotal) + " " + receipt.getCurrency());
         }
     }
 
