@@ -319,7 +319,7 @@ public class SelectDestinationTest {
         onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("to honey.thigpen@ukbuilder.com")));
 
         onView(withId(R.id.transfer_amount)).perform(nestedScrollTo()).check(matches(isDisplayed()));
-        onView(withId(R.id.transfer_amount)).check(matches(withText(R.string.defaultTransferAmount)));
+        onView(withId(R.id.transfer_amount)).check(matches(withText("0.00")));
         onView(withId(R.id.transfer_amount_currency)).check(matches(withText("USD")));
 
         //Check that the toggle is disabled by default
