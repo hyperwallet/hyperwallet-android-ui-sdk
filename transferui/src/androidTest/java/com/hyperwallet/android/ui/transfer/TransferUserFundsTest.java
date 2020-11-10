@@ -105,8 +105,8 @@ public class TransferUserFundsTest {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("user_response.json")).mock();
 
-//        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-//                .getResourceContent("ppc/prepaid_card_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("ppc/prepaid_card_response.json")).mock();
         IdlingRegistry.getInstance().register(EspressoIdlingResource.getIdlingResource());
     }
 
@@ -1030,7 +1030,7 @@ public class TransferUserFundsTest {
 
     }
 
-    @Test
+       @Test
     public void testTransferFragment_verifyTransferFromPrepaidCard() {
         // Mock the response with PPC source
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
@@ -1053,10 +1053,10 @@ public class TransferUserFundsTest {
         // Transfer From
         verifyTransferFromAvailbleFunds();
         onView(ViewMatchers.withId(R.id.source_data_container))
-                        .perform(ViewActions.click());
+                .perform(ViewActions.click());
         // Select PPC from the Select From list
         onView(ViewMatchers.withText(R.string.prepaid_card))
-                        .perform(ViewActions.click());
+                .perform(ViewActions.click());
 
         // Verify Transfer From is Available Funds
         // Select PPC from the Select From list
@@ -1065,6 +1065,62 @@ public class TransferUserFundsTest {
         Espresso.onView(ViewMatchers.withId(R.id.transfer_destination_description_1))
                 .check(ViewAssertions.matches(ViewMatchers.withText(ppcInfo)));
     }
+
+    /*
+Given the user is on the log in screen
+And make the user to enter amount and note text
+When the user to change account under Transfer From
+Then the user should able see amount field and note section got reset
+     */
+    @Test
+    public void testTransferFragment_verifyCurrencyReset() {
+        // Mock the response with PPC source
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("ppc/prepaid_card_response.json")).mock();
+
+        // Mock the response by using trm-token to fetch the card info
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("ppc/get_prepaid_card_success_response.json")).mock();
+
+        // if there is sources, we load the transfer method destination with PPC transfer method
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
+
+        //  only when transferMethods.size() > 0, get the quote by the source token
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("create_transfer_quote_response.json")).mock();
+
+        mActivityTestRule.launchActivity(null);
+
+
+        onView(withId(R.id.transfer_amount)).perform(nestedScrollTo(), replaceText("100.00"));
+        onView(withId(R.id.transfer_notes)).perform(nestedScrollTo(), replaceText("QA Automation Test"));
+
+        // Transfer From
+        verifyTransferFromAvailbleFunds();
+        onView(ViewMatchers.withId(R.id.source_data_container))
+                .perform(ViewActions.click());
+        // Select PPC from the Select From list
+        onView(ViewMatchers.withText(R.string.prepaid_card))
+                .perform(ViewActions.click());
+
+        // Verify Transfer From is Available Funds
+        // Select PPC from the Select From list
+        verifyTransferFromPPC();
+        String ppcInfo = VISA + MASK + "9285";
+        Espresso.onView(ViewMatchers.withId(R.id.transfer_destination_description_1))
+                .check(ViewAssertions.matches(ViewMatchers.withText(ppcInfo)));
+
+        Espresso.onView(ViewMatchers.withId(R.id.transfer_amount))
+                .check(ViewAssertions.matches(ViewMatchers.withText(ppcInfo)));
+
+        // Validation after from transfer method changed
+        onView(withId(R.id.transfer_funds_header)).check(
+                matches(withText(R.string.mobileTransferFundsHeader)));
+        onView(withId(R.id.transfer_amount)).check(matches(withText("100.00")));
+        onView(withId(R.id.transfer_notes)).check(matches(withText("QA Automation Test")));
+    }
+
 
     @Test
     public void testTransferFragment_verifyTransferToPrepaidCard() {
