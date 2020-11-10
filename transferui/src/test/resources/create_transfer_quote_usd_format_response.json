@@ -1,17 +1,16 @@
 {
-  "token": "ttest-trf-token",
+  "token": "test-trf-token",
   "status": "QUOTED",
-  "createdOn": "2019-08-14T21:08:22",
+  "createdOn": "2019-08-01T22:36:34",
   "clientTransferId": "test-client-transfer-id",
-  "sourceToken": "trm-fake-token",
-  "sourceAmount": "1,000.00",
-  "sourceFeeAmount": "0.00",
+  "sourceToken": "test-user-token",
+  "sourceAmount": "1,000,000,000.00",
   "sourceCurrency": "USD",
   "destinationToken": "test-fake-token",
-  "destinationAmount": "998.00",
+  "destinationAmount": "1000000000.00",
   "destinationFeeAmount": "2.00",
   "destinationCurrency": "USD",
-  "expiresOn": "2019-08-14T21:10:22",
+  "expiresOn": "2019-08-12T20:40:36",
   "links": [
     {
       "params": {
