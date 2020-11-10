@@ -47,6 +47,7 @@ import com.hyperwallet.android.model.Error;
 import com.hyperwallet.android.model.Errors;
 import com.hyperwallet.android.model.receipt.Receipt;
 import com.hyperwallet.android.ui.common.repository.Event;
+import com.hyperwallet.android.ui.common.util.CurrencyParser;
 import com.hyperwallet.android.ui.common.util.DateUtils;
 import com.hyperwallet.android.ui.common.util.Utils;
 import com.hyperwallet.android.ui.common.view.OneClickListener;
@@ -334,7 +335,7 @@ public class ListReceiptsFragment extends Fragment {
                 if (CREDIT.equals(receipt.getEntry())) {
                     transactionAmount.setTextColor(transactionAmount.getContext()
                             .getResources().getColor(R.color.positiveColor));
-                    transactionAmount.setText(Utils.formatCurrency(receipt.getCurrency(), receipt.getAmount()));
+                    transactionAmount.setText(CurrencyParser.getInstance(itemView.getContext()).formatCurrency(receipt.getCurrency(), receipt.getAmount()));
                     transactionTypeIcon.setTextColor(transactionTypeIcon.getContext()
                             .getResources().getColor(R.color.positiveColor));
                     transactionTypeIcon.setText(transactionTypeIcon.getContext().getText(R.string.credit));
@@ -344,7 +345,7 @@ public class ListReceiptsFragment extends Fragment {
                     transactionTypeIcon.setTextColor(transactionTypeIcon.getContext()
                             .getResources().getColor(R.color.negativeColor));
                     transactionAmount.setText(transactionAmount.getContext().getString(R.string.debit_sign_transaction,
-                                    Utils.formatCurrency(receipt.getCurrency(), receipt.getAmount())));
+                            CurrencyParser.getInstance(itemView.getContext()).formatCurrency(receipt.getCurrency(), receipt.getAmount())));
                     transactionTypeIcon.setText(transactionTypeIcon.getContext().getText(R.string.debit));
                 }
 
