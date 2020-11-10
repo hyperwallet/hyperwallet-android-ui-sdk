@@ -6,17 +6,17 @@ public class CurrencyDetails {
     private Integer id;
     private String name;
     private String currencyCode;
-    private String isocurrencyCode;
-    private String baseunit;
-    private Integer denominationamount;
+    private String isoCurrencyCode;
+    private String baseUnit;
+    private Integer denominationAmount;
     private Integer decimals;
     private Integer hiddenDecimals;
-    private String symbol;
     private Integer exchangeable;
-    private Integer governmentissued;
+    private Integer governmentIssued;
     private Integer groupingUsed;
     private Integer fxTransactionVisible;
     private String displayedAs;
+    private String symbol;
 
     public Integer getId() {
         return id;
@@ -42,28 +42,28 @@ public class CurrencyDetails {
         this.currencyCode = currencyCode;
     }
 
-    public String getIsocurrencyCode() {
-        return isocurrencyCode;
+    public String getIsoCurrencyCode() {
+        return isoCurrencyCode;
     }
 
-    public void setIsocurrencyCode(String isocurrencyCode) {
-        this.isocurrencyCode = isocurrencyCode;
+    public void setIsoCurrencyCode(String isoCurrencyCode) {
+        this.isoCurrencyCode = isoCurrencyCode;
     }
 
-    public String getBaseunit() {
-        return baseunit;
+    public String getBaseUnit() {
+        return baseUnit;
     }
 
-    public void setBaseunit(String baseunit) {
-        this.baseunit = baseunit;
+    public void setBaseUnit(String baseUnit) {
+        this.baseUnit = baseUnit;
     }
 
-    public Integer getDenominationamount() {
-        return denominationamount;
+    public Integer getDenominationAmount() {
+        return denominationAmount;
     }
 
-    public void setDenominationamount(Integer denominationamount) {
-        this.denominationamount = denominationamount;
+    public void setDenominationAmount(Integer denominationAmount) {
+        this.denominationAmount = denominationAmount;
     }
 
     public Integer getDecimals() {
@@ -98,12 +98,12 @@ public class CurrencyDetails {
         this.exchangeable = exchangeable;
     }
 
-    public Integer getGovernmentissued() {
-        return governmentissued;
+    public Integer getGovernmentIssued() {
+        return governmentIssued;
     }
 
-    public void setGovernmentissued(Integer governmentissued) {
-        this.governmentissued = governmentissued;
+    public void setGovernmentIssued(Integer governmentIssued) {
+        this.governmentIssued = governmentIssued;
     }
 
     public Integer getGroupingUsed() {

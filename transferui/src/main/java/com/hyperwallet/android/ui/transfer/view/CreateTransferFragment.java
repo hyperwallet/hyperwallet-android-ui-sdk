@@ -18,7 +18,6 @@ package com.hyperwallet.android.ui.transfer.view;
 
 import static android.app.Activity.RESULT_OK;
 
-import static com.hyperwallet.android.model.transfer.Transfer.CURRENCY_NUMERIC_SEPARATOR;
 import static com.hyperwallet.android.model.transfer.Transfer.EMPTY_STRING;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TOKEN;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TRANSFER_METHOD_COUNTRY;
@@ -35,7 +34,7 @@ import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getTran
 import static com.hyperwallet.android.ui.transfer.view.CreateTransferActivity.EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT;
 import static com.hyperwallet.android.ui.transfer.view.ListTransferDestinationActivity.EXTRA_SELECTED_DESTINATION;
 import static com.hyperwallet.android.ui.transfer.view.ListTransferSourceActivity.EXTRA_SELECTED_SOURCE;
-import static com.hyperwallet.android.ui.transfer.viewmodel.CreateTransferViewModel.REGEX_ONLY_NUMBER_AND_DECIMAL;
+import static com.hyperwallet.android.ui.transfer.viewmodel.CreateTransferViewModel.CURRENCY_DOT_SEPARATOR;
 
 import android.content.Context;
 import android.content.Intent;
@@ -90,6 +89,7 @@ public class CreateTransferFragment extends Fragment {
     private static final int NOTES_MAX_LINE_LENGTH = 40;
     private static final String REGEX_ONLY_NUMBER = "[^0-9]";
     private static final String REGEX_REMOVE_TRAILING_EMPTY_SPACE = "\\s+$";
+    private static final String REGEX_ONLY_NUMBER_AND_DECIMAL = "[^0-9.]";
     private static final String US_CURRENCY_CODE = "USD";
     private static final String CURRENCY_FILE_NAME = "currency.json";
     private final String CURRENCY_CODE = "currencycode";
@@ -112,6 +112,8 @@ public class CreateTransferFragment extends Fragment {
     private TextView mTransferAmountError;
     private int mNumberOfFractionDigits = 0;
     private String mCurrencyCode;
+    private String mDecimalSeparator;
+    private String mGroupSeparator;
     private List<CurrencyDetails> mCurrencyDetailsList = new ArrayList<>();
 
     /**
@@ -315,7 +317,7 @@ public class CreateTransferFragment extends Fragment {
         }
 
         try {
-            if (Double.parseDouble(amount.replaceAll(REGEX_ONLY_NUMBER_AND_DECIMAL, EMPTY_STRING)) == 0.0) {
+            if (Double.parseDouble(amount.replaceAll(REGEX_ONLY_NUMBER, EMPTY_STRING)) == 0.0) {
                 return false;
             }
         } catch (NumberFormatException e) {
@@ -624,7 +626,10 @@ public class CreateTransferFragment extends Fragment {
                             mTransferAmount.setText(
                                     mCreateTransferViewModel.getTransferAmount().getValue() == null ? formattedAmount(0,
                                             mCurrencyCode) : formattedAmount(
-                                            stringToDouble(mCreateTransferViewModel.getTransferAmount().getValue()),
+                                            stringToDouble(
+                                                    mCreateTransferViewModel.getTransferAmount().getValue().replace(
+                                                            mGroupSeparator, EMPTY_STRING).replace(mDecimalSeparator,
+                                                            CURRENCY_DOT_SEPARATOR)),
                                             mCurrencyCode));
                         }
                     }
@@ -731,13 +736,15 @@ public class CreateTransferFragment extends Fragment {
         DecimalFormatSymbols decimalFormatSymbols = currencyFormatter.getDecimalFormatSymbols();
         decimalFormatSymbols.setCurrencySymbol("");
         currencyFormatter.setDecimalFormatSymbols(decimalFormatSymbols);
-        mCreateTransferViewModel.setDecimalSeparator(Character.toString(decimalFormatSymbols.getDecimalSeparator()));
-        mCreateTransferViewModel.setGroupSeparator(Character.toString(decimalFormatSymbols.getGroupingSeparator()));
+        mDecimalSeparator = Character.toString(decimalFormatSymbols.getDecimalSeparator());
+        mGroupSeparator = Character.toString(decimalFormatSymbols.getGroupingSeparator());
+        mCreateTransferViewModel.setDecimalSeparator(mDecimalSeparator);
+        mCreateTransferViewModel.setGroupSeparator(mGroupSeparator);
         return currencyFormatter.format(amount).replaceAll(REGEX_REMOVE_TRAILING_EMPTY_SPACE, EMPTY_STRING);
     }
 
     private double stringToDouble(@NonNull final String amount) {
-        String cleanString = amount.replaceAll(CURRENCY_NUMERIC_SEPARATOR, EMPTY_STRING);
+        String cleanString = amount.replaceAll(REGEX_ONLY_NUMBER_AND_DECIMAL, EMPTY_STRING);
         if (!TextUtils.isEmpty(cleanString)) {
             return Double.parseDouble(cleanString);
         } else {
