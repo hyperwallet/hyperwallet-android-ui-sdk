@@ -49,7 +49,6 @@ import com.hyperwallet.android.model.receipt.Receipt;
 import com.hyperwallet.android.ui.common.repository.Event;
 import com.hyperwallet.android.ui.common.util.CurrencyParser;
 import com.hyperwallet.android.ui.common.util.DateUtils;
-import com.hyperwallet.android.ui.common.util.Utils;
 import com.hyperwallet.android.ui.common.view.OneClickListener;
 import com.hyperwallet.android.ui.receipt.R;
 import com.hyperwallet.android.ui.receipt.repository.PrepaidCardReceiptRepositoryImpl;
