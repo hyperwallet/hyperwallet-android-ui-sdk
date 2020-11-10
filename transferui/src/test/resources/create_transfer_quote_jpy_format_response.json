@@ -7,7 +7,7 @@
   "sourceAmount": "1,000,000,000",
   "sourceCurrency": "JPY",
   "destinationToken": "test-fake-token",
-  "destinationAmount": "9000",
+  "destinationAmount": "100000000000",
   "destinationFeeAmount": "200",
   "destinationCurrency": "JPY",
   "expiresOn": "2019-08-12T20:40:36",
