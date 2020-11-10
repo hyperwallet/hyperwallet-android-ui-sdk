@@ -73,7 +73,6 @@ public class CreateTransferViewModel extends ViewModel {
     private static final String DESTINATION_TOKEN_INPUT_FIELD = "destinationToken";
     private static final String PRIVATE_TOKEN_PREFIX = "trm-";
     public static final String CURRENCY_DOT_SEPARATOR = ".";
-    public static final String REGEX_ONLY_NUMBER_AND_DECIMAL = "[^0-9.]";
 
 
     private final TransferRepository mTransferRepository;
