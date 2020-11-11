@@ -6,7 +6,7 @@
       "createdOn": "2020-06-20T22:48:41",
       "entry": "DEBIT",
       "destinationToken": "test-fake-token",
-      "amount": "10.00",
+      "amount": "100000000.00",
       "fee": "3.00",
       "currency": "USD",
       "details": {
@@ -61,7 +61,7 @@
       "createdOn": "2020-09-20T23:55:17",
       "entry": "CREDIT",
       "sourceToken": "test-fake-token",
-      "amount": "6.90",
+      "amount": "1000000.99",
       "currency": "USD",
       "details": {
         "cardNumber": "************0673"
