@@ -33,9 +33,9 @@ subprojects {
     ext {
         hyperwalletGroupId = 'com.hyperwallet.android.ui'
 
-        compileVersion = 28
+        compileVersion = 29
         minVersion = 21
-        targetVersion = 28
+        targetVersion = 29
         codeVersion = 1
 
         hyperwalletCoreVersion = '1.0.0-beta07-SNAPSHOT'
