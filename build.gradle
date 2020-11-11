@@ -60,6 +60,7 @@ subprojects {
         robolectricVersion = '4.1'
         coreTest = '1.3.0'
         mockWebServerVersion = '3.11.0'
+        coreTest = '1.3.0'
         //
         jacocoVersion = "0.8.2"
         fileFilter = ['**/BuildConfig.*']
