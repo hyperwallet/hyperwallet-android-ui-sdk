@@ -17,7 +17,6 @@
     <string name="mobileCharityName">Charity name</string>
     <string name="mobileCheckNumber">Check number</string>
     <string name="mobilePromoWebsite">Promo website</string>
-    <string name="concat_string_view_format">%s%s %s</string>
     <string name="concat_date_string_view_format">%s %s</string>
 
     <string name="mobileNoTransactionsUser" translatable="false">There\'s no activity to display.</string>
@@ -30,7 +29,9 @@
     <string name="debit" translatable="false">\ue908</string>
     <string name="credit" translatable="false">\ue907</string>
     <string name="debit_sign" translatable="false">-%s%s</string>
+    <string name="debit_sign_receipts" translatable="false">-%s</string>
     <string name="credit_sign" translatable="false">%s%s</string>
+    <string name="debit_sign_transaction" translatable="false">-%s</string>
 
     <!--Generic fee types-->
     <string name="unknown_type">Unknown Transaction Type</string>

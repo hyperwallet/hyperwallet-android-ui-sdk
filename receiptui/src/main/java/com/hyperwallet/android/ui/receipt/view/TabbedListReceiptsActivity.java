@@ -27,6 +27,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.hyperwallet.android.model.Error;
 import com.hyperwallet.android.model.Errors;
 import com.hyperwallet.android.ui.common.repository.Event;
 import com.hyperwallet.android.ui.common.util.PageGroups;
@@ -37,7 +38,10 @@ import com.hyperwallet.android.ui.receipt.viewmodel.TabbedListReceiptsViewModel;
 import com.hyperwallet.android.ui.transfermethod.repository.PrepaidCardRepositoryImpl;
 import com.hyperwallet.android.ui.user.repository.UserRepositoryImpl;
 
-public class TabbedListReceiptsActivity extends AppCompatActivity implements OnNetworkErrorCallback {
+import java.util.List;
+
+public class TabbedListReceiptsActivity extends AppCompatActivity implements OnNetworkErrorCallback,
+        ListReceiptsFragment.ListReceiptsFragmentCallback {
     public static final String TAG = "receipts:prepaid:tabbed-list-receipts";
 
     public static final String EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT = "EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT";
@@ -97,6 +101,11 @@ public class TabbedListReceiptsActivity extends AppCompatActivity implements OnN
             fragment = TabbedListReceiptsFragment.newInstance();
         }
         fragment.retry();
+    }
+
+    @Override
+    public void onHandleError(List<Error> errors) {
+
     }
 
     @Override

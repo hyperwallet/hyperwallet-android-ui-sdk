@@ -17,7 +17,6 @@
     <string name="mobileCharityName">Nombre de la organización benéfica</string>
     <string name="mobileCheckNumber">Número de cheque</string>
     <string name="mobilePromoWebsite">Página web de la promoción</string>
-    <string name="concat_string_view_format">%s%s %s</string>
     <string name="concat_date_string_view_format">%s %s</string>
 
     <string name="mobileNoTransactionsUser" >No hay actividad para mostrar.</string>
