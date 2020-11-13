@@ -22,7 +22,7 @@
                 android:id="@+id/transaction_header"
                 style="@style/HeaderTitleAppearance"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/section_header_height"
+                android:layout_height="wrap_content"
                 android:paddingTop="@dimen/grid_padding_top">
 
                 <TextView
