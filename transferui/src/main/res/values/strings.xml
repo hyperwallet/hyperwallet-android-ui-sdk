@@ -12,7 +12,7 @@
     <string name="transfer_currency_placeholder">USD</string>
     <string name="transfer_currency_code_placeholder">$</string>
     <string name="transfer_all_funds_label">Transfer max amount</string>
-    <string name="mobileAvailableBalance">Amount available: %s %s</string>
+    <string name="mobileAvailableBalance">Amount available: %s %s %s</string>
     <string name="mobileSummaryLabel">SUMMARY</string>
     <string name="mobileNoteLabel">Note</string>
     <string name="transfer_notes_label">Note</string>

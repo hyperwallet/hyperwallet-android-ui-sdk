@@ -563,10 +563,6 @@ public class CreateTransferFragment extends Fragment {
                     @Override
                     public void onChanged(TransferSource transferSource) {
 
-                        mTransferAmount.setText(formattedAmount(
-                                stringToDouble((String) getResources().getText(R.string.defaultTransferAmount)),
-                                mCurrencyCode));
-
                         showTransferSource(transferSource);
                     }
                 });
@@ -601,8 +597,9 @@ public class CreateTransferFragment extends Fragment {
             @Override
             public void onChanged(final Transfer transfer) {
                 if (transfer != null) {
-                    String summary = requireContext().getString(R.string.mobileAvailableBalance,
-                            transfer.getDestinationAmount(), transfer.getDestinationCurrency());
+                    CurrencyDetails currencyDetails = getNumberOfFractionDigits(mCurrencyCode);
+                    String summary = requireContext().getString(R.string.mobileAvailableBalance,currencyDetails == null ? "" : currencyDetails.getSymbol(),
+                            formattedAmount(stringToDouble(transfer.getDestinationAmount()),mCurrencyCode), transfer.getDestinationCurrency());
                     mTransferAllFundsSummary.setText(summary);
                     mTransferAllFundsSummary.setVisibility(View.VISIBLE);
                     if (mCreateTransferViewModel.isUpdateTransferAllFunds()) {

@@ -12,7 +12,7 @@
     <string name="transfer_currency_placeholder">USD</string>
     <string name="transfer_currency_code_placeholder">$</string>
     <string name="transfer_all_funds_label">Transferir todos los fondos</string>
-    <string name="mobileAvailableBalance">Fondos disponibles: %s %s</string>
+    <string name="mobileAvailableBalance">Fondos disponibles: %s %s %s</string>
     <string name="mobileSummaryLabel">RESUMEN</string>
     <string name="mobileNoteLabel">Nota</string>
     <string name="transfer_notes_label">Descripción</string>

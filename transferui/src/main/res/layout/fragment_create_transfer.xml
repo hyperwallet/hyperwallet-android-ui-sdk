@@ -65,6 +65,7 @@
                             android:paddingStart="@dimen/amount_padding"
                             android:paddingEnd="@dimen/amount_padding"
                             android:paddingTop="@dimen/currency_code_padding"
+                            android:layout_marginEnd="@dimen/transfer_currency_end"
                             android:textAppearance="@style/TextAppearance.Hyperwallet.Currency.Caption"
                             app:layout_constraintEnd_toStartOf="@+id/transfer_amount"
                             app:layout_constraintTop_toTopOf="parent"
@@ -92,6 +93,7 @@
                         <TextView
                             android:id="@+id/transfer_amount_currency"
                             android:layout_width="wrap_content"
+                            android:layout_marginStart="@dimen/widget_default_margin"
                             android:layout_height="wrap_content"
                             android:paddingBottom="@dimen/currency_padding"
                             android:textAppearance="@style/TextAppearance.Hyperwallet.CurrencyCode.Caption"
