@@ -15,7 +15,9 @@
             android:id="@+id/create_transfer_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/section_header_height"
             android:orientation="vertical">
+
 
             <LinearLayout
                 android:id="@+id/transfer_funds_header_container"
