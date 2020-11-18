@@ -119,24 +119,26 @@ public class ListPrepaidCardReceiptsTest {
         onView(withId(R.id.list_receipts))
                 .check(matches(atPosition(0, hasDescendant(withText(monthLabel1)))));
         onView(withId(R.id.list_receipts)).check(matches(atPosition(0,
-                hasDescendant(withText(R.string.debit)))));
+                hasDescendant(withText(R.string.credit)))));
         onView(withId(R.id.list_receipts)).check(
-                matches(atPosition(0, hasDescendant(withText(R.string.prepaid_card_sale)))));
+                matches(atPosition(0, hasDescendant(withText(R.string.deposit)))));
         onView(withId(R.id.list_receipts)).check(
-                matches(atPosition(0, hasDescendant(withText(debitSymbol + usdCurrencySymbol + "10.00")))));
+                matches(atPosition(0, hasDescendant(withText(usdCurrencySymbol + "5.00")))));
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(0, hasDescendant(withText("June 6, 2019")))));
         onView(withId(R.id.list_receipts)).check(matches(atPosition(0, hasDescendant(withText("USD")))));
 
         onView(withId(R.id.list_receipts)).check(matches(atPosition(1,
-                hasDescendant(withText(R.string.credit)))));
+                hasDescendant(withText(R.string.debit)))));
         onView(withId(R.id.list_receipts)).check(
-                matches(atPosition(1, hasDescendant(withText(R.string.deposit)))));
+                matches(atPosition(1, hasDescendant(withText(R.string.prepaid_card_sale)))));
         onView(withId(R.id.list_receipts)).check(
-                matches(atPosition(1, hasDescendant(withText(usdCurrencySymbol + "5.00")))));
+                matches(atPosition(1, hasDescendant(withText(debitSymbol + usdCurrencySymbol + "10.00")))));
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(1, hasDescendant(withText("June 6, 2019")))));
         onView(withId(R.id.list_receipts)).check(matches(atPosition(1, hasDescendant(withText("USD")))));
+
+
 
         onView(withId(R.id.list_receipts)).check(matches(atPosition(2,
                 hasDescendant(withText(R.string.debit)))));
@@ -289,6 +291,7 @@ public class ListPrepaidCardReceiptsTest {
         mActivityTestRule.launchActivity(null);
 
         onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
+
         onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
                 .check(matches(withText(R.string.title_activity_receipt_list)));
         onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.list_receipts))))
@@ -376,7 +379,8 @@ public class ListPrepaidCardReceiptsTest {
                 .check(matches(withText(R.string.title_activity_receipt_list)));
         onView(withId(R.id.list_receipts)).check(matches(isDisplayed()));
 
-        onView(withId(R.id.list_receipts)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        onView(withId(R.id.list_receipts)).perform(RecyclerViewActions.actionOnItemAtPosition(1, click()));
+        //onView(withId(R.id.list_receipts)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
 
         onView(withId(R.id.transaction_header_text)).check(matches(withText(R.string.mobileTransactionTypeLabel)));
         onView(withId(R.id.transaction_type_icon)).check(matches(withText(R.string.debit)));
@@ -430,7 +434,7 @@ public class ListPrepaidCardReceiptsTest {
                 .check(matches(withText(R.string.title_activity_receipt_list)));
         onView(withId(R.id.list_receipts)).check(matches(isDisplayed()));
 
-        onView(withId(R.id.list_receipts)).perform(RecyclerViewActions.actionOnItemAtPosition(1, click()));
+        onView(withId(R.id.list_receipts)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
 
         onView(withId(R.id.transaction_header_text)).check(matches(withText(R.string.mobileTransactionTypeLabel)));
         onView(withId(R.id.transaction_type_icon)).check(matches(withText(R.string.credit)));
