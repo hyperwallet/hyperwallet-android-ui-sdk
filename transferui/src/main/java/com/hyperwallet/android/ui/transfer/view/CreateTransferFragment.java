@@ -89,7 +89,7 @@ public class CreateTransferFragment extends Fragment {
     private static final int NOTES_MAX_LINE_LENGTH = 40;
     private static final String REGEX_ONLY_NUMBER = "[^0-9]";
     private static final String REGEX_REMOVE_TRAILING_EMPTY_SPACE = "\\s+$";
-    private static final String REGEX_ONLY_NUMBER_AND_DECIMAL = "[^0-9.]";
+    public static final String REGEX_ONLY_NUMBER_AND_DECIMAL = "[^0-9.]";
     private static final String US_CURRENCY_CODE = "USD";
     private static final String CURRENCY_FILE_NAME = "currency.json";
     private final String CURRENCY_CODE = "currencycode";

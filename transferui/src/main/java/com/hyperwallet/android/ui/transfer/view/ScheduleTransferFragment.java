@@ -16,6 +16,7 @@
  */
 package com.hyperwallet.android.ui.transfer.view;
 
+import static com.hyperwallet.android.model.transfer.Transfer.EMPTY_STRING;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TRANSFER_METHOD_COUNTRY;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TYPE;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.PREPAID_CARD;
@@ -23,6 +24,7 @@ import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getStri
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getStringResourceByName;
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getTransferMethodDetail;
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getTransferMethodName;
+import static com.hyperwallet.android.ui.transfer.view.CreateTransferFragment.REGEX_ONLY_NUMBER_AND_DECIMAL;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -43,6 +45,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hyperwallet.android.model.transfer.ForeignExchange;
+import com.hyperwallet.android.ui.common.util.CurrencyParser;
 import com.hyperwallet.android.ui.common.view.OneClickListener;
 import com.hyperwallet.android.ui.transfer.R;
 import com.hyperwallet.android.ui.transfer.TransferSource;
@@ -180,22 +183,18 @@ public class ScheduleTransferFragment extends Fragment {
             feeContainer.setVisibility(View.VISIBLE);
             receiveAmountContainer.setVisibility(View.VISIBLE);
             amountHorizontalBar.setVisibility(View.VISIBLE);
-            fee.setText(requireContext().getString(R.string.amount_currency_format,
-                    mScheduleTransferViewModel.getTransfer().getDestinationFeeAmount(),
-                    mScheduleTransferViewModel.getTransfer().getDestinationCurrency()));
-            amount.setText(requireContext().getString(R.string.amount_currency_format,
-                    mScheduleTransferViewModel.getTransferTotalAmount(),
-                    mScheduleTransferViewModel.getTransfer().getDestinationCurrency()));
-            receiveAmount.setText(requireContext().getString(R.string.amount_currency_format,
-                    mScheduleTransferViewModel.getTransfer().getDestinationAmount(),
-                    mScheduleTransferViewModel.getTransfer().getDestinationCurrency()));
+            String feeFormattedValue = CurrencyParser.getInstance(requireContext()).formatCurrency(mScheduleTransferViewModel.getTransfer().getDestinationCurrency(), mScheduleTransferViewModel.getTransfer().getDestinationFeeAmount().replaceAll(REGEX_ONLY_NUMBER_AND_DECIMAL, EMPTY_STRING));
+            String amountFormattedValue = CurrencyParser.getInstance(requireContext()).formatCurrency(mScheduleTransferViewModel.getTransfer().getDestinationCurrency(), mScheduleTransferViewModel.getTransferTotalAmount().replaceAll(REGEX_ONLY_NUMBER_AND_DECIMAL, EMPTY_STRING));
+            String receiveAmountFormattedValue = CurrencyParser.getInstance(requireContext()).formatCurrency(mScheduleTransferViewModel.getTransfer().getDestinationCurrency(), mScheduleTransferViewModel.getTransfer().getDestinationAmount().replaceAll(REGEX_ONLY_NUMBER_AND_DECIMAL, EMPTY_STRING));
+            fee.setText(feeFormattedValue);
+            amount.setText(amountFormattedValue);
+            receiveAmount.setText(receiveAmountFormattedValue);
         } else {
             feeContainer.setVisibility(View.GONE);
             receiveAmountContainer.setVisibility(View.GONE);
             amountHorizontalBar.setVisibility(View.GONE);
-            amount.setText(requireContext().getString(R.string.amount_currency_format,
-                    mScheduleTransferViewModel.getTransfer().getDestinationAmount(),
-                    mScheduleTransferViewModel.getTransfer().getDestinationCurrency()));
+            String amountFormattedValue = CurrencyParser.getInstance(requireContext()).formatCurrency(mScheduleTransferViewModel.getTransfer().getDestinationCurrency(), mScheduleTransferViewModel.getTransfer().getDestinationAmount().replaceAll(REGEX_ONLY_NUMBER_AND_DECIMAL, EMPTY_STRING));
+            amount.setText(amountFormattedValue);
         }
 
         if (mScheduleTransferViewModel.getShowFxChangeWarning()) {
