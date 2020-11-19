@@ -1,0 +1,172 @@
+<resources>
+    <string name="app_name">bizonylat</string>
+    <string name="title_activity_receipt_list">Tranzakciók</string>
+    <string name="title_activity_receipt_detail">Tranzakció részletei</string>
+    <string name="mobileTransactionDetailsHeader">Tranzakció részletei</string>
+    <string name="transactions">Tranzakciók</string>
+    <string name="mobileTransactionTypeLabel">TRANZAKCIÓ</string>
+    <string name="mobileFeeInfoLabel">DÍJINFORMÁCIÓ</string>
+    <string name="amount">Összeg</string>
+    <string name="mobileFeeLabel">Díj</string>
+    <string name="mobileTransactionDetailsTotal">Tranzakció összesen</string>
+    <string name="mobileTransactionDetailsLabel">ADATOK</string>
+    <string name="mobileJournalNumberLabel">Bizonylatazonosító</string>
+    <string name="date">Dátum</string>
+    <string name="mobileMerchantTxnLabel">Tranzakció azonosító</string>
+    <string name="mobileConfirmNotesLabel">MEGJEGYZÉS</string>
+    <string name="mobileCharityName">Jótékonysági szervezet neve</string>
+    <string name="mobileCheckNumber">Ellenőrző szám</string>
+    <string name="mobilePromoWebsite">Promó weboldal</string>
+    <string name="concat_date_string_view_format">%s %s</string>
+
+    <string name="mobileNoTransactionsUser" translatable="false">Nincs megjeleníthető tevékenység.</string>
+    <string name="mobileNoTransactionsPrepaidCard" translatable="false">Nincs tranzakció az elmúlt 365 napban.</string>
+    <string name="title_transfer_funds">Átutalás</string>
+    <string name="font_icon_placeholder">\ue908</string>
+    <string name="text_placeholder">Helykitöltő</string>
+
+    <!-- entry types -->
+    <string name="debit" translatable="false">\ue908</string>
+    <string name="credit" translatable="false">\ue907</string>
+    <string name="debit_sign" translatable="false">-%s%s</string>
+    <string name="credit_sign" translatable="false">%s%s</string>
+
+    <!--Generic fee types-->
+    <string name="unknown_type">Ismeretlen tranzakciótípus</string>
+    <string name="annual_fee">Éves díj</string>
+    <string name="annual_fee_refund">Éves díjvisszatérítés</string>
+    <string name="customer_service_fee">Ügyfélszolgálati díj</string>
+    <string name="customer_service_fee_refund">Ügyfélszolgálati djjvisszatérítés</string>
+    <string name="expedited_shipping_fee">Gyorsított szállítási díj</string>
+    <string name="generic_fee_refund">Általános díjvisszatérítés</string>
+    <string name="monthly_fee">Havi díj</string>
+    <string name="monthly_fee_refund">MoneyGram-díjvisszatérítés</string>
+    <string name="payment_expiry_fee">Lejárt fizetés díja</string>
+    <string name="payment_fee">Fizetés díja</string>
+    <string name="processing_fee">Feldolgozási díj</string>
+    <string name="standard_shipping_fee">Standard szállítási díj</string>
+    <string name="transfer_fee">Átutalási díj</string>
+
+    <!--Generic payment types-->
+    <string name="adjustment">Egyenlegkiegészítés</string>
+    <string name="foreign_exchange">Deviza</string>
+    <string name="deposit">Fizetés</string>
+    <string name="manual_adjustment">Módosítás</string>
+    <string name="payment_expiration">Lejárt fizetés</string>
+
+    <!--Bank account-specific types-->
+    <string name="bank_account_transfer_fee">Bankszámla visszatérítési díj</string>
+    <string name="bank_account_transfer_return">Bankszámla-visszatérítés</string>
+    <string name="bank_account_transfer_return_fee">Bankszámla visszatérítési díj</string>
+    <string name="transfer_to_bank_account">Bankszámla</string>
+
+    <!--Card-specific types-->
+    <string name="card_activation_fee">Kártyaaktivációs díj</string>
+    <string name="card_activation_fee_waiver">Kártyaaktivációs díjelengedés</string>
+    <string name="card_fee">Kártyadíj</string>
+    <string name="manual_transfer_to_prepaid_card">Átutalás kártyára</string>
+    <string name="prepaid_card_balance_inquiry_fee">Egyenleglekérdezés díja</string>
+    <string name="prepaid_card_cash_advance">Készpénz-előleg</string>
+    <string name="prepaid_card_disputed_charge_refund">Vitatott terhelés visszatérítése</string>
+    <string name="prepaid_card_dispute_deposit">Vitatott kártyaelőleg</string>
+    <string name="prepaid_card_domestic_cash_withdrawal_fee">ATM-pénzfelvétel</string>
+    <string name="prepaid_card_exchange_rate_difference">ELŐRE_FIZETETT-KÁRTYA_ÁRFOLYAM_KÜLÖNBÖZET
+    </string>
+    <string name="prepaid_card_manual_unload">Átutalás kártyáról</string>
+    <string name="prepaid_card_overseas_cash_withdrawal_fee">ATM-pénzfelvétel</string>
+    <string name="prepaid_card_pin_change_fee">PIN-módosítási díj</string>
+    <string name="prepaid_card_refund">Visszatérítés</string>
+    <string name="prepaid_card_replacement_fee">Kártyacsere díja</string>
+    <string name="prepaid_card_sale">Tranzakció</string>
+    <string name="prepaid_card_sale_reversal">Visszafordított tranzakció</string>
+    <string name="prepaid_card_unload">Átutalás kártyáról</string>
+    <string name="transfer_to_prepaid_card">Átutalás kártyára</string>
+    <!---->
+    <!--Donation types-->
+    <string name="donation">Adomány</string>
+    <string name="donation_fee">Adománydíj</string>
+    <string name="donation_return">Adományvisszatérítés</string>
+    <!---->
+    <!--Merchant payment types-->
+    <string name="merchant_payment">Kereskedői fizetés</string>
+    <string name="merchant_payment_fee">Kereskedői fizetés díja</string>
+    <string name="merchant_payment_refund">Kereskedői fizetés visszatérítése</string>
+    <string name="merchant_payment_return">Kereskedői fizetés visszatérítése</string>
+    <!---->
+    <!--MoneyGram types-->
+    <string name="moneygram_transfer_return">MoneyGram-visszatérítés</string>
+    <string name="transfer_to_moneygram">MoneyGram</string>
+    <!---->
+    <!--Paper check types-->
+    <string name="paper_check_fee">Papír alapú csekk díj</string>
+    <string name="paper_check_refund">Papír alapú csekk visszatérítés</string>
+    <string name="transfer_to_paper_check">Papír alapú csekk</string>
+    <!---->
+    <!--User and program account types-->
+    <string name="account_closure">Számlazárás</string>
+    <string name="account_closure_fee">Számlazárási díj</string>
+    <string name="account_unload">Pénzösszeg-visszatérítés</string>
+    <string name="dormant_user_fee">„Alvó” felhasználói fiók díj</string>
+    <string name="dormant_user_fee_refund">„Alvó” felhasználói fiók díjvisszatérítés</string>
+    <string name="payment">Fizetés</string>
+    <string name="payment_cancellation">Fizetés törlése</string>
+    <string name="payment_reversal">Fizetés visszafordítása</string>
+    <string name="payment_reversal_fee">Fizetés visszafordítási díja</string>
+    <string name="payment_return">Fizetés visszatérítése</string>
+    <string name="transfer_to_program_account">Átutalás programba</string>
+    <string name="transfer_to_user">Átutalás felhasználónak</string>
+    <string name="transfer_to_paypal_account">PayPal</string>
+    <string name="transfer_to_bank_card">Bankkártya</string>
+    <string name="transfer_to_debit_card">Betéti kártya</string>
+    <string name="prepaid_card_transfer_return">Előre fizetett kártyafeltöltés visszatérítési</string>
+    <!---->
+    <!--Virtual incentive types-->
+    <string name="virtual_incentive_cancellation">Promó lemondása</string>
+    <string name="virtual_incentive_issuance">Promó kiadva</string>
+    <string name="virtual_incentive_purchase">Promó megvásárlása</string>
+    <string name="virtual_incentive_refund">Promó visszatérítése</string>
+    <!---->
+    <!--Western Union and WUBS types-->
+    <string name="transfer_to_western_union">Western Union</string>
+    <string name="transfer_to_wubs_wire">Banki átutalás</string>
+    <string name="western_union_transfer_return">Western Union-pénzfelvétel</string>
+    <string name="wubs_wire_transfer_return">Banki átutalás visszatérítése</string>
+    <!---->
+    <!--Wire transfer types-->
+    <string name="transfer_to_wire">Banki átutalás</string>
+    <string name="wire_transfer_fee">Banki átutalás díja</string>
+    <string name="wire_transfer_return">Banki átutalás visszatérítése</string>
+
+    <!-- New exposed receipt types -->
+    <string name="paypal_account_transfer_return">Kifizetés visszatérítése</string>
+    <string name="venmo_account_transfer_return">Kifizetés visszatérítése</string>
+    <string name="prepaid_card_account_deposit">Számlabefizetés</string>
+    <string name="prepaid_card_annual_fee_discount">Éves díjkedvezmény</string>
+    <string name="prepaid_card_bill_reprint_fee">Számla újranyomtatási díja</string>
+    <string name="prepaid_card_atm_or_cash_advance_fee">ATM-/Készpénzelőleg díja</string>
+    <string name="prepaid_card_cash_advance_chargeback">Készpénzelőleg visszaterhelése</string>
+    <string name="prepaid_card_cash_advance_chargeback_reversal">Készpénzelőleg visszaterhelésének visszafordítása</string>
+    <string name="prepaid_card_cash_advance_repress">Készpénzelőleg visszaterhelésének visszatartása</string>
+    <string name="prepaid_card_cash_advance_repress_reversal">Előleg visszaterhelésének visszatartása</string>
+    <string name="prepaid_card_chargeback">Visszaterhelés</string>
+    <string name="prepaid_card_chargeback_refund">Visszaterhelés visszatérítése</string>
+    <string name="prepaid_card_chargeback_refund_reversal">Visszaterhelés visszatérítésének visszafordítása</string>
+    <string name="prepaid_card_chargeback_reversal">Visszaterhelés visszatérítése</string>
+    <string name="prepaid_card_commission_or_fee">Díj/Jutalék</string>
+    <string name="prepaid_card_debit_transfer">Letét/Átutalások</string>
+    <string name="prepaid_card_document_request_fee">Dokumentumlekérés díja</string>
+    <string name="prepaid_card_emergency_cash">Vészhelyzeti pénzösszeg</string>
+    <string name="prepaid_card_emergency_card">Vészhelyzeti kártya</string>
+    <string name="prepaid_card_income">Bevétel</string>
+    <string name="prepaid_card_load_fee">PAN díja</string>
+    <string name="prepaid_card_refund_fee">Visszatérítési díj</string>
+    <string name="prepaid_card_monthly_maintenance_fee">Havi karbantartási díj</string>
+    <string name="prepaid_card_transaction_fee">Tranzakciós díj</string>
+    <string name="prepaid_card_sms_fee">SMS-díj</string>
+    <string name="prepaid_card_declined_authorization_fee">Elutasított hitelesítési díj</string>
+    <string name="fispc">Vásárlás</string>
+
+    <!-- Prepaid Cards Receipt   -->
+    <string name="mobileAvailableBalances" translatable="false">Elérhető pénzösszegek</string>
+
+</resources>

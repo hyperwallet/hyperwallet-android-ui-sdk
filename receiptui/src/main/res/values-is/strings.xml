@@ -1,0 +1,172 @@
+<resources>
+    <string name="app_name">kvittun</string>
+    <string name="title_activity_receipt_list">Færslur</string>
+    <string name="title_activity_receipt_detail">Upplýsingar um færslu</string>
+    <string name="mobileTransactionDetailsHeader">Upplýsingar um færslu</string>
+    <string name="transactions">Færslur</string>
+    <string name="mobileTransactionTypeLabel">FÆRSLA</string>
+    <string name="mobileFeeInfoLabel">UPPLÝSINGAR UM GJALD</string>
+    <string name="amount">Fjárhæð</string>
+    <string name="mobileFeeLabel">Gjald</string>
+    <string name="mobileTransactionDetailsTotal">Færsla samtals</string>
+    <string name="mobileTransactionDetailsLabel">UPPLÝSINGAR</string>
+    <string name="mobileJournalNumberLabel">Auðkenni móttakanda</string>
+    <string name="date">Dagsetning</string>
+    <string name="mobileMerchantTxnLabel">Auðkenni færslu</string>
+    <string name="mobileConfirmNotesLabel">SKÝRING</string>
+    <string name="mobileCharityName">Heiti góðgerðarstarfsemi</string>
+    <string name="mobileCheckNumber">Númer ávísunar</string>
+    <string name="mobilePromoWebsite">Vefsíða kynningartilboðs</string>
+    <string name="concat_date_string_view_format">%s %s</string>
+
+    <string name="mobileNoTransactionsUser" translatable="false">Engar hreyfingar til að sýna.</string>
+    <string name="mobileNoTransactionsPrepaidCard" translatable="false">Engar færslur síðustu 365 daga</string>
+    <string name="title_transfer_funds">Millifæra</string>
+    <string name="font_icon_placeholder">\ue908</string>
+    <string name="text_placeholder">Frátökureitur</string>
+
+    <!-- entry types -->
+    <string name="debit" translatable="false">\ue908</string>
+    <string name="credit" translatable="false">\ue907</string>
+    <string name="debit_sign" translatable="false">-%s%s</string>
+    <string name="credit_sign" translatable="false">%s%s</string>
+
+    <!--Generic fee types-->
+    <string name="unknown_type">Óþekkt færslugerð</string>
+    <string name="annual_fee">Ársgjald</string>
+    <string name="annual_fee_refund">Endurgreiðsla ársgjalds</string>
+    <string name="customer_service_fee">Gjald vegna viðskiptavinaþjónustu</string>
+    <string name="customer_service_fee_refund">Endurgreiðsla gjalds vegna viðskiptavinaþjónustu</string>
+    <string name="expedited_shipping_fee">Gjald vegna flýtisendingar</string>
+    <string name="generic_fee_refund">Almenn endurgreiðsla gjalds</string>
+    <string name="monthly_fee">Mánaðargjald</string>
+    <string name="monthly_fee_refund">Endurgreiðsla mánaðargjalds</string>
+    <string name="payment_expiry_fee">Gjald vegna þess að greiðsla er útrunnin</string>
+    <string name="payment_fee">Greiðslugjald</string>
+    <string name="processing_fee">Afgreiðslugjald</string>
+    <string name="standard_shipping_fee">Venjulegt sendingargjald</string>
+    <string name="transfer_fee">Flutningsgjald</string>
+
+    <!--Generic payment types-->
+    <string name="adjustment">Leiðrétting stöðu</string>
+    <string name="foreign_exchange">Gjaldeyrisviðskipti</string>
+    <string name="deposit">Greiðsla</string>
+    <string name="manual_adjustment">Leiðrétting</string>
+    <string name="payment_expiration">Greiðsla útrunnin</string>
+
+    <!--Bank account-specific types-->
+    <string name="bank_account_transfer_fee">Gjald vegna skila á bankareikning</string>
+    <string name="bank_account_transfer_return">Skil á bankareikning</string>
+    <string name="bank_account_transfer_return_fee">Gjald vegna skila á bankareikning</string>
+    <string name="transfer_to_bank_account">Bankareikningur</string>
+
+    <!--Card-specific types-->
+    <string name="card_activation_fee">Gjald vegna virkjunar korts</string>
+    <string name="card_activation_fee_waiver">Eftirgjöf gjalds vegna virkjunar korts</string>
+    <string name="card_fee">Kortagjald</string>
+    <string name="manual_transfer_to_prepaid_card">Millifæra á kort</string>
+    <string name="prepaid_card_balance_inquiry_fee">Gjald vegna athugunar á stöðu</string>
+    <string name="prepaid_card_cash_advance">Útgreiðsla reiðufjár</string>
+    <string name="prepaid_card_disputed_charge_refund">Umdeild endurgreiðsla gjaldfærslu</string>
+    <string name="prepaid_card_dispute_deposit">Umdeild innlögn á kort</string>
+    <string name="prepaid_card_domestic_cash_withdrawal_fee">Úttekt úr hraðbanka</string>
+    <string name="prepaid_card_exchange_rate_difference">PREPAID_CARD_EXCHANGE_RATE_DIFFERENCE
+    </string>
+    <string name="prepaid_card_manual_unload">Millifærsla af korti</string>
+    <string name="prepaid_card_overseas_cash_withdrawal_fee">Úttekt úr hraðbanka</string>
+    <string name="prepaid_card_pin_change_fee">Gjald vegna breytingar á PIN númeri</string>
+    <string name="prepaid_card_refund">Endurgreiðsla</string>
+    <string name="prepaid_card_replacement_fee">Gjald vegna nýs korts</string>
+    <string name="prepaid_card_sale">Færsla</string>
+    <string name="prepaid_card_sale_reversal">Bakfærð færsla</string>
+    <string name="prepaid_card_unload">Millifærsla af korti</string>
+    <string name="transfer_to_prepaid_card">Millifæra á kort</string>
+    <!---->
+    <!--Donation types-->
+    <string name="donation">Framlag</string>
+    <string name="donation_fee">Framlagsgjald</string>
+    <string name="donation_return">Skil framlags</string>
+    <!---->
+    <!--Merchant payment types-->
+    <string name="merchant_payment">Greiðsla til söluaðila</string>
+    <string name="merchant_payment_fee">Greiðslugjald til söluaðila</string>
+    <string name="merchant_payment_refund">Endurgreiðsla á greiðslu til söluaðila</string>
+    <string name="merchant_payment_return">Skil á greiðslu til söluaðila</string>
+    <!---->
+    <!--MoneyGram types-->
+    <string name="moneygram_transfer_return">MoneyGram skil</string>
+    <string name="transfer_to_moneygram">MoneyGram</string>
+    <!---->
+    <!--Paper check types-->
+    <string name="paper_check_fee">Gjald vegna pappírsávísunar</string>
+    <string name="paper_check_refund">Endurgreiðsla pappírsávísunar</string>
+    <string name="transfer_to_paper_check">Pappírsávísun</string>
+    <!---->
+    <!--User and program account types-->
+    <string name="account_closure">Lokun reiknings</string>
+    <string name="account_closure_fee">Gjald fyrir lokun reiknings</string>
+    <string name="account_unload">Skil fjármuna</string>
+    <string name="dormant_user_fee">Gjald vegna óvirks notanda</string>
+    <string name="dormant_user_fee_refund">Endurgreiðsla gjalds vegna óvirks notanda</string>
+    <string name="payment">Greiðsla</string>
+    <string name="payment_cancellation">Hætt við greiðslu</string>
+    <string name="payment_reversal">Bakfærsla greiðslu</string>
+    <string name="payment_reversal_fee">Gjald vegna bakfærslu greiðslu</string>
+    <string name="payment_return">Greiðsluskil</string>
+    <string name="transfer_to_program_account">Millifæra á forrit</string>
+    <string name="transfer_to_user">Millifæra á notanda</string>
+    <string name="transfer_to_paypal_account">PayPal</string>
+    <string name="transfer_to_bank_card">Bankakort</string>
+    <string name="transfer_to_debit_card">Debetkort</string>
+    <string name="prepaid_card_transfer_return">Skil innlagnar á fyrirframgreitt kort</string>
+    <!---->
+    <!--Virtual incentive types-->
+    <string name="virtual_incentive_cancellation">Hætt við kynningartilboð</string>
+    <string name="virtual_incentive_issuance">Útgefið kynningartilboð</string>
+    <string name="virtual_incentive_purchase">Kaup kynningartilboðs</string>
+    <string name="virtual_incentive_refund">Endurgreiðsla kynningartilboðs</string>
+    <!---->
+    <!--Western Union and WUBS types-->
+    <string name="transfer_to_western_union">Western Union</string>
+    <string name="transfer_to_wubs_wire">Símgreiðsla</string>
+    <string name="western_union_transfer_return">Western Union úttekt</string>
+    <string name="wubs_wire_transfer_return">Skil símgreiðslu</string>
+    <!---->
+    <!--Wire transfer types-->
+    <string name="transfer_to_wire">Símgreiðsla</string>
+    <string name="wire_transfer_fee">Gjald vegna símgreiðslu</string>
+    <string name="wire_transfer_return">Skil símgreiðslu</string>
+
+    <!-- New exposed receipt types -->
+    <string name="paypal_account_transfer_return">Skil úttektar</string>
+    <string name="venmo_account_transfer_return">Skil úttektar</string>
+    <string name="prepaid_card_account_deposit">Innlögn á reikning</string>
+    <string name="prepaid_card_annual_fee_discount">Afsláttur af ársgjaldi</string>
+    <string name="prepaid_card_bill_reprint_fee">Gjald vegna endurprentunar reiknings</string>
+    <string name="prepaid_card_atm_or_cash_advance_fee">Gjald vegna úttektar úr hraðbanka/reiðufjárúttektar</string>
+    <string name="prepaid_card_cash_advance_chargeback">Bakfærsla reiðufjárúttektar</string>
+    <string name="prepaid_card_cash_advance_chargeback_reversal">Bakfærð bakfærsla reiðufjárúttektar</string>
+    <string name="prepaid_card_cash_advance_repress">Þvinguð reiðufjárúttekt</string>
+    <string name="prepaid_card_cash_advance_repress_reversal">Bakfærsla þvingaðrar úttektar</string>
+    <string name="prepaid_card_chargeback">Bakfærsla</string>
+    <string name="prepaid_card_chargeback_refund">Endurgreiðsla bakfærslu</string>
+    <string name="prepaid_card_chargeback_refund_reversal">Bakfærð endurgreiðsla bakfærslu</string>
+    <string name="prepaid_card_chargeback_reversal">Bakfærð bakfærsla</string>
+    <string name="prepaid_card_commission_or_fee">Gjald/Umboðsþóknun</string>
+    <string name="prepaid_card_debit_transfer">Skuldfærslur/Millifærslur</string>
+    <string name="prepaid_card_document_request_fee">Gjald vegna beiðni um skjal</string>
+    <string name="prepaid_card_emergency_cash">Neyðarfé</string>
+    <string name="prepaid_card_emergency_card">Neyðarkort</string>
+    <string name="prepaid_card_income">Tekjur</string>
+    <string name="prepaid_card_load_fee">PAN gjald</string>
+    <string name="prepaid_card_refund_fee">Endurgreiðslugjald</string>
+    <string name="prepaid_card_monthly_maintenance_fee">Mánaðargjald</string>
+    <string name="prepaid_card_transaction_fee">Færslugjald</string>
+    <string name="prepaid_card_sms_fee">SMS gjald</string>
+    <string name="prepaid_card_declined_authorization_fee">Gjald vegna synjunar á heimild</string>
+    <string name="fispc">Kaup</string>
+
+    <!-- Prepaid Cards Receipt   -->
+    <string name="mobileAvailableBalances" translatable="false">Tiltækir fjármunir</string>
+
+</resources>

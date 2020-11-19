@@ -1,0 +1,79 @@
+<resources>
+    <string name="app_name">hyperwallet.ui</string>
+    <string name="title_account_add">Bæta við reikningi</string>
+    <string name="unknown">Óþekkt</string>
+
+    <string name="title_activity_select_transfer_method">Veldu millifærsluaðferð</string>
+    <!-- SelectTransferMethodActivity -->
+    <string name="select_transfer_method_title">@string/title_activity_select_transfer_method
+    </string>
+
+    <string name="mobileCountryRegion">Land/svæði</string>
+    <string name="mobileCurrencyLabel">Gjaldmiðill</string>
+    <string name="mobileAddTransferMethodHeader">Bæta við millifærsluaðferð</string>
+    <string name="title_activity_add_transfer_method">Bæta við millifærsluaðferð</string>
+    <string name="title_add_bank_account">Bankareikningur</string>
+    <string name="title_add_bank_card">Debetkort</string>
+
+    <string name="error_exact_length_field">Lengd í þessum reit er nákvæmlega %d.</string>
+    <string name="error_invalid_expiry_date">%s er ógilt.</string>
+    <string name="error_min_max_length_field">Lágmarkslengd í þessum reit er {0} og hámarkslengd er {1}.
+    </string>
+
+    <string name="createTransferMethodButtonLabel">Bæta við millifærsluaðferð</string>
+    <string name="default_account_label">Sjálfvalinn reikningur</string>
+    <string name="default_account_sub_label">Veldu sjálfvalda millifærsluaðferð</string>
+    <string name="api_expiry_date_format">MM/ÁÁ</string>
+
+    <string name="feeAndProcessingTimeInformation">%s gjald \u2022 %s</string>
+    <string name="feeInformation">%s gjald</string>
+
+    <string name="emptyStateAddTransferMethod">Bæta við millifærsluaðferð til að byrja.</string>
+
+    <!-- menu title -->
+    <string name="menu_transfer_funds">Millifæra</string>
+
+    <!--Fee formatter-->
+    <string name="fee_flat_formatter">%1$s%2$s</string>
+    <string name="fee_percent_no_min_and_max_formatter">%1$s%%</string>
+    <string name="fee_percent_only_min_formatter">%1$s%% (Lágmark:%2$s %3$s)</string>
+    <string name="fee_percent_only_max_formatter">%1$s%% (Hámark:%2$s %3$s)</string>
+    <string name="fee_percent_formatter">%1$s%% (Lágmark:%2$s %3$s, Hámark:%2$s %4$s)</string>
+    <string name="fee_mix_no_min_and_max_formatter">%1$s%2$s + %3$s%%</string>
+    <string name="fee_mix_only_min_formatter">%1$s%2$s + %3$s%% (Lágmark:%1$s %4$s)</string>
+    <string name="fee_mix_only_max_formatter">%1$s%2$s + %3$s%% (Hámark:%1$s %4$s)</string>
+    <string name="fee_mix_formatter">%1$s%2$s + %3$s%% (Lágmark:%1$s %4$s, Hámark:%1$s %5$s)</string>
+
+    <string name="account_holder">UPPLÝSINGAR UM REIKNINGSEIGANDA</string>
+    <string name="account_information">REIKNINGSUPPLÝSINGAR: %s(%s)</string>
+    <string name="address">HEIMILISFANG</string>
+    <string name="contact_information">TENGILIÐAUPPLÝSINGAR</string>
+    <string name="identification">AUÐKENNING</string>
+    <string name="intermediary_account">MILLILIÐAREIKNINGUR</string>
+    <string name="mobileFeesAndProcessingTime">GJÖLD OG AFGREIÐSLUTÍMI</string>
+
+    <string name="search_hint">Leit vísbending</string>
+    <string name="search_country">Leit land</string>
+    <string name="search_currency">Leit gjaldmiðill</string>
+    <string name="search_widget">Leita</string>
+
+    <string name="select_transfer_method_currency_button_description">Velja gjaldmiðil hnappur
+    </string>
+    <string name="select_transfer_method_country_button_description">Velja land hnappur</string>
+    <string name="selected_country_item_description">Valið land hlutur</string>
+    <string name="selected_currency_item_description">Valinn gjaldmiðill hlutur</string>
+    <string name="transfer_method_context_button_description">Smellivalmynd hnappur</string>
+    <string name="item_select_description">Valinn hlutur</string>
+
+    <string name="error_unmapped_field">Ótengdur reitur, vinsamlegast hafðu samband við þjónustuver.</string>
+
+    <string name="country_placeholder">Kanada</string>
+    <string name="currency_placeholder">CAD</string>
+    <string name="feesAndProcessTimePlaceholder">$20,00 USD gjald \u2022 1\-3 virkir dagar </string>
+    <string name="mobileCountryCurrencyLabel">STAÐSETNING OG GJALDMIÐILL</string>
+    <string name="mobileTransferMethodLabel">MILLIFÆRSLUAÐFERÐ</string>
+    <string name="mobileTransferMethodsHeader">Millifærsluaðferðir</string>
+
+    <string name="mobileRemoveEAconfirm">Fjarlægja millifærsluaðferð</string>
+    <string name="prepaidCardManagementInfo"  translatable="false">„Skráðu þig inn með netvafra til að stilla kortið þitt“</string>
+</resources>

@@ -1,0 +1,172 @@
+<resources>
+    <string name="app_name">tanda terima</string>
+    <string name="title_activity_receipt_list">Transaksi</string>
+    <string name="title_activity_receipt_detail">Perincian Transaksi</string>
+    <string name="mobileTransactionDetailsHeader">Perincian transaksi</string>
+    <string name="transactions">Transaksi</string>
+    <string name="mobileTransactionTypeLabel">TRANSAKSI</string>
+    <string name="mobileFeeInfoLabel">INFO BIAYA</string>
+    <string name="amount">Jumlah</string>
+    <string name="mobileFeeLabel">Biaya</string>
+    <string name="mobileTransactionDetailsTotal">Total transaksi</string>
+    <string name="mobileTransactionDetailsLabel">PERINCIAN</string>
+    <string name="mobileJournalNumberLabel">ID Penerimaan</string>
+    <string name="date">Tanggal</string>
+    <string name="mobileMerchantTxnLabel">ID Transaksi</string>
+    <string name="mobileConfirmNotesLabel">CATATAN</string>
+    <string name="mobileCharityName">Nama badan amal</string>
+    <string name="mobileCheckNumber">Nomor cek</string>
+    <string name="mobilePromoWebsite">Situs web promo</string>
+    <string name="concat_date_string_view_format">%s %s</string>
+
+    <string name="mobileNoTransactionsUser" translatable="false">Tidak \'ada kegiatan untuk ditampilkan.</string>
+    <string name="mobileNoTransactionsPrepaidCard" translatable="false">Tidak ada transaksi dalam 365 hari terakhir</string>
+    <string name="title_transfer_funds">Transfer</string>
+    <string name="font_icon_placeholder">\ue908</string>
+    <string name="text_placeholder">Placeholder</string>
+
+    <!-- entry types -->
+    <string name="debit" translatable="false">\ue908</string>
+    <string name="credit" translatable="false">\ue907</string>
+    <string name="debit_sign" translatable="false">-%s%s</string>
+    <string name="credit_sign" translatable="false">%s%s</string>
+
+    <!--Generic fee types-->
+    <string name="unknown_type">Jenis Transaksi Tidak Diketahui</string>
+    <string name="annual_fee">Biaya Tahunan</string>
+    <string name="annual_fee_refund">Pengembalian Dana Biaya Tahunan</string>
+    <string name="customer_service_fee">Biaya Layanan Pelanggan</string>
+    <string name="customer_service_fee_refund">Pengembalian Dana Biaya Layanan Pelanggan</string>
+    <string name="expedited_shipping_fee">Biaya Pengiriman Kilat</string>
+    <string name="generic_fee_refund">Pengembalian Dana Biaya Generik</string>
+    <string name="monthly_fee">Biaya Bulanan</string>
+    <string name="monthly_fee_refund">Pengembalian Dana Biaya Bulanan</string>
+    <string name="payment_expiry_fee">Biaya Pengakhiran Pembayaran</string>
+    <string name="payment_fee">Biaya Pembayaran</string>
+    <string name="processing_fee">Biaya Pemrosesan</string>
+    <string name="standard_shipping_fee">Biaya Pengiriman Standar</string>
+    <string name="transfer_fee">Biaya Transfer</string>
+
+    <!--Generic payment types-->
+    <string name="adjustment">Penyesuaian Saldo</string>
+    <string name="foreign_exchange">Valuta Asing</string>
+    <string name="deposit">Pembayaran</string>
+    <string name="manual_adjustment">Penyesuaian</string>
+    <string name="payment_expiration">Pembayaran Kedaluwarsa</string>
+
+    <!--Bank account-specific types-->
+    <string name="bank_account_transfer_fee">Biaya Pengembalian Rekening Bank</string>
+    <string name="bank_account_transfer_return">Pengembalian Rekening Bank</string>
+    <string name="bank_account_transfer_return_fee">Biaya Pengembalian Rekening Bank</string>
+    <string name="transfer_to_bank_account">Rekening Bank</string>
+
+    <!--Card-specific types-->
+    <string name="card_activation_fee">Biaya Aktivasi Kartu</string>
+    <string name="card_activation_fee_waiver">Pengecualian Biaya Aktivasi Kartu</string>
+    <string name="card_fee">Biaya Kartu</string>
+    <string name="manual_transfer_to_prepaid_card">Transfer ke Kartu</string>
+    <string name="prepaid_card_balance_inquiry_fee">Biaya Pertanyaan Saldo</string>
+    <string name="prepaid_card_cash_advance">Tarik Tunai</string>
+    <string name="prepaid_card_disputed_charge_refund">Pengembalian Dana Biaya yang Disengketakan</string>
+    <string name="prepaid_card_dispute_deposit">Setoran Kartu yang Disengketakan</string>
+    <string name="prepaid_card_domestic_cash_withdrawal_fee">Penarikan ATM</string>
+    <string name="prepaid_card_exchange_rate_difference">PREPAID_CARD_EXCHANGE_RATE_DIFFERENCE
+    </string>
+    <string name="prepaid_card_manual_unload">Transfer dari Kartu</string>
+    <string name="prepaid_card_overseas_cash_withdrawal_fee">Penarikan ATM</string>
+    <string name="prepaid_card_pin_change_fee">Biaya Penggantian PIN</string>
+    <string name="prepaid_card_refund">Pengembalian Dana</string>
+    <string name="prepaid_card_replacement_fee">Biaya Penggantian Kartu</string>
+    <string name="prepaid_card_sale">Transaksi</string>
+    <string name="prepaid_card_sale_reversal">Transaksi Dibalik</string>
+    <string name="prepaid_card_unload">Transfer dari Kartu</string>
+    <string name="transfer_to_prepaid_card">Transfer ke Kartu</string>
+    <!---->
+    <!--Donation types-->
+    <string name="donation">Donasi</string>
+    <string name="donation_fee">Biaya Donasi</string>
+    <string name="donation_return">Pengembalian Donasi</string>
+    <!---->
+    <!--Merchant payment types-->
+    <string name="merchant_payment">Pembayaran Merchant</string>
+    <string name="merchant_payment_fee">Biaya Pembayaran Merchant</string>
+    <string name="merchant_payment_refund">Pengembalian Dana Pembayaran Merchant</string>
+    <string name="merchant_payment_return">Pengembalian Pembayaran Merchant</string>
+    <!---->
+    <!--MoneyGram types-->
+    <string name="moneygram_transfer_return">Pengembalian MoneyGram</string>
+    <string name="transfer_to_moneygram">MoneyGram</string>
+    <!---->
+    <!--Paper check types-->
+    <string name="paper_check_fee">Biaya Cek Kertas</string>
+    <string name="paper_check_refund">Pengembalian Dana Cek Kertas</string>
+    <string name="transfer_to_paper_check">Cek Kertas</string>
+    <!---->
+    <!--User and program account types-->
+    <string name="account_closure">Penutupan Rekening</string>
+    <string name="account_closure_fee">Biaya Penutupan Rekening</string>
+    <string name="account_unload">Pengembalian Dana</string>
+    <string name="dormant_user_fee">Biaya Rekening Pengguna Pasif</string>
+    <string name="dormant_user_fee_refund">Pengembalian Dana Biaya Rekening Pengguna Pasif</string>
+    <string name="payment">Pembayaran</string>
+    <string name="payment_cancellation">Pembatalan Pembayaran</string>
+    <string name="payment_reversal">Pembalikan Pembayaran</string>
+    <string name="payment_reversal_fee">Biaya Pembalikan Pembayaran</string>
+    <string name="payment_return">Pengembalian Pembayaran</string>
+    <string name="transfer_to_program_account">Transfer ke Program</string>
+    <string name="transfer_to_user">Transfer ke Pengguna</string>
+    <string name="transfer_to_paypal_account">PayPal</string>
+    <string name="transfer_to_bank_card">Kartu Bank</string>
+    <string name="transfer_to_debit_card">Kartu Debit</string>
+    <string name="prepaid_card_transfer_return">Pengembalian Beban Kartu Prabayar</string>
+    <!---->
+    <!--Virtual incentive types-->
+    <string name="virtual_incentive_cancellation">Pembatalan Promo</string>
+    <string name="virtual_incentive_issuance">Promo yang Diterbitkan</string>
+    <string name="virtual_incentive_purchase">Pembelian Promo</string>
+    <string name="virtual_incentive_refund">Pengembalian Dana Promo</string>
+    <!---->
+    <!--Western Union and WUBS types-->
+    <string name="transfer_to_western_union">Western Union</string>
+    <string name="transfer_to_wubs_wire">Transfer Bank</string>
+    <string name="western_union_transfer_return">Penarikan Western Union</string>
+    <string name="wubs_wire_transfer_return">Pengembalian Transfer Bank</string>
+    <!---->
+    <!--Wire transfer types-->
+    <string name="transfer_to_wire">Transfer Bank</string>
+    <string name="wire_transfer_fee">Biaya Transfer Bank</string>
+    <string name="wire_transfer_return">Pengembalian Transfer Bank</string>
+
+    <!-- New exposed receipt types -->
+    <string name="paypal_account_transfer_return">Pengembalian Penarikan Dana</string>
+    <string name="venmo_account_transfer_return">Pengembalian Penarikan Dana</string>
+    <string name="prepaid_card_account_deposit">Deposito Rekening</string>
+    <string name="prepaid_card_annual_fee_discount">Diskon biaya tahunan</string>
+    <string name="prepaid_card_bill_reprint_fee">Biaya Pencetakan Kembali Tagihan</string>
+    <string name="prepaid_card_atm_or_cash_advance_fee">Biaya ATM/Tarik Tunai</string>
+    <string name="prepaid_card_cash_advance_chargeback">Pengembalian Tagihan Tarik Tunai</string>
+    <string name="prepaid_card_cash_advance_chargeback_reversal">Pembalikan Pengembalian Tagihan Tarik Tunai</string>
+    <string name="prepaid_card_cash_advance_repress">Penahanan Tarik Tunai</string>
+    <string name="prepaid_card_cash_advance_repress_reversal">Pembalikan Penahanan Tarik Tunai</string>
+    <string name="prepaid_card_chargeback">Pengembalian Tagihan</string>
+    <string name="prepaid_card_chargeback_refund">Pengembalian Dana Pengembalian Tagihan</string>
+    <string name="prepaid_card_chargeback_refund_reversal">Pembalikan Pengembalian Dana Pengembalian Tagihan</string>
+    <string name="prepaid_card_chargeback_reversal">Pembalikan Pengembalian Tagihan</string>
+    <string name="prepaid_card_commission_or_fee">Biaya/Komisi</string>
+    <string name="prepaid_card_debit_transfer">Debit/Transfer</string>
+    <string name="prepaid_card_document_request_fee">Biaya Permintaan Dokumen</string>
+    <string name="prepaid_card_emergency_cash">Uang Darurat</string>
+    <string name="prepaid_card_emergency_card">Kartu Darurat</string>
+    <string name="prepaid_card_income">Penghasilan</string>
+    <string name="prepaid_card_load_fee">Biaya PAN</string>
+    <string name="prepaid_card_refund_fee">Biaya Pengembalian Dana</string>
+    <string name="prepaid_card_monthly_maintenance_fee">Biaya Pemeliharaan Bulanan</string>
+    <string name="prepaid_card_transaction_fee">Biaya Transaksi</string>
+    <string name="prepaid_card_sms_fee">Biaya SMS</string>
+    <string name="prepaid_card_declined_authorization_fee">Biaya Otorisasi yang Ditolak</string>
+    <string name="fispc">Pembelian</string>
+
+    <!-- Prepaid Cards Receipt   -->
+    <string name="mobileAvailableBalances" translatable="false">Dana yang tersedia</string>
+
+</resources>

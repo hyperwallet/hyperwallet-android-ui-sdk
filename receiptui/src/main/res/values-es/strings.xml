@@ -19,10 +19,17 @@
     <string name="mobilePromoWebsite">Página web de la promoción</string>
     <string name="concat_date_string_view_format">%s %s</string>
 
-    <string name="mobileNoTransactionsUser" >No hay actividad para mostrar.</string>
-    <string name="title_transfer_funds">Transferir fondos</string>
+    <string name="mobileNoTransactionsUser" translatable="false">No hay actividad para mostrar.</string>
+    <string name="mobileNoTransactionsPrepaidCard" translatable="false">No se han registrado transacciones en los últimos 365 días</string>
+    <string name="title_transfer_funds">Transferencia</string>
     <string name="font_icon_placeholder">\ue908</string>
     <string name="text_placeholder">Marcador de posición</string>
+
+    <!-- entry types -->
+    <string name="debit" translatable="false">\ue908</string>
+    <string name="credit" translatable="false">\ue907</string>
+    <string name="debit_sign" translatable="false">-%s%s</string>
+    <string name="credit_sign" translatable="false">%s%s</string>
 
     <!--Generic fee types-->
     <string name="unknown_type">Tipo de transacción desconocido</string>
@@ -34,7 +41,7 @@
     <string name="generic_fee_refund">Reembolso de la tarifa general</string>
     <string name="monthly_fee">Tarifa mensual</string>
     <string name="monthly_fee_refund">Devolución de la tarifa mensual</string>
-    <string name="payment_expiry_fee">Tarifa por vencimiento de pago</string>
+    <string name="payment_expiry_fee">Tarifa por expiración de pago</string>
     <string name="payment_fee">Tarifa de pago</string>
     <string name="processing_fee">Tarifa de tramitación</string>
     <string name="standard_shipping_fee">Tarifa de envío estándar</string>
@@ -43,7 +50,7 @@
     <!--Generic payment types-->
     <string name="adjustment">Ajuste del saldo</string>
     <string name="foreign_exchange">Cambio de divisas</string>
-    <string name="deposit">Depósito de fondos</string>
+    <string name="deposit">Pago</string>
     <string name="manual_adjustment">Ajuste</string>
     <string name="payment_expiration">Pago vencido</string>
 
@@ -57,23 +64,23 @@
     <string name="card_activation_fee">Tarifa de activación de tarjeta</string>
     <string name="card_activation_fee_waiver">Exención de la tarifa de activación de tarjeta</string>
     <string name="card_fee">Tarifa de la tarjeta</string>
-    <string name="manual_transfer_to_prepaid_card">Carga de la tarjeta</string>
+    <string name="manual_transfer_to_prepaid_card">Transferir a tarjeta</string>
     <string name="prepaid_card_balance_inquiry_fee">Tarifa de consulta de saldo</string>
     <string name="prepaid_card_cash_advance">Anticipo de efectivo</string>
     <string name="prepaid_card_disputed_charge_refund">Devolución de cargos impugnados</string>
     <string name="prepaid_card_dispute_deposit">Depósito de tarjeta impugnada</string>
     <string name="prepaid_card_domestic_cash_withdrawal_fee">Retirada del cajero automático</string>
     <string name="prepaid_card_exchange_rate_difference">PREPAID_CARD_EXCHANGE_RATE_DIFFERENCE
-  </string>
-    <string name="prepaid_card_manual_unload">Descarga de la tarjeta</string>
+    </string>
+    <string name="prepaid_card_manual_unload">Transferir desde tarjeta</string>
     <string name="prepaid_card_overseas_cash_withdrawal_fee">Retirada del cajero automático</string>
     <string name="prepaid_card_pin_change_fee">Tarifa de cambio de PIN</string>
     <string name="prepaid_card_refund">Devolución</string>
     <string name="prepaid_card_replacement_fee">Tarifa por reemplazo de tarjeta</string>
     <string name="prepaid_card_sale">Transacción</string>
     <string name="prepaid_card_sale_reversal">Transacción inversa</string>
-    <string name="prepaid_card_unload">Descarga de la tarjeta</string>
-    <string name="transfer_to_prepaid_card">Carga de la tarjeta</string>
+    <string name="prepaid_card_unload">Transferir desde tarjeta</string>
+    <string name="transfer_to_prepaid_card">Transferir a tarjeta</string>
     <!---->
     <!--Donation types-->
     <string name="donation">Donación</string>
@@ -98,7 +105,7 @@
     <!--User and program account types-->
     <string name="account_closure">Cierre de cuenta</string>
     <string name="account_closure_fee">Tarifa por cierre de cuenta</string>
-    <string name="account_unload">Fondos no descargados</string>
+    <string name="account_unload">Devolución de fondos</string>
     <string name="dormant_user_fee">Tarifa por cuenta de usuario inactiva</string>
     <string name="dormant_user_fee_refund">Devolución de la tarifa por cuenta de usuario inactiva</string>
     <string name="payment">Pago</string>
@@ -109,7 +116,9 @@
     <string name="transfer_to_program_account">Transferir a Programa</string>
     <string name="transfer_to_user">Transferir a Usuario</string>
     <string name="transfer_to_paypal_account">PayPal</string>
-    <string name="transfer_to_bank_card">Tarjeta de débito</string>
+    <string name="transfer_to_bank_card">Tarjeta bancaria</string>
+    <string name="transfer_to_debit_card">Tarjeta de débito</string>
+    <string name="prepaid_card_transfer_return">Devolución de la carga de la tarjeta de prepago</string>
     <!---->
     <!--Virtual incentive types-->
     <string name="virtual_incentive_cancellation">Cancelación de la promoción</string>
@@ -131,10 +140,10 @@
     <!-- New exposed receipt types -->
     <string name="paypal_account_transfer_return">Devolución de retirada de dinero</string>
     <string name="venmo_account_transfer_return">Devolución de retirada de dinero</string>
-    <string name="prepaid_card_account_deposit">Depósito del portal</string>
+    <string name="prepaid_card_account_deposit">Depósito en cuenta</string>
     <string name="prepaid_card_annual_fee_discount">Descuento en la tarifa anual</string>
-    <string name="prepaid_card_bill_reprint_fee">Reimpresión de la factura</string>
-    <string name="prepaid_card_atm_or_cash_advance_fee">Tarifa del cajero automático/ Tarifa de anticipo de efectivo</string>
+    <string name="prepaid_card_bill_reprint_fee">Tarifa por reimpresión de facturas</string>
+    <string name="prepaid_card_atm_or_cash_advance_fee">Tarifa del cajero automático/Tarifa de anticipo de efectivo</string>
     <string name="prepaid_card_cash_advance_chargeback">Devolución del anticipo de efectivo</string>
     <string name="prepaid_card_cash_advance_chargeback_reversal">Anulación de la devolución del anticipo de efectivo</string>
     <string name="prepaid_card_cash_advance_repress">Suprimir el anticipo de efectivo</string>
@@ -143,17 +152,21 @@
     <string name="prepaid_card_chargeback_refund">Reembolso de cargos</string>
     <string name="prepaid_card_chargeback_refund_reversal">Anulación del reembolso de cargos</string>
     <string name="prepaid_card_chargeback_reversal">Anulación de la devolución del cargo</string>
-    <string name="prepaid_card_commission_or_fee">Tarifa / Comisión</string>
+    <string name="prepaid_card_commission_or_fee">Tarifa/Comisión</string>
     <string name="prepaid_card_debit_transfer">Débito/transferencias</string>
-    <string name="prepaid_card_document_request_fee">Solicitudes de copias de documentos</string>
+    <string name="prepaid_card_document_request_fee">Tarifa por solicitud de documentos</string>
     <string name="prepaid_card_emergency_cash">Dinero de emergencia</string>
     <string name="prepaid_card_emergency_card">Tarjeta de emergencia</string>
     <string name="prepaid_card_income">Ingresos</string>
-    <string name="prepaid_card_load_fee">Tarifa por carga</string>
+    <string name="prepaid_card_load_fee">Tarifa PAN</string>
     <string name="prepaid_card_refund_fee">Tarifa de devolución</string>
     <string name="prepaid_card_monthly_maintenance_fee">Tarifa mensual por mantenimiento</string>
     <string name="prepaid_card_transaction_fee">Tarifa por transacción</string>
     <string name="prepaid_card_sms_fee">Tarifa por SMS</string>
     <string name="prepaid_card_declined_authorization_fee">Tarifa de autorización denegada</string>
     <string name="fispc">Compra</string>
+
+    <!-- Prepaid Cards Receipt   -->
+    <string name="mobileAvailableBalances" translatable="false">Fondos disponibles</string>
+
 </resources>

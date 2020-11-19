@@ -1,0 +1,172 @@
+<resources>
+    <string name="app_name">ricevuta</string>
+    <string name="title_activity_receipt_list">Transazioni</string>
+    <string name="title_activity_receipt_detail">Dettagli transazione</string>
+    <string name="mobileTransactionDetailsHeader">Dettagli transazione</string>
+    <string name="transactions">Transazioni</string>
+    <string name="mobileTransactionTypeLabel">TRANSAZIONE</string>
+    <string name="mobileFeeInfoLabel">INFORMAZIONI SULLE COMMISSIONI</string>
+    <string name="amount">Importo</string>
+    <string name="mobileFeeLabel">Commissione</string>
+    <string name="mobileTransactionDetailsTotal">Totale della transazione</string>
+    <string name="mobileTransactionDetailsLabel">DETTAGLI</string>
+    <string name="mobileJournalNumberLabel">ID ricevuta</string>
+    <string name="date">Data</string>
+    <string name="mobileMerchantTxnLabel">ID transazione</string>
+    <string name="mobileConfirmNotesLabel">NOTA</string>
+    <string name="mobileCharityName">Nome dell’ente benefico</string>
+    <string name="mobileCheckNumber">Numero dell’assegno</string>
+    <string name="mobilePromoWebsite">Sito web della promozione</string>
+    <string name="concat_date_string_view_format">%s %s</string>
+
+    <string name="mobileNoTransactionsUser" translatable="false">Nessuna attività da visualizzare.</string>
+    <string name="mobileNoTransactionsPrepaidCard" translatable="false">Nessuna transazione negli ultimi 365 giorni</string>
+    <string name="title_transfer_funds">Trasferimento</string>
+    <string name="font_icon_placeholder">\ue908</string>
+    <string name="text_placeholder">Placeholder</string>
+
+    <!-- entry types -->
+    <string name="debit" translatable="false">\ue908</string>
+    <string name="credit" translatable="false">\ue907</string>
+    <string name="debit_sign" translatable="false">-%s%s</string>
+    <string name="credit_sign" translatable="false">%s%s</string>
+
+    <!--Generic fee types-->
+    <string name="unknown_type">Tipo di transazione sconosciuto</string>
+    <string name="annual_fee">Commissione annuale</string>
+    <string name="annual_fee_refund">Rimborso commissione annuale</string>
+    <string name="customer_service_fee">Commissione Servizio clienti</string>
+    <string name="customer_service_fee_refund">Rimborso commissione Servizio clienti</string>
+    <string name="expedited_shipping_fee">Commissione per spedizione rapida</string>
+    <string name="generic_fee_refund">Rimborso commissione generica</string>
+    <string name="monthly_fee">Commissione mensile</string>
+    <string name="monthly_fee_refund">Rimborso commissione mensile</string>
+    <string name="payment_expiry_fee">Commissione per scadenza pagamento</string>
+    <string name="payment_fee">Commissione su pagamento</string>
+    <string name="processing_fee">Commissione per elaborazione</string>
+    <string name="standard_shipping_fee">Commissione per spedizione standard</string>
+    <string name="transfer_fee">Commissione per trasferimento</string>
+
+    <!--Generic payment types-->
+    <string name="adjustment">Rettifica saldo</string>
+    <string name="foreign_exchange">Cambio di valuta</string>
+    <string name="deposit">Pagamento</string>
+    <string name="manual_adjustment">Rettifica</string>
+    <string name="payment_expiration">Pagamento scaduto</string>
+
+    <!--Bank account-specific types-->
+    <string name="bank_account_transfer_fee">Commissione storno conto bancario</string>
+    <string name="bank_account_transfer_return">Storno conto bancario</string>
+    <string name="bank_account_transfer_return_fee">Commissione storno conto bancario</string>
+    <string name="transfer_to_bank_account">Conto bancario</string>
+
+    <!--Card-specific types-->
+    <string name="card_activation_fee">Commissione per attivazione carta</string>
+    <string name="card_activation_fee_waiver">Esenzione commissione per attivazione carta</string>
+    <string name="card_fee">Commissione carta</string>
+    <string name="manual_transfer_to_prepaid_card">Trasferimento verso carta</string>
+    <string name="prepaid_card_balance_inquiry_fee">Commissione per richiesta saldo</string>
+    <string name="prepaid_card_cash_advance">Anticipo di contanti</string>
+    <string name="prepaid_card_disputed_charge_refund">Rimborso carta oggetto di controversia</string>
+    <string name="prepaid_card_dispute_deposit">Deposito carta oggetto di controversia</string>
+    <string name="prepaid_card_domestic_cash_withdrawal_fee">Prelievo bancomat</string>
+    <string name="prepaid_card_exchange_rate_difference">PREPAID_CARD_EXCHANGE_RATE_DIFFERENCE
+    </string>
+    <string name="prepaid_card_manual_unload">Trasferimento da carta</string>
+    <string name="prepaid_card_overseas_cash_withdrawal_fee">Prelievo bancomat</string>
+    <string name="prepaid_card_pin_change_fee">Commissione per cambio PIN</string>
+    <string name="prepaid_card_refund">Rimborso</string>
+    <string name="prepaid_card_replacement_fee">Commissione per sostituzione carta</string>
+    <string name="prepaid_card_sale">Transazione</string>
+    <string name="prepaid_card_sale_reversal">Transazione annullata</string>
+    <string name="prepaid_card_unload">Trasferimento da carta</string>
+    <string name="transfer_to_prepaid_card">Trasferimento verso carta</string>
+    <!---->
+    <!--Donation types-->
+    <string name="donation">Donazione</string>
+    <string name="donation_fee">Commissione su donazione</string>
+    <string name="donation_return">Storno donazione</string>
+    <!---->
+    <!--Merchant payment types-->
+    <string name="merchant_payment">Pagamento esercente</string>
+    <string name="merchant_payment_fee">Commissione pagamento esercente</string>
+    <string name="merchant_payment_refund">Rimborso pagamento esercente</string>
+    <string name="merchant_payment_return">Storno pagamento esercente</string>
+    <!---->
+    <!--MoneyGram types-->
+    <string name="moneygram_transfer_return">Storno MoneyGram</string>
+    <string name="transfer_to_moneygram">MoneyGram</string>
+    <!---->
+    <!--Paper check types-->
+    <string name="paper_check_fee">Commissione assegno</string>
+    <string name="paper_check_refund">Rimborso assegno</string>
+    <string name="transfer_to_paper_check">Assegno</string>
+    <!---->
+    <!--User and program account types-->
+    <string name="account_closure">Chiusura conto</string>
+    <string name="account_closure_fee">Commissione per chiusura conto</string>
+    <string name="account_unload">Storno fondi</string>
+    <string name="dormant_user_fee">Commissione conto utente inattivo</string>
+    <string name="dormant_user_fee_refund">Rimborso commissione conto utente inattivo</string>
+    <string name="payment">Pagamento</string>
+    <string name="payment_cancellation">Annullamento pagamento</string>
+    <string name="payment_reversal">Inversione pagamento</string>
+    <string name="payment_reversal_fee">Commissione per inversione pagamento</string>
+    <string name="payment_return">Storno pagamento</string>
+    <string name="transfer_to_program_account">Trasferimento verso programma</string>
+    <string name="transfer_to_user">Trasferimento verso utente</string>
+    <string name="transfer_to_paypal_account">PayPal</string>
+    <string name="transfer_to_bank_card">Carta bancaria</string>
+    <string name="transfer_to_debit_card">Carta di debito</string>
+    <string name="prepaid_card_transfer_return">Storno caricamento carta prepagata</string>
+    <!---->
+    <!--Virtual incentive types-->
+    <string name="virtual_incentive_cancellation">Annullamento promozione</string>
+    <string name="virtual_incentive_issuance">Promozione emessa</string>
+    <string name="virtual_incentive_purchase">Acquisto con promozione</string>
+    <string name="virtual_incentive_refund">Rimborso promozione</string>
+    <!---->
+    <!--Western Union and WUBS types-->
+    <string name="transfer_to_western_union">Western Union</string>
+    <string name="transfer_to_wubs_wire">Bonifico bancario</string>
+    <string name="western_union_transfer_return">Prelievo Western Union</string>
+    <string name="wubs_wire_transfer_return">Storno bonifico bancario</string>
+    <!---->
+    <!--Wire transfer types-->
+    <string name="transfer_to_wire">Bonifico bancario</string>
+    <string name="wire_transfer_fee">Commissione per bonifico bancario</string>
+    <string name="wire_transfer_return">Storno bonifico bancario</string>
+
+    <!-- New exposed receipt types -->
+    <string name="paypal_account_transfer_return">Storno prelievo</string>
+    <string name="venmo_account_transfer_return">Storno prelievo</string>
+    <string name="prepaid_card_account_deposit">Deposito conto</string>
+    <string name="prepaid_card_annual_fee_discount">Sconto su commissione annuale</string>
+    <string name="prepaid_card_bill_reprint_fee">Commissione per ristampa bolletta</string>
+    <string name="prepaid_card_atm_or_cash_advance_fee">Commissione per bancomat/anticipo di contanti</string>
+    <string name="prepaid_card_cash_advance_chargeback">Chargeback con anticipo di contanti</string>
+    <string name="prepaid_card_cash_advance_chargeback_reversal">Inversione chargeback con anticipo di contanti</string>
+    <string name="prepaid_card_cash_advance_repress">Trattenuta anticipo di contanti</string>
+    <string name="prepaid_card_cash_advance_repress_reversal">Inversione trattenuta anticipo</string>
+    <string name="prepaid_card_chargeback">Chargeback</string>
+    <string name="prepaid_card_chargeback_refund">Rimborso chargeback</string>
+    <string name="prepaid_card_chargeback_refund_reversal">Inversione rimborso chargeback</string>
+    <string name="prepaid_card_chargeback_reversal">Inversione chargeback</string>
+    <string name="prepaid_card_commission_or_fee">Commissione</string>
+    <string name="prepaid_card_debit_transfer">Debito/Trasferimenti</string>
+    <string name="prepaid_card_document_request_fee">Commissione per richiesta documenti</string>
+    <string name="prepaid_card_emergency_cash">Denaro di emergenza</string>
+    <string name="prepaid_card_emergency_card">Carta di emergenza</string>
+    <string name="prepaid_card_income">Reddito</string>
+    <string name="prepaid_card_load_fee">Commissione PAN</string>
+    <string name="prepaid_card_refund_fee">Commissione per rimborso</string>
+    <string name="prepaid_card_monthly_maintenance_fee">Commissione mensile per manutenzione</string>
+    <string name="prepaid_card_transaction_fee">Commissione sulla transazione</string>
+    <string name="prepaid_card_sms_fee">Commissione per SMS</string>
+    <string name="prepaid_card_declined_authorization_fee">Commissione per autorizzazione respinta</string>
+    <string name="fispc">Acquisto</string>
+
+    <!-- Prepaid Cards Receipt   -->
+    <string name="mobileAvailableBalances" translatable="false">Fondi disponibili</string>
+
+</resources>

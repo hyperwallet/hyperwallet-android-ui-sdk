@@ -1,0 +1,71 @@
+<resources>
+    <string name="title_activity_create_transfer">Перевести средства</string>
+    <string name="mobileConfirmationHeader">Подтвердите данные</string>
+    <string name="mobileConfirmNotesLabel">ПРИМЕЧАНИЕ</string>
+    <string name="transfer_destination">Назначение</string>
+    <string name="mobileTransferToLabel">ПЕРЕВОД НА</string>
+    <string name="mobileTransferFundsHeader">Перевести средства</string>
+    <string name="mobileFXlabel">ОБМЕН ВАЛЮТЫ</string>
+    <string name="transfer_header_label">Перевод</string>
+    <string name="noTransferMethodAdded">Требуется указать способ перевода</string>
+    <string name="transfer_amount_hint">Сумма</string>
+    <string name="transfer_currency_placeholder">Долларов США</string>
+    <string name="transfer_currency_code_placeholder">$</string>
+    <string name="transfer_all_funds_label">Максимальная сумма перевода</string>
+    <string name="mobileAvailableBalance">Доступная сумма: %s %s</string>
+    <string name="mobileSummaryLabel">КРАТКАЯ ИНФОРМАЦИЯ</string>
+    <string name="mobileNoteLabel">Примечание</string>
+    <string name="transfer_notes_label">Примечание</string>
+    <string name="transfer_notes_additional_info_label">Добавить личное сообщение (необязательно)</string>
+    <string name="continueButtonLabel">Продолжить</string>
+    <string name="defaultTransferAmount">0</string>
+    <string name="transfer">Перевод</string>
+    <string name="add_text">+</string>
+    <string name="mobileAddTransferMethod">Добавить способ перевода</string>
+    <string name="add_transfer_description_1">Чтобы начать, добавьте способ перевода.</string>
+    <string name="add_transfer_description_2">Чтобы начать, добавьте способ перевода.</string>
+    <string name="transfer_destination_selection_description">Выбор способа перевода</string>
+    <string name="destination_item_description">Позиция назначения</string>
+
+    <string name="amount_currency_format">%s %s</string>
+    <string name="exchange_rate_format">1 %s = %s %s</string>
+
+    <string name="module_transfermethodui_unavailable_error">Вы не можете добавить способ перевода.</string>
+    <string name="transferAmountInvalid">Введите действительную сумму перевода</string>
+
+    <string name="mobileFXsell">С</string>
+    <string name="mobileFXbuy">НА</string>
+    <string name="mobileFXRateLabel">Курс обмена</string>
+
+    <string name="mobileConfirmDetailsAmount">Сумма</string>
+    <string name="mobileConfirmDetailsFee">Сбор</string>
+    <string name="mobileConfirmDetailsTotal">Вы получите</string>
+    <string name="exchange_rate_change_warning">В связи с изменением обменного курса вы теперь получите %1$s %2$s.</string>
+
+
+    <string name="mobileTransferMax">Максимальная сумма перевода</string>
+    <string name="transfer_summary_placeholder">Доступная сумма: 2422,90 канадских долларов</string>
+    <string name="transfer_notes_placeholder">Частичный перевод</string>
+    <string name="transfer_item_icon_placeholder">\ue000</string>
+    <string name="transfer_item_title_placeholder">Тип перевода</string>
+    <string name="transfer_item_country_placeholder">Название страны</string>
+    <string name="transfer_item_identification_placeholder">Редактирование на XXXX</string>
+    <string name="foreign_exchange_sell_placeholder">15,05 канадских долларов</string>
+    <string name="foreign_exchange_buy_placeholder">11,00 долларов США</string>
+    <string name="foreign_exchange_rate_placeholder">1 кан. доллар = 0,73897 долл. США</string>
+    <string name="summary_amount_placeholder">10,00 канадских долларов</string>
+    <string name="summary_amount_fee_placeholder">0,25 канадских долларов</string>
+    <string name="summary_amount_transfer_placeholder">9,75 канадских долларов</string>
+    <string name="exchange_rate_change_warning_placeholder">В связи с изменением обменного курса вы теперь получите 10,00 канадских долларов.</string>
+
+    <string name="mobileTransferSuccessMsg">Ваш перевод обрабатывается</string>
+    <string name="mobileTransferSuccessDetails">Средства отправлены на ваш %s</string>
+    <string name="doneButtonLabel">Выполнено</string>
+    <string name="mobileTransferMethodsHeader">Способы перевода</string>
+    <string name="mobileTransferFromLabel" translatable="false">ПЕРЕВОД ИЗ</string>
+    <string name="transferSource" translatable="false">Источник</string>
+    <string name="mobileTransferFromHeader" translatable="false">Перевод из</string>
+    <string name="availableFunds" translatable="false">Свободные средства</string>
+    <string name="noTransferFromSourceAvailableError" translatable="false">Перевод из источника отсутствует</string>
+
+</resources>

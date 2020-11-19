@@ -1,0 +1,71 @@
+<resources>
+    <string name="title_activity_create_transfer">資金を転送</string>
+    <string name="mobileConfirmationHeader">詳細を確認</string>
+    <string name="mobileConfirmNotesLabel">注</string>
+    <string name="transfer_destination">宛先</string>
+    <string name="mobileTransferToLabel">送金先</string>
+    <string name="mobileTransferFundsHeader">資金を転送</string>
+    <string name="mobileFXlabel">外国為替</string>
+    <string name="transfer_header_label">送金</string>
+    <string name="noTransferMethodAdded">送金方法が必要です</string>
+    <string name="transfer_amount_hint">金額</string>
+    <string name="transfer_currency_placeholder">米ドル</string>
+    <string name="transfer_currency_code_placeholder">$</string>
+    <string name="transfer_all_funds_label">最大送金額</string>
+    <string name="mobileAvailableBalance">利用可能額：%s %s</string>
+    <string name="mobileSummaryLabel">明細</string>
+    <string name="mobileNoteLabel">注</string>
+    <string name="transfer_notes_label">注</string>
+    <string name="transfer_notes_additional_info_label">メモを追加する（任意）</string>
+    <string name="continueButtonLabel">続行</string>
+    <string name="defaultTransferAmount">0</string>
+    <string name="transfer">送金</string>
+    <string name="add_text">+</string>
+    <string name="mobileAddTransferMethod">送金方法を追加</string>
+    <string name="add_transfer_description_1">始めるには、送金方法を追加します。</string>
+    <string name="add_transfer_description_2">始めるには、送金方法を追加します。</string>
+    <string name="transfer_destination_selection_description">送金方法の選択</string>
+    <string name="destination_item_description">宛先アイテム</string>
+
+    <string name="amount_currency_format">%s %s</string>
+    <string name="exchange_rate_format">1 %s = %s %s</string>
+
+    <string name="module_transfermethodui_unavailable_error">送金方法を追加できません。</string>
+    <string name="transferAmountInvalid">有効な送金額を入力する</string>
+
+    <string name="mobileFXsell">送金元</string>
+    <string name="mobileFXbuy">送金先</string>
+    <string name="mobileFXRateLabel">為替レート</string>
+
+    <string name="mobileConfirmDetailsAmount">金額</string>
+    <string name="mobileConfirmDetailsFee">手数料</string>
+    <string name="mobileConfirmDetailsTotal">受取額</string>
+    <string name="exchange_rate_change_warning">為替レートの変動により、受取額は%1$s %2$sになります。</string>
+
+
+    <string name="mobileTransferMax">最大送金額</string>
+    <string name="transfer_summary_placeholder">利用可能額：2,422.90カナダドル</string>
+    <string name="transfer_notes_placeholder">部分送金</string>
+    <string name="transfer_item_icon_placeholder">\ue000</string>
+    <string name="transfer_item_title_placeholder">送金タイプ</string>
+    <string name="transfer_item_country_placeholder">国名</string>
+    <string name="transfer_item_identification_placeholder">XXXXを編集中</string>
+    <string name="foreign_exchange_sell_placeholder">15.05カナダドル</string>
+    <string name="foreign_exchange_buy_placeholder">11.00米ドル</string>
+    <string name="foreign_exchange_rate_placeholder">1カナダドル = 0.73897米ドル</string>
+    <string name="summary_amount_placeholder">10.00カナダドル</string>
+    <string name="summary_amount_fee_placeholder">0.25カナダドル</string>
+    <string name="summary_amount_transfer_placeholder">9.75カナダドル</string>
+    <string name="exchange_rate_change_warning_placeholder">為替レートの変動により、受取額は10.00カナダドルになります。</string>
+
+    <string name="mobileTransferSuccessMsg">お客様の送金を処理しています</string>
+    <string name="mobileTransferSuccessDetails">資金はお客様の%sに送金中です</string>
+    <string name="doneButtonLabel">完了</string>
+    <string name="mobileTransferMethodsHeader">送金方法</string>
+    <string name="mobileTransferFromLabel" translatable="false">送金元</string>
+    <string name="transferSource" translatable="false">送金元</string>
+    <string name="mobileTransferFromHeader" translatable="false">送金元</string>
+    <string name="availableFunds" translatable="false">利用可能な資金</string>
+    <string name="noTransferFromSourceAvailableError" translatable="false">送金元に利用可能な送金がありません</string>
+
+</resources>

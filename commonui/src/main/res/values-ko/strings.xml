@@ -1,0 +1,38 @@
+<resources>
+    <string name="error_dialog_title">오류</string>
+    <string name="error_dialog_connectivity_title">연결 문제</string>
+    <string name="error_dialog_unexpected_title">예상치 못한 오류</string>
+    <string name="ok">확인</string>
+    <string name="try_again_button_label">다시 시도</string>
+    <string name="not_available">사용 불가</string>
+
+    <!-- title and font icon -->
+    <string name="bank_account">은행 계좌</string>
+    <string name="bank_card">체크카드</string>
+    <string name="wire_account">전신 송금 계정</string>
+    <string name="paper_check">수표</string>
+    <string name="prepaid_card">선불카드</string>
+    <string name="paypal_account">Paypal 계정</string>
+    <string name="venmo_account">Venmo 계정</string>
+    <string name="cash_pickup_mg">MoneyGram</string>
+    <string name="visa" translatable="false">Visa</string>
+    <string name="mastercard" translatable="false">Mastercard</string>
+
+    <string name="bank_account_font_icon" translatable="false">\ue900</string>
+    <string name="bank_card_font_icon" translatable="false">\ue903</string>
+    <string name="wire_account_font_icon" translatable="false">\ue90a</string>
+    <string name="paper_check_font_icon" translatable="false">\ue902</string>
+    <string name="prepaid_card_font_icon" translatable="false">\ue901</string>
+    <string name="paypal_account_font_icon" translatable="false">\ue906</string>
+    <string name="venmo_account_font_icon" translatable="false">\ue909</string>
+    <string name="cash_pickup_mg_font_icon" translatable="false">\ue905</string>
+
+    <string name="endingIn">끝자리 %s</string>
+    <string name="to">수신: %s</string>
+    <string name="not_translated_in_braces">(번역 없음)</string>
+
+    <string name="authentication_error_header">인증 오류</string>
+    <string name="cancelButtonLabel">취소</string>
+    <string name="remove">삭제</string>
+    <string name="mobileAreYouSure">계속 진행하시겠습니까?</string>
+</resources>

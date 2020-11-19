@@ -1,0 +1,38 @@
+<resources>
+    <string name="error_dialog_title">Errore</string>
+    <string name="error_dialog_connectivity_title">Problema di connettività</string>
+    <string name="error_dialog_unexpected_title">Errore imprevisto</string>
+    <string name="ok">OK</string>
+    <string name="try_again_button_label">Riprova</string>
+    <string name="not_available">Non disponibile</string>
+
+    <!-- title and font icon -->
+    <string name="bank_account">Conto bancario</string>
+    <string name="bank_card">Carta di debito</string>
+    <string name="wire_account">Account per bonifici urgenti</string>
+    <string name="paper_check">Assegno</string>
+    <string name="prepaid_card">Carta prepagata</string>
+    <string name="paypal_account">Conto PayPal</string>
+    <string name="venmo_account">Conto Venmo</string>
+    <string name="cash_pickup_mg">MoneyGram</string>
+    <string name="visa" translatable="false">Visa</string>
+    <string name="mastercard" translatable="false">Mastercard</string>
+
+    <string name="bank_account_font_icon" translatable="false">\ue900</string>
+    <string name="bank_card_font_icon" translatable="false">\ue903</string>
+    <string name="wire_account_font_icon" translatable="false">\ue90a</string>
+    <string name="paper_check_font_icon" translatable="false">\ue902</string>
+    <string name="prepaid_card_font_icon" translatable="false">\ue901</string>
+    <string name="paypal_account_font_icon" translatable="false">\ue906</string>
+    <string name="venmo_account_font_icon" translatable="false">\ue909</string>
+    <string name="cash_pickup_mg_font_icon" translatable="false">\ue905</string>
+
+    <string name="endingIn">che termina con %s</string>
+    <string name="to">a %s</string>
+    <string name="not_translated_in_braces">(non tradotto)</string>
+
+    <string name="authentication_error_header">Errore di autenticazione</string>
+    <string name="cancelButtonLabel">Annulla</string>
+    <string name="remove">Rimuovi</string>
+    <string name="mobileAreYouSure">Sei sicuro/a?</string>
+</resources>

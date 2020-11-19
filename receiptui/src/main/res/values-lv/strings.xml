@@ -1,0 +1,172 @@
+<resources>
+    <string name="app_name">kvīts</string>
+    <string name="title_activity_receipt_list">Darījumi</string>
+    <string name="title_activity_receipt_detail">Informācija par darījumu</string>
+    <string name="mobileTransactionDetailsHeader">Informācija par darījumu</string>
+    <string name="transactions">Darījumi</string>
+    <string name="mobileTransactionTypeLabel">DARĪJUMS</string>
+    <string name="mobileFeeInfoLabel">INFORMĀCIJA PAR MAKSU</string>
+    <string name="amount">Summa</string>
+    <string name="mobileFeeLabel">Maksa</string>
+    <string name="mobileTransactionDetailsTotal">Darījuma kopsumma</string>
+    <string name="mobileTransactionDetailsLabel">INFORMĀCIJA</string>
+    <string name="mobileJournalNumberLabel">Kvīts ID</string>
+    <string name="date">Datums</string>
+    <string name="mobileMerchantTxnLabel">Darījuma ID</string>
+    <string name="mobileConfirmNotesLabel">PIEZĪME</string>
+    <string name="mobileCharityName">Labdarības organizācijas nosaukums</string>
+    <string name="mobileCheckNumber">Pārbaudīt numuru</string>
+    <string name="mobilePromoWebsite">Akcijas tīmekļa vietne</string>
+    <string name="concat_date_string_view_format">%s %s</string>
+
+    <string name="mobileNoTransactionsUser" translatable="false">Nav nevienas darbības, ko attēlot.</string>
+    <string name="mobileNoTransactionsPrepaidCard" translatable="false">Pēdējo 365 dienu laikā nav veikts neviens darījums</string>
+    <string name="title_transfer_funds">Pārskaitījums</string>
+    <string name="font_icon_placeholder">\ue908</string>
+    <string name="text_placeholder">Vietturis</string>
+
+    <!-- entry types -->
+    <string name="debit" translatable="false">\ue908</string>
+    <string name="credit" translatable="false">\ue907</string>
+    <string name="debit_sign" translatable="false">-%s%s</string>
+    <string name="credit_sign" translatable="false">%s%s</string>
+
+    <!--Generic fee types-->
+    <string name="unknown_type">Nezināms darījuma veids</string>
+    <string name="annual_fee">Gada maksa</string>
+    <string name="annual_fee_refund">Gada maksas atmaksa</string>
+    <string name="customer_service_fee">Klienta apkalpošanas maksa</string>
+    <string name="customer_service_fee_refund">Klienta apkalpošanas maksas atmaksa</string>
+    <string name="expedited_shipping_fee">Paātrinātas piegādes maksa</string>
+    <string name="generic_fee_refund">Vispārējās maksas atmaksa</string>
+    <string name="monthly_fee">Ikmēneša maksa</string>
+    <string name="monthly_fee_refund">Ikmēneša maksas atmaksa</string>
+    <string name="payment_expiry_fee">Maksājuma derīguma termiņa beigu maksa</string>
+    <string name="payment_fee">Maksājuma komisijas maksa</string>
+    <string name="processing_fee">Apstrādes maksa</string>
+    <string name="standard_shipping_fee">Standarta piegādes maksa</string>
+    <string name="transfer_fee">Pārskaitījuma maksa</string>
+
+    <!--Generic payment types-->
+    <string name="adjustment">Atlikuma korekcija</string>
+    <string name="foreign_exchange">Valūtas maiņas kurss</string>
+    <string name="deposit">Maksājums</string>
+    <string name="manual_adjustment">Korekcija</string>
+    <string name="payment_expiration">Beidzies maksājuma derīguma termiņš</string>
+
+    <!--Bank account-specific types-->
+    <string name="bank_account_transfer_fee">Bankas konta atgriešanas maksa</string>
+    <string name="bank_account_transfer_return">Bankas konta atgriešana</string>
+    <string name="bank_account_transfer_return_fee">Bankas konta atgriešanas maksa</string>
+    <string name="transfer_to_bank_account">Bankas konts</string>
+
+    <!--Card-specific types-->
+    <string name="card_activation_fee">Kartes aktivizācijas maksa</string>
+    <string name="card_activation_fee_waiver">Atcelta kartes aktivizācijas maksa</string>
+    <string name="card_fee">Kartes maksa</string>
+    <string name="manual_transfer_to_prepaid_card">Pārskaitījums uz karti</string>
+    <string name="prepaid_card_balance_inquiry_fee">Maksa par atlikuma vaicājumu</string>
+    <string name="prepaid_card_cash_advance">Skaidras naudas avanss</string>
+    <string name="prepaid_card_disputed_charge_refund">Apstrīdētās maksas atmaksa</string>
+    <string name="prepaid_card_dispute_deposit">Apstrīdētais kartes depozīts</string>
+    <string name="prepaid_card_domestic_cash_withdrawal_fee">Skaidras naudas izņemšana bankomātā</string>
+    <string name="prepaid_card_exchange_rate_difference">PREPAID_CARD_EXCHANGE_RATE_DIFFERENCE
+    </string>
+    <string name="prepaid_card_manual_unload">Pārskaitījums no kartes</string>
+    <string name="prepaid_card_overseas_cash_withdrawal_fee">Skaidras naudas izņemšana bankomātā</string>
+    <string name="prepaid_card_pin_change_fee">Maksa par PIN koda maiņu</string>
+    <string name="prepaid_card_refund">Atmaksa</string>
+    <string name="prepaid_card_replacement_fee">Kartes aizstāšanas maksa</string>
+    <string name="prepaid_card_sale">Darījums</string>
+    <string name="prepaid_card_sale_reversal">Atgriezts darījums</string>
+    <string name="prepaid_card_unload">Pārskaitījums no kartes</string>
+    <string name="transfer_to_prepaid_card">Pārskaitījums uz karti</string>
+    <!---->
+    <!--Donation types-->
+    <string name="donation">Ziedojums</string>
+    <string name="donation_fee">Ziedojuma maksa</string>
+    <string name="donation_return">Ziedojuma atmaksa</string>
+    <!---->
+    <!--Merchant payment types-->
+    <string name="merchant_payment">Komersanta maksājums</string>
+    <string name="merchant_payment_fee">Komersanta maksājuma maksa</string>
+    <string name="merchant_payment_refund">Komersanta maksājuma atmaksa</string>
+    <string name="merchant_payment_return">Komersanta maksājuma atgriešana</string>
+    <!---->
+    <!--MoneyGram types-->
+    <string name="moneygram_transfer_return">MoneyGram atgriešana</string>
+    <string name="transfer_to_moneygram">MoneyGram</string>
+    <!---->
+    <!--Paper check types-->
+    <string name="paper_check_fee">Naudas čeka maksa</string>
+    <string name="paper_check_refund">Naudas čeka atmaksa</string>
+    <string name="transfer_to_paper_check">Naudas čeks</string>
+    <!---->
+    <!--User and program account types-->
+    <string name="account_closure">Konta slēgšana</string>
+    <string name="account_closure_fee">Maksa par konta slēgšanu</string>
+    <string name="account_unload">Līdzekļu atgriešana</string>
+    <string name="dormant_user_fee">Neaktīva lietotāja konta maksa</string>
+    <string name="dormant_user_fee_refund">Neaktīva lietotāja konta maksas atmaksa</string>
+    <string name="payment">Maksājums</string>
+    <string name="payment_cancellation">Maksājuma atcelšana</string>
+    <string name="payment_reversal">Maksājuma nosūtīšana atpakaļ</string>
+    <string name="payment_reversal_fee">Maksa par maksājuma nosūtīšanu atpakaļ</string>
+    <string name="payment_return">Maksājuma atgriešana</string>
+    <string name="transfer_to_program_account">Pārskaitījums uz programmu</string>
+    <string name="transfer_to_user">Pārskaitījums lietotājam</string>
+    <string name="transfer_to_paypal_account">PayPal</string>
+    <string name="transfer_to_bank_card">Bankas karte</string>
+    <string name="transfer_to_debit_card">Debetkarte</string>
+    <string name="prepaid_card_transfer_return">Priekšapmaksas kartes papildināšanas atmaksa</string>
+    <!---->
+    <!--Virtual incentive types-->
+    <string name="virtual_incentive_cancellation">Akcijas atcelšana</string>
+    <string name="virtual_incentive_issuance">Izsniegts akcijas kods</string>
+    <string name="virtual_incentive_purchase">Akcijas pirkums</string>
+    <string name="virtual_incentive_refund">Akcijas atmaksa</string>
+    <!---->
+    <!--Western Union and WUBS types-->
+    <string name="transfer_to_western_union">Western Union</string>
+    <string name="transfer_to_wubs_wire">Elektroniskais pārskaitījums</string>
+    <string name="western_union_transfer_return">Western Union naudas izņemšana</string>
+    <string name="wubs_wire_transfer_return">Elektroniskā pārskaitījuma atgriešana</string>
+    <!---->
+    <!--Wire transfer types-->
+    <string name="transfer_to_wire">Elektroniskais pārskaitījums</string>
+    <string name="wire_transfer_fee">Elektroniskā pārskaitījuma maksa</string>
+    <string name="wire_transfer_return">Elektroniskā pārskaitījuma atgriešana</string>
+
+    <!-- New exposed receipt types -->
+    <string name="paypal_account_transfer_return">Naudas līdzekļu atgriešana</string>
+    <string name="venmo_account_transfer_return">Naudas līdzekļu atgriešana</string>
+    <string name="prepaid_card_account_deposit">Konta depozīts</string>
+    <string name="prepaid_card_annual_fee_discount">Gada maksas atlaide</string>
+    <string name="prepaid_card_bill_reprint_fee">Maksa par rēķina atkārtotu izdrukāšanu</string>
+    <string name="prepaid_card_atm_or_cash_advance_fee">Maksa par skaidras naudas izņemšanu bankomātā / avansā</string>
+    <string name="prepaid_card_cash_advance_chargeback">Skaidras naudas avansa atteikums</string>
+    <string name="prepaid_card_cash_advance_chargeback_reversal">Skaidras naudas avansa atteikuma atgriešana</string>
+    <string name="prepaid_card_cash_advance_repress">Skaidras naudas avansa ieturējums</string>
+    <string name="prepaid_card_cash_advance_repress_reversal">Skaidras naudas avansa ieturējuma atgriešana</string>
+    <string name="prepaid_card_chargeback">Maksas piemērošanas atteikums</string>
+    <string name="prepaid_card_chargeback_refund">Atteiktās maksas atmaksa</string>
+    <string name="prepaid_card_chargeback_refund_reversal">Atteiktās maksas atmaksas atgriešana</string>
+    <string name="prepaid_card_chargeback_reversal">Atteiktās maksas atgriešana</string>
+    <string name="prepaid_card_commission_or_fee">Maksa / komisijas maksa</string>
+    <string name="prepaid_card_debit_transfer">Debets / pārskaitījumi</string>
+    <string name="prepaid_card_document_request_fee">Maksa par dokumenta pieprasīšanu</string>
+    <string name="prepaid_card_emergency_cash">Ārkārtas naudas līdzekļi</string>
+    <string name="prepaid_card_emergency_card">Ārkārtas karte</string>
+    <string name="prepaid_card_income">Ienākumi</string>
+    <string name="prepaid_card_load_fee">PAN maksa</string>
+    <string name="prepaid_card_refund_fee">Maksa par atmaksu</string>
+    <string name="prepaid_card_monthly_maintenance_fee">Ikmēneša uzturēšanas maksa</string>
+    <string name="prepaid_card_transaction_fee">Darījuma maksa</string>
+    <string name="prepaid_card_sms_fee">SMS maksa</string>
+    <string name="prepaid_card_declined_authorization_fee">Atteiktas autorizācijas maksa</string>
+    <string name="fispc">Pirkums</string>
+
+    <!-- Prepaid Cards Receipt   -->
+    <string name="mobileAvailableBalances" translatable="false">Pieejamie līdzekļi</string>
+
+</resources>

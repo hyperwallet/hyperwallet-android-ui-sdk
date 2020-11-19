@@ -1,0 +1,79 @@
+<resources>
+    <string name="app_name">hyperwallet.ui</string>
+    <string name="title_account_add">Pridať účet</string>
+    <string name="unknown">Neznámy</string>
+
+    <string name="title_activity_select_transfer_method">Vybrať spôsob prevodu</string>
+    <!-- SelectTransferMethodActivity -->
+    <string name="select_transfer_method_title">@string/title_activity_select_transfer_method
+    </string>
+
+    <string name="mobileCountryRegion">Krajina alebo oblasť</string>
+    <string name="mobileCurrencyLabel">Mena</string>
+    <string name="mobileAddTransferMethodHeader">Pridať spôsob prevodu</string>
+    <string name="title_activity_add_transfer_method">Pridať spôsob prevodu</string>
+    <string name="title_add_bank_account">Bankový účet</string>
+    <string name="title_add_bank_card">Debetná karta</string>
+
+    <string name="error_exact_length_field">Dĺžka tohto poľa je presne %d.</string>
+    <string name="error_invalid_expiry_date">%s predstavuje neplatnú hodnotu.</string>
+    <string name="error_min_max_length_field">Minimálna dĺžka tohto poľa je {0} znakov a maximálna dĺžka je {1} znakov.
+    </string>
+
+    <string name="createTransferMethodButtonLabel">Pridať spôsob prevodu</string>
+    <string name="default_account_label">Predvolený účet</string>
+    <string name="default_account_sub_label">Vybrať predvolený spôsob prevodu</string>
+    <string name="api_expiry_date_format">MM/RR</string>
+
+    <string name="feeAndProcessingTimeInformation">%s poplatok \u2022 %s</string>
+    <string name="feeInformation">%s poplatok</string>
+
+    <string name="emptyStateAddTransferMethod">Pridajte spôsob prevodu, aby ste mohli začať.</string>
+
+    <!-- menu title -->
+    <string name="menu_transfer_funds">Prevod</string>
+
+    <!--Fee formatter-->
+    <string name="fee_flat_formatter">%1$s%2$s</string>
+    <string name="fee_percent_no_min_and_max_formatter">%1$s%%</string>
+    <string name="fee_percent_only_min_formatter">%1$s%% (Min.:%2$s %3$s)</string>
+    <string name="fee_percent_only_max_formatter">%1$s%% (Max.:%2$s %3$s)</string>
+    <string name="fee_percent_formatter">%1$s%% (Min.:%2$s %3$s, max.:%2$s %4$s)</string>
+    <string name="fee_mix_no_min_and_max_formatter">%1$s%2$s + %3$s%%</string>
+    <string name="fee_mix_only_min_formatter">%1$s%2$s + %3$s%% (Min.:%1$s %4$s)</string>
+    <string name="fee_mix_only_max_formatter">%1$s%2$s + %3$s%% (Max.:%1$s %4$s)</string>
+    <string name="fee_mix_formatter">%1$s%2$s + %3$s%% (Min.:%1$s %4$s, max.:%1$s %5$s)</string>
+
+    <string name="account_holder">INFORMÁCIE O DRŽITEĽOVI ÚČTU</string>
+    <string name="account_information">INFORMÁCIE O ÚČTE: %s(%s)</string>
+    <string name="address">ADRESA</string>
+    <string name="contact_information">KONTAKTNÉ ÚDAJE</string>
+    <string name="identification">IDENTIFIKÁCIA</string>
+    <string name="intermediary_account">SPROSTREDKOVATEĽSKÝ ÚČET</string>
+    <string name="mobileFeesAndProcessingTime">POPLATKY A ČAS SPRACOVANIA</string>
+
+    <string name="search_hint">Tip na vyhľadávanie</string>
+    <string name="search_country">Krajina vyhľadávania</string>
+    <string name="search_currency">Mena vyhľadávania</string>
+    <string name="search_widget">Vyhľadávanie</string>
+
+    <string name="select_transfer_method_currency_button_description">Tlačidlo Vybrať menu
+    </string>
+    <string name="select_transfer_method_country_button_description">Tlačidlo Vybrať krajinu</string>
+    <string name="selected_country_item_description">Položka Vybratá krajina</string>
+    <string name="selected_currency_item_description">Položka Vybratá mena</string>
+    <string name="transfer_method_context_button_description">Tlačidlo Kontextová ponuka</string>
+    <string name="item_select_description">Vybratá položka</string>
+
+    <string name="error_unmapped_field">Nenamapované pole, kontaktujte podporu.</string>
+
+    <string name="country_placeholder">Kanada</string>
+    <string name="currency_placeholder">CAD</string>
+    <string name="feesAndProcessTimePlaceholder">Poplatok $20,00 USD \u2022 1 – 3 pracovné dni </string>
+    <string name="mobileCountryCurrencyLabel">LOKALITA A MENA</string>
+    <string name="mobileTransferMethodLabel">SPÔSOB PREVODU</string>
+    <string name="mobileTransferMethodsHeader">Spôsoby prevodu</string>
+
+    <string name="mobileRemoveEAconfirm">Odstrániť spôsob prevodu</string>
+    <string name="prepaidCardManagementInfo"  translatable="false">„Prihláste sa pomocou webového prehliadača, aby ste mohli spravovať svoju kartu.“</string>
+</resources>

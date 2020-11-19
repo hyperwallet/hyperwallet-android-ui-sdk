@@ -1,0 +1,79 @@
+<resources>
+    <string name="app_name">hyperwallet.ui</string>
+    <string name="title_account_add">Thêm tài khoản</string>
+    <string name="unknown">Không xác định</string>
+
+    <string name="title_activity_select_transfer_method">Chọn phương thức chuyển tiền</string>
+    <!-- SelectTransferMethodActivity -->
+    <string name="select_transfer_method_title">@schuỗi/tiêu đề_hoạt động_chọn_phương thức_chuyển khoản
+    </string>
+
+    <string name="mobileCountryRegion">Quốc gia/khu vực</string>
+    <string name="mobileCurrencyLabel">Đơn vị tiền tệ</string>
+    <string name="mobileAddTransferMethodHeader">Thêm phương thức chuyển tiền</string>
+    <string name="title_activity_add_transfer_method">Thêm phương thức chuyển tiền</string>
+    <string name="title_add_bank_account">Tài khoản ngân hàng</string>
+    <string name="title_add_bank_card">Thẻ ghi nợ</string>
+
+    <string name="error_exact_length_field">Độ dài của trường này chính xác là %d.</string>
+    <string name="error_invalid_expiry_date">%s không hợp lệ.</string>
+    <string name="error_min_max_length_field">Độ dài tối thiểu của trường này là {0} và độ dài tối đa là {1}.
+    </string>
+
+    <string name="createTransferMethodButtonLabel">Thêm phương thức chuyển tiền</string>
+    <string name="default_account_label">Tài khoản mặc định</string>
+    <string name="default_account_sub_label">Chọn phương thức chuyển mặc định</string>
+    <string name="api_expiry_date_format">MM/YY</string>
+
+    <string name="feeAndProcessingTimeInformation">%s phí \u2022 %s</string>
+    <string name="feeInformation">%s phí</string>
+
+    <string name="emptyStateAddTransferMethod">Thêm phương thức chuyển tiền để bắt đầu.</string>
+
+    <!-- menu title -->
+    <string name="menu_transfer_funds">Chuyển tiền</string>
+
+    <!--Fee formatter-->
+    <string name="fee_flat_formatter">%1$s%2$s</string>
+    <string name="fee_percent_no_min_and_max_formatter">%1$s%%</string>
+    <string name="fee_percent_only_min_formatter">%1$s%% (Tối thiểu:%2$s %3$s)</string>
+    <string name="fee_percent_only_max_formatter">%1$s%% (Tối đa:%2$s %3$s)</string>
+    <string name="fee_percent_formatter">%1$s%% (Tối thiểu:%2$s %3$s, Tối đa:%2$s %4$s)</string>
+    <string name="fee_mix_no_min_and_max_formatter">%1$s%2$s + %3$s%%</string>
+    <string name="fee_mix_only_min_formatter">%1$s%2$s + %3$s%% (Tối thiểu:%1$s %4$s)</string>
+    <string name="fee_mix_only_max_formatter">%1$s%2$s + %3$s%% (Tối đa:%1$s %4$s)</string>
+    <string name="fee_mix_formatter">%1$s%2$s + %3$s%% (Tối thiểu:%1$s %4$s, Tối đa:%1$s %5$s)</string>
+
+    <string name="account_holder">THÔNG TIN CHỦ TÀI KHOẢN</string>
+    <string name="account_information">THÔNG TIN TÀI KHOẢN: %s(%s)</string>
+    <string name="address">ĐỊA CHỈ</string>
+    <string name="contact_information">THÔNG TIN LIÊN HỆ</string>
+    <string name="identification">NHẬN DẠNG</string>
+    <string name="intermediary_account">TÀI KHOẢN TRUNG GIAN</string>
+    <string name="mobileFeesAndProcessingTime">LỆ PHÍ VÀ THỜI GIAN XỬ LÝ</string>
+
+    <string name="search_hint">Gợi ý tìm kiếm</string>
+    <string name="search_country">Tìm kiếm quốc gia</string>
+    <string name="search_currency">Tìm kiếm đơn vị tiền tệ</string>
+    <string name="search_widget">Tìm kiếm</string>
+
+    <string name="select_transfer_method_currency_button_description">Chọn nút đơn vị tiền tệ
+    </string>
+    <string name="select_transfer_method_country_button_description">Nút chọn quốc gia</string>
+    <string name="selected_country_item_description">Mục quốc gia đã chọn</string>
+    <string name="selected_currency_item_description">Mục đơn vị tiền tệ đã chọn</string>
+    <string name="transfer_method_context_button_description">Nút menu ngữ cảnh</string>
+    <string name="item_select_description">Chọn mục</string>
+
+    <string name="error_unmapped_field">Trường chưa được ánh xạ, Vui lòng liên hệ với bộ phận hỗ trợ.</string>
+
+    <string name="country_placeholder">Canada</string>
+    <string name="currency_placeholder">CAD</string>
+    <string name="feesAndProcessTimePlaceholder">$20,00USD phí \u2022 1\-3 Ngày làm việc </string>
+    <string name="mobileCountryCurrencyLabel">ĐỊA ĐIỂM VÀ TIỀN TỆ</string>
+    <string name="mobileTransferMethodLabel">PHƯƠNG THỨC CHUYỂN TIỀN</string>
+    <string name="mobileTransferMethodsHeader">Phương thức chuyển tiền</string>
+
+    <string name="mobileRemoveEAconfirm">Xóa phương thức chuyển tiền</string>
+    <string name="prepaidCardManagementInfo"  translatable="false">"Đăng nhập bằng trình duyệt web để quản lý thẻ của bạn"</string>
+</resources>

@@ -1,0 +1,79 @@
+<resources>
+    <string name="app_name">hyperwallet.ui</string>
+    <string name="title_account_add">เพิ่มบัญชี</string>
+    <string name="unknown">ไม่รู้จัก</string>
+
+    <string name="title_activity_select_transfer_method">เลือกวิธีการโอนเงิน</string>
+    <!-- SelectTransferMethodActivity -->
+    <string name="select_transfer_method_title">@string/title_activity_select_transfer_method
+    </string>
+
+    <string name="mobileCountryRegion">ประเทศ/ภูมิภาค</string>
+    <string name="mobileCurrencyLabel">สกุลเงิน</string>
+    <string name="mobileAddTransferMethodHeader">เพิ่มวิธีการโอนเงิน</string>
+    <string name="title_activity_add_transfer_method">เพิ่มวิธีการโอนเงิน</string>
+    <string name="title_add_bank_account">บัญชีธนาคาร</string>
+    <string name="title_add_bank_card">บัตรเดบิต</string>
+
+    <string name="error_exact_length_field">ความยาวสำหรับช่องข้อมูลนี้คือ %d เท่านั้น</string>
+    <string name="error_invalid_expiry_date">%s ไม่ถูกต้อง</string>
+    <string name="error_min_max_length_field">ความยาวขั้นต่ำของช่องข้อมูลนี้คือ {0} และความยาวสูงสุดคือ {1}
+    </string>
+
+    <string name="createTransferMethodButtonLabel">เพิ่มวิธีการโอนเงิน</string>
+    <string name="default_account_label">บัญชีเริ่มต้น</string>
+    <string name="default_account_sub_label">เลือกวิธีการโอนเงินเริ่มต้น</string>
+    <string name="api_expiry_date_format">ดด/ปป</string>
+
+    <string name="feeAndProcessingTimeInformation">%s ค่าธรรมเนียม \u2022 %s</string>
+    <string name="feeInformation">%s ค่าธรรมเนียม</string>
+
+    <string name="emptyStateAddTransferMethod">เพิ่มวิธีการโอนเงินเพื่อเริ่มต้นใช้งาน</string>
+
+    <!-- menu title -->
+    <string name="menu_transfer_funds">การโอนเงิน</string>
+
+    <!--Fee formatter-->
+    <string name="fee_flat_formatter">%1$s%2$s</string>
+    <string name="fee_percent_no_min_and_max_formatter">%1$s%%</string>
+    <string name="fee_percent_only_min_formatter">%1$s%% (ต่ำสุด:%2$s %3$s)</string>
+    <string name="fee_percent_only_max_formatter">%1$s%% (สูงสุด:%2$s %3$s)</string>
+    <string name="fee_percent_formatter">%1$s%% (ต่ำสุด:%2$s %3$s สูงสุด:%2$s %4$s)</string>
+    <string name="fee_mix_no_min_and_max_formatter">%1$s%2$s + %3$s%%</string>
+    <string name="fee_mix_only_min_formatter">%1$s%2$s + %3$s%% (ต่ำสุด:%1$s %4$s)</string>
+    <string name="fee_mix_only_max_formatter">%1$s%2$s + %3$s%% (สูงสุด:%1$s %4$s)</string>
+    <string name="fee_mix_formatter">%1$s%2$s + %3$s%% (ต่ำสุด:%1$s %4$s สูงสุด:%1$s %5$s)</string>
+
+    <string name="account_holder">ข้อมูลเจ้าของบัญชี</string>
+    <string name="account_information">ข้อมูลบัญชี: %s(%s)</string>
+    <string name="address">ที่อยู่</string>
+    <string name="contact_information">ข้อมูลการติดต่อ</string>
+    <string name="identification">รหัสประจำตัว</string>
+    <string name="intermediary_account">บัญชีธนาคารตัวกลาง</string>
+    <string name="mobileFeesAndProcessingTime">ค่าธรรมเนียมและเวลาในการดำเนินการ</string>
+
+    <string name="search_hint">ค้นหาคำแนะนำ</string>
+    <string name="search_country">ค้นหาประเทศ</string>
+    <string name="search_currency">ค้นหาสกุลเงิน</string>
+    <string name="search_widget">ค้นหา</string>
+
+    <string name="select_transfer_method_currency_button_description">ปุ่มเลือกสกุลเงิน
+    </string>
+    <string name="select_transfer_method_country_button_description">ปุ่มเลือกประเทศ</string>
+    <string name="selected_country_item_description">รายชื่อประเทศที่เลือก</string>
+    <string name="selected_currency_item_description">รายการสกุลเงินที่เลือก</string>
+    <string name="transfer_method_context_button_description">ปุ่มเมนูบริบท</string>
+    <string name="item_select_description">รายการที่เลือก</string>
+
+    <string name="error_unmapped_field">ไม่ได้แม็ปช่องข้อมูล โปรดติดต่อฝ่ายสนับสนุน</string>
+
+    <string name="country_placeholder">แคนาดา</string>
+    <string name="currency_placeholder">ดอลลาร์แคนาดา</string>
+    <string name="feesAndProcessTimePlaceholder">ค่าธรรมเนียม 20.00 ดอลลาร์สหรัฐ \u2022 1\-3 วันทำการ </string>
+    <string name="mobileCountryCurrencyLabel">ที่ตั้งและสกุลเงิน</string>
+    <string name="mobileTransferMethodLabel">วิธีการโอนเงิน</string>
+    <string name="mobileTransferMethodsHeader">วิธีการโอนเงิน</string>
+
+    <string name="mobileRemoveEAconfirm">ลบวิธีการโอนเงิน</string>
+    <string name="prepaidCardManagementInfo"  translatable="false">"เข้าสู่ระบบโดยใช้เว็บเบราว์เซอร์เพื่อจัดการบัตรของคุณ"</string>
+</resources>

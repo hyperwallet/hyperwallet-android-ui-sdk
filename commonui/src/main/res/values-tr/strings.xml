@@ -1,0 +1,38 @@
+<resources>
+    <string name="error_dialog_title">Hata</string>
+    <string name="error_dialog_connectivity_title">Bağlantı Sorunu</string>
+    <string name="error_dialog_unexpected_title">Beklenmeyen Hata</string>
+    <string name="ok">Tamam</string>
+    <string name="try_again_button_label">Yeniden dene</string>
+    <string name="not_available">Kullanılamıyor</string>
+
+    <!-- title and font icon -->
+    <string name="bank_account">Banka Hesabı</string>
+    <string name="bank_card">Banka Kartı</string>
+    <string name="wire_account">Banka Havalesi Hesabı</string>
+    <string name="paper_check">Kâğıt Çek</string>
+    <string name="prepaid_card">Ön Ödemeli Kart</string>
+    <string name="paypal_account">Paypal Hesabı</string>
+    <string name="venmo_account">Venmo Hesabı</string>
+    <string name="cash_pickup_mg">MoneyGram</string>
+    <string name="visa" translatable="false">Visa</string>
+    <string name="mastercard" translatable="false">Mastercard</string>
+
+    <string name="bank_account_font_icon" translatable="false">\ue900</string>
+    <string name="bank_card_font_icon" translatable="false">\ue903</string>
+    <string name="wire_account_font_icon" translatable="false">\ue90a</string>
+    <string name="paper_check_font_icon" translatable="false">\ue902</string>
+    <string name="prepaid_card_font_icon" translatable="false">\ue901</string>
+    <string name="paypal_account_font_icon" translatable="false">\ue906</string>
+    <string name="venmo_account_font_icon" translatable="false">\ue909</string>
+    <string name="cash_pickup_mg_font_icon" translatable="false">\ue905</string>
+
+    <string name="endingIn">kart numarasının sonu %s</string>
+    <string name="to">kime %s</string>
+    <string name="not_translated_in_braces">(tercüme edilmemiş)</string>
+
+    <string name="authentication_error_header">Doğrulama Hatası</string>
+    <string name="cancelButtonLabel">İptal et</string>
+    <string name="remove">Kaldır</string>
+    <string name="mobileAreYouSure">Emin misiniz?</string>
+</resources>

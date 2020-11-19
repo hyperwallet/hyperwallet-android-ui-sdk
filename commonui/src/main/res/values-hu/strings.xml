@@ -1,0 +1,38 @@
+<resources>
+    <string name="error_dialog_title">Hiba</string>
+    <string name="error_dialog_connectivity_title">Kapcsolódási hiba</string>
+    <string name="error_dialog_unexpected_title">Váratlan hiba</string>
+    <string name="ok">OK</string>
+    <string name="try_again_button_label">Újra</string>
+    <string name="not_available">Nem áll rendelkezésre</string>
+
+    <!-- title and font icon -->
+    <string name="bank_account">Bankszámla</string>
+    <string name="bank_card">Betéti kártya</string>
+    <string name="wire_account">Átutalási számla</string>
+    <string name="paper_check">Papír alapú csekk</string>
+    <string name="prepaid_card">Előre fizetett kártya</string>
+    <string name="paypal_account">Paypal-számla</string>
+    <string name="venmo_account">Venmo-számla</string>
+    <string name="cash_pickup_mg">MoneyGram</string>
+    <string name="visa" translatable="false">Visa</string>
+    <string name="mastercard" translatable="false">Mastercard</string>
+
+    <string name="bank_account_font_icon" translatable="false">\ue900</string>
+    <string name="bank_card_font_icon" translatable="false">\ue903</string>
+    <string name="wire_account_font_icon" translatable="false">\ue90a</string>
+    <string name="paper_check_font_icon" translatable="false">\ue902</string>
+    <string name="prepaid_card_font_icon" translatable="false">\ue901</string>
+    <string name="paypal_account_font_icon" translatable="false">\ue906</string>
+    <string name="venmo_account_font_icon" translatable="false">\ue909</string>
+    <string name="cash_pickup_mg_font_icon" translatable="false">\ue905</string>
+
+    <string name="endingIn">a következő számra végződő kártya: %s</string>
+    <string name="to">címzett: %s</string>
+    <string name="not_translated_in_braces">(nincs lefordítva)</string>
+
+    <string name="authentication_error_header">Hitelesítési hiba</string>
+    <string name="cancelButtonLabel">Mégse</string>
+    <string name="remove">Eltávolítás</string>
+    <string name="mobileAreYouSure">Biztos benne?</string>
+</resources>

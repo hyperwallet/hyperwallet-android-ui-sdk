@@ -1,0 +1,79 @@
+<resources>
+    <string name="app_name">hyperwallet.ui</string>
+    <string name="title_account_add">添加账户</string>
+    <string name="unknown">未知</string>
+
+    <string name="title_activity_select_transfer_method">选择转账方式</string>
+    <!-- SelectTransferMethodActivity -->
+    <string name="select_transfer_method_title">@string/title_activity_select_transfer_method
+    </string>
+
+    <string name="mobileCountryRegion">国家/地区</string>
+    <string name="mobileCurrencyLabel">货币</string>
+    <string name="mobileAddTransferMethodHeader">添加转账方式</string>
+    <string name="title_activity_add_transfer_method">添加转账方式</string>
+    <string name="title_add_bank_account">银行账户</string>
+    <string name="title_add_bank_card">借记卡</string>
+
+    <string name="error_exact_length_field">该字段长度正好为 %d。</string>
+    <string name="error_invalid_expiry_date">%s 无效。</string>
+    <string name="error_min_max_length_field">该字段的最小长度为 {0}，最大长度为 {1}。
+    </string>
+
+    <string name="createTransferMethodButtonLabel">添加转账方式</string>
+    <string name="default_account_label">默认账户</string>
+    <string name="default_account_sub_label">选择默认转账方式</string>
+    <string name="api_expiry_date_format">月月/年年</string>
+
+    <string name="feeAndProcessingTimeInformation">%s 费用 \u2022 %s</string>
+    <string name="feeInformation">%s 费用</string>
+
+    <string name="emptyStateAddTransferMethod">添加转账方式以开始。</string>
+
+    <!-- menu title -->
+    <string name="menu_transfer_funds">转账</string>
+
+    <!--Fee formatter-->
+    <string name="fee_flat_formatter">%1$s%2$s</string>
+    <string name="fee_percent_no_min_and_max_formatter">%1$s%%</string>
+    <string name="fee_percent_only_min_formatter">%1$s%%（最低：%2$s %3$s）</string>
+    <string name="fee_percent_only_max_formatter">%1$s%%（最高：%2$s %3$s）</string>
+    <string name="fee_percent_formatter">%1$s%%（最低：%2$s %3$s，最高：%2$s %4$s）</string>
+    <string name="fee_mix_no_min_and_max_formatter">%1$s%2$s + %3$s%%</string>
+    <string name="fee_mix_only_min_formatter">%1$s%2$s + %3$s%%（最低：%1$s %4$s）</string>
+    <string name="fee_mix_only_max_formatter">%1$s%2$s + %3$s%%（最高：%1$s %4$s）</string>
+    <string name="fee_mix_formatter">%1$s%2$s + %3$s%%（最低：%1$s %4$s，最高：%1$s %5$s）</string>
+
+    <string name="account_holder">账户持有者信息</string>
+    <string name="account_information">账户信息：%s(%s)</string>
+    <string name="address">地址</string>
+    <string name="contact_information">联系信息</string>
+    <string name="identification">身份验证</string>
+    <string name="intermediary_account">中间银行账户</string>
+    <string name="mobileFeesAndProcessingTime">费用和处理时间</string>
+
+    <string name="search_hint">搜索提示</string>
+    <string name="search_country">搜索国家/地区</string>
+    <string name="search_currency">搜索货币</string>
+    <string name="search_widget">搜索</string>
+
+    <string name="select_transfer_method_currency_button_description">选择货币按钮
+    </string>
+    <string name="select_transfer_method_country_button_description">选择国家/地区按钮</string>
+    <string name="selected_country_item_description">选中国家/地区项</string>
+    <string name="selected_currency_item_description">选中货币项</string>
+    <string name="transfer_method_context_button_description">上下文菜单按钮</string>
+    <string name="item_select_description">选中项</string>
+
+    <string name="error_unmapped_field">未映射的字段，请联系支持帮助。</string>
+
+    <string name="country_placeholder">加拿大</string>
+    <string name="currency_placeholder">加元</string>
+    <string name="feesAndProcessTimePlaceholder">20.00 美元费用 \u2022 1-3 个工作日 </string>
+    <string name="mobileCountryCurrencyLabel">所在地和货币</string>
+    <string name="mobileTransferMethodLabel">转账方式</string>
+    <string name="mobileTransferMethodsHeader">转账方式</string>
+
+    <string name="mobileRemoveEAconfirm">移除转账方式</string>
+    <string name="prepaidCardManagementInfo"  translatable="false">“使用网页浏览器登录，管理您的卡”</string>
+</resources>

@@ -1,0 +1,71 @@
+<resources>
+    <string name="title_activity_create_transfer">Pārskaitīt līdzekļus</string>
+    <string name="mobileConfirmationHeader">Apstiprināt informāciju</string>
+    <string name="mobileConfirmNotesLabel">PIEZĪME</string>
+    <string name="transfer_destination">Galamērķis</string>
+    <string name="mobileTransferToLabel">SAŅĒMĒJS</string>
+    <string name="mobileTransferFundsHeader">Pārskaitīt līdzekļus</string>
+    <string name="mobileFXlabel">VALŪTAS MAIŅAS KURSS</string>
+    <string name="transfer_header_label">Pārskaitījums</string>
+    <string name="noTransferMethodAdded">Jānorāda pārskaitījuma veids</string>
+    <string name="transfer_amount_hint">Summa</string>
+    <string name="transfer_currency_placeholder">USD</string>
+    <string name="transfer_currency_code_placeholder">$</string>
+    <string name="transfer_all_funds_label">Pārskaitīt maksimālo summu</string>
+    <string name="mobileAvailableBalance">Pieejamā summa: %s %s</string>
+    <string name="mobileSummaryLabel">KOPSAVILKUMS</string>
+    <string name="mobileNoteLabel">Piezīme</string>
+    <string name="transfer_notes_label">Piezīme</string>
+    <string name="transfer_notes_additional_info_label">Pievienot piezīmi (izvēles)</string>
+    <string name="continueButtonLabel">Turpināt</string>
+    <string name="defaultTransferAmount">0</string>
+    <string name="transfer">Pārskaitījums</string>
+    <string name="add_text">+</string>
+    <string name="mobileAddTransferMethod">Pievienot pārskaitījuma veidu</string>
+    <string name="add_transfer_description_1">Pievienojiet pārskaitījuma veidu, lai uzsāktu darījumu.</string>
+    <string name="add_transfer_description_2">Pievienojiet pārskaitījuma veidu, lai uzsāktu darījumu.</string>
+    <string name="transfer_destination_selection_description">Pārskaitījuma veida atlase</string>
+    <string name="destination_item_description">Galamērķa vienums</string>
+
+    <string name="amount_currency_format">%s %s</string>
+    <string name="exchange_rate_format">1 %s = %s %s</string>
+
+    <string name="module_transfermethodui_unavailable_error">Jūs nevarat pievienot pārskaitījuma veidu.</string>
+    <string name="transferAmountInvalid">Ievadiet derīgu pārskaitījuma summu</string>
+
+    <string name="mobileFXsell">No</string>
+    <string name="mobileFXbuy">Kam</string>
+    <string name="mobileFXRateLabel">Valūtas maiņas kurss</string>
+
+    <string name="mobileConfirmDetailsAmount">Summa</string>
+    <string name="mobileConfirmDetailsFee">Maksa</string>
+    <string name="mobileConfirmDetailsTotal">Jūs saņemsiet</string>
+    <string name="exchange_rate_change_warning">Valūtas maiņas kursa izmaiņu dēļ jūs tagad saņemsiet \'%1$s %2$s.</string>
+
+
+    <string name="mobileTransferMax">Pārskaitīt maksimālo summu</string>
+    <string name="transfer_summary_placeholder">Pieejamā summa:   2422,90 CAD</string>
+    <string name="transfer_notes_placeholder">Daļējs pārskaitījums</string>
+    <string name="transfer_item_icon_placeholder">\ue000</string>
+    <string name="transfer_item_title_placeholder">Pārskaitījuma veids</string>
+    <string name="transfer_item_country_placeholder">Valsts nosaukums</string>
+    <string name="transfer_item_identification_placeholder">Korekcija XXXX</string>
+    <string name="foreign_exchange_sell_placeholder">15,05 CAD</string>
+    <string name="foreign_exchange_buy_placeholder">11,00 USD</string>
+    <string name="foreign_exchange_rate_placeholder">1 CAD = 0,73897 USD</string>
+    <string name="summary_amount_placeholder">10,00 CAD</string>
+    <string name="summary_amount_fee_placeholder">0,25 CAD</string>
+    <string name="summary_amount_transfer_placeholder">9,75 CAD</string>
+    <string name="exchange_rate_change_warning_placeholder">Valūtas maiņas kursa izmaiņu dēļ jūs tagad saņemsiet \' 10,00 CAD.</string>
+
+    <string name="mobileTransferSuccessMsg">Jūsu pārskaitījums tiek apstrādāts</string>
+    <string name="mobileTransferSuccessDetails">Nauda ir ceļā uz jūsu %s</string>
+    <string name="doneButtonLabel">Pabeigts</string>
+    <string name="mobileTransferMethodsHeader">Pārskaitījumu veidi</string>
+    <string name="mobileTransferFromLabel" translatable="false">PĀRSKAITĪT NO</string>
+    <string name="transferSource" translatable="false">Avots</string>
+    <string name="mobileTransferFromHeader" translatable="false">Pārskaitīt no</string>
+    <string name="availableFunds" translatable="false">Pieejamie līdzekļi</string>
+    <string name="noTransferFromSourceAvailableError" translatable="false">Nav pieejams pārskaitījums no avota</string>
+
+</resources>

@@ -1,0 +1,38 @@
+<resources>
+    <string name="error_dialog_title">Erro</string>
+    <string name="error_dialog_connectivity_title">Problema de conectividade</string>
+    <string name="error_dialog_unexpected_title">Erro inesperado</string>
+    <string name="ok">OK</string>
+    <string name="try_again_button_label">Tentar novamente</string>
+    <string name="not_available">Não disponível</string>
+
+    <!-- title and font icon -->
+    <string name="bank_account">Conta bancária</string>
+    <string name="bank_card">Cartão de débito</string>
+    <string name="wire_account">Conta de transferência bancária</string>
+    <string name="paper_check">Cheque em papel</string>
+    <string name="prepaid_card">Cartão pré-pago</string>
+    <string name="paypal_account">Conta PayPal</string>
+    <string name="venmo_account">Conta Venmo</string>
+    <string name="cash_pickup_mg">MoneyGram</string>
+    <string name="visa" translatable="false">Visa</string>
+    <string name="mastercard" translatable="false">Mastercard</string>
+
+    <string name="bank_account_font_icon" translatable="false">\ue900</string>
+    <string name="bank_card_font_icon" translatable="false">\ue903</string>
+    <string name="wire_account_font_icon" translatable="false">\ue90a</string>
+    <string name="paper_check_font_icon" translatable="false">\ue902</string>
+    <string name="prepaid_card_font_icon" translatable="false">\ue901</string>
+    <string name="paypal_account_font_icon" translatable="false">\ue906</string>
+    <string name="venmo_account_font_icon" translatable="false">\ue909</string>
+    <string name="cash_pickup_mg_font_icon" translatable="false">\ue905</string>
+
+    <string name="endingIn">a terminar em %s</string>
+    <string name="to">para %s</string>
+    <string name="not_translated_in_braces">(não traduzido)</string>
+
+    <string name="authentication_error_header">Erro de autenticação</string>
+    <string name="cancelButtonLabel">Cancelar</string>
+    <string name="remove">Remover</string>
+    <string name="mobileAreYouSure">Tem a certeza?</string>
+</resources>

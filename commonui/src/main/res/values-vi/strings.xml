@@ -1,0 +1,38 @@
+<resources>
+    <string name="error_dialog_title">Lỗi</string>
+    <string name="error_dialog_connectivity_title">Lỗi kết nối</string>
+    <string name="error_dialog_unexpected_title">Lỗi không mong đợi</string>
+    <string name="ok">OK</string>
+    <string name="try_again_button_label">Thử lại</string>
+    <string name="not_available">Không khả dụng</string>
+
+    <!-- title and font icon -->
+    <string name="bank_account">Tài khoản ngân hàng</string>
+    <string name="bank_card">Thẻ ghi nợ</string>
+    <string name="wire_account">Tài khoản điện chuyển khoản</string>
+    <string name="paper_check">Séc giấy</string>
+    <string name="prepaid_card">Thẻ trả trước</string>
+    <string name="paypal_account">Tài khoản Paypal</string>
+    <string name="venmo_account">Tài khoản Venmo</string>
+    <string name="cash_pickup_mg">MoneyGram</string>
+    <string name="visa" translatable="false">Visa</string>
+    <string name="mastercard" translatable="false">Mastercard</string>
+
+    <string name="bank_account_font_icon" translatable="false">\ue900</string>
+    <string name="bank_card_font_icon" translatable="false">\ue903</string>
+    <string name="wire_account_font_icon" translatable="false">\ue90a</string>
+    <string name="paper_check_font_icon" translatable="false">\ue902</string>
+    <string name="prepaid_card_font_icon" translatable="false">\ue901</string>
+    <string name="paypal_account_font_icon" translatable="false">\ue906</string>
+    <string name="venmo_account_font_icon" translatable="false">\ue909</string>
+    <string name="cash_pickup_mg_font_icon" translatable="false">\ue905</string>
+
+    <string name="endingIn">kết thúc bằng %s</string>
+    <string name="to">đến %s</string>
+    <string name="not_translated_in_braces">(not translated)</string>
+
+    <string name="authentication_error_header">Lỗi xác thực</string>
+    <string name="cancelButtonLabel">Huỷ bỏ</string>
+    <string name="remove">Xóa</string>
+    <string name="mobileAreYouSure">Bạn có chắc không?</string>
+</resources>

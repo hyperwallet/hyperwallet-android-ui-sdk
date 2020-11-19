@@ -1,0 +1,38 @@
+<resources>
+    <string name="error_dialog_title">Błąd</string>
+    <string name="error_dialog_connectivity_title">Problem z łącznością</string>
+    <string name="error_dialog_unexpected_title">Nieoczekiwany błąd</string>
+    <string name="ok">OK</string>
+    <string name="try_again_button_label">Spróbuj ponownie</string>
+    <string name="not_available">Niedostępne</string>
+
+    <!-- title and font icon -->
+    <string name="bank_account">Rachunek bankowy</string>
+    <string name="bank_card">Karta debetowa</string>
+    <string name="wire_account">Konto przelewowe</string>
+    <string name="paper_check">Czek papierowy</string>
+    <string name="prepaid_card">Karta przedpłacona</string>
+    <string name="paypal_account">Konto Paypal</string>
+    <string name="venmo_account">Konto Venmo</string>
+    <string name="cash_pickup_mg">MoneyGram</string>
+    <string name="visa" translatable="false">Visa</string>
+    <string name="mastercard" translatable="false">Mastercard</string>
+
+    <string name="bank_account_font_icon" translatable="false">\ue900</string>
+    <string name="bank_card_font_icon" translatable="false">\ue903</string>
+    <string name="wire_account_font_icon" translatable="false">\ue90a</string>
+    <string name="paper_check_font_icon" translatable="false">\ue902</string>
+    <string name="prepaid_card_font_icon" translatable="false">\ue901</string>
+    <string name="paypal_account_font_icon" translatable="false">\ue906</string>
+    <string name="venmo_account_font_icon" translatable="false">\ue909</string>
+    <string name="cash_pickup_mg_font_icon" translatable="false">\ue905</string>
+
+    <string name="endingIn">kończy się za %s</string>
+    <string name="to">do %s</string>
+    <string name="not_translated_in_braces">(bez tłumaczenia)</string>
+
+    <string name="authentication_error_header">Błąd uwierzytelniania</string>
+    <string name="cancelButtonLabel">Anuluj</string>
+    <string name="remove">Usuń</string>
+    <string name="mobileAreYouSure">Na pewno?</string>
+</resources>

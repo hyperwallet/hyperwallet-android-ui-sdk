@@ -1,0 +1,71 @@
+<resources>
+    <string name="title_activity_create_transfer">Przelew środków</string>
+    <string name="mobileConfirmationHeader">Potwierdź szczegóły</string>
+    <string name="mobileConfirmNotesLabel">UWAGA</string>
+    <string name="transfer_destination">Miejsce docelowe</string>
+    <string name="mobileTransferToLabel">PRZELEW DO</string>
+    <string name="mobileTransferFundsHeader">Przelej środki</string>
+    <string name="mobileFXlabel">WYMIANA WALUT</string>
+    <string name="transfer_header_label">Przelew</string>
+    <string name="noTransferMethodAdded">Wymagana jest metoda przelewu</string>
+    <string name="transfer_amount_hint">Kwota</string>
+    <string name="transfer_currency_placeholder">USD</string>
+    <string name="transfer_currency_code_placeholder">$</string>
+    <string name="transfer_all_funds_label">Maks. kwota przelewu</string>
+    <string name="mobileAvailableBalance">Dostępna kwota: %s %s</string>
+    <string name="mobileSummaryLabel">PODSUMOWANIE</string>
+    <string name="mobileNoteLabel">Uwaga</string>
+    <string name="transfer_notes_label">Uwaga</string>
+    <string name="transfer_notes_additional_info_label">Dodaj uwagę (opcjonalne)</string>
+    <string name="continueButtonLabel">Kontynuuj</string>
+    <string name="defaultTransferAmount">0</string>
+    <string name="transfer">Przelew</string>
+    <string name="add_text">+</string>
+    <string name="mobileAddTransferMethod">Dodaj metodę przelewu</string>
+    <string name="add_transfer_description_1">Dodaj metodę przelewu, aby zacząć.</string>
+    <string name="add_transfer_description_2">Dodaj metodę przelewu, aby zacząć.</string>
+    <string name="transfer_destination_selection_description">Wybór metody przelewu</string>
+    <string name="destination_item_description">Pozycja dotycząca miejsca docelowego</string>
+
+    <string name="amount_currency_format">%s %s</string>
+    <string name="exchange_rate_format">1 %s = %s %s</string>
+
+    <string name="module_transfermethodui_unavailable_error">Nie możesz dodać metody przelewu.</string>
+    <string name="transferAmountInvalid">Wpisz prawidłową kwotę przelewu</string>
+
+    <string name="mobileFXsell">Od</string>
+    <string name="mobileFXbuy">Do</string>
+    <string name="mobileFXRateLabel">Kurs wymiany</string>
+
+    <string name="mobileConfirmDetailsAmount">Kwota</string>
+    <string name="mobileConfirmDetailsFee">Opłata</string>
+    <string name="mobileConfirmDetailsTotal">Otrzymasz</string>
+    <string name="exchange_rate_change_warning">Na skutek zmian kursu wymiany otrzymasz teraz %1$s %2$s.</string>
+
+
+    <string name="mobileTransferMax">Maks. kwota przelewu</string>
+    <string name="transfer_summary_placeholder">Dostępna kwota:   2422,90 CAD</string>
+    <string name="transfer_notes_placeholder">Przelew częściowy</string>
+    <string name="transfer_item_icon_placeholder">\ue000</string>
+    <string name="transfer_item_title_placeholder">Rodzaj przelewu</string>
+    <string name="transfer_item_country_placeholder">Nazwa kraju</string>
+    <string name="transfer_item_identification_placeholder">Edytowanie na XXXX</string>
+    <string name="foreign_exchange_sell_placeholder">15,05 CAD</string>
+    <string name="foreign_exchange_buy_placeholder">11,00 USD</string>
+    <string name="foreign_exchange_rate_placeholder">1 CAD = 0,73897 USD</string>
+    <string name="summary_amount_placeholder">10,00 CAD</string>
+    <string name="summary_amount_fee_placeholder">0,25 CAD</string>
+    <string name="summary_amount_transfer_placeholder">9,75 CAD</string>
+    <string name="exchange_rate_change_warning_placeholder">Na skutek zmian kursu wymiany otrzymasz teraz 10,00 CAD.</string>
+
+    <string name="mobileTransferSuccessMsg">Przetwarzamy Twój przelew</string>
+    <string name="mobileTransferSuccessDetails">Wysłano Twoje pieniądze do %s</string>
+    <string name="doneButtonLabel">Gotowe</string>
+    <string name="mobileTransferMethodsHeader">Metody przelewu</string>
+    <string name="mobileTransferFromLabel" translatable="false">PRZELEW OD</string>
+    <string name="transferSource" translatable="false">Źródło</string>
+    <string name="mobileTransferFromHeader" translatable="false">Przelew od</string>
+    <string name="availableFunds" translatable="false">Dostępne środki</string>
+    <string name="noTransferFromSourceAvailableError" translatable="false">Brak dostępnych przelewów od źródła</string>
+
+</resources>

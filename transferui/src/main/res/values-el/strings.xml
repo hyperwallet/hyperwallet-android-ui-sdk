@@ -1,0 +1,71 @@
+<resources>
+    <string name="title_activity_create_transfer">Μεταφορά ποσού</string>
+    <string name="mobileConfirmationHeader">Επιβεβαιώστε τα στοιχεία</string>
+    <string name="mobileConfirmNotesLabel">ΣΗΜΕΙΩΣΗ</string>
+    <string name="transfer_destination">Προορισμός</string>
+    <string name="mobileTransferToLabel">ΜΕΤΑΦΟΡΑ ΠΡΟΣ</string>
+    <string name="mobileTransferFundsHeader">Μεταφορά ποσού</string>
+    <string name="mobileFXlabel">ΣΥΝΑΛΛΑΓΜΑ</string>
+    <string name="transfer_header_label">Μεταφορά</string>
+    <string name="noTransferMethodAdded">Ο τρόπος μεταφοράς είναι υποχρεωτικός</string>
+    <string name="transfer_amount_hint">Ποσό</string>
+    <string name="transfer_currency_placeholder">USD</string>
+    <string name="transfer_currency_code_placeholder">$</string>
+    <string name="transfer_all_funds_label">Μέγιστο ποσό μεταφοράς</string>
+    <string name="mobileAvailableBalance">Διαθέσιμο ποσό: %s %s</string>
+    <string name="mobileSummaryLabel">ΣΥΝΟΨΗ</string>
+    <string name="mobileNoteLabel">Σημείωση</string>
+    <string name="transfer_notes_label">Σημείωση</string>
+    <string name="transfer_notes_additional_info_label">Προσθήκη σημείωσης (προαιρετικό)</string>
+    <string name="continueButtonLabel">Συνέχεια</string>
+    <string name="defaultTransferAmount">0</string>
+    <string name="transfer">Μεταφορά</string>
+    <string name="add_text">+</string>
+    <string name="mobileAddTransferMethod">Προσθήκη τρόπου μεταφοράς</string>
+    <string name="add_transfer_description_1">Ξεκινήστε προσθέτοντας έναν τρόπο μεταφοράς.</string>
+    <string name="add_transfer_description_2">Ξεκινήστε προσθέτοντας έναν τρόπο μεταφοράς.</string>
+    <string name="transfer_destination_selection_description">Επιλογή τρόπου μεταφοράς</string>
+    <string name="destination_item_description">Στοιχείο προορισμού</string>
+
+    <string name="amount_currency_format">%s %s</string>
+    <string name="exchange_rate_format">1 %s = %s %s</string>
+
+    <string name="module_transfermethodui_unavailable_error">Δεν μπορείτε να προσθέσετε έναν τρόπο μεταφοράς.</string>
+    <string name="transferAmountInvalid">Εισαγάγετε ένα έγκυρο ποσό μεταφοράς</string>
+
+    <string name="mobileFXsell">Από</string>
+    <string name="mobileFXbuy">Προς</string>
+    <string name="mobileFXRateLabel">Ισοτιμία</string>
+
+    <string name="mobileConfirmDetailsAmount">Ποσό</string>
+    <string name="mobileConfirmDetailsFee">Τέλος</string>
+    <string name="mobileConfirmDetailsTotal">Θα λάβετε</string>
+    <string name="exchange_rate_change_warning">Λόγω αλλαγών στην ισοτιμία, τελικά θα λάβετε %1$s %2$s.</string>
+
+
+    <string name="mobileTransferMax">Μέγιστο ποσό μεταφοράς</string>
+    <string name="transfer_summary_placeholder">Διαθέσιμο ποσό:   2.422,90 CAD</string>
+    <string name="transfer_notes_placeholder">Μερική μεταφορά</string>
+    <string name="transfer_item_icon_placeholder">\ue000</string>
+    <string name="transfer_item_title_placeholder">Είδος μεταφοράς</string>
+    <string name="transfer_item_country_placeholder">Όνομα χώρας</string>
+    <string name="transfer_item_identification_placeholder">Επεξεργασία σε XXXX</string>
+    <string name="foreign_exchange_sell_placeholder">15,05 CAD</string>
+    <string name="foreign_exchange_buy_placeholder">11,00 CAD</string>
+    <string name="foreign_exchange_rate_placeholder">1 CAD = 0,73897 USD</string>
+    <string name="summary_amount_placeholder">10,00 CAD</string>
+    <string name="summary_amount_fee_placeholder">0,25 CAD</string>
+    <string name="summary_amount_transfer_placeholder">9,75 CAD</string>
+    <string name="exchange_rate_change_warning_placeholder">Λόγω αλλαγών στην ισοτιμία, τελικά θα λάβετε 10,00 CAD.</string>
+
+    <string name="mobileTransferSuccessMsg">Η μεταφορά σας βρίσκεται σε επεξεργασία</string>
+    <string name="mobileTransferSuccessDetails">Τα χρήματα βρίσκονται καθ’ οδόν προς τον %s σας.</string>
+    <string name="doneButtonLabel">Τέλος</string>
+    <string name="mobileTransferMethodsHeader">Τρόποι μεταφοράς</string>
+    <string name="mobileTransferFromLabel" translatable="false">ΜΕΤΑΦΟΡΑ ΑΠΟ</string>
+    <string name="transferSource" translatable="false">Προέλευση</string>
+    <string name="mobileTransferFromHeader" translatable="false">Μεταφορά από</string>
+    <string name="availableFunds" translatable="false">Διαθέσιμο ποσό</string>
+    <string name="noTransferFromSourceAvailableError" translatable="false">Δεν υπάρχει καμία διαθέσιμη μεταφορά από αυτή την προέλευση</string>
+
+</resources>

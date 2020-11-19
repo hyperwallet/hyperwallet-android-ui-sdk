@@ -12,11 +12,22 @@
     <string name="wire_account">Cuenta de transferencia bancaria</string>
     <string name="paper_check">Cheque impreso</string>
     <string name="prepaid_card">Tarjeta prepagada</string>
-    <string name="paypal_account">PayPal</string>
-    <string name="venmo_account">Venmo</string>
+    <string name="paypal_account">Cuenta de Paypal</string>
+    <string name="venmo_account">Cuenta de Venmo</string>
     <string name="cash_pickup_mg">MoneyGram</string>
+    <string name="visa" translatable="false">Visa</string>
+    <string name="mastercard" translatable="false">Mastercard</string>
 
-    <string name="endingIn">finalizando el %s</string>
+    <string name="bank_account_font_icon" translatable="false">\ue900</string>
+    <string name="bank_card_font_icon" translatable="false">\ue903</string>
+    <string name="wire_account_font_icon" translatable="false">\ue90a</string>
+    <string name="paper_check_font_icon" translatable="false">\ue902</string>
+    <string name="prepaid_card_font_icon" translatable="false">\ue901</string>
+    <string name="paypal_account_font_icon" translatable="false">\ue906</string>
+    <string name="venmo_account_font_icon" translatable="false">\ue909</string>
+    <string name="cash_pickup_mg_font_icon" translatable="false">\ue905</string>
+
+    <string name="endingIn">finaliza el %s</string>
     <string name="to">para %s</string>
     <string name="not_translated_in_braces">(no traducido)</string>
 

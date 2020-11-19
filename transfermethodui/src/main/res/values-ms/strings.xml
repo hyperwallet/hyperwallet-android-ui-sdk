@@ -1,0 +1,79 @@
+<resources>
+    <string name="app_name">hyperwallet.ui</string>
+    <string name="title_account_add">Tambah Akaun</string>
+    <string name="unknown">Tidak diketahui</string>
+
+    <string name="title_activity_select_transfer_method">Pilih Kaedah Pemindahan</string>
+    <!-- SelectTransferMethodActivity -->
+    <string name="select_transfer_method_title">@string/title_activity_select_transfer_method
+    </string>
+
+    <string name="mobileCountryRegion">Negara/Wilayah</string>
+    <string name="mobileCurrencyLabel">Mata wang</string>
+    <string name="mobileAddTransferMethodHeader">Tambah kaedah pemindahan</string>
+    <string name="title_activity_add_transfer_method">Tambah Kedah Pemindahan</string>
+    <string name="title_add_bank_account">Akaun Bank</string>
+    <string name="title_add_bank_card">Kad Debit</string>
+
+    <string name="error_exact_length_field">Panjang medan ini adalah betul-betul %d.</string>
+    <string name="error_invalid_expiry_date">%s tidak sah.</string>
+    <string name="error_min_max_length_field">Panjang minimum medan ini ialah {0} panjang        maksimum ialah {1}.
+    </string>
+
+    <string name="createTransferMethodButtonLabel">Tambah Kedah Pemindahan</string>
+    <string name="default_account_label">Akaun Lalai</string>
+    <string name="default_account_sub_label">Pilih kaedah pemindahan lalai</string>
+    <string name="api_expiry_date_format">BB/TT</string>
+
+    <string name="feeAndProcessingTimeInformation">%s yuran \u2022 %s</string>
+    <string name="feeInformation">%s yuran</string>
+
+    <string name="emptyStateAddTransferMethod">Tambahkan kaedah pemindahan untuk memulakan.</string>
+
+    <!-- menu title -->
+    <string name="menu_transfer_funds">Pindah</string>
+
+    <!--Fee formatter-->
+    <string name="fee_flat_formatter">%1$s%2$s</string>
+    <string name="fee_percent_no_min_and_max_formatter">%1$s%%</string>
+    <string name="fee_percent_only_min_formatter">%1$s%% (Min:%2$s %3$s)</string>
+    <string name="fee_percent_only_max_formatter">%1$s%% (Maks:%2$s %3$s)</string>
+    <string name="fee_percent_formatter">%1$s%% (Min:%2$s %3$s, Maks:%2$s %4$s)</string>
+    <string name="fee_mix_no_min_and_max_formatter">%1$s%2$s + %3$s%%</string>
+    <string name="fee_mix_only_min_formatter">%1$s%2$s + %3$s%% (Min:%1$s %4$s)</string>
+    <string name="fee_mix_only_max_formatter">%1$s%2$s + %3$s%% (Maks:%1$s %4$s)</string>
+    <string name="fee_mix_formatter">%1$s%2$s + %3$s%% (Min:%1$s %4$s, Maks:%1$s %5$s)</string>
+
+    <string name="account_holder">MAKLUMAT PEMEGANG AKAUN</string>
+    <string name="account_information">MAKLUMAT AKAUN: %s(%s)</string>
+    <string name="address">ALAMAT</string>
+    <string name="contact_information">MAKLUMAT HUBUNGAN</string>
+    <string name="identification">PENGENALAN</string>
+    <string name="intermediary_account">AKAUN PENGANTARA</string>
+    <string name="mobileFeesAndProcessingTime">YURAN DAN TEMPOH PEMPROSESAN</string>
+
+    <string name="search_hint">Cari Petua</string>
+    <string name="search_country">Cari Negara</string>
+    <string name="search_currency">Cari Mata Wang</string>
+    <string name="search_widget">Cari</string>
+
+    <string name="select_transfer_method_currency_button_description">Pilih butang mata wang
+    </string>
+    <string name="select_transfer_method_country_button_description">Pilih butang negara</string>
+    <string name="selected_country_item_description">Item negara yang dipilih</string>
+    <string name="selected_currency_item_description">Item mata wang yang dipilih</string>
+    <string name="transfer_method_context_button_description">Butang menu konteks</string>
+    <string name="item_select_description">Item yang dipilih</string>
+
+    <string name="error_unmapped_field">Medan tidak dipetakan, Sila hubungi sokongan.</string>
+
+    <string name="country_placeholder">Kanada</string>
+    <string name="currency_placeholder">CAD</string>
+    <string name="feesAndProcessTimePlaceholder">Yuran $20.00 AS \u2022 1\-3 Hari Perniagaan </string>
+    <string name="mobileCountryCurrencyLabel">LOKASI DAN MATA WANG</string>
+    <string name="mobileTransferMethodLabel">KAEDAH PEMINDAHAN</string>
+    <string name="mobileTransferMethodsHeader">Kaedah pemindahan</string>
+
+    <string name="mobileRemoveEAconfirm">Alih keluar kaedah pemindahan</string>
+    <string name="prepaidCardManagementInfo"  translatable="false">"Log masuk menggunakan penyemak imbas web untuk menguruskan kad anda"</string>
+</resources>

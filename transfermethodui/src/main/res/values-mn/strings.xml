@@ -1,0 +1,79 @@
+<resources>
+    <string name="app_name">hyperwallet.ui</string>
+    <string name="title_account_add">Данс нэмэх</string>
+    <string name="unknown">Тодорхойгүй</string>
+
+    <string name="title_activity_select_transfer_method">Шилжүүлгийн аргыг сонгоно уу</string>
+    <!-- SelectTransferMethodActivity -->
+    <string name="select_transfer_method_title">@string/title_activity_select_transfer_method
+    </string>
+
+    <string name="mobileCountryRegion">Улс/Бүс</string>
+    <string name="mobileCurrencyLabel">Валют</string>
+    <string name="mobileAddTransferMethodHeader">Шилжүүлгийн аргыг нэмнэ үү</string>
+    <string name="title_activity_add_transfer_method">Шилжүүлгийн арга нэмэх</string>
+    <string name="title_add_bank_account">Банкны данс</string>
+    <string name="title_add_bank_card">Дебит карт</string>
+
+    <string name="error_exact_length_field">Энэ талбарын урт яг %d байна.</string>
+    <string name="error_invalid_expiry_date">%s хүчингүй.</string>
+    <string name="error_min_max_length_field">Энэ талбарын хамгийн бага урт бол {0}, хамгийн их урт бол {1} байна.
+    </string>
+
+    <string name="createTransferMethodButtonLabel">Шилжүүлгийн арга нэмэх</string>
+    <string name="default_account_label">Анхдагч данс</string>
+    <string name="default_account_sub_label">Анхдагч шилжүүлгийн аргыг сонгоно уу</string>
+    <string name="api_expiry_date_format">СС/ОО</string>
+
+    <string name="feeAndProcessingTimeInformation">%s хураамж \u2022 %s</string>
+    <string name="feeInformation">%s хураамж</string>
+
+    <string name="emptyStateAddTransferMethod">Эхлэхийн тулд шилжүүлгийн аргыг нэмнэ үү.</string>
+
+    <!-- menu title -->
+    <string name="menu_transfer_funds">Шилжүүлэг</string>
+
+    <!--Fee formatter-->
+    <string name="fee_flat_formatter">%1$s%2$s</string>
+    <string name="fee_percent_no_min_and_max_formatter">%1$s%%</string>
+    <string name="fee_percent_only_min_formatter">%1$s%% (Хамгийн бага:%2$s %3$s)</string>
+    <string name="fee_percent_only_max_formatter">%1$s%% (Хамгийн их:%2$s %3$s)</string>
+    <string name="fee_percent_formatter">%1$s%% (Хамгийн бага:%2$s %3$s, Хамгийн их:%2$s %4$s)</string>
+    <string name="fee_mix_no_min_and_max_formatter">%1$s%2$s + %3$s%%</string>
+    <string name="fee_mix_only_min_formatter">%1$s%2$s + %3$s%% (Хамгийн бага:%1$s %4$s)</string>
+    <string name="fee_mix_only_max_formatter">%1$s%2$s + %3$s%% (Хамгийн их:%1$s %4$s)</string>
+    <string name="fee_mix_formatter">%1$s%2$s + %3$s%% (Хамгийн бага:%1$s %4$s, Хамгийн их:%1$s %5$s)</string>
+
+    <string name="account_holder">ДАНС ЭЗЭМШИГЧИЙН МЭДЭЭЛЭЛ</string>
+    <string name="account_information">ДАНСНЫ МЭДЭЭЛЭЛ %s(%s)</string>
+    <string name="address">ХАЯГ</string>
+    <string name="contact_information">ХОЛБОО БАРИХ МЭДЭЭЛЭЛ</string>
+    <string name="identification">ТАНИХ ҮЙЛ АЖИЛЛАГАА</string>
+    <string name="intermediary_account">ЗУУЧЛАГЧИЙН ДАНС</string>
+    <string name="mobileFeesAndProcessingTime">ХУРААМЖ, ГҮЙЦЭТГЭХ ХУГАЦАА</string>
+
+    <string name="search_hint">Хайлтын зөвлөгөө</string>
+    <string name="search_country">Хайх улс</string>
+    <string name="search_currency">Хайх валют</string>
+    <string name="search_widget">Хайх</string>
+
+    <string name="select_transfer_method_currency_button_description">Валютын товч сонгох
+    </string>
+    <string name="select_transfer_method_country_button_description">Улсын товч сонгох</string>
+    <string name="selected_country_item_description">Сонгосон улсын зүйл</string>
+    <string name="selected_currency_item_description">Сонгосон валютын зүйл</string>
+    <string name="transfer_method_context_button_description">Контекстын цэсийн товч</string>
+    <string name="item_select_description">Сонгосон зүйл</string>
+
+    <string name="error_unmapped_field">Тодорхой бус талбар, Тусламжийн албатай холбоо барина уу.</string>
+
+    <string name="country_placeholder">Канад</string>
+    <string name="currency_placeholder">Канад доллар</string>
+    <string name="feesAndProcessTimePlaceholder">20.00 ам.доллар хураамж \u2022 1\-3 ажлын хоног </string>
+    <string name="mobileCountryCurrencyLabel">БАЙРШИЛ, ВАЛЮТ</string>
+    <string name="mobileTransferMethodLabel">ШИЛЖҮҮЛГИЙН АРГА</string>
+    <string name="mobileTransferMethodsHeader">Шилжүүлгийн аргууд</string>
+
+    <string name="mobileRemoveEAconfirm">Шилжүүлгийн аргыг устгах</string>
+    <string name="prepaidCardManagementInfo"  translatable="false">“Картаа удирдахын тулд вэб хөтөч ашиглан нэвтэрнэ үү”</string>
+</resources>

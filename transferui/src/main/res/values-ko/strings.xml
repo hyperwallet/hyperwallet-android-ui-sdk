@@ -1,0 +1,71 @@
+<resources>
+    <string name="title_activity_create_transfer">자금 이체</string>
+    <string name="mobileConfirmationHeader">세부 정보 확인</string>
+    <string name="mobileConfirmNotesLabel">참고</string>
+    <string name="transfer_destination">수취인</string>
+    <string name="mobileTransferToLabel">수취인:</string>
+    <string name="mobileTransferFundsHeader">자금 이체</string>
+    <string name="mobileFXlabel">외국환</string>
+    <string name="transfer_header_label">이체</string>
+    <string name="noTransferMethodAdded">이체 방법이 필요합니다</string>
+    <string name="transfer_amount_hint">금액</string>
+    <string name="transfer_currency_placeholder">USD</string>
+    <string name="transfer_currency_code_placeholder">$</string>
+    <string name="transfer_all_funds_label">최대 이체 금액</string>
+    <string name="mobileAvailableBalance">사용 가능한 금액: %s %s</string>
+    <string name="mobileSummaryLabel">요약</string>
+    <string name="mobileNoteLabel">참고</string>
+    <string name="transfer_notes_label">참고</string>
+    <string name="transfer_notes_additional_info_label">참고 사항 추가(선택)</string>
+    <string name="continueButtonLabel">계속</string>
+    <string name="defaultTransferAmount">0</string>
+    <string name="transfer">이체</string>
+    <string name="add_text">+</string>
+    <string name="mobileAddTransferMethod">이체 방법 추가</string>
+    <string name="add_transfer_description_1">시작하려면 이체 방법을 추가하십시오.</string>
+    <string name="add_transfer_description_2">시작하려면 이체 방법을 추가하십시오.</string>
+    <string name="transfer_destination_selection_description">이체 방법 선택</string>
+    <string name="destination_item_description">수취인 항목</string>
+
+    <string name="amount_currency_format">%s %s</string>
+    <string name="exchange_rate_format">1 %s = %s %s</string>
+
+    <string name="module_transfermethodui_unavailable_error">이체 방법을 추가할 수 없습니다.</string>
+    <string name="transferAmountInvalid">유효한 이체 금액을 입력하십시오</string>
+
+    <string name="mobileFXsell">송금인:</string>
+    <string name="mobileFXbuy">수취인:</string>
+    <string name="mobileFXRateLabel">환율</string>
+
+    <string name="mobileConfirmDetailsAmount">금액</string>
+    <string name="mobileConfirmDetailsFee">수수료</string>
+    <string name="mobileConfirmDetailsTotal">다음의 금액을 수취하실 수 있습니다.</string>
+    <string name="exchange_rate_change_warning">환율 변동으로 인해 %1$s %2$s 금액을 수취하실 수 있습니다.</string>
+
+
+    <string name="mobileTransferMax">최대 이체 금액</string>
+    <string name="transfer_summary_placeholder">사용 가능한 금액:  CAD 2,422.90</string>
+    <string name="transfer_notes_placeholder">부분 이체</string>
+    <string name="transfer_item_icon_placeholder">\ue000</string>
+    <string name="transfer_item_title_placeholder">이체 유형</string>
+    <string name="transfer_item_country_placeholder">국가명</string>
+    <string name="transfer_item_identification_placeholder">XXXX 수정</string>
+    <string name="foreign_exchange_sell_placeholder">CAD 15.05</string>
+    <string name="foreign_exchange_buy_placeholder">USD 11.00</string>
+    <string name="foreign_exchange_rate_placeholder">CAD 1 = USD 0.73897</string>
+    <string name="summary_amount_placeholder">CAD 10.00</string>
+    <string name="summary_amount_fee_placeholder">CAD 0.25</string>
+    <string name="summary_amount_transfer_placeholder">CAD 9.75</string>
+    <string name="exchange_rate_change_warning_placeholder">환율 변동으로 인해 CAD 10.00를 수취하실 수 있습니다.</string>
+
+    <string name="mobileTransferSuccessMsg">이체가 처리 중입니다</string>
+    <string name="mobileTransferSuccessDetails">귀하의 %s(으)로 자금 이체 중입니다.</string>
+    <string name="doneButtonLabel">완료</string>
+    <string name="mobileTransferMethodsHeader">이체 방법</string>
+    <string name="mobileTransferFromLabel" translatable="false">송금인:</string>
+    <string name="transferSource" translatable="false">자금 원천</string>
+    <string name="mobileTransferFromHeader" translatable="false">송금인:</string>
+    <string name="availableFunds" translatable="false">사용 가능한 자금</string>
+    <string name="noTransferFromSourceAvailableError" translatable="false">자금 원천으로부터 이체 불가</string>
+
+</resources>

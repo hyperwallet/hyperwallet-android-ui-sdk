@@ -1,0 +1,38 @@
+<resources>
+    <string name="error_dialog_title">Fout</string>
+    <string name="error_dialog_connectivity_title">Connectiviteitsprobleem</string>
+    <string name="error_dialog_unexpected_title">Onverwachte fout</string>
+    <string name="ok">OK</string>
+    <string name="try_again_button_label">Probeer opnieuw</string>
+    <string name="not_available">Niet beschikbaar</string>
+
+    <!-- title and font icon -->
+    <string name="bank_account">Bankrekening</string>
+    <string name="bank_card">Debetkaart</string>
+    <string name="wire_account">Bankrekening</string>
+    <string name="paper_check">Papieren check</string>
+    <string name="prepaid_card">Prepaidkaart</string>
+    <string name="paypal_account">PayPal-account</string>
+    <string name="venmo_account">Venmo-account</string>
+    <string name="cash_pickup_mg">MoneyGram</string>
+    <string name="visa" translatable="false">Visa</string>
+    <string name="mastercard" translatable="false">Mastercard</string>
+
+    <string name="bank_account_font_icon" translatable="false">\ue900</string>
+    <string name="bank_card_font_icon" translatable="false">\ue903</string>
+    <string name="wire_account_font_icon" translatable="false">\ue90a</string>
+    <string name="paper_check_font_icon" translatable="false">\ue902</string>
+    <string name="prepaid_card_font_icon" translatable="false">\ue901</string>
+    <string name="paypal_account_font_icon" translatable="false">\ue906</string>
+    <string name="venmo_account_font_icon" translatable="false">\ue909</string>
+    <string name="cash_pickup_mg_font_icon" translatable="false">\ue905</string>
+
+    <string name="endingIn">eindigend op %s</string>
+    <string name="to">naar %s</string>
+    <string name="not_translated_in_braces">(niet vertaald)</string>
+
+    <string name="authentication_error_header">Verificatiefout</string>
+    <string name="cancelButtonLabel">Annuleren</string>
+    <string name="remove">Verwijderen</string>
+    <string name="mobileAreYouSure">Weet u het zeker?</string>
+</resources>

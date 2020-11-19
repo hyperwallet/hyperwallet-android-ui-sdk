@@ -1,0 +1,38 @@
+<resources>
+    <string name="error_dialog_title">Napaka</string>
+    <string name="error_dialog_connectivity_title">Težave s povezljivostjo</string>
+    <string name="error_dialog_unexpected_title">Nepričakovana napaka</string>
+    <string name="ok">V redu</string>
+    <string name="try_again_button_label">Poskusite znova</string>
+    <string name="not_available">Ni na voljo</string>
+
+    <!-- title and font icon -->
+    <string name="bank_account">Bančni račun</string>
+    <string name="bank_card">Debetna kartica</string>
+    <string name="wire_account">Račun za elektronski prenos sredstev</string>
+    <string name="paper_check">Ček</string>
+    <string name="prepaid_card">Predplačniška kartica</string>
+    <string name="paypal_account">Račun Paypal</string>
+    <string name="venmo_account">Račun Venmo</string>
+    <string name="cash_pickup_mg">MoneyGram</string>
+    <string name="visa" translatable="false">Visa</string>
+    <string name="mastercard" translatable="false">Mastercard</string>
+
+    <string name="bank_account_font_icon" translatable="false">\ue900</string>
+    <string name="bank_card_font_icon" translatable="false">\ue903</string>
+    <string name="wire_account_font_icon" translatable="false">\ue90a</string>
+    <string name="paper_check_font_icon" translatable="false">\ue902</string>
+    <string name="prepaid_card_font_icon" translatable="false">\ue901</string>
+    <string name="paypal_account_font_icon" translatable="false">\ue906</string>
+    <string name="venmo_account_font_icon" translatable="false">\ue909</string>
+    <string name="cash_pickup_mg_font_icon" translatable="false">\ue905</string>
+
+    <string name="endingIn">ki se konča z %s</string>
+    <string name="to">za %s</string>
+    <string name="not_translated_in_braces">(ni prevedeno)</string>
+
+    <string name="authentication_error_header">Napaka pri avtentifikaciji</string>
+    <string name="cancelButtonLabel">Prekliči</string>
+    <string name="remove">Odstrani</string>
+    <string name="mobileAreYouSure">Ali ste prepričani?</string>
+</resources>

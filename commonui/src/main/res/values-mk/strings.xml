@@ -1,0 +1,38 @@
+<resources>
+    <string name="error_dialog_title">Грешка</string>
+    <string name="error_dialog_connectivity_title">Проблем со врската</string>
+    <string name="error_dialog_unexpected_title">Неочекувана грешка</string>
+    <string name="ok">Во ред</string>
+    <string name="try_again_button_label">Обидете се повторно</string>
+    <string name="not_available">Не е достапно</string>
+
+    <!-- title and font icon -->
+    <string name="bank_account">Сметка во банка</string>
+    <string name="bank_card">Дебитна картичка</string>
+    <string name="wire_account">Сметка за дознаки</string>
+    <string name="paper_check">Физички чек</string>
+    <string name="prepaid_card">Припејд-картичка</string>
+    <string name="paypal_account">Paypal сметка</string>
+    <string name="venmo_account">Venmo сметка</string>
+    <string name="cash_pickup_mg">MoneyGram</string>
+    <string name="visa" translatable="false">Visa</string>
+    <string name="mastercard" translatable="false">Mastercard</string>
+
+    <string name="bank_account_font_icon" translatable="false">\ue900</string>
+    <string name="bank_card_font_icon" translatable="false">\ue903</string>
+    <string name="wire_account_font_icon" translatable="false">\ue90a</string>
+    <string name="paper_check_font_icon" translatable="false">\ue902</string>
+    <string name="prepaid_card_font_icon" translatable="false">\ue901</string>
+    <string name="paypal_account_font_icon" translatable="false">\ue906</string>
+    <string name="venmo_account_font_icon" translatable="false">\ue909</string>
+    <string name="cash_pickup_mg_font_icon" translatable="false">\ue905</string>
+
+    <string name="endingIn">завршува со %s</string>
+    <string name="to">до %s</string>
+    <string name="not_translated_in_braces">(не е преведено)</string>
+
+    <string name="authentication_error_header">Грешка во автентикација</string>
+    <string name="cancelButtonLabel">Откажи</string>
+    <string name="remove">Отстрани</string>
+    <string name="mobileAreYouSure">Дали сте сигурни?</string>
+</resources>

@@ -1,0 +1,38 @@
+<resources>
+    <string name="error_dialog_title">Помилка</string>
+    <string name="error_dialog_connectivity_title">Проблема зв’язку</string>
+    <string name="error_dialog_unexpected_title">Неочікувана помилка</string>
+    <string name="ok">OK</string>
+    <string name="try_again_button_label">Спробувати ще раз</string>
+    <string name="not_available">Не застосовується</string>
+
+    <!-- title and font icon -->
+    <string name="bank_account">Банківський рахунок</string>
+    <string name="bank_card">Дебетова картка</string>
+    <string name="wire_account">Рахунок для банківського переказу</string>
+    <string name="paper_check">Паперовий чек</string>
+    <string name="prepaid_card">Дебетова картка</string>
+    <string name="paypal_account">Рахунок Paypal</string>
+    <string name="venmo_account">Рахунок Venmo</string>
+    <string name="cash_pickup_mg">MoneyGram</string>
+    <string name="visa" translatable="false">Visa</string>
+    <string name="mastercard" translatable="false">Mastercard</string>
+
+    <string name="bank_account_font_icon" translatable="false">\ue900</string>
+    <string name="bank_card_font_icon" translatable="false">\ue903</string>
+    <string name="wire_account_font_icon" translatable="false">\ue90a</string>
+    <string name="paper_check_font_icon" translatable="false">\ue902</string>
+    <string name="prepaid_card_font_icon" translatable="false">\ue901</string>
+    <string name="paypal_account_font_icon" translatable="false">\ue906</string>
+    <string name="venmo_account_font_icon" translatable="false">\ue909</string>
+    <string name="cash_pickup_mg_font_icon" translatable="false">\ue905</string>
+
+    <string name="endingIn">закінчується на %s</string>
+    <string name="to">для %s</string>
+    <string name="not_translated_in_braces">(не перекладено)</string>
+
+    <string name="authentication_error_header">Помилка автентифікації</string>
+    <string name="cancelButtonLabel">Скасувати</string>
+    <string name="remove">Видалити</string>
+    <string name="mobileAreYouSure">Ви впевнені?</string>
+</resources>

@@ -1,0 +1,172 @@
+<resources>
+    <string name="app_name">영수증</string>
+    <string name="title_activity_receipt_list">거래</string>
+    <string name="title_activity_receipt_detail">거래 세부 정보</string>
+    <string name="mobileTransactionDetailsHeader">거래 세부 정보</string>
+    <string name="transactions">거래</string>
+    <string name="mobileTransactionTypeLabel">거래</string>
+    <string name="mobileFeeInfoLabel">수수료 정보</string>
+    <string name="amount">금액</string>
+    <string name="mobileFeeLabel">수수료</string>
+    <string name="mobileTransactionDetailsTotal">거래 총계</string>
+    <string name="mobileTransactionDetailsLabel">세부 정보</string>
+    <string name="mobileJournalNumberLabel">영수증 ID</string>
+    <string name="date">날짜</string>
+    <string name="mobileMerchantTxnLabel">거래 ID</string>
+    <string name="mobileConfirmNotesLabel">참고</string>
+    <string name="mobileCharityName">기부 이름</string>
+    <string name="mobileCheckNumber">수표 번호</string>
+    <string name="mobilePromoWebsite">프로모션 웹사이트</string>
+    <string name="concat_date_string_view_format">%s %s</string>
+
+    <string name="mobileNoTransactionsUser" translatable="false">표시할 내용이 없습니다.</string>
+    <string name="mobileNoTransactionsPrepaidCard" translatable="false">지난 365일간 거래 내역이 없습니다</string>
+    <string name="title_transfer_funds">이체</string>
+    <string name="font_icon_placeholder">\ue908</string>
+    <string name="text_placeholder">플레이스홀더</string>
+
+    <!-- entry types -->
+    <string name="debit" translatable="false">\ue908</string>
+    <string name="credit" translatable="false">\ue907</string>
+    <string name="debit_sign" translatable="false">-%s%s</string>
+    <string name="credit_sign" translatable="false">%s%s</string>
+
+    <!--Generic fee types-->
+    <string name="unknown_type">알 수 없는 거래 유형</string>
+    <string name="annual_fee">연수수료</string>
+    <string name="annual_fee_refund">연수수료 환불</string>
+    <string name="customer_service_fee">고객 서비스 수수료</string>
+    <string name="customer_service_fee_refund">고객 서비스 수수료 환불</string>
+    <string name="expedited_shipping_fee">신속 배송 수수료</string>
+    <string name="generic_fee_refund">일반 수수료 환불</string>
+    <string name="monthly_fee">월별 수수료</string>
+    <string name="monthly_fee_refund">월별 수수료 환불</string>
+    <string name="payment_expiry_fee">지급 만기 수수료</string>
+    <string name="payment_fee">지급 수수료</string>
+    <string name="processing_fee">처리 수수료</string>
+    <string name="standard_shipping_fee">기본 배송 수수료</string>
+    <string name="transfer_fee">송금 수수료</string>
+
+    <!--Generic payment types-->
+    <string name="adjustment">잔액 수정</string>
+    <string name="foreign_exchange">외국환</string>
+    <string name="deposit">지급</string>
+    <string name="manual_adjustment">수정</string>
+    <string name="payment_expiration">지급 만기</string>
+
+    <!--Bank account-specific types-->
+    <string name="bank_account_transfer_fee">은행 계좌 반환 수수료</string>
+    <string name="bank_account_transfer_return">은행 계좌 반환</string>
+    <string name="bank_account_transfer_return_fee">은행 계좌 반환 수수료</string>
+    <string name="transfer_to_bank_account">은행 계좌</string>
+
+    <!--Card-specific types-->
+    <string name="card_activation_fee">카드 활성화 수수료</string>
+    <string name="card_activation_fee_waiver">카드 활성화 수수료 면제</string>
+    <string name="card_fee">카드 수수료</string>
+    <string name="manual_transfer_to_prepaid_card">카드로의 이체</string>
+    <string name="prepaid_card_balance_inquiry_fee">잔액 문의 수수료</string>
+    <string name="prepaid_card_cash_advance">현금 서비스</string>
+    <string name="prepaid_card_disputed_charge_refund">분쟁 청구 환불</string>
+    <string name="prepaid_card_dispute_deposit">분쟁 카드 예금</string>
+    <string name="prepaid_card_domestic_cash_withdrawal_fee">ATM 인출</string>
+    <string name="prepaid_card_exchange_rate_difference">PREPAID_CARD_EXCHANGE_RATE_DIFFERENCE
+    </string>
+    <string name="prepaid_card_manual_unload">카드로부터의 이체</string>
+    <string name="prepaid_card_overseas_cash_withdrawal_fee">ATM 인출</string>
+    <string name="prepaid_card_pin_change_fee">PIN 변경 수수료</string>
+    <string name="prepaid_card_refund">환불</string>
+    <string name="prepaid_card_replacement_fee">카드 교체 수수료</string>
+    <string name="prepaid_card_sale">거래</string>
+    <string name="prepaid_card_sale_reversal">역처리된 거래</string>
+    <string name="prepaid_card_unload">카드로부터의 이체</string>
+    <string name="transfer_to_prepaid_card">카드로의 이체</string>
+    <!---->
+    <!--Donation types-->
+    <string name="donation">기부</string>
+    <string name="donation_fee">기부 수수료</string>
+    <string name="donation_return">기부 반환</string>
+    <!---->
+    <!--Merchant payment types-->
+    <string name="merchant_payment">가맹점 지급</string>
+    <string name="merchant_payment_fee">가맹점 지급 수수료</string>
+    <string name="merchant_payment_refund">가맹점 지급 환불</string>
+    <string name="merchant_payment_return">가맹점 지급 반환</string>
+    <!---->
+    <!--MoneyGram types-->
+    <string name="moneygram_transfer_return">MoneyGram 반환</string>
+    <string name="transfer_to_moneygram">MoneyGram</string>
+    <!---->
+    <!--Paper check types-->
+    <string name="paper_check_fee">수표 수수료</string>
+    <string name="paper_check_refund">수표 환불</string>
+    <string name="transfer_to_paper_check">수표</string>
+    <!---->
+    <!--User and program account types-->
+    <string name="account_closure">계좌 해지</string>
+    <string name="account_closure_fee">계좌 해지 수수료</string>
+    <string name="account_unload">자금 반환</string>
+    <string name="dormant_user_fee">휴면 사용자 계정 수수료</string>
+    <string name="dormant_user_fee_refund">휴면 사용자 계정 수수료 환불</string>
+    <string name="payment">지급</string>
+    <string name="payment_cancellation">지급 취소</string>
+    <string name="payment_reversal">지급 역처리</string>
+    <string name="payment_reversal_fee">지급 역처리 수수료</string>
+    <string name="payment_return">지급 반환</string>
+    <string name="transfer_to_program_account">프로그램으로의 이체</string>
+    <string name="transfer_to_user">사용자로의 이체</string>
+    <string name="transfer_to_paypal_account">PayPal</string>
+    <string name="transfer_to_bank_card">은행 카드</string>
+    <string name="transfer_to_debit_card">체크카드</string>
+    <string name="prepaid_card_transfer_return">선불카드 예치 반환</string>
+    <!---->
+    <!--Virtual incentive types-->
+    <string name="virtual_incentive_cancellation">프로모션 취소</string>
+    <string name="virtual_incentive_issuance">발급된 프로모션</string>
+    <string name="virtual_incentive_purchase">프로모션 구매</string>
+    <string name="virtual_incentive_refund">프로모션 환불</string>
+    <!---->
+    <!--Western Union and WUBS types-->
+    <string name="transfer_to_western_union">Western Union</string>
+    <string name="transfer_to_wubs_wire">전신 송금</string>
+    <string name="western_union_transfer_return">Western Union 인출</string>
+    <string name="wubs_wire_transfer_return">전신 송금 반환</string>
+    <!---->
+    <!--Wire transfer types-->
+    <string name="transfer_to_wire">전신 송금</string>
+    <string name="wire_transfer_fee">전신 송금 수수료</string>
+    <string name="wire_transfer_return">전신 송금 반환</string>
+
+    <!-- New exposed receipt types -->
+    <string name="paypal_account_transfer_return">현금 인출 반환</string>
+    <string name="venmo_account_transfer_return">현금 인출 반환</string>
+    <string name="prepaid_card_account_deposit">계좌 예금</string>
+    <string name="prepaid_card_annual_fee_discount">연수수료 할인</string>
+    <string name="prepaid_card_bill_reprint_fee">청구서 재인쇄 수수료</string>
+    <string name="prepaid_card_atm_or_cash_advance_fee">ATM/현금 서비스 수수료</string>
+    <string name="prepaid_card_cash_advance_chargeback">현금 서비스 지불 거절</string>
+    <string name="prepaid_card_cash_advance_chargeback_reversal">현금 서비스 지불 거절 역처리</string>
+    <string name="prepaid_card_cash_advance_repress">현금 서비스 억제</string>
+    <string name="prepaid_card_cash_advance_repress_reversal">현금 서비스 억제 역처리</string>
+    <string name="prepaid_card_chargeback">지불 거절</string>
+    <string name="prepaid_card_chargeback_refund">지불 거절 환불</string>
+    <string name="prepaid_card_chargeback_refund_reversal">지불 거절 환불 역처리</string>
+    <string name="prepaid_card_chargeback_reversal">지불 거절 역처리</string>
+    <string name="prepaid_card_commission_or_fee">수수료/커미션</string>
+    <string name="prepaid_card_debit_transfer">출금/이체</string>
+    <string name="prepaid_card_document_request_fee">문서 요청 수수료</string>
+    <string name="prepaid_card_emergency_cash">비상 자금</string>
+    <string name="prepaid_card_emergency_card">비상 카드</string>
+    <string name="prepaid_card_income">소득</string>
+    <string name="prepaid_card_load_fee">PAN 수수료</string>
+    <string name="prepaid_card_refund_fee">환불 수수료</string>
+    <string name="prepaid_card_monthly_maintenance_fee">월별 유지보수 수수료</string>
+    <string name="prepaid_card_transaction_fee">거래 수수료</string>
+    <string name="prepaid_card_sms_fee">SMS 수수료</string>
+    <string name="prepaid_card_declined_authorization_fee">승인 수수료 거부됨</string>
+    <string name="fispc">구매</string>
+
+    <!-- Prepaid Cards Receipt   -->
+    <string name="mobileAvailableBalances" translatable="false">사용 가능한 자금</string>
+
+</resources>

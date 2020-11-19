@@ -1,0 +1,71 @@
+<resources>
+    <string name="title_activity_create_transfer">轉帳資金</string>
+    <string name="mobileConfirmationHeader">確認細節</string>
+    <string name="mobileConfirmNotesLabel">附註</string>
+    <string name="transfer_destination">目的地</string>
+    <string name="mobileTransferToLabel">轉帳至</string>
+    <string name="mobileTransferFundsHeader">轉帳資金</string>
+    <string name="mobileFXlabel">外匯</string>
+    <string name="transfer_header_label">轉帳</string>
+    <string name="noTransferMethodAdded">轉帳方式為必填項</string>
+    <string name="transfer_amount_hint">金額</string>
+    <string name="transfer_currency_placeholder">美元</string>
+    <string name="transfer_currency_code_placeholder">$</string>
+    <string name="transfer_all_funds_label">最高轉帳金額</string>
+    <string name="mobileAvailableBalance">可用金額：%s %s</string>
+    <string name="mobileSummaryLabel">摘要</string>
+    <string name="mobileNoteLabel">附註</string>
+    <string name="transfer_notes_label">附註</string>
+    <string name="transfer_notes_additional_info_label">新增附註（選擇性）</string>
+    <string name="continueButtonLabel">繼續</string>
+    <string name="defaultTransferAmount">0</string>
+    <string name="transfer">轉帳</string>
+    <string name="add_text">+</string>
+    <string name="mobileAddTransferMethod">新增轉帳方式</string>
+    <string name="add_transfer_description_1">新增轉帳方式以開始使用。</string>
+    <string name="add_transfer_description_2">新增轉帳方式以開始使用。</string>
+    <string name="transfer_destination_selection_description">轉帳方式選項</string>
+    <string name="destination_item_description">目的地項目</string>
+
+    <string name="amount_currency_format">%s %s</string>
+    <string name="exchange_rate_format">1 %s = %s %s</string>
+
+    <string name="module_transfermethodui_unavailable_error">您無法新增轉帳方式。</string>
+    <string name="transferAmountInvalid">請輸入有效的轉帳金額</string>
+
+    <string name="mobileFXsell">自</string>
+    <string name="mobileFXbuy">至</string>
+    <string name="mobileFXRateLabel">匯率</string>
+
+    <string name="mobileConfirmDetailsAmount">金額</string>
+    <string name="mobileConfirmDetailsFee">手續費</string>
+    <string name="mobileConfirmDetailsTotal">您將收到</string>
+    <string name="exchange_rate_change_warning">因為匯率有所改變，您即將收到 %1$s %2$s。</string>
+
+
+    <string name="mobileTransferMax">最高轉帳金額</string>
+    <string name="transfer_summary_placeholder">可用金額：2,422.90 加拿大元</string>
+    <string name="transfer_notes_placeholder">部分轉帳</string>
+    <string name="transfer_item_icon_placeholder">\ue000</string>
+    <string name="transfer_item_title_placeholder">轉帳類型</string>
+    <string name="transfer_item_country_placeholder">國家/地區名稱</string>
+    <string name="transfer_item_identification_placeholder">在 XXXX 編輯</string>
+    <string name="foreign_exchange_sell_placeholder">15.05 加拿大元</string>
+    <string name="foreign_exchange_buy_placeholder">11.00 美元</string>
+    <string name="foreign_exchange_rate_placeholder">1 加拿大元 = 0.73897 美元</string>
+    <string name="summary_amount_placeholder">10.00 加拿大元</string>
+    <string name="summary_amount_fee_placeholder">0.25 加拿大元</string>
+    <string name="summary_amount_transfer_placeholder">9.75 加拿大元</string>
+    <string name="exchange_rate_change_warning_placeholder">因為匯率有所改變，您即將收到 10.00 加拿大元。</string>
+
+    <string name="mobileTransferSuccessMsg">您的轉帳正在處理中</string>
+    <string name="mobileTransferSuccessDetails">款項已匯至您的 %s</string>
+    <string name="doneButtonLabel">完成</string>
+    <string name="mobileTransferMethodsHeader">轉帳方式</string>
+    <string name="mobileTransferFromLabel" translatable="false">轉帳自</string>
+    <string name="transferSource" translatable="false">來源</string>
+    <string name="mobileTransferFromHeader" translatable="false">轉帳自</string>
+    <string name="availableFunds" translatable="false">可用資金</string>
+    <string name="noTransferFromSourceAvailableError" translatable="false">無可用資源可供轉帳</string>
+
+</resources>

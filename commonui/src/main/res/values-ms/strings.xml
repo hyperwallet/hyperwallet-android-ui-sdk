@@ -1,0 +1,38 @@
+<resources>
+    <string name="error_dialog_title">Ralat</string>
+    <string name="error_dialog_connectivity_title">Isu Kesambungan</string>
+    <string name="error_dialog_unexpected_title">Ralat yang Tidak Dijangka</string>
+    <string name="ok">OK</string>
+    <string name="try_again_button_label">Cuba lagi</string>
+    <string name="not_available">Tidak Tersedia</string>
+
+    <!-- title and font icon -->
+    <string name="bank_account">Akaun Bank</string>
+    <string name="bank_card">Kad Debit</string>
+    <string name="wire_account">Akaun Pindahan Kawat</string>
+    <string name="paper_check">Cek Kertas</string>
+    <string name="prepaid_card">Kad Prabayar</string>
+    <string name="paypal_account">Akaun Paypal</string>
+    <string name="venmo_account">Akaun Venmo</string>
+    <string name="cash_pickup_mg">MoneyGram</string>
+    <string name="visa" translatable="false">Visa</string>
+    <string name="mastercard" translatable="false">Mastercard</string>
+
+    <string name="bank_account_font_icon" translatable="false">\ue900</string>
+    <string name="bank_card_font_icon" translatable="false">\ue903</string>
+    <string name="wire_account_font_icon" translatable="false">\ue90a</string>
+    <string name="paper_check_font_icon" translatable="false">\ue902</string>
+    <string name="prepaid_card_font_icon" translatable="false">\ue901</string>
+    <string name="paypal_account_font_icon" translatable="false">\ue906</string>
+    <string name="venmo_account_font_icon" translatable="false">\ue909</string>
+    <string name="cash_pickup_mg_font_icon" translatable="false">\ue905</string>
+
+    <string name="endingIn">berakhir dengan %s</string>
+    <string name="to">kepada %s</string>
+    <string name="not_translated_in_braces">(tidak diterjemahkan)</string>
+
+    <string name="authentication_error_header">Ralat Pengesahan</string>
+    <string name="cancelButtonLabel">Batal</string>
+    <string name="remove">Alih keluar</string>
+    <string name="mobileAreYouSure">Adakah anda pasti?</string>
+</resources>

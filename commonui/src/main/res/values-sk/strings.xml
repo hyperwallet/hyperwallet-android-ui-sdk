@@ -1,0 +1,38 @@
+<resources>
+    <string name="error_dialog_title">Chyba</string>
+    <string name="error_dialog_connectivity_title">Problém s pripojením</string>
+    <string name="error_dialog_unexpected_title">Neočakávaná chyba</string>
+    <string name="ok">OK</string>
+    <string name="try_again_button_label">Skúsiť znova</string>
+    <string name="not_available">Nie je k dispozícii</string>
+
+    <!-- title and font icon -->
+    <string name="bank_account">Bankový účet</string>
+    <string name="bank_card">Debetná karta</string>
+    <string name="wire_account">Účet bankového prevodu</string>
+    <string name="paper_check">Papierový šek</string>
+    <string name="prepaid_card">Predplatená karta</string>
+    <string name="paypal_account">Účet Paypal</string>
+    <string name="venmo_account">Účet Venmo</string>
+    <string name="cash_pickup_mg">MoneyGram</string>
+    <string name="visa" translatable="false">Visa</string>
+    <string name="mastercard" translatable="false">Mastercard</string>
+
+    <string name="bank_account_font_icon" translatable="false">\ue900</string>
+    <string name="bank_card_font_icon" translatable="false">\ue903</string>
+    <string name="wire_account_font_icon" translatable="false">\ue90a</string>
+    <string name="paper_check_font_icon" translatable="false">\ue902</string>
+    <string name="prepaid_card_font_icon" translatable="false">\ue901</string>
+    <string name="paypal_account_font_icon" translatable="false">\ue906</string>
+    <string name="venmo_account_font_icon" translatable="false">\ue909</string>
+    <string name="cash_pickup_mg_font_icon" translatable="false">\ue905</string>
+
+    <string name="endingIn">končí sa o %s</string>
+    <string name="to">na %s</string>
+    <string name="not_translated_in_braces">(nepreložené)</string>
+
+    <string name="authentication_error_header">Chyba overenia</string>
+    <string name="cancelButtonLabel">Zrušiť</string>
+    <string name="remove">Odstrániť</string>
+    <string name="mobileAreYouSure">Naozaj?</string>
+</resources>

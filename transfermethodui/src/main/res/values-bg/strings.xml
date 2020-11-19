@@ -1,0 +1,79 @@
+<resources>
+    <string name="app_name">hyperwallet.ui</string>
+    <string name="title_account_add">Добавяне на сметка</string>
+    <string name="unknown">Неизвестно</string>
+
+    <string name="title_activity_select_transfer_method">Изберете метод за трансфер</string>
+    <!-- SelectTransferMethodActivity -->
+    <string name="select_transfer_method_title">@string/title_activity_select_transfer_method
+    </string>
+
+    <string name="mobileCountryRegion">Държава/Регион</string>
+    <string name="mobileCurrencyLabel">Валута</string>
+    <string name="mobileAddTransferMethodHeader">Добавяне на метод за трансфер</string>
+    <string name="title_activity_add_transfer_method">Добавяне на метод за трансфер</string>
+    <string name="title_add_bank_account">Банкова сметка</string>
+    <string name="title_add_bank_card">Дебитна карта</string>
+
+    <string name="error_exact_length_field">Дължината на това поле е точно %d.</string>
+    <string name="error_invalid_expiry_date">%s е невалиден.</string>
+    <string name="error_min_max_length_field">Минималната дължина на това поле е {0} а максималната        е {1}.
+    </string>
+
+    <string name="createTransferMethodButtonLabel">Добавяне на метод за трансфер</string>
+    <string name="default_account_label">Сметка по подразбиране</string>
+    <string name="default_account_sub_label">Изберете метод за трансфер по подразбиране</string>
+    <string name="api_expiry_date_format">ММ/ГГ</string>
+
+    <string name="feeAndProcessingTimeInformation">%s такса \u2022 %s</string>
+    <string name="feeInformation">%s такса</string>
+
+    <string name="emptyStateAddTransferMethod">Добавете метод за трансфер, за да започнете.</string>
+
+    <!-- menu title -->
+    <string name="menu_transfer_funds">Трансфер</string>
+
+    <!--Fee formatter-->
+    <string name="fee_flat_formatter">%1$s%2$s</string>
+    <string name="fee_percent_no_min_and_max_formatter">%1$s%%</string>
+    <string name="fee_percent_only_min_formatter">%1$s%% (Мин.:%2$s %3$s)</string>
+    <string name="fee_percent_only_max_formatter">%1$s%% (Макс.:%2$s %3$s)</string>
+    <string name="fee_percent_formatter">%1$s%% (Мин.:%2$s %3$s, Макс.:%2$s %4$s)</string>
+    <string name="fee_mix_no_min_and_max_formatter">%1$s%2$s + %3$s%%</string>
+    <string name="fee_mix_only_min_formatter">%1$s%2$s + %3$s%% (Мин.:%1$s %4$s)</string>
+    <string name="fee_mix_only_max_formatter">%1$s%2$s + %3$s%% (Макс.:%1$s %4$s)</string>
+    <string name="fee_mix_formatter">%1$s%2$s + %3$s%% (Мин.:%1$s %4$s, Макс.:%1$s %5$s)</string>
+
+    <string name="account_holder">ИНФОРМАЦИЯ ЗА ПРИТЕЖАТЕЛЯ НА СМЕТКАТА</string>
+    <string name="account_information">ИНФОРМАЦИЯ ЗА СМЕТКАТА: %s(%s)</string>
+    <string name="address">АДРЕС</string>
+    <string name="contact_information">ДАННИ ЗА КОНТАКТ</string>
+    <string name="identification">ИДЕНТИФИКАЦИЯ</string>
+    <string name="intermediary_account">ПОСРЕДНИЧЕСКА СМЕТКА</string>
+    <string name="mobileFeesAndProcessingTime">ТАКСИ И ВРЕМЕ ЗА ОБРАБОТВАНЕ</string>
+
+    <string name="search_hint">Съвет за търсене</string>
+    <string name="search_country">Търсене на държава</string>
+    <string name="search_currency">Търсене на валута</string>
+    <string name="search_widget">Търсене</string>
+
+    <string name="select_transfer_method_currency_button_description">Изберете бутон за валута
+    </string>
+    <string name="select_transfer_method_country_button_description">Изберете бутон за държава</string>
+    <string name="selected_country_item_description">Избор за държава</string>
+    <string name="selected_currency_item_description">Избор за валута</string>
+    <string name="transfer_method_context_button_description">Бутон за контекстно меню</string>
+    <string name="item_select_description">Избран запис</string>
+
+    <string name="error_unmapped_field">Немаркирано поле. Моля, свържете се с отдела по поддръжка.</string>
+
+    <string name="country_placeholder">Канада</string>
+    <string name="currency_placeholder">CAD</string>
+    <string name="feesAndProcessTimePlaceholder">Такса $20,00 USD \u2022 1\-3 работни дни </string>
+    <string name="mobileCountryCurrencyLabel">МЕСТОПОЛОЖЕНИЕ И ВАЛУТА</string>
+    <string name="mobileTransferMethodLabel">МЕТОД ЗА ТРАНСФЕР</string>
+    <string name="mobileTransferMethodsHeader">Методи за трансфер</string>
+
+    <string name="mobileRemoveEAconfirm">Премахване на метода за трансфер</string>
+    <string name="prepaidCardManagementInfo"  translatable="false">„Влезте в системата чрез уеб браузър, за да управлявате Вашата карта“</string>
+</resources>

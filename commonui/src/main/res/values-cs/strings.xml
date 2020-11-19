@@ -1,0 +1,38 @@
+<resources>
+    <string name="error_dialog_title">Chyba</string>
+    <string name="error_dialog_connectivity_title">Problém s připojením</string>
+    <string name="error_dialog_unexpected_title">Neočekávaná chyba</string>
+    <string name="ok">OK</string>
+    <string name="try_again_button_label">Zkusit znovu</string>
+    <string name="not_available">Není k dispozici</string>
+
+    <!-- title and font icon -->
+    <string name="bank_account">Bankovní účet</string>
+    <string name="bank_card">Debetní Karta</string>
+    <string name="wire_account">Účet pro bezhotovostní převody</string>
+    <string name="paper_check">Papírový šek</string>
+    <string name="prepaid_card">Předplacená karta</string>
+    <string name="paypal_account">Účty PayPal</string>
+    <string name="venmo_account">Účet Venmo</string>
+    <string name="cash_pickup_mg">MoneyGram</string>
+    <string name="visa" translatable="false">Visa</string>
+    <string name="mastercard" translatable="false">Mastercard</string>
+
+    <string name="bank_account_font_icon" translatable="false">\ue900</string>
+    <string name="bank_card_font_icon" translatable="false">\ue903</string>
+    <string name="wire_account_font_icon" translatable="false">\ue90a</string>
+    <string name="paper_check_font_icon" translatable="false">\ue902</string>
+    <string name="prepaid_card_font_icon" translatable="false">\ue901</string>
+    <string name="paypal_account_font_icon" translatable="false">\ue906</string>
+    <string name="venmo_account_font_icon" translatable="false">\ue909</string>
+    <string name="cash_pickup_mg_font_icon" translatable="false">\ue905</string>
+
+    <string name="endingIn">končí v %s</string>
+    <string name="to">pro %s</string>
+    <string name="not_translated_in_braces">(nepřeloženo)</string>
+
+    <string name="authentication_error_header">Chyba ověření</string>
+    <string name="cancelButtonLabel">Zrušit</string>
+    <string name="remove">Odebrat</string>
+    <string name="mobileAreYouSure">Jste si jistí?</string>
+</resources>

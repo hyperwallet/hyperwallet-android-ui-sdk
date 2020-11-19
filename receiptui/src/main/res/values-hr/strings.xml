@@ -1,0 +1,172 @@
+<resources>
+    <string name="app_name">priznanica</string>
+    <string name="title_activity_receipt_list">Transakcije</string>
+    <string name="title_activity_receipt_detail">Pojedinosti transakcije</string>
+    <string name="mobileTransactionDetailsHeader">Pojedinosti transakcije</string>
+    <string name="transactions">Transakcije</string>
+    <string name="mobileTransactionTypeLabel">TRANSAKCIJA</string>
+    <string name="mobileFeeInfoLabel">INFORMACIJE O NAKNADI</string>
+    <string name="amount">Iznos</string>
+    <string name="mobileFeeLabel">Naknada</string>
+    <string name="mobileTransactionDetailsTotal">Ukupan iznos transakcije</string>
+    <string name="mobileTransactionDetailsLabel">POJEDINOSTI</string>
+    <string name="mobileJournalNumberLabel">ID potvrde primitka</string>
+    <string name="date">Datum</string>
+    <string name="mobileMerchantTxnLabel">ID transakcije</string>
+    <string name="mobileConfirmNotesLabel">NAPOMENA</string>
+    <string name="mobileCharityName">Ime dobrotvorne organizacije</string>
+    <string name="mobileCheckNumber">Broj čeka</string>
+    <string name="mobilePromoWebsite">Promo web stranica</string>
+    <string name="concat_date_string_view_format">%s %s</string>
+
+    <string name="mobileNoTransactionsUser" translatable="false">Nema\'aktivnosti za prikaz.</string>
+    <string name="mobileNoTransactionsPrepaidCard" translatable="false">U posljednjih 365 dana nemate nikakvih transakcija</string>
+    <string name="title_transfer_funds">Prijenos</string>
+    <string name="font_icon_placeholder">\ue908</string>
+    <string name="text_placeholder">Rezervirano mjesto</string>
+
+    <!-- entry types -->
+    <string name="debit" translatable="false">\ue908</string>
+    <string name="credit" translatable="false">\ue907</string>
+    <string name="debit_sign" translatable="false">-%s%s</string>
+    <string name="credit_sign" translatable="false">%s%s</string>
+
+    <!--Generic fee types-->
+    <string name="unknown_type">Nepoznata vrsta transakcije</string>
+    <string name="annual_fee">Godišnja naknada</string>
+    <string name="annual_fee_refund">Povrat godišnje naknade</string>
+    <string name="customer_service_fee">Naknada za korisničku uslugu</string>
+    <string name="customer_service_fee_refund">Povrat naknade za korisničku uslugu</string>
+    <string name="expedited_shipping_fee">Naknada za ubrzanu dostavu</string>
+    <string name="generic_fee_refund">Povrat generičke naknade</string>
+    <string name="monthly_fee">Mjesečna naknada</string>
+    <string name="monthly_fee_refund">Povrat mjesečne naknade</string>
+    <string name="payment_expiry_fee">Naknada za istek plaćanja</string>
+    <string name="payment_fee">Naknada za plaćanje</string>
+    <string name="processing_fee">Naknada za obradu</string>
+    <string name="standard_shipping_fee">Standardna naknada za dostavu</string>
+    <string name="transfer_fee">Naknada za prijenos</string>
+
+    <!--Generic payment types-->
+    <string name="adjustment">Podešavanje salda</string>
+    <string name="foreign_exchange">Devizna razmjena</string>
+    <string name="deposit">Uplata</string>
+    <string name="manual_adjustment">Prilagođavanje</string>
+    <string name="payment_expiration">Plaćanje isteklo</string>
+
+    <!--Bank account-specific types-->
+    <string name="bank_account_transfer_fee">Naknada za povrat bankovnog računa</string>
+    <string name="bank_account_transfer_return">Povrat bankovnog računa</string>
+    <string name="bank_account_transfer_return_fee">Naknada za povrat bankovnog računa</string>
+    <string name="transfer_to_bank_account">Bankovni račun</string>
+
+    <!--Card-specific types-->
+    <string name="card_activation_fee">Naknada za aktivaciju kartice</string>
+    <string name="card_activation_fee_waiver">Odricanje naknade za aktivaciju kartice</string>
+    <string name="card_fee">Naknada za karticu</string>
+    <string name="manual_transfer_to_prepaid_card">Prijenos na karticu</string>
+    <string name="prepaid_card_balance_inquiry_fee">Naknada za upit o stanju</string>
+    <string name="prepaid_card_cash_advance">Gotovinski predujam</string>
+    <string name="prepaid_card_disputed_charge_refund">Povrat osporenog pologa</string>
+    <string name="prepaid_card_dispute_deposit">Osporeni polog kartice</string>
+    <string name="prepaid_card_domestic_cash_withdrawal_fee">Podizanje gotovine s bankomata</string>
+    <string name="prepaid_card_exchange_rate_difference">PREPAID_CARD_EXCHANGE_RATE_DIFFERENCE
+    </string>
+    <string name="prepaid_card_manual_unload">Prijenos s kartice</string>
+    <string name="prepaid_card_overseas_cash_withdrawal_fee">Podizanje gotovine s bankomata</string>
+    <string name="prepaid_card_pin_change_fee">Naknada za promjenu PIN-a</string>
+    <string name="prepaid_card_refund">Povrat</string>
+    <string name="prepaid_card_replacement_fee">Naknada za zamjenu kartice</string>
+    <string name="prepaid_card_sale">Transakcija</string>
+    <string name="prepaid_card_sale_reversal">Obratna transakcija</string>
+    <string name="prepaid_card_unload">Prijenos s kartice</string>
+    <string name="transfer_to_prepaid_card">Prijenos na karticu</string>
+    <!---->
+    <!--Donation types-->
+    <string name="donation">Donacija</string>
+    <string name="donation_fee">Naknada za donaciju</string>
+    <string name="donation_return">Povrat donacije</string>
+    <!---->
+    <!--Merchant payment types-->
+    <string name="merchant_payment">Uplata trgovca</string>
+    <string name="merchant_payment_fee">Naknada za uplatu trgovca</string>
+    <string name="merchant_payment_refund">Povrat uplate trgovca</string>
+    <string name="merchant_payment_return">Povrat uplate trgovca</string>
+    <!---->
+    <!--MoneyGram types-->
+    <string name="moneygram_transfer_return">MoneyGram povrat</string>
+    <string name="transfer_to_moneygram">MoneyGram</string>
+    <!---->
+    <!--Paper check types-->
+    <string name="paper_check_fee">Naknada za papirnati ček</string>
+    <string name="paper_check_refund">Povrat naknade za papirnati ček</string>
+    <string name="transfer_to_paper_check">Papirnati ček</string>
+    <!---->
+    <!--User and program account types-->
+    <string name="account_closure">Zatvaranje računa</string>
+    <string name="account_closure_fee">Naknada za zatvaranje računa</string>
+    <string name="account_unload">Povrat sredstava</string>
+    <string name="dormant_user_fee">Naknada za neaktivni korisnički račun</string>
+    <string name="dormant_user_fee_refund">Povrat naknade za neaktivni korisnički račun</string>
+    <string name="payment">Uplata</string>
+    <string name="payment_cancellation">Poništavanje uplate</string>
+    <string name="payment_reversal">Storniranje plaćanja</string>
+    <string name="payment_reversal_fee">Naknada za storniranje plaćanja</string>
+    <string name="payment_return">Povrat uplate</string>
+    <string name="transfer_to_program_account">Prijenos na program</string>
+    <string name="transfer_to_user">Prijenos na korisnika</string>
+    <string name="transfer_to_paypal_account">PayPal</string>
+    <string name="transfer_to_bank_card">Bankovna kartica</string>
+    <string name="transfer_to_debit_card">Debitna kartica</string>
+    <string name="prepaid_card_transfer_return">Povrat punjenja prepaid kartice</string>
+    <!---->
+    <!--Virtual incentive types-->
+    <string name="virtual_incentive_cancellation">Otkazivanje promocije</string>
+    <string name="virtual_incentive_issuance">Izdana promocija</string>
+    <string name="virtual_incentive_purchase">Promo kupnja</string>
+    <string name="virtual_incentive_refund">Povrat novca za promo kupnju</string>
+    <!---->
+    <!--Western Union and WUBS types-->
+    <string name="transfer_to_western_union">Western Union</string>
+    <string name="transfer_to_wubs_wire">Bankovni prijenos</string>
+    <string name="western_union_transfer_return">Western Union preuzimanje gotovine</string>
+    <string name="wubs_wire_transfer_return">Povrat bankovnog prijenosa</string>
+    <!---->
+    <!--Wire transfer types-->
+    <string name="transfer_to_wire">Bankovni prijenos</string>
+    <string name="wire_transfer_fee">Naknada za bankovni prijenos</string>
+    <string name="wire_transfer_return">Povrat bankovnog prijenosa</string>
+
+    <!-- New exposed receipt types -->
+    <string name="paypal_account_transfer_return">Povrat unovčenja</string>
+    <string name="venmo_account_transfer_return">Povrat unovčenja</string>
+    <string name="prepaid_card_account_deposit">Depozit na računu</string>
+    <string name="prepaid_card_annual_fee_discount">Popust na godišnju naknadu</string>
+    <string name="prepaid_card_bill_reprint_fee">Naknada za ponovno tiskanje računa</string>
+    <string name="prepaid_card_atm_or_cash_advance_fee">Naknada za bankomat / podizanje gotovine</string>
+    <string name="prepaid_card_cash_advance_chargeback">Opoziv gotovinskog predujma</string>
+    <string name="prepaid_card_cash_advance_chargeback_reversal">Poništavanje opoziva gotovinskog predujma</string>
+    <string name="prepaid_card_cash_advance_repress">Zadržavanje gotovinskog predujma</string>
+    <string name="prepaid_card_cash_advance_repress_reversal">Poništavanje zadržavanja gotovinskog predujma</string>
+    <string name="prepaid_card_chargeback">Opoziv plaćanja</string>
+    <string name="prepaid_card_chargeback_refund">Povrat sredstava prema opozivu plaćanja</string>
+    <string name="prepaid_card_chargeback_refund_reversal">Poništavanje povrata sredstava prema opozivu plaćanja</string>
+    <string name="prepaid_card_chargeback_reversal">Poništavanje opoziva plaćanja</string>
+    <string name="prepaid_card_commission_or_fee">Naknada/provizija</string>
+    <string name="prepaid_card_debit_transfer">Terećenje/Prijenosi</string>
+    <string name="prepaid_card_document_request_fee">Naknada za zahtjev za dokument</string>
+    <string name="prepaid_card_emergency_cash">Novac za hitne slučajeve</string>
+    <string name="prepaid_card_emergency_card">Kartica za hitne slučajeve</string>
+    <string name="prepaid_card_income">Prihod</string>
+    <string name="prepaid_card_load_fee">PAN naknada</string>
+    <string name="prepaid_card_refund_fee">Naknada za povrat</string>
+    <string name="prepaid_card_monthly_maintenance_fee">Mjesečna naknada za održavanje</string>
+    <string name="prepaid_card_transaction_fee">Naknada za transakciju</string>
+    <string name="prepaid_card_sms_fee">SMS naknada</string>
+    <string name="prepaid_card_declined_authorization_fee">Naknada za odbijenu autorizaciju</string>
+    <string name="fispc">Kupnja</string>
+
+    <!-- Prepaid Cards Receipt   -->
+    <string name="mobileAvailableBalances" translatable="false">Dostupna sredstva</string>
+
+</resources>

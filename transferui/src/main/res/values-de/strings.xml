@@ -1,0 +1,71 @@
+<resources>
+    <string name="title_activity_create_transfer">Geld überweisen</string>
+    <string name="mobileConfirmationHeader">Daten bestätigen</string>
+    <string name="mobileConfirmNotesLabel">ANMERKUNG</string>
+    <string name="transfer_destination">Ziel</string>
+    <string name="mobileTransferToLabel">ÜBERWEISEN AN</string>
+    <string name="mobileTransferFundsHeader">Geld überweisen</string>
+    <string name="mobileFXlabel">FREMDWÄHRUNG</string>
+    <string name="transfer_header_label">Überweisung</string>
+    <string name="noTransferMethodAdded">Überweisungsmethode ist ein Pflichtfeld</string>
+    <string name="transfer_amount_hint">Betrag</string>
+    <string name="transfer_currency_placeholder">USD</string>
+    <string name="transfer_currency_code_placeholder">$</string>
+    <string name="transfer_all_funds_label">Höchstbetrag überweisen</string>
+    <string name="mobileAvailableBalance">Verfügbarer Betrag: %s %s</string>
+    <string name="mobileSummaryLabel">ZUSAMMENFASSUNG</string>
+    <string name="mobileNoteLabel">Anmerkung</string>
+    <string name="transfer_notes_label">Anmerkung</string>
+    <string name="transfer_notes_additional_info_label">Anmerkung hinzufügen (optional)</string>
+    <string name="continueButtonLabel">Weiter</string>
+    <string name="defaultTransferAmount">0</string>
+    <string name="transfer">Überweisung</string>
+    <string name="add_text">+</string>
+    <string name="mobileAddTransferMethod">Überweisungsmethode hinzufügen</string>
+    <string name="add_transfer_description_1">Fügen Sie eine Überweisungsmethode hinzu, um zu beginnen.</string>
+    <string name="add_transfer_description_2">Fügen Sie eine Überweisungsmethode hinzu, um zu beginnen.</string>
+    <string name="transfer_destination_selection_description">Auswahl der Überweisungsmethode</string>
+    <string name="destination_item_description">Zielelement</string>
+
+    <string name="amount_currency_format">%s %s</string>
+    <string name="exchange_rate_format">1 %s = %s %s</string>
+
+    <string name="module_transfermethodui_unavailable_error">Sie können keine Überweisungsmethode hinzufügen.</string>
+    <string name="transferAmountInvalid">Geben Sie einen gültigen Überweisungsbetrag ein.</string>
+
+    <string name="mobileFXsell">Von</string>
+    <string name="mobileFXbuy">An</string>
+    <string name="mobileFXRateLabel">Wechselkurs</string>
+
+    <string name="mobileConfirmDetailsAmount">Betrag</string>
+    <string name="mobileConfirmDetailsFee">Gebühr</string>
+    <string name="mobileConfirmDetailsTotal">Sie erhalten</string>
+    <string name="exchange_rate_change_warning">Wegen einer Änderung des Wechselkurses erhalten Sie nun %1$s %2$s.</string>
+
+
+    <string name="mobileTransferMax">Höchstbetrag überweisen</string>
+    <string name="transfer_summary_placeholder">Verfügbarer Betrag: 2.422,90 CAD</string>
+    <string name="transfer_notes_placeholder">Teilüberweisung</string>
+    <string name="transfer_item_icon_placeholder">\ue000</string>
+    <string name="transfer_item_title_placeholder">Überweisungstyp</string>
+    <string name="transfer_item_country_placeholder">Name des Landes</string>
+    <string name="transfer_item_identification_placeholder">Wird auf XXXX bearbeitet</string>
+    <string name="foreign_exchange_sell_placeholder">15,05 CAD</string>
+    <string name="foreign_exchange_buy_placeholder">11,00 USD</string>
+    <string name="foreign_exchange_rate_placeholder">1 CAD = 0,73897 USD</string>
+    <string name="summary_amount_placeholder">10,00 CAD</string>
+    <string name="summary_amount_fee_placeholder">0,25 CAD</string>
+    <string name="summary_amount_transfer_placeholder">9,75 CAD</string>
+    <string name="exchange_rate_change_warning_placeholder">Wegen einer Änderung des Wechselkurses erhalten Sie nun 10,00 CAD.</string>
+
+    <string name="mobileTransferSuccessMsg">Ihre Überweisung wird bearbeitet.</string>
+    <string name="mobileTransferSuccessDetails">Das Geld ist auf dem Weg zu Ihrem %s</string>
+    <string name="doneButtonLabel">Fertig</string>
+    <string name="mobileTransferMethodsHeader">Überweisungsmethoden</string>
+    <string name="mobileTransferFromLabel" translatable="false">ÜBERWEISEN VON</string>
+    <string name="transferSource" translatable="false">Quelle</string>
+    <string name="mobileTransferFromHeader" translatable="false">Überweisen von</string>
+    <string name="availableFunds" translatable="false">Verfügbares Geld</string>
+    <string name="noTransferFromSourceAvailableError" translatable="false">Keine Überweisung von Quelle verfügbar</string>
+
+</resources>
