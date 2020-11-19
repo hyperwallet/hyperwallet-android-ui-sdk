@@ -366,21 +366,16 @@ public class CreateTransferFragment extends Fragment {
                         if (cleanString.length() != 0) {
                             double parsed = Double.parseDouble(cleanString);
                             String formatted;
-                            switch (mNumberOfFractionDigits) {
-                                case 0:
-                                    formatted = formattedAmount(parsed, mCurrencyCode);
-                                    break;
-                                case 1:
-                                    formatted = formattedAmount(parsed / 10, mCurrencyCode);
-                                    break;
-                                case 2:
-                                    formatted = formattedAmount(parsed / 100, mCurrencyCode);
-                                    break;
-                                case 3:
-                                    formatted = formattedAmount(parsed / 1000, mCurrencyCode);
-                                    break;
-                                default:
-                                    formatted = "";
+                            int fractionalDenominator = 10;
+                            if (mNumberOfFractionDigits > 1) {
+                                for (int i = 1; i < mNumberOfFractionDigits; i++) {
+                                    fractionalDenominator *= 10;
+                                }
+                            }
+                            if (mNumberOfFractionDigits == 0) {
+                                formatted = formattedAmount(parsed, mCurrencyCode);
+                            } else {
+                                formatted = formattedAmount(parsed / fractionalDenominator, mCurrencyCode);
                             }
                             if (formatted.replaceAll(REGEX_ONLY_NUMBER, EMPTY_STRING).length()
                                     <= MAX_AMOUNT_WHOLE_NUMBER) {
