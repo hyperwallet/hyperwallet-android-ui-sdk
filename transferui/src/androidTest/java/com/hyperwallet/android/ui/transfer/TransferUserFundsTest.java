@@ -202,7 +202,7 @@ public class TransferUserFundsTest {
         onView(withId(R.id.transfer_all_funds)).perform(nestedScrollTo(), click());
         // Assert 12 digits amount with currency format based on default locale
         // onView(withId(R.id.transfer_amount)).check(matches(withText( USD_CURRENCY_SYMBOL + "1000,000,000.00")));
-        onView(withId(R.id.transfer_amount)).check(matches(withText( containsString("1000,000,000.00"))));
+        onView(withId(R.id.transfer_amount)).check(matches(withText( containsString("1,000,000,000.00"))));
         onView(withId(R.id.transfer_amount_currency)).check(matches(withText("USD")));
 
         // Assert later when we fix the Available funds amount format DTSERWFOUR-170
@@ -232,7 +232,7 @@ public class TransferUserFundsTest {
         onView(withId(R.id.transfer_all_funds)).perform(nestedScrollTo(), click());
         // Assert 12 digits amount with currency format based on default locale
         // onView(withId(R.id.transfer_amount)).check(matches(withText(JOD_CURRENCY_SYMBOL + "1000,000,000.00")));
-        onView(withId(R.id.transfer_amount)).check(matches(withText(containsString("1000,000,000.00"))));
+        onView(withId(R.id.transfer_amount)).check(matches(withText(containsString("1,000,000,000.00"))));
         onView(withId(R.id.transfer_amount_currency)).check(matches(withText("JOD")));
         // Assert later when we fix the Available funds amount format DTSERWFOUR-170
 
@@ -853,7 +853,7 @@ public class TransferUserFundsTest {
         onView(withId(R.id.exchange_rate_warning)).perform(nestedScrollTo());
         onView(withId(R.id.exchange_rate_warning)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.exchange_rate_warning)).check(
-                matches(withText("Due to changes in the FX rate, you will now receive 192.05 USD.")));
+                matches(withText("Due to changes in the exchange rate, you'll now receive 192.05 USD.")));
         onView(withId(R.id.notes_container)).perform(nestedScrollTo());
         onView(withId(R.id.notes_container)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.notes_value)).check(matches(withText("Transfer funds test")));

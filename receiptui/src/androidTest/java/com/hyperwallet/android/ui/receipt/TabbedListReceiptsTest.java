@@ -185,8 +185,8 @@ Then user can see the tabs for Available funds and receipts
                 .getResourceContent("receipt_list_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("prepaidcard/prepaidcard_primarycard_only_response.json")).mock();
-//        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-//                .getResourceContent("prepaidcard/prepaidcard_receipts_response.json")).mock();
+       // mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+               // .getResourceContent("prepaidcard/prepaidcard_receipts_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("prepaidcard/prepaidcard_receipts_multicurrency_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();
@@ -356,10 +356,6 @@ Then user can see the tabs for Available funds and receipts
                         ViewMatchers.hasSibling(ViewMatchers.withText("-"+ usdCurrencySymbol + "10.00"))
                 )
         ).check(ViewAssertions.matches(ViewMatchers.isCompletelyDisplayed()));
-
-
-        onView(withId(R.id.list_receipts)).check(
-                matches(atPosition(1, hasDescendant(withText("-"+ KRW.second.toString() + "10,000")))));
     }
 
 
