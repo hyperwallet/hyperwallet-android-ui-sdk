@@ -62,10 +62,10 @@
     <string name="mobileTransferSuccessDetails">Het geld is onderweg naar uw %s</string>
     <string name="doneButtonLabel">Gereed</string>
     <string name="mobileTransferMethodsHeader">Overboekingsmethoden</string>
-    <string name="mobileTransferFromLabel" translatable="false">OVERBOEKEN VAN</string>
-    <string name="transferSource" translatable="false">Bron</string>
-    <string name="mobileTransferFromHeader" translatable="false">Overboeken van</string>
-    <string name="availableFunds" translatable="false">Beschikbaar geld</string>
-    <string name="noTransferFromSourceAvailableError" translatable="false">Geen overboeking van bron beschikbaar</string>
+    <string name="mobileTransferFromLabel">OVERBOEKEN VAN</string>
+    <string name="transferSource">Bron</string>
+    <string name="mobileTransferFromHeader">Overboeken van</string>
+    <string name="availableFunds">Beschikbaar geld</string>
+    <string name="noTransferFromSourceAvailableError">Geen overboeking van bron beschikbaar</string>
 
 </resources>

@@ -62,10 +62,10 @@
     <string name="mobileTransferSuccessDetails">Парите пътуват към Вашата %s</string>
     <string name="doneButtonLabel">Готово</string>
     <string name="mobileTransferMethodsHeader">Методи за трансфер</string>
-    <string name="mobileTransferFromLabel" translatable="false">ТРАНСФЕР ОТ</string>
-    <string name="transferSource" translatable="false">Източник</string>
-    <string name="mobileTransferFromHeader" translatable="false">Трансфер от</string>
-    <string name="availableFunds" translatable="false">Налични средства</string>
-    <string name="noTransferFromSourceAvailableError" translatable="false">Не е наличен трансфер от източника</string>
+    <string name="mobileTransferFromLabel">ТРАНСФЕР ОТ</string>
+    <string name="transferSource">Източник</string>
+    <string name="mobileTransferFromHeader">Трансфер от</string>
+    <string name="availableFunds">Налични средства</string>
+    <string name="noTransferFromSourceAvailableError">Не е наличен трансфер от източника</string>
 
 </resources>

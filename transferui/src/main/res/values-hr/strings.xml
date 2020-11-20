@@ -62,10 +62,10 @@
     <string name="mobileTransferSuccessDetails">Novac je na putu do vašeg %s</string>
     <string name="doneButtonLabel">Gotovo</string>
     <string name="mobileTransferMethodsHeader">Načini prijenosa</string>
-    <string name="mobileTransferFromLabel" translatable="false">PRIJENOS SA</string>
-    <string name="transferSource" translatable="false">Izvor</string>
-    <string name="mobileTransferFromHeader" translatable="false">Prijenos sa</string>
-    <string name="availableFunds" translatable="false">Dostupna sredstva</string>
-    <string name="noTransferFromSourceAvailableError" translatable="false">Prijenos sa izvora nije dostupan</string>
+    <string name="mobileTransferFromLabel">PRIJENOS SA</string>
+    <string name="transferSource">Izvor</string>
+    <string name="mobileTransferFromHeader">Prijenos sa</string>
+    <string name="availableFunds">Dostupna sredstva</string>
+    <string name="noTransferFromSourceAvailableError">Prijenos sa izvora nije dostupan</string>
 
 </resources>

@@ -62,10 +62,10 @@
     <string name="mobileTransferSuccessDetails">คุณกำลังจะได้รับเงินใน %s</string>
     <string name="doneButtonLabel">เสร็จสิ้น</string>
     <string name="mobileTransferMethodsHeader">วิธีการโอนเงิน</string>
-    <string name="mobileTransferFromLabel" translatable="false">โอนมาจาก</string>
-    <string name="transferSource" translatable="false">แหล่งที่มา</string>
-    <string name="mobileTransferFromHeader" translatable="false">โอนมาจาก</string>
-    <string name="availableFunds" translatable="false">ยอดเงินที่ใช้ได้</string>
-    <string name="noTransferFromSourceAvailableError" translatable="false">ไม่มีการโอนเงินจากแหล่งที่มา</string>
+    <string name="mobileTransferFromLabel">โอนมาจาก</string>
+    <string name="transferSource">แหล่งที่มา</string>
+    <string name="mobileTransferFromHeader">โอนมาจาก</string>
+    <string name="availableFunds">ยอดเงินที่ใช้ได้</string>
+    <string name="noTransferFromSourceAvailableError">ไม่มีการโอนเงินจากแหล่งที่มา</string>
 
 </resources>

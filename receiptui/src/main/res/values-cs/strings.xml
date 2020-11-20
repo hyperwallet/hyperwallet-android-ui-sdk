@@ -19,17 +19,13 @@
     <string name="mobilePromoWebsite">Webové stránky akce</string>
     <string name="concat_date_string_view_format">%s %s</string>
 
-    <string name="mobileNoTransactionsUser" translatable="false">Žádná aktivita k zobrazení.</string>
-    <string name="mobileNoTransactionsPrepaidCard" translatable="false">Žádné transakce za posledních 365 dnů</string>
+    <string name="mobileNoTransactionsUser">Žádná aktivita k zobrazení.</string>
+    <string name="mobileNoTransactionsPrepaidCard">Žádné transakce za posledních 365 dnů</string>
     <string name="title_transfer_funds">Převod</string>
     <string name="font_icon_placeholder">\ue908</string>
     <string name="text_placeholder">Zástupný znak</string>
 
-    <!-- entry types -->
-    <string name="debit" translatable="false">\ue908</string>
-    <string name="credit" translatable="false">\ue907</string>
-    <string name="debit_sign" translatable="false">-%s%s</string>
-    <string name="credit_sign" translatable="false">%s%s</string>
+
 
     <!--Generic fee types-->
     <string name="unknown_type">Neznámý typ transakce</string>
@@ -167,6 +163,6 @@
     <string name="fispc">Nákup</string>
 
     <!-- Prepaid Cards Receipt   -->
-    <string name="mobileAvailableBalances" translatable="false">Dostupné prostředky</string>
+    <string name="mobileAvailableBalances">Dostupné prostředky</string>
 
 </resources>

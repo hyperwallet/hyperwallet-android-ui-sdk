@@ -62,10 +62,10 @@
     <string name="mobileTransferSuccessDetails">Pengarna är på väg till ditt %s</string>
     <string name="doneButtonLabel">Klart</string>
     <string name="mobileTransferMethodsHeader">Överföringsmetoder</string>
-    <string name="mobileTransferFromLabel" translatable="false">ÖVERFÖRING FRÅN</string>
-    <string name="transferSource" translatable="false">Källa</string>
-    <string name="mobileTransferFromHeader" translatable="false">Överföring från</string>
-    <string name="availableFunds" translatable="false">Tillgängligt saldo</string>
-    <string name="noTransferFromSourceAvailableError" translatable="false">Det finns ingen överföring från källan tillgänglig</string>
+    <string name="mobileTransferFromLabel">ÖVERFÖRING FRÅN</string>
+    <string name="transferSource">Källa</string>
+    <string name="mobileTransferFromHeader">Överföring från</string>
+    <string name="availableFunds">Tillgängligt saldo</string>
+    <string name="noTransferFromSourceAvailableError">Det finns ingen överföring från källan tillgänglig</string>
 
 </resources>

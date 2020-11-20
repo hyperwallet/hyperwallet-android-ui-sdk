@@ -62,10 +62,10 @@
     <string name="mobileTransferSuccessDetails">Τα χρήματα βρίσκονται καθ’ οδόν προς τον %s σας.</string>
     <string name="doneButtonLabel">Τέλος</string>
     <string name="mobileTransferMethodsHeader">Τρόποι μεταφοράς</string>
-    <string name="mobileTransferFromLabel" translatable="false">ΜΕΤΑΦΟΡΑ ΑΠΟ</string>
-    <string name="transferSource" translatable="false">Προέλευση</string>
-    <string name="mobileTransferFromHeader" translatable="false">Μεταφορά από</string>
-    <string name="availableFunds" translatable="false">Διαθέσιμο ποσό</string>
-    <string name="noTransferFromSourceAvailableError" translatable="false">Δεν υπάρχει καμία διαθέσιμη μεταφορά από αυτή την προέλευση</string>
+    <string name="mobileTransferFromLabel">ΜΕΤΑΦΟΡΑ ΑΠΟ</string>
+    <string name="transferSource">Προέλευση</string>
+    <string name="mobileTransferFromHeader">Μεταφορά από</string>
+    <string name="availableFunds">Διαθέσιμο ποσό</string>
+    <string name="noTransferFromSourceAvailableError">Δεν υπάρχει καμία διαθέσιμη μεταφορά από αυτή την προέλευση</string>
 
 </resources>

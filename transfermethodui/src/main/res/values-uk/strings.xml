@@ -75,5 +75,5 @@
     <string name="mobileTransferMethodsHeader">Способи переказу</string>
 
     <string name="mobileRemoveEAconfirm">Видалити спосіб переказу</string>
-    <string name="prepaidCardManagementInfo"  translatable="false">«Увійдіть за допомогою браузера, щоби керувати своєю карткою»</string>
+    <string name="prepaidCardManagementInfo" >«Увійдіть за допомогою браузера, щоби керувати своєю карткою»</string>
 </resources>

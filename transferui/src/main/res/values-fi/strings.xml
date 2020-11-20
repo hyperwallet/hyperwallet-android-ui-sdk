@@ -62,10 +62,10 @@
     <string name="mobileTransferSuccessDetails">Rahat ovat matkalla kohteeseen %s</string>
     <string name="doneButtonLabel">Valmis</string>
     <string name="mobileTransferMethodsHeader">Siirtomenetelmät</string>
-    <string name="mobileTransferFromLabel" translatable="false">SIIRRÄ KOHTEESTA</string>
-    <string name="transferSource" translatable="false">Lähde</string>
-    <string name="mobileTransferFromHeader" translatable="false">Siirrä kohteesta</string>
-    <string name="availableFunds" translatable="false">Käytettävissä olevat varat</string>
-    <string name="noTransferFromSourceAvailableError" translatable="false">Lähteestä ei ole käytettävissä siirtoja</string>
+    <string name="mobileTransferFromLabel">SIIRRÄ KOHTEESTA</string>
+    <string name="transferSource">Lähde</string>
+    <string name="mobileTransferFromHeader">Siirrä kohteesta</string>
+    <string name="availableFunds">Käytettävissä olevat varat</string>
+    <string name="noTransferFromSourceAvailableError">Lähteestä ei ole käytettävissä siirtoja</string>
 
 </resources>

@@ -75,5 +75,5 @@
     <string name="mobileTransferMethodsHeader">轉帳方式</string>
 
     <string name="mobileRemoveEAconfirm">移除轉帳方式</string>
-    <string name="prepaidCardManagementInfo"  translatable="false">「以網頁瀏覽器登入，以便管理您的卡片」</string>
+    <string name="prepaidCardManagementInfo" >「以網頁瀏覽器登入，以便管理您的卡片」</string>
 </resources>

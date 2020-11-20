@@ -62,10 +62,10 @@
     <string name="mobileTransferSuccessDetails">Das Geld ist auf dem Weg zu Ihrem %s</string>
     <string name="doneButtonLabel">Fertig</string>
     <string name="mobileTransferMethodsHeader">Überweisungsmethoden</string>
-    <string name="mobileTransferFromLabel" translatable="false">ÜBERWEISEN VON</string>
-    <string name="transferSource" translatable="false">Quelle</string>
-    <string name="mobileTransferFromHeader" translatable="false">Überweisen von</string>
-    <string name="availableFunds" translatable="false">Verfügbares Geld</string>
-    <string name="noTransferFromSourceAvailableError" translatable="false">Keine Überweisung von Quelle verfügbar</string>
+    <string name="mobileTransferFromLabel">ÜBERWEISEN VON</string>
+    <string name="transferSource">Quelle</string>
+    <string name="mobileTransferFromHeader">Überweisen von</string>
+    <string name="availableFunds">Verfügbares Geld</string>
+    <string name="noTransferFromSourceAvailableError">Keine Überweisung von Quelle verfügbar</string>
 
 </resources>

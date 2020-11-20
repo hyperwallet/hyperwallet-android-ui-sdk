@@ -19,17 +19,13 @@
     <string name="mobilePromoWebsite">Página web de la promoción</string>
     <string name="concat_date_string_view_format">%s %s</string>
 
-    <string name="mobileNoTransactionsUser" translatable="false">No hay actividad para mostrar.</string>
-    <string name="mobileNoTransactionsPrepaidCard" translatable="false">No se han registrado transacciones en los últimos 365 días</string>
+    <string name="mobileNoTransactionsUser">No hay actividad para mostrar.</string>
+    <string name="mobileNoTransactionsPrepaidCard">No se han registrado transacciones en los últimos 365 días</string>
     <string name="title_transfer_funds">Transferencia</string>
     <string name="font_icon_placeholder">\ue908</string>
     <string name="text_placeholder">Marcador de posición</string>
 
-    <!-- entry types -->
-    <string name="debit" translatable="false">\ue908</string>
-    <string name="credit" translatable="false">\ue907</string>
-    <string name="debit_sign" translatable="false">-%s%s</string>
-    <string name="credit_sign" translatable="false">%s%s</string>
+
 
     <!--Generic fee types-->
     <string name="unknown_type">Tipo de transacción desconocido</string>
@@ -167,6 +163,6 @@
     <string name="fispc">Compra</string>
 
     <!-- Prepaid Cards Receipt   -->
-    <string name="mobileAvailableBalances" translatable="false">Fondos disponibles</string>
+    <string name="mobileAvailableBalances">Fondos disponibles</string>
 
 </resources>

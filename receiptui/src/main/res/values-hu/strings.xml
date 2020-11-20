@@ -19,17 +19,13 @@
     <string name="mobilePromoWebsite">Promó weboldal</string>
     <string name="concat_date_string_view_format">%s %s</string>
 
-    <string name="mobileNoTransactionsUser" translatable="false">Nincs megjeleníthető tevékenység.</string>
-    <string name="mobileNoTransactionsPrepaidCard" translatable="false">Nincs tranzakció az elmúlt 365 napban.</string>
+    <string name="mobileNoTransactionsUser">Nincs megjeleníthető tevékenység.</string>
+    <string name="mobileNoTransactionsPrepaidCard">Nincs tranzakció az elmúlt 365 napban.</string>
     <string name="title_transfer_funds">Átutalás</string>
     <string name="font_icon_placeholder">\ue908</string>
     <string name="text_placeholder">Helykitöltő</string>
 
-    <!-- entry types -->
-    <string name="debit" translatable="false">\ue908</string>
-    <string name="credit" translatable="false">\ue907</string>
-    <string name="debit_sign" translatable="false">-%s%s</string>
-    <string name="credit_sign" translatable="false">%s%s</string>
+
 
     <!--Generic fee types-->
     <string name="unknown_type">Ismeretlen tranzakciótípus</string>
@@ -167,6 +163,6 @@
     <string name="fispc">Vásárlás</string>
 
     <!-- Prepaid Cards Receipt   -->
-    <string name="mobileAvailableBalances" translatable="false">Elérhető pénzösszegek</string>
+    <string name="mobileAvailableBalances">Elérhető pénzösszegek</string>
 
 </resources>

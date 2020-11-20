@@ -75,5 +75,5 @@
     <string name="mobileTransferMethodsHeader">Aktarım Yöntemleri</string>
 
     <string name="mobileRemoveEAconfirm">Aktarım yöntemini kaldır</string>
-    <string name="prepaidCardManagementInfo"  translatable="false">"Kartınızı yönetmek için bir web tarayıcısı kullanarak oturum açın"</string>
+    <string name="prepaidCardManagementInfo" >"Kartınızı yönetmek için bir web tarayıcısı kullanarak oturum açın"</string>
 </resources>

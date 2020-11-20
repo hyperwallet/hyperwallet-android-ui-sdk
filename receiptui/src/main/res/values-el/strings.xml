@@ -19,17 +19,13 @@
     <string name="mobilePromoWebsite">Ιστότοπος προώθησης</string>
     <string name="concat_date_string_view_format">%s %s</string>
 
-    <string name="mobileNoTransactionsUser" translatable="false">Δεν υπάρχει δραστηριότητα προς προβολή.</string>
-    <string name="mobileNoTransactionsPrepaidCard" translatable="false">Καμία συναλλαγή τις τελευταίες 365 ημέρες</string>
+    <string name="mobileNoTransactionsUser">Δεν υπάρχει δραστηριότητα προς προβολή.</string>
+    <string name="mobileNoTransactionsPrepaidCard">Καμία συναλλαγή τις τελευταίες 365 ημέρες</string>
     <string name="title_transfer_funds">Μεταφορά</string>
     <string name="font_icon_placeholder">\ue908</string>
     <string name="text_placeholder">Χαρακτήρας κράτησης θέσης</string>
 
-    <!-- entry types -->
-    <string name="debit" translatable="false">\ue908</string>
-    <string name="credit" translatable="false">\ue907</string>
-    <string name="debit_sign" translatable="false">-%s%s</string>
-    <string name="credit_sign" translatable="false">%s%s</string>
+
 
     <!--Generic fee types-->
     <string name="unknown_type">Άγνωστο είδος συναλλαγής</string>
@@ -167,6 +163,6 @@
     <string name="fispc">Αγορά</string>
 
     <!-- Prepaid Cards Receipt   -->
-    <string name="mobileAvailableBalances" translatable="false">Διαθέσιμο ποσό</string>
+    <string name="mobileAvailableBalances">Διαθέσιμο ποσό</string>
 
 </resources>

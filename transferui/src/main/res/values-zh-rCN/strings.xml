@@ -62,10 +62,10 @@
     <string name="mobileTransferSuccessDetails">正在向您的 %s 转账</string>
     <string name="doneButtonLabel">完成</string>
     <string name="mobileTransferMethodsHeader">转账方式</string>
-    <string name="mobileTransferFromLabel" translatable="false">转出账户</string>
-    <string name="transferSource" translatable="false">来源</string>
-    <string name="mobileTransferFromHeader" translatable="false">转出账户</string>
-    <string name="availableFunds" translatable="false">可用资金</string>
-    <string name="noTransferFromSourceAvailableError" translatable="false">没有可用的从来源转出的转账</string>
+    <string name="mobileTransferFromLabel">转出账户</string>
+    <string name="transferSource">来源</string>
+    <string name="mobileTransferFromHeader">转出账户</string>
+    <string name="availableFunds">可用资金</string>
+    <string name="noTransferFromSourceAvailableError">没有可用的从来源转出的转账</string>
 
 </resources>

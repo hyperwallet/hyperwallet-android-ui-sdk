@@ -62,10 +62,10 @@
     <string name="mobileTransferSuccessDetails">Wang tersebut sedang dalam perjalanan ke %s anda</string>
     <string name="doneButtonLabel">Selesai</string>
     <string name="mobileTransferMethodsHeader">Kaedah pemindahan</string>
-    <string name="mobileTransferFromLabel" translatable="false">PINDAH DARIPADA</string>
-    <string name="transferSource" translatable="false">Sumber</string>
-    <string name="mobileTransferFromHeader" translatable="false">Pindah daripada</string>
-    <string name="availableFunds" translatable="false">Dana yang Tersedia</string>
-    <string name="noTransferFromSourceAvailableError" translatable="false">Tiada Pemindahan daripada sumber yang tersedia</string>
+    <string name="mobileTransferFromLabel">PINDAH DARIPADA</string>
+    <string name="transferSource">Sumber</string>
+    <string name="mobileTransferFromHeader">Pindah daripada</string>
+    <string name="availableFunds">Dana yang Tersedia</string>
+    <string name="noTransferFromSourceAvailableError">Tiada Pemindahan daripada sumber yang tersedia</string>
 
 </resources>

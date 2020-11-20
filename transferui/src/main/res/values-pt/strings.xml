@@ -62,10 +62,10 @@
     <string name="mobileTransferSuccessDetails">O dinheiro está a caminho da sua %s</string>
     <string name="doneButtonLabel">Feito</string>
     <string name="mobileTransferMethodsHeader">Métodos de transferência</string>
-    <string name="mobileTransferFromLabel" translatable="false">TRANSFERIR DE</string>
-    <string name="transferSource" translatable="false">Origem</string>
-    <string name="mobileTransferFromHeader" translatable="false">Transferir de</string>
-    <string name="availableFunds" translatable="false">Saldo disponível</string>
-    <string name="noTransferFromSourceAvailableError" translatable="false">Nenhuma transferência da origem está disponível</string>
+    <string name="mobileTransferFromLabel">TRANSFERIR DE</string>
+    <string name="transferSource">Origem</string>
+    <string name="mobileTransferFromHeader">Transferir de</string>
+    <string name="availableFunds">Saldo disponível</string>
+    <string name="noTransferFromSourceAvailableError">Nenhuma transferência da origem está disponível</string>
 
 </resources>

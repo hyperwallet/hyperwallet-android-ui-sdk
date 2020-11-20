@@ -19,17 +19,13 @@
     <string name="mobilePromoWebsite">Promotiewebsite</string>
     <string name="concat_date_string_view_format">%s %s</string>
 
-    <string name="mobileNoTransactionsUser" translatable="false">Er is geen activiteit om weer te geven.</string>
-    <string name="mobileNoTransactionsPrepaidCard" translatable="false">Geen transacties in de afgelopen 365 dagen</string>
+    <string name="mobileNoTransactionsUser">Er is geen activiteit om weer te geven.</string>
+    <string name="mobileNoTransactionsPrepaidCard">Geen transacties in de afgelopen 365 dagen</string>
     <string name="title_transfer_funds">Overboeken</string>
     <string name="font_icon_placeholder">\ue908</string>
     <string name="text_placeholder">Tijdelijke aanduiding</string>
 
-    <!-- entry types -->
-    <string name="debit" translatable="false">\ue908</string>
-    <string name="credit" translatable="false">\ue907</string>
-    <string name="debit_sign" translatable="false">-%s%s</string>
-    <string name="credit_sign" translatable="false">%s%s</string>
+
 
     <!--Generic fee types-->
     <string name="unknown_type">Onbekend transactietype</string>
@@ -167,6 +163,6 @@
     <string name="fispc">Aankoop</string>
 
     <!-- Prepaid Cards Receipt   -->
-    <string name="mobileAvailableBalances" translatable="false">Beschikbaar geld</string>
+    <string name="mobileAvailableBalances">Beschikbaar geld</string>
 
 </resources>

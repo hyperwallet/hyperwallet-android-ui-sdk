@@ -75,5 +75,5 @@
     <string name="mobileTransferMethodsHeader">Millifærsluaðferðir</string>
 
     <string name="mobileRemoveEAconfirm">Fjarlægja millifærsluaðferð</string>
-    <string name="prepaidCardManagementInfo"  translatable="false">„Skráðu þig inn með netvafra til að stilla kortið þitt“</string>
+    <string name="prepaidCardManagementInfo" >„Skráðu þig inn með netvafra til að stilla kortið þitt“</string>
 </resources>

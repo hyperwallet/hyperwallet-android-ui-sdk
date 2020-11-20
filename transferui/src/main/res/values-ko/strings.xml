@@ -62,10 +62,10 @@
     <string name="mobileTransferSuccessDetails">귀하의 %s(으)로 자금 이체 중입니다.</string>
     <string name="doneButtonLabel">완료</string>
     <string name="mobileTransferMethodsHeader">이체 방법</string>
-    <string name="mobileTransferFromLabel" translatable="false">송금인:</string>
-    <string name="transferSource" translatable="false">자금 원천</string>
-    <string name="mobileTransferFromHeader" translatable="false">송금인:</string>
-    <string name="availableFunds" translatable="false">사용 가능한 자금</string>
-    <string name="noTransferFromSourceAvailableError" translatable="false">자금 원천으로부터 이체 불가</string>
+    <string name="mobileTransferFromLabel">송금인:</string>
+    <string name="transferSource">자금 원천</string>
+    <string name="mobileTransferFromHeader">송금인:</string>
+    <string name="availableFunds">사용 가능한 자금</string>
+    <string name="noTransferFromSourceAvailableError">자금 원천으로부터 이체 불가</string>
 
 </resources>

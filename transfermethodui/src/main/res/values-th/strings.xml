@@ -75,5 +75,5 @@
     <string name="mobileTransferMethodsHeader">วิธีการโอนเงิน</string>
 
     <string name="mobileRemoveEAconfirm">ลบวิธีการโอนเงิน</string>
-    <string name="prepaidCardManagementInfo"  translatable="false">"เข้าสู่ระบบโดยใช้เว็บเบราว์เซอร์เพื่อจัดการบัตรของคุณ"</string>
+    <string name="prepaidCardManagementInfo" >"เข้าสู่ระบบโดยใช้เว็บเบราว์เซอร์เพื่อจัดการบัตรของคุณ"</string>
 </resources>

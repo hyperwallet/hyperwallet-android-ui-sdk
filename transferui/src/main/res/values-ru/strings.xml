@@ -62,10 +62,10 @@
     <string name="mobileTransferSuccessDetails">Средства отправлены на ваш %s</string>
     <string name="doneButtonLabel">Выполнено</string>
     <string name="mobileTransferMethodsHeader">Способы перевода</string>
-    <string name="mobileTransferFromLabel" translatable="false">ПЕРЕВОД ИЗ</string>
-    <string name="transferSource" translatable="false">Источник</string>
-    <string name="mobileTransferFromHeader" translatable="false">Перевод из</string>
-    <string name="availableFunds" translatable="false">Свободные средства</string>
-    <string name="noTransferFromSourceAvailableError" translatable="false">Перевод из источника отсутствует</string>
+    <string name="mobileTransferFromLabel">ПЕРЕВОД ИЗ</string>
+    <string name="transferSource">Источник</string>
+    <string name="mobileTransferFromHeader">Перевод из</string>
+    <string name="availableFunds">Свободные средства</string>
+    <string name="noTransferFromSourceAvailableError">Перевод из источника отсутствует</string>
 
 </resources>

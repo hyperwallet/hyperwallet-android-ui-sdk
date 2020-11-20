@@ -62,10 +62,10 @@
     <string name="mobileTransferSuccessDetails">Uang sedang dikirim ke %sAnda</string>
     <string name="doneButtonLabel">Selesai</string>
     <string name="mobileTransferMethodsHeader">Metode transfer</string>
-    <string name="mobileTransferFromLabel" translatable="false">TRANSFER DARI</string>
-    <string name="transferSource" translatable="false">Sumber</string>
-    <string name="mobileTransferFromHeader" translatable="false">Transfer dari</string>
-    <string name="availableFunds" translatable="false">Dana yang Tersedia</string>
-    <string name="noTransferFromSourceAvailableError" translatable="false">Tidak ada Transfer dari sumber yang tersedia</string>
+    <string name="mobileTransferFromLabel">TRANSFER DARI</string>
+    <string name="transferSource">Sumber</string>
+    <string name="mobileTransferFromHeader">Transfer dari</string>
+    <string name="availableFunds">Dana yang Tersedia</string>
+    <string name="noTransferFromSourceAvailableError">Tidak ada Transfer dari sumber yang tersedia</string>
 
 </resources>

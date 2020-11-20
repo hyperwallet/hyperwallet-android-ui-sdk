@@ -19,17 +19,13 @@
     <string name="mobilePromoWebsite">Site-ul web al ofertei promoționale</string>
     <string name="concat_date_string_view_format">%s %s</string>
 
-    <string name="mobileNoTransactionsUser" translatable="false">Nu există nicio activitate de afișat.</string>
-    <string name="mobileNoTransactionsPrepaidCard" translatable="false">Nu există tranzacții în ultimele 365 de zile.</string>
+    <string name="mobileNoTransactionsUser">Nu există nicio activitate de afișat.</string>
+    <string name="mobileNoTransactionsPrepaidCard">Nu există tranzacții în ultimele 365 de zile.</string>
     <string name="title_transfer_funds">Transfer</string>
     <string name="font_icon_placeholder">\ue908</string>
     <string name="text_placeholder">Împuternicit</string>
 
-    <!-- entry types -->
-    <string name="debit" translatable="false">\ue908</string>
-    <string name="credit" translatable="false">\ue907</string>
-    <string name="debit_sign" translatable="false">-%s%s</string>
-    <string name="credit_sign" translatable="false">%s%s</string>
+
 
     <!--Generic fee types-->
     <string name="unknown_type">Tip tranzacție necunoscut</string>
@@ -167,6 +163,6 @@
     <string name="fispc">Achiziție</string>
 
     <!-- Prepaid Cards Receipt   -->
-    <string name="mobileAvailableBalances" translatable="false">Fonduri disponibile</string>
+    <string name="mobileAvailableBalances">Fonduri disponibile</string>
 
 </resources>

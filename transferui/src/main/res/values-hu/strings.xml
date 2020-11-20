@@ -62,10 +62,10 @@
     <string name="mobileTransferSuccessDetails">Pénzösszege úton van a következőre: %s.</string>
     <string name="doneButtonLabel">Kész</string>
     <string name="mobileTransferMethodsHeader">Átutalási módok</string>
-    <string name="mobileTransferFromLabel" translatable="false">ÁTUTALÁS FELADÓJA</string>
-    <string name="transferSource" translatable="false">Forrás</string>
-    <string name="mobileTransferFromHeader" translatable="false">Átutalás feladója</string>
-    <string name="availableFunds" translatable="false">Elérhető pénzösszegek</string>
-    <string name="noTransferFromSourceAvailableError" translatable="false">Nincs elérhető átutalási forrás</string>
+    <string name="mobileTransferFromLabel">ÁTUTALÁS FELADÓJA</string>
+    <string name="transferSource">Forrás</string>
+    <string name="mobileTransferFromHeader">Átutalás feladója</string>
+    <string name="availableFunds">Elérhető pénzösszegek</string>
+    <string name="noTransferFromSourceAvailableError">Nincs elérhető átutalási forrás</string>
 
 </resources>

@@ -75,5 +75,5 @@
     <string name="mobileTransferMethodsHeader">Načini prenosa</string>
 
     <string name="mobileRemoveEAconfirm">Odstrani način prenosa</string>
-    <string name="prepaidCardManagementInfo"  translatable="false">„Prijavite se prek spletnega brskalnika in upravljajte kartico.“</string>
+    <string name="prepaidCardManagementInfo" >„Prijavite se prek spletnega brskalnika in upravljajte kartico.“</string>
 </resources>

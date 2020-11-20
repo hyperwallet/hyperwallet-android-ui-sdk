@@ -62,10 +62,10 @@
     <string name="mobileTransferSuccessDetails">Peníze jsou na cestě na váš %s</string>
     <string name="doneButtonLabel">Hotovo</string>
     <string name="mobileTransferMethodsHeader">Způsoby převodu</string>
-    <string name="mobileTransferFromLabel" translatable="false">PŘEVOD OD</string>
-    <string name="transferSource" translatable="false">Zdroj</string>
-    <string name="mobileTransferFromHeader" translatable="false">Převod od</string>
-    <string name="availableFunds" translatable="false">Dostupné prostředky</string>
-    <string name="noTransferFromSourceAvailableError" translatable="false">Od zdroje není k dispozici žádný převod</string>
+    <string name="mobileTransferFromLabel">PŘEVOD OD</string>
+    <string name="transferSource">Zdroj</string>
+    <string name="mobileTransferFromHeader">Převod od</string>
+    <string name="availableFunds">Dostupné prostředky</string>
+    <string name="noTransferFromSourceAvailableError">Od zdroje není k dispozici žádný převod</string>
 
 </resources>

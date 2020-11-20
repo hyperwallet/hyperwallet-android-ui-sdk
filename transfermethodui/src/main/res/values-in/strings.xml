@@ -75,5 +75,5 @@
     <string name="mobileTransferMethodsHeader">Metode transfer</string>
 
     <string name="mobileRemoveEAconfirm">Hapus metode transfer</string>
-    <string name="prepaidCardManagementInfo"  translatable="false">"Login menggunakan peramban web untuk mengelola kartu Anda"</string>
+    <string name="prepaidCardManagementInfo" >"Login menggunakan peramban web untuk mengelola kartu Anda"</string>
 </resources>

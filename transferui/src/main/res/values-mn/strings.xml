@@ -62,10 +62,10 @@
     <string name="mobileTransferSuccessDetails">Мөнгө таны %s уруу очиж явна</string>
     <string name="doneButtonLabel">Дууссан</string>
     <string name="mobileTransferMethodsHeader">Шилжүүлгийн арга</string>
-    <string name="mobileTransferFromLabel" translatable="false">ХЭНЭЭС ШИЛЖҮҮЛЭХ</string>
-    <string name="transferSource" translatable="false">Эх үүсвэр</string>
-    <string name="mobileTransferFromHeader" translatable="false">Хэнээс шилжүүлэх</string>
-    <string name="availableFunds" translatable="false">Бэлэн байгаа мөнгө</string>
-    <string name="noTransferFromSourceAvailableError" translatable="false">Эх үүсвэрээс ирэх шилжүүлэг байхгүй</string>
+    <string name="mobileTransferFromLabel">ХЭНЭЭС ШИЛЖҮҮЛЭХ</string>
+    <string name="transferSource">Эх үүсвэр</string>
+    <string name="mobileTransferFromHeader">Хэнээс шилжүүлэх</string>
+    <string name="availableFunds">Бэлэн байгаа мөнгө</string>
+    <string name="noTransferFromSourceAvailableError">Эх үүсвэрээс ирэх шилжүүлэг байхгүй</string>
 
 </resources>

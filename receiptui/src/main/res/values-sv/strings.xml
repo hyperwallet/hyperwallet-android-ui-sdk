@@ -19,17 +19,13 @@
     <string name="mobilePromoWebsite">Kampanjwebbplats</string>
     <string name="concat_date_string_view_format">%s %s</string>
 
-    <string name="mobileNoTransactionsUser" translatable="false">Det finns ingen aktivitet att visa.</string>
-    <string name="mobileNoTransactionsPrepaidCard" translatable="false">Inga transaktioner de senaste 365 dagarna</string>
+    <string name="mobileNoTransactionsUser">Det finns ingen aktivitet att visa.</string>
+    <string name="mobileNoTransactionsPrepaidCard">Inga transaktioner de senaste 365 dagarna</string>
     <string name="title_transfer_funds">Överföring</string>
     <string name="font_icon_placeholder">\ue908</string>
     <string name="text_placeholder">Platshållare</string>
 
-    <!-- entry types -->
-    <string name="debit" translatable="false">\ue908</string>
-    <string name="credit" translatable="false">\ue907</string>
-    <string name="debit_sign" translatable="false">-%s%s</string>
-    <string name="credit_sign" translatable="false">%s%s</string>
+
 
     <!--Generic fee types-->
     <string name="unknown_type">Okänd transaktionstyp</string>
@@ -167,6 +163,6 @@
     <string name="fispc">Inköp</string>
 
     <!-- Prepaid Cards Receipt   -->
-    <string name="mobileAvailableBalances" translatable="false">Tillgängligt saldo</string>
+    <string name="mobileAvailableBalances">Tillgängligt saldo</string>
 
 </resources>

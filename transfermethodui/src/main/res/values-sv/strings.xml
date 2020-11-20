@@ -75,5 +75,5 @@
     <string name="mobileTransferMethodsHeader">Överföringsmetoder</string>
 
     <string name="mobileRemoveEAconfirm">Ta bort överföringsmetod</string>
-    <string name="prepaidCardManagementInfo"  translatable="false">”Logga in med en webbläsare för att hantera ditt kort”</string>
+    <string name="prepaidCardManagementInfo" >”Logga in med en webbläsare för att hantera ditt kort”</string>
 </resources>

@@ -62,10 +62,10 @@
     <string name="mobileTransferSuccessDetails">Wysłano Twoje pieniądze do %s</string>
     <string name="doneButtonLabel">Gotowe</string>
     <string name="mobileTransferMethodsHeader">Metody przelewu</string>
-    <string name="mobileTransferFromLabel" translatable="false">PRZELEW OD</string>
-    <string name="transferSource" translatable="false">Źródło</string>
-    <string name="mobileTransferFromHeader" translatable="false">Przelew od</string>
-    <string name="availableFunds" translatable="false">Dostępne środki</string>
-    <string name="noTransferFromSourceAvailableError" translatable="false">Brak dostępnych przelewów od źródła</string>
+    <string name="mobileTransferFromLabel">PRZELEW OD</string>
+    <string name="transferSource">Źródło</string>
+    <string name="mobileTransferFromHeader">Przelew od</string>
+    <string name="availableFunds">Dostępne środki</string>
+    <string name="noTransferFromSourceAvailableError">Brak dostępnych przelewów od źródła</string>
 
 </resources>

@@ -62,10 +62,10 @@
     <string name="mobileTransferSuccessDetails">Nauda ir ceļā uz jūsu %s</string>
     <string name="doneButtonLabel">Pabeigts</string>
     <string name="mobileTransferMethodsHeader">Pārskaitījumu veidi</string>
-    <string name="mobileTransferFromLabel" translatable="false">PĀRSKAITĪT NO</string>
-    <string name="transferSource" translatable="false">Avots</string>
-    <string name="mobileTransferFromHeader" translatable="false">Pārskaitīt no</string>
-    <string name="availableFunds" translatable="false">Pieejamie līdzekļi</string>
-    <string name="noTransferFromSourceAvailableError" translatable="false">Nav pieejams pārskaitījums no avota</string>
+    <string name="mobileTransferFromLabel">PĀRSKAITĪT NO</string>
+    <string name="transferSource">Avots</string>
+    <string name="mobileTransferFromHeader">Pārskaitīt no</string>
+    <string name="availableFunds">Pieejamie līdzekļi</string>
+    <string name="noTransferFromSourceAvailableError">Nav pieejams pārskaitījums no avota</string>
 
 </resources>

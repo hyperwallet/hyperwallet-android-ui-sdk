@@ -19,17 +19,13 @@
     <string name="mobilePromoWebsite">促銷網站</string>
     <string name="concat_date_string_view_format">%s %s</string>
 
-    <string name="mobileNoTransactionsUser" translatable="false">沒有活動可顯示。</string>
-    <string name="mobileNoTransactionsPrepaidCard" translatable="false">近 365 天內無交易</string>
+    <string name="mobileNoTransactionsUser">沒有活動可顯示。</string>
+    <string name="mobileNoTransactionsPrepaidCard">近 365 天內無交易</string>
     <string name="title_transfer_funds">轉帳</string>
     <string name="font_icon_placeholder">\ue908</string>
     <string name="text_placeholder">佔位符</string>
 
-    <!-- entry types -->
-    <string name="debit" translatable="false">\ue908</string>
-    <string name="credit" translatable="false">\ue907</string>
-    <string name="debit_sign" translatable="false">-%s%s</string>
-    <string name="credit_sign" translatable="false">%s%s</string>
+
 
     <!--Generic fee types-->
     <string name="unknown_type">未知交易類型</string>
@@ -167,6 +163,6 @@
     <string name="fispc">購買</string>
 
     <!-- Prepaid Cards Receipt   -->
-    <string name="mobileAvailableBalances" translatable="false">可用資金</string>
+    <string name="mobileAvailableBalances">可用資金</string>
 
 </resources>

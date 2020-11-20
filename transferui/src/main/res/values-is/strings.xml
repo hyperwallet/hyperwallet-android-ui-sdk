@@ -62,10 +62,10 @@
     <string name="mobileTransferSuccessDetails">Fjármunirnir eru á leiðinni inn á %s þinn</string>
     <string name="doneButtonLabel">Búið</string>
     <string name="mobileTransferMethodsHeader">Millifærsluaðferðir</string>
-    <string name="mobileTransferFromLabel" translatable="false">MILLIFÆRA FRÁ</string>
-    <string name="transferSource" translatable="false">Uppruni</string>
-    <string name="mobileTransferFromHeader" translatable="false">Millifæra frá</string>
-    <string name="availableFunds" translatable="false">Tiltækir fjármunir</string>
-    <string name="noTransferFromSourceAvailableError" translatable="false">Millifærsla frá uppruna ekki í boði</string>
+    <string name="mobileTransferFromLabel">MILLIFÆRA FRÁ</string>
+    <string name="transferSource">Uppruni</string>
+    <string name="mobileTransferFromHeader">Millifæra frá</string>
+    <string name="availableFunds">Tiltækir fjármunir</string>
+    <string name="noTransferFromSourceAvailableError">Millifærsla frá uppruna ekki í boði</string>
 
 </resources>

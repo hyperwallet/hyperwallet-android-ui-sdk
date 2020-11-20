@@ -62,10 +62,10 @@
     <string name="mobileTransferSuccessDetails">Para %s hesabınıza gönderiliyor</string>
     <string name="doneButtonLabel">İşlem gerçekleşti</string>
     <string name="mobileTransferMethodsHeader">Aktarım yöntemleri</string>
-    <string name="mobileTransferFromLabel" translatable="false">AKTARIMI YAPAN</string>
-    <string name="transferSource" translatable="false">Kaynak</string>
-    <string name="mobileTransferFromHeader" translatable="false">Aktarımı Yapan</string>
-    <string name="availableFunds" translatable="false">Mevcut Para</string>
-    <string name="noTransferFromSourceAvailableError" translatable="false">Kaynaktan aktarım yok</string>
+    <string name="mobileTransferFromLabel">AKTARIMI YAPAN</string>
+    <string name="transferSource">Kaynak</string>
+    <string name="mobileTransferFromHeader">Aktarımı Yapan</string>
+    <string name="availableFunds">Mevcut Para</string>
+    <string name="noTransferFromSourceAvailableError">Kaynaktan aktarım yok</string>
 
 </resources>

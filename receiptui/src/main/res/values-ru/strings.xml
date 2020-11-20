@@ -19,17 +19,13 @@
     <string name="mobilePromoWebsite">Промо-сайт</string>
     <string name="concat_date_string_view_format">%s %s</string>
 
-    <string name="mobileNoTransactionsUser" translatable="false">Нет действий для отображения.</string>
-    <string name="mobileNoTransactionsPrepaidCard" translatable="false">Нет транзакций за последние 365 дней</string>
+    <string name="mobileNoTransactionsUser">Нет действий для отображения.</string>
+    <string name="mobileNoTransactionsPrepaidCard">Нет транзакций за последние 365 дней</string>
     <string name="title_transfer_funds">Перевод</string>
     <string name="font_icon_placeholder">\ue908</string>
     <string name="text_placeholder">Временная позиция</string>
 
-    <!-- entry types -->
-    <string name="debit" translatable="false">\ue908</string>
-    <string name="credit" translatable="false">\ue907</string>
-    <string name="debit_sign" translatable="false">-%s%s</string>
-    <string name="credit_sign" translatable="false">%s%s</string>
+
 
     <!--Generic fee types-->
     <string name="unknown_type">Неизвестный тип транзакции</string>
@@ -167,6 +163,6 @@
     <string name="fispc">Покупка</string>
 
     <!-- Prepaid Cards Receipt   -->
-    <string name="mobileAvailableBalances" translatable="false">Свободные средства</string>
+    <string name="mobileAvailableBalances">Свободные средства</string>
 
 </resources>

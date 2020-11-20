@@ -75,5 +75,5 @@
     <string name="mobileTransferMethodsHeader">Metode de transfer</string>
 
     <string name="mobileRemoveEAconfirm">Eliminați metodă de transfer</string>
-    <string name="prepaidCardManagementInfo"  translatable="false">„Autentificați-vă utilizând un browser web pentru a vă gestiona cardul”</string>
+    <string name="prepaidCardManagementInfo" >„Autentificați-vă utilizând un browser web pentru a vă gestiona cardul”</string>
 </resources>

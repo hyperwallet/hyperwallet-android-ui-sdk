@@ -17,20 +17,13 @@
     <string name="mobileCharityName">Название на благотворителна организация</string>
     <string name="mobileCheckNumber">Номер на чек</string>
     <string name="mobilePromoWebsite">Уебсайт за промоции</string>
-<!--    <string name="concat_string_view_format">%s%s %s</string>-->
     <string name="concat_date_string_view_format">%s %s</string>
 
-    <string name="mobileNoTransactionsUser" translatable="false">Няма активност, която да бъде показана.</string>
-    <string name="mobileNoTransactionsPrepaidCard" translatable="false">Няма трансакции през последните 365 дни</string>
+    <string name="mobileNoTransactionsUser">Няма активност, която да бъде показана.</string>
+    <string name="mobileNoTransactionsPrepaidCard">Няма трансакции през последните 365 дни</string>
     <string name="title_transfer_funds">Трансфер</string>
     <string name="font_icon_placeholder">\ue908</string>
     <string name="text_placeholder">Маркер за място</string>
-
-    <!-- entry types -->
-    <string name="debit" translatable="false">\ue908</string>
-    <string name="credit" translatable="false">\ue907</string>
-    <string name="debit_sign" translatable="false">-%s%s</string>
-    <string name="credit_sign" translatable="false">%s%s</string>
 
     <!--Generic fee types-->
     <string name="unknown_type">Неизвестен тип трансакция</string>
@@ -168,6 +161,6 @@
     <string name="fispc">Покупка</string>
 
     <!-- Prepaid Cards Receipt   -->
-    <string name="mobileAvailableBalances" translatable="false">Налични средства</string>
+    <string name="mobileAvailableBalances">Налични средства</string>
 
 </resources>

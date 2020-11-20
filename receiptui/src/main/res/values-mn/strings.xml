@@ -19,17 +19,13 @@
     <string name="mobilePromoWebsite">Сурталчилгааны вэбсайт</string>
     <string name="concat_date_string_view_format">%s %s</string>
 
-    <string name="mobileNoTransactionsUser" translatable="false">Харуулах үйл ажиллагаа байхгүй.</string>
-    <string name="mobileNoTransactionsPrepaidCard" translatable="false">Сүүлийн 365 хоногт гүйлгээ хийгээгүй</string>
+    <string name="mobileNoTransactionsUser">Харуулах үйл ажиллагаа байхгүй.</string>
+    <string name="mobileNoTransactionsPrepaidCard">Сүүлийн 365 хоногт гүйлгээ хийгээгүй</string>
     <string name="title_transfer_funds">Шилжүүлэг</string>
     <string name="font_icon_placeholder">\ue908</string>
     <string name="text_placeholder">Байршуулагч</string>
 
-    <!-- entry types -->
-    <string name="debit" translatable="false">\ue908</string>
-    <string name="credit" translatable="false">\ue907</string>
-    <string name="debit_sign" translatable="false">-%s%s</string>
-    <string name="credit_sign" translatable="false">%s%s</string>
+
 
     <!--Generic fee types-->
     <string name="unknown_type">Үл мэдэгдэх гүйлгээний төрөл</string>
@@ -167,6 +163,6 @@
     <string name="fispc">Худалдан авах</string>
 
     <!-- Prepaid Cards Receipt   -->
-    <string name="mobileAvailableBalances" translatable="false">Бэлэн байгаа мөнгө</string>
+    <string name="mobileAvailableBalances">Бэлэн байгаа мөнгө</string>
 
 </resources>

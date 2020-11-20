@@ -19,17 +19,13 @@
     <string name="mobilePromoWebsite">Promo web stranica</string>
     <string name="concat_date_string_view_format">%s %s</string>
 
-    <string name="mobileNoTransactionsUser" translatable="false">Nema\'aktivnosti za prikaz.</string>
-    <string name="mobileNoTransactionsPrepaidCard" translatable="false">U posljednjih 365 dana nemate nikakvih transakcija</string>
+    <string name="mobileNoTransactionsUser">Nema\'aktivnosti za prikaz.</string>
+    <string name="mobileNoTransactionsPrepaidCard">U posljednjih 365 dana nemate nikakvih transakcija</string>
     <string name="title_transfer_funds">Prijenos</string>
     <string name="font_icon_placeholder">\ue908</string>
     <string name="text_placeholder">Rezervirano mjesto</string>
 
-    <!-- entry types -->
-    <string name="debit" translatable="false">\ue908</string>
-    <string name="credit" translatable="false">\ue907</string>
-    <string name="debit_sign" translatable="false">-%s%s</string>
-    <string name="credit_sign" translatable="false">%s%s</string>
+
 
     <!--Generic fee types-->
     <string name="unknown_type">Nepoznata vrsta transakcije</string>
@@ -167,6 +163,6 @@
     <string name="fispc">Kupnja</string>
 
     <!-- Prepaid Cards Receipt   -->
-    <string name="mobileAvailableBalances" translatable="false">Dostupna sredstva</string>
+    <string name="mobileAvailableBalances">Dostupna sredstva</string>
 
 </resources>

@@ -62,10 +62,10 @@
     <string name="mobileTransferSuccessDetails">Tiền đang được chuyển đến %s của bạn </string>
     <string name="doneButtonLabel">Hoàn tất</string>
     <string name="mobileTransferMethodsHeader">Phương thức chuyển tiền</string>
-    <string name="mobileTransferFromLabel" translatable="false">CHUYỂN TỪ</string>
-    <string name="transferSource" translatable="false">Nguồn</string>
-    <string name="mobileTransferFromHeader" translatable="false">Chuyển từ</string>
-    <string name="availableFunds" translatable="false">Tiền khả dụng</string>
-    <string name="noTransferFromSourceAvailableError" translatable="false">Không có chuyển tiền từ nguồn khả dụng</string>
+    <string name="mobileTransferFromLabel">CHUYỂN TỪ</string>
+    <string name="transferSource">Nguồn</string>
+    <string name="mobileTransferFromHeader">Chuyển từ</string>
+    <string name="availableFunds">Tiền khả dụng</string>
+    <string name="noTransferFromSourceAvailableError">Không có chuyển tiền từ nguồn khả dụng</string>
 
 </resources>

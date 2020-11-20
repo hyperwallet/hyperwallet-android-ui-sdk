@@ -75,5 +75,5 @@
     <string name="mobileTransferMethodsHeader">Методи за трансфер</string>
 
     <string name="mobileRemoveEAconfirm">Премахване на метода за трансфер</string>
-    <string name="prepaidCardManagementInfo"  translatable="false">„Влезте в системата чрез уеб браузър, за да управлявате Вашата карта“</string>
+    <string name="prepaidCardManagementInfo" >„Влезте в системата чрез уеб браузър, за да управлявате Вашата карта“</string>
 </resources>

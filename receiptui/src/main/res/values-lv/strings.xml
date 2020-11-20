@@ -19,17 +19,13 @@
     <string name="mobilePromoWebsite">Akcijas tīmekļa vietne</string>
     <string name="concat_date_string_view_format">%s %s</string>
 
-    <string name="mobileNoTransactionsUser" translatable="false">Nav nevienas darbības, ko attēlot.</string>
-    <string name="mobileNoTransactionsPrepaidCard" translatable="false">Pēdējo 365 dienu laikā nav veikts neviens darījums</string>
+    <string name="mobileNoTransactionsUser">Nav nevienas darbības, ko attēlot.</string>
+    <string name="mobileNoTransactionsPrepaidCard">Pēdējo 365 dienu laikā nav veikts neviens darījums</string>
     <string name="title_transfer_funds">Pārskaitījums</string>
     <string name="font_icon_placeholder">\ue908</string>
     <string name="text_placeholder">Vietturis</string>
 
-    <!-- entry types -->
-    <string name="debit" translatable="false">\ue908</string>
-    <string name="credit" translatable="false">\ue907</string>
-    <string name="debit_sign" translatable="false">-%s%s</string>
-    <string name="credit_sign" translatable="false">%s%s</string>
+
 
     <!--Generic fee types-->
     <string name="unknown_type">Nezināms darījuma veids</string>
@@ -167,6 +163,6 @@
     <string name="fispc">Pirkums</string>
 
     <!-- Prepaid Cards Receipt   -->
-    <string name="mobileAvailableBalances" translatable="false">Pieejamie līdzekļi</string>
+    <string name="mobileAvailableBalances">Pieejamie līdzekļi</string>
 
 </resources>

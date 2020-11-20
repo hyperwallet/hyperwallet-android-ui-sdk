@@ -62,10 +62,10 @@
     <string name="mobileTransferSuccessDetails">Denar je na poti na vaš %s</string>
     <string name="doneButtonLabel">Opravljeno</string>
     <string name="mobileTransferMethodsHeader">Načini prenosa</string>
-    <string name="mobileTransferFromLabel" translatable="false">PRENOS OD</string>
-    <string name="transferSource" translatable="false">Vir</string>
-    <string name="mobileTransferFromHeader" translatable="false">Prenos od</string>
-    <string name="availableFunds" translatable="false">Sredstva na voljo</string>
-    <string name="noTransferFromSourceAvailableError" translatable="false">Prenos iz vira ni na voljo</string>
+    <string name="mobileTransferFromLabel">PRENOS OD</string>
+    <string name="transferSource">Vir</string>
+    <string name="mobileTransferFromHeader">Prenos od</string>
+    <string name="availableFunds">Sredstva na voljo</string>
+    <string name="noTransferFromSourceAvailableError">Prenos iz vira ni na voljo</string>
 
 </resources>
