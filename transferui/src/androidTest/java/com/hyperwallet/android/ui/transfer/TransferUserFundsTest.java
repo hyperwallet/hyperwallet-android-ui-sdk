@@ -169,7 +169,7 @@ public class TransferUserFundsTest {
         onView(withId(R.id.transfer_all_funds)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_all_funds)).check(matches(not(isSelected())));
         onView(withId(R.id.transfer_summary)).perform(nestedScrollTo()).check(matches(isDisplayed()));
-        String availableFundUSD = getAvailableFund("998.00", "USD");
+        String availableFundUSD = getAvailableFund("$","998.00", "USD");
         onView(withId(R.id.transfer_summary)).check(matches(withText(availableFundUSD)));
 
         onView(withId(R.id.transfer_action_button)).perform(nestedScrollTo());
@@ -202,7 +202,7 @@ public class TransferUserFundsTest {
         onView(withId(R.id.transfer_all_funds)).perform(nestedScrollTo(), click());
         // Assert 12 digits amount with currency format based on default locale
         // onView(withId(R.id.transfer_amount)).check(matches(withText( USD_CURRENCY_SYMBOL + "1000,000,000.00")));
-        onView(withId(R.id.transfer_amount)).check(matches(withText( containsString("1000,000,000.00"))));
+        onView(withId(R.id.transfer_amount)).check(matches(withText( containsString("1,000,000,000.00"))));
         onView(withId(R.id.transfer_amount_currency)).check(matches(withText("USD")));
 
         // Assert later when we fix the Available funds amount format DTSERWFOUR-170
@@ -232,7 +232,7 @@ public class TransferUserFundsTest {
         onView(withId(R.id.transfer_all_funds)).perform(nestedScrollTo(), click());
         // Assert 12 digits amount with currency format based on default locale
         // onView(withId(R.id.transfer_amount)).check(matches(withText(JOD_CURRENCY_SYMBOL + "1000,000,000.00")));
-        onView(withId(R.id.transfer_amount)).check(matches(withText(containsString("1000,000,000.00"))));
+        onView(withId(R.id.transfer_amount)).check(matches(withText(containsString("1,000,000,000.00"))));
         onView(withId(R.id.transfer_amount_currency)).check(matches(withText("JOD")));
         // Assert later when we fix the Available funds amount format DTSERWFOUR-170
 
@@ -333,7 +333,7 @@ public class TransferUserFundsTest {
         onView(withId(R.id.transfer_all_funds)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_all_funds)).check(matches(not(isSelected())));
         onView(withId(R.id.transfer_summary)).perform(nestedScrollTo()).check(matches(isDisplayed()));
-        String availableFundUSD = getAvailableFund("998.00", "USD");
+        String availableFundUSD = getAvailableFund("$","998.00", "USD");
         onView(withId(R.id.transfer_summary)).check(matches(withText(availableFundUSD)));
 
         onView(withId(R.id.transfer_action_button)).check(matches(isEnabled()));
@@ -389,7 +389,7 @@ public class TransferUserFundsTest {
         onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("ending in 5121")));
 
         onView(withId(R.id.transfer_summary)).perform(nestedScrollTo()).check(matches(isDisplayed()));
-        String availableFundCAD = getAvailableFund("1,157.40", "CAD");
+        String availableFundCAD = getAvailableFund("$","1,157.40", "CAD");
         onView(withId(R.id.transfer_summary)).check(matches(withText(availableFundCAD)));
 
         onView(withId(R.id.transfer_amount)).perform(nestedScrollTo(), replaceText("150.00"));
@@ -736,11 +736,11 @@ public class TransferUserFundsTest {
                         hasDescendant(allOf(withId(R.id.exchange_rate_value), withText("1 EUR = 1.126100 USD"))))));
 
         onView(withId(R.id.amount_label)).check(matches(withText(R.string.mobileConfirmDetailsAmount)));
-        onView(withId(R.id.amount_value)).check(matches(withText("290.05 USD")));
+        onView(withId(R.id.amount_value)).check(matches(withText("$290.05 USD")));
         onView(withId(R.id.fee_label)).check(matches(withText(R.string.mobileConfirmDetailsFee)));
-        onView(withId(R.id.fee_value)).check(matches(withText("2.00 USD")));
+        onView(withId(R.id.fee_value)).check(matches(withText("$2.00 USD")));
         onView(withId(R.id.transfer_label)).check(matches(withText(R.string.mobileConfirmDetailsTotal)));
-        onView(withId(R.id.transfer_value)).check(matches(withText("288.05 USD")));
+        onView(withId(R.id.transfer_value)).check(matches(withText("$288.05 USD")));
         onView(withId(R.id.exchange_rate_warning_container)).check(matches(not(isDisplayed())));
         onView(withId(R.id.exchange_rate_warning)).check(matches(not(isDisplayed())));
 
@@ -845,15 +845,15 @@ public class TransferUserFundsTest {
                         hasDescendant(allOf(withId(R.id.exchange_rate_value), withText("1 EUR = 1.136100 USD"))))));
 
         onView(withId(R.id.amount_label)).check(matches(withText(R.string.mobileConfirmDetailsAmount)));
-        onView(withId(R.id.amount_value)).check(matches(withText("194.05 USD")));
+        onView(withId(R.id.amount_value)).check(matches(withText("$194.05 USD")));
         onView(withId(R.id.fee_label)).check(matches(withText(R.string.mobileConfirmDetailsFee)));
-        onView(withId(R.id.fee_value)).check(matches(withText("2.00 USD")));
+        onView(withId(R.id.fee_value)).check(matches(withText("$2.00 USD")));
         onView(withId(R.id.transfer_label)).check(matches(withText(R.string.mobileConfirmDetailsTotal)));
-        onView(withId(R.id.transfer_value)).check(matches(withText("192.05 USD")));
+        onView(withId(R.id.transfer_value)).check(matches(withText("$192.05 USD")));
         onView(withId(R.id.exchange_rate_warning)).perform(nestedScrollTo());
         onView(withId(R.id.exchange_rate_warning)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.exchange_rate_warning)).check(
-                matches(withText("Due to changes in the FX rate, you will now receive 192.05 USD.")));
+                matches(withText("Due to changes in the exchange rate, you'll now receive 192.05 USD.")));
         onView(withId(R.id.notes_container)).perform(nestedScrollTo());
         onView(withId(R.id.notes_container)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.notes_value)).check(matches(withText("Transfer funds test")));
@@ -1040,7 +1040,7 @@ public class TransferUserFundsTest {
         onView(withId(android.R.id.button2)).check(matches(withText(R.string.cancelButtonLabel)));
         onView(withId(android.R.id.button1)).perform(click());
         onView(withText(R.string.error_dialog_connectivity_title)).check(doesNotExist());
-        String availableFundUSD = getAvailableFund("100.00", "USD");
+        String availableFundUSD = getAvailableFund("$","100.00", "USD");
         onView(withId(R.id.transfer_summary)).check(matches(withText(availableFundUSD)));
     }
 
@@ -1067,11 +1067,11 @@ public class TransferUserFundsTest {
 
         onView(withId(R.id.list_foreign_exchange)).check(matches(not(isDisplayed())));
         onView(withId(R.id.amount_label)).check(matches(withText(R.string.mobileConfirmDetailsAmount)));
-        onView(withId(R.id.amount_value)).check(matches(withText("102.00 USD")));
+        onView(withId(R.id.amount_value)).check(matches(withText("$102.00 USD")));
         onView(withId(R.id.fee_label)).check(matches(withText(R.string.mobileConfirmDetailsFee)));
-        onView(withId(R.id.fee_value)).check(matches(withText("2.00 USD")));
+        onView(withId(R.id.fee_value)).check(matches(withText("$2.00 USD")));
         onView(withId(R.id.transfer_label)).check(matches(withText(R.string.mobileConfirmDetailsTotal)));
-        onView(withId(R.id.transfer_value)).check(matches(withText("100.00 USD")));
+        onView(withId(R.id.transfer_value)).check(matches(withText("$100.00 USD")));
         onView(withId(R.id.notes_container)).check(matches(not(isDisplayed())));
         onView(withId(R.id.notes_value)).check(matches(not(isDisplayed())));
 
@@ -1133,11 +1133,11 @@ public class TransferUserFundsTest {
 
         onView(withId(R.id.list_foreign_exchange)).check(matches(not(isDisplayed())));
         onView(withId(R.id.amount_label)).check(matches(withText(R.string.mobileConfirmDetailsAmount)));
-        onView(withId(R.id.amount_value)).check(matches(withText("102.00 USD")));
+        onView(withId(R.id.amount_value)).check(matches(withText("$102.00 USD")));
         onView(withId(R.id.fee_label)).check(matches(withText(R.string.mobileConfirmDetailsFee)));
-        onView(withId(R.id.fee_value)).check(matches(withText("2.00 USD")));
+        onView(withId(R.id.fee_value)).check(matches(withText("$2.00 USD")));
         onView(withId(R.id.transfer_label)).check(matches(withText(R.string.mobileConfirmDetailsTotal)));
-        onView(withId(R.id.transfer_value)).check(matches(withText("100.00 USD")));
+        onView(withId(R.id.transfer_value)).check(matches(withText("$100.00 USD")));
         onView(withId(R.id.notes_container)).check(matches(not(isDisplayed())));
         onView(withId(R.id.notes_value)).check(matches(not(isDisplayed())));
 
@@ -1435,9 +1435,9 @@ public class TransferUserFundsTest {
     }
 
 
-    private String getAvailableFund(String amount, String currency) {
+    private String getAvailableFund(String symbol,String amount, String currency) {
         String availableFund = String.format(InstrumentationRegistry.getInstrumentation().getTargetContext()
-                .getString(R.string.mobileAvailableBalance), amount , currency);
+                .getString(R.string.mobileAvailableBalance),symbol, amount , currency);
         return availableFund;
     }
 

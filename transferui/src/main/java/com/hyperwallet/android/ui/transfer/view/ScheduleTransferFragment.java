@@ -183,18 +183,38 @@ public class ScheduleTransferFragment extends Fragment {
             feeContainer.setVisibility(View.VISIBLE);
             receiveAmountContainer.setVisibility(View.VISIBLE);
             amountHorizontalBar.setVisibility(View.VISIBLE);
-            String feeFormattedValue = CurrencyParser.getInstance(requireContext()).formatCurrency(mScheduleTransferViewModel.getTransfer().getDestinationCurrency(), mScheduleTransferViewModel.getTransfer().getDestinationFeeAmount().replaceAll(REGEX_ONLY_NUMBER_AND_DECIMAL, EMPTY_STRING));
-            String amountFormattedValue = CurrencyParser.getInstance(requireContext()).formatCurrency(mScheduleTransferViewModel.getTransfer().getDestinationCurrency(), mScheduleTransferViewModel.getTransferTotalAmount().replaceAll(REGEX_ONLY_NUMBER_AND_DECIMAL, EMPTY_STRING));
-            String receiveAmountFormattedValue = CurrencyParser.getInstance(requireContext()).formatCurrency(mScheduleTransferViewModel.getTransfer().getDestinationCurrency(), mScheduleTransferViewModel.getTransfer().getDestinationAmount().replaceAll(REGEX_ONLY_NUMBER_AND_DECIMAL, EMPTY_STRING));
-            fee.setText(feeFormattedValue);
-            amount.setText(amountFormattedValue);
-            receiveAmount.setText(receiveAmountFormattedValue);
+            String feeFormattedValue = CurrencyParser.getInstance(requireContext()).formatCurrency(
+                    mScheduleTransferViewModel.getTransfer().getDestinationCurrency(),
+                    mScheduleTransferViewModel.getTransfer().getDestinationFeeAmount().replaceAll(
+                            REGEX_ONLY_NUMBER_AND_DECIMAL, EMPTY_STRING));
+            String amountFormattedValue = CurrencyParser.getInstance(requireContext()).formatCurrency(
+                    mScheduleTransferViewModel.getTransfer().getDestinationCurrency(),
+                    mScheduleTransferViewModel.getTransferTotalAmount().replaceAll(REGEX_ONLY_NUMBER_AND_DECIMAL,
+                            EMPTY_STRING));
+            String receiveAmountFormattedValue = CurrencyParser.getInstance(requireContext()).formatCurrency(
+                    mScheduleTransferViewModel.getTransfer().getDestinationCurrency(),
+                    mScheduleTransferViewModel.getTransfer().getDestinationAmount().replaceAll(
+                            REGEX_ONLY_NUMBER_AND_DECIMAL, EMPTY_STRING));
+            fee.setText(requireContext().getString(R.string.amount_currency_format,
+                    feeFormattedValue,
+                    mScheduleTransferViewModel.getTransfer().getDestinationCurrency()));
+            amount.setText(requireContext().getString(R.string.amount_currency_format,
+                    amountFormattedValue,
+                    mScheduleTransferViewModel.getTransfer().getDestinationCurrency()));
+            receiveAmount.setText(requireContext().getString(R.string.amount_currency_format,
+                    receiveAmountFormattedValue,
+                    mScheduleTransferViewModel.getTransfer().getDestinationCurrency()));
         } else {
             feeContainer.setVisibility(View.GONE);
             receiveAmountContainer.setVisibility(View.GONE);
             amountHorizontalBar.setVisibility(View.GONE);
-            String amountFormattedValue = CurrencyParser.getInstance(requireContext()).formatCurrency(mScheduleTransferViewModel.getTransfer().getDestinationCurrency(), mScheduleTransferViewModel.getTransfer().getDestinationAmount().replaceAll(REGEX_ONLY_NUMBER_AND_DECIMAL, EMPTY_STRING));
-            amount.setText(amountFormattedValue);
+            String amountFormattedValue = CurrencyParser.getInstance(requireContext()).formatCurrency(
+                    mScheduleTransferViewModel.getTransfer().getDestinationCurrency(),
+                    mScheduleTransferViewModel.getTransfer().getDestinationAmount().replaceAll(
+                            REGEX_ONLY_NUMBER_AND_DECIMAL, EMPTY_STRING));
+            amount.setText(requireContext().getString(R.string.amount_currency_format,
+                    amountFormattedValue,
+                    mScheduleTransferViewModel.getTransfer().getDestinationCurrency()));
         }
 
         if (mScheduleTransferViewModel.getShowFxChangeWarning()) {
@@ -290,12 +310,26 @@ public class ScheduleTransferFragment extends Fragment {
                 TextView buyValue = itemView.findViewById(R.id.buy_value);
                 TextView exchangeRateValue = itemView.findViewById(R.id.exchange_rate_value);
 
+                String sellFormattedAmount= CurrencyParser.getInstance(itemView.getContext()).formatCurrency(
+                        fx.getSourceCurrency(), fx.getSourceAmount().replaceAll(
+                                REGEX_ONLY_NUMBER_AND_DECIMAL, EMPTY_STRING));
+
+                String buyFormattedAmount= CurrencyParser.getInstance(itemView.getContext()).formatCurrency(
+                        fx.getDestinationCurrency(), fx.getDestinationAmount().replaceAll(
+                                REGEX_ONLY_NUMBER_AND_DECIMAL, EMPTY_STRING));
+
+                String exchangeFormattedAmount= CurrencyParser.getInstance(itemView.getContext()).formatCurrency(
+                        fx.getDestinationCurrency(), fx.getRate().replaceAll(
+                                REGEX_ONLY_NUMBER_AND_DECIMAL, EMPTY_STRING));
+                String exchangeFormattedSourceAmount= CurrencyParser.getInstance(itemView.getContext()).formatCurrency(
+                        fx.getSourceCurrency(),"1");
+
                 sellValue.setText(itemView.getContext().getString(R.string.amount_currency_format,
-                        fx.getSourceAmount(), fx.getSourceCurrency()));
+                        sellFormattedAmount, fx.getSourceCurrency()));
                 buyValue.setText(itemView.getContext().getString(R.string.amount_currency_format,
-                        fx.getDestinationAmount(), fx.getDestinationCurrency()));
+                        buyFormattedAmount, fx.getDestinationCurrency()));
                 exchangeRateValue.setText(itemView.getContext().getString(R.string.exchange_rate_format,
-                        fx.getSourceCurrency(), fx.getRate(), fx.getDestinationCurrency()));
+                        exchangeFormattedSourceAmount,fx.getSourceCurrency(),exchangeFormattedAmount, fx.getDestinationCurrency()));
             }
         }
     }

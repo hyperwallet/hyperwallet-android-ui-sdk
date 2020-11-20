@@ -28,7 +28,7 @@
     <string name="destination_item_description">Elemento de destino</string>
 
     <string name="amount_currency_format">%s %s</string>
-    <string name="exchange_rate_format">1 %s = %s %s</string>
+    <string name="exchange_rate_format">%s %s = %s %s</string>
 
     <string name="module_transfermethodui_unavailable_error">La funcionalidad para añadir una cuenta no se ha incluido en esta aplicación.</string>
     <string name="transferAmountInvalid">Introduzca un importe de transferencia válido</string>
