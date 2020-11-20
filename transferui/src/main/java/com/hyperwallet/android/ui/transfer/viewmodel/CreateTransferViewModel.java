@@ -99,7 +99,6 @@ public class CreateTransferViewModel extends ViewModel {
     private final MutableLiveData<TransferSource> mSelectedTransferSource = new MutableLiveData<>();
 
     private String mSourceToken;
-    private boolean mIsInitialized;
     private String initialAmount;
     private boolean mIsPortraitMode;
     private ProgramModel mProgramModel;
@@ -133,10 +132,7 @@ public class CreateTransferViewModel extends ViewModel {
         mPrepaidCardRepository = prepaidCardRepository;
 
         // initialize
-        mTransferAvailableFunds.setValue(Boolean.FALSE);
-        mIsLoading.postValue(Boolean.TRUE);
-        mIsCreateQuoteLoading.setValue(Boolean.FALSE);
-        mShowFxRateChange.setValue(Boolean.FALSE);
+        initialize();
     }
 
     /**
@@ -155,7 +151,11 @@ public class CreateTransferViewModel extends ViewModel {
         mUserRepository = userRepository;
         mPrepaidCardRepository = prepaidCardRepository;
 
-        // initialize
+        // Initialize
+        initialize();
+    }
+
+    private void initialize() {
         mTransferAvailableFunds.setValue(Boolean.FALSE);
         mIsLoading.postValue(Boolean.TRUE);
         mIsCreateQuoteLoading.setValue(Boolean.FALSE);
@@ -165,13 +165,10 @@ public class CreateTransferViewModel extends ViewModel {
     public void init(@NonNull final String defaultAmount) {
         initialAmount = defaultAmount;
         isCardModel = ProgramModel.isCardModel(getProgramModel());
-        if (!mIsInitialized) {
-            mIsInitialized = true;
-            if (mSourceToken == null) {
-                loadTransferSource();
-            } else {
-                loadTransferSource(mSourceToken);
-            }
+        if (mSourceToken == null) {
+            loadTransferSource();
+        } else {
+            loadTransferSource(mSourceToken);
         }
     }
 
@@ -179,16 +176,12 @@ public class CreateTransferViewModel extends ViewModel {
      * Refresh this view model please only call this when this view model is initialized
      * or else it will just do nothing
      */
-    public void refresh() {
+    public void refresh(String amount) {
         mTransferAmount.postValue(null);
         mTransferNotes.postValue(null);
-        if (!isTransferDestinationUnknown()
-                && !isTransferSourceTokenUnknown() && mIsInitialized) {
-            quoteAvailableTransferFunds(mSourceToken, mTransferDestination.getValue());
-        } else if (isTransferDestinationUnknown()
-                && !isTransferSourceTokenUnknown() && mIsInitialized) {
-            loadTransferDestination(mSourceToken);
-        }
+        // Re-Initialize
+        initialize();
+        init(amount);
     }
 
     public boolean isPortraitMode() {
