@@ -75,7 +75,6 @@ public class ListTransferMethodActivity extends AppCompatActivity implements
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         TextView titleText = findViewById(R.id.toolbar_title);
-        titleText.setText(R.string.mobileTransferMethodsHeader);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
