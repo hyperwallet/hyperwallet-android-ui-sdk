@@ -212,7 +212,7 @@ public class SelectTransferMethodInsightTest {
         mActivityTestRule.launchActivity(null);
 
         onView(withId(R.id.select_transfer_method_types_list))
-                .perform(RecyclerViewActions.actionOnItem(withChild(withText(R.string.paypal_account)), click()));
+                .perform(RecyclerViewActions.actionOnItem(withChild(withText("PayPal")), click()));
 
         verify(mHyperwalletInsightMockRule.getInsight(),
                 timeout(5000).times(1)).trackClick(any(Context.class),

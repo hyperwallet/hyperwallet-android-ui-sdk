@@ -263,7 +263,7 @@ public class BankAccountInsightTest {
         assertThat(mParamsCaptor.getValue().get("error_type"), is("EXCEPTION"));
         assertThat(mParamsCaptor.getValue().get("error_code"), is("EC_UNEXPECTED_EXCEPTION"));
         assertThat(mParamsCaptor.getValue().get("error_message"),
-                is("Oops… Something went wrong, please try again."));
+                is("Something went wrong, please try again."));
         assertThat(mParamsCaptor.getValue().get("error_description"),
                 containsString("Insights detected error"));
         assertThat(mParamsCaptor.getValue().get("erfd"), nullValue());

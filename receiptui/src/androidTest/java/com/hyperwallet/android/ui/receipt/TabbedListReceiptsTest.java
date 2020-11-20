@@ -68,6 +68,7 @@ public class TabbedListReceiptsTest {
 
     @ClassRule
     public static HyperwalletExternalResourceManager sResourceManager = new HyperwalletExternalResourceManager();
+
     @Rule
     public HyperwalletSdkMockRule mHyperwalletSdkMockRule = new HyperwalletSdkMockRule();
 
@@ -184,11 +185,9 @@ Then user can see the tabs for Available funds and receipts
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("receipt_list_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("prepaidcard/prepaidcard_primarycard_only_response.json")).mock();
-//        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-//                .getResourceContent("prepaidcard/prepaidcard_receipts_response.json")).mock();
+                .getResourceContent("prepaidcard/prepaidcard_secondary_response2.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("prepaidcard/prepaidcard_receipts_multicurrency_response.json")).mock();
+                .getResourceContent("prepaidcard/prepaidcard_secondary_receipts_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();
 
         // run test
@@ -328,6 +327,7 @@ Then user can see the tabs for Available funds and receipts
     */
     @Test
     public void testListReceipt_clickTransactionDisplaysDetailsCurrencyFormatKRW() {
+        // DTSERWFOUR-198 -not loading the mock but we can investigate later
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("receipt_list_currency_format_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
@@ -357,9 +357,18 @@ Then user can see the tabs for Available funds and receipts
                 )
         ).check(ViewAssertions.matches(ViewMatchers.isCompletelyDisplayed()));
 
+        Espresso.onView(
+                allOf(
+                        ViewMatchers.withText("-"+ KRW.second.toString() + "10,000")
+                )
+        ).check(ViewAssertions.matches(ViewMatchers.isCompletelyDisplayed()));
 
-        onView(withId(R.id.list_receipts)).check(
-                matches(atPosition(1, hasDescendant(withText("-"+ KRW.second.toString() + "10,000")))));
+        Espresso.onView(
+                allOf(
+                        ViewMatchers.withText("KRW")
+                )
+        ).check(ViewAssertions.matches(ViewMatchers.isCompletelyDisplayed()));
+
     }
 
 
