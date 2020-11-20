@@ -51,6 +51,7 @@ import com.hyperwallet.android.ui.transfer.R;
 import com.hyperwallet.android.ui.transfer.TransferSource;
 import com.hyperwallet.android.ui.transfer.viewmodel.ScheduleTransferViewModel;
 
+import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
 
@@ -318,18 +319,14 @@ public class ScheduleTransferFragment extends Fragment {
                         fx.getDestinationCurrency(), fx.getDestinationAmount().replaceAll(
                                 REGEX_ONLY_NUMBER_AND_DECIMAL, EMPTY_STRING));
 
-                String exchangeFormattedAmount= CurrencyParser.getInstance(itemView.getContext()).formatCurrency(
-                        fx.getDestinationCurrency(), fx.getRate().replaceAll(
-                                REGEX_ONLY_NUMBER_AND_DECIMAL, EMPTY_STRING));
-                String exchangeFormattedSourceAmount= CurrencyParser.getInstance(itemView.getContext()).formatCurrency(
-                        fx.getSourceCurrency(),"1");
-
+                Currency sourceCurrency = Currency.getInstance(fx.getSourceCurrency());
+                Currency destinationCurrency = Currency.getInstance(fx.getDestinationCurrency());
                 sellValue.setText(itemView.getContext().getString(R.string.amount_currency_format,
                         sellFormattedAmount, fx.getSourceCurrency()));
                 buyValue.setText(itemView.getContext().getString(R.string.amount_currency_format,
                         buyFormattedAmount, fx.getDestinationCurrency()));
                 exchangeRateValue.setText(itemView.getContext().getString(R.string.exchange_rate_format,
-                        exchangeFormattedSourceAmount,fx.getSourceCurrency(),exchangeFormattedAmount, fx.getDestinationCurrency()));
+                        sourceCurrency.getSymbol(),fx.getSourceCurrency(), destinationCurrency.getSymbol(),fx.getRate(), fx.getDestinationCurrency()));
             }
         }
     }
