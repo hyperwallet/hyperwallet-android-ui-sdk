@@ -182,27 +182,13 @@ Then user can see the tabs for Available funds and receipts
 */
     @Test
     public void testListReceiptFragment_verifyAvailbleFundsReceipt() {
-//        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-//                .getResourceContent("receipt_list_response.json")).mock();
-//        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-//                .getResourceContent("prepaidcard/prepaidcard_primarycard_only_response.json")).mock();
-//       // mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-//               // .getResourceContent("prepaidcard/prepaidcard_receipts_response.json")).mock();
-////        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-////                .getResourceContent("prepaidcard/prepaidcard_receipts_multicurrency_response.json")).mock();
-//        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();
-
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("receipt_list_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("prepaidcard/prepaidcard_secondary_response2.json")).mock();
-
-//        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-//                .getResourceContent("receipt_list_response.json")).mock();
-        // receipt_list_one_only_response
-        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("receipt_list_one_only_response.json")).mock();
-
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("prepaidcard/prepaidcard_secondary_receipts_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();
 
         // run test
         mActivityTestRule.launchActivity(null);

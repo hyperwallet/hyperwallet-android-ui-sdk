@@ -201,7 +201,6 @@ public class TransferUserFundsTest {
 
         onView(withId(R.id.transfer_all_funds)).perform(nestedScrollTo(), click());
         // Assert 12 digits amount with currency format based on default locale
-        // onView(withId(R.id.transfer_amount)).check(matches(withText( USD_CURRENCY_SYMBOL + "1000,000,000.00")));
         onView(withId(R.id.transfer_amount)).check(matches(withText( containsString("1,000,000,000.00"))));
         onView(withId(R.id.transfer_amount_currency)).check(matches(withText("USD")));
 
