@@ -1,0 +1,79 @@
+<resources>
+    <string name="app_name">hyperwallet.ui</string>
+    <string name="title_account_add">Account toevoegen</string>
+    <string name="unknown">Onbekend</string>
+
+    <string name="title_activity_select_transfer_method">Selecteer overschrijvingsmethode</string>
+    <!-- SelectTransferMethodActivity -->
+    <string name="select_transfer_method_title">@string/title_activity_select_transfer_method
+    </string>
+
+    <string name="mobileCountryRegion">Land/regio</string>
+    <string name="mobileCurrencyLabel">Valuta</string>
+    <string name="mobileAddTransferMethodHeader">Een overboekingsmethode toevoegen</string>
+    <string name="title_activity_add_transfer_method">Overboekingsmethode toevoegen</string>
+    <string name="title_add_bank_account">Bankrekening</string>
+    <string name="title_add_bank_card">Debetkaart</string>
+
+    <string name="error_exact_length_field">De lengte van dit veld is exact %d.</string>
+    <string name="error_invalid_expiry_date">%s is ongeldig.</string>
+    <string name="error_min_max_length_field">De minimale lengte van dit veld is {0} en de maximale        lengte is {1}.
+    </string>
+
+    <string name="createTransferMethodButtonLabel">Overboekingsmethode toevoegen</string>
+    <string name="default_account_label">Standaardrekening</string>
+    <string name="default_account_sub_label">Selecteer een standaard overboekingsmethode</string>
+    <string name="api_expiry_date_format">MM/JJ</string>
+
+    <string name="feeAndProcessingTimeInformation">%s kosten \u2022 %s</string>
+    <string name="feeInformation">%s kosten</string>
+
+    <string name="emptyStateAddTransferMethod">Voeg een overboekingsmethode toe om te beginnen.</string>
+
+    <!-- menu title -->
+    <string name="menu_transfer_funds">Overboeken</string>
+
+    <!--Fee formatter-->
+    <string name="fee_flat_formatter">%1$s%2$s</string>
+    <string name="fee_percent_no_min_and_max_formatter">%1$s%%</string>
+    <string name="fee_percent_only_min_formatter">%1$s%% (min:%2$s %3$s)</string>
+    <string name="fee_percent_only_max_formatter">%1$s%% (max:%2$s %3$s)</string>
+    <string name="fee_percent_formatter">%1$s%% (min:%2$s %3$s, max:%2$s %4$s)</string>
+    <string name="fee_mix_no_min_and_max_formatter">%1$s%2$s + %3$s%%</string>
+    <string name="fee_mix_only_min_formatter">%1$s%2$s + %3$s%% (min:%1$s %4$s)</string>
+    <string name="fee_mix_only_max_formatter">%1$s%2$s + %3$s%% (max:%1$s %4$s)</string>
+    <string name="fee_mix_formatter">%1$s%2$s + %3$s%% (min:%1$s %4$s, max:%1$s %5$s)</string>
+
+    <string name="account_holder">GEGEVENS REKENINGHOUDER</string>
+    <string name="account_information">GEGEVENS REKENINGHOUDER: %s(%s)</string>
+    <string name="address">ADRES</string>
+    <string name="contact_information">CONTACTGEGEVENS</string>
+    <string name="identification">IDENTIFICATIE</string>
+    <string name="intermediary_account">TUSSENREKENING</string>
+    <string name="mobileFeesAndProcessingTime">KOSTEN EN VERWERKINGSTIJD</string>
+
+    <string name="search_hint">Hint zoeken</string>
+    <string name="search_country">Land zoeken</string>
+    <string name="search_currency">Valuta zoeken</string>
+    <string name="search_widget">Zoeken</string>
+
+    <string name="select_transfer_method_currency_button_description">Knop \'Valuta selecteren\'
+    </string>
+    <string name="select_transfer_method_country_button_description">Knop \'Land selecteren\'</string>
+    <string name="selected_country_item_description">Item geselecteerd land</string>
+    <string name="selected_currency_item_description">Item geselecteerde valuta</string>
+    <string name="transfer_method_context_button_description">Knop \'Contextmenu\'</string>
+    <string name="item_select_description">Geselecteerd item</string>
+
+    <string name="error_unmapped_field">Niet-gekoppeld veld. Neem contact op met ondersteuning.</string>
+
+    <string name="country_placeholder">Canada</string>
+    <string name="currency_placeholder">CAD</string>
+    <string name="feesAndProcessTimePlaceholder">$ 20,00 USD kosten \u2022 1\-3 werkdagen </string>
+    <string name="mobileCountryCurrencyLabel">LOCATIE EN VALUTA</string>
+    <string name="mobileTransferMethodLabel">OVERBOEKINGSMETHODE</string>
+    <string name="mobileTransferMethodsHeader">Overboekingsmethoden</string>
+
+    <string name="mobileRemoveEAconfirm">Overboekingsmethode verwijderen</string>
+    <string name="prepaidCardManagementInfo" >"Log in met een webbrowser om uw kaart te beheren"</string>
+</resources>

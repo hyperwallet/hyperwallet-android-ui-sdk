@@ -1,0 +1,27 @@
+<resources>
+    <string name="error_dialog_title">错误</string>
+    <string name="error_dialog_connectivity_title">连接问题</string>
+    <string name="error_dialog_unexpected_title">意外错误</string>
+    <string name="ok">是</string>
+    <string name="try_again_button_label">重新尝试</string>
+    <string name="not_available">不可用</string>
+
+    <!-- title and font icon -->
+    <string name="bank_account">银行账户</string>
+    <string name="bank_card">借记卡</string>
+    <string name="wire_account">电汇账户</string>
+    <string name="paper_check">纸面支票</string>
+    <string name="prepaid_card">预付卡</string>
+    <string name="paypal_account">PayPal 账户</string>
+    <string name="venmo_account">Venmo 账户</string>
+    <string name="cash_pickup_mg">MoneyGram</string>
+
+    <string name="endingIn">截至 %s</string>
+    <string name="to">至 %s</string>
+    <string name="not_translated_in_braces">（未翻译）</string>
+
+    <string name="authentication_error_header">验证错误</string>
+    <string name="cancelButtonLabel">取消</string>
+    <string name="remove">删除</string>
+    <string name="mobileAreYouSure">是否确定？</string>
+</resources>

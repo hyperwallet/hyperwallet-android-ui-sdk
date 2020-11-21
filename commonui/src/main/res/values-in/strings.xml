@@ -1,0 +1,27 @@
+<resources>
+    <string name="error_dialog_title">Kesalahan</string>
+    <string name="error_dialog_connectivity_title">Masalah Koneksi</string>
+    <string name="error_dialog_unexpected_title">Kesalahan Tidak Terduga</string>
+    <string name="ok">OK</string>
+    <string name="try_again_button_label">Coba lagi</string>
+    <string name="not_available">Tidak Tersedia</string>
+
+    <!-- title and font icon -->
+    <string name="bank_account">Rekening Bank</string>
+    <string name="bank_card">Kartu Debit</string>
+    <string name="wire_account">Rekening Transfer Bank</string>
+    <string name="paper_check">Cek Kertas</string>
+    <string name="prepaid_card">Kartu Prabayar</string>
+    <string name="paypal_account">Akun PayPal</string>
+    <string name="venmo_account">Akun Venmo</string>
+    <string name="cash_pickup_mg">MoneyGram</string>
+
+    <string name="endingIn">berakhiran %s</string>
+    <string name="to">ke %s</string>
+    <string name="not_translated_in_braces">(not translated)</string>
+
+    <string name="authentication_error_header">Kesalahan Autentikasi</string>
+    <string name="cancelButtonLabel">Batalkan</string>
+    <string name="remove">Hapus</string>
+    <string name="mobileAreYouSure">Apa Anda yakin?</string>
+</resources>

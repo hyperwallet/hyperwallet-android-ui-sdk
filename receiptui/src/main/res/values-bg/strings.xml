@@ -1,0 +1,166 @@
+<resources>
+    <string name="app_name">бележка</string>
+    <string name="title_activity_receipt_list">Трансакции</string>
+    <string name="title_activity_receipt_detail">Информация за трансакция</string>
+    <string name="mobileTransactionDetailsHeader">Информация за трансакция</string>
+    <string name="transactions">Трансакции</string>
+    <string name="mobileTransactionTypeLabel">ТРАНСАКЦИЯ</string>
+    <string name="mobileFeeInfoLabel">ИНОРМАЦИЯ ЗА ТАКСИ</string>
+    <string name="amount">Сума</string>
+    <string name="mobileFeeLabel">Такса</string>
+    <string name="mobileTransactionDetailsTotal">Обща стойност на трансакцията</string>
+    <string name="mobileTransactionDetailsLabel">ИНФОРМАЦИЯ</string>
+    <string name="mobileJournalNumberLabel">ИН на бележка</string>
+    <string name="date">Дата</string>
+    <string name="mobileMerchantTxnLabel">Идентификационен № на трансакцията</string>
+    <string name="mobileConfirmNotesLabel">ЗАБЕЛЕЖКА</string>
+    <string name="mobileCharityName">Название на благотворителна организация</string>
+    <string name="mobileCheckNumber">Номер на чек</string>
+    <string name="mobilePromoWebsite">Уебсайт за промоции</string>
+    <string name="concat_date_string_view_format">%s %s</string>
+
+    <string name="mobileNoTransactionsUser">Няма активност, която да бъде показана.</string>
+    <string name="mobileNoTransactionsPrepaidCard">Няма трансакции през последните 365 дни</string>
+    <string name="title_transfer_funds">Трансфер</string>
+    <string name="font_icon_placeholder">\ue908</string>
+    <string name="text_placeholder">Маркер за място</string>
+
+    <!--Generic fee types-->
+    <string name="unknown_type">Неизвестен тип трансакция</string>
+    <string name="annual_fee">Годишна такса</string>
+    <string name="annual_fee_refund">Възстановяване на годишна такса</string>
+    <string name="customer_service_fee">Такса за обслужване на клиенти</string>
+    <string name="customer_service_fee_refund">Възстановяване на такса за обслужване на клиенти</string>
+    <string name="expedited_shipping_fee">Такса за ускорена доставка</string>
+    <string name="generic_fee_refund">Възстановяване на обща такса</string>
+    <string name="monthly_fee">Месена такса</string>
+    <string name="monthly_fee_refund">Възстановяване на месечна такса</string>
+    <string name="payment_expiry_fee">Такса за изтекло плащане</string>
+    <string name="payment_fee">Такса за плащане</string>
+    <string name="processing_fee">Такса за обработка</string>
+    <string name="standard_shipping_fee">Такса за стандартна доставка</string>
+    <string name="transfer_fee">Такса за превод</string>
+
+    <!--Generic payment types-->
+    <string name="adjustment">Коригиране на салдо</string>
+    <string name="foreign_exchange">Обмен на валута</string>
+    <string name="deposit">Плащане</string>
+    <string name="manual_adjustment">Коригиране</string>
+    <string name="payment_expiration">Плащането е изтекло</string>
+
+    <!--Bank account-specific types-->
+    <string name="bank_account_transfer_fee">Такса за върнато плащане от банковата сметка</string>
+    <string name="bank_account_transfer_return">Върнато плащане от банковата сметка</string>
+    <string name="bank_account_transfer_return_fee">Такса за върнато плащане от банковата сметка</string>
+    <string name="transfer_to_bank_account">Банкова сметка</string>
+
+    <!--Card-specific types-->
+    <string name="card_activation_fee">Такса за активиране на карта</string>
+    <string name="card_activation_fee_waiver">Отмяна на такса за активиране на карта</string>
+    <string name="card_fee">Такса за карта</string>
+    <string name="manual_transfer_to_prepaid_card">Трансфер към карта</string>
+    <string name="prepaid_card_balance_inquiry_fee">Такса за справка салдо</string>
+    <string name="prepaid_card_cash_advance">Аванс в брой</string>
+    <string name="prepaid_card_disputed_charge_refund">Оспорено възстановяване на разход</string>
+    <string name="prepaid_card_dispute_deposit">Оспорен картов депозит</string>
+    <string name="prepaid_card_domestic_cash_withdrawal_fee">Теглене от банкомат</string>
+    <string name="prepaid_card_exchange_rate_difference">РАЗЛИКА_В_ОБМЕННИЯ_КУРС_ЗА_ПРЕДПЛАТЕНА_КАРТА
+    </string>
+    <string name="prepaid_card_manual_unload">Трансфер от карта</string>
+    <string name="prepaid_card_overseas_cash_withdrawal_fee">Теглене от банкомат</string>
+    <string name="prepaid_card_pin_change_fee">Такса за смяна на PIN-код</string>
+    <string name="prepaid_card_refund">Възстановяване на сума</string>
+    <string name="prepaid_card_replacement_fee">Такса за замяна на карта</string>
+    <string name="prepaid_card_sale">Трансакция</string>
+    <string name="prepaid_card_sale_reversal">Трансакция с възстановена сума</string>
+    <string name="prepaid_card_unload">Трансфер от карта</string>
+    <string name="transfer_to_prepaid_card">Трансфер към карта</string>
+    <!---->
+    <!--Donation types-->
+    <string name="donation">Дарение</string>
+    <string name="donation_fee">Такса за дарение</string>
+    <string name="donation_return">Връщане на дарение</string>
+    <!---->
+    <!--Merchant payment types-->
+    <string name="merchant_payment">Плащане на търговец</string>
+    <string name="merchant_payment_fee">Такса за плащане на търговец</string>
+    <string name="merchant_payment_refund">Възстановяване на плащане на търговец</string>
+    <string name="merchant_payment_return">Връщане на плащане на търговец</string>
+    <!---->
+    <!--MoneyGram types-->
+    <string name="moneygram_transfer_return">Връщане от MoneyGram</string>
+    <string name="transfer_to_moneygram">MoneyGram</string>
+    <!---->
+    <!--Paper check types-->
+    <string name="paper_check_fee">Такса за хартиен чек</string>
+    <string name="paper_check_refund">Възстановяване на сума от хартиен чек</string>
+    <string name="transfer_to_paper_check">Хартиен чек</string>
+    <!---->
+    <!--User and program account types-->
+    <string name="account_closure">Закриване на сметка</string>
+    <string name="account_closure_fee">Такса за закриване на сметка</string>
+    <string name="account_unload">Връщане на средства</string>
+    <string name="dormant_user_fee">Такса за сметка на неактивен потребител</string>
+    <string name="dormant_user_fee_refund">Възстановяване на такса за сметка на неактивен потребител</string>
+    <string name="payment">Плащане</string>
+    <string name="payment_cancellation">Отмяна на плащане</string>
+    <string name="payment_reversal">Възстановяване на плащане</string>
+    <string name="payment_reversal_fee">Такса за възстановяване на плащане</string>
+    <string name="payment_return">Връщане на плащане</string>
+    <string name="transfer_to_program_account">Трансфер към програма</string>
+    <string name="transfer_to_user">Трансфер към потребител</string>
+    <string name="transfer_to_paypal_account">PayPal</string>
+    <string name="transfer_to_bank_card">Банкова карта</string>
+    <string name="transfer_to_debit_card">Дебитна карта</string>
+    <string name="prepaid_card_transfer_return">Връщане на сума за зареждане на предплатена карта</string>
+    <!---->
+    <!--Virtual incentive types-->
+    <string name="virtual_incentive_cancellation">Отмяна на промоция</string>
+    <string name="virtual_incentive_issuance">Издадена промоция</string>
+    <string name="virtual_incentive_purchase">Покупка чрез промоция</string>
+    <string name="virtual_incentive_refund">Възстановяване на промоция</string>
+    <!---->
+    <!--Western Union and WUBS types-->
+    <string name="transfer_to_western_union">Western Union</string>
+    <string name="transfer_to_wubs_wire">Банков превод</string>
+    <string name="western_union_transfer_return">Теглене от Western Union</string>
+    <string name="wubs_wire_transfer_return">Връщане на банков превод</string>
+    <!---->
+    <!--Wire transfer types-->
+    <string name="transfer_to_wire">Банков превод</string>
+    <string name="wire_transfer_fee">Такса за банков превод</string>
+    <string name="wire_transfer_return">Връщане на банков превод</string>
+
+    <!-- New exposed receipt types -->
+    <string name="paypal_account_transfer_return">Връщане на изтеглени пари</string>
+    <string name="venmo_account_transfer_return">Връщане на изтеглени пари</string>
+    <string name="prepaid_card_account_deposit">Депозит в сметка</string>
+    <string name="prepaid_card_annual_fee_discount">Отстъпка от годишната такса</string>
+    <string name="prepaid_card_bill_reprint_fee">Такса за повторно отпечатване на сметка</string>
+    <string name="prepaid_card_atm_or_cash_advance_fee">Такса за банкомат/аванс в брой</string>
+    <string name="prepaid_card_cash_advance_chargeback">Възстановяване на аванс в брой</string>
+    <string name="prepaid_card_cash_advance_chargeback_reversal">Отмяна на възстановяване на аванс в брой</string>
+    <string name="prepaid_card_cash_advance_repress">Задържане на аванс в брой</string>
+    <string name="prepaid_card_cash_advance_repress_reversal">Отмяна на задържане на аванс</string>
+    <string name="prepaid_card_chargeback">Възстановяване на плащане</string>
+    <string name="prepaid_card_chargeback_refund">Възстановяване на плащане</string>
+    <string name="prepaid_card_chargeback_refund_reversal">Отмяна на възстановяване на плащане</string>
+    <string name="prepaid_card_chargeback_reversal">Отмяна на възстановяване на плащане</string>
+    <string name="prepaid_card_commission_or_fee">Такса/Комисионна</string>
+    <string name="prepaid_card_debit_transfer">Дебит/Трансфери</string>
+    <string name="prepaid_card_document_request_fee">Такса за заявка на документ</string>
+    <string name="prepaid_card_emergency_cash">Пари за спешни случаи</string>
+    <string name="prepaid_card_emergency_card">Карта за спешни случаи</string>
+    <string name="prepaid_card_income">Доход</string>
+    <string name="prepaid_card_load_fee">PAN такса</string>
+    <string name="prepaid_card_refund_fee">Такса за възстановяване на сума</string>
+    <string name="prepaid_card_monthly_maintenance_fee">Такса за месечна поддръжка</string>
+    <string name="prepaid_card_transaction_fee">Такса за трансакция</string>
+    <string name="prepaid_card_sms_fee">Такса за SMS</string>
+    <string name="prepaid_card_declined_authorization_fee">Такса за отказана оторизация</string>
+    <string name="fispc">Покупка</string>
+
+    <!-- Prepaid Cards Receipt   -->
+    <string name="mobileAvailableBalances">Налични средства</string>
+
+</resources>

@@ -1,0 +1,168 @@
+<resources>
+    <string name="app_name">betaalbewijs</string>
+    <string name="title_activity_receipt_list">Transacties</string>
+    <string name="title_activity_receipt_detail">Transactiegegevens</string>
+    <string name="mobileTransactionDetailsHeader">Transactiegegevens</string>
+    <string name="transactions">Transacties</string>
+    <string name="mobileTransactionTypeLabel">TRANSACTIE</string>
+    <string name="mobileFeeInfoLabel">KOSTEN INFORMATIE</string>
+    <string name="amount">Bedrag</string>
+    <string name="mobileFeeLabel">Kosten</string>
+    <string name="mobileTransactionDetailsTotal">Transactietotaal</string>
+    <string name="mobileTransactionDetailsLabel">GEGEVENS</string>
+    <string name="mobileJournalNumberLabel">Ontvangstbewijs-ID</string>
+    <string name="date">Datum</string>
+    <string name="mobileMerchantTxnLabel">Transactie-ID</string>
+    <string name="mobileConfirmNotesLabel">OPMERKING</string>
+    <string name="mobileCharityName">Naam liefdadigheidsinstelling</string>
+    <string name="mobileCheckNumber">Chequenummer</string>
+    <string name="mobilePromoWebsite">Promotiewebsite</string>
+    <string name="concat_date_string_view_format">%s %s</string>
+
+    <string name="mobileNoTransactionsUser">Er is geen activiteit om weer te geven.</string>
+    <string name="mobileNoTransactionsPrepaidCard">Geen transacties in de afgelopen 365 dagen</string>
+    <string name="title_transfer_funds">Overboeken</string>
+    <string name="font_icon_placeholder">\ue908</string>
+    <string name="text_placeholder">Tijdelijke aanduiding</string>
+
+
+
+    <!--Generic fee types-->
+    <string name="unknown_type">Onbekend transactietype</string>
+    <string name="annual_fee">Jaarlijkse kosten</string>
+    <string name="annual_fee_refund">Terugbetaling jaarlijkse kosten</string>
+    <string name="customer_service_fee">Kosten klantenservice</string>
+    <string name="customer_service_fee_refund">Terugbetaling kosten klantenservice</string>
+    <string name="expedited_shipping_fee">Kosten versnelde verzending</string>
+    <string name="generic_fee_refund">Terugbetaling algemene kosten</string>
+    <string name="monthly_fee">Maandelijkse kosten</string>
+    <string name="monthly_fee_refund">Terugbetaling maandelijkse kosten</string>
+    <string name="payment_expiry_fee">Kosten betaling verlopen</string>
+    <string name="payment_fee">Kosten betaling</string>
+    <string name="processing_fee">Verwerkingskosten</string>
+    <string name="standard_shipping_fee">Standaard verzendkosten</string>
+    <string name="transfer_fee">Overdrachtskosten</string>
+
+    <!--Generic payment types-->
+    <string name="adjustment">Aanpassing saldo</string>
+    <string name="foreign_exchange">Vreemde valuta</string>
+    <string name="deposit">Betaling</string>
+    <string name="manual_adjustment">Aanpassing</string>
+    <string name="payment_expiration">Betaling verlopen</string>
+
+    <!--Bank account-specific types-->
+    <string name="bank_account_transfer_fee">Kosten terugbetaling bankrekening</string>
+    <string name="bank_account_transfer_return">Terugbetaling bankrekening</string>
+    <string name="bank_account_transfer_return_fee">Kosten terugbetaling bankrekening</string>
+    <string name="transfer_to_bank_account">Bankrekening</string>
+
+    <!--Card-specific types-->
+    <string name="card_activation_fee">Kaartactiveringskosten</string>
+    <string name="card_activation_fee_waiver">Vrijstelling kaartactiveringskosten</string>
+    <string name="card_fee">Kosten kaart</string>
+    <string name="manual_transfer_to_prepaid_card">Overboeken naar kaart</string>
+    <string name="prepaid_card_balance_inquiry_fee">Kosten opvragen saldo</string>
+    <string name="prepaid_card_cash_advance">Voorschot</string>
+    <string name="prepaid_card_disputed_charge_refund">Terugbetaling betwiste kosten</string>
+    <string name="prepaid_card_dispute_deposit">Betwiste kaartstorting</string>
+    <string name="prepaid_card_domestic_cash_withdrawal_fee">Opname geldautomaat</string>
+    <string name="prepaid_card_exchange_rate_difference">PREPAIDKAART_WISSELKOERSVERSCHIL
+    </string>
+    <string name="prepaid_card_manual_unload">Overboeken van kaart</string>
+    <string name="prepaid_card_overseas_cash_withdrawal_fee">Opname geldautomaat</string>
+    <string name="prepaid_card_pin_change_fee">Kosten wijziging pincode</string>
+    <string name="prepaid_card_refund">Terugbetaling</string>
+    <string name="prepaid_card_replacement_fee">Kosten kaartvervanging</string>
+    <string name="prepaid_card_sale">Transactie</string>
+    <string name="prepaid_card_sale_reversal">Omgekeerde transactie</string>
+    <string name="prepaid_card_unload">Overboeken van kaart</string>
+    <string name="transfer_to_prepaid_card">Overboeken naar kaart</string>
+    <!---->
+    <!--Donation types-->
+    <string name="donation">Donatie</string>
+    <string name="donation_fee">Kosten donatie</string>
+    <string name="donation_return">Terugbetaling donatie</string>
+    <!---->
+    <!--Merchant payment types-->
+    <string name="merchant_payment">Betaling verkoper</string>
+    <string name="merchant_payment_fee">Kosten betaling verkoper</string>
+    <string name="merchant_payment_refund">Terugbetaling betaling verkoper</string>
+    <string name="merchant_payment_return">Terugbetaling betaling verkoper</string>
+    <!---->
+    <!--MoneyGram types-->
+    <string name="moneygram_transfer_return">Terugbetaling MoneyGram</string>
+    <string name="transfer_to_moneygram">MoneyGram</string>
+    <!---->
+    <!--Paper check types-->
+    <string name="paper_check_fee">Kosten papieren check</string>
+    <string name="paper_check_refund">Terugbetaling papieren cheque</string>
+    <string name="transfer_to_paper_check">Papieren cheque</string>
+    <!---->
+    <!--User and program account types-->
+    <string name="account_closure">Rekening sluiten</string>
+    <string name="account_closure_fee">Kosten rekening sluiten</string>
+    <string name="account_unload">Terugbetaling geld</string>
+    <string name="dormant_user_fee">Kosten slapende gebruikersrekening</string>
+    <string name="dormant_user_fee_refund">Terugbetaling kosten slapende gebruikersrekening</string>
+    <string name="payment">Betaling</string>
+    <string name="payment_cancellation">Annulering betaling</string>
+    <string name="payment_reversal">Terugboeking betaling</string>
+    <string name="payment_reversal_fee">Kosten terugboeking betaling</string>
+    <string name="payment_return">Terugbetaling betaling</string>
+    <string name="transfer_to_program_account">Overboeken naar programma</string>
+    <string name="transfer_to_user">Overboeken naar gebruiker</string>
+    <string name="transfer_to_paypal_account">PayPal</string>
+    <string name="transfer_to_bank_card">Bankkaart</string>
+    <string name="transfer_to_debit_card">Debetkaart</string>
+    <string name="prepaid_card_transfer_return">Terugbetaling opladen prepaidkaart</string>
+    <!---->
+    <!--Virtual incentive types-->
+    <string name="virtual_incentive_cancellation">Annulering promotie</string>
+    <string name="virtual_incentive_issuance">Uitgegeven promotie</string>
+    <string name="virtual_incentive_purchase">Aankoop promotie</string>
+    <string name="virtual_incentive_refund">Terugbetaling promotie</string>
+    <!---->
+    <!--Western Union and WUBS types-->
+    <string name="transfer_to_western_union">Western Union</string>
+    <string name="transfer_to_wubs_wire">Bankoverschrijving</string>
+    <string name="western_union_transfer_return">Opname Western Union</string>
+    <string name="wubs_wire_transfer_return">Terugbetaling bankoverschrijving</string>
+    <!---->
+    <!--Wire transfer types-->
+    <string name="transfer_to_wire">Bankoverschrijving</string>
+    <string name="wire_transfer_fee">Kosten bankoverschrijving</string>
+    <string name="wire_transfer_return">Terugbetaling bankoverschrijving</string>
+
+    <!-- New exposed receipt types -->
+    <string name="paypal_account_transfer_return">Terugbetaling uitbetaling</string>
+    <string name="venmo_account_transfer_return">Terugbetaling uitbetaling</string>
+    <string name="prepaid_card_account_deposit">Storting op rekening</string>
+    <string name="prepaid_card_annual_fee_discount">Korting jaarlijkse kosten</string>
+    <string name="prepaid_card_bill_reprint_fee">Kosten opnieuw afdrukken factuur</string>
+    <string name="prepaid_card_atm_or_cash_advance_fee">Kosten geldautomaat/voorschot</string>
+    <string name="prepaid_card_cash_advance_chargeback">Terugboeking voorschot</string>
+    <string name="prepaid_card_cash_advance_chargeback_reversal">Terugboeking van terugboeking voorschot</string>
+    <string name="prepaid_card_cash_advance_repress">Voorschot onderdrukken</string>
+    <string name="prepaid_card_cash_advance_repress_reversal">Terugboeking voorschot onderdrukken</string>
+    <string name="prepaid_card_chargeback">Terugboeking</string>
+    <string name="prepaid_card_chargeback_refund">Terugbetaling terugboeking</string>
+    <string name="prepaid_card_chargeback_refund_reversal">Terugbetaling van terugbetaling terugboeking</string>
+    <string name="prepaid_card_chargeback_reversal">Terugboeking van terugboeking</string>
+    <string name="prepaid_card_commission_or_fee">Kosten/commissie</string>
+    <string name="prepaid_card_debit_transfer">Debet/overboekingen</string>
+    <string name="prepaid_card_document_request_fee">Kosten document opvragen</string>
+    <string name="prepaid_card_emergency_cash">Noodgeld</string>
+    <string name="prepaid_card_emergency_card">Noodkaart</string>
+    <string name="prepaid_card_income">Inkomen</string>
+    <string name="prepaid_card_load_fee">PAN-kosten</string>
+    <string name="prepaid_card_refund_fee">Kosten terugbetaling</string>
+    <string name="prepaid_card_monthly_maintenance_fee">Maandelijkse onderhoudskosten</string>
+    <string name="prepaid_card_transaction_fee">Transactiekosten</string>
+    <string name="prepaid_card_sms_fee">Sms-kosten</string>
+    <string name="prepaid_card_declined_authorization_fee">Kosten afgewezen autorisatie</string>
+    <string name="fispc">Aankoop</string>
+
+    <!-- Prepaid Cards Receipt   -->
+    <string name="mobileAvailableBalances">Beschikbaar geld</string>
+
+</resources>

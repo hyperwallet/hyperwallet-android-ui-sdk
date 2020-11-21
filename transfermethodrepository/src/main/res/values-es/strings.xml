@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="error_unsupported_transfer_type">Este método de transferencia actualmente no es compatible</string>
+    <string name="error_unsupported_transfer_type">Este método de transferencia no es compatible.</string>
 </resources>

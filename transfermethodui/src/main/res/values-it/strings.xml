@@ -1,0 +1,79 @@
+<resources>
+    <string name="app_name">hyperwallet.ui</string>
+    <string name="title_account_add">Aggiungi conto</string>
+    <string name="unknown">Sconosciuto</string>
+
+    <string name="title_activity_select_transfer_method">Seleziona metodo di trasferimento</string>
+    <!-- SelectTransferMethodActivity -->
+    <string name="select_transfer_method_title">@string/title_activity_select_transfer_method
+    </string>
+
+    <string name="mobileCountryRegion">Paese/regione</string>
+    <string name="mobileCurrencyLabel">Valuta</string>
+    <string name="mobileAddTransferMethodHeader">Aggiungi un metodo di trasferimento</string>
+    <string name="title_activity_add_transfer_method">Aggiungi metodo di trasferimento</string>
+    <string name="title_add_bank_account">Conto bancario</string>
+    <string name="title_add_bank_card">Carta di debito</string>
+
+    <string name="error_exact_length_field">La lunghezza di questo campo è esattamente %d.</string>
+    <string name="error_invalid_expiry_date">%s non è valido.</string>
+    <string name="error_min_max_length_field">La lunghezza minima di questo campo è {0} e la lunghezza massima è {1}.
+    </string>
+
+    <string name="createTransferMethodButtonLabel">Aggiungi metodo di trasferimento</string>
+    <string name="default_account_label">Conto predefinito</string>
+    <string name="default_account_sub_label">Seleziona un metodo di trasferimento predefinito</string>
+    <string name="api_expiry_date_format">MM/AA</string>
+
+    <string name="feeAndProcessingTimeInformation">Commissione %s \u2022 %s</string>
+    <string name="feeInformation">Commissione %s</string>
+
+    <string name="emptyStateAddTransferMethod">Aggiungi un metodo di trasferimento per iniziare.</string>
+
+    <!-- menu title -->
+    <string name="menu_transfer_funds">Trasferimento</string>
+
+    <!--Fee formatter-->
+    <string name="fee_flat_formatter">%1$s%2$s</string>
+    <string name="fee_percent_no_min_and_max_formatter">%1$s%%</string>
+    <string name="fee_percent_only_min_formatter">%1$s%% (Min:%2$s %3$s)</string>
+    <string name="fee_percent_only_max_formatter">%1$s%% (Max:%2$s %3$s)</string>
+    <string name="fee_percent_formatter">%1$s%% (Min:%2$s %3$s, Max:%2$s %4$s)</string>
+    <string name="fee_mix_no_min_and_max_formatter">%1$s%2$s + %3$s%%</string>
+    <string name="fee_mix_only_min_formatter">%1$s%2$s + %3$s%% (Min:%1$s %4$s)</string>
+    <string name="fee_mix_only_max_formatter">%1$s%2$s + %3$s%% (Max:%1$s %4$s)</string>
+    <string name="fee_mix_formatter">%1$s%2$s + %3$s%% (Min:%1$s %4$s, Max:%1$s %5$s)</string>
+
+    <string name="account_holder">INFORMAZIONI SUL TITOLARE DEL CONTO</string>
+    <string name="account_information">INFORMAZIONI SUL CONTO: %s(%s)</string>
+    <string name="address">INDIRIZZO</string>
+    <string name="contact_information">INFORMAZIONI DI CONTATTO</string>
+    <string name="identification">IDENTIFICAZIONE</string>
+    <string name="intermediary_account">CONTO DELL’INTERMEDIARIO</string>
+    <string name="mobileFeesAndProcessingTime">COMMISSIONI E TEMPO DI ELABORAZIONE</string>
+
+    <string name="search_hint">Cerca Suggerimento</string>
+    <string name="search_country">Cerca Paese</string>
+    <string name="search_currency">Cerca Valuta</string>
+    <string name="search_widget">Cerca</string>
+
+    <string name="select_transfer_method_currency_button_description">Pulsante di selezione valuta
+    </string>
+    <string name="select_transfer_method_country_button_description">Pulsante di selezione Paese</string>
+    <string name="selected_country_item_description">Elemento Paese selezionato</string>
+    <string name="selected_currency_item_description">Elemento valuta selezionato</string>
+    <string name="transfer_method_context_button_description">Pulsante menu contestuale</string>
+    <string name="item_select_description">Elemento selezionato</string>
+
+    <string name="error_unmapped_field">Campo non mappato, contatta l’Assistenza.</string>
+
+    <string name="country_placeholder">Canada</string>
+    <string name="currency_placeholder">CAD</string>
+    <string name="feesAndProcessTimePlaceholder">Commissione 20,00 $ USD \u2022 1-3 giorni lavorativi </string>
+    <string name="mobileCountryCurrencyLabel">LUOGO E VALUTA</string>
+    <string name="mobileTransferMethodLabel">METODO DI TRASFERIMENTO</string>
+    <string name="mobileTransferMethodsHeader">Metodi di trasferimento</string>
+
+    <string name="mobileRemoveEAconfirm">Rimuovi metodo di trasferimento</string>
+    <string name="prepaidCardManagementInfo" >“Per gestire la tua carta, accedi usando un browser web”</string>
+</resources>

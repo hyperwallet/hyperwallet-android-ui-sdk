@@ -1,0 +1,27 @@
+<resources>
+    <string name="error_dialog_title">Fel</string>
+    <string name="error_dialog_connectivity_title">Anslutningsproblem</string>
+    <string name="error_dialog_unexpected_title">Oväntat fel</string>
+    <string name="ok">OK</string>
+    <string name="try_again_button_label">Försök igen</string>
+    <string name="not_available">Ej tillgänglig</string>
+
+    <!-- title and font icon -->
+    <string name="bank_account">Bankkonto</string>
+    <string name="bank_card">Betalkort</string>
+    <string name="wire_account">Konto för banköverföring</string>
+    <string name="paper_check">Papperscheck</string>
+    <string name="prepaid_card">Förbetalt kort</string>
+    <string name="paypal_account">PayPal-konto</string>
+    <string name="venmo_account">Venmo-konto</string>
+    <string name="cash_pickup_mg">MoneyGram</string>
+
+    <string name="endingIn">upphör om %s</string>
+    <string name="to">till %s</string>
+    <string name="not_translated_in_braces">(ej översatt)</string>
+
+    <string name="authentication_error_header">Autentiseringsfel</string>
+    <string name="cancelButtonLabel">Avbryt</string>
+    <string name="remove">Ta bort</string>
+    <string name="mobileAreYouSure">Är du säker?</string>
+</resources>
