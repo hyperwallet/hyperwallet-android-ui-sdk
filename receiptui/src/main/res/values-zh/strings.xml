@@ -1,0 +1,168 @@
+<resources>
+    <string name="app_name">收據</string>
+    <string name="title_activity_receipt_list">交易</string>
+    <string name="title_activity_receipt_detail">交易細節</string>
+    <string name="mobileTransactionDetailsHeader">交易細節</string>
+    <string name="transactions">交易</string>
+    <string name="mobileTransactionTypeLabel">交易</string>
+    <string name="mobileFeeInfoLabel">手續費資訊</string>
+    <string name="amount">金額</string>
+    <string name="mobileFeeLabel">手續費</string>
+    <string name="mobileTransactionDetailsTotal">交易總額</string>
+    <string name="mobileTransactionDetailsLabel">細節</string>
+    <string name="mobileJournalNumberLabel">收款代號</string>
+    <string name="date">日期</string>
+    <string name="mobileMerchantTxnLabel">交易代號</string>
+    <string name="mobileConfirmNotesLabel">附註</string>
+    <string name="mobileCharityName">慈善團體名稱</string>
+    <string name="mobileCheckNumber">支票編號</string>
+    <string name="mobilePromoWebsite">促銷網站</string>
+    <string name="concat_date_string_view_format">%s %s</string>
+
+    <string name="mobileNoTransactionsUser">沒有活動可顯示。</string>
+    <string name="mobileNoTransactionsPrepaidCard">近 365 天內無交易</string>
+    <string name="title_transfer_funds">轉帳</string>
+    <string name="font_icon_placeholder">\ue908</string>
+    <string name="text_placeholder">佔位符</string>
+
+
+
+    <!--Generic fee types-->
+    <string name="unknown_type">未知交易類型</string>
+    <string name="annual_fee">年費</string>
+    <string name="annual_fee_refund">年費退款</string>
+    <string name="customer_service_fee">客戶服務費用</string>
+    <string name="customer_service_fee_refund">客戶服務費用退款</string>
+    <string name="expedited_shipping_fee">加急運費</string>
+    <string name="generic_fee_refund">一般退款</string>
+    <string name="monthly_fee">月費</string>
+    <string name="monthly_fee_refund">月費退款</string>
+    <string name="payment_expiry_fee">付款到期手續費</string>
+    <string name="payment_fee">付款手續費</string>
+    <string name="processing_fee">處理手續費</string>
+    <string name="standard_shipping_fee">標準運費</string>
+    <string name="transfer_fee">轉帳手續費</string>
+
+    <!--Generic payment types-->
+    <string name="adjustment">餘額調整</string>
+    <string name="foreign_exchange">外匯</string>
+    <string name="deposit">付款</string>
+    <string name="manual_adjustment">調整</string>
+    <string name="payment_expiration">付款已到期</string>
+
+    <!--Bank account-specific types-->
+    <string name="bank_account_transfer_fee">銀行帳戶退款手續費</string>
+    <string name="bank_account_transfer_return">銀行帳戶退款</string>
+    <string name="bank_account_transfer_return_fee">銀行帳戶退款手續費</string>
+    <string name="transfer_to_bank_account">銀行帳戶</string>
+
+    <!--Card-specific types-->
+    <string name="card_activation_fee">卡片啟用手續費</string>
+    <string name="card_activation_fee_waiver">卡片啟用手續費減免</string>
+    <string name="card_fee">卡片費</string>
+    <string name="manual_transfer_to_prepaid_card">轉帳至卡片</string>
+    <string name="prepaid_card_balance_inquiry_fee">餘額查詢手續費</string>
+    <string name="prepaid_card_cash_advance">預付現金</string>
+    <string name="prepaid_card_disputed_charge_refund">爭議收費退款</string>
+    <string name="prepaid_card_dispute_deposit">爭議卡片存款</string>
+    <string name="prepaid_card_domestic_cash_withdrawal_fee">ATM 提款</string>
+    <string name="prepaid_card_exchange_rate_difference">PREPAID_CARD_EXCHANGE_RATE_DIFFERENCE
+    </string>
+    <string name="prepaid_card_manual_unload">自卡片轉帳</string>
+    <string name="prepaid_card_overseas_cash_withdrawal_fee">ATM 提款</string>
+    <string name="prepaid_card_pin_change_fee">PIN 變更手續費</string>
+    <string name="prepaid_card_refund">退款</string>
+    <string name="prepaid_card_replacement_fee">卡片更換手續費</string>
+    <string name="prepaid_card_sale">交易</string>
+    <string name="prepaid_card_sale_reversal">已撤銷交易</string>
+    <string name="prepaid_card_unload">自卡片轉帳</string>
+    <string name="transfer_to_prepaid_card">轉帳至卡片</string>
+    <!---->
+    <!--Donation types-->
+    <string name="donation">捐款</string>
+    <string name="donation_fee">捐款手續費</string>
+    <string name="donation_return">捐款退款</string>
+    <!---->
+    <!--Merchant payment types-->
+    <string name="merchant_payment">商家支付</string>
+    <string name="merchant_payment_fee">商家支付手續費</string>
+    <string name="merchant_payment_refund">商家支付退款</string>
+    <string name="merchant_payment_return">商家支付退款</string>
+    <!---->
+    <!--MoneyGram types-->
+    <string name="moneygram_transfer_return">MoneyGram 退款</string>
+    <string name="transfer_to_moneygram">MoneyGram</string>
+    <!---->
+    <!--Paper check types-->
+    <string name="paper_check_fee">紙本支票手續費</string>
+    <string name="paper_check_refund">紙本支票退款</string>
+    <string name="transfer_to_paper_check">紙本支票</string>
+    <!---->
+    <!--User and program account types-->
+    <string name="account_closure">帳戶關閉</string>
+    <string name="account_closure_fee">帳戶關閉手續費</string>
+    <string name="account_unload">資金退還</string>
+    <string name="dormant_user_fee">非使用中使用者帳戶手續費</string>
+    <string name="dormant_user_fee_refund">非使用中使用者帳戶手續費退款</string>
+    <string name="payment">付款</string>
+    <string name="payment_cancellation">付款取消</string>
+    <string name="payment_reversal">付款取消</string>
+    <string name="payment_reversal_fee">付款取消手續費</string>
+    <string name="payment_return">退款</string>
+    <string name="transfer_to_program_account">轉帳至計畫</string>
+    <string name="transfer_to_user">轉帳至使用者</string>
+    <string name="transfer_to_paypal_account">PayPal</string>
+    <string name="transfer_to_bank_card">銀行卡</string>
+    <string name="transfer_to_debit_card">簽帳金融卡</string>
+    <string name="prepaid_card_transfer_return">預付卡載入退還</string>
+    <!---->
+    <!--Virtual incentive types-->
+    <string name="virtual_incentive_cancellation">促銷取消</string>
+    <string name="virtual_incentive_issuance">已發行促銷</string>
+    <string name="virtual_incentive_purchase">購買促銷</string>
+    <string name="virtual_incentive_refund">促銷退款</string>
+    <!---->
+    <!--Western Union and WUBS types-->
+    <string name="transfer_to_western_union">西聯</string>
+    <string name="transfer_to_wubs_wire">匯款轉帳</string>
+    <string name="western_union_transfer_return">西聯提款</string>
+    <string name="wubs_wire_transfer_return">匯款轉帳退款</string>
+    <!---->
+    <!--Wire transfer types-->
+    <string name="transfer_to_wire">匯款轉帳</string>
+    <string name="wire_transfer_fee">西聯手續費</string>
+    <string name="wire_transfer_return">匯款轉帳退款</string>
+
+    <!-- New exposed receipt types -->
+    <string name="paypal_account_transfer_return">提現退款</string>
+    <string name="venmo_account_transfer_return">提現退款</string>
+    <string name="prepaid_card_account_deposit">帳戶存款</string>
+    <string name="prepaid_card_annual_fee_discount">年費折扣</string>
+    <string name="prepaid_card_bill_reprint_fee">重印帳單手續費</string>
+    <string name="prepaid_card_atm_or_cash_advance_fee">ATM/預付現金手續費</string>
+    <string name="prepaid_card_cash_advance_chargeback">預付現金退單</string>
+    <string name="prepaid_card_cash_advance_chargeback_reversal">預付現金退單取消</string>
+    <string name="prepaid_card_cash_advance_repress">退回預付現金</string>
+    <string name="prepaid_card_cash_advance_repress_reversal">退回預付現金取消</string>
+    <string name="prepaid_card_chargeback">退單</string>
+    <string name="prepaid_card_chargeback_refund">退單退款</string>
+    <string name="prepaid_card_chargeback_refund_reversal">退單退款取消</string>
+    <string name="prepaid_card_chargeback_reversal">退單取消</string>
+    <string name="prepaid_card_commission_or_fee">手續費/佣金</string>
+    <string name="prepaid_card_debit_transfer">扣款/轉帳</string>
+    <string name="prepaid_card_document_request_fee">文件要求手續費</string>
+    <string name="prepaid_card_emergency_cash">緊急款項</string>
+    <string name="prepaid_card_emergency_card">緊急卡</string>
+    <string name="prepaid_card_income">收益</string>
+    <string name="prepaid_card_load_fee">PAN 手續費</string>
+    <string name="prepaid_card_refund_fee">退款手續費</string>
+    <string name="prepaid_card_monthly_maintenance_fee">每月維護費</string>
+    <string name="prepaid_card_transaction_fee">交易手續費</string>
+    <string name="prepaid_card_sms_fee">簡訊費</string>
+    <string name="prepaid_card_declined_authorization_fee">拒絕授權費</string>
+    <string name="fispc">購買</string>
+
+    <!-- Prepaid Cards Receipt   -->
+    <string name="mobileAvailableBalances">可用資金</string>
+
+</resources>

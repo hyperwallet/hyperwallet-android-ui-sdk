@@ -1,0 +1,71 @@
+<resources>
+    <string name="title_activity_create_transfer">Шилжүүлэх мөнгө</string>
+    <string name="mobileConfirmationHeader">Мэдээллийг баталгаажуулах</string>
+    <string name="mobileConfirmNotesLabel">АНХААР</string>
+    <string name="transfer_destination">Хүлээн авах улс</string>
+    <string name="mobileTransferToLabel">ХЭНД ШИЛЖҮҮЛЭХ</string>
+    <string name="mobileTransferFundsHeader">Шилжүүлэх мөнгө</string>
+    <string name="mobileFXlabel">ГАДААД ВАЛЮТ</string>
+    <string name="transfer_header_label">Шилжүүлэг</string>
+    <string name="noTransferMethodAdded">Шилжүүлгийн аргыг зааж өгөх ёстой</string>
+    <string name="transfer_amount_hint">Дүн</string>
+    <string name="transfer_currency_placeholder">ам.доллар</string>
+    <string name="transfer_currency_code_placeholder">$</string>
+    <string name="transfer_all_funds_label">Шилжүүлгийн хамгийн их дүн</string>
+    <string name="mobileAvailableBalance">Боломжтой дүн: %s %s</string>
+    <string name="mobileSummaryLabel">ХУРААНГУЙ</string>
+    <string name="mobileNoteLabel">Анхаар</string>
+    <string name="transfer_notes_label">Анхаар</string>
+    <string name="transfer_notes_additional_info_label">Тэмдэглэл нэмэх (заавал бус)</string>
+    <string name="continueButtonLabel">Үргэлжлүүлэх</string>
+    <string name="defaultTransferAmount">0</string>
+    <string name="transfer">Шилжүүлэг</string>
+    <string name="add_text">+</string>
+    <string name="mobileAddTransferMethod">Шилжүүлгийн арга нэмэх</string>
+    <string name="add_transfer_description_1">Эхлэхийн тулд шилжүүлгийн аргыг нэмнэ үү.</string>
+    <string name="add_transfer_description_2">Эхлэхийн тулд шилжүүлгийн аргыг нэмнэ үү.</string>
+    <string name="transfer_destination_selection_description">Шилжүүлгийн аргыг сонгох</string>
+    <string name="destination_item_description">Хүлээн авах зүйл</string>
+
+    <string name="amount_currency_format">%s %s</string>
+    <string name="exchange_rate_format">1 %s = %s %s</string>
+
+    <string name="module_transfermethodui_unavailable_error">Та шилжүүлгийн аргыг нэмэх боломжгүй.</string>
+    <string name="transferAmountInvalid">Зөв шилжүүлгийн дүнг оруулна уу</string>
+
+    <string name="mobileFXsell">Хэнээс</string>
+    <string name="mobileFXbuy">Хэнд</string>
+    <string name="mobileFXRateLabel">Ханш</string>
+
+    <string name="mobileConfirmDetailsAmount">Дүн</string>
+    <string name="mobileConfirmDetailsFee">Хураамж</string>
+    <string name="mobileConfirmDetailsTotal">Та хүлээн авна</string>
+    <string name="exchange_rate_change_warning">Валютын ханшийн өөрчлөлтийн улмаас та одоо %1$s %2$s-ыг авна.</string>
+
+
+    <string name="mobileTransferMax">Шилжүүлгийн хамгийн их дүн</string>
+    <string name="transfer_summary_placeholder">Боломжтой дүн: 2,422.90 канад доллар</string>
+    <string name="transfer_notes_placeholder">Хэсэгчилсэн шилжүүлэг</string>
+    <string name="transfer_item_icon_placeholder">\ue000</string>
+    <string name="transfer_item_title_placeholder">Шилжүүлгийн төрөл</string>
+    <string name="transfer_item_country_placeholder">Улсын нэр</string>
+    <string name="transfer_item_identification_placeholder">XXXX-д засварлаж байна</string>
+    <string name="foreign_exchange_sell_placeholder">15.05 канад доллар</string>
+    <string name="foreign_exchange_buy_placeholder">11.00 ам.доллар</string>
+    <string name="foreign_exchange_rate_placeholder">1 CAD = 0.73897 ам.доллар</string>
+    <string name="summary_amount_placeholder">10.00 канад доллар</string>
+    <string name="summary_amount_fee_placeholder">0.25 канад доллар</string>
+    <string name="summary_amount_transfer_placeholder">9.75 канад доллар</string>
+    <string name="exchange_rate_change_warning_placeholder">Валютын ханшийн өөрчлөлтийн улмаас та одоо 10.00 канад доллар хүлээн авна.</string>
+
+    <string name="mobileTransferSuccessMsg">Таны шилжүүлгийг гүйцэтгэж байна</string>
+    <string name="mobileTransferSuccessDetails">Мөнгө таны %s уруу очиж явна</string>
+    <string name="doneButtonLabel">Дууссан</string>
+    <string name="mobileTransferMethodsHeader">Шилжүүлгийн арга</string>
+    <string name="mobileTransferFromLabel">ХЭНЭЭС ШИЛЖҮҮЛЭХ</string>
+    <string name="transferSource">Эх үүсвэр</string>
+    <string name="mobileTransferFromHeader">Хэнээс шилжүүлэх</string>
+    <string name="availableFunds">Бэлэн байгаа мөнгө</string>
+    <string name="noTransferFromSourceAvailableError">Эх үүсвэрээс ирэх шилжүүлэг байхгүй</string>
+
+</resources>

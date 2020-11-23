@@ -11,26 +11,26 @@
     <string name="transfer_amount_hint">Importe</string>
     <string name="transfer_currency_placeholder">USD</string>
     <string name="transfer_currency_code_placeholder">$</string>
-    <string name="transfer_all_funds_label">Transferir todos los fondos</string>
-    <string name="mobileAvailableBalance">Fondos disponibles: %s %s %s</string>
+    <string name="transfer_all_funds_label">Importe máximo de transferencia</string>
+    <string name="mobileAvailableBalance">Importe disponible: %s %s %s</string>
     <string name="mobileSummaryLabel">RESUMEN</string>
     <string name="mobileNoteLabel">Nota</string>
-    <string name="transfer_notes_label">Descripción</string>
-    <string name="transfer_notes_additional_info_label">La descripción es opcional</string>
+    <string name="transfer_notes_label">Nota</string>
+    <string name="transfer_notes_additional_info_label">Añadir una nota (opcional)</string>
     <string name="continueButtonLabel">Continuar</string>
     <string name="defaultTransferAmount">0</string>
     <string name="transfer">Transferencia</string>
     <string name="add_text">+</string>
     <string name="mobileAddTransferMethod">Añadir método de transferencia</string>
-    <string name="add_transfer_description_1">No se ha configurado una cuenta todavía</string>
-    <string name="add_transfer_description_2">por favor, añada una cuenta.</string>
+    <string name="add_transfer_description_1">Añada un método de transferencia para empezar.</string>
+    <string name="add_transfer_description_2">Añada un método de transferencia para empezar.</string>
     <string name="transfer_destination_selection_description">Selección del método de transferencia</string>
     <string name="destination_item_description">Elemento de destino</string>
 
     <string name="amount_currency_format">%s %s</string>
     <string name="exchange_rate_format">%s1 %s = %s%s %s</string>
 
-    <string name="module_transfermethodui_unavailable_error">La funcionalidad para añadir una cuenta no se ha incluido en esta aplicación.</string>
+    <string name="module_transfermethodui_unavailable_error">No puede añadir un método de transferencia.</string>
     <string name="transferAmountInvalid">Introduzca un importe de transferencia válido</string>
 
     <string name="mobileFXsell">De</string>
@@ -40,27 +40,32 @@
     <string name="mobileConfirmDetailsAmount">Importe</string>
     <string name="mobileConfirmDetailsFee">Tarifa</string>
     <string name="mobileConfirmDetailsTotal">Usted recibirá</string>
-    <string name="exchange_rate_change_warning">Debido a los cambios en la tarifa FX, ahora recibirá %1$s %2$s.</string>
+    <string name="exchange_rate_change_warning">Debido a los cambios en el tipo de cambio, ahora recibirá %1$s %2$s.</string>
 
 
     <string name="mobileTransferMax">Importe máximo de transferencia</string>
-    <string name="transfer_summary_placeholder">Saldo disponible: 2.422,90 CAD</string>
+    <string name="transfer_summary_placeholder">Importe disponible: 2.422,90 CAD</string>
     <string name="transfer_notes_placeholder">Transferencia parcial</string>
     <string name="transfer_item_icon_placeholder">\ue000</string>
     <string name="transfer_item_title_placeholder">Tipo de transferencia</string>
     <string name="transfer_item_country_placeholder">Nombre del país</string>
-    <string name="transfer_item_identification_placeholder">Editado en XXXX</string>
-    <string name="foreign_exchange_sell_placeholder">15.05 CAD</string>
-    <string name="foreign_exchange_buy_placeholder">11.00 USD</string>
-    <string name="foreign_exchange_rate_placeholder">1 CAD = 0.73897 USD</string>
-    <string name="summary_amount_placeholder">10.00 CAD</string>
-    <string name="summary_amount_fee_placeholder">0.25 CAD</string>
-    <string name="summary_amount_transfer_placeholder">9.75 CAD</string>
-    <string name="exchange_rate_change_warning_placeholder">Debido a los cambios en la tarifa FX, ahora recibirá 10,00 CAD.</string>
+    <string name="transfer_item_identification_placeholder">Editar sobre XXXX</string>
+    <string name="foreign_exchange_sell_placeholder">15,05 CAD</string>
+    <string name="foreign_exchange_buy_placeholder">11,00 USD</string>
+    <string name="foreign_exchange_rate_placeholder">1 CAD = 0,73897 USD</string>
+    <string name="summary_amount_placeholder">10,00 CAD</string>
+    <string name="summary_amount_fee_placeholder">0,25 CAD</string>
+    <string name="summary_amount_transfer_placeholder">9,75 CAD</string>
+    <string name="exchange_rate_change_warning_placeholder">Debido a los cambios en el tipo de cambio, ahora recibirá 10,00 CAD.</string>
 
     <string name="mobileTransferSuccessMsg">Su transferencia está siendo procesada</string>
-    <string name="mobileTransferSuccessDetails">Los fondos están en camino hacia su %s</string>
+    <string name="mobileTransferSuccessDetails">El dinero está de camino a su %s</string>
     <string name="doneButtonLabel">Hecho</string>
     <string name="mobileTransferMethodsHeader">Métodos de transferencia</string>
+    <string name="mobileTransferFromLabel">TRANSFERIR DE</string>
+    <string name="transferSource">Fuente</string>
+    <string name="mobileTransferFromHeader">Transferir de</string>
+    <string name="availableFunds">Fondos disponibles</string>
+    <string name="noTransferFromSourceAvailableError">La transferencia de la fuente no está disponible</string>
 
 </resources>

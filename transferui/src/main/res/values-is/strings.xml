@@ -1,0 +1,71 @@
+<resources>
+    <string name="title_activity_create_transfer">Millifæra fjármuni</string>
+    <string name="mobileConfirmationHeader">Staðfesta upplýsingar</string>
+    <string name="mobileConfirmNotesLabel">SKÝRING</string>
+    <string name="transfer_destination">Viðtökustaður</string>
+    <string name="mobileTransferToLabel">MILLIFÆRA TIL</string>
+    <string name="mobileTransferFundsHeader">Millifæra fjármuni</string>
+    <string name="mobileFXlabel">GJALDEYRISVIÐSKIPTI</string>
+    <string name="transfer_header_label">Millifæra</string>
+    <string name="noTransferMethodAdded">Þörf er á millifærsluaðferð</string>
+    <string name="transfer_amount_hint">Fjárhæð</string>
+    <string name="transfer_currency_placeholder">USD</string>
+    <string name="transfer_currency_code_placeholder">$</string>
+    <string name="transfer_all_funds_label">Millifæra hámarksfjárhæð</string>
+    <string name="mobileAvailableBalance">Tiltæk fjárhæð: %s %s</string>
+    <string name="mobileSummaryLabel">SAMANTEKT</string>
+    <string name="mobileNoteLabel">Skýring</string>
+    <string name="transfer_notes_label">Skýring</string>
+    <string name="transfer_notes_additional_info_label">Bæta við skýringu (valkvætt)</string>
+    <string name="continueButtonLabel">Halda áfram</string>
+    <string name="defaultTransferAmount">0</string>
+    <string name="transfer">Millifæra</string>
+    <string name="add_text">+</string>
+    <string name="mobileAddTransferMethod">Bæta við millifærsluaðferð</string>
+    <string name="add_transfer_description_1">Bæta við millifærsluaðferð til að byrja.</string>
+    <string name="add_transfer_description_2">Bæta við millifærsluaðferð til að byrja.</string>
+    <string name="transfer_destination_selection_description">Val millifærsluaðferðar</string>
+    <string name="destination_item_description">Viðtökustaður hlutur</string>
+
+    <string name="amount_currency_format">%s %s</string>
+    <string name="exchange_rate_format">1 %s = %s %s</string>
+
+    <string name="module_transfermethodui_unavailable_error">Þú getur ekki bætt við millifærsluaðferð.</string>
+    <string name="transferAmountInvalid">Sláðu inn gilda millifærslufjárhæð</string>
+
+    <string name="mobileFXsell">Frá</string>
+    <string name="mobileFXbuy">Til</string>
+    <string name="mobileFXRateLabel">Gengi</string>
+
+    <string name="mobileConfirmDetailsAmount">Fjárhæð</string>
+    <string name="mobileConfirmDetailsFee">Gjald</string>
+    <string name="mobileConfirmDetailsTotal">Þú munt fá</string>
+    <string name="exchange_rate_change_warning">Vegna gengisbreytinga munt þú nú fá %1$s %2$s.</string>
+
+
+    <string name="mobileTransferMax">Millifæra hámarksfjárhæð</string>
+    <string name="transfer_summary_placeholder">Tiltæk fjárhæð: 2.422,90 CAD</string>
+    <string name="transfer_notes_placeholder">Millifærsla hluta fjármuna</string>
+    <string name="transfer_item_icon_placeholder">\ue000</string>
+    <string name="transfer_item_title_placeholder">Gerð millifærslu</string>
+    <string name="transfer_item_country_placeholder">Heiti lands</string>
+    <string name="transfer_item_identification_placeholder">Breytt þann XXXX</string>
+    <string name="foreign_exchange_sell_placeholder">15,05 CAD</string>
+    <string name="foreign_exchange_buy_placeholder">11,00 USD</string>
+    <string name="foreign_exchange_rate_placeholder">1 CAD = 0,73897 USD</string>
+    <string name="summary_amount_placeholder">10,00 CAD</string>
+    <string name="summary_amount_fee_placeholder">0,25 CAD</string>
+    <string name="summary_amount_transfer_placeholder">9,75 CAD</string>
+    <string name="exchange_rate_change_warning_placeholder">Vegna gengisbreytinga munt þú nú fá 10,00 CAD.</string>
+
+    <string name="mobileTransferSuccessMsg">Millifærslan þín er í vinnslu</string>
+    <string name="mobileTransferSuccessDetails">Fjármunirnir eru á leiðinni inn á %s þinn</string>
+    <string name="doneButtonLabel">Búið</string>
+    <string name="mobileTransferMethodsHeader">Millifærsluaðferðir</string>
+    <string name="mobileTransferFromLabel">MILLIFÆRA FRÁ</string>
+    <string name="transferSource">Uppruni</string>
+    <string name="mobileTransferFromHeader">Millifæra frá</string>
+    <string name="availableFunds">Tiltækir fjármunir</string>
+    <string name="noTransferFromSourceAvailableError">Millifærsla frá uppruna ekki í boði</string>
+
+</resources>

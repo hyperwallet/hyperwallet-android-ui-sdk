@@ -6,7 +6,7 @@
     <string name="title_activity_select_transfer_method">Seleccionar método de transferencia</string>
     <!-- SelectTransferMethodActivity -->
     <string name="select_transfer_method_title">@string/title_activity_select_transfer_method
-  </string>
+    </string>
 
     <string name="mobileCountryRegion">País/región</string>
     <string name="mobileCurrencyLabel">Divisa</string>
@@ -17,13 +17,13 @@
 
     <string name="error_exact_length_field">La longitud de este campo es exactamente %d.</string>
     <string name="error_invalid_expiry_date">%s no es válido.</string>
-    <string name="error_min_max_length_field">La longitud mínima de este campo es {0} y la máxima es {1}.
+    <string name="error_min_max_length_field">La longitud mínima de este campo es {0} y la máxima         es {1}.
     </string>
 
-    <string name="createTransferMethodButtonLabel">Crear método de transferencia</string>
+    <string name="createTransferMethodButtonLabel">Añadir método de transferencia</string>
     <string name="default_account_label">Cuenta predeterminada</string>
-    <string name="default_account_sub_label">Seleccione la cuenta como método predeterminado</string>
-    <string name="api_expiry_date_format">MM/YY</string>
+    <string name="default_account_sub_label">Seleccione un método de transferencia predeterminado</string>
+    <string name="api_expiry_date_format">MM/AA</string>
 
     <string name="feeAndProcessingTimeInformation">%s tarifa \u2022 %s</string>
     <string name="feeInformation">%s tarifa</string>
@@ -31,7 +31,7 @@
     <string name="emptyStateAddTransferMethod">Añada un método de transferencia para empezar.</string>
 
     <!-- menu title -->
-    <string name="menu_transfer_funds">Transferir fondos</string>
+    <string name="menu_transfer_funds">Transferencia</string>
 
     <!--Fee formatter-->
     <string name="fee_flat_formatter">%1$s%2$s</string>
@@ -69,10 +69,11 @@
 
     <string name="country_placeholder">Canadá</string>
     <string name="currency_placeholder">CAD</string>
-    <string name="feesAndProcessTimePlaceholder">20,00 $ USD tarifa \u2022 1\-3 Días laborables </string>
+    <string name="feesAndProcessTimePlaceholder">Tarifa de 20,00 USD \u2022 1\-3 días laborables </string>
     <string name="mobileCountryCurrencyLabel">UBICACIÓN Y DIVISA</string>
     <string name="mobileTransferMethodLabel">MÉTODO DE TRANSFERENCIA</string>
     <string name="mobileTransferMethodsHeader">Métodos de transferencia</string>
 
     <string name="mobileRemoveEAconfirm">Eliminar método de transferencia</string>
+    <string name="prepaidCardManagementInfo" >"Acceda a través de un navegador web para gestionar su tarjeta"</string>
 </resources>

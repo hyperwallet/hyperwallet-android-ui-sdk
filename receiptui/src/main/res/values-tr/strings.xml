@@ -1,0 +1,168 @@
+<resources>
+    <string name="app_name">makbuz</string>
+    <string name="title_activity_receipt_list">İşlemler</string>
+    <string name="title_activity_receipt_detail">İşlem Detayları</string>
+    <string name="mobileTransactionDetailsHeader">İşlem detayları</string>
+    <string name="transactions">İşlemler</string>
+    <string name="mobileTransactionTypeLabel">İŞLEM</string>
+    <string name="mobileFeeInfoLabel">ÜCRET BİLGİLERİ</string>
+    <string name="amount">Tutar</string>
+    <string name="mobileFeeLabel">Ücret</string>
+    <string name="mobileTransactionDetailsTotal">İşlem toplamı</string>
+    <string name="mobileTransactionDetailsLabel">DETAYLAR</string>
+    <string name="mobileJournalNumberLabel">Makbuz Numarası</string>
+    <string name="date">Tarih</string>
+    <string name="mobileMerchantTxnLabel">İşlem Numarası</string>
+    <string name="mobileConfirmNotesLabel">NOT</string>
+    <string name="mobileCharityName">Bağış adı</string>
+    <string name="mobileCheckNumber">Çek numarası</string>
+    <string name="mobilePromoWebsite">Promo web sitesi</string>
+    <string name="concat_date_string_view_format">%s %s</string>
+
+    <string name="mobileNoTransactionsUser">\'Görüntülenecek etkinlik yok.</string>
+    <string name="mobileNoTransactionsPrepaidCard">Son 365 günde yapılmış bir işlem yok</string>
+    <string name="title_transfer_funds">Aktarım</string>
+    <string name="font_icon_placeholder">\ue908</string>
+    <string name="text_placeholder">Yer tutucu</string>
+
+
+
+    <!--Generic fee types-->
+    <string name="unknown_type">Bilinmeyen Aktarım Türü </string>
+    <string name="annual_fee">Yıllık Ücret</string>
+    <string name="annual_fee_refund">Yıllık Ücretin İadesi</string>
+    <string name="customer_service_fee">Müşteri Hizmetleri Ücreti</string>
+    <string name="customer_service_fee_refund">Müşteri Hizmetleri Ücretinin İadesi</string>
+    <string name="expedited_shipping_fee">Hızlandırılmış Gönderim Ücreti</string>
+    <string name="generic_fee_refund">Genel Ücret İadesi</string>
+    <string name="monthly_fee">Aylık Ücret</string>
+    <string name="monthly_fee_refund">Aylık Ücretin İadesi</string>
+    <string name="payment_expiry_fee">Ödeme Süresinin Dolması Nedeniyle Alınan Ücret</string>
+    <string name="payment_fee">Ödeme Ücreti</string>
+    <string name="processing_fee">İşlem Ücreti</string>
+    <string name="standard_shipping_fee">Standart Gönderim Ücreti</string>
+    <string name="transfer_fee">Transfer Ücreti</string>
+
+    <!--Generic payment types-->
+    <string name="adjustment">Bakiye Düzeltme</string>
+    <string name="foreign_exchange">Döviz</string>
+    <string name="deposit">Ödeme</string>
+    <string name="manual_adjustment">Düzeltme</string>
+    <string name="payment_expiration">Ödeme Süresi Doldu</string>
+
+    <!--Bank account-specific types-->
+    <string name="bank_account_transfer_fee">Banka Hesabına İade Ücreti</string>
+    <string name="bank_account_transfer_return">Banka Hesabına İade</string>
+    <string name="bank_account_transfer_return_fee">Banka Hesabına İade Ücreti</string>
+    <string name="transfer_to_bank_account">Banka Hesabı</string>
+
+    <!--Card-specific types-->
+    <string name="card_activation_fee">Kart Etkinleştirme Ücreti</string>
+    <string name="card_activation_fee_waiver">Kart Etkinleştirme Ücreti Muafiyeti</string>
+    <string name="card_fee">Kart Ücreti</string>
+    <string name="manual_transfer_to_prepaid_card">Karta Aktar</string>
+    <string name="prepaid_card_balance_inquiry_fee">Bakiye Sorgulama Ücreti</string>
+    <string name="prepaid_card_cash_advance">Nakit Avans</string>
+    <string name="prepaid_card_disputed_charge_refund">İtiraz Edilen Ücret İadesi</string>
+    <string name="prepaid_card_dispute_deposit">İtiraz Edilen Karta Para Yatırma İşlemi </string>
+    <string name="prepaid_card_domestic_cash_withdrawal_fee">ATM’den Para Çekme</string>
+    <string name="prepaid_card_exchange_rate_difference">PREPAID_CARD_EXCHANGE_RATE_DIFFERENCE
+    </string>
+    <string name="prepaid_card_manual_unload">Karttan Aktar</string>
+    <string name="prepaid_card_overseas_cash_withdrawal_fee">ATM’den Para Çekme</string>
+    <string name="prepaid_card_pin_change_fee">PIN Değişikliği Ücreti</string>
+    <string name="prepaid_card_refund">İade</string>
+    <string name="prepaid_card_replacement_fee">Kart Değişim Ücreti</string>
+    <string name="prepaid_card_sale">İşlem</string>
+    <string name="prepaid_card_sale_reversal">Ters İşlem</string>
+    <string name="prepaid_card_unload">Karttan Aktar</string>
+    <string name="transfer_to_prepaid_card">Karta Aktar</string>
+    <!---->
+    <!--Donation types-->
+    <string name="donation">Bağış</string>
+    <string name="donation_fee">Bağış Ücreti</string>
+    <string name="donation_return">Bağış İadesi</string>
+    <!---->
+    <!--Merchant payment types-->
+    <string name="merchant_payment">Üye İş Yeri Ödemesi</string>
+    <string name="merchant_payment_fee">Üye İş Yeri Ödemesi Ücreti</string>
+    <string name="merchant_payment_refund">Üye İş Yeri Ödeme İadesi</string>
+    <string name="merchant_payment_return">Üye İş Yeri Ödeme İadesi</string>
+    <!---->
+    <!--MoneyGram types-->
+    <string name="moneygram_transfer_return">MoneyGram İadesi</string>
+    <string name="transfer_to_moneygram">MoneyGram</string>
+    <!---->
+    <!--Paper check types-->
+    <string name="paper_check_fee">Kâğıt Çek Ücreti</string>
+    <string name="paper_check_refund">Kâğıt Çek İadesi</string>
+    <string name="transfer_to_paper_check">Kâğıt Çek</string>
+    <!---->
+    <!--User and program account types-->
+    <string name="account_closure">Hesap Kapanışı</string>
+    <string name="account_closure_fee">Hesap Kapanış Ücreti</string>
+    <string name="account_unload">Para İadesi</string>
+    <string name="dormant_user_fee">Etkin Olmayan Kullanıcı Hesap Ücreti</string>
+    <string name="dormant_user_fee_refund">Etkin Olmayan Kullanıcı Hesap Ücreti İadesi</string>
+    <string name="payment">Ödeme</string>
+    <string name="payment_cancellation">Ödeme İptali</string>
+    <string name="payment_reversal">Ödemenin İptali</string>
+    <string name="payment_reversal_fee">Ödeme İptal Ücreti</string>
+    <string name="payment_return">Ödeme İadesi</string>
+    <string name="transfer_to_program_account">Programa Aktar</string>
+    <string name="transfer_to_user">Kullanıcıya Aktar</string>
+    <string name="transfer_to_paypal_account">PayPal</string>
+    <string name="transfer_to_bank_card">Banka Kartı</string>
+    <string name="transfer_to_debit_card">Banka Kartı</string>
+    <string name="prepaid_card_transfer_return">Ön Ödemeli Kart Yükleme İadesi</string>
+    <!---->
+    <!--Virtual incentive types-->
+    <string name="virtual_incentive_cancellation">Promo İptali</string>
+    <string name="virtual_incentive_issuance">Çıkan Promo</string>
+    <string name="virtual_incentive_purchase">Promo Satın Alma</string>
+    <string name="virtual_incentive_refund">Promo İadesi</string>
+    <!---->
+    <!--Western Union and WUBS types-->
+    <string name="transfer_to_western_union">Western Union</string>
+    <string name="transfer_to_wubs_wire">Banka Havalesi</string>
+    <string name="western_union_transfer_return">Western Union İşlem İptali</string>
+    <string name="wubs_wire_transfer_return">Banka Havalesi İadesi</string>
+    <!---->
+    <!--Wire transfer types-->
+    <string name="transfer_to_wire">Banka Havalesi</string>
+    <string name="wire_transfer_fee">Banka Havalesi Ücreti</string>
+    <string name="wire_transfer_return">Banka Havalesi İadesi</string>
+
+    <!-- New exposed receipt types -->
+    <string name="paypal_account_transfer_return">Çekim İadesi</string>
+    <string name="venmo_account_transfer_return">Çekim İadesi</string>
+    <string name="prepaid_card_account_deposit">Hesaba Para Yatırma</string>
+    <string name="prepaid_card_annual_fee_discount">Yıllık ücret indirimi</string>
+    <string name="prepaid_card_bill_reprint_fee">Makbuz Bastırma Ücreti</string>
+    <string name="prepaid_card_atm_or_cash_advance_fee">ATM/Nakit Avans Ücreti</string>
+    <string name="prepaid_card_cash_advance_chargeback">Nakit Avans Ters İbrazı</string>
+    <string name="prepaid_card_cash_advance_chargeback_reversal">Nakit Avans Ters İbraz İptali</string>
+    <string name="prepaid_card_cash_advance_repress">Nakit Avans Engellemesi</string>
+    <string name="prepaid_card_cash_advance_repress_reversal">Avans Engellemesinin Kaldırılması</string>
+    <string name="prepaid_card_chargeback">Ters İbraz</string>
+    <string name="prepaid_card_chargeback_refund">Ters İbraz İadesi</string>
+    <string name="prepaid_card_chargeback_refund_reversal">Ters İbraz İade İptali</string>
+    <string name="prepaid_card_chargeback_reversal">Ters İbraz İptali</string>
+    <string name="prepaid_card_commission_or_fee">Ücret/Komisyon</string>
+    <string name="prepaid_card_debit_transfer">Borç/Aktarımlar</string>
+    <string name="prepaid_card_document_request_fee">Belge Talep Ücreti</string>
+    <string name="prepaid_card_emergency_cash">Acil Durum Parası</string>
+    <string name="prepaid_card_emergency_card">Acil Durum Kartı</string>
+    <string name="prepaid_card_income">Gelir</string>
+    <string name="prepaid_card_load_fee">PAN Ücreti</string>
+    <string name="prepaid_card_refund_fee">İade Ücreti</string>
+    <string name="prepaid_card_monthly_maintenance_fee">Aylık İdame Ücreti</string>
+    <string name="prepaid_card_transaction_fee">İşlem Ücreti</string>
+    <string name="prepaid_card_sms_fee">SMS Ücreti</string>
+    <string name="prepaid_card_declined_authorization_fee">Yetkilendirme Reddi Ücreti</string>
+    <string name="fispc">Satın Alma</string>
+
+    <!-- Prepaid Cards Receipt   -->
+    <string name="mobileAvailableBalances">Mevcut para</string>
+
+</resources>

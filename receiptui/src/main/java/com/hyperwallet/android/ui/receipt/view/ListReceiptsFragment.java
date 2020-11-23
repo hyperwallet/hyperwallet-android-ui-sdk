@@ -343,7 +343,7 @@ public class ListReceiptsFragment extends Fragment {
                             .getResources().getColor(R.color.negativeColor));
                     transactionTypeIcon.setTextColor(transactionTypeIcon.getContext()
                             .getResources().getColor(R.color.negativeColor));
-                    transactionAmount.setText(transactionAmount.getContext().getString(R.string.debit_sign_transaction,
+                    transactionAmount.setText(transactionAmount.getContext().getString(R.string.debit_sign_receipts,
                             CurrencyParser.getInstance(itemView.getContext()).formatCurrency(receipt.getCurrency(), receipt.getAmount())));
                     transactionTypeIcon.setText(transactionTypeIcon.getContext().getText(R.string.debit));
                 }

@@ -1,0 +1,79 @@
+<resources>
+    <string name="app_name">hyperwallet.ui</string>
+    <string name="title_account_add">Додати обліковий запис</string>
+    <string name="unknown">Невідомий</string>
+
+    <string name="title_activity_select_transfer_method">Оберіть спосіб переказу</string>
+    <!-- SelectTransferMethodActivity -->
+    <string name="select_transfer_method_title">@string/title_activity_select_transfer_method
+    </string>
+
+    <string name="mobileCountryRegion">Країна/регіон</string>
+    <string name="mobileCurrencyLabel">Валюта</string>
+    <string name="mobileAddTransferMethodHeader">Додати спосіб переказу</string>
+    <string name="title_activity_add_transfer_method">Додати спосіб переказу</string>
+    <string name="title_add_bank_account">Банківський рахунок</string>
+    <string name="title_add_bank_card">Дебетова картка</string>
+
+    <string name="error_exact_length_field">Довжина цього поля становить саме %d.</string>
+    <string name="error_invalid_expiry_date">%s недійсне.</string>
+    <string name="error_min_max_length_field">Мінімальна довжина цього поля: {0}. Максимальна довжина цього поля: {1}.
+    </string>
+
+    <string name="createTransferMethodButtonLabel">Додати спосіб переказу</string>
+    <string name="default_account_label">Типовий обліковий запис</string>
+    <string name="default_account_sub_label">Вибрати типовий спосіб переказу</string>
+    <string name="api_expiry_date_format">ММ/РР</string>
+
+    <string name="feeAndProcessingTimeInformation">%s комісія \u2022 %s</string>
+    <string name="feeInformation">%s комісія</string>
+
+    <string name="emptyStateAddTransferMethod">Щоб розпочати, додайте спосіб переказу.</string>
+
+    <!-- menu title -->
+    <string name="menu_transfer_funds">Переказ</string>
+
+    <!--Fee formatter-->
+    <string name="fee_flat_formatter">%1$s%2$s</string>
+    <string name="fee_percent_no_min_and_max_formatter">%1$s%%</string>
+    <string name="fee_percent_only_min_formatter">%1$s%% (Мін. :%2$s %3$s)</string>
+    <string name="fee_percent_only_max_formatter">%1$s%% (Макс.:%2$s %3$s)</string>
+    <string name="fee_percent_formatter">%1$s%% (Мін.:%2$s %3$s, макс.:%2$s %4$s)</string>
+    <string name="fee_mix_no_min_and_max_formatter">%1$s%2$s + %3$s%%</string>
+    <string name="fee_mix_only_min_formatter">%1$s%2$s + %3$s%% (Мін.:%1$s %4$s)</string>
+    <string name="fee_mix_only_max_formatter">%1$s%2$s + %3$s%% (Макс.:%1$s %4$s)</string>
+    <string name="fee_mix_formatter">%1$s%2$s + %3$s%% (Мін.:%1$s %4$s, макс.:%1$s %5$s)</string>
+
+    <string name="account_holder">ДАНІ ПРО ВЛАСНИКА ОБЛІКОВОГО ЗАПИСУ</string>
+    <string name="account_information">ДАНІ ПРО ОБЛІКОВИЙ ЗАПИС: %s(%s)</string>
+    <string name="address">АДРЕСА</string>
+    <string name="contact_information">КОНТАКТНІ ДАНІ</string>
+    <string name="identification">ІДЕНТИФІКАЦІЯ</string>
+    <string name="intermediary_account">РАХУНОК ПОСЕРЕДНИКА</string>
+    <string name="mobileFeesAndProcessingTime">КОМІСІЯ ТА ЧАС ОБРОБКИ</string>
+
+    <string name="search_hint">Підказка для пошуку</string>
+    <string name="search_country">Шукати країну</string>
+    <string name="search_currency">Шукати валюту</string>
+    <string name="search_widget">Пошук</string>
+
+    <string name="select_transfer_method_currency_button_description">Кнопка вибору валюти
+    </string>
+    <string name="select_transfer_method_country_button_description">Кнопка вибору країни</string>
+    <string name="selected_country_item_description">Елемент вибраної країни</string>
+    <string name="selected_currency_item_description">Елемент вибраної валюти</string>
+    <string name="transfer_method_context_button_description">Кнопка контекстного меню</string>
+    <string name="item_select_description">Вибраний елемент</string>
+
+    <string name="error_unmapped_field">Непозначене поле. Зверніться, будь ласка, до служби підтримки.</string>
+
+    <string name="country_placeholder">Канада</string>
+    <string name="currency_placeholder">CAD</string>
+    <string name="feesAndProcessTimePlaceholder">комісія $20,00 USD \u2022 1\–3 робочих дні </string>
+    <string name="mobileCountryCurrencyLabel">МІСЦЕРОЗТАШУВАННЯ ТА ВАЛЮТА</string>
+    <string name="mobileTransferMethodLabel">СПОСІБ ПЕРЕКАЗУ</string>
+    <string name="mobileTransferMethodsHeader">Способи переказу</string>
+
+    <string name="mobileRemoveEAconfirm">Видалити спосіб переказу</string>
+    <string name="prepaidCardManagementInfo" >«Увійдіть за допомогою браузера, щоби керувати своєю карткою»</string>
+</resources>

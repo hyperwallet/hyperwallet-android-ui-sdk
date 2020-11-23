@@ -1,0 +1,79 @@
+<resources>
+    <string name="app_name">hyperwallet.ui</string>
+    <string name="title_account_add">Přidat účet</string>
+    <string name="unknown">Neznámý</string>
+
+    <string name="title_activity_select_transfer_method">Vyberte způsob přenosu</string>
+    <!-- SelectTransferMethodActivity -->
+    <string name="select_transfer_method_title">@string/title_activity_select_transfer_method
+    </string>
+
+    <string name="mobileCountryRegion">Země / oblast</string>
+    <string name="mobileCurrencyLabel">Měna</string>
+    <string name="mobileAddTransferMethodHeader">Přidejte způsob převodu</string>
+    <string name="title_activity_add_transfer_method">Přidejte Způsob Převodu</string>
+    <string name="title_add_bank_account">Bankovní účet</string>
+    <string name="title_add_bank_card">Debetní Karta</string>
+
+    <string name="error_exact_length_field">Délka tohoto pole je přesně %d.</string>
+    <string name="error_invalid_expiry_date">%s je neplatná.</string>
+    <string name="error_min_max_length_field">Minimální délka tohoto pole je {0} a maximální        délka je {1}.
+    </string>
+
+    <string name="createTransferMethodButtonLabel">Přidejte Způsob Převodu</string>
+    <string name="default_account_label">Výchozí účet</string>
+    <string name="default_account_sub_label">Vyberte výchozí způsob převodu</string>
+    <string name="api_expiry_date_format">MM/RR</string>
+
+    <string name="feeAndProcessingTimeInformation">%s poplatek \u2022 %s</string>
+    <string name="feeInformation">%s poplatek</string>
+
+    <string name="emptyStateAddTransferMethod">Chcete-li začít, přidejte způsob převodu.</string>
+
+    <!-- menu title -->
+    <string name="menu_transfer_funds">Převod</string>
+
+    <!--Fee formatter-->
+    <string name="fee_flat_formatter">%1$s%2$s</string>
+    <string name="fee_percent_no_min_and_max_formatter">%1$s%%</string>
+    <string name="fee_percent_only_min_formatter">%1$s%% (Min.:%2$s %3$s)</string>
+    <string name="fee_percent_only_max_formatter">%1$s%% (Max.:%2$s %3$s)</string>
+    <string name="fee_percent_formatter">%1$s%% (Min.:%2$s %3$s, Max.:%2$s %4$s)</string>
+    <string name="fee_mix_no_min_and_max_formatter">%1$s%2$s + %3$s%%</string>
+    <string name="fee_mix_only_min_formatter">%1$s%2$s + %3$s%% (Min.:%1$s %4$s)</string>
+    <string name="fee_mix_only_max_formatter">%1$s%2$s + %3$s%% (Max.:%1$s %4$s)</string>
+    <string name="fee_mix_formatter">%1$s%2$s + %3$s%% (Min.:%1$s %4$s, Max.:%1$s %5$s)</string>
+
+    <string name="account_holder">INFORMACE O DRŽITELI ÚČTU</string>
+    <string name="account_information">INFORMACE O ÚČTU: %s(%s)</string>
+    <string name="address">ADRESA</string>
+    <string name="contact_information">KONTAKTNÍ ÚDAJE</string>
+    <string name="identification">IDENTIFIKACE</string>
+    <string name="intermediary_account">ÚČET ZPROSTŘEDKOVATELE</string>
+    <string name="mobileFeesAndProcessingTime">POPLATKY A DOBA ZPRACOVÁNÍ</string>
+
+    <string name="search_hint">Vyhledat nápovědu</string>
+    <string name="search_country">Vyhledat zemi</string>
+    <string name="search_currency">Vyhledat měnu</string>
+    <string name="search_widget">Vyhledat</string>
+
+    <string name="select_transfer_method_currency_button_description">Tlačítko Vybrat měnu
+    </string>
+    <string name="select_transfer_method_country_button_description">Tlačítko Vybrat zemi</string>
+    <string name="selected_country_item_description">Položka Vybraná země</string>
+    <string name="selected_currency_item_description">Položka Vybraná měna</string>
+    <string name="transfer_method_context_button_description">Tlačítko kontextové nabídky</string>
+    <string name="item_select_description">Vybraná položka</string>
+
+    <string name="error_unmapped_field">Nepřiřazené pole, obraťte se prosím na podporu.</string>
+
+    <string name="country_placeholder">Kanada</string>
+    <string name="currency_placeholder">CAD</string>
+    <string name="feesAndProcessTimePlaceholder">Poplatek 20,00 USD \u2022 1\-3 pracovní dny </string>
+    <string name="mobileCountryCurrencyLabel">MÍSTO A MĚNA</string>
+    <string name="mobileTransferMethodLabel">ZPŮSOB PŘEVODU</string>
+    <string name="mobileTransferMethodsHeader">Způsoby převodu</string>
+
+    <string name="mobileRemoveEAconfirm">Odeberte způsob převodu</string>
+    <string name="prepaidCardManagementInfo" >„Chcete-li spravovat svou kartu, přihlaste se pomocí webového prohlížeče“</string>
+</resources>

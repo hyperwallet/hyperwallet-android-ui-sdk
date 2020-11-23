@@ -19,8 +19,8 @@
     <string name="mobilePromoWebsite">Promo website</string>
     <string name="concat_date_string_view_format">%s %s</string>
 
-    <string name="mobileNoTransactionsUser" translatable="false">There\'s no activity to display.</string>
-    <string name="mobileNoTransactionsPrepaidCard" translatable="false">No transactions in the past 365 days</string>
+    <string name="mobileNoTransactionsUser">There\'s no activity to display.</string>
+    <string name="mobileNoTransactionsPrepaidCard">No transactions in the past 365 days</string>
     <string name="title_transfer_funds">Transfer</string>
     <string name="font_icon_placeholder">\ue908</string>
     <string name="text_placeholder">Placeholder</string>
@@ -31,7 +31,6 @@
     <string name="debit_sign" translatable="false">-%s%s</string>
     <string name="debit_sign_receipts" translatable="false">-%s</string>
     <string name="credit_sign" translatable="false">%s%s</string>
-    <string name="debit_sign_transaction" translatable="false">-%s</string>
 
     <!--Generic fee types-->
     <string name="unknown_type">Unknown Transaction Type</string>
@@ -119,8 +118,8 @@
     <string name="transfer_to_user">Transfer to User</string>
     <string name="transfer_to_paypal_account">PayPal</string>
     <string name="transfer_to_bank_card">Bank Card</string>
-    <string name="transfer_to_debit_card" translatable="false" >Debit Card</string>
-    <string name="prepaid_card_transfer_return" translatable="false" >Prepaid Card Load Return</string>
+    <string name="transfer_to_debit_card">Debit Card</string>
+    <string name="prepaid_card_transfer_return">Prepaid Card Load Return</string>
     <string name="transfer_to_venmo_account" translatable="false" >Venmo</string>
     <!---->
     <!--Virtual incentive types-->
@@ -170,6 +169,6 @@
     <string name="fispc">Purchase</string>
 
     <!-- Prepaid Cards Receipt   -->
-    <string name="mobileAvailableBalances" translatable="false">Available funds</string>
+    <string name="mobileAvailableBalances">Available funds</string>
 
 </resources>

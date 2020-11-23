@@ -1,0 +1,27 @@
+<resources>
+    <string name="error_dialog_title">Fout</string>
+    <string name="error_dialog_connectivity_title">Connectiviteitsprobleem</string>
+    <string name="error_dialog_unexpected_title">Onverwachte fout</string>
+    <string name="ok">OK</string>
+    <string name="try_again_button_label">Probeer opnieuw</string>
+    <string name="not_available">Niet beschikbaar</string>
+
+    <!-- title and font icon -->
+    <string name="bank_account">Bankrekening</string>
+    <string name="bank_card">Debetkaart</string>
+    <string name="wire_account">Bankrekening</string>
+    <string name="paper_check">Papieren check</string>
+    <string name="prepaid_card">Prepaidkaart</string>
+    <string name="paypal_account">PayPal-account</string>
+    <string name="venmo_account">Venmo-account</string>
+    <string name="cash_pickup_mg">MoneyGram</string>
+
+    <string name="endingIn">eindigend op %s</string>
+    <string name="to">naar %s</string>
+    <string name="not_translated_in_braces">(niet vertaald)</string>
+
+    <string name="authentication_error_header">Verificatiefout</string>
+    <string name="cancelButtonLabel">Annuleren</string>
+    <string name="remove">Verwijderen</string>
+    <string name="mobileAreYouSure">Weet u het zeker?</string>
+</resources>
