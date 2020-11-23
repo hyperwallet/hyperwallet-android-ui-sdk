@@ -1,0 +1,71 @@
+<resources>
+    <string name="title_activity_create_transfer">Prijenos sredstava</string>
+    <string name="mobileConfirmationHeader">Potvrdite detalje</string>
+    <string name="mobileConfirmNotesLabel">NAPOMENA</string>
+    <string name="transfer_destination">Odredište</string>
+    <string name="mobileTransferToLabel">PRIJENOS NA</string>
+    <string name="mobileTransferFundsHeader">Prijenos sredstava</string>
+    <string name="mobileFXlabel">DEVIZNA RAZMJENA</string>
+    <string name="transfer_header_label">Prijenos</string>
+    <string name="noTransferMethodAdded">Način prijenosa je obvezan</string>
+    <string name="transfer_amount_hint">Iznos</string>
+    <string name="transfer_currency_placeholder">USD</string>
+    <string name="transfer_currency_code_placeholder">$</string>
+    <string name="transfer_all_funds_label">Maksimalni iznos za prijenos</string>
+    <string name="mobileAvailableBalance">Dostupan iznos: %s %s</string>
+    <string name="mobileSummaryLabel">SPECIFIKACIJA</string>
+    <string name="mobileNoteLabel">Napomena</string>
+    <string name="transfer_notes_label">Napomena</string>
+    <string name="transfer_notes_additional_info_label">Dodajte napomenu (nije obavezno)</string>
+    <string name="continueButtonLabel">Nastavite</string>
+    <string name="defaultTransferAmount">0</string>
+    <string name="transfer">Prijenos</string>
+    <string name="add_text">+</string>
+    <string name="mobileAddTransferMethod">Dodajte način prijenosa</string>
+    <string name="add_transfer_description_1">Dodajte način prijenosa da biste započeli.</string>
+    <string name="add_transfer_description_2">Dodajte način prijenosa da biste započeli.</string>
+    <string name="transfer_destination_selection_description">Odabir načina prijenosa</string>
+    <string name="destination_item_description">Odredišna stavka</string>
+
+    <string name="amount_currency_format">%s %s</string>
+    <string name="exchange_rate_format">1 %s = %s %s</string>
+
+    <string name="module_transfermethodui_unavailable_error">Ne\'možete dodati način prijenosa.</string>
+    <string name="transferAmountInvalid">Unesite valjani iznos prijenosa</string>
+
+    <string name="mobileFXsell">Sa</string>
+    <string name="mobileFXbuy">Na</string>
+    <string name="mobileFXRateLabel">Devizni tečaj</string>
+
+    <string name="mobileConfirmDetailsAmount">Iznos</string>
+    <string name="mobileConfirmDetailsFee">Naknada</string>
+    <string name="mobileConfirmDetailsTotal">Primit ćete</string>
+    <string name="exchange_rate_change_warning">Zbog promjena u deviznom tečaju, sada\'ćete primiti %1$s %2$s.</string>
+
+
+    <string name="mobileTransferMax">Maksimalni iznos za prijenos</string>
+    <string name="transfer_summary_placeholder">Dostupan iznos: 2422,90 CAD</string>
+    <string name="transfer_notes_placeholder">Djelomični prijenos</string>
+    <string name="transfer_item_icon_placeholder">\ue000</string>
+    <string name="transfer_item_title_placeholder">Vrsta prijenosa</string>
+    <string name="transfer_item_country_placeholder">Naziv zemlje</string>
+    <string name="transfer_item_identification_placeholder">Uređivanje na XXXX</string>
+    <string name="foreign_exchange_sell_placeholder">15,05 CAD</string>
+    <string name="foreign_exchange_buy_placeholder">11,00 USD</string>
+    <string name="foreign_exchange_rate_placeholder">1 CAD = 0,73897 USD</string>
+    <string name="summary_amount_placeholder">10,00 CAD</string>
+    <string name="summary_amount_fee_placeholder">0,25 CAD</string>
+    <string name="summary_amount_transfer_placeholder">9,75 CAD</string>
+    <string name="exchange_rate_change_warning_placeholder">Zbog promjena u deviznom tečaju, sada\'ćete primiti 10,00 CAD.</string>
+
+    <string name="mobileTransferSuccessMsg">Vaš transfer je u postupku obrade</string>
+    <string name="mobileTransferSuccessDetails">Novac je na putu do vašeg %s</string>
+    <string name="doneButtonLabel">Gotovo</string>
+    <string name="mobileTransferMethodsHeader">Načini prijenosa</string>
+    <string name="mobileTransferFromLabel">PRIJENOS SA</string>
+    <string name="transferSource">Izvor</string>
+    <string name="mobileTransferFromHeader">Prijenos sa</string>
+    <string name="availableFunds">Dostupna sredstva</string>
+    <string name="noTransferFromSourceAvailableError">Prijenos sa izvora nije dostupan</string>
+
+</resources>

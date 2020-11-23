@@ -12,11 +12,11 @@
     <string name="wire_account">Cuenta de transferencia bancaria</string>
     <string name="paper_check">Cheque impreso</string>
     <string name="prepaid_card">Tarjeta prepagada</string>
-    <string name="paypal_account">PayPal</string>
-    <string name="venmo_account">Venmo</string>
+    <string name="paypal_account">Cuenta de Paypal</string>
+    <string name="venmo_account">Cuenta de Venmo</string>
     <string name="cash_pickup_mg">MoneyGram</string>
 
-    <string name="endingIn">finalizando el %s</string>
+    <string name="endingIn">finaliza el %s</string>
     <string name="to">para %s</string>
     <string name="not_translated_in_braces">(no traducido)</string>
 

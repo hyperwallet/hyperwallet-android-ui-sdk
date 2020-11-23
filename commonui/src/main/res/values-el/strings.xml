@@ -1,0 +1,27 @@
+<resources>
+    <string name="error_dialog_title">Σφάλμα</string>
+    <string name="error_dialog_connectivity_title">Πρόβλημα σύνδεσης</string>
+    <string name="error_dialog_unexpected_title">Απρόσμενο σφάλμα</string>
+    <string name="ok">OK</string>
+    <string name="try_again_button_label">Δοκιμάστε ξανά</string>
+    <string name="not_available">Μη διαθέσιμο</string>
+
+    <!-- title and font icon -->
+    <string name="bank_account">Τραπεζικός λογαριασμός</string>
+    <string name="bank_card">Χρεωστική κάρτα</string>
+    <string name="wire_account">Λογαριασμός εμβασμάτων</string>
+    <string name="paper_check">Επιταγή</string>
+    <string name="prepaid_card">Προπληρωμένη κάρτα</string>
+    <string name="paypal_account">Λογαριασμός PayPal</string>
+    <string name="venmo_account">Λογαριασμός Venmo</string>
+    <string name="cash_pickup_mg">MoneyGram</string>
+
+    <string name="endingIn">λήγει σε %s</string>
+    <string name="to">έως %s</string>
+    <string name="not_translated_in_braces">(αμετάφραστο)</string>
+
+    <string name="authentication_error_header">Σφάλμα ελέγχου ταυτότητας</string>
+    <string name="cancelButtonLabel">Ακύρωση</string>
+    <string name="remove">Κατάργηση</string>
+    <string name="mobileAreYouSure">Είστε βέβαιος/-η;</string>
+</resources>

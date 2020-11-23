@@ -1,0 +1,168 @@
+<resources>
+    <string name="app_name">баримт</string>
+    <string name="title_activity_receipt_list">Гүйлгээ</string>
+    <string name="title_activity_receipt_detail">Гүйлгээний мэдээлэл</string>
+    <string name="mobileTransactionDetailsHeader">Гүйлгээний мэдээлэл</string>
+    <string name="transactions">Гүйлгээ</string>
+    <string name="mobileTransactionTypeLabel">ГҮЙЛГЭЭ</string>
+    <string name="mobileFeeInfoLabel">ХУРААМЖИЙН МЭДЭЭЛЭЛ</string>
+    <string name="amount">Дүн</string>
+    <string name="mobileFeeLabel">Хураамж</string>
+    <string name="mobileTransactionDetailsTotal">Гүйлгээний нийт дүн</string>
+    <string name="mobileTransactionDetailsLabel">ДЭЛГЭРЭНГҮЙ МЭДЭЭЛЭЛ</string>
+    <string name="mobileJournalNumberLabel">Баримтын ID</string>
+    <string name="date">Огноо</string>
+    <string name="mobileMerchantTxnLabel">Гүйлгээний ID</string>
+    <string name="mobileConfirmNotesLabel">АНХААР</string>
+    <string name="mobileCharityName">Буяны байгууллагын нэр</string>
+    <string name="mobileCheckNumber">Чекийн дугаар</string>
+    <string name="mobilePromoWebsite">Сурталчилгааны вэбсайт</string>
+    <string name="concat_date_string_view_format">%s %s</string>
+
+    <string name="mobileNoTransactionsUser">Харуулах үйл ажиллагаа байхгүй.</string>
+    <string name="mobileNoTransactionsPrepaidCard">Сүүлийн 365 хоногт гүйлгээ хийгээгүй</string>
+    <string name="title_transfer_funds">Шилжүүлэг</string>
+    <string name="font_icon_placeholder">\ue908</string>
+    <string name="text_placeholder">Байршуулагч</string>
+
+
+
+    <!--Generic fee types-->
+    <string name="unknown_type">Үл мэдэгдэх гүйлгээний төрөл</string>
+    <string name="annual_fee">Жилийн хураамж</string>
+    <string name="annual_fee_refund">Жилийн хураамжийн буцаан олголт</string>
+    <string name="customer_service_fee">Хэрэглэгчий үйлчилгээний хураамж</string>
+    <string name="customer_service_fee_refund">Хэрэглэгчийн үйлчилгээний хураамжийг буцаан олгох</string>
+    <string name="expedited_shipping_fee">Түргэвчилсэн хүргэлтийн хураамж</string>
+    <string name="generic_fee_refund">Ерөнхий хураамжийн буцаан олголт</string>
+    <string name="monthly_fee">Сарын хураамж</string>
+    <string name="monthly_fee_refund">Сарын хураамжийг буцаан олголт</string>
+    <string name="payment_expiry_fee">Төлбөрийн хугацаа дуусахад авах хураамж</string>
+    <string name="payment_fee">Төлбөрийн хураамж</string>
+    <string name="processing_fee">Гүйцэтгэх хураамж</string>
+    <string name="standard_shipping_fee">Стандарт хүргэлтийн хураамж</string>
+    <string name="transfer_fee">Шилжүүлгийн хураамж</string>
+
+    <!--Generic payment types-->
+    <string name="adjustment">Үлдэгдлийн тохируулга</string>
+    <string name="foreign_exchange">ГАДААД ВАЛЮТ</string>
+    <string name="deposit">Төлбөр</string>
+    <string name="manual_adjustment">Тохируулга</string>
+    <string name="payment_expiration">Төлбөрийн хугацаа дууссан</string>
+
+    <!--Bank account-specific types-->
+    <string name="bank_account_transfer_fee">Банкны дансны буцаах хураамж</string>
+    <string name="bank_account_transfer_return">Банкны дансны буцаалт</string>
+    <string name="bank_account_transfer_return_fee">Банкны дансны буцаах хураамж</string>
+    <string name="transfer_to_bank_account">Банкны данс</string>
+
+    <!--Card-specific types-->
+    <string name="card_activation_fee">Карт идэвхжүүлэх хураамж</string>
+    <string name="card_activation_fee_waiver">Карт идэвхжүүлэх хураамжаас чөлөөлөх</string>
+    <string name="card_fee">Картын хураамж</string>
+    <string name="manual_transfer_to_prepaid_card">Карт уруу шилжүүлэх</string>
+    <string name="prepaid_card_balance_inquiry_fee">Үлдэгдэл лавлах хураамж</string>
+    <string name="prepaid_card_cash_advance">Бэлэн мөнгө урьдчилан авах</string>
+    <string name="prepaid_card_disputed_charge_refund">Маргаантай төлбөрийн буцаан олголт</string>
+    <string name="prepaid_card_dispute_deposit">Маргаантай картын мөнгө</string>
+    <string name="prepaid_card_domestic_cash_withdrawal_fee">АТМ-с мөнгө авах</string>
+    <string name="prepaid_card_exchange_rate_difference">УРЬДЧИЛСАН_ТӨЛБӨРТ_КАРТЫН_ХАНШИЙН_ЗӨРҮҮ
+    </string>
+    <string name="prepaid_card_manual_unload">Картаас шилжүүлэх</string>
+    <string name="prepaid_card_overseas_cash_withdrawal_fee">АТМ-с мөнгө авах</string>
+    <string name="prepaid_card_pin_change_fee">ПИН өөрчлөх хураамж</string>
+    <string name="prepaid_card_refund">Буцаан олголт</string>
+    <string name="prepaid_card_replacement_fee">Карт солих хураамж</string>
+    <string name="prepaid_card_sale">Гүйлгээ</string>
+    <string name="prepaid_card_sale_reversal">Буцаасан гүйлгээ</string>
+    <string name="prepaid_card_unload">Картаас шилжүүлэх</string>
+    <string name="transfer_to_prepaid_card">Карт уруу шилжүүлэх</string>
+    <!---->
+    <!--Donation types-->
+    <string name="donation">Хандив</string>
+    <string name="donation_fee">Хандивын хураамж</string>
+    <string name="donation_return">Хандив буцаах</string>
+    <!---->
+    <!--Merchant payment types-->
+    <string name="merchant_payment">Картаар үйлчлэгч байгууллагын төлбөр</string>
+    <string name="merchant_payment_fee">Картаар үйлчлэгч байгууллагын төлбөрийн хураамж</string>
+    <string name="merchant_payment_refund">Картаар үйлчлэгч байгууллагын төлбөрийн буцаан олголт</string>
+    <string name="merchant_payment_return">Картаар үйлчлэгч байгууллагын төлбөрийн буцаалт</string>
+    <!---->
+    <!--MoneyGram types-->
+    <string name="moneygram_transfer_return">MoneyGram буцаалт</string>
+    <string name="transfer_to_moneygram">MoneyGram</string>
+    <!---->
+    <!--Paper check types-->
+    <string name="paper_check_fee">Цаасан чекийн хураамж</string>
+    <string name="paper_check_refund">Цаасан чекийн буцаан олголт</string>
+    <string name="transfer_to_paper_check">Цаасан чек</string>
+    <!---->
+    <!--User and program account types-->
+    <string name="account_closure">Данс хаах</string>
+    <string name="account_closure_fee">Данс хаах хураамж</string>
+    <string name="account_unload">Мөнгө буцаах</string>
+    <string name="dormant_user_fee">Идэвхгүй хэрэглэгчийн дансны хураамж</string>
+    <string name="dormant_user_fee_refund">Идэвхгүй хэрэглэгчийн дансны хураамжийн буцаан олголт</string>
+    <string name="payment">Төлбөр</string>
+    <string name="payment_cancellation">Төлбөр цуцлах</string>
+    <string name="payment_reversal">Төлбөрийн буцаалт</string>
+    <string name="payment_reversal_fee">Төлбөрийг буцаах хураамж</string>
+    <string name="payment_return">Төлбөрийн буцаалт</string>
+    <string name="transfer_to_program_account">Хөтөлбөрт шилжүүлэх</string>
+    <string name="transfer_to_user">Хэрэглэгчид шилжүүлэх</string>
+    <string name="transfer_to_paypal_account">PayPal</string>
+    <string name="transfer_to_bank_card">Банкны карт</string>
+    <string name="transfer_to_debit_card">Дебит карт</string>
+    <string name="prepaid_card_transfer_return">Урьдчилсан төлбөрт карт цэнэглэлтийн буцаалт</string>
+    <!---->
+    <!--Virtual incentive types-->
+    <string name="virtual_incentive_cancellation">Урамшуулал цуцлах</string>
+    <string name="virtual_incentive_issuance">Гаргасан урамшуулал</string>
+    <string name="virtual_incentive_purchase">Урамшуулал худалдан авах</string>
+    <string name="virtual_incentive_refund">Урамшууллын буцаан олголт</string>
+    <!---->
+    <!--Western Union and WUBS types-->
+    <string name="transfer_to_western_union">Western Union</string>
+    <string name="transfer_to_wubs_wire">Банкны шилжүүлэг</string>
+    <string name="western_union_transfer_return">Western Union-ээс мөнгө авах</string>
+    <string name="wubs_wire_transfer_return">Банкны шилжүүлгийг буцаах</string>
+    <!---->
+    <!--Wire transfer types-->
+    <string name="transfer_to_wire">Банкны шилжүүлэг</string>
+    <string name="wire_transfer_fee">Банкны шилжүүлгийн хураамж</string>
+    <string name="wire_transfer_return">Банкны шилжүүлгийг буцаах</string>
+
+    <!-- New exposed receipt types -->
+    <string name="paypal_account_transfer_return">Бэлэн мөнгө гаргалтын буцаалт</string>
+    <string name="venmo_account_transfer_return">Бэлэн мөнгө гаргалтын буцаалт</string>
+    <string name="prepaid_card_account_deposit">Дансанд мөнгө байршуулах</string>
+    <string name="prepaid_card_annual_fee_discount">Жилийн хураамжийн хөнгөлөлт</string>
+    <string name="prepaid_card_bill_reprint_fee">Баримт дахин хэвлэх хураамж</string>
+    <string name="prepaid_card_atm_or_cash_advance_fee">АТМ/Бэлэн мөнгө урьдчилан авах хураамж</string>
+    <string name="prepaid_card_cash_advance_chargeback">Урьдчилж авсан бэлэн мөнгийг буцаах</string>
+    <string name="prepaid_card_cash_advance_chargeback_reversal">Урьдчилж авсан бэлэн мөнгөний буцаалтыг цуцлах</string>
+    <string name="prepaid_card_cash_advance_repress">Урьдчилж бэлэн мөнгө авахыг зогсоох</string>
+    <string name="prepaid_card_cash_advance_repress_reversal">Урьдчилж бэлэн мөнгө авахыг зогсоохыг цуцлах</string>
+    <string name="prepaid_card_chargeback">Буцаах</string>
+    <string name="prepaid_card_chargeback_refund">Буцаалтыг зогсоох</string>
+    <string name="prepaid_card_chargeback_refund_reversal">Буцаалт зогсоохыг цуцлах</string>
+    <string name="prepaid_card_chargeback_reversal">Буцаалтыг зогсоох</string>
+    <string name="prepaid_card_commission_or_fee">Хураамж/Шимтгэл</string>
+    <string name="prepaid_card_debit_transfer">Дебет/Шилжүүлэг</string>
+    <string name="prepaid_card_document_request_fee">Баримт бичгийн хүсэлтийн хураамж</string>
+    <string name="prepaid_card_emergency_cash">Яаралтай тусламжийн мөнгө</string>
+    <string name="prepaid_card_emergency_card">Яаралтай тусламжийн карт</string>
+    <string name="prepaid_card_income">Орлого</string>
+    <string name="prepaid_card_load_fee">PAN хураамж</string>
+    <string name="prepaid_card_refund_fee">Буцаан олголтын хураамж</string>
+    <string name="prepaid_card_monthly_maintenance_fee">Сарын үйлчилгээний хураамж</string>
+    <string name="prepaid_card_transaction_fee">Гүйлгээний хураамж</string>
+    <string name="prepaid_card_sms_fee">SMS хураамж</string>
+    <string name="prepaid_card_declined_authorization_fee">Татгалзсан зөвшөөрлийн хураамж</string>
+    <string name="fispc">Худалдан авах</string>
+
+    <!-- Prepaid Cards Receipt   -->
+    <string name="mobileAvailableBalances">Бэлэн байгаа мөнгө</string>
+
+</resources>

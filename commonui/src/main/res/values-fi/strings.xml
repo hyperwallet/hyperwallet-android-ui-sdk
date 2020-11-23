@@ -1,0 +1,27 @@
+<resources>
+    <string name="error_dialog_title">Virhe</string>
+    <string name="error_dialog_connectivity_title">Yhteysongelma</string>
+    <string name="error_dialog_unexpected_title">Odottamaton virhe</string>
+    <string name="ok">OK</string>
+    <string name="try_again_button_label">Yritä uudelleen</string>
+    <string name="not_available">Ei käytettävissä</string>
+
+    <!-- title and font icon -->
+    <string name="bank_account">Pankkitili</string>
+    <string name="bank_card">Maksukortti</string>
+    <string name="wire_account">Pankkisiirtotili</string>
+    <string name="paper_check">Paperinen sekki</string>
+    <string name="prepaid_card">Prepaid-kortti</string>
+    <string name="paypal_account">PayPal-tili</string>
+    <string name="venmo_account">Venmo-tili</string>
+    <string name="cash_pickup_mg">MoneyGram</string>
+
+    <string name="endingIn">päättyy %s</string>
+    <string name="to">kohteeseen %s</string>
+    <string name="not_translated_in_braces">(ei käännetty)</string>
+
+    <string name="authentication_error_header">Varmennusvirhe</string>
+    <string name="cancelButtonLabel">Peruuta</string>
+    <string name="remove">Poista</string>
+    <string name="mobileAreYouSure">Oletko varma?</string>
+</resources>

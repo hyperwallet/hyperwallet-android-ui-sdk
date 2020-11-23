@@ -1,0 +1,79 @@
+<resources>
+    <string name="app_name">hyperwallet.ui</string>
+    <string name="title_account_add">Hesap Ekle</string>
+    <string name="unknown">Bilinmiyor</string>
+
+    <string name="title_activity_select_transfer_method">Aktarım Yöntemi Seç</string>
+    <!-- SelectTransferMethodActivity -->
+    <string name="select_transfer_method_title">@string/title_activity_select_transfer_method
+    </string>
+
+    <string name="mobileCountryRegion">Ülke/Bölge</string>
+    <string name="mobileCurrencyLabel">Para Birimi</string>
+    <string name="mobileAddTransferMethodHeader">Bir aktarım yöntemi ekle</string>
+    <string name="title_activity_add_transfer_method">Aktarım Yöntemi Ekle</string>
+    <string name="title_add_bank_account">Banka Hesabı</string>
+    <string name="title_add_bank_card">Banka Kartı</string>
+
+    <string name="error_exact_length_field">Bu alanın uzunluğu tam olarak %d.</string>
+    <string name="error_invalid_expiry_date">%s geçersizdir.</string>
+    <string name="error_min_max_length_field">Bu alanın minimum uzunluğu {0} ve maksimum uzunluğu {1} olmalıdır.
+    </string>
+
+    <string name="createTransferMethodButtonLabel">Aktarım Yöntemi Ekle</string>
+    <string name="default_account_label">Varsayılan Hesap</string>
+    <string name="default_account_sub_label">Varsayılan bir aktarım yöntemi seç</string>
+    <string name="api_expiry_date_format">AA/YY</string>
+
+    <string name="feeAndProcessingTimeInformation">%s ücret \u2022 %s</string>
+    <string name="feeInformation">%s ücret</string>
+
+    <string name="emptyStateAddTransferMethod">Başlamak için bir aktarım yöntemi ekle.</string>
+
+    <!-- menu title -->
+    <string name="menu_transfer_funds">Aktarım</string>
+
+    <!--Fee formatter-->
+    <string name="fee_flat_formatter">%1$s%2$s</string>
+    <string name="fee_percent_no_min_and_max_formatter">%1$s%%</string>
+    <string name="fee_percent_only_min_formatter">%1$s%% (En az:%2$s %3$s)</string>
+    <string name="fee_percent_only_max_formatter">%1$s%% (En fazla:%2$s %3$s)</string>
+    <string name="fee_percent_formatter">%1$s%% (En az:%2$s %3$s, En fazla:%2$s %4$s)</string>
+    <string name="fee_mix_no_min_and_max_formatter">%1$s%2$s + %3$s%%</string>
+    <string name="fee_mix_only_min_formatter">%1$s%2$s + %3$s%% (En az:%1$s %4$s)</string>
+    <string name="fee_mix_only_max_formatter">%1$s%2$s + %3$s%% (En fazla:%1$s %4$s)</string>
+    <string name="fee_mix_formatter">%1$s%2$s + %3$s%% (En az:%1$s %4$s, En fazla:%1$s %5$s)</string>
+
+    <string name="account_holder">HESAP SAHİBİ BİLGİLERİ</string>
+    <string name="account_information">HESAP BİLGİLERİ: %s(%s)</string>
+    <string name="address">ADRES</string>
+    <string name="contact_information">İLETİŞİM BİLGİLERİ</string>
+    <string name="identification">KİMLİK</string>
+    <string name="intermediary_account">ARA HESAP</string>
+    <string name="mobileFeesAndProcessingTime">ÜCRETLER VE İŞLEM ZAMANI</string>
+
+    <string name="search_hint">İpucu Ara</string>
+    <string name="search_country">Ülke Ara</string>
+    <string name="search_currency">Para Birimi Ara</string>
+    <string name="search_widget">Ara</string>
+
+    <string name="select_transfer_method_currency_button_description">Para birimi seçme butonu
+    </string>
+    <string name="select_transfer_method_country_button_description">Ülke seçme butonu</string>
+    <string name="selected_country_item_description">Ülke seçildi</string>
+    <string name="selected_currency_item_description">Para birimi seçildi</string>
+    <string name="transfer_method_context_button_description">İçerik menü butonu</string>
+    <string name="item_select_description">Seçilen</string>
+
+    <string name="error_unmapped_field">Eşlenmemiş alan; lütfen destek ekibiyle iletişime geçin.</string>
+
+    <string name="country_placeholder">Kanada</string>
+    <string name="currency_placeholder">CAD</string>
+    <string name="feesAndProcessTimePlaceholder">20,00 ABD Doları ücret \u2022 1\-3 İş Günü </string>
+    <string name="mobileCountryCurrencyLabel">KONUM VE PARA BİRİMİ</string>
+    <string name="mobileTransferMethodLabel">AKTARIM YÖNTEMİ</string>
+    <string name="mobileTransferMethodsHeader">Aktarım Yöntemleri</string>
+
+    <string name="mobileRemoveEAconfirm">Aktarım yöntemini kaldır</string>
+    <string name="prepaidCardManagementInfo" >"Kartınızı yönetmek için bir web tarayıcısı kullanarak oturum açın"</string>
+</resources>

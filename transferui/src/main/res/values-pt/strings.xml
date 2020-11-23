@@ -1,0 +1,71 @@
+<resources>
+    <string name="title_activity_create_transfer">Transferir dinheiro</string>
+    <string name="mobileConfirmationHeader">Confirme os dados</string>
+    <string name="mobileConfirmNotesLabel">OBSERVAÇÃO</string>
+    <string name="transfer_destination">Favorecido</string>
+    <string name="mobileTransferToLabel">TRANSFERIR PARA</string>
+    <string name="mobileTransferFundsHeader">Transferir dinheiro</string>
+    <string name="mobileFXlabel">CÂMBIO</string>
+    <string name="transfer_header_label">Transferir</string>
+    <string name="noTransferMethodAdded">O método de transferência é obrigatório</string>
+    <string name="transfer_amount_hint">Valor</string>
+    <string name="transfer_currency_placeholder">USD</string>
+    <string name="transfer_currency_code_placeholder">$</string>
+    <string name="transfer_all_funds_label">Quantidade máxima para transferência</string>
+    <string name="mobileAvailableBalance">Valor disponível:%s %s</string>
+    <string name="mobileSummaryLabel">RESUMO</string>
+    <string name="mobileNoteLabel">Observação</string>
+    <string name="transfer_notes_label">Observação</string>
+    <string name="transfer_notes_additional_info_label">Adicionar observação (opcional)</string>
+    <string name="continueButtonLabel">Continuar</string>
+    <string name="defaultTransferAmount">0</string>
+    <string name="transfer">Transferir</string>
+    <string name="add_text">+</string>
+    <string name="mobileAddTransferMethod">Adicionar método de transferência</string>
+    <string name="add_transfer_description_1">Adicione um método de transferência para começar.</string>
+    <string name="add_transfer_description_2">Adicione um método de transferência para começar.</string>
+    <string name="transfer_destination_selection_description">Seleção do método de transferência</string>
+    <string name="destination_item_description">Item do favorecido</string>
+
+    <string name="amount_currency_format">%s %s</string>
+    <string name="exchange_rate_format">1 %s = %s %s</string>
+
+    <string name="module_transfermethodui_unavailable_error">Você não pode adicionar um método de transferência.</string>
+    <string name="transferAmountInvalid">Insira um valor válido para transferência</string>
+
+    <string name="mobileFXsell">De</string>
+    <string name="mobileFXbuy">Para</string>
+    <string name="mobileFXRateLabel">Taxa de câmbio</string>
+
+    <string name="mobileConfirmDetailsAmount">Valor</string>
+    <string name="mobileConfirmDetailsFee">Taxa</string>
+    <string name="mobileConfirmDetailsTotal">Você receberá</string>
+    <string name="exchange_rate_change_warning">Devido a variações na taxa de câmbio, você \'receberá agora %1$s %2$s.</string>
+
+
+    <string name="mobileTransferMax">Quantidade máxima para transferência</string>
+    <string name="transfer_summary_placeholder">Valor disponível: CAD 2.422,90</string>
+    <string name="transfer_notes_placeholder">Transferência parcial</string>
+    <string name="transfer_item_icon_placeholder">\ue000</string>
+    <string name="transfer_item_title_placeholder">Tipo de transferência</string>
+    <string name="transfer_item_country_placeholder">Nome do país</string>
+    <string name="transfer_item_identification_placeholder">Editando em XXXX</string>
+    <string name="foreign_exchange_sell_placeholder">CAD 15,05</string>
+    <string name="foreign_exchange_buy_placeholder">USD 11,00</string>
+    <string name="foreign_exchange_rate_placeholder">CAD 1 = USD 0,73897</string>
+    <string name="summary_amount_placeholder">CAD 10,00</string>
+    <string name="summary_amount_fee_placeholder">CAD 0,25</string>
+    <string name="summary_amount_transfer_placeholder">CAD 9,75</string>
+    <string name="exchange_rate_change_warning_placeholder">Devido a variações na taxa de câmbio, você receberá agora CAD 10,00</string>
+
+    <string name="mobileTransferSuccessMsg">Sua transferência está sendo processada</string>
+    <string name="mobileTransferSuccessDetails">O dinheiro está a caminho da sua %s</string>
+    <string name="doneButtonLabel">Feito</string>
+    <string name="mobileTransferMethodsHeader">Métodos de transferência</string>
+    <string name="mobileTransferFromLabel">TRANSFERIR DE</string>
+    <string name="transferSource">Origem</string>
+    <string name="mobileTransferFromHeader">Transferir de</string>
+    <string name="availableFunds">Saldo disponível</string>
+    <string name="noTransferFromSourceAvailableError">Nenhuma transferência da origem está disponível</string>
+
+</resources>
