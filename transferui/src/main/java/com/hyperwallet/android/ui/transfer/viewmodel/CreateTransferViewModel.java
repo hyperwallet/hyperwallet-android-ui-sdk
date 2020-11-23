@@ -179,6 +179,7 @@ public class CreateTransferViewModel extends ViewModel {
     public void refresh(String amount) {
         mTransferAmount.postValue(null);
         mTransferNotes.postValue(null);
+        mSourceToken = null;
         // Re-Initialize
         initialize();
         init(amount);
