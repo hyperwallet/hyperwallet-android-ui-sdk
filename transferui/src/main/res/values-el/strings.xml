@@ -12,7 +12,7 @@
     <string name="transfer_currency_placeholder">USD</string>
     <string name="transfer_currency_code_placeholder">$</string>
     <string name="transfer_all_funds_label">Μέγιστο ποσό μεταφοράς</string>
-    <string name="mobileAvailableBalance">Διαθέσιμο ποσό: %s %s</string>
+    <string name="mobileAvailableBalance">Διαθέσιμο ποσό: %s %s %s</string>
     <string name="mobileSummaryLabel">ΣΥΝΟΨΗ</string>
     <string name="mobileNoteLabel">Σημείωση</string>
     <string name="transfer_notes_label">Σημείωση</string>
@@ -28,7 +28,6 @@
     <string name="destination_item_description">Στοιχείο προορισμού</string>
 
     <string name="amount_currency_format">%s %s</string>
-    <string name="exchange_rate_format">1 %s = %s %s</string>
 
     <string name="module_transfermethodui_unavailable_error">Δεν μπορείτε να προσθέσετε έναν τρόπο μεταφοράς.</string>
     <string name="transferAmountInvalid">Εισαγάγετε ένα έγκυρο ποσό μεταφοράς</string>

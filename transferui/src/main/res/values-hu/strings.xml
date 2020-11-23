@@ -12,7 +12,7 @@
     <string name="transfer_currency_placeholder">USD</string>
     <string name="transfer_currency_code_placeholder">$</string>
     <string name="transfer_all_funds_label">Max. összeg átutalása</string>
-    <string name="mobileAvailableBalance">Elérhető összeg: %s %s</string>
+    <string name="mobileAvailableBalance">Elérhető összeg: %s %s %s</string>
     <string name="mobileSummaryLabel">ÖSSZEGZÉS</string>
     <string name="mobileNoteLabel">Megjegyzés</string>
     <string name="transfer_notes_label">Megjegyzés</string>
@@ -28,7 +28,6 @@
     <string name="destination_item_description">Célszámla elem</string>
 
     <string name="amount_currency_format">%s %s</string>
-    <string name="exchange_rate_format">1 %s = %s %s</string>
 
     <string name="module_transfermethodui_unavailable_error">Önnek nem áll módjában átutalási módot hozzáadni.</string>
     <string name="transferAmountInvalid">Adjon meg egy érvényes átutalási összeget</string>

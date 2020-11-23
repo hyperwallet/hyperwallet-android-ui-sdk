@@ -28,7 +28,6 @@
     <string name="destination_item_description">Elemento de destino</string>
 
     <string name="amount_currency_format">%s %s</string>
-    <string name="exchange_rate_format">%s1 %s = %s%s %s</string>
 
     <string name="module_transfermethodui_unavailable_error">No puede añadir un método de transferencia.</string>
     <string name="transferAmountInvalid">Introduzca un importe de transferencia válido</string>

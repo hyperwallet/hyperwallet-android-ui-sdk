@@ -12,7 +12,7 @@
     <string name="transfer_currency_placeholder">USD</string>
     <string name="transfer_currency_code_placeholder">$</string>
     <string name="transfer_all_funds_label">Префрли максимален износ</string>
-    <string name="mobileAvailableBalance">Достапен износ: %s %s</string>
+    <string name="mobileAvailableBalance">Достапен износ: %s %s %s</string>
     <string name="mobileSummaryLabel">РЕЗИМЕ</string>
     <string name="mobileNoteLabel">Забелешка</string>
     <string name="transfer_notes_label">Забелешка</string>
@@ -28,7 +28,6 @@
     <string name="destination_item_description">Крајна ставка</string>
 
     <string name="amount_currency_format">%s %s</string>
-    <string name="exchange_rate_format">1 %s = %s %s</string>
 
     <string name="module_transfermethodui_unavailable_error">Не\'можете да додадете метод на трансфер.</string>
     <string name="transferAmountInvalid">Внеси важечки износ на трансфер</string>

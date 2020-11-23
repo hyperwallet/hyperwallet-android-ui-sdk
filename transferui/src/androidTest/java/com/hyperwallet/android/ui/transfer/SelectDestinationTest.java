@@ -197,7 +197,7 @@ public class SelectDestinationTest {
         onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("ending in 0616")));
 
         onView(withId(R.id.transfer_summary)).perform(nestedScrollTo()).check(matches(isDisplayed()));
-        String availableFundUSD = getAvailableFund("998.00", "USD");
+        String availableFundUSD = getAvailableFund("$","998.00", "USD");
         onView(withId(R.id.transfer_summary)).check(matches(withText(availableFundUSD)));
 
         onView(withId(R.id.transfer_destination_title)).perform(click());
@@ -280,7 +280,7 @@ public class SelectDestinationTest {
         onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("ending in 5121")));
 
         onView(withId(R.id.transfer_summary)).perform(nestedScrollTo()).check(matches(isDisplayed()));
-        String availableFundCAD = getAvailableFund("1,157.40", "CAD");
+        String availableFundCAD = getAvailableFund("$","1,157.40", "CAD");
         onView(withId(R.id.transfer_summary)).check(matches(withText(availableFundCAD)));
 
     }
@@ -306,7 +306,7 @@ public class SelectDestinationTest {
         onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("ending in 0616")));
 
         onView(withId(R.id.transfer_summary)).perform(nestedScrollTo()).check(matches(isDisplayed()));
-        String availableFundUSD = getAvailableFund("998.00", "USD");
+        String availableFundUSD = getAvailableFund("$","998.00", "USD");
         onView(withId(R.id.transfer_summary)).check(matches(withText(availableFundUSD)));
 
         onView(withId(R.id.transfer_destination_title)).perform(click());
@@ -326,7 +326,7 @@ public class SelectDestinationTest {
         onView(withId(R.id.transfer_all_funds)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_all_funds)).check(matches(not(isSelected())));
         onView(withId(R.id.transfer_summary)).perform(nestedScrollTo()).check(matches(isDisplayed()));
-        String availableFundUSD2 = getAvailableFund("1000.00", "USD");
+        String availableFundUSD2 = getAvailableFund("$","1,000.00", "USD");
         onView(withId(R.id.transfer_summary)).check(matches(withText(availableFundUSD2)));
 
         onView(withId(R.id.transfer_notes)).perform(nestedScrollTo()).check(matches(isDisplayed()));
@@ -425,9 +425,9 @@ public class SelectDestinationTest {
 
     }
 
-    private String getAvailableFund(String amount, String currency) {
+    private String getAvailableFund(String symbol,String amount, String currency) {
         String availableFund = String.format(InstrumentationRegistry.getInstrumentation().getTargetContext()
-                .getString(R.string.mobileAvailableBalance), amount , currency);
+                .getString(R.string.mobileAvailableBalance),symbol, amount , currency);
         return availableFund;
     }
 
