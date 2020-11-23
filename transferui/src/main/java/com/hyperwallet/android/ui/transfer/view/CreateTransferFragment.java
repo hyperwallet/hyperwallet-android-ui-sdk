@@ -88,7 +88,7 @@ public class CreateTransferFragment extends Fragment {
     private static final String ELLIPSIS = "...";
     private static final int NOTES_MAX_LINE_LENGTH = 40;
     private static final String REGEX_ONLY_NUMBER = "[^0-9]";
-    private static final String REGEX_REMOVE_TRAILING_EMPTY_SPACE = "\\s+$";
+    private static final String REGEX_REMOVE_EMPTY_SPACE = "^\\s+|\\s+$";
     public static final String REGEX_ONLY_NUMBER_AND_DECIMAL = "[^0-9.]";
     private static final String US_CURRENCY_CODE = "USD";
     private static final String CURRENCY_FILE_NAME = "currency.json";
@@ -593,8 +593,10 @@ public class CreateTransferFragment extends Fragment {
             public void onChanged(final Transfer transfer) {
                 if (transfer != null) {
                     CurrencyDetails currencyDetails = getNumberOfFractionDigits(mCurrencyCode);
-                    String summary = requireContext().getString(R.string.mobileAvailableBalance,currencyDetails == null ? "" : currencyDetails.getSymbol(),
-                            formattedAmount(stringToDouble(transfer.getDestinationAmount()),mCurrencyCode), transfer.getDestinationCurrency());
+                    String summary = requireContext().getString(R.string.mobileAvailableBalance,
+                            currencyDetails == null ? "" : currencyDetails.getSymbol(),
+                            formattedAmount(stringToDouble(transfer.getDestinationAmount()), mCurrencyCode),
+                            transfer.getDestinationCurrency());
                     mTransferAllFundsSummary.setText(summary);
                     mTransferAllFundsSummary.setVisibility(View.VISIBLE);
                     if (mCreateTransferViewModel.isUpdateTransferAllFunds()) {
@@ -742,7 +744,7 @@ public class CreateTransferFragment extends Fragment {
         mGroupSeparator = Character.toString(decimalFormatSymbols.getGroupingSeparator());
         mCreateTransferViewModel.setDecimalSeparator(mDecimalSeparator);
         mCreateTransferViewModel.setGroupSeparator(mGroupSeparator);
-        return currencyFormatter.format(amount).replaceAll(REGEX_REMOVE_TRAILING_EMPTY_SPACE, EMPTY_STRING);
+        return currencyFormatter.format(amount).replaceAll(REGEX_REMOVE_EMPTY_SPACE, EMPTY_STRING);
     }
 
     private double stringToDouble(@NonNull final String amount) {
