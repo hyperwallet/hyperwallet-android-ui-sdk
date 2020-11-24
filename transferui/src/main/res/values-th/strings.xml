@@ -1,0 +1,71 @@
+<resources>
+    <string name="title_activity_create_transfer">โอนเงิน</string>
+    <string name="mobileConfirmationHeader">ยืนยันรายละเอียด</string>
+    <string name="mobileConfirmNotesLabel">หมายเหตุ</string>
+    <string name="transfer_destination">ปลายทาง</string>
+    <string name="mobileTransferToLabel">โอนไปยัง</string>
+    <string name="mobileTransferFundsHeader">โอนเงิน</string>
+    <string name="mobileFXlabel">อัตราแลกเปลี่ยน</string>
+    <string name="transfer_header_label">การโอนเงิน</string>
+    <string name="noTransferMethodAdded">ต้องระบุวิธีการโอนเงิน</string>
+    <string name="transfer_amount_hint">จำนวนเงิน</string>
+    <string name="transfer_currency_placeholder">ดอลลาร์สหรัฐ</string>
+    <string name="transfer_currency_code_placeholder">$</string>
+    <string name="transfer_all_funds_label">จำนวนเงินที่โอนได้สูงสุด</string>
+    <string name="mobileAvailableBalance">จำนวนเงินที่ใช้ได้: %s %s</string>
+    <string name="mobileSummaryLabel">สรุป</string>
+    <string name="mobileNoteLabel">หมายเหตุ</string>
+    <string name="transfer_notes_label">หมายเหตุ</string>
+    <string name="transfer_notes_additional_info_label">เพิ่มหมายเหตุ (ตัวเลือก)</string>
+    <string name="continueButtonLabel">ดำเนินการต่อ</string>
+    <string name="defaultTransferAmount">0</string>
+    <string name="transfer">การโอนเงิน</string>
+    <string name="add_text">+</string>
+    <string name="mobileAddTransferMethod">เพิ่มวิธีการโอนเงิน</string>
+    <string name="add_transfer_description_1">เพิ่มวิธีการโอนเงินเพื่อเริ่มต้นใช้งาน</string>
+    <string name="add_transfer_description_2">เพิ่มวิธีการโอนเงินเพื่อเริ่มต้นใช้งาน</string>
+    <string name="transfer_destination_selection_description">ตัวเลือกวิธีการโอนเงิน</string>
+    <string name="destination_item_description">รายการปลายทาง</string>
+
+    <string name="amount_currency_format">%s %s</string>
+    <string name="exchange_rate_format">1 %s = %s %s</string>
+
+    <string name="module_transfermethodui_unavailable_error">คุณ\'ไม่สามารถเพิ่มวิธีการโอนเงินได้</string>
+    <string name="transferAmountInvalid">ป้อนจำนวนเงินที่ต้องการโอนที่ถูกต้อง</string>
+
+    <string name="mobileFXsell">จาก</string>
+    <string name="mobileFXbuy">ไป</string>
+    <string name="mobileFXRateLabel">อัตราแลกเปลี่ยน</string>
+
+    <string name="mobileConfirmDetailsAmount">จำนวนเงิน</string>
+    <string name="mobileConfirmDetailsFee">ค่าธรรมเนียม</string>
+    <string name="mobileConfirmDetailsTotal">คุณจะได้รับ</string>
+    <string name="exchange_rate_change_warning">เนื่องจากการเปลี่ยนแปลงของอัตราแลกเปลี่ยน ตอนนี้คุณ\'จะได้รับ %1$s %2$s</string>
+
+
+    <string name="mobileTransferMax">จำนวนเงินที่โอนได้สูงสุด</string>
+    <string name="transfer_summary_placeholder">จำนวนเงินที่ใช้ได้: 2,422.90 ดอลลาร์แคนาดา</string>
+    <string name="transfer_notes_placeholder">การโอนเงินบางส่วน</string>
+    <string name="transfer_item_icon_placeholder">\ue000</string>
+    <string name="transfer_item_title_placeholder">ประเภทการโอนเงิน</string>
+    <string name="transfer_item_country_placeholder">ชื่อประเทศ</string>
+    <string name="transfer_item_identification_placeholder">แก้ไขเมื่อ XXXX</string>
+    <string name="foreign_exchange_sell_placeholder">15.05 ดอลลาร์แคนาดา</string>
+    <string name="foreign_exchange_buy_placeholder">11.00 ดอลลาร์สหรัฐ</string>
+    <string name="foreign_exchange_rate_placeholder">1 ดอลลาร์แคนาดา = 0.73897 ดอลลาร์สหรัฐ</string>
+    <string name="summary_amount_placeholder">10.00 ดอลลาร์แคนาดา</string>
+    <string name="summary_amount_fee_placeholder">0.25 ดอลลาร์แคนาดา</string>
+    <string name="summary_amount_transfer_placeholder">9.75 ดอลลาร์แคนาดา</string>
+    <string name="exchange_rate_change_warning_placeholder">เนื่องจากการเปลี่ยนแปลงของอัตราแลกเปลี่ยน ตอนนี้คุณ\'จะได้รับ 10.00 ดอลลาร์แคนาดา</string>
+
+    <string name="mobileTransferSuccessMsg">กำลังประมวลผลการโอนเงินของคุณ</string>
+    <string name="mobileTransferSuccessDetails">คุณกำลังจะได้รับเงินใน %s</string>
+    <string name="doneButtonLabel">เสร็จสิ้น</string>
+    <string name="mobileTransferMethodsHeader">วิธีการโอนเงิน</string>
+    <string name="mobileTransferFromLabel">โอนมาจาก</string>
+    <string name="transferSource">แหล่งที่มา</string>
+    <string name="mobileTransferFromHeader">โอนมาจาก</string>
+    <string name="availableFunds">ยอดเงินที่ใช้ได้</string>
+    <string name="noTransferFromSourceAvailableError">ไม่มีการโอนเงินจากแหล่งที่มา</string>
+
+</resources>

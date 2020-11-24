@@ -126,7 +126,7 @@ public class ReceiptDetailFragment extends Fragment {
         } else if (DEBIT.equals(receipt.getEntry())) {
             transactionAmount.setTextColor(transactionAmount.getContext()
                     .getResources().getColor(R.color.negativeColor));
-            transactionAmount.setText(transactionAmount.getContext().getString(R.string.debit_sign_transaction,
+            transactionAmount.setText(transactionAmount.getContext().getString(R.string.debit_sign_receipts,
                     CurrencyParser.getInstance(view.getContext()).formatCurrency(receipt.getCurrency(), receipt.getAmount())));
             transactionTypeIcon.setTextColor(transactionTypeIcon.getContext()
                     .getResources().getColor(R.color.negativeColor));

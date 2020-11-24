@@ -1,0 +1,79 @@
+<resources>
+    <string name="app_name">hyperwallet.ui</string>
+    <string name="title_account_add">계좌 추가</string>
+    <string name="unknown">알 수 없음</string>
+
+    <string name="title_activity_select_transfer_method">이체 방법 선택</string>
+    <!-- SelectTransferMethodActivity -->
+    <string name="select_transfer_method_title">@string/title_activity_select_transfer_method
+    </string>
+
+    <string name="mobileCountryRegion">국가/지역</string>
+    <string name="mobileCurrencyLabel">통화</string>
+    <string name="mobileAddTransferMethodHeader">이체 방법 추가</string>
+    <string name="title_activity_add_transfer_method">이체 방법 추가</string>
+    <string name="title_add_bank_account">은행 계좌</string>
+    <string name="title_add_bank_card">체크카드</string>
+
+    <string name="error_exact_length_field">이 필드의 길이는 정확히 %d자입니다.</string>
+    <string name="error_invalid_expiry_date">%s이(가) 유효하지 않습니다.</string>
+    <string name="error_min_max_length_field">이 필드의 길이는 최소 {0}자, 최대 {1}자입니다.
+    </string>
+
+    <string name="createTransferMethodButtonLabel">이체 방법 추가</string>
+    <string name="default_account_label">기본 계좌</string>
+    <string name="default_account_sub_label">기본 이체 방법 선택</string>
+    <string name="api_expiry_date_format">월월/년년</string>
+
+    <string name="feeAndProcessingTimeInformation">%s 수수료\u2022 %s</string>
+    <string name="feeInformation">%s 수수료</string>
+
+    <string name="emptyStateAddTransferMethod">시작하려면 이체 방법을 추가하십시오.</string>
+
+    <!-- menu title -->
+    <string name="menu_transfer_funds">이체</string>
+
+    <!--Fee formatter-->
+    <string name="fee_flat_formatter">%1$s%2$s</string>
+    <string name="fee_percent_no_min_and_max_formatter">%1$s%%</string>
+    <string name="fee_percent_only_min_formatter">%1$s%% (최소:%2$s %3$s)</string>
+    <string name="fee_percent_only_max_formatter">%1$s%% (최대:%2$s %3$s)</string>
+    <string name="fee_percent_formatter">%1$s%% (최소:%2$s %3$s, 최대:%2$s %4$s)</string>
+    <string name="fee_mix_no_min_and_max_formatter">%1$s%2$s + %3$s%%</string>
+    <string name="fee_mix_only_min_formatter">%1$s%2$s + %3$s%% (최소:%1$s %4$s)</string>
+    <string name="fee_mix_only_max_formatter">%1$s%2$s + %3$s%% (최대:%1$s %4$s)</string>
+    <string name="fee_mix_formatter">%1$s%2$s + %3$s%% (최소:%1$s %4$s, 최대:%1$s %5$s)</string>
+
+    <string name="account_holder">예금주 정보</string>
+    <string name="account_information">계좌 정보: %s(%s)</string>
+    <string name="address">주소</string>
+    <string name="contact_information">연락처 정보</string>
+    <string name="identification">신원 확인</string>
+    <string name="intermediary_account">중개 계좌</string>
+    <string name="mobileFeesAndProcessingTime">수수료 및 처리 시간</string>
+
+    <string name="search_hint">힌트 검색</string>
+    <string name="search_country">국가 검색</string>
+    <string name="search_currency">통화 검색</string>
+    <string name="search_widget">검색</string>
+
+    <string name="select_transfer_method_currency_button_description">통화 선택 버튼
+    </string>
+    <string name="select_transfer_method_country_button_description">국가 선택 버튼</string>
+    <string name="selected_country_item_description">선택된 국가 항목</string>
+    <string name="selected_currency_item_description">선택된 통화 항목</string>
+    <string name="transfer_method_context_button_description">컨텍스트 메뉴 버튼</string>
+    <string name="item_select_description">선택된 항목</string>
+
+    <string name="error_unmapped_field">매핑되지 않은 필드, 지원팀에 문의하십시오.</string>
+
+    <string name="country_placeholder">캐나다</string>
+    <string name="currency_placeholder">CAD</string>
+    <string name="feesAndProcessTimePlaceholder">수수료 USD $20 \u2022 1~3 영업일 </string>
+    <string name="mobileCountryCurrencyLabel">위치 및 통화</string>
+    <string name="mobileTransferMethodLabel">이체 방법</string>
+    <string name="mobileTransferMethodsHeader">이체 방법</string>
+
+    <string name="mobileRemoveEAconfirm">이체 방법 삭제</string>
+    <string name="prepaidCardManagementInfo" >“카드를 관리하려면 웹 브라우저를 사용하여 로그인하십시오”</string>
+</resources>

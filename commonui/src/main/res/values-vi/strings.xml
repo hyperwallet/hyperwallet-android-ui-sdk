@@ -1,0 +1,27 @@
+<resources>
+    <string name="error_dialog_title">Lỗi</string>
+    <string name="error_dialog_connectivity_title">Lỗi kết nối</string>
+    <string name="error_dialog_unexpected_title">Lỗi không mong đợi</string>
+    <string name="ok">OK</string>
+    <string name="try_again_button_label">Thử lại</string>
+    <string name="not_available">Không khả dụng</string>
+
+    <!-- title and font icon -->
+    <string name="bank_account">Tài khoản ngân hàng</string>
+    <string name="bank_card">Thẻ ghi nợ</string>
+    <string name="wire_account">Tài khoản điện chuyển khoản</string>
+    <string name="paper_check">Séc giấy</string>
+    <string name="prepaid_card">Thẻ trả trước</string>
+    <string name="paypal_account">Tài khoản Paypal</string>
+    <string name="venmo_account">Tài khoản Venmo</string>
+    <string name="cash_pickup_mg">MoneyGram</string>
+
+    <string name="endingIn">kết thúc bằng %s</string>
+    <string name="to">đến %s</string>
+    <string name="not_translated_in_braces">(not translated)</string>
+
+    <string name="authentication_error_header">Lỗi xác thực</string>
+    <string name="cancelButtonLabel">Huỷ bỏ</string>
+    <string name="remove">Xóa</string>
+    <string name="mobileAreYouSure">Bạn có chắc không?</string>
+</resources>

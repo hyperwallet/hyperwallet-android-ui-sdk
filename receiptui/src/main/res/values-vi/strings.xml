@@ -1,0 +1,168 @@
+<resources>
+    <string name="app_name">biên lai</string>
+    <string name="title_activity_receipt_list">Các giao dịch</string>
+    <string name="title_activity_receipt_detail">Chi tiết Giao dịch</string>
+    <string name="mobileTransactionDetailsHeader">Chi tiết giao dịch</string>
+    <string name="transactions">Các giao dịch</string>
+    <string name="mobileTransactionTypeLabel">GIAO DỊCH</string>
+    <string name="mobileFeeInfoLabel">THÔNG TIN PHÍ</string>
+    <string name="amount">Số tiền</string>
+    <string name="mobileFeeLabel">Phí</string>
+    <string name="mobileTransactionDetailsTotal">Tổng giao dịch</string>
+    <string name="mobileTransactionDetailsLabel">CHI TIẾT</string>
+    <string name="mobileJournalNumberLabel">Mã biên nhận</string>
+    <string name="date">Ngày</string>
+    <string name="mobileMerchantTxnLabel">Mã giao dịch</string>
+    <string name="mobileConfirmNotesLabel">LƯU Ý</string>
+    <string name="mobileCharityName">Tên tổ chức từ thiện</string>
+    <string name="mobileCheckNumber">Số séc</string>
+    <string name="mobilePromoWebsite">Trang web quảng cáo</string>
+    <string name="concat_date_string_view_format">%s %s</string>
+
+    <string name="mobileNoTransactionsUser">\'Không có hoạt động để hiển thị.</string>
+    <string name="mobileNoTransactionsPrepaidCard">Không có giao dịch nào trong 365 ngày qua</string>
+    <string name="title_transfer_funds">Chuyển tiền</string>
+    <string name="font_icon_placeholder">\ue908</string>
+    <string name="text_placeholder">Trình giữ chỗ</string>
+
+
+
+    <!--Generic fee types-->
+    <string name="unknown_type">Loại giao dịch không xác định</string>
+    <string name="annual_fee">Phí hằng năm</string>
+    <string name="annual_fee_refund">Hoàn phí hàng năm</string>
+    <string name="customer_service_fee">Phí dịch vụ khách hàng</string>
+    <string name="customer_service_fee_refund">Hoàn lại phí dịch vụ cho khách hàng</string>
+    <string name="expedited_shipping_fee">Phí vận chuyển nhanh</string>
+    <string name="generic_fee_refund">Hoàn lại phí chung</string>
+    <string name="monthly_fee">Phí hàng tháng</string>
+    <string name="monthly_fee_refund">Hoàn lại phí hàng tháng</string>
+    <string name="payment_expiry_fee">Phí hết hạn thanh toán</string>
+    <string name="payment_fee">Phí thanh toán</string>
+    <string name="processing_fee">Phí xử lý</string>
+    <string name="standard_shipping_fee">Phí vận chuyển tiêu chuẩn</string>
+    <string name="transfer_fee">Phí chuyển</string>
+
+    <!--Generic payment types-->
+    <string name="adjustment">Điều chỉnh số dư</string>
+    <string name="foreign_exchange">Ngoại hối</string>
+    <string name="deposit">Thanh toán</string>
+    <string name="manual_adjustment">Điều chỉnh</string>
+    <string name="payment_expiration">Thanh toán đã hết hạn</string>
+
+    <!--Bank account-specific types-->
+    <string name="bank_account_transfer_fee">Phí trả lại tài khoản ngân hàng</string>
+    <string name="bank_account_transfer_return">Trả lại tài khoản ngân hàng</string>
+    <string name="bank_account_transfer_return_fee">Phí trả lại tài khoản ngân hàng</string>
+    <string name="transfer_to_bank_account">Tài khoản ngân hàng</string>
+
+    <!--Card-specific types-->
+    <string name="card_activation_fee">Phí kích hoạt thẻ</string>
+    <string name="card_activation_fee_waiver">Miễn phí kích hoạt thẻ</string>
+    <string name="card_fee">Phí thẻ</string>
+    <string name="manual_transfer_to_prepaid_card">Chuyển sang thẻ</string>
+    <string name="prepaid_card_balance_inquiry_fee">Phí truy vấn số dư</string>
+    <string name="prepaid_card_cash_advance">Ứng trước tiền mặt</string>
+    <string name="prepaid_card_disputed_charge_refund">Hoàn lại phí tranh chấp</string>
+    <string name="prepaid_card_dispute_deposit">Tiền gửi vào thẻ tranh chấp</string>
+    <string name="prepaid_card_domestic_cash_withdrawal_fee">Rút tiền từ máy ATM</string>
+    <string name="prepaid_card_exchange_rate_difference">PREPAID_CARD_EXCHANGE_RATE_DIFFERENCE
+    </string>
+    <string name="prepaid_card_manual_unload">Chuyển từ thẻ</string>
+    <string name="prepaid_card_overseas_cash_withdrawal_fee">Rút tiền từ máy ATM</string>
+    <string name="prepaid_card_pin_change_fee">Phí thay đổi mã PIN</string>
+    <string name="prepaid_card_refund">Hoàn tiền</string>
+    <string name="prepaid_card_replacement_fee">Phí thay thế thẻ</string>
+    <string name="prepaid_card_sale">Giao dịch</string>
+    <string name="prepaid_card_sale_reversal">Giao dịch được đảo chiều</string>
+    <string name="prepaid_card_unload">Chuyển từ thẻ</string>
+    <string name="transfer_to_prepaid_card">Chuyển sang thẻ</string>
+    <!---->
+    <!--Donation types-->
+    <string name="donation">Quyên góp</string>
+    <string name="donation_fee">Phí quyên góp</string>
+    <string name="donation_return">Hoàn tiền quyên góp</string>
+    <!---->
+    <!--Merchant payment types-->
+    <string name="merchant_payment">Thanh toán cho người bán</string>
+    <string name="merchant_payment_fee">Phí thanh toán cho người bán</string>
+    <string name="merchant_payment_refund">Hoàn lại thanh toán cho người bán</string>
+    <string name="merchant_payment_return">Trả lại thanh toán cho người bán</string>
+    <!---->
+    <!--MoneyGram types-->
+    <string name="moneygram_transfer_return">Trả lại MoneyGram</string>
+    <string name="transfer_to_moneygram">MoneyGram</string>
+    <!---->
+    <!--Paper check types-->
+    <string name="paper_check_fee">Phí séc giấy</string>
+    <string name="paper_check_refund">Hoàn tiền séc giấy</string>
+    <string name="transfer_to_paper_check">Séc giấy</string>
+    <!---->
+    <!--User and program account types-->
+    <string name="account_closure">Đóng tài khoản</string>
+    <string name="account_closure_fee">Phí đóng tài khoản</string>
+    <string name="account_unload">Hoàn lại tiền</string>
+    <string name="dormant_user_fee">Phí duy trì tài khoản không hoạt động</string>
+    <string name="dormant_user_fee_refund">Hoàn lại phí cho tài khoản không hoạt động</string>
+    <string name="payment">Thanh toán</string>
+    <string name="payment_cancellation">Hủy thanh toán</string>
+    <string name="payment_reversal">Đảo chiều thanh toán</string>
+    <string name="payment_reversal_fee">Phí đảo chiều thanh toán</string>
+    <string name="payment_return">Trả lại thanh toán</string>
+    <string name="transfer_to_program_account">Chuyển sang Chương trình</string>
+    <string name="transfer_to_user">Chuyển cho người dùng</string>
+    <string name="transfer_to_paypal_account">PayPal</string>
+    <string name="transfer_to_bank_card">Thẻ ngân hàng</string>
+    <string name="transfer_to_debit_card">Thẻ ghi nợ</string>
+    <string name="prepaid_card_transfer_return">Trả lại nạp thẻ trả trước</string>
+    <!---->
+    <!--Virtual incentive types-->
+    <string name="virtual_incentive_cancellation">Hủy khuyến mại</string>
+    <string name="virtual_incentive_issuance">Khuyến mại đã phát hành</string>
+    <string name="virtual_incentive_purchase">Giao dịch mua có khuyến mãi</string>
+    <string name="virtual_incentive_refund">Hoàn lại tiền khuyến mãi</string>
+    <!---->
+    <!--Western Union and WUBS types-->
+    <string name="transfer_to_western_union">Western Union</string>
+    <string name="transfer_to_wubs_wire">Điện chuyển khoản</string>
+    <string name="western_union_transfer_return">Rút tiền qua Western Union</string>
+    <string name="wubs_wire_transfer_return">Hoàn trả điện chuyển khoản ngân hàng</string>
+    <!---->
+    <!--Wire transfer types-->
+    <string name="transfer_to_wire">Điện chuyển khoản</string>
+    <string name="wire_transfer_fee">Phí điện chuyển khoản</string>
+    <string name="wire_transfer_return">Hoàn trả điện chuyển khoản ngân hàng</string>
+
+    <!-- New exposed receipt types -->
+    <string name="paypal_account_transfer_return">Trả lại tiền mặt xuất ra</string>
+    <string name="venmo_account_transfer_return">Trả lại tiền mặt xuất ra</string>
+    <string name="prepaid_card_account_deposit">Tiền gửi tài khoản</string>
+    <string name="prepaid_card_annual_fee_discount">Giảm phí hàng năm</string>
+    <string name="prepaid_card_bill_reprint_fee">Phí in lại hóa đơn</string>
+    <string name="prepaid_card_atm_or_cash_advance_fee">Phí ATM/tạm ứng tiền mặt</string>
+    <string name="prepaid_card_cash_advance_chargeback">Hoàn trả tạm ứng tiền mặt</string>
+    <string name="prepaid_card_cash_advance_chargeback_reversal">Đảo chiều hoàn trả tạm ứng tiền mặt</string>
+    <string name="prepaid_card_cash_advance_repress">Áp chế tạm ứng tiền mặt</string>
+    <string name="prepaid_card_cash_advance_repress_reversal">Đảo chiều áp chế tạm ứng tiền mặt</string>
+    <string name="prepaid_card_chargeback">Hoàn trả</string>
+    <string name="prepaid_card_chargeback_refund">Tiền hoàn trả</string>
+    <string name="prepaid_card_chargeback_refund_reversal">Đảo chiều tiền hoàn trả</string>
+    <string name="prepaid_card_chargeback_reversal">Đảo chiều hoàn trả</string>
+    <string name="prepaid_card_commission_or_fee">Phí/Hoa hồng</string>
+    <string name="prepaid_card_debit_transfer">Ghi nợ/Chuyển khoản</string>
+    <string name="prepaid_card_document_request_fee">Phí yêu cầu tài liệu</string>
+    <string name="prepaid_card_emergency_cash">Tiền khẩn cấp</string>
+    <string name="prepaid_card_emergency_card">Thẻ khẩn cấp</string>
+    <string name="prepaid_card_income">Thu nhập</string>
+    <string name="prepaid_card_load_fee">Phí PAN</string>
+    <string name="prepaid_card_refund_fee">Phí hoàn tiền</string>
+    <string name="prepaid_card_monthly_maintenance_fee">Phí duy trì hàng tháng</string>
+    <string name="prepaid_card_transaction_fee">Phí giao dịch</string>
+    <string name="prepaid_card_sms_fee">Phí SMS</string>
+    <string name="prepaid_card_declined_authorization_fee">Phí ủy quyền bị từ chối</string>
+    <string name="fispc">Mua</string>
+
+    <!-- Prepaid Cards Receipt   -->
+    <string name="mobileAvailableBalances">Tiền khả dụng</string>
+
+</resources>

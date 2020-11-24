@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_unsupported_transfer_type">이 이체 방법은 지원되지 않습니다.</string>
+</resources>
