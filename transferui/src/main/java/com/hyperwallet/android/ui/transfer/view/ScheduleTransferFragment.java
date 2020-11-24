@@ -45,6 +45,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hyperwallet.android.model.transfer.ForeignExchange;
+import com.hyperwallet.android.ui.common.util.CurrencyDetails;
 import com.hyperwallet.android.ui.common.util.CurrencyParser;
 import com.hyperwallet.android.ui.common.view.OneClickListener;
 import com.hyperwallet.android.ui.transfer.R;
@@ -184,15 +185,15 @@ public class ScheduleTransferFragment extends Fragment {
             feeContainer.setVisibility(View.VISIBLE);
             receiveAmountContainer.setVisibility(View.VISIBLE);
             amountHorizontalBar.setVisibility(View.VISIBLE);
-            String feeFormattedValue = CurrencyParser.getInstance(requireContext()).formatCurrency(
+            String feeFormattedValue = CurrencyParser.getInstance(requireContext()).formatCurrencyWithSymbol(
                     mScheduleTransferViewModel.getTransfer().getDestinationCurrency(),
                     mScheduleTransferViewModel.getTransfer().getDestinationFeeAmount().replaceAll(
                             REGEX_ONLY_NUMBER_AND_DECIMAL, EMPTY_STRING));
-            String amountFormattedValue = CurrencyParser.getInstance(requireContext()).formatCurrency(
+            String amountFormattedValue = CurrencyParser.getInstance(requireContext()).formatCurrencyWithSymbol(
                     mScheduleTransferViewModel.getTransfer().getDestinationCurrency(),
                     mScheduleTransferViewModel.getTransferTotalAmount().replaceAll(REGEX_ONLY_NUMBER_AND_DECIMAL,
                             EMPTY_STRING));
-            String receiveAmountFormattedValue = CurrencyParser.getInstance(requireContext()).formatCurrency(
+            String receiveAmountFormattedValue = CurrencyParser.getInstance(requireContext()).formatCurrencyWithSymbol(
                     mScheduleTransferViewModel.getTransfer().getDestinationCurrency(),
                     mScheduleTransferViewModel.getTransfer().getDestinationAmount().replaceAll(
                             REGEX_ONLY_NUMBER_AND_DECIMAL, EMPTY_STRING));
@@ -209,7 +210,7 @@ public class ScheduleTransferFragment extends Fragment {
             feeContainer.setVisibility(View.GONE);
             receiveAmountContainer.setVisibility(View.GONE);
             amountHorizontalBar.setVisibility(View.GONE);
-            String amountFormattedValue = CurrencyParser.getInstance(requireContext()).formatCurrency(
+            String amountFormattedValue = CurrencyParser.getInstance(requireContext()).formatCurrencyWithSymbol(
                     mScheduleTransferViewModel.getTransfer().getDestinationCurrency(),
                     mScheduleTransferViewModel.getTransfer().getDestinationAmount().replaceAll(
                             REGEX_ONLY_NUMBER_AND_DECIMAL, EMPTY_STRING));
@@ -311,16 +312,16 @@ public class ScheduleTransferFragment extends Fragment {
                 TextView buyValue = itemView.findViewById(R.id.buy_value);
                 TextView exchangeRateValue = itemView.findViewById(R.id.exchange_rate_value);
 
-                String sellFormattedAmount= CurrencyParser.getInstance(itemView.getContext()).formatCurrency(
+                String sellFormattedAmount= CurrencyParser.getInstance(itemView.getContext()).formatCurrencyWithSymbol(
                         fx.getSourceCurrency(), fx.getSourceAmount().replaceAll(
                                 REGEX_ONLY_NUMBER_AND_DECIMAL, EMPTY_STRING));
 
-                String buyFormattedAmount= CurrencyParser.getInstance(itemView.getContext()).formatCurrency(
+                String buyFormattedAmount= CurrencyParser.getInstance(itemView.getContext()).formatCurrencyWithSymbol(
                         fx.getDestinationCurrency(), fx.getDestinationAmount().replaceAll(
                                 REGEX_ONLY_NUMBER_AND_DECIMAL, EMPTY_STRING));
 
-                Currency sourceCurrency = Currency.getInstance(fx.getSourceCurrency());
-                Currency destinationCurrency = Currency.getInstance(fx.getDestinationCurrency());
+                CurrencyDetails sourceCurrency = CurrencyParser.getInstance(itemView.getContext()).getCurrency(fx.getSourceCurrency());
+                CurrencyDetails destinationCurrency = CurrencyParser.getInstance(itemView.getContext()).getCurrency(fx.getDestinationCurrency());
                 sellValue.setText(itemView.getContext().getString(R.string.amount_currency_format,
                         sellFormattedAmount, fx.getSourceCurrency()));
                 buyValue.setText(itemView.getContext().getString(R.string.amount_currency_format,
