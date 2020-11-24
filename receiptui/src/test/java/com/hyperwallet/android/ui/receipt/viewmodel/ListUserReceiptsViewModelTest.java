@@ -5,6 +5,7 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import com.hyperwallet.android.ui.receipt.repository.PrepaidCardReceiptRepository;
@@ -61,12 +62,12 @@ public class ListUserReceiptsViewModelTest {
     }
 
     @Test
-    public void testInit_verifyInitializedOnce() {
+    public void testInit_verifyInitializedMultiple() {
         mListUserReceiptsViewModel.init();
         verify(mUserReceiptRepository).loadUserReceipts();
         // call again. multiple calls to init should only register 1 call to repository
         mListUserReceiptsViewModel.init();
-        verify(mUserReceiptRepository).loadUserReceipts();
+        verify(mUserReceiptRepository, times(2)).loadUserReceipts();
     }
 
     @Test

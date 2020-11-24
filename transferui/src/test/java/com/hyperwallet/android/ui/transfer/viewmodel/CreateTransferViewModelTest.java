@@ -1157,10 +1157,9 @@ public class CreateTransferViewModelTest {
         // test
         CreateTransferViewModel viewModel = spy(factory.create(CreateTransferViewModel.class));
         doReturn(ProgramModel.CARD_ONLY_MODEL).when(viewModel).getProgramModel();
-        viewModel.init("0");
-        viewModel.refresh();
+        viewModel.refresh("0");
 
-        verify(mTransferRepository, times(2)).createTransfer(any(Transfer.class),
+        verify(mTransferRepository, times(1)).createTransfer(any(Transfer.class),
                 any(TransferRepository.CreateTransferCallback.class));
     }
 
@@ -1172,9 +1171,11 @@ public class CreateTransferViewModelTest {
 
         // test
         CreateTransferViewModel viewModel = factory.create(CreateTransferViewModel.class);
-        viewModel.refresh();
+        viewModel.refresh("0");
 
-        verify(mTransferRepository, never()).createTransfer(any(Transfer.class),
+        assertThat(viewModel, is(notNullValue()));
+        assertThat(viewModel.isTransferAllAvailableFunds().getValue(), is(false));
+        verify(mTransferRepository, times(1)).createTransfer(any(Transfer.class),
                 any(TransferRepository.CreateTransferCallback.class));
     }
 

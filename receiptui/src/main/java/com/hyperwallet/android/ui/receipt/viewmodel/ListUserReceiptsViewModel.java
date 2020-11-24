@@ -19,8 +19,6 @@ public class ListUserReceiptsViewModel extends ListReceiptsViewModel {
     private UserReceiptRepository mUserReceiptRepository;
     private MutableLiveData<Event<Receipt>> mDetailNavigation = new MutableLiveData<>();
 
-    private boolean mIsInitialized;
-
     ListUserReceiptsViewModel(@NonNull final UserReceiptRepository userReceiptRepository) {
         mUserReceiptRepository = userReceiptRepository;
 
@@ -36,11 +34,8 @@ public class ListUserReceiptsViewModel extends ListReceiptsViewModel {
 
     @Override
     public void init() {
-        if (!mIsInitialized) {
-            mIsInitialized = true;
-            // load initial receipts
-            mUserReceiptRepository.loadUserReceipts();
-        }
+        // load initial receipts
+        mUserReceiptRepository.loadUserReceipts();
     }
 
     @Override
