@@ -19,8 +19,6 @@ public class ListPrepaidCardReceiptsViewModel extends ListReceiptsViewModel {
     private PrepaidCardReceiptRepository mPrepaidCardReceiptRepository;
     private MutableLiveData<Event<Receipt>> mDetailNavigation = new MutableLiveData<>();
 
-    private boolean mIsInitialized;
-
     ListPrepaidCardReceiptsViewModel(@NonNull final PrepaidCardReceiptRepository receiptRepository) {
         mPrepaidCardReceiptRepository = receiptRepository;
 
@@ -50,10 +48,7 @@ public class ListPrepaidCardReceiptsViewModel extends ListReceiptsViewModel {
 
     @Override
     public void init() {
-        if (!mIsInitialized) {
-            mIsInitialized = true;
-            mPrepaidCardReceiptRepository.loadPrepaidCardReceipts();
-        }
+        mPrepaidCardReceiptRepository.loadPrepaidCardReceipts();
     }
 
     @Override
