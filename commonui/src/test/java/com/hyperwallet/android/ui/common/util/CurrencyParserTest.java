@@ -89,4 +89,17 @@ public class CurrencyParserTest {
             assertThat(currency, is(currencyMap.getValue()));
         }
     }
+
+    @Test
+    public void testGetNumberOfFractionDigits_ThreeDigitDecimal(){
+        Context context = ApplicationProvider.getApplicationContext();
+        int noOfDigits = CurrencyParser.getInstance(context).getNumberOfFractionDigits("TND");
+        assertThat(noOfDigits, is(3));
+    }
+    @Test
+    public void testGetNumberOfFractionDigits_NoDigitDecimal(){
+        Context context = ApplicationProvider.getApplicationContext();
+        int noOfDigits = CurrencyParser.getInstance(context).getNumberOfFractionDigits("JPY");
+        assertThat(noOfDigits, is(0));
+    }
 }

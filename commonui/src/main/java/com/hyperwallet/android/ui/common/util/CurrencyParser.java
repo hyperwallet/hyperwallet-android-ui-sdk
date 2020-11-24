@@ -4,6 +4,8 @@ import static com.hyperwallet.android.model.transfer.Transfer.EMPTY_STRING;
 
 import android.content.Context;
 
+import androidx.annotation.VisibleForTesting;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -86,7 +88,8 @@ public class CurrencyParser {
         return format.format(Double.parseDouble(amount));
     }
 
-    private int getNumberOfFractionDigits(String currencyCode) {
+    @VisibleForTesting
+    int getNumberOfFractionDigits(String currencyCode) {
         for (CurrencyDetails list : currencyList) {
             if (list.getCurrencyCode().equals(currencyCode)) {
                 return list.getDecimals();
