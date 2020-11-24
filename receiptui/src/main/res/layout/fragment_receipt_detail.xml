@@ -22,7 +22,7 @@
                 android:id="@+id/transaction_header"
                 style="@style/HeaderTitleAppearance"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/section_header_height"
+                android:layout_height="wrap_content"
                 android:paddingTop="@dimen/grid_padding_top">
 
                 <TextView
@@ -55,6 +55,7 @@
                 android:id="@+id/receipt_details_header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/grid_margin_top"
                 style="@style/HeaderTitleAppearance">
 
                 <TextView
@@ -354,6 +355,7 @@
                     android:id="@+id/fee_details_header"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/grid_margin_top"
                     style="@style/HeaderTitleAppearance">
 
                     <TextView
