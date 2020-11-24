@@ -1,0 +1,27 @@
+<resources>
+    <string name="error_dialog_title">Грешка</string>
+    <string name="error_dialog_connectivity_title">Проблем с връзката</string>
+    <string name="error_dialog_unexpected_title">Неочаквана грешка</string>
+    <string name="ok">Добре</string>
+    <string name="try_again_button_label">Нов опит</string>
+    <string name="not_available">Не е налично</string>
+
+    <!-- title and font icon -->
+    <string name="bank_account">Банкова сметка</string>
+    <string name="bank_card">Дебитна карта</string>
+    <string name="wire_account">Сметка за банков превод</string>
+    <string name="paper_check">Хартиен чек</string>
+    <string name="prepaid_card">Предплатена карта</string>
+    <string name="paypal_account">Профил в Paypal</string>
+    <string name="venmo_account">Профил във Venmo</string>
+    <string name="cash_pickup_mg">MoneyGram</string>
+
+    <string name="endingIn">завършваща на %s</string>
+    <string name="to">до %s</string>
+    <string name="not_translated_in_braces">(няма превод)</string>
+
+    <string name="authentication_error_header">Грешка при удостоверяване</string>
+    <string name="cancelButtonLabel">Отмяна</string>
+    <string name="remove">Премахване</string>
+    <string name="mobileAreYouSure">Сигурни ли сте?</string>
+</resources>

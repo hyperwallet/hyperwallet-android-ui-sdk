@@ -1,0 +1,71 @@
+<resources>
+    <string name="title_activity_create_transfer">Geld overboeken</string>
+    <string name="mobileConfirmationHeader">Bevestig de gegevens</string>
+    <string name="mobileConfirmNotesLabel">OPMERKING</string>
+    <string name="transfer_destination">Bestemming</string>
+    <string name="mobileTransferToLabel">OVERBOEKEN NAAR</string>
+    <string name="mobileTransferFundsHeader">Geld overboeken</string>
+    <string name="mobileFXlabel">VREEMDE VALUTA</string>
+    <string name="transfer_header_label">Overboeken</string>
+    <string name="noTransferMethodAdded">Overboekingsmethode is verplicht</string>
+    <string name="transfer_amount_hint">Bedrag</string>
+    <string name="transfer_currency_placeholder">USD</string>
+    <string name="transfer_currency_code_placeholder">$</string>
+    <string name="transfer_all_funds_label">Max. bedrag overboeken</string>
+    <string name="mobileAvailableBalance">Beschikbaar bedrag: %s %s</string>
+    <string name="mobileSummaryLabel">SAMENVATTING</string>
+    <string name="mobileNoteLabel">Opmerking</string>
+    <string name="transfer_notes_label">Opmerking</string>
+    <string name="transfer_notes_additional_info_label">Een opmerking toevoegen (optioneel)</string>
+    <string name="continueButtonLabel">Doorgaan</string>
+    <string name="defaultTransferAmount">0</string>
+    <string name="transfer">Overboeken</string>
+    <string name="add_text">+</string>
+    <string name="mobileAddTransferMethod">Overboekingsmethode toevoegen</string>
+    <string name="add_transfer_description_1">Voeg een overboekingsmethode toe om te beginnen.</string>
+    <string name="add_transfer_description_2">Voeg een overboekingsmethode toe om te beginnen.</string>
+    <string name="transfer_destination_selection_description">Selectie van overboekingsmethode</string>
+    <string name="destination_item_description">Item bestemming</string>
+
+    <string name="amount_currency_format">%s %s</string>
+    <string name="exchange_rate_format">1 %s = %s %s</string>
+
+    <string name="module_transfermethodui_unavailable_error">U kunt geen overboekingsmethode toevoegen.</string>
+    <string name="transferAmountInvalid">Voer een geldig overboekingsbedrag in</string>
+
+    <string name="mobileFXsell">Van</string>
+    <string name="mobileFXbuy">Naar</string>
+    <string name="mobileFXRateLabel">Wisselkoers</string>
+
+    <string name="mobileConfirmDetailsAmount">Bedrag</string>
+    <string name="mobileConfirmDetailsFee">Kosten</string>
+    <string name="mobileConfirmDetailsTotal">U ontvangt</string>
+    <string name="exchange_rate_change_warning">Door veranderingen in de wisselkoers ontvangt u nu %1$s %2$s.</string>
+
+
+    <string name="mobileTransferMax">Max. bedrag overboeken</string>
+    <string name="transfer_summary_placeholder">Beschikbaar bedrag: 2.422,90 CAD</string>
+    <string name="transfer_notes_placeholder">Gedeeltelijke overboeking</string>
+    <string name="transfer_item_icon_placeholder">\ue000</string>
+    <string name="transfer_item_title_placeholder">Type overboeking</string>
+    <string name="transfer_item_country_placeholder">Naam land</string>
+    <string name="transfer_item_identification_placeholder">Bewerken op XXXX</string>
+    <string name="foreign_exchange_sell_placeholder">15,05 CAD</string>
+    <string name="foreign_exchange_buy_placeholder">11,00 USD</string>
+    <string name="foreign_exchange_rate_placeholder">1 CAD = 0,73897 USD</string>
+    <string name="summary_amount_placeholder">10,00 CAD</string>
+    <string name="summary_amount_fee_placeholder">0,25 CAD</string>
+    <string name="summary_amount_transfer_placeholder">9,75 CAD</string>
+    <string name="exchange_rate_change_warning_placeholder">Door veranderingen in de wisselkoers ontvangt u nu 10,00 CAD.</string>
+
+    <string name="mobileTransferSuccessMsg">Uw overboeking wordt verwerkt</string>
+    <string name="mobileTransferSuccessDetails">Het geld is onderweg naar uw %s</string>
+    <string name="doneButtonLabel">Gereed</string>
+    <string name="mobileTransferMethodsHeader">Overboekingsmethoden</string>
+    <string name="mobileTransferFromLabel">OVERBOEKEN VAN</string>
+    <string name="transferSource">Bron</string>
+    <string name="mobileTransferFromHeader">Overboeken van</string>
+    <string name="availableFunds">Beschikbaar geld</string>
+    <string name="noTransferFromSourceAvailableError">Geen overboeking van bron beschikbaar</string>
+
+</resources>

@@ -1,0 +1,71 @@
+<resources>
+    <string name="title_activity_create_transfer">Dana Transfer</string>
+    <string name="mobileConfirmationHeader">Konfirmasi perinciannya</string>
+    <string name="mobileConfirmNotesLabel">CATATAN</string>
+    <string name="transfer_destination">Tujuan</string>
+    <string name="mobileTransferToLabel">TRANSFER KE</string>
+    <string name="mobileTransferFundsHeader">Dana transfer</string>
+    <string name="mobileFXlabel">VALUTA ASING</string>
+    <string name="transfer_header_label">Transfer</string>
+    <string name="noTransferMethodAdded">Metode transfer wajib diisi</string>
+    <string name="transfer_amount_hint">Jumlah</string>
+    <string name="transfer_currency_placeholder">USD</string>
+    <string name="transfer_currency_code_placeholder">$</string>
+    <string name="transfer_all_funds_label">Jumlah maks transfer</string>
+    <string name="mobileAvailableBalance">Jumlah yang tersedia: %s %s</string>
+    <string name="mobileSummaryLabel">RINGKASAN</string>
+    <string name="mobileNoteLabel">Catatan</string>
+    <string name="transfer_notes_label">Catatan</string>
+    <string name="transfer_notes_additional_info_label">Tambahkan catatan (opsional)</string>
+    <string name="continueButtonLabel">Lanjutkan</string>
+    <string name="defaultTransferAmount">0</string>
+    <string name="transfer">Transfer</string>
+    <string name="add_text">+</string>
+    <string name="mobileAddTransferMethod">Tambahkan metode transfer</string>
+    <string name="add_transfer_description_1">Tambahkan metode transfer untuk memulai.</string>
+    <string name="add_transfer_description_2">Tambahkan metode transfer untuk memulai.</string>
+    <string name="transfer_destination_selection_description">Pemilihan metode transfer</string>
+    <string name="destination_item_description">Item tujuan</string>
+
+    <string name="amount_currency_format">%s %s</string>
+    <string name="exchange_rate_format">1 %s = %s %s</string>
+
+    <string name="module_transfermethodui_unavailable_error">Anda\' tidak dapat menambah metode transfer.</string>
+    <string name="transferAmountInvalid">Masukkan jumlah transfer yang valid</string>
+
+    <string name="mobileFXsell">Dari</string>
+    <string name="mobileFXbuy">Ke</string>
+    <string name="mobileFXRateLabel">Nilai tukar</string>
+
+    <string name="mobileConfirmDetailsAmount">Jumlah</string>
+    <string name="mobileConfirmDetailsFee">Biaya</string>
+    <string name="mobileConfirmDetailsTotal">Anda akan menerima</string>
+    <string name="exchange_rate_change_warning">Akibat perubahan dalam nilai tukar, Anda \'akan menerima %1$s %2$s.</string>
+
+
+    <string name="mobileTransferMax">Jumlah maks transfer</string>
+    <string name="transfer_summary_placeholder">Jumlah yang tersedia: 2.422,90 CAD</string>
+    <string name="transfer_notes_placeholder">Transfer sebagian</string>
+    <string name="transfer_item_icon_placeholder">\ue000</string>
+    <string name="transfer_item_title_placeholder">Jenis Transfer</string>
+    <string name="transfer_item_country_placeholder">Nama Negara</string>
+    <string name="transfer_item_identification_placeholder">Mengedit pada XXXX</string>
+    <string name="foreign_exchange_sell_placeholder">15,05 CAD</string>
+    <string name="foreign_exchange_buy_placeholder">11,00 USD</string>
+    <string name="foreign_exchange_rate_placeholder">1 CAD = 0,73897 USD</string>
+    <string name="summary_amount_placeholder">10,00 CAD</string>
+    <string name="summary_amount_fee_placeholder">0,25 CAD</string>
+    <string name="summary_amount_transfer_placeholder">9,75 CAD</string>
+    <string name="exchange_rate_change_warning_placeholder">Akibat perubahan dalam nilai tukar, Anda \'akan menerima 10,00 CAD.</string>
+
+    <string name="mobileTransferSuccessMsg">Transfer Anda sedang diproses</string>
+    <string name="mobileTransferSuccessDetails">Uang sedang dikirim ke %sAnda</string>
+    <string name="doneButtonLabel">Selesai</string>
+    <string name="mobileTransferMethodsHeader">Metode transfer</string>
+    <string name="mobileTransferFromLabel">TRANSFER DARI</string>
+    <string name="transferSource">Sumber</string>
+    <string name="mobileTransferFromHeader">Transfer dari</string>
+    <string name="availableFunds">Dana yang Tersedia</string>
+    <string name="noTransferFromSourceAvailableError">Tidak ada Transfer dari sumber yang tersedia</string>
+
+</resources>

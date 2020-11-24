@@ -1,0 +1,27 @@
+<resources>
+    <string name="error_dialog_title">Помилка</string>
+    <string name="error_dialog_connectivity_title">Проблема зв’язку</string>
+    <string name="error_dialog_unexpected_title">Неочікувана помилка</string>
+    <string name="ok">OK</string>
+    <string name="try_again_button_label">Спробувати ще раз</string>
+    <string name="not_available">Не застосовується</string>
+
+    <!-- title and font icon -->
+    <string name="bank_account">Банківський рахунок</string>
+    <string name="bank_card">Дебетова картка</string>
+    <string name="wire_account">Рахунок для банківського переказу</string>
+    <string name="paper_check">Паперовий чек</string>
+    <string name="prepaid_card">Дебетова картка</string>
+    <string name="paypal_account">Рахунок Paypal</string>
+    <string name="venmo_account">Рахунок Venmo</string>
+    <string name="cash_pickup_mg">MoneyGram</string>
+
+    <string name="endingIn">закінчується на %s</string>
+    <string name="to">для %s</string>
+    <string name="not_translated_in_braces">(не перекладено)</string>
+
+    <string name="authentication_error_header">Помилка автентифікації</string>
+    <string name="cancelButtonLabel">Скасувати</string>
+    <string name="remove">Видалити</string>
+    <string name="mobileAreYouSure">Ви впевнені?</string>
+</resources>

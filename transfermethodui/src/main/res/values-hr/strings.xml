@@ -1,0 +1,79 @@
+<resources>
+    <string name="app_name">hyperwallet.ui</string>
+    <string name="title_account_add">Dodajte račun</string>
+    <string name="unknown">Nepoznato</string>
+
+    <string name="title_activity_select_transfer_method">Odaberite Način prijenosa</string>
+    <!-- SelectTransferMethodActivity -->
+    <string name="select_transfer_method_title">@string/title_activity_select_transfer_method
+    </string>
+
+    <string name="mobileCountryRegion">Zemlja/regija</string>
+    <string name="mobileCurrencyLabel">Valuta</string>
+    <string name="mobileAddTransferMethodHeader">Dodajte način prijenosa</string>
+    <string name="title_activity_add_transfer_method">Dodajte Način Prijenosa</string>
+    <string name="title_add_bank_account">Bankovni račun</string>
+    <string name="title_add_bank_card">Debitna Kartica</string>
+
+    <string name="error_exact_length_field">Duljina ovog polja je točno %d.</string>
+    <string name="error_invalid_expiry_date">%s nije valjan.</string>
+    <string name="error_min_max_length_field">Minimalna duljina ovog polja je {0}, a maksimalna         duljina je {1}.
+    </string>
+
+    <string name="createTransferMethodButtonLabel">Dodajte Način Prijenosa</string>
+    <string name="default_account_label">Zadani račun</string>
+    <string name="default_account_sub_label">Izaberite zadani način prijenosa</string>
+    <string name="api_expiry_date_format">MM/GG</string>
+
+    <string name="feeAndProcessingTimeInformation">%s naknada \u2022 %s</string>
+    <string name="feeInformation">%s naknada</string>
+
+    <string name="emptyStateAddTransferMethod">Dodajte način prijenosa da biste započeli.</string>
+
+    <!-- menu title -->
+    <string name="menu_transfer_funds">Prijenos</string>
+
+    <!--Fee formatter-->
+    <string name="fee_flat_formatter">%1$s%2$s</string>
+    <string name="fee_percent_no_min_and_max_formatter">%1$s%%</string>
+    <string name="fee_percent_only_min_formatter">%1$s%% (Min:%2$s %3$s)</string>
+    <string name="fee_percent_only_max_formatter">%1$s%% (Maks:%2$s %3$s)</string>
+    <string name="fee_percent_formatter">%1$s%% (Min:%2$s %3$s, Maks:%2$s %4$s)</string>
+    <string name="fee_mix_no_min_and_max_formatter">%1$s%2$s + %3$s%%</string>
+    <string name="fee_mix_only_min_formatter">%1$s%2$s + %3$s%% (Min:%1$s %4$s)</string>
+    <string name="fee_mix_only_max_formatter">%1$s%2$s + %3$s%% (Maks:%1$s %4$s)</string>
+    <string name="fee_mix_formatter">%1$s%2$s + %3$s%% (Min:%1$s %4$s, Maks:%1$s %5$s)</string>
+
+    <string name="account_holder">INFORMACIJE O VLASNIKU RAČUNA</string>
+    <string name="account_information">INFORMACIJE O RAČUNU: %s(%s)</string>
+    <string name="address">ADRESA</string>
+    <string name="contact_information">KONTAKT INFORMACIJE</string>
+    <string name="identification">IDENTIFIKACIJA</string>
+    <string name="intermediary_account">RAČUN POSREDNIKA</string>
+    <string name="mobileFeesAndProcessingTime">NAKNADA I VRIJEME OBRADE</string>
+
+    <string name="search_hint">Savjet za pretraživanje</string>
+    <string name="search_country">Pretražite zemlju</string>
+    <string name="search_currency">Pretražite valutu</string>
+    <string name="search_widget">Pretraga</string>
+
+    <string name="select_transfer_method_currency_button_description">Tipka za odabir valute
+    </string>
+    <string name="select_transfer_method_country_button_description">Tipka za odabir zemlje</string>
+    <string name="selected_country_item_description">Stavka za odabranu zemlju</string>
+    <string name="selected_currency_item_description">Stavka za odabranu valutu</string>
+    <string name="transfer_method_context_button_description">Tipka za kontekstualni izbornik</string>
+    <string name="item_select_description">Odabrana stavka</string>
+
+    <string name="error_unmapped_field">Neucrtano polje, molimo kontaktirajte Službu za podršku.</string>
+
+    <string name="country_placeholder">Kanada</string>
+    <string name="currency_placeholder">Kanadski dolar - CAD</string>
+    <string name="feesAndProcessTimePlaceholder">Naknada 20,00 USD \u2022 1\-3 radna dana </string>
+    <string name="mobileCountryCurrencyLabel">LOKACIJA I VALUTA</string>
+    <string name="mobileTransferMethodLabel">NAČIN PRIJENOSA</string>
+    <string name="mobileTransferMethodsHeader">Načini prijenosa</string>
+
+    <string name="mobileRemoveEAconfirm">Uklonite način prijenosa</string>
+    <string name="prepaidCardManagementInfo" >„Prijavite se putem web-preglednika da biste mogli upravljati svojom karticom”</string>
+</resources>

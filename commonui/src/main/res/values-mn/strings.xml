@@ -1,0 +1,27 @@
+<resources>
+    <string name="error_dialog_title">Алдаа</string>
+    <string name="error_dialog_connectivity_title">Холболтын асуудал</string>
+    <string name="error_dialog_unexpected_title">Гэнэтийн алдаа</string>
+    <string name="ok">ОK</string>
+    <string name="try_again_button_label">Дахин оролдоно уу</string>
+    <string name="not_available">Боломжгүй</string>
+
+    <!-- title and font icon -->
+    <string name="bank_account">Банкны данс</string>
+    <string name="bank_card">Дебит карт</string>
+    <string name="wire_account">Банкны шилжүүлгийн данс</string>
+    <string name="paper_check">Цаасан чек</string>
+    <string name="prepaid_card">Урьдчилсан төлбөрт карт</string>
+    <string name="paypal_account">Paypal данс</string>
+    <string name="venmo_account">Venmo данс</string>
+    <string name="cash_pickup_mg">MoneyGram</string>
+
+    <string name="endingIn">%s-аар төгссөн</string>
+    <string name="to">%s уруу</string>
+    <string name="not_translated_in_braces">(орчуулаагүй)</string>
+
+    <string name="authentication_error_header">Баталгаажуулалтын алдаа</string>
+    <string name="cancelButtonLabel">Цуцлах</string>
+    <string name="remove">Устгах</string>
+    <string name="mobileAreYouSure">Та итгэлтэй байна уу?</string>
+</resources>

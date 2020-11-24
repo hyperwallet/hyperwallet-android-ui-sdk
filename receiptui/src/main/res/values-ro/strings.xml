@@ -1,0 +1,168 @@
+<resources>
+    <string name="app_name">confirmare de primire</string>
+    <string name="title_activity_receipt_list">Tranzacții</string>
+    <string name="title_activity_receipt_detail">Detalii tranzacție</string>
+    <string name="mobileTransactionDetailsHeader">Detalii tranzacție</string>
+    <string name="transactions">Tranzacții</string>
+    <string name="mobileTransactionTypeLabel">TRANZACȚIE</string>
+    <string name="mobileFeeInfoLabel">INFORMAȚII COMISION</string>
+    <string name="amount">Suma</string>
+    <string name="mobileFeeLabel">Comision</string>
+    <string name="mobileTransactionDetailsTotal">Total tranzacție</string>
+    <string name="mobileTransactionDetailsLabel">DETALII</string>
+    <string name="mobileJournalNumberLabel">ID confirmare de primire</string>
+    <string name="date">Data</string>
+    <string name="mobileMerchantTxnLabel">ID tranzacție</string>
+    <string name="mobileConfirmNotesLabel">NOTĂ</string>
+    <string name="mobileCharityName">Denumire organizație caritabilă</string>
+    <string name="mobileCheckNumber">Număr cec</string>
+    <string name="mobilePromoWebsite">Site-ul web al ofertei promoționale</string>
+    <string name="concat_date_string_view_format">%s %s</string>
+
+    <string name="mobileNoTransactionsUser">Nu există nicio activitate de afișat.</string>
+    <string name="mobileNoTransactionsPrepaidCard">Nu există tranzacții în ultimele 365 de zile.</string>
+    <string name="title_transfer_funds">Transfer</string>
+    <string name="font_icon_placeholder">\ue908</string>
+    <string name="text_placeholder">Împuternicit</string>
+
+
+
+    <!--Generic fee types-->
+    <string name="unknown_type">Tip tranzacție necunoscut</string>
+    <string name="annual_fee">Comision anual</string>
+    <string name="annual_fee_refund">Comision anual de rambursare</string>
+    <string name="customer_service_fee">Comision serviciu clienți</string>
+    <string name="customer_service_fee_refund">Rambursare comision serviciu clienți</string>
+    <string name="expedited_shipping_fee">Taxă de expediere urgentă</string>
+    <string name="generic_fee_refund">Rambursare comision general</string>
+    <string name="monthly_fee">Comision lunar</string>
+    <string name="monthly_fee_refund">Comision lunar de rambursare</string>
+    <string name="payment_expiry_fee">Comision expirare plată</string>
+    <string name="payment_fee">Comision plată</string>
+    <string name="processing_fee">Comision de procesare</string>
+    <string name="standard_shipping_fee">Comision de transport standard</string>
+    <string name="transfer_fee">Comision de transfer</string>
+
+    <!--Generic payment types-->
+    <string name="adjustment">Ajustare balanță</string>
+    <string name="foreign_exchange">Curs valutar</string>
+    <string name="deposit">Plată</string>
+    <string name="manual_adjustment">Ajustare</string>
+    <string name="payment_expiration">Plată expirată</string>
+
+    <!--Bank account-specific types-->
+    <string name="bank_account_transfer_fee">Comision returnare cont bancar</string>
+    <string name="bank_account_transfer_return">Returnare cont bancar</string>
+    <string name="bank_account_transfer_return_fee">Comision returnare cont bancar</string>
+    <string name="transfer_to_bank_account">Cont bancar</string>
+
+    <!--Card-specific types-->
+    <string name="card_activation_fee">Comision activare card</string>
+    <string name="card_activation_fee_waiver">Renunțare la taxa de activare a cardului</string>
+    <string name="card_fee">Comision card</string>
+    <string name="manual_transfer_to_prepaid_card">Transfer pe card</string>
+    <string name="prepaid_card_balance_inquiry_fee">Comision interogare sold</string>
+    <string name="prepaid_card_cash_advance">Avans numerar</string>
+    <string name="prepaid_card_disputed_charge_refund">Rambursare taxă contestată</string>
+    <string name="prepaid_card_dispute_deposit">Depunere card contestată</string>
+    <string name="prepaid_card_domestic_cash_withdrawal_fee">Retragere ATM</string>
+    <string name="prepaid_card_exchange_rate_difference">PREPAID_CARD_EXCHANGE_RATE_DIFFERENCE
+    </string>
+    <string name="prepaid_card_manual_unload">Transfer de pe card</string>
+    <string name="prepaid_card_overseas_cash_withdrawal_fee">Retragere ATM</string>
+    <string name="prepaid_card_pin_change_fee">Comision schimbare PIN</string>
+    <string name="prepaid_card_refund">Rambursare</string>
+    <string name="prepaid_card_replacement_fee">Comision înlocuire card</string>
+    <string name="prepaid_card_sale">Tranzacție</string>
+    <string name="prepaid_card_sale_reversal">Tranzacție reversată</string>
+    <string name="prepaid_card_unload">Transfer de pe card</string>
+    <string name="transfer_to_prepaid_card">Transfer pe card</string>
+    <!---->
+    <!--Donation types-->
+    <string name="donation">Donație</string>
+    <string name="donation_fee">Comision donație</string>
+    <string name="donation_return">Returnare donație</string>
+    <!---->
+    <!--Merchant payment types-->
+    <string name="merchant_payment">Plată la comerciant</string>
+    <string name="merchant_payment_fee">Comision plată comerciant</string>
+    <string name="merchant_payment_refund">Rambursare plată la comerciant</string>
+    <string name="merchant_payment_return">Returnare plată la comerciant</string>
+    <!---->
+    <!--MoneyGram types-->
+    <string name="moneygram_transfer_return">Returnare MoneyGram</string>
+    <string name="transfer_to_moneygram">MoneyGram</string>
+    <!---->
+    <!--Paper check types-->
+    <string name="paper_check_fee">Comision cec</string>
+    <string name="paper_check_refund">Rambursare cec</string>
+    <string name="transfer_to_paper_check">Cec</string>
+    <!---->
+    <!--User and program account types-->
+    <string name="account_closure">Închidere cont</string>
+    <string name="account_closure_fee">Comision închidere cont</string>
+    <string name="account_unload">Returnare fonduri</string>
+    <string name="dormant_user_fee">Comision cont utilizator Dormant</string>
+    <string name="dormant_user_fee_refund">Rambursare comision cont utilizator Dormant</string>
+    <string name="payment">Plată</string>
+    <string name="payment_cancellation">Anulare plată</string>
+    <string name="payment_reversal">Reversare operațiune de plată</string>
+    <string name="payment_reversal_fee">Comision reversare operațiune de plată</string>
+    <string name="payment_return">Returnare plată</string>
+    <string name="transfer_to_program_account">Transferați către program</string>
+    <string name="transfer_to_user">Transferați către utilizator</string>
+    <string name="transfer_to_paypal_account">PayPal</string>
+    <string name="transfer_to_bank_card">Card bancar</string>
+    <string name="transfer_to_debit_card">Card de debit</string>
+    <string name="prepaid_card_transfer_return">Returnare încărcare card preplătit</string>
+    <!---->
+    <!--Virtual incentive types-->
+    <string name="virtual_incentive_cancellation">Anulare ofertă promoțională</string>
+    <string name="virtual_incentive_issuance">Ofertă promoțională emisă</string>
+    <string name="virtual_incentive_purchase">Achiziționare ofertă promoțională</string>
+    <string name="virtual_incentive_refund">Rambursare ofertă promoțională</string>
+    <!---->
+    <!--Western Union and WUBS types-->
+    <string name="transfer_to_western_union">Western Union</string>
+    <string name="transfer_to_wubs_wire">Transfer bancar</string>
+    <string name="western_union_transfer_return">Retragere Western Union</string>
+    <string name="wubs_wire_transfer_return">Returnare transfer bancar</string>
+    <!---->
+    <!--Wire transfer types-->
+    <string name="transfer_to_wire">Transfer bancar</string>
+    <string name="wire_transfer_fee">Comision transfer bancar</string>
+    <string name="wire_transfer_return">Returnare transfer bancar</string>
+
+    <!-- New exposed receipt types -->
+    <string name="paypal_account_transfer_return">Returnare încasări</string>
+    <string name="venmo_account_transfer_return">Returnare încasări</string>
+    <string name="prepaid_card_account_deposit">Depunere cont</string>
+    <string name="prepaid_card_annual_fee_discount">Reducerea comisionului anual</string>
+    <string name="prepaid_card_bill_reprint_fee">Comision reimprimare factură</string>
+    <string name="prepaid_card_atm_or_cash_advance_fee">Comision ATM/Avans numerar</string>
+    <string name="prepaid_card_cash_advance_chargeback">Stornare avans numerar</string>
+    <string name="prepaid_card_cash_advance_chargeback_reversal">Reversare stornare avans numerar</string>
+    <string name="prepaid_card_cash_advance_repress">Blocare avans numerar</string>
+    <string name="prepaid_card_cash_advance_repress_reversal">Reversare blocare avans</string>
+    <string name="prepaid_card_chargeback">Stornare</string>
+    <string name="prepaid_card_chargeback_refund">Rambursare stornare</string>
+    <string name="prepaid_card_chargeback_refund_reversal">Reversare rambursare stornare</string>
+    <string name="prepaid_card_chargeback_reversal">Reversare stornare</string>
+    <string name="prepaid_card_commission_or_fee">Taxă/Comision</string>
+    <string name="prepaid_card_debit_transfer">Debit/Transferuri</string>
+    <string name="prepaid_card_document_request_fee">Comision de solicitare documente</string>
+    <string name="prepaid_card_emergency_cash">Bani în caz de urgență</string>
+    <string name="prepaid_card_emergency_card">Card în caz de urgență</string>
+    <string name="prepaid_card_income">Venit</string>
+    <string name="prepaid_card_load_fee">Comision PAN</string>
+    <string name="prepaid_card_refund_fee">Comision de rambursare</string>
+    <string name="prepaid_card_monthly_maintenance_fee">Comision lunar de întreținere</string>
+    <string name="prepaid_card_transaction_fee">Comision tranzacție</string>
+    <string name="prepaid_card_sms_fee">Comision SMS</string>
+    <string name="prepaid_card_declined_authorization_fee">Comision de autorizare refuzat</string>
+    <string name="fispc">Achiziție</string>
+
+    <!-- Prepaid Cards Receipt   -->
+    <string name="mobileAvailableBalances">Fonduri disponibile</string>
+
+</resources>

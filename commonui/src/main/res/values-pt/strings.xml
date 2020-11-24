@@ -1,0 +1,27 @@
+<resources>
+    <string name="error_dialog_title">Erro</string>
+    <string name="error_dialog_connectivity_title">Problema de conexão</string>
+    <string name="error_dialog_unexpected_title">Erro inesperado</string>
+    <string name="ok">OK</string>
+    <string name="try_again_button_label">Tente novamente</string>
+    <string name="not_available">Não disponível</string>
+
+    <!-- title and font icon -->
+    <string name="bank_account">Conta bancária</string>
+    <string name="bank_card">Cartão de débito</string>
+    <string name="wire_account">Conta da transferência bancária</string>
+    <string name="paper_check">Cheque em papel</string>
+    <string name="prepaid_card">Cartão pré-pago</string>
+    <string name="paypal_account">Conta do PayPal</string>
+    <string name="venmo_account">Conta do Venmo</string>
+    <string name="cash_pickup_mg">MoneyGram</string>
+
+    <string name="endingIn">com final %s</string>
+    <string name="to">para %s</string>
+    <string name="not_translated_in_braces">(não traduzido)</string>
+
+    <string name="authentication_error_header">Erro de autenticação</string>
+    <string name="cancelButtonLabel">Cancelar</string>
+    <string name="remove">Remover</string>
+    <string name="mobileAreYouSure">Você tem certeza?</string>
+</resources>

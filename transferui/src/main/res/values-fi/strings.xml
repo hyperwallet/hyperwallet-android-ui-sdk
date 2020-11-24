@@ -1,0 +1,71 @@
+<resources>
+    <string name="title_activity_create_transfer">Siirrä varat</string>
+    <string name="mobileConfirmationHeader">Vahvista tiedot</string>
+    <string name="mobileConfirmNotesLabel">HUOMAUTUS</string>
+    <string name="transfer_destination">Kohde</string>
+    <string name="mobileTransferToLabel">SIIRRÄ KOHTEESEEN</string>
+    <string name="mobileTransferFundsHeader">Siirrä varat</string>
+    <string name="mobileFXlabel">VALUUTANVAIHTO</string>
+    <string name="transfer_header_label">Siirrä</string>
+    <string name="noTransferMethodAdded">Siirtomenetelmä on pakollinen</string>
+    <string name="transfer_amount_hint">Summa</string>
+    <string name="transfer_currency_placeholder">USD</string>
+    <string name="transfer_currency_code_placeholder">$</string>
+    <string name="transfer_all_funds_label">Siirrä suurin sallittu summa</string>
+    <string name="mobileAvailableBalance">Käytettävissä oleva summa: %s %s</string>
+    <string name="mobileSummaryLabel">YHTEENVETO</string>
+    <string name="mobileNoteLabel">Huomautus</string>
+    <string name="transfer_notes_label">Huomautus</string>
+    <string name="transfer_notes_additional_info_label">Lisää muistiinpano (valinnainen)</string>
+    <string name="continueButtonLabel">Jatka</string>
+    <string name="defaultTransferAmount">0</string>
+    <string name="transfer">Siirrä</string>
+    <string name="add_text">+</string>
+    <string name="mobileAddTransferMethod">Lisää siirtomenetelmä</string>
+    <string name="add_transfer_description_1">Aloita lisäämällä siirtomenetelmä.</string>
+    <string name="add_transfer_description_2">Aloita lisäämällä siirtomenetelmä.</string>
+    <string name="transfer_destination_selection_description">Siirtomenetelmän valinta</string>
+    <string name="destination_item_description">Kohde</string>
+
+    <string name="amount_currency_format">%s %s</string>
+    <string name="exchange_rate_format">1 %s = %s %s</string>
+
+    <string name="module_transfermethodui_unavailable_error">Et pysty lisäämään siirtomenetelmää.</string>
+    <string name="transferAmountInvalid">Syötä kelvollinen siirrettävä summa</string>
+
+    <string name="mobileFXsell">Kohteesta</string>
+    <string name="mobileFXbuy">Kohteeseen</string>
+    <string name="mobileFXRateLabel">Vaihtokurssi</string>
+
+    <string name="mobileConfirmDetailsAmount">Summa</string>
+    <string name="mobileConfirmDetailsFee">Maksu</string>
+    <string name="mobileConfirmDetailsTotal">Tulet vastaanottamaan</string>
+    <string name="exchange_rate_change_warning">Vaihtokurssin muutosten vuoksi tulet vastaanottamaan %1$s %2$s.</string>
+
+
+    <string name="mobileTransferMax">Siirrä suurin sallittu summa</string>
+    <string name="transfer_summary_placeholder">Käytettävissä oleva summa: 2 422,90 CAD</string>
+    <string name="transfer_notes_placeholder">Osittainen siirto</string>
+    <string name="transfer_item_icon_placeholder">\ue000</string>
+    <string name="transfer_item_title_placeholder">Siirtotyyppi</string>
+    <string name="transfer_item_country_placeholder">Maan nimi</string>
+    <string name="transfer_item_identification_placeholder">Muokkaus XXXX</string>
+    <string name="foreign_exchange_sell_placeholder">15,05 CAD</string>
+    <string name="foreign_exchange_buy_placeholder">11,00 USD</string>
+    <string name="foreign_exchange_rate_placeholder">1 CAD = 0,73897 USD</string>
+    <string name="summary_amount_placeholder">10,00 CAD</string>
+    <string name="summary_amount_fee_placeholder">0,25 CAD</string>
+    <string name="summary_amount_transfer_placeholder">9,75 CAD</string>
+    <string name="exchange_rate_change_warning_placeholder">Vaihtokurssin muutosten vuoksi tulet vastaanottamaan 10,00 CAD.</string>
+
+    <string name="mobileTransferSuccessMsg">Siirtoasi käsitellään</string>
+    <string name="mobileTransferSuccessDetails">Rahat ovat matkalla kohteeseen %s</string>
+    <string name="doneButtonLabel">Valmis</string>
+    <string name="mobileTransferMethodsHeader">Siirtomenetelmät</string>
+    <string name="mobileTransferFromLabel">SIIRRÄ KOHTEESTA</string>
+    <string name="transferSource">Lähde</string>
+    <string name="mobileTransferFromHeader">Siirrä kohteesta</string>
+    <string name="availableFunds">Käytettävissä olevat varat</string>
+    <string name="noTransferFromSourceAvailableError">Lähteestä ei ole käytettävissä siirtoja</string>
+
+</resources>

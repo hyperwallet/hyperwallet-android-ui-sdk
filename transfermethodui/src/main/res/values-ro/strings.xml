@@ -1,0 +1,79 @@
+<resources>
+    <string name="app_name">hyperwallet.ui</string>
+    <string name="title_account_add">Adăugați cont</string>
+    <string name="unknown">Necunoscut</string>
+
+    <string name="title_activity_select_transfer_method">Selectați metoda de transfer</string>
+    <!-- SelectTransferMethodActivity -->
+    <string name="select_transfer_method_title">@string/title_activity_select_transfer_method
+    </string>
+
+    <string name="mobileCountryRegion">Țara/Regiunea</string>
+    <string name="mobileCurrencyLabel">Moneda</string>
+    <string name="mobileAddTransferMethodHeader">Adăugați o metodă de transfer</string>
+    <string name="title_activity_add_transfer_method">Adăugați metoda de transfer</string>
+    <string name="title_add_bank_account">Cont bancar</string>
+    <string name="title_add_bank_card">Card de debit</string>
+
+    <string name="error_exact_length_field">Lungimea acestui câmp este de exact %d.</string>
+    <string name="error_invalid_expiry_date">%s nu este valid.</string>
+    <string name="error_min_max_length_field">Lungimea minimă a acestui câmp este {0}, iar lungimea maximă este {1}.
+    </string>
+
+    <string name="createTransferMethodButtonLabel">Adăugați metoda de transfer</string>
+    <string name="default_account_label">Cont implicit</string>
+    <string name="default_account_sub_label">Selectați o metodă implicită de transfer</string>
+    <string name="api_expiry_date_format">LL/AA</string>
+
+    <string name="feeAndProcessingTimeInformation">comision %s \u2022 %s</string>
+    <string name="feeInformation">comision %s</string>
+
+    <string name="emptyStateAddTransferMethod">Adăugați o metodă de transfer pentru a începe.</string>
+
+    <!-- menu title -->
+    <string name="menu_transfer_funds">Transfer</string>
+
+    <!--Fee formatter-->
+    <string name="fee_flat_formatter">%1$s%2$s</string>
+    <string name="fee_percent_no_min_and_max_formatter">%1$s%%</string>
+    <string name="fee_percent_only_min_formatter">%1$s%% (Minim:%2$s %3$s)</string>
+    <string name="fee_percent_only_max_formatter">%1$s%% (Maxim:%2$s %3$s)</string>
+    <string name="fee_percent_formatter">%1$s%% (Minim:%2$s %3$s, Maxim:%2$s %4$s)</string>
+    <string name="fee_mix_no_min_and_max_formatter">%1$s%2$s + %3$s%%</string>
+    <string name="fee_mix_only_min_formatter">%1$s%2$s + %3$s%% (Minim:%1$s %4$s)</string>
+    <string name="fee_mix_only_max_formatter">%1$s%2$s + %3$s%% (Maxim:%1$s %4$s)</string>
+    <string name="fee_mix_formatter">%1$s%2$s + %3$s%% (Minim:%1$s %4$s, Maxim:%1$s %5$s)</string>
+
+    <string name="account_holder">INFORMAȚII TITULAR CONT</string>
+    <string name="account_information">INFORMAȚII CONT: %s(%s)</string>
+    <string name="address">ADRESĂ</string>
+    <string name="contact_information">INFORMAȚII DE CONTACT</string>
+    <string name="identification">IDENTIFICARE</string>
+    <string name="intermediary_account">CONT INTERMEDIAR</string>
+    <string name="mobileFeesAndProcessingTime">COMISIOANE ȘI TIMP DE PROCESARE</string>
+
+    <string name="search_hint">Căutați sugestie</string>
+    <string name="search_country">Căutați țară</string>
+    <string name="search_currency">Căutați monedă</string>
+    <string name="search_widget">Căutați</string>
+
+    <string name="select_transfer_method_currency_button_description">Selectați butonul pentru monedă
+    </string>
+    <string name="select_transfer_method_country_button_description">Selectați butonul pentru țară</string>
+    <string name="selected_country_item_description">Element de țară selectat</string>
+    <string name="selected_currency_item_description">Element de monedă selectat</string>
+    <string name="transfer_method_context_button_description">Buton meniu contextual</string>
+    <string name="item_select_description">Element selectat</string>
+
+    <string name="error_unmapped_field">Câmp nemapat. Vă rugăm să apelați echipa de asistență.</string>
+
+    <string name="country_placeholder">Canada</string>
+    <string name="currency_placeholder">CAD</string>
+    <string name="feesAndProcessTimePlaceholder">Comision 20,00 USD \u2022 1\-3 zile lucrătoare </string>
+    <string name="mobileCountryCurrencyLabel">LOCAȚIE ȘI MONEDĂ</string>
+    <string name="mobileTransferMethodLabel">METODĂ DE TRANSFER</string>
+    <string name="mobileTransferMethodsHeader">Metode de transfer</string>
+
+    <string name="mobileRemoveEAconfirm">Eliminați metodă de transfer</string>
+    <string name="prepaidCardManagementInfo" >„Autentificați-vă utilizând un browser web pentru a vă gestiona cardul”</string>
+</resources>

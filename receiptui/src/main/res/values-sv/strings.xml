@@ -1,0 +1,168 @@
+<resources>
+    <string name="app_name">kvitto</string>
+    <string name="title_activity_receipt_list">Transaktioner</string>
+    <string name="title_activity_receipt_detail">Transaktionsdetaljer</string>
+    <string name="mobileTransactionDetailsHeader">Transaktionsdetaljer</string>
+    <string name="transactions">Transaktioner</string>
+    <string name="mobileTransactionTypeLabel">TRANSAKTION</string>
+    <string name="mobileFeeInfoLabel">AVGIFTSINFORMATION</string>
+    <string name="amount">Belopp</string>
+    <string name="mobileFeeLabel">Avgift</string>
+    <string name="mobileTransactionDetailsTotal">Transaktionstotal</string>
+    <string name="mobileTransactionDetailsLabel">DETALJER</string>
+    <string name="mobileJournalNumberLabel">Kvitto-ID</string>
+    <string name="date">Datum</string>
+    <string name="mobileMerchantTxnLabel">Transaktions-ID</string>
+    <string name="mobileConfirmNotesLabel">ANTECKNING</string>
+    <string name="mobileCharityName">Namn på välgörenhetsorganisation</string>
+    <string name="mobileCheckNumber">Checknummer</string>
+    <string name="mobilePromoWebsite">Kampanjwebbplats</string>
+    <string name="concat_date_string_view_format">%s %s</string>
+
+    <string name="mobileNoTransactionsUser">Det finns ingen aktivitet att visa.</string>
+    <string name="mobileNoTransactionsPrepaidCard">Inga transaktioner de senaste 365 dagarna</string>
+    <string name="title_transfer_funds">Överföring</string>
+    <string name="font_icon_placeholder">\ue908</string>
+    <string name="text_placeholder">Platshållare</string>
+
+
+
+    <!--Generic fee types-->
+    <string name="unknown_type">Okänd transaktionstyp</string>
+    <string name="annual_fee">Årsavgift</string>
+    <string name="annual_fee_refund">Återbetalning av årsavgift</string>
+    <string name="customer_service_fee">Kundserviceavgift</string>
+    <string name="customer_service_fee_refund">Återbetalning av kundserviceavgift</string>
+    <string name="expedited_shipping_fee">Avgift för expressfrakt</string>
+    <string name="generic_fee_refund">Återbetalning av allmän avgift</string>
+    <string name="monthly_fee">Månadsavgift</string>
+    <string name="monthly_fee_refund">Återbetalning av månadsavgift</string>
+    <string name="payment_expiry_fee">Avgift för förfallen betalning</string>
+    <string name="payment_fee">Betalningsavgift</string>
+    <string name="processing_fee">Administrativ avgift</string>
+    <string name="standard_shipping_fee">Avgift för standardfrakt</string>
+    <string name="transfer_fee">Överföringsavgift</string>
+
+    <!--Generic payment types-->
+    <string name="adjustment">Justering av saldo</string>
+    <string name="foreign_exchange">Utländsk valuta</string>
+    <string name="deposit">Betalning</string>
+    <string name="manual_adjustment">Justering</string>
+    <string name="payment_expiration">Förfallen betalning</string>
+
+    <!--Bank account-specific types-->
+    <string name="bank_account_transfer_fee">Avgift för returnering till bankkonto</string>
+    <string name="bank_account_transfer_return">Returnering till bankkonto</string>
+    <string name="bank_account_transfer_return_fee">Avgift för returnering till bankkonto</string>
+    <string name="transfer_to_bank_account">Bankkonto</string>
+
+    <!--Card-specific types-->
+    <string name="card_activation_fee">Avgift för kortaktivering</string>
+    <string name="card_activation_fee_waiver">Ingen avgift för kortaktivering</string>
+    <string name="card_fee">Kortavgift</string>
+    <string name="manual_transfer_to_prepaid_card">Överföring till kort</string>
+    <string name="prepaid_card_balance_inquiry_fee">Avgift för saldoförfrågan</string>
+    <string name="prepaid_card_cash_advance">Förskott</string>
+    <string name="prepaid_card_disputed_charge_refund">Ifrågasatt återbetalning av avgift</string>
+    <string name="prepaid_card_dispute_deposit">Ifrågasatt insättning på kort</string>
+    <string name="prepaid_card_domestic_cash_withdrawal_fee">Bankomatuttag</string>
+    <string name="prepaid_card_exchange_rate_difference">FÖRBETALT_KORT_VALUTA_KURS_SKILLNAD
+    </string>
+    <string name="prepaid_card_manual_unload">Överföring från kort</string>
+    <string name="prepaid_card_overseas_cash_withdrawal_fee">Bankomatuttag</string>
+    <string name="prepaid_card_pin_change_fee">Avgift för ändring av PIN-kod</string>
+    <string name="prepaid_card_refund">Återbetalning</string>
+    <string name="prepaid_card_replacement_fee">Avgift för ersättningskort</string>
+    <string name="prepaid_card_sale">Transaktion</string>
+    <string name="prepaid_card_sale_reversal">Återförd transaktion</string>
+    <string name="prepaid_card_unload">Överföring från kort</string>
+    <string name="transfer_to_prepaid_card">Överföring till kort</string>
+    <!---->
+    <!--Donation types-->
+    <string name="donation">Gåva</string>
+    <string name="donation_fee">Avgift för gåva</string>
+    <string name="donation_return">Returnering av gåva</string>
+    <!---->
+    <!--Merchant payment types-->
+    <string name="merchant_payment">Handlares betalning</string>
+    <string name="merchant_payment_fee">Handlares betalningsavgift</string>
+    <string name="merchant_payment_refund">Återbetalning till handlare</string>
+    <string name="merchant_payment_return">Returnering av betalning till handlare</string>
+    <!---->
+    <!--MoneyGram types-->
+    <string name="moneygram_transfer_return">Returnering av MoneyGram</string>
+    <string name="transfer_to_moneygram">MoneyGram</string>
+    <!---->
+    <!--Paper check types-->
+    <string name="paper_check_fee">Avgift för papperscheck</string>
+    <string name="paper_check_refund">Återbetalning av papperscheck</string>
+    <string name="transfer_to_paper_check">Papperscheck</string>
+    <!---->
+    <!--User and program account types-->
+    <string name="account_closure">Stängning av konto</string>
+    <string name="account_closure_fee">Avgift för stängning av konto</string>
+    <string name="account_unload">Returnering av pengar</string>
+    <string name="dormant_user_fee">Avgift för vilande användarkonto</string>
+    <string name="dormant_user_fee_refund">Återbetalning av avgift för vilande användarkonto</string>
+    <string name="payment">Betalning</string>
+    <string name="payment_cancellation">Annullering av betalning</string>
+    <string name="payment_reversal">Återföring av betalning</string>
+    <string name="payment_reversal_fee">Avgift för återföring av betalning</string>
+    <string name="payment_return">Returnering av betalning</string>
+    <string name="transfer_to_program_account">Överföring till program</string>
+    <string name="transfer_to_user">Överföring till användare</string>
+    <string name="transfer_to_paypal_account">PayPal</string>
+    <string name="transfer_to_bank_card">Bankkort</string>
+    <string name="transfer_to_debit_card">Betalkort</string>
+    <string name="prepaid_card_transfer_return">Returnering av laddat belopp på förbetalt kort</string>
+    <!---->
+    <!--Virtual incentive types-->
+    <string name="virtual_incentive_cancellation">Annullering av kampanj</string>
+    <string name="virtual_incentive_issuance">Utfärdad kampanj</string>
+    <string name="virtual_incentive_purchase">Kampanjköp</string>
+    <string name="virtual_incentive_refund">Kampanjåterbetalning</string>
+    <!---->
+    <!--Western Union and WUBS types-->
+    <string name="transfer_to_western_union">Western Union</string>
+    <string name="transfer_to_wubs_wire">Banköverföring</string>
+    <string name="western_union_transfer_return">Western Union-uttag</string>
+    <string name="wubs_wire_transfer_return">Returnering av banköverföring</string>
+    <!---->
+    <!--Wire transfer types-->
+    <string name="transfer_to_wire">Banköverföring</string>
+    <string name="wire_transfer_fee">Avgift för banköverföring</string>
+    <string name="wire_transfer_return">Returnering av banköverföring</string>
+
+    <!-- New exposed receipt types -->
+    <string name="paypal_account_transfer_return">Returnering av kontanter</string>
+    <string name="venmo_account_transfer_return">Returnering av kontanter</string>
+    <string name="prepaid_card_account_deposit">Insättning på konto</string>
+    <string name="prepaid_card_annual_fee_discount">Rabatt på årsavgift</string>
+    <string name="prepaid_card_bill_reprint_fee">Avgift för ny utskrift av räkning</string>
+    <string name="prepaid_card_atm_or_cash_advance_fee">Avgift för bankomatuttag/förskott</string>
+    <string name="prepaid_card_cash_advance_chargeback">Chargeback av förskott</string>
+    <string name="prepaid_card_cash_advance_chargeback_reversal">Återföring av chargeback av förskott</string>
+    <string name="prepaid_card_cash_advance_repress">Hejdat förskott</string>
+    <string name="prepaid_card_cash_advance_repress_reversal">Återföring av hejdat förskott</string>
+    <string name="prepaid_card_chargeback">Chargeback</string>
+    <string name="prepaid_card_chargeback_refund">Återbetalning av chargeback</string>
+    <string name="prepaid_card_chargeback_refund_reversal">Återföring av återbetald chargeback</string>
+    <string name="prepaid_card_chargeback_reversal">Återföring av chargeback</string>
+    <string name="prepaid_card_commission_or_fee">Avgift/Provision</string>
+    <string name="prepaid_card_debit_transfer">Debitering/Överföringar</string>
+    <string name="prepaid_card_document_request_fee">Avgift för begäran om dokument</string>
+    <string name="prepaid_card_emergency_cash">Buffertpengar</string>
+    <string name="prepaid_card_emergency_card">Buffertkort</string>
+    <string name="prepaid_card_income">Inkomst</string>
+    <string name="prepaid_card_load_fee">PAN-avgift</string>
+    <string name="prepaid_card_refund_fee">Avgift för återbetalning</string>
+    <string name="prepaid_card_monthly_maintenance_fee">Månatlig underhållsavgift</string>
+    <string name="prepaid_card_transaction_fee">Transaktionsavgift</string>
+    <string name="prepaid_card_sms_fee">SMS-avgift</string>
+    <string name="prepaid_card_declined_authorization_fee">Avgift för nekad autentisering</string>
+    <string name="fispc">Inköp</string>
+
+    <!-- Prepaid Cards Receipt   -->
+    <string name="mobileAvailableBalances">Tillgängligt saldo</string>
+
+</resources>

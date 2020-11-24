@@ -1,0 +1,168 @@
+<resources>
+    <string name="app_name">квитанция</string>
+    <string name="title_activity_receipt_list">Транзакции</string>
+    <string name="title_activity_receipt_detail">Детали транзакции</string>
+    <string name="mobileTransactionDetailsHeader">Детали транзакции</string>
+    <string name="transactions">Транзакции</string>
+    <string name="mobileTransactionTypeLabel">ТРАНЗАКЦИЯ</string>
+    <string name="mobileFeeInfoLabel">ИНФОРМАЦИЯ О СБОРЕ</string>
+    <string name="amount">Сумма</string>
+    <string name="mobileFeeLabel">Сбор</string>
+    <string name="mobileTransactionDetailsTotal">Итого по транзакции</string>
+    <string name="mobileTransactionDetailsLabel">ДЕТАЛИ</string>
+    <string name="mobileJournalNumberLabel">Номер квитанции</string>
+    <string name="date">Дата</string>
+    <string name="mobileMerchantTxnLabel">ID транзакции</string>
+    <string name="mobileConfirmNotesLabel">ПРИМЕЧАНИЕ</string>
+    <string name="mobileCharityName">Название благотворительной организации</string>
+    <string name="mobileCheckNumber">Номер чека</string>
+    <string name="mobilePromoWebsite">Промо-сайт</string>
+    <string name="concat_date_string_view_format">%s %s</string>
+
+    <string name="mobileNoTransactionsUser">Нет действий для отображения.</string>
+    <string name="mobileNoTransactionsPrepaidCard">Нет транзакций за последние 365 дней</string>
+    <string name="title_transfer_funds">Перевод</string>
+    <string name="font_icon_placeholder">\ue908</string>
+    <string name="text_placeholder">Временная позиция</string>
+
+
+
+    <!--Generic fee types-->
+    <string name="unknown_type">Неизвестный тип транзакции</string>
+    <string name="annual_fee">Ежегодная комиссия</string>
+    <string name="annual_fee_refund">Возврат ежегодной комиссии</string>
+    <string name="customer_service_fee">Комиссия за обслуживание клиентов</string>
+    <string name="customer_service_fee_refund">Возврат комиссии за обслуживание клиентов</string>
+    <string name="expedited_shipping_fee">Плата за ускоренную доставку</string>
+    <string name="generic_fee_refund">Возврат общей комиссии</string>
+    <string name="monthly_fee">Ежемесячная комиссия</string>
+    <string name="monthly_fee_refund">Возврат ежемесячной комиссии</string>
+    <string name="payment_expiry_fee">Комиссия за истечение срока платежа</string>
+    <string name="payment_fee">Комиссия за платеж</string>
+    <string name="processing_fee">Сервисный сбор</string>
+    <string name="standard_shipping_fee">Стандартная плата за доставку</string>
+    <string name="transfer_fee">Комиссия за перевод средств</string>
+
+    <!--Generic payment types-->
+    <string name="adjustment">Коррекция баланса</string>
+    <string name="foreign_exchange">Обмен валюты</string>
+    <string name="deposit">Платеж</string>
+    <string name="manual_adjustment">Коррекция</string>
+    <string name="payment_expiration">Срок платежа истек</string>
+
+    <!--Bank account-specific types-->
+    <string name="bank_account_transfer_fee">Комиссия за возврат на банковский счет</string>
+    <string name="bank_account_transfer_return">Возврат на банковский счет</string>
+    <string name="bank_account_transfer_return_fee">Комиссия за возврат на банковский счет</string>
+    <string name="transfer_to_bank_account">Банковский счет</string>
+
+    <!--Card-specific types-->
+    <string name="card_activation_fee">Комиссия за активацию карты</string>
+    <string name="card_activation_fee_waiver">Отмена комиссии за активацию карты</string>
+    <string name="card_fee">Комиссия за карту</string>
+    <string name="manual_transfer_to_prepaid_card">Перевод на карту</string>
+    <string name="prepaid_card_balance_inquiry_fee">Комиссия за запрос баланса</string>
+    <string name="prepaid_card_cash_advance">Денежный аванс</string>
+    <string name="prepaid_card_disputed_charge_refund">Возврат спорных платежей</string>
+    <string name="prepaid_card_dispute_deposit">Спорный депозит по карте</string>
+    <string name="prepaid_card_domestic_cash_withdrawal_fee">Снятие в банкомате</string>
+    <string name="prepaid_card_exchange_rate_difference">PREPAID_CARD_EXCHANGE_RATE_DIFFERENCE
+    </string>
+    <string name="prepaid_card_manual_unload">Перевод с карты</string>
+    <string name="prepaid_card_overseas_cash_withdrawal_fee">Снятие в банкомате</string>
+    <string name="prepaid_card_pin_change_fee">Комиссия за изменение PIN-кода</string>
+    <string name="prepaid_card_refund">Возврат денег</string>
+    <string name="prepaid_card_replacement_fee">Комиссия за замену карты</string>
+    <string name="prepaid_card_sale">Транзакция</string>
+    <string name="prepaid_card_sale_reversal">Аннулированная транзакция</string>
+    <string name="prepaid_card_unload">Перевод с карты</string>
+    <string name="transfer_to_prepaid_card">Перевод на карту</string>
+    <!---->
+    <!--Donation types-->
+    <string name="donation">Пожертвование</string>
+    <string name="donation_fee">Сбор за пожертвование</string>
+    <string name="donation_return">Возврат пожертвования</string>
+    <!---->
+    <!--Merchant payment types-->
+    <string name="merchant_payment">Платеж продавца</string>
+    <string name="merchant_payment_fee">Комиссия продавца за платеж</string>
+    <string name="merchant_payment_refund">Возврат платежа продавцу</string>
+    <string name="merchant_payment_return">Возврат платежа продавцом</string>
+    <!---->
+    <!--MoneyGram types-->
+    <string name="moneygram_transfer_return">Возврат MoneyGram</string>
+    <string name="transfer_to_moneygram">MoneyGram</string>
+    <!---->
+    <!--Paper check types-->
+    <string name="paper_check_fee">Комиссия за бумажный чек</string>
+    <string name="paper_check_refund">Возврат бумажного чека</string>
+    <string name="transfer_to_paper_check">Бумажный чек</string>
+    <!---->
+    <!--User and program account types-->
+    <string name="account_closure">Закрытие счета</string>
+    <string name="account_closure_fee">Комиссия за закрытие счета</string>
+    <string name="account_unload">Возврат средств</string>
+    <string name="dormant_user_fee">Комиссия за бездействующий аккаунт пользователя</string>
+    <string name="dormant_user_fee_refund">Возврат комиссии за бездействующий аккаунт пользователя</string>
+    <string name="payment">Платеж</string>
+    <string name="payment_cancellation">Отмена платежа</string>
+    <string name="payment_reversal">Отзыв платежа</string>
+    <string name="payment_reversal_fee">Комиссия за отзыв платежа</string>
+    <string name="payment_return">Возврат платежа</string>
+    <string name="transfer_to_program_account">Перевод на программу</string>
+    <string name="transfer_to_user">Перевод пользователю</string>
+    <string name="transfer_to_paypal_account">PayPal</string>
+    <string name="transfer_to_bank_card">Банковская карта</string>
+    <string name="transfer_to_debit_card">Дебетовая карта</string>
+    <string name="prepaid_card_transfer_return">Возврат суммы предоплаченной карты</string>
+    <!---->
+    <!--Virtual incentive types-->
+    <string name="virtual_incentive_cancellation">Отмена промоакции</string>
+    <string name="virtual_incentive_issuance">Выпущенная промоакция</string>
+    <string name="virtual_incentive_purchase">Промо-покупка</string>
+    <string name="virtual_incentive_refund">Возврат по промоакции</string>
+    <!---->
+    <!--Western Union and WUBS types-->
+    <string name="transfer_to_western_union">Western Union</string>
+    <string name="transfer_to_wubs_wire">Банковский перевод</string>
+    <string name="western_union_transfer_return">Вывод средств через Western Union</string>
+    <string name="wubs_wire_transfer_return">Возврат банковского перевода</string>
+    <!---->
+    <!--Wire transfer types-->
+    <string name="transfer_to_wire">Банковский перевод</string>
+    <string name="wire_transfer_fee">Комиссия за банковский перевод</string>
+    <string name="wire_transfer_return">Возврат банковского перевода</string>
+
+    <!-- New exposed receipt types -->
+    <string name="paypal_account_transfer_return">Возврат выведенных средств</string>
+    <string name="venmo_account_transfer_return">Возврат выведенных средств</string>
+    <string name="prepaid_card_account_deposit">Депозит на счет</string>
+    <string name="prepaid_card_annual_fee_discount">Скидка на годовую комиссию</string>
+    <string name="prepaid_card_bill_reprint_fee">Комиссия за повторную печать счета</string>
+    <string name="prepaid_card_atm_or_cash_advance_fee">Комиссия за банкомат/ аванс</string>
+    <string name="prepaid_card_cash_advance_chargeback">Возврат денежного аванса</string>
+    <string name="prepaid_card_cash_advance_chargeback_reversal">Аннулирование возврата аванса</string>
+    <string name="prepaid_card_cash_advance_repress">Удерживание денежного аванса</string>
+    <string name="prepaid_card_cash_advance_repress_reversal">Аннулирование удерживания аванса</string>
+    <string name="prepaid_card_chargeback">Возврат средств</string>
+    <string name="prepaid_card_chargeback_refund">Возмещение средств</string>
+    <string name="prepaid_card_chargeback_refund_reversal">Аннулирование возмещения средств</string>
+    <string name="prepaid_card_chargeback_reversal">Аннулирование возврата средств</string>
+    <string name="prepaid_card_commission_or_fee">Сбор/ комиссия</string>
+    <string name="prepaid_card_debit_transfer">Дебет/ переводы</string>
+    <string name="prepaid_card_document_request_fee">Плата за запрос документов</string>
+    <string name="prepaid_card_emergency_cash">Деньги на экстренные цели</string>
+    <string name="prepaid_card_emergency_card">Карта для экстренных целей</string>
+    <string name="prepaid_card_income">Доход</string>
+    <string name="prepaid_card_load_fee">Комиссия за первичный идентификатор счета (PAN)</string>
+    <string name="prepaid_card_refund_fee">Комиссия за возврат</string>
+    <string name="prepaid_card_monthly_maintenance_fee">Ежемесячная плата за обслуживание</string>
+    <string name="prepaid_card_transaction_fee">Комиссия за транзакцию</string>
+    <string name="prepaid_card_sms_fee">Плата за SMS</string>
+    <string name="prepaid_card_declined_authorization_fee">Плата за отклоненную авторизацию</string>
+    <string name="fispc">Покупка</string>
+
+    <!-- Prepaid Cards Receipt   -->
+    <string name="mobileAvailableBalances">Свободные средства</string>
+
+</resources>

@@ -1,0 +1,71 @@
+<resources>
+    <string name="title_activity_create_transfer">Pindah Dana</string>
+    <string name="mobileConfirmationHeader">Mengesahkan butiran</string>
+    <string name="mobileConfirmNotesLabel">NOTA</string>
+    <string name="transfer_destination">Destinasi</string>
+    <string name="mobileTransferToLabel">PINDAH KEPADA</string>
+    <string name="mobileTransferFundsHeader">Pindah dana</string>
+    <string name="mobileFXlabel">PERTUKARAN WANG ASING</string>
+    <string name="transfer_header_label">Pindah</string>
+    <string name="noTransferMethodAdded">Kaedah pemindahan diperlukan</string>
+    <string name="transfer_amount_hint">Jumlah</string>
+    <string name="transfer_currency_placeholder">ASD</string>
+    <string name="transfer_currency_code_placeholder">$</string>
+    <string name="transfer_all_funds_label">Pindah jumlah maks</string>
+    <string name="mobileAvailableBalance">Jumlah yang tersedia: %s %s</string>
+    <string name="mobileSummaryLabel">RINGKASAN</string>
+    <string name="mobileNoteLabel">Nota</string>
+    <string name="transfer_notes_label">Nota</string>
+    <string name="transfer_notes_additional_info_label">Tambah nota (opsyenal)</string>
+    <string name="continueButtonLabel">Seterusnya</string>
+    <string name="defaultTransferAmount">0</string>
+    <string name="transfer">Pindah</string>
+    <string name="add_text">+</string>
+    <string name="mobileAddTransferMethod">Tambah kedah pemindahan</string>
+    <string name="add_transfer_description_1">Tambah kaedah pemindahan untuk memulakan.</string>
+    <string name="add_transfer_description_2">Tambah kaedah pemindahan untuk memulakan.</string>
+    <string name="transfer_destination_selection_description">Pilih kaedah pemindahan</string>
+    <string name="destination_item_description">Item destinasi</string>
+
+    <string name="amount_currency_format">%s %s</string>
+    <string name="exchange_rate_format">1 %s = %s %s</string>
+
+    <string name="module_transfermethodui_unavailable_error">Anda tidak boleh menambah kaedah pemindahan.</string>
+    <string name="transferAmountInvalid">Masukkan jumlah pemindahan yang sah</string>
+
+    <string name="mobileFXsell">Daripada</string>
+    <string name="mobileFXbuy">Kepada</string>
+    <string name="mobileFXRateLabel">Kadar pertukaran</string>
+
+    <string name="mobileConfirmDetailsAmount">Jumlah</string>
+    <string name="mobileConfirmDetailsFee">Yuran</string>
+    <string name="mobileConfirmDetailsTotal">Anda akan menerima</string>
+    <string name="exchange_rate_change_warning">Disebabkan oleh perubahan dalam kadar pertukaran, kini anda akan menerima %1$s %2$s.</string>
+
+
+    <string name="mobileTransferMax">Pindah jumlah maks</string>
+    <string name="transfer_summary_placeholder">Jumlah yang tersedia:   2,422.90 CAD</string>
+    <string name="transfer_notes_placeholder">Pemindahan separa</string>
+    <string name="transfer_item_icon_placeholder">\ue000</string>
+    <string name="transfer_item_title_placeholder">Jenis Pemindahan</string>
+    <string name="transfer_item_country_placeholder">Nama negara</string>
+    <string name="transfer_item_identification_placeholder">Menyunting pada XXXX</string>
+    <string name="foreign_exchange_sell_placeholder">15.05 CAD</string>
+    <string name="foreign_exchange_buy_placeholder">11.00 ASD</string>
+    <string name="foreign_exchange_rate_placeholder">1 CAD = 0.73897 ASD</string>
+    <string name="summary_amount_placeholder">10.00 CAD</string>
+    <string name="summary_amount_fee_placeholder">0.25 CAD</string>
+    <string name="summary_amount_transfer_placeholder">9.75 CAD</string>
+    <string name="exchange_rate_change_warning_placeholder">Disebabkan oleh perubahan dalam kadar pertukaran, kini anda akan menerima 10.00 CAD.</string>
+
+    <string name="mobileTransferSuccessMsg">Pemindahan anda sedang diproses</string>
+    <string name="mobileTransferSuccessDetails">Wang tersebut sedang dalam perjalanan ke %s anda</string>
+    <string name="doneButtonLabel">Selesai</string>
+    <string name="mobileTransferMethodsHeader">Kaedah pemindahan</string>
+    <string name="mobileTransferFromLabel">PINDAH DARIPADA</string>
+    <string name="transferSource">Sumber</string>
+    <string name="mobileTransferFromHeader">Pindah daripada</string>
+    <string name="availableFunds">Dana yang Tersedia</string>
+    <string name="noTransferFromSourceAvailableError">Tiada Pemindahan daripada sumber yang tersedia</string>
+
+</resources>

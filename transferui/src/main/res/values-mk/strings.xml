@@ -1,0 +1,71 @@
+<resources>
+    <string name="title_activity_create_transfer">Префрли пари</string>
+    <string name="mobileConfirmationHeader">Потврди ги податоците</string>
+    <string name="mobileConfirmNotesLabel">ЗАБЕЛЕШКА</string>
+    <string name="transfer_destination">Дестинација</string>
+    <string name="mobileTransferToLabel">ПРЕФРЛИ НА</string>
+    <string name="mobileTransferFundsHeader">Префрли пари</string>
+    <string name="mobileFXlabel">ДЕВИЗИ</string>
+    <string name="transfer_header_label">Трансфер</string>
+    <string name="noTransferMethodAdded">Потребен е метод на трансфер</string>
+    <string name="transfer_amount_hint">Износ</string>
+    <string name="transfer_currency_placeholder">USD</string>
+    <string name="transfer_currency_code_placeholder">$</string>
+    <string name="transfer_all_funds_label">Префрли максимален износ</string>
+    <string name="mobileAvailableBalance">Достапен износ: %s %s</string>
+    <string name="mobileSummaryLabel">РЕЗИМЕ</string>
+    <string name="mobileNoteLabel">Забелешка</string>
+    <string name="transfer_notes_label">Забелешка</string>
+    <string name="transfer_notes_additional_info_label">Додади забелешка (незадолжително)</string>
+    <string name="continueButtonLabel">Продолжи</string>
+    <string name="defaultTransferAmount">0</string>
+    <string name="transfer">Трансфер</string>
+    <string name="add_text">+</string>
+    <string name="mobileAddTransferMethod">Додади метод на трансфер</string>
+    <string name="add_transfer_description_1">Додади метод на трансфер за да почнеш.</string>
+    <string name="add_transfer_description_2">Додади метод на трансфер за да почнеш.</string>
+    <string name="transfer_destination_selection_description">Избор на метод на трансфер</string>
+    <string name="destination_item_description">Крајна ставка</string>
+
+    <string name="amount_currency_format">%s %s</string>
+    <string name="exchange_rate_format">1 %s = %s %s</string>
+
+    <string name="module_transfermethodui_unavailable_error">Не\'можете да додадете метод на трансфер.</string>
+    <string name="transferAmountInvalid">Внеси важечки износ на трансфер</string>
+
+    <string name="mobileFXsell">Од</string>
+    <string name="mobileFXbuy">До</string>
+    <string name="mobileFXRateLabel">Девизен курс</string>
+
+    <string name="mobileConfirmDetailsAmount">Износ</string>
+    <string name="mobileConfirmDetailsFee">Цена</string>
+    <string name="mobileConfirmDetailsTotal">Ќе добиеш</string>
+    <string name="exchange_rate_change_warning">Поради промени во девизниот курс сега ќе\' добиете %1$s %2$s.</string>
+
+
+    <string name="mobileTransferMax">Префрли максимален износ</string>
+    <string name="transfer_summary_placeholder">Достапен износ:   2,422.90 CAD</string>
+    <string name="transfer_notes_placeholder">Делумен трансфер</string>
+    <string name="transfer_item_icon_placeholder">\ue000</string>
+    <string name="transfer_item_title_placeholder">Тип на трансфер</string>
+    <string name="transfer_item_country_placeholder">Име на земја</string>
+    <string name="transfer_item_identification_placeholder">Уредување на XXXX</string>
+    <string name="foreign_exchange_sell_placeholder">15.05 CAD</string>
+    <string name="foreign_exchange_buy_placeholder">11.00 USD</string>
+    <string name="foreign_exchange_rate_placeholder">1 CAD = 0.73897 USD</string>
+    <string name="summary_amount_placeholder">10.00 CAD</string>
+    <string name="summary_amount_fee_placeholder">0.25 CAD</string>
+    <string name="summary_amount_transfer_placeholder">9.75 CAD</string>
+    <string name="exchange_rate_change_warning_placeholder">Поради промени во девизниот курс сега ќе\' добиете 10.00 CAD.</string>
+
+    <string name="mobileTransferSuccessMsg">Вашиот трансфер се процесира</string>
+    <string name="mobileTransferSuccessDetails">Парите се префрлаат на вашата %s</string>
+    <string name="doneButtonLabel">Завршено</string>
+    <string name="mobileTransferMethodsHeader">Методи на трансфер</string>
+    <string name="mobileTransferFromLabel">ТРАНСФЕР ОД</string>
+    <string name="transferSource">Извор</string>
+    <string name="mobileTransferFromHeader">Трансфер од</string>
+    <string name="availableFunds">Достапни средства</string>
+    <string name="noTransferFromSourceAvailableError">Нема достапен трансфер од извор</string>
+
+</resources>

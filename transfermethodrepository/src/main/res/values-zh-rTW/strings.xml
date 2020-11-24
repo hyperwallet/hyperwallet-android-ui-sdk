@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_unsupported_transfer_type">不支援此轉帳方式。</string>
+</resources>

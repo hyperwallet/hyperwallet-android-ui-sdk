@@ -1,0 +1,168 @@
+<resources>
+    <string name="app_name">Απόδειξη</string>
+    <string name="title_activity_receipt_list">Συναλλαγές</string>
+    <string name="title_activity_receipt_detail">Στοιχεία συναλλαγής</string>
+    <string name="mobileTransactionDetailsHeader">Στοιχεία συναλλαγής</string>
+    <string name="transactions">Συναλλαγές</string>
+    <string name="mobileTransactionTypeLabel">ΣΥΝΑΛΛΑΓΗ</string>
+    <string name="mobileFeeInfoLabel">ΠΛΗΡΟΦΟΡΙΕΣ ΤΕΛΩΝ</string>
+    <string name="amount">Ποσό</string>
+    <string name="mobileFeeLabel">Τέλος</string>
+    <string name="mobileTransactionDetailsTotal">Σύνολο συναλλαγής</string>
+    <string name="mobileTransactionDetailsLabel">ΣΤΟΙΧΕΙΑ</string>
+    <string name="mobileJournalNumberLabel">Αναγνωριστικό απόδειξης</string>
+    <string name="date">Ημερομηνία</string>
+    <string name="mobileMerchantTxnLabel">Αναγνωριστικό συναλλαγής</string>
+    <string name="mobileConfirmNotesLabel">ΣΗΜΕΙΩΣΗ</string>
+    <string name="mobileCharityName">Επωνυμία φιλανθρωπικού ιδρύματος</string>
+    <string name="mobileCheckNumber">Αριθμός επιταγής</string>
+    <string name="mobilePromoWebsite">Ιστότοπος προώθησης</string>
+    <string name="concat_date_string_view_format">%s %s</string>
+
+    <string name="mobileNoTransactionsUser">Δεν υπάρχει δραστηριότητα προς προβολή.</string>
+    <string name="mobileNoTransactionsPrepaidCard">Καμία συναλλαγή τις τελευταίες 365 ημέρες</string>
+    <string name="title_transfer_funds">Μεταφορά</string>
+    <string name="font_icon_placeholder">\ue908</string>
+    <string name="text_placeholder">Χαρακτήρας κράτησης θέσης</string>
+
+
+
+    <!--Generic fee types-->
+    <string name="unknown_type">Άγνωστο είδος συναλλαγής</string>
+    <string name="annual_fee">Ετήσιο τέλος</string>
+    <string name="annual_fee_refund">Επιστροφή ετήσιου τέλους</string>
+    <string name="customer_service_fee">Τέλος εξυπηρέτησης πελατών</string>
+    <string name="customer_service_fee_refund">Επιστροφή τέλους εξυπηρέτησης πελατών</string>
+    <string name="expedited_shipping_fee">Τέλος εξπρές αποστολής</string>
+    <string name="generic_fee_refund">Επιστροφή γενικού τέλους</string>
+    <string name="monthly_fee">Μηνιαίο τέλος</string>
+    <string name="monthly_fee_refund">Επιστροφή μηνιαίου τέλους</string>
+    <string name="payment_expiry_fee">Τέλος λήξης πληρωμής</string>
+    <string name="payment_fee">Τέλος πληρωμής</string>
+    <string name="processing_fee">Τέλος επεξεργασίας</string>
+    <string name="standard_shipping_fee">Τέλος κανονικής αποστολής</string>
+    <string name="transfer_fee">Τέλος μεταφοράς</string>
+
+    <!--Generic payment types-->
+    <string name="adjustment">Προσαρμογή υπολοίπου</string>
+    <string name="foreign_exchange">Συνάλλαγμα</string>
+    <string name="deposit">Πληρωμή</string>
+    <string name="manual_adjustment">Προσαρμογή</string>
+    <string name="payment_expiration">Η πληρωμή έληξε</string>
+
+    <!--Bank account-specific types-->
+    <string name="bank_account_transfer_fee">Τέλος επιστροφής τραπεζικού λογαριασμού</string>
+    <string name="bank_account_transfer_return">Επιστροφή τραπεζικού λογαριασμού</string>
+    <string name="bank_account_transfer_return_fee">Τέλος επιστροφής τραπεζικού λογαριασμού</string>
+    <string name="transfer_to_bank_account">Τραπεζικός λογαριασμός</string>
+
+    <!--Card-specific types-->
+    <string name="card_activation_fee">Τέλος ενεργοποίησης κάρτας</string>
+    <string name="card_activation_fee_waiver">Αποποίηση τέλος ενεργοποίησης κάρτας</string>
+    <string name="card_fee">Τέλος κάρτας</string>
+    <string name="manual_transfer_to_prepaid_card">Μεταφορά στην κάρτα</string>
+    <string name="prepaid_card_balance_inquiry_fee">Τέλος ερώτησης υπολοίπου</string>
+    <string name="prepaid_card_cash_advance">Προκαταβολή μετρητών</string>
+    <string name="prepaid_card_disputed_charge_refund">Επιστροφή αμφισβητούμενου τέλος</string>
+    <string name="prepaid_card_dispute_deposit">Κατάθεση αμφισβητούμενης κάρτας</string>
+    <string name="prepaid_card_domestic_cash_withdrawal_fee">Ανάληψη από μηχάνημα αυτόματης ανάληψης</string>
+    <string name="prepaid_card_exchange_rate_difference">PREPAID_CARD_EXCHANGE_RATE_DIFFERENCE
+    </string>
+    <string name="prepaid_card_manual_unload">Μεταφορά από κάρτα</string>
+    <string name="prepaid_card_overseas_cash_withdrawal_fee">Ανάληψη από μηχάνημα αυτόματης ανάληψης</string>
+    <string name="prepaid_card_pin_change_fee">Τέλος αλλαγής PIN</string>
+    <string name="prepaid_card_refund">Επιστροφή χρημάτων</string>
+    <string name="prepaid_card_replacement_fee">Τέλος αντικατάστασης κάρτας</string>
+    <string name="prepaid_card_sale">Συναλλαγή</string>
+    <string name="prepaid_card_sale_reversal">Αντεστραμμένη συναλλαγή</string>
+    <string name="prepaid_card_unload">Μεταφορά από κάρτα</string>
+    <string name="transfer_to_prepaid_card">Μεταφορά στην κάρτα</string>
+    <!---->
+    <!--Donation types-->
+    <string name="donation">Δωρεά</string>
+    <string name="donation_fee">Τέλος δωρεάς</string>
+    <string name="donation_return">Επιστροφή δωρεάς</string>
+    <!---->
+    <!--Merchant payment types-->
+    <string name="merchant_payment">Πληρωμή εμπόρου</string>
+    <string name="merchant_payment_fee">Τέλος πληρωμής εμπόρου</string>
+    <string name="merchant_payment_refund">Επιστροφή χρημάτων πληρωμής εμπόρου</string>
+    <string name="merchant_payment_return">Επιστροφή πληρωμής εμπόρου</string>
+    <!---->
+    <!--MoneyGram types-->
+    <string name="moneygram_transfer_return">Επιστροφή MoneyGram</string>
+    <string name="transfer_to_moneygram">MoneyGram</string>
+    <!---->
+    <!--Paper check types-->
+    <string name="paper_check_fee">Τέλος επιταγής</string>
+    <string name="paper_check_refund">Επιστροφή επιταγής</string>
+    <string name="transfer_to_paper_check">Επιταγή</string>
+    <!---->
+    <!--User and program account types-->
+    <string name="account_closure">Κλείσιμο λογαριασμού</string>
+    <string name="account_closure_fee">Τέλος κλεισίματος λογαριασμού</string>
+    <string name="account_unload">Επιστροφή χρημάτων</string>
+    <string name="dormant_user_fee">Τέλος αδρανούς λογαριασμού χρήστη</string>
+    <string name="dormant_user_fee_refund">Επιστροφή τέλους αδρανούς λογαριασμού χρήστη</string>
+    <string name="payment">Πληρωμή</string>
+    <string name="payment_cancellation">Ακύρωση πληρωμής</string>
+    <string name="payment_reversal">Αντιστροφή πληρωμής</string>
+    <string name="payment_reversal_fee">Τέλος αντιστροφής πληρωμής</string>
+    <string name="payment_return">Επιστροφή πληρωμής</string>
+    <string name="transfer_to_program_account">Μεταφορά σε πρόγραμμα</string>
+    <string name="transfer_to_user">Μεταφορά σε χρήστη</string>
+    <string name="transfer_to_paypal_account">PayPal</string>
+    <string name="transfer_to_bank_card">Τραπεζική κάρτα</string>
+    <string name="transfer_to_debit_card">Χρεωστική κάρτα</string>
+    <string name="prepaid_card_transfer_return">Επιστροφή φόρτωσης προπληρωμής κάρτας</string>
+    <!---->
+    <!--Virtual incentive types-->
+    <string name="virtual_incentive_cancellation">Ακύρωση προώθησης</string>
+    <string name="virtual_incentive_issuance">Εκδοθείσα προώθηση</string>
+    <string name="virtual_incentive_purchase">Αγορά προώθησης</string>
+    <string name="virtual_incentive_refund">Επιστροφή χρημάτων προώθησης</string>
+    <!---->
+    <!--Western Union and WUBS types-->
+    <string name="transfer_to_western_union">Western Union</string>
+    <string name="transfer_to_wubs_wire">Έμβασμα</string>
+    <string name="western_union_transfer_return">Ανάληψη Western Union</string>
+    <string name="wubs_wire_transfer_return">Επιστροφή εμβάσματος</string>
+    <!---->
+    <!--Wire transfer types-->
+    <string name="transfer_to_wire">Έμβασμα</string>
+    <string name="wire_transfer_fee">Τέλος εμβάσματος</string>
+    <string name="wire_transfer_return">Επιστροφή εμβάσματος</string>
+
+    <!-- New exposed receipt types -->
+    <string name="paypal_account_transfer_return">Επιστροφή εκταμίευσης</string>
+    <string name="venmo_account_transfer_return">Επιστροφή εκταμίευσης</string>
+    <string name="prepaid_card_account_deposit">Κατάθεση λογαριασμού</string>
+    <string name="prepaid_card_annual_fee_discount">Έκπτωση ετήσιου τέλος</string>
+    <string name="prepaid_card_bill_reprint_fee">Τέλος ανατύπωσης λογαριασμού</string>
+    <string name="prepaid_card_atm_or_cash_advance_fee">Τέλος προκαταβολής μετρητών / μηχανήματος αυτόματης ανάληψης</string>
+    <string name="prepaid_card_cash_advance_chargeback">Επιστροφή χρέωσης προκαταβολής μετρητών</string>
+    <string name="prepaid_card_cash_advance_chargeback_reversal">Αντιστροφή επιστροφής χρέωσης προκαταβολής μετρητών</string>
+    <string name="prepaid_card_cash_advance_repress">Καταστολή προκαταβολής μετρητών</string>
+    <string name="prepaid_card_cash_advance_repress_reversal">Αντιστροφή καταστολής προκαταβολής</string>
+    <string name="prepaid_card_chargeback">Επιστροφή χρέωσης</string>
+    <string name="prepaid_card_chargeback_refund">Επιστροφή χρημάτων επιστροφής χρέωσης</string>
+    <string name="prepaid_card_chargeback_refund_reversal">Αντιστροφή επιστροφής χρημάτων επιστροφής χρέωσης</string>
+    <string name="prepaid_card_chargeback_reversal">Αντιστροφή επιστροφής χρέωσης</string>
+    <string name="prepaid_card_commission_or_fee">Τέλος/Προμήθεια</string>
+    <string name="prepaid_card_debit_transfer">Χρέωση/Μεταφορές</string>
+    <string name="prepaid_card_document_request_fee">Τέλος αιτήματος εγγράφου</string>
+    <string name="prepaid_card_emergency_cash">Χρήματα έκτακτης ανάγκης</string>
+    <string name="prepaid_card_emergency_card">Κάρτα έκτακτης ανάγκης</string>
+    <string name="prepaid_card_income">Εισόδημα</string>
+    <string name="prepaid_card_load_fee">Τέλος αριθμού κύριου λογαριασμού</string>
+    <string name="prepaid_card_refund_fee">Τέλος επιστροφής χρημάτων</string>
+    <string name="prepaid_card_monthly_maintenance_fee">Μηνιαίο τέλος συντήρησης</string>
+    <string name="prepaid_card_transaction_fee">Τέλος συναλλαγής</string>
+    <string name="prepaid_card_sms_fee">Τέλος SMS</string>
+    <string name="prepaid_card_declined_authorization_fee">Τέλος απορριφθείσας εξουσιοδότησης</string>
+    <string name="fispc">Αγορά</string>
+
+    <!-- Prepaid Cards Receipt   -->
+    <string name="mobileAvailableBalances">Διαθέσιμο ποσό</string>
+
+</resources>
