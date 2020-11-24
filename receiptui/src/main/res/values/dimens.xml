@@ -3,5 +3,5 @@
     <dimen name="ellipsis_spacing">10dp</dimen>
     <dimen name="item_text_top_bottom_margin">8dp</dimen>
     <dimen name="item_receipt_information_height">80dp</dimen>
-    <dimen name="receipt_tab_margin_top">32dp</dimen>
+    <dimen name="receipt_tab_margin_top">48dp</dimen>
 </resources>
