@@ -579,6 +579,22 @@ public class CreateTransferFragment extends Fragment {
                     public void onChanged(ArrayList<TransferSource> transferSources) {
                         if (transferSources.size() <= 1) {
                             mTransferSource.setOnClickListener(null);
+                        } else {
+                            mTransferSource.setOnClickListener(new OneClickListener() {
+                                @Override
+                                public void onOneClick(View v) {
+                                    TransferSource activeSource =
+                                            mCreateTransferViewModel.getTransferSelectedSource().getValue();
+                                    ArrayList<TransferSource> sourceList =
+                                            mCreateTransferViewModel.getTransferSources().getValue();
+                                    Intent intent = new Intent(requireContext(), ListTransferSourceActivity.class);
+                                    intent.putParcelableArrayListExtra(ListTransferSourceActivity.EXTRA_TRANSFER_SOURCE_LIST,
+                                            sourceList);
+                                    intent.putExtra(ListTransferSourceActivity.EXTRA_SELECTED_SOURCE_TOKEN,
+                                            activeSource.getToken());
+                                    startActivityForResult(intent, SELECT_TRANSFER_SOURCE_REQUEST_CODE);
+                                }
+                            });
                         }
                     }
                 });
