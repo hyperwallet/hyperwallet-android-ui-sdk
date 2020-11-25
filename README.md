@@ -31,6 +31,14 @@ When enabling Proguard, please add a rule in `proguard-rules.pro` file in your m
 -keep public class com.hyperwallet.android.model.** { *; }
 ```
 
+### Proguard
+
+When enabling Proguard, please add a rule in `proguard-rules.pro` file in your main app
+
+```properties
+-keep public class com.hyperwallet.android.** { *; }
+```
+
 ## Initialization
 
 After you're done installing the SDK, you need to initialize an instance in order to utilize UI SDK functions. Also you need to provide a  [HyperwalletAuthenticationTokenProvider](#Authentication) object to retrieve an authentication token.
@@ -322,6 +330,17 @@ Listed below are the names of these styles:
 | Widget.Hyperwallet.ProgressBar.Receipts | @style/Widget.AppCompat.ProgressBar |
 | TextAppearance.Hyperwallet.Positive | TextAppearance.MaterialComponents.Subtitle1 |
 | TextAppearance.Hyperwallet.Negative | TextAppearance.MaterialComponents.Subtitle1 |
+
+## Material Components Version and Theme
+Hyperwallet UI SDK supports Material Components Version `1.0.0`, if your App needs to use higher version it may lead to unexpected behavior around floating text hints if you are not using Bridge theme.
+As a workaround you may override the themes of UI SDK activities to use Bridge themes. An example below:
+
+```
+ <activity
+        android:name="com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity"
+        android:theme="@style/Theme.MaterialComponents.NoActionBar.Bridge"
+        tools:replace="android:theme" />
+```
 
 ## Error Handling
 In Hyperwallet UI SDK, we categorize HyperwalletException into three groups:
