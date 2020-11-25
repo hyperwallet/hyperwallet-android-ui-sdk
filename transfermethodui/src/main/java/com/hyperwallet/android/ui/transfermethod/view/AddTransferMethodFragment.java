@@ -564,6 +564,12 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                             .transferMethodCurrency(mCurrency)
                             .build();
                     break;
+                //Todo case paper check
+               /* mTransferMethod = new VenmoAccount.Builder()
+                        .transferMethodCountry(mCountry)
+                        .transferMethodCurrency(mCurrency)
+                        .build();
+                break;*/
                 default:
                     mTransferMethod = new TransferMethod();
                     mTransferMethod.setField(TRANSFER_METHOD_COUNTRY, mCountry);

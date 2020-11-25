@@ -80,6 +80,9 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
             case VENMO_ACCOUNT:
                 createVenmoAccount(transferMethod, callback);
                 break;
+            //Todo case paper_check
+           // createPaperCheck(transferMethod,callback);
+           // break;
             default: // error on unknown transfer type
                 callback.onError(getErrorsOnUnsupportedTransferType());
         }
@@ -170,6 +173,9 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
             case VENMO_ACCOUNT:
                 deactivateVenmoAccount(transferMethod, callback);
                 break;
+            //Todo case paper check
+           // deactivatePaperCheck(transferMethod,callback);
+           // break;
             default: // error on unknown transfer type
                 callback.onError(getErrorsOnUnsupportedTransferType());
         }
@@ -240,6 +246,28 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
 
     private void deactivateVenmoAccount(@NonNull final TransferMethod transferMethod,
                                         @NonNull final DeactivateTransferMethodCallback callback) {
+        getHyperwallet().deactivateVenmoAccount(transferMethod.getField(TOKEN), null,
+                new HyperwalletListener<StatusTransition>() {
+                    @Override
+                    public void onSuccess(@Nullable StatusTransition result) {
+                        callback.onTransferMethodDeactivated(result);
+                    }
+
+                    @Override
+                    public void onFailure(HyperwalletException exception) {
+                        callback.onError(exception.getErrors());
+                    }
+
+                    @Override
+                    public Handler getHandler() {
+                        return mHandler;
+                    }
+                });
+    }
+
+    private void deactivatePaperCheck(@NonNull final TransferMethod transferMethod,
+            @NonNull final DeactivateTransferMethodCallback callback) {
+        //Todo paper check
         getHyperwallet().deactivateVenmoAccount(transferMethod.getField(TOKEN), null,
                 new HyperwalletListener<StatusTransition>() {
                     @Override
@@ -347,6 +375,28 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
         });
     }
 
+    private void createPaperCheck(@NonNull final TransferMethod transferMethod,
+            @NonNull final LoadTransferMethodCallback callback) {
+        //TODO paper check
+        VenmoAccount venmoAccount = (VenmoAccount) transferMethod;
+
+        getHyperwallet().createVenmoAccount(venmoAccount, new HyperwalletListener<VenmoAccount>() {
+            @Override
+            public void onSuccess(@Nullable VenmoAccount result) {
+                callback.onTransferMethodLoaded(result);
+            }
+
+            @Override
+            public void onFailure(HyperwalletException exception) {
+                callback.onError(exception.getErrors());
+            }
+
+            @Override
+            public Handler getHandler() {
+                return mHandler;
+            }
+        });
+    }
     // Note: This way of surfacing error is not ideal but rather a workaround please have a look on other options,
     // before resulting into this pattern
     private Errors getErrorsOnUnsupportedTransferType() {

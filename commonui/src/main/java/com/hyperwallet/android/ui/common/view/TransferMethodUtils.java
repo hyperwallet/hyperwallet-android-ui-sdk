@@ -172,6 +172,7 @@ public class TransferMethodUtils {
             case VENMO_ACCOUNT:
                 return getFourDigitsIdentification(context, transferMethod, VENMO_ACCOUNT_ID,
                         R.string.endingIn);
+            //Todo case paper check
             default:
                 return "";
         }
