@@ -105,11 +105,11 @@ public class CurrencyParserTest {
     }
 
     @Test
-    public void testCurrencyDetails() {
+    public void testGetCurrency() {
         Context context = ApplicationProvider.getApplicationContext();
-        CurrencyDetails currency = CurrencyParser.getInstance(context).getCurrency("TND");
-        assertThat(currency.getSymbol(), is("د.ت"));
-        assertThat(currency.getDecimals(),is(3));
+        CurrencyDetails currencyDetails = CurrencyParser.getInstance(context).getCurrency("TND");
+        assertThat(currencyDetails.getSymbol(), is("د.ت"));
+        assertThat(currencyDetails.getDecimals(),is(3));
     }
 
     @Test
