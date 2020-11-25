@@ -37,6 +37,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            android:textDirection="ltr"
             tools:text="@string/foreign_exchange_sell_placeholder"/>
 
         <View
@@ -81,6 +82,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            android:textDirection="ltr"
             tools:text="@string/foreign_exchange_buy_placeholder"/>
 
         <View
