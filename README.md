@@ -28,14 +28,6 @@ api 'com.hyperwallet.android.ui:transferui:1.0.0-beta07'
 When enabling Proguard, please add a rule in `proguard-rules.pro` file in your main app
 
 ```properties
--keep public class com.hyperwallet.android.model.** { *; }
-```
-
-### Proguard
-
-When enabling Proguard, please add a rule in `proguard-rules.pro` file in your main app
-
-```properties
 -keep public class com.hyperwallet.android.** { *; }
 ```
 
