@@ -12,7 +12,7 @@
     <string name="transfer_currency_placeholder">ดอลลาร์สหรัฐ</string>
     <string name="transfer_currency_code_placeholder">$</string>
     <string name="transfer_all_funds_label">จำนวนเงินที่โอนได้สูงสุด</string>
-    <string name="mobileAvailableBalance">จำนวนเงินที่ใช้ได้: %s %s</string>
+    <string name="mobileAvailableBalance">จำนวนเงินที่ใช้ได้: %s %s %s</string>
     <string name="mobileSummaryLabel">สรุป</string>
     <string name="mobileNoteLabel">หมายเหตุ</string>
     <string name="transfer_notes_label">หมายเหตุ</string>
@@ -28,7 +28,6 @@
     <string name="destination_item_description">รายการปลายทาง</string>
 
     <string name="amount_currency_format">%s %s</string>
-    <string name="exchange_rate_format">1 %s = %s %s</string>
 
     <string name="module_transfermethodui_unavailable_error">คุณ\'ไม่สามารถเพิ่มวิธีการโอนเงินได้</string>
     <string name="transferAmountInvalid">ป้อนจำนวนเงินที่ต้องการโอนที่ถูกต้อง</string>

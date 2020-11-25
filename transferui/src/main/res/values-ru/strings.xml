@@ -12,7 +12,7 @@
     <string name="transfer_currency_placeholder">Долларов США</string>
     <string name="transfer_currency_code_placeholder">$</string>
     <string name="transfer_all_funds_label">Максимальная сумма перевода</string>
-    <string name="mobileAvailableBalance">Доступная сумма: %s %s</string>
+    <string name="mobileAvailableBalance">Доступная сумма: %s %s %s</string>
     <string name="mobileSummaryLabel">КРАТКАЯ ИНФОРМАЦИЯ</string>
     <string name="mobileNoteLabel">Примечание</string>
     <string name="transfer_notes_label">Примечание</string>
@@ -28,7 +28,6 @@
     <string name="destination_item_description">Позиция назначения</string>
 
     <string name="amount_currency_format">%s %s</string>
-    <string name="exchange_rate_format">1 %s = %s %s</string>
 
     <string name="module_transfermethodui_unavailable_error">Вы не можете добавить способ перевода.</string>
     <string name="transferAmountInvalid">Введите действительную сумму перевода</string>

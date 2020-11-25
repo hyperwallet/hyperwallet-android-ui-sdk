@@ -12,7 +12,7 @@
     <string name="transfer_currency_placeholder">USD</string>
     <string name="transfer_currency_code_placeholder">$</string>
     <string name="transfer_all_funds_label">En yüksek miktarı aktar</string>
-    <string name="mobileAvailableBalance">Mevcut miktar: %s %s</string>
+    <string name="mobileAvailableBalance">Mevcut miktar: %s %s %s</string>
     <string name="mobileSummaryLabel">ÖZET</string>
     <string name="mobileNoteLabel">Not</string>
     <string name="transfer_notes_label">Not</string>
@@ -28,7 +28,6 @@
     <string name="destination_item_description">Gideceği yer</string>
 
     <string name="amount_currency_format">%s %s</string>
-    <string name="exchange_rate_format">1 %s = %s %s</string>
 
     <string name="module_transfermethodui_unavailable_error">Bir\' aktarım yöntemi ekleyemediniz.</string>
     <string name="transferAmountInvalid">Geçerli bir aktarım tutarı gir</string>
