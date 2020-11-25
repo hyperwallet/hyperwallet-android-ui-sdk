@@ -28,7 +28,6 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
@@ -82,7 +81,6 @@ public class TabbedListReceiptsFragment extends Fragment {
         mViewPager = view.findViewById(R.id.receipts_pager);
         mTabLayout = view.findViewById(R.id.tab_layout);
         mHeader = view.findViewById(R.id.transactions_header);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.transactions);
     }
 
     void retry() {
