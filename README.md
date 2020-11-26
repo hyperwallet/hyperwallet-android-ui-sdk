@@ -31,14 +31,6 @@ When enabling Proguard, please add a rule in `proguard-rules.pro` file in your m
 -keep public class com.hyperwallet.android.** { *; }
 ```
 
-### Proguard
-
-When enabling Proguard, please add a rule in `proguard-rules.pro` file in your main app
-
-```properties
--keep public class com.hyperwallet.android.model.** { *; }
-```
-
 ## Initialization
 
 After you're done installing the SDK, you need to initialize an instance in order to utilize UI SDK functions. Also you need to provide a  [HyperwalletAuthenticationTokenProvider](#Authentication) object to retrieve an authentication token.
