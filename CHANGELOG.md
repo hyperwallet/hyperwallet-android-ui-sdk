@@ -1,6 +1,13 @@
 Changelog
 =========
 
+[1.0.0-beta07](https://github.com/hyperwallet/hyperwallet-android-ui-sdk/releases/tag/1.0.0-beta07)
+-------------------
+* Added Prepaid Card support
+* Added multiple languages support
+* Added currency formatting
+* UI Enhancements
+
 [1.0.0-beta06](https://github.com/hyperwallet/hyperwallet-android-ui-sdk/releases/tag/1.0.0-beta06)
 -------------------
 * Security fixes
