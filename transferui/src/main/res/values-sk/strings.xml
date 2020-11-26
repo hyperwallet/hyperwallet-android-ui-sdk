@@ -1,0 +1,70 @@
+<resources>
+    <string name="title_activity_create_transfer">Previesť prostriedky</string>
+    <string name="mobileConfirmationHeader">Potvrdenie údajov</string>
+    <string name="mobileConfirmNotesLabel">POZNÁMKA</string>
+    <string name="transfer_destination">Destinácia</string>
+    <string name="mobileTransferToLabel">PREVOD NA</string>
+    <string name="mobileTransferFundsHeader">Previesť prostriedky</string>
+    <string name="mobileFXlabel">ZAHRANIČNÁ MENA</string>
+    <string name="transfer_header_label">Prevod</string>
+    <string name="noTransferMethodAdded">Vyžaduje sa spôsob prevodu</string>
+    <string name="transfer_amount_hint">Suma</string>
+    <string name="transfer_currency_placeholder">USD</string>
+    <string name="transfer_currency_code_placeholder">$</string>
+    <string name="transfer_all_funds_label">Max. suma prevodu</string>
+    <string name="mobileAvailableBalance">Disponibilná suma: %s %s %s</string>
+    <string name="mobileSummaryLabel">ZHRNUTIE</string>
+    <string name="mobileNoteLabel">Poznámka</string>
+    <string name="transfer_notes_label">Poznámka</string>
+    <string name="transfer_notes_additional_info_label">Pridať poznámku (voliteľné)</string>
+    <string name="continueButtonLabel">Pokračovať</string>
+    <string name="defaultTransferAmount">0</string>
+    <string name="transfer">Prevod</string>
+    <string name="add_text">+</string>
+    <string name="mobileAddTransferMethod">Pridať spôsob prevodu</string>
+    <string name="add_transfer_description_1">Pridajte spôsob prevodu, aby ste mohli začať.</string>
+    <string name="add_transfer_description_2">Pridajte spôsob prevodu, aby ste mohli začať.</string>
+    <string name="transfer_destination_selection_description">Výber spôsobu prevodu</string>
+    <string name="destination_item_description">Položka destinácie</string>
+
+    <string name="amount_currency_format">%s %s</string>
+
+    <string name="module_transfermethodui_unavailable_error">Nemôžete pridať spôsob prevodu.</string>
+    <string name="transferAmountInvalid">Zadajte platnú sumu prevodu</string>
+
+    <string name="mobileFXsell">Od</string>
+    <string name="mobileFXbuy">Do</string>
+    <string name="mobileFXRateLabel">Výmenný kurz</string>
+
+    <string name="mobileConfirmDetailsAmount">Suma</string>
+    <string name="mobileConfirmDetailsFee">Poplatok</string>
+    <string name="mobileConfirmDetailsTotal">Dostanete</string>
+    <string name="exchange_rate_change_warning">Vzhľadom na zmeny výmenného kurzu dostanete %1$s %2$s.</string>
+
+
+    <string name="mobileTransferMax">Max. suma prevodu</string>
+    <string name="transfer_summary_placeholder">Disponibilná suma: 2 422,90 CAD</string>
+    <string name="transfer_notes_placeholder">Čiastočný prevod</string>
+    <string name="transfer_item_icon_placeholder">\ue000</string>
+    <string name="transfer_item_title_placeholder">Typ prevodu</string>
+    <string name="transfer_item_country_placeholder">Názov krajiny</string>
+    <string name="transfer_item_identification_placeholder">Úprava: XXXX</string>
+    <string name="foreign_exchange_sell_placeholder">15,05 CAD</string>
+    <string name="foreign_exchange_buy_placeholder">11,00 USD</string>
+    <string name="foreign_exchange_rate_placeholder">1 CAD = 0,73897 USD</string>
+    <string name="summary_amount_placeholder">10,00 CAD</string>
+    <string name="summary_amount_fee_placeholder">0,25 CAD</string>
+    <string name="summary_amount_transfer_placeholder">9,75 CAD</string>
+    <string name="exchange_rate_change_warning_placeholder">Vzhľadom na zmeny výmenného kurzu dostanete 10,00 CAD.</string>
+
+    <string name="mobileTransferSuccessMsg">Váš prevod sa spracováva</string>
+    <string name="mobileTransferSuccessDetails">Peniaze sú na ceste na váš účet %s</string>
+    <string name="doneButtonLabel">Hotovo</string>
+    <string name="mobileTransferMethodsHeader">Spôsoby prevodu</string>
+    <string name="mobileTransferFromLabel">PREVOD Z</string>
+    <string name="transferSource">Zdroj</string>
+    <string name="mobileTransferFromHeader">Prevod z</string>
+    <string name="availableFunds">Dostupné finančné prostriedky</string>
+    <string name="noTransferFromSourceAvailableError">Žiadny prevod z dostupného zdroja</string>
+
+</resources>

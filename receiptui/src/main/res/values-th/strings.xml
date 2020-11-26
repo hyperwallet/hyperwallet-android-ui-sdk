@@ -1,0 +1,168 @@
+<resources>
+    <string name="app_name">ใบเสร็จ</string>
+    <string name="title_activity_receipt_list">ธุรกรรม</string>
+    <string name="title_activity_receipt_detail">รายละเอียดธุรกรรม</string>
+    <string name="mobileTransactionDetailsHeader">รายละเอียดธุรกรรม</string>
+    <string name="transactions">ธุรกรรม</string>
+    <string name="mobileTransactionTypeLabel">ธุรกรรม</string>
+    <string name="mobileFeeInfoLabel">ข้อมูลค่าธรรมเนียม</string>
+    <string name="amount">จำนวนเงิน</string>
+    <string name="mobileFeeLabel">ค่าธรรมเนียม</string>
+    <string name="mobileTransactionDetailsTotal">ยอดรวมธุรกรรม</string>
+    <string name="mobileTransactionDetailsLabel">รายละเอียด</string>
+    <string name="mobileJournalNumberLabel">ID ใบเสร็จรับเงิน</string>
+    <string name="date">วันที่</string>
+    <string name="mobileMerchantTxnLabel">ID ธุรกรรม</string>
+    <string name="mobileConfirmNotesLabel">หมายเหตุ</string>
+    <string name="mobileCharityName">ชื่อการกุศล</string>
+    <string name="mobileCheckNumber">หมายเลขเช็ค</string>
+    <string name="mobilePromoWebsite">เว็บไซต์โปรโมชั่น</string>
+    <string name="concat_date_string_view_format">%s %s</string>
+
+    <string name="mobileNoTransactionsUser">ไม่มี\'กิจกรรมที่จะแสดง</string>
+    <string name="mobileNoTransactionsPrepaidCard">ไม่มีธุรกรรมใน 365 วันที่ผ่านมา</string>
+    <string name="title_transfer_funds">การโอนเงิน</string>
+    <string name="font_icon_placeholder">\ue908</string>
+    <string name="text_placeholder">พื้นที่ที่สำรองไว้</string>
+
+
+
+    <!--Generic fee types-->
+    <string name="unknown_type">ประเภทธุรกรรมที่ไม่รู้จัก</string>
+    <string name="annual_fee">ค่าธรรมเนียมรายปี</string>
+    <string name="annual_fee_refund">การคืนเงินค่าธรรมเนียมรายปี</string>
+    <string name="customer_service_fee">ค่าธรรมเนียมบริการลูกค้า</string>
+    <string name="customer_service_fee_refund">การคืนค่าธรรมเนียมบริการลูกค้า</string>
+    <string name="expedited_shipping_fee">ค่าธรรมเนียมการจัดส่งเร่งด่วน</string>
+    <string name="generic_fee_refund">การคืนเงินค่าธรรมเนียมทั่วไป</string>
+    <string name="monthly_fee">ค่าธรรมเนียมรายเดือน</string>
+    <string name="monthly_fee_refund">การคืนเงินค่าธรรมเนียมรายเดือน</string>
+    <string name="payment_expiry_fee">ค่าธรรมเนียมหมดอายุการชำระเงิน</string>
+    <string name="payment_fee">ค่าธรรมเนียมการชำระเงิน</string>
+    <string name="processing_fee">ค่าธรรมเนียมการดำเนินการ</string>
+    <string name="standard_shipping_fee">ค่าธรรมเนียมการขนส่งมาตรฐาน</string>
+    <string name="transfer_fee">ค่าธรรมเนียมการโอน</string>
+
+    <!--Generic payment types-->
+    <string name="adjustment">การปรับยอดคงเหลือ</string>
+    <string name="foreign_exchange">อัตราแลกเปลี่ยน</string>
+    <string name="deposit">การชำระเงิน</string>
+    <string name="manual_adjustment">การปรับปรุง</string>
+    <string name="payment_expiration">การชำระเงินที่หมดอายุ</string>
+
+    <!--Bank account-specific types-->
+    <string name="bank_account_transfer_fee">ค่าธรรมเนียมส่งคืนเข้าบัญชีธนาคาร</string>
+    <string name="bank_account_transfer_return">การส่งคืนเข้าบัญชีธนาคาร</string>
+    <string name="bank_account_transfer_return_fee">ค่าธรรมเนียมส่งคืนเข้าบัญชีธนาคาร</string>
+    <string name="transfer_to_bank_account">บัญชีธนาคาร</string>
+
+    <!--Card-specific types-->
+    <string name="card_activation_fee">ค่าธรรมเนียมการเปิดใช้บัตร</string>
+    <string name="card_activation_fee_waiver">การยกเว้นค่าธรรมเนียมการเปิดใช้บัตร</string>
+    <string name="card_fee">ค่าธรรมเนียมบัตร</string>
+    <string name="manual_transfer_to_prepaid_card">โอนไปยังบัตร</string>
+    <string name="prepaid_card_balance_inquiry_fee">ค่าธรรมเนียมการสอบถามยอดคงเหลือ</string>
+    <string name="prepaid_card_cash_advance">การเบิกถอนเงินสดล่วงหน้า</string>
+    <string name="prepaid_card_disputed_charge_refund">การคืนเงินที่เรียกเก็บเงินที่ถูกปฏิเสธ</string>
+    <string name="prepaid_card_dispute_deposit">การฝากเงินด้วยบัตรที่ถูกปฏิเสธ</string>
+    <string name="prepaid_card_domestic_cash_withdrawal_fee">การถอนเงินจาก ATM</string>
+    <string name="prepaid_card_exchange_rate_difference">PREPAID_CARD_EXCHANGE_RATE_DIFFERENCE
+    </string>
+    <string name="prepaid_card_manual_unload">โอนจากบัตร</string>
+    <string name="prepaid_card_overseas_cash_withdrawal_fee">การถอนเงินจาก ATM</string>
+    <string name="prepaid_card_pin_change_fee">ค่าธรรมเนียมการเปลี่ยน PIN</string>
+    <string name="prepaid_card_refund">การคืนเงิน</string>
+    <string name="prepaid_card_replacement_fee">ค่าธรรมเนียมการเปลี่ยนบัตร</string>
+    <string name="prepaid_card_sale">ธุรกรรม</string>
+    <string name="prepaid_card_sale_reversal">ธุรกรรมที่กลับรายการ</string>
+    <string name="prepaid_card_unload">โอนจากบัตร</string>
+    <string name="transfer_to_prepaid_card">โอนไปยังบัตร</string>
+    <!---->
+    <!--Donation types-->
+    <string name="donation">การบริจาค</string>
+    <string name="donation_fee">ค่าธรรมเนียมการบริจาค</string>
+    <string name="donation_return">การส่งคืนเงินบริจาค</string>
+    <!---->
+    <!--Merchant payment types-->
+    <string name="merchant_payment">การชำระเงินกับผู้ขาย</string>
+    <string name="merchant_payment_fee">ค่าธรรมเนียมการชำระเงินกับผู้ขาย</string>
+    <string name="merchant_payment_refund">การคืนเงินที่ชำระเงินกับผู้ขาย</string>
+    <string name="merchant_payment_return">การส่งคืนเงินที่ชำระเงินกับผู้ขาย</string>
+    <!---->
+    <!--MoneyGram types-->
+    <string name="moneygram_transfer_return">การส่งคืน MoneyGram</string>
+    <string name="transfer_to_moneygram">MoneyGram</string>
+    <!---->
+    <!--Paper check types-->
+    <string name="paper_check_fee">ค่าธรรมเนียมเช็ค</string>
+    <string name="paper_check_refund">การคืนเช็ค</string>
+    <string name="transfer_to_paper_check">เช็ค</string>
+    <!---->
+    <!--User and program account types-->
+    <string name="account_closure">การปิดบัญชี</string>
+    <string name="account_closure_fee">ค่าธรรมเนียมการปิดบัญชี</string>
+    <string name="account_unload">การส่งคืนเงิน</string>
+    <string name="dormant_user_fee">ค่าธรรมเนียมบัญชีผู้ใช้ที่ไม่มีการเคลื่อนไหว</string>
+    <string name="dormant_user_fee_refund">การคืนเงินค่าธรรมเนียมบัญชีผู้ใช้ที่ไม่มีการเคลื่อนไหว</string>
+    <string name="payment">การชำระเงิน</string>
+    <string name="payment_cancellation">การยกเลิกการชำระเงิน</string>
+    <string name="payment_reversal">การกลับรายการชำระเงิน</string>
+    <string name="payment_reversal_fee">ค่าธรรมเนียมการกลับรายการชำระเงิน</string>
+    <string name="payment_return">การส่งคืนการชำระเงิน</string>
+    <string name="transfer_to_program_account">โอนไปยังโปรแกรม</string>
+    <string name="transfer_to_user">โอนไปยังผู้ใช้</string>
+    <string name="transfer_to_paypal_account">PayPal</string>
+    <string name="transfer_to_bank_card">บัตรจากธนาคาร</string>
+    <string name="transfer_to_debit_card">บัตรเดบิต</string>
+    <string name="prepaid_card_transfer_return">การส่งคืนบัตรเติมที่โหลด</string>
+    <!---->
+    <!--Virtual incentive types-->
+    <string name="virtual_incentive_cancellation">การยกเลิกโปรโมชั่น</string>
+    <string name="virtual_incentive_issuance">โปรโมชั่นที่ออก</string>
+    <string name="virtual_incentive_purchase">การสั่งซื้อตามโปรโมชั่น</string>
+    <string name="virtual_incentive_refund">การคืนเงินตามราคาโปรโมชั่น</string>
+    <!---->
+    <!--Western Union and WUBS types-->
+    <string name="transfer_to_western_union">Western Union</string>
+    <string name="transfer_to_wubs_wire">โอนเงินผ่านธนาคาร</string>
+    <string name="western_union_transfer_return">การถอนเงินจาก Western Union</string>
+    <string name="wubs_wire_transfer_return">การส่งคืนการโอนเงินผ่านธนาคาร</string>
+    <!---->
+    <!--Wire transfer types-->
+    <string name="transfer_to_wire">โอนเงินผ่านธนาคาร</string>
+    <string name="wire_transfer_fee">ค่าธรรมเนียมการโอนเงินผ่านธนาคาร</string>
+    <string name="wire_transfer_return">การส่งคืนการโอนเงินผ่านธนาคาร</string>
+
+    <!-- New exposed receipt types -->
+    <string name="paypal_account_transfer_return">ยกเลิกการจ่ายเงินสด</string>
+    <string name="venmo_account_transfer_return">ยกเลิกการจ่ายเงินสด</string>
+    <string name="prepaid_card_account_deposit">การฝากเงินในบัญชี</string>
+    <string name="prepaid_card_annual_fee_discount">ส่วนลดค่าธรรมเนียมรายปี</string>
+    <string name="prepaid_card_bill_reprint_fee">ค่าธรรมเนียมการพิมพ์บิลซ้ำ</string>
+    <string name="prepaid_card_atm_or_cash_advance_fee">ค่าธรรมเนียม ATM/การเบิกเงินสดล่วงหน้า</string>
+    <string name="prepaid_card_cash_advance_chargeback">การขอคืนเงินสำหรับการเบิกเงินสดล่วงหน้า</string>
+    <string name="prepaid_card_cash_advance_chargeback_reversal">การกลับรายการคืนเงินสำหรับการเบิกเงินสดล่วงหน้า</string>
+    <string name="prepaid_card_cash_advance_repress">การระงับการเบิกเงินสดล่วงหน้า</string>
+    <string name="prepaid_card_cash_advance_repress_reversal">การกลับรายการระงับล่วงหน้า</string>
+    <string name="prepaid_card_chargeback">การขอคืนเงิน</string>
+    <string name="prepaid_card_chargeback_refund">การคืนเงินที่ขอคืน</string>
+    <string name="prepaid_card_chargeback_refund_reversal">การกลับรายการคืนเงินที่ขอคืน</string>
+    <string name="prepaid_card_chargeback_reversal">การกลับรายการขอคืนเงิน</string>
+    <string name="prepaid_card_commission_or_fee">ค่าธรรมเนียม/คอมมิชชัน</string>
+    <string name="prepaid_card_debit_transfer">หักโดยตรง/โอนเงิน</string>
+    <string name="prepaid_card_document_request_fee">ค่าธรรมเนียมการขอเอกสาร</string>
+    <string name="prepaid_card_emergency_cash">เงินฉุกเฉิน</string>
+    <string name="prepaid_card_emergency_card">บัตรฉุกเฉิน</string>
+    <string name="prepaid_card_income">รายได้</string>
+    <string name="prepaid_card_load_fee">ค่าธรรมเนียม PAN</string>
+    <string name="prepaid_card_refund_fee">ค่าธรรมเนียมการคืนเงิน</string>
+    <string name="prepaid_card_monthly_maintenance_fee">ค่าธรรมเนียมการบำรุงรักษารายเดือน</string>
+    <string name="prepaid_card_transaction_fee">ค่าธรรมเนียมการทำธุรกรรม</string>
+    <string name="prepaid_card_sms_fee">ค่าธรรมเนียม SMS</string>
+    <string name="prepaid_card_declined_authorization_fee">ค่าธรรมเนียมการอนุมัติที่ถูกปฏิเสธ</string>
+    <string name="fispc">การสั่งซื้อ</string>
+
+    <!-- Prepaid Cards Receipt   -->
+    <string name="mobileAvailableBalances">ยอดเงินที่ใช้ได้</string>
+
+</resources>

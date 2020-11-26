@@ -1,0 +1,79 @@
+<resources>
+    <string name="app_name">hyperwallet.ui</string>
+    <string name="title_account_add">Tambah Rekening</string>
+    <string name="unknown">Tidak diketahui</string>
+
+    <string name="title_activity_select_transfer_method">Pilih Metode Transfer</string>
+    <!-- SelectTransferMethodActivity -->
+    <string name="select_transfer_method_title">@string/title_activity_select_transfer_method
+    </string>
+
+    <string name="mobileCountryRegion">Negara/Wilayah</string>
+    <string name="mobileCurrencyLabel">Mata Uang</string>
+    <string name="mobileAddTransferMethodHeader">Tambahkan metode transfer</string>
+    <string name="title_activity_add_transfer_method">Tambahkan Metode Transfer</string>
+    <string name="title_add_bank_account">Rekening Bank</string>
+    <string name="title_add_bank_card">Kartu Debit</string>
+
+    <string name="error_exact_length_field">Panjang untuk kolom ini harus tepat %d.</string>
+    <string name="error_invalid_expiry_date">%s tidak valid.</string>
+    <string name="error_min_max_length_field">Panjang minimum untuk kolom ini adalah {0} dan panjang        maksimum adalah {1}.
+    </string>
+
+    <string name="createTransferMethodButtonLabel">Tambahkan Metode Transfer</string>
+    <string name="default_account_label">Rekening Standar</string>
+    <string name="default_account_sub_label">Pilih metode transfer standar</string>
+    <string name="api_expiry_date_format">BB/TT</string>
+
+    <string name="feeAndProcessingTimeInformation">Biaya %s \u2022 %s</string>
+    <string name="feeInformation">Biaya %s</string>
+
+    <string name="emptyStateAddTransferMethod">Tambahkan metode transfer untuk memulai.</string>
+
+    <!-- menu title -->
+    <string name="menu_transfer_funds">Transfer</string>
+
+    <!--Fee formatter-->
+    <string name="fee_flat_formatter">%1$s%2$s</string>
+    <string name="fee_percent_no_min_and_max_formatter">%1$s%%</string>
+    <string name="fee_percent_only_min_formatter">%1$s%% (Min:%2$s %3$s)</string>
+    <string name="fee_percent_only_max_formatter">%1$s%% (Maks:%2$s %3$s)</string>
+    <string name="fee_percent_formatter">%1$s%% (Min:%2$s %3$s, Maks:%2$s %4$s)</string>
+    <string name="fee_mix_no_min_and_max_formatter">%1$s%2$s + %3$s%%</string>
+    <string name="fee_mix_only_min_formatter">%1$s%2$s + %3$s%% (Min:%1$s %4$s)</string>
+    <string name="fee_mix_only_max_formatter">%1$s%2$s + %3$s%% (Maks:%1$s %4$s)</string>
+    <string name="fee_mix_formatter">%1$s%2$s + %3$s%% (Min:%1$s %4$s, Maks:%1$s %5$s)</string>
+
+    <string name="account_holder">INFORMASI PEMILIK REKENING</string>
+    <string name="account_information">INFORMASI REKENING: %s(%s)</string>
+    <string name="address">ALAMAT</string>
+    <string name="contact_information">INFORMASI KONTAK</string>
+    <string name="identification">IDENTIFIKASI</string>
+    <string name="intermediary_account">REKENING PERANTARA</string>
+    <string name="mobileFeesAndProcessingTime">BIAYA DAN WAKTU PEMROSESAN</string>
+
+    <string name="search_hint">Cari Petunjuk</string>
+    <string name="search_country">Cari Negara</string>
+    <string name="search_currency">Cari Mata Uang</string>
+    <string name="search_widget">Cari</string>
+
+    <string name="select_transfer_method_currency_button_description">Pilih tombol mata uang
+    </string>
+    <string name="select_transfer_method_country_button_description">Piih tombol negara</string>
+    <string name="selected_country_item_description">Item negara yang dipilih</string>
+    <string name="selected_currency_item_description">Item mata uang yang dipilih</string>
+    <string name="transfer_method_context_button_description">Tombol menu konteks</string>
+    <string name="item_select_description">Item yang dipilih</string>
+
+    <string name="error_unmapped_field">Kolom belum dipetakan, Hubungilah dukungan.</string>
+
+    <string name="country_placeholder">Kanada</string>
+    <string name="currency_placeholder">CAD</string>
+    <string name="feesAndProcessTimePlaceholder">Biaya $20,00 USD \u2022 1\-3 Hari Kerja </string>
+    <string name="mobileCountryCurrencyLabel">LOKASI DAN MATA UANG</string>
+    <string name="mobileTransferMethodLabel">METODE TRANSFER</string>
+    <string name="mobileTransferMethodsHeader">Metode transfer</string>
+
+    <string name="mobileRemoveEAconfirm">Hapus metode transfer</string>
+    <string name="prepaidCardManagementInfo" >"Login menggunakan peramban web untuk mengelola kartu Anda"</string>
+</resources>

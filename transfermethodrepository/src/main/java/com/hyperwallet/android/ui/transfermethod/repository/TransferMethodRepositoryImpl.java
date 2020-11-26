@@ -23,6 +23,7 @@ import static com.hyperwallet.android.model.transfermethod.TransferMethod.Transf
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.BANK_ACCOUNT;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.BANK_CARD;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.PAYPAL_ACCOUNT;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.VENMO_ACCOUNT;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.WIRE_ACCOUNT;
 
 import android.os.Handler;
@@ -43,6 +44,7 @@ import com.hyperwallet.android.model.transfermethod.BankCard;
 import com.hyperwallet.android.model.transfermethod.PayPalAccount;
 import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import com.hyperwallet.android.model.transfermethod.TransferMethodQueryParam;
+import com.hyperwallet.android.model.transfermethod.VenmoAccount;
 import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
 
 import java.util.Collections;
@@ -74,6 +76,9 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
                 break;
             case PAYPAL_ACCOUNT:
                 createPayPalAccount(transferMethod, callback);
+                break;
+            case VENMO_ACCOUNT:
+                createVenmoAccount(transferMethod, callback);
                 break;
             default: // error on unknown transfer type
                 callback.onError(getErrorsOnUnsupportedTransferType());
@@ -162,6 +167,9 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
             case PAYPAL_ACCOUNT:
                 deactivatePayPalAccount(transferMethod, callback);
                 break;
+            case VENMO_ACCOUNT:
+                deactivateVenmoAccount(transferMethod, callback);
+                break;
             default: // error on unknown transfer type
                 callback.onError(getErrorsOnUnsupportedTransferType());
         }
@@ -230,8 +238,29 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
                 });
     }
 
+    private void deactivateVenmoAccount(@NonNull final TransferMethod transferMethod,
+                                        @NonNull final DeactivateTransferMethodCallback callback) {
+        getHyperwallet().deactivateVenmoAccount(transferMethod.getField(TOKEN), null,
+                new HyperwalletListener<StatusTransition>() {
+                    @Override
+                    public void onSuccess(@Nullable StatusTransition result) {
+                        callback.onTransferMethodDeactivated(result);
+                    }
+
+                    @Override
+                    public void onFailure(HyperwalletException exception) {
+                        callback.onError(exception.getErrors());
+                    }
+
+                    @Override
+                    public Handler getHandler() {
+                        return mHandler;
+                    }
+                });
+    }
+
     private void createBankAccount(final TransferMethod transferMethod,
-            final LoadTransferMethodCallback callback) {
+                                   final LoadTransferMethodCallback callback) {
         BankAccount bankAccount = (BankAccount) transferMethod;
 
         getHyperwallet().createBankAccount(bankAccount, new HyperwalletListener<BankAccount>() {
@@ -275,12 +304,34 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
     }
 
     private void createPayPalAccount(@NonNull final TransferMethod transferMethod,
-            @NonNull final LoadTransferMethodCallback callback) {
+                                     @NonNull final LoadTransferMethodCallback callback) {
         PayPalAccount payPalAccount = (PayPalAccount) transferMethod;
 
         getHyperwallet().createPayPalAccount(payPalAccount, new HyperwalletListener<PayPalAccount>() {
             @Override
             public void onSuccess(@Nullable PayPalAccount result) {
+                callback.onTransferMethodLoaded(result);
+            }
+
+            @Override
+            public void onFailure(HyperwalletException exception) {
+                callback.onError(exception.getErrors());
+            }
+
+            @Override
+            public Handler getHandler() {
+                return mHandler;
+            }
+        });
+    }
+
+    private void createVenmoAccount(@NonNull final TransferMethod transferMethod,
+                                    @NonNull final LoadTransferMethodCallback callback) {
+        VenmoAccount venmoAccount = (VenmoAccount) transferMethod;
+
+        getHyperwallet().createVenmoAccount(venmoAccount, new HyperwalletListener<VenmoAccount>() {
+            @Override
+            public void onSuccess(@Nullable VenmoAccount result) {
                 callback.onTransferMethodLoaded(result);
             }
 

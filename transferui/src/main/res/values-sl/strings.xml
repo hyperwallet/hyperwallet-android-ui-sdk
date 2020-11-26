@@ -1,0 +1,70 @@
+<resources>
+    <string name="title_activity_create_transfer">Prenesi sredstva</string>
+    <string name="mobileConfirmationHeader">Potrdi podatke</string>
+    <string name="mobileConfirmNotesLabel">OPOMBA:</string>
+    <string name="transfer_destination">Namembni cilj</string>
+    <string name="mobileTransferToLabel">PRENOS V/DO</string>
+    <string name="mobileTransferFundsHeader">Prenesi sredstva</string>
+    <string name="mobileFXlabel">DEVIZNA SREDSTVA</string>
+    <string name="transfer_header_label">Prenos</string>
+    <string name="noTransferMethodAdded">Zahtevan je način prenosa</string>
+    <string name="transfer_amount_hint">Znesek</string>
+    <string name="transfer_currency_placeholder">USD</string>
+    <string name="transfer_currency_code_placeholder">$</string>
+    <string name="transfer_all_funds_label">Prenesi najvišji možni znesek</string>
+    <string name="mobileAvailableBalance">Znesek na voljo: %s %s %s</string>
+    <string name="mobileSummaryLabel">POVZETEK</string>
+    <string name="mobileNoteLabel">Opomba</string>
+    <string name="transfer_notes_label">Opomba</string>
+    <string name="transfer_notes_additional_info_label">Dodaj opombo (izbirno)</string>
+    <string name="continueButtonLabel">Nadaljuj</string>
+    <string name="defaultTransferAmount">0</string>
+    <string name="transfer">Prenos</string>
+    <string name="add_text">+</string>
+    <string name="mobileAddTransferMethod">Dodaj način prenosa</string>
+    <string name="add_transfer_description_1">Za začetek dodajte način prenosa.</string>
+    <string name="add_transfer_description_2">Za začetek dodajte način prenosa.</string>
+    <string name="transfer_destination_selection_description">Izbira načina prenosa</string>
+    <string name="destination_item_description">Postavka Namembni cilj</string>
+
+    <string name="amount_currency_format">%s %s</string>
+
+    <string name="module_transfermethodui_unavailable_error">Ne morete dodati načina prenosa.</string>
+    <string name="transferAmountInvalid">Vnesite veljavni znesek prenosa</string>
+
+    <string name="mobileFXsell">Od</string>
+    <string name="mobileFXbuy">Za</string>
+    <string name="mobileFXRateLabel">Menjalni tečaj</string>
+
+    <string name="mobileConfirmDetailsAmount">Znesek</string>
+    <string name="mobileConfirmDetailsFee">Pristojbina</string>
+    <string name="mobileConfirmDetailsTotal">Prejeli boste</string>
+    <string name="exchange_rate_change_warning">Zaradi sprememb v menjalnem tečaju boste zdaj prejeli %1$s%2$s.</string>
+
+
+    <string name="mobileTransferMax">Prenesi najvišji možni znesek</string>
+    <string name="transfer_summary_placeholder">Znesek na voljo:  2.422,90 CAD</string>
+    <string name="transfer_notes_placeholder">Delni prenos</string>
+    <string name="transfer_item_icon_placeholder">\ue000</string>
+    <string name="transfer_item_title_placeholder">Vrsta prenosa</string>
+    <string name="transfer_item_country_placeholder">Ime države</string>
+    <string name="transfer_item_identification_placeholder">Urejanje dne XXXX</string>
+    <string name="foreign_exchange_sell_placeholder">15,05 CAD</string>
+    <string name="foreign_exchange_buy_placeholder">11,00 USD</string>
+    <string name="foreign_exchange_rate_placeholder">1 CAD = 0,73897 USD</string>
+    <string name="summary_amount_placeholder">10,00 CAD</string>
+    <string name="summary_amount_fee_placeholder">0,25 CAD</string>
+    <string name="summary_amount_transfer_placeholder">9,75 CAD</string>
+    <string name="exchange_rate_change_warning_placeholder">Zaradi sprememb v menjalnem tečaju boste zdaj prejeli 10,00 CAD.</string>
+
+    <string name="mobileTransferSuccessMsg">Vaš prenos je v obdelavi</string>
+    <string name="mobileTransferSuccessDetails">Denar je na poti na vaš %s</string>
+    <string name="doneButtonLabel">Opravljeno</string>
+    <string name="mobileTransferMethodsHeader">Načini prenosa</string>
+    <string name="mobileTransferFromLabel">PRENOS OD</string>
+    <string name="transferSource">Vir</string>
+    <string name="mobileTransferFromHeader">Prenos od</string>
+    <string name="availableFunds">Sredstva na voljo</string>
+    <string name="noTransferFromSourceAvailableError">Prenos iz vira ni na voljo</string>
+
+</resources>

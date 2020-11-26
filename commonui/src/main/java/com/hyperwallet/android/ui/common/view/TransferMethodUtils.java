@@ -17,14 +17,17 @@
 package com.hyperwallet.android.ui.common.view;
 
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.BANK_ACCOUNT_ID;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.CARD_BRAND;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.CARD_NUMBER;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.EMAIL;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TYPE;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.VENMO_ACCOUNT_ID;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.BANK_ACCOUNT;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.BANK_CARD;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.PAPER_CHECK;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.PAYPAL_ACCOUNT;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.PREPAID_CARD;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.VENMO_ACCOUNT;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.WIRE_ACCOUNT;
 
 import android.content.Context;
@@ -126,6 +129,9 @@ public class TransferMethodUtils {
             case PAYPAL_ACCOUNT:
                 title = context.getString(R.string.paypal_account);
                 break;
+            case VENMO_ACCOUNT:
+                title = context.getString(R.string.venmo_account);
+                break;
             default:
                 title = transferMethodType.toLowerCase(Locale.ROOT) + context.getString(
                         R.string.not_translated_in_braces);
@@ -151,11 +157,11 @@ public class TransferMethodUtils {
 
         switch (type) {
             case BANK_CARD:
-            case PREPAID_CARD:
-                return getFourDigitsIdentification(context,
-                        transferMethod,
-                        CARD_NUMBER,
+                return getFourDigitsIdentification(context, transferMethod, CARD_NUMBER,
                         R.string.endingIn);
+            case PREPAID_CARD:
+                return getFourDigitsIdentificationWithCardBrand(context,
+                        transferMethod);
             case BANK_ACCOUNT:
             case WIRE_ACCOUNT:
                 return getFourDigitsIdentification(context, transferMethod, BANK_ACCOUNT_ID,
@@ -163,6 +169,9 @@ public class TransferMethodUtils {
             case PAYPAL_ACCOUNT:
                 final String email = transferMethod.getField(EMAIL);
                 return context.getString(R.string.to, email != null ? email : "");
+            case VENMO_ACCOUNT:
+                return getFourDigitsIdentification(context, transferMethod, VENMO_ACCOUNT_ID,
+                        R.string.endingIn);
             default:
                 return "";
         }
@@ -180,5 +189,20 @@ public class TransferMethodUtils {
                         : !TextUtils.isEmpty(transferIdentification) ? transferIdentification : "";
 
         return context.getString(stringResId, identificationText);
+    }
+
+    private static String getFourDigitsIdentificationWithCardBrand(@NonNull final Context context,
+            @NonNull final TransferMethod transferMethod) {
+        final String transferIdentification = transferMethod.getField(CARD_NUMBER);
+        final String cardBrandIdentification = transferMethod.getField(CARD_BRAND);
+        final String cardBrand = cardBrandIdentification != null ? getStringResourceByName(context,
+                cardBrandIdentification) : "";
+
+        final String identificationText =
+                !TextUtils.isEmpty(transferIdentification) && transferIdentification.length() > LAST_FOUR_DIGIT
+                        ? transferIdentification.substring(transferIdentification.length() - LAST_FOUR_DIGIT)
+                        : !TextUtils.isEmpty(transferIdentification) ? transferIdentification : "";
+
+        return cardBrand + "\u0020\u2022\u2022\u2022\u2022\u0020" + identificationText;
     }
 }

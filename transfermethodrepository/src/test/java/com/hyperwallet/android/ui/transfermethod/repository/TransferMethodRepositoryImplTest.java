@@ -6,6 +6,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.nullValue;
+import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.doAnswer;
@@ -36,6 +37,7 @@ import com.hyperwallet.android.model.transfermethod.BankCard;
 import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import com.hyperwallet.android.model.transfermethod.TransferMethodQueryParam;
 import com.hyperwallet.android.model.transfermethod.PayPalAccount;
+import com.hyperwallet.android.model.transfermethod.VenmoAccount;
 
 import org.hamcrest.Matchers;
 import org.junit.Before;
@@ -83,11 +85,21 @@ public class TransferMethodRepositoryImplTest {
     @Captor
     private ArgumentCaptor<PayPalAccount> mPayPalAccountArgumentCaptor;
     @Captor
+    private ArgumentCaptor<VenmoAccount> mVenmoAccountArgumentCaptor;
+    @Captor
     private ArgumentCaptor<StatusTransition> mStatusTransitionArgumentCaptor;
     @Captor
     private ArgumentCaptor<List<TransferMethod>> mListTransferMethodCaptor;
     @Captor
     private ArgumentCaptor<TransferMethodQueryParam> mQueryParamCaptor;
+
+    private static final String COUNTRY_US = "US";
+    private static final String CURRENCY_USD = "USD";
+    private static final String VENMO_ACCOUNT_ID = "1234567898";
+    private static final String TEST_MESSAGE = "Test Message";
+    private static final String TEST_CODE = "TEST_CODE";
+    private static final String TEST_TOKEN = "test-fake-token";
+    private static final String NOTES_CLOSING_ACCOUNT = "Closing this account.";
 
     @Before
     public void setup() {
@@ -132,10 +144,10 @@ public class TransferMethodRepositoryImplTest {
     @Test
     public void testCreateTransferMethod_bankAccountWithError() {
         BankAccount bankAccount = new BankAccount
-                .Builder("US", "USD", "23432432")
+                .Builder(COUNTRY_US, CURRENCY_USD, "23432432")
                 .build();
 
-        final Error error = new Error("test message", "TEST_CODE");
+        final Error error = new Error(TEST_MESSAGE, TEST_CODE);
 
         doAnswer(new Answer() {
             @Override
@@ -162,7 +174,7 @@ public class TransferMethodRepositoryImplTest {
     @Test
     public void testCreateTransferMethod_withUnsupportedTransferMethodType() {
         BankAccount bankAccount = new BankAccount
-                .Builder("US", "USD", "23432432")
+                .Builder(COUNTRY_US, CURRENCY_USD, "23432432")
                 .transferMethodType("UNKNOWN_TRANSFER_TYPE")
                 .build();
 
@@ -181,7 +193,7 @@ public class TransferMethodRepositoryImplTest {
     public void testDeactivateTransferMethod_bankAccountWithSuccess() {
         BankAccount bankAccount = new BankAccount
                 .Builder("CA", "CAD", "3423423432")
-                .token("test-fake-token")
+                .token(TEST_TOKEN)
                 .build();
         bankAccount.setField(STATUS, StatusTransition.StatusDefinition.ACTIVATED);
         doAnswer(new Answer() {
@@ -189,7 +201,7 @@ public class TransferMethodRepositoryImplTest {
             public Object answer(InvocationOnMock invocation) {
                 StatusTransition statusTransition = new StatusTransition.Builder()
                         .transition(DE_ACTIVATED)
-                        .notes("Closing this account.").build();
+                        .notes(NOTES_CLOSING_ACCOUNT).build();
                 HyperwalletListener listener = (HyperwalletListener) invocation.getArguments()[2];
                 listener.onSuccess(statusTransition);
                 return listener;
@@ -207,17 +219,17 @@ public class TransferMethodRepositoryImplTest {
         StatusTransition statusTransition = mStatusTransitionArgumentCaptor.getValue();
         assertThat(statusTransition, is(notNullValue()));
         assertThat(statusTransition.getTransition(), is(DE_ACTIVATED));
-        assertThat(statusTransition.getNotes(), is("Closing this account."));
+        assertThat(statusTransition.getNotes(), is(NOTES_CLOSING_ACCOUNT));
     }
 
     @Test
     public void testDeactivateTransferMethod_bankAccountWithError() {
         BankAccount bankAccount = new BankAccount
                 .Builder("CA", "CAD", "3423423432")
-                .token("test-fake-token")
+                .token(TEST_TOKEN)
                 .build();
         bankAccount.setField(STATUS, StatusTransition.StatusDefinition.ACTIVATED);
-        final Error error = new Error("test message", "TEST_CODE");
+        final Error error = new Error(TEST_MESSAGE, TEST_CODE);
         doAnswer(new Answer() {
             @Override
             public Object answer(InvocationOnMock invocation) {
@@ -244,8 +256,8 @@ public class TransferMethodRepositoryImplTest {
     @Test
     public void testDeactivateTransferMethod_withUnsupportedTransferMethodType() {
         BankAccount bankAccount = new BankAccount
-                .Builder("US", "USD", "23432432")
-                .token("test-fake-token")
+                .Builder(COUNTRY_US, CURRENCY_USD, "23432432")
+                .token(TEST_TOKEN)
                 .transferMethodType("UNKNOWN_TRANSFER_TYPE")
                 .build();
         bankAccount.setField(STATUS, StatusTransition.StatusDefinition.ACTIVATED);
@@ -265,7 +277,7 @@ public class TransferMethodRepositoryImplTest {
     public void testDeactivateTransferMethod_bankCardWithSuccess() {
         BankCard bankCard = new BankCard
                 .Builder("CA", "CAD", "1232345456784", "2019-05", "234")
-                .token("test-fake-token")
+                .token(TEST_TOKEN)
                 .build();
         bankCard.setField(STATUS, StatusTransition.StatusDefinition.ACTIVATED);
         doAnswer(new Answer() {
@@ -273,7 +285,7 @@ public class TransferMethodRepositoryImplTest {
             public Object answer(InvocationOnMock invocation) {
                 StatusTransition statusTransition = new StatusTransition.Builder()
                         .transition(DE_ACTIVATED)
-                        .notes("Closing this account.").build();
+                        .notes(NOTES_CLOSING_ACCOUNT).build();
                 HyperwalletListener listener = (HyperwalletListener) invocation.getArguments()[2];
                 listener.onSuccess(statusTransition);
                 return listener;
@@ -291,17 +303,17 @@ public class TransferMethodRepositoryImplTest {
         StatusTransition statusTransition = mStatusTransitionArgumentCaptor.getValue();
         assertThat(statusTransition, is(notNullValue()));
         assertThat(statusTransition.getTransition(), is(DE_ACTIVATED));
-        assertThat(statusTransition.getNotes(), is("Closing this account."));
+        assertThat(statusTransition.getNotes(), is(NOTES_CLOSING_ACCOUNT));
     }
 
     @Test
     public void testDeactivateTransferMethod_bankCardWithError() {
         BankCard bankCard = new BankCard
                 .Builder("CA", "CAD", "1232345456784", "2019-05", "234")
-                .token("test-fake-token")
+                .token(TEST_TOKEN)
                 .build();
         bankCard.setField(STATUS, StatusTransition.StatusDefinition.ACTIVATED);
-        final Error error = new Error("test message", "TEST_CODE");
+        final Error error = new Error(TEST_MESSAGE, TEST_CODE);
         doAnswer(new Answer() {
             @Override
             public Object answer(InvocationOnMock invocation) {
@@ -327,14 +339,14 @@ public class TransferMethodRepositoryImplTest {
 
     @Test
     public void testDeactivateTransferMethod_payPalAccountWithSuccess() {
-        PayPalAccount payPalAccount = new PayPalAccount.Builder("US", "US", "jsmith4@hyperwallet.com")
-                .token("test-fake-token").build();
+        PayPalAccount payPalAccount = new PayPalAccount.Builder(COUNTRY_US, COUNTRY_US, "jsmith4@hyperwallet.com")
+                .token(TEST_TOKEN).build();
         doAnswer(new Answer() {
             @Override
             public Object answer(InvocationOnMock invocation) {
                 StatusTransition statusTransition = new StatusTransition.Builder()
                         .transition(DE_ACTIVATED)
-                        .notes("Closing this account.").build();
+                        .notes(NOTES_CLOSING_ACCOUNT).build();
                 HyperwalletListener listener = (HyperwalletListener) invocation.getArguments()[2];
                 listener.onSuccess(statusTransition);
                 return listener;
@@ -352,15 +364,15 @@ public class TransferMethodRepositoryImplTest {
         StatusTransition statusTransition = mStatusTransitionArgumentCaptor.getValue();
         assertThat(statusTransition, is(notNullValue()));
         assertThat(statusTransition.getTransition(), is(DE_ACTIVATED));
-        assertThat(statusTransition.getNotes(), is("Closing this account."));
+        assertThat(statusTransition.getNotes(), is(NOTES_CLOSING_ACCOUNT));
     }
 
     @Test
     public void testDeactivateTransferMethod_payPalAccountWithError() {
-        PayPalAccount payPalAccount = new PayPalAccount.Builder("US", "US", "jsmith4@hyperwallet.com")
-                .token("test-fake-token").build();
+        PayPalAccount payPalAccount = new PayPalAccount.Builder(COUNTRY_US, COUNTRY_US, "jsmith4@hyperwallet.com")
+                .token(TEST_TOKEN).build();
         payPalAccount.setField(STATUS, StatusTransition.StatusDefinition.ACTIVATED);
-        final Error error = new Error("test message", "TEST_CODE");
+        final Error error = new Error(TEST_MESSAGE, TEST_CODE);
         doAnswer(new Answer() {
             @Override
             public Object answer(InvocationOnMock invocation) {
@@ -384,6 +396,58 @@ public class TransferMethodRepositoryImplTest {
         assertThat(mErrorsArgumentCaptor.getValue().getErrors(), hasItem(error));
     }
 
+    @Test
+    public void deactivateTransferMethod_venmoAccountWithSuccess() {
+        final VenmoAccount venmoAccount = buildVenmoAccount();
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                StatusTransition statusTransition = new StatusTransition.Builder()
+                        .transition(DE_ACTIVATED)
+                        .notes(NOTES_CLOSING_ACCOUNT).build();
+                HyperwalletListener listener = (HyperwalletListener) invocation.getArguments()[2];
+                listener.onSuccess(statusTransition);
+                return listener;
+            }
+        }).when(mHyperwallet).deactivateVenmoAccount(anyString(), (String) isNull(), any(HyperwalletListener.class));
+
+        mTransferMethodRepository.deactivateTransferMethod(venmoAccount, mDeactivateTransferMethodCallback);
+
+        verify(mDeactivateTransferMethodCallback).onTransferMethodDeactivated(
+                mStatusTransitionArgumentCaptor.capture());
+        verify(mDeactivateTransferMethodCallback, never()).onError(any(Errors.class));
+
+        StatusTransition statusTransition = mStatusTransitionArgumentCaptor.getValue();
+        assertThat(statusTransition, is(notNullValue()));
+        assertThat(statusTransition.getTransition(), is(DE_ACTIVATED));
+        assertThat(statusTransition.getNotes(), is(NOTES_CLOSING_ACCOUNT));
+    }
+
+    @Test
+    public void deactivateTransferMethod_venmoAccountWithError() {
+        final VenmoAccount venmoAccount = buildVenmoAccount();
+        venmoAccount.setField(STATUS, StatusTransition.StatusDefinition.ACTIVATED);
+        final Error error = new Error(TEST_MESSAGE, TEST_CODE);
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                HyperwalletListener listener = (HyperwalletListener) invocation.getArguments()[2];
+                List<Error> errorList = new ArrayList<>();
+                errorList.add(error);
+                Errors errors = new Errors(errorList);
+                listener.onFailure(new HyperwalletException(errors));
+                return listener;
+            }
+        }).when(mHyperwallet).deactivateVenmoAccount(anyString(), (String) isNull(), any(HyperwalletListener.class));
+
+        // Deactivate
+        mTransferMethodRepository.deactivateTransferMethod(venmoAccount, mDeactivateTransferMethodCallback);
+
+        verify(mDeactivateTransferMethodCallback, never()).onTransferMethodDeactivated(
+                any(StatusTransition.class));
+        verify(mDeactivateTransferMethodCallback).onError(mErrorsArgumentCaptor.capture());
+        assertThat(mErrorsArgumentCaptor.getValue().getErrors(), hasItem(error));
+    }
 
     @Test
     public void testCreateTransferMethod_bankCardWithSuccess() {
@@ -507,7 +571,7 @@ public class TransferMethodRepositoryImplTest {
 
     @Test
     public void testLoadTransferMethod_withError() {
-        final Error error = new Error("test message", "TEST_CODE");
+        final Error error = new Error(TEST_MESSAGE, TEST_CODE);
 
         doAnswer(new Answer() {
             @Override
@@ -539,7 +603,7 @@ public class TransferMethodRepositoryImplTest {
                     .Builder("CA", "CAD", "3423423432")
                     .build());
             add(new BankAccount
-                    .Builder("US", "USD", "1231231222")
+                    .Builder(COUNTRY_US, CURRENCY_USD, "1231231222")
                     .build());
         }};
 
@@ -592,7 +656,7 @@ public class TransferMethodRepositoryImplTest {
 
     @Test
     public void testLoadLatestTransferMethod_withError() {
-        final Error error = new Error("test message", "TEST_CODE");
+        final Error error = new Error(TEST_MESSAGE, TEST_CODE);
 
         doAnswer(new Answer() {
             @Override
@@ -620,8 +684,8 @@ public class TransferMethodRepositoryImplTest {
     public void testCreateTransferMethod_payPalAccountWithSuccess() {
         // prepare
         final PayPalAccount returnedPayPalAccount = new PayPalAccount.Builder()
-                .transferMethodCurrency("USD")
-                .transferMethodCountry("US")
+                .transferMethodCurrency(CURRENCY_USD)
+                .transferMethodCountry(COUNTRY_US)
                 .email("money@mail.com")
                 .token("trm-token-1342242314")
                 .build();
@@ -649,8 +713,8 @@ public class TransferMethodRepositoryImplTest {
         // assert
         PayPalAccount payPalAccount = mPayPalAccountArgumentCaptor.getValue();
         assertThat(payPalAccount, is(notNullValue()));
-        assertThat(payPalAccount.getCountry(), is("US"));
-        assertThat(payPalAccount.getCurrency(), is("USD"));
+        assertThat(payPalAccount.getCountry(), is(COUNTRY_US));
+        assertThat(payPalAccount.getCurrency(), is(CURRENCY_USD));
         assertThat(payPalAccount.getEmail(), is("money@mail.com"));
         assertThat(payPalAccount.getField(STATUS), is(ACTIVATED));
         assertThat(payPalAccount.getField(TOKEN), is("trm-token-1342242314"));
@@ -688,9 +752,62 @@ public class TransferMethodRepositoryImplTest {
     }
 
     @Test
+    public void createTransferMethod_venmoAccountWithSuccess() {
+        final VenmoAccount returnedVenmoAccount = buildVenmoAccount();
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                HyperwalletListener listener = (HyperwalletListener) invocation.getArguments()[1];
+                returnedVenmoAccount.setField(STATUS, ACTIVATED);
+                listener.onSuccess(returnedVenmoAccount);
+                return listener;
+            }
+        }).when(mHyperwallet).createVenmoAccount(any(VenmoAccount.class), any(HyperwalletListener.class));
+
+        VenmoAccount parameter = new VenmoAccount.Builder().build();
+
+        mTransferMethodRepository.createTransferMethod(parameter, mLoadTransferMethodCallback);
+
+        verify(mLoadTransferMethodCallback).onTransferMethodLoaded(mVenmoAccountArgumentCaptor.capture());
+        verify(mLoadTransferMethodCallback, never()).onError(any(Errors.class));
+
+        VenmoAccount venmoAccount = mVenmoAccountArgumentCaptor.getValue();
+        assertThat(venmoAccount, is(notNullValue()));
+        assertThat(venmoAccount.getCountry(), is(COUNTRY_US));
+        assertThat(venmoAccount.getCurrency(), is(CURRENCY_USD));
+        assertThat(venmoAccount.getAccountId(), is(VENMO_ACCOUNT_ID));
+        assertThat(venmoAccount.getField(STATUS), is(ACTIVATED));
+        assertThat(venmoAccount.getField(TOKEN), is(TEST_TOKEN));
+    }
+
+    @Test
+    public void createTransferMethod_venmoAccountWithError() {
+        final Error returnedError = new Error(TEST_MESSAGE, TEST_CODE);
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                HyperwalletListener listener = (HyperwalletListener) invocation.getArguments()[1];
+
+                List<Error> errorList = new ArrayList<>();
+                errorList.add(returnedError);
+
+                listener.onFailure(new HyperwalletException(new Errors(errorList)));
+                return listener;
+            }
+        }).when(mHyperwallet).createVenmoAccount(any(VenmoAccount.class), any(HyperwalletListener.class));
+        VenmoAccount parameter = new VenmoAccount.Builder().build();
+
+        mTransferMethodRepository.createTransferMethod(parameter, mLoadTransferMethodCallback);
+
+        verify(mLoadTransferMethodCallback, never()).onTransferMethodLoaded(any(TransferMethod.class));
+        verify(mLoadTransferMethodCallback).onError(mErrorsArgumentCaptor.capture());
+        assertThat(mErrorsArgumentCaptor.getValue().getErrors(), hasItem(returnedError));
+    }
+
+    @Test
     public void testCreateTransferMethod_wireAccountWithSuccess() {
         BankAccount bankAccount = new BankAccount
-                .Builder("US", "USD", "1411413412")
+                .Builder(COUNTRY_US, CURRENCY_USD, "1411413412")
                 .transferMethodType(TransferMethod.TransferMethodTypes.WIRE_ACCOUNT)
                 .build();
 
@@ -699,7 +816,7 @@ public class TransferMethodRepositoryImplTest {
             public Object answer(InvocationOnMock invocation) {
                 HyperwalletListener listener = (HyperwalletListener) invocation.getArguments()[1];
                 BankAccount returnedBank = new BankAccount
-                        .Builder("US", "USD", "1411413412")
+                        .Builder(COUNTRY_US, CURRENCY_USD, "1411413412")
                         .bankName("Mock Bank Response")
                         .transferMethodType(TransferMethod.TransferMethodTypes.WIRE_ACCOUNT)
                         .build();
@@ -719,8 +836,8 @@ public class TransferMethodRepositoryImplTest {
         assertThat(transferMethod, is(notNullValue()));
         assertThat(transferMethod.getField(TYPE), is(TransferMethod.TransferMethodTypes.WIRE_ACCOUNT));
         assertThat(transferMethod.getField(BANK_NAME), is("Mock Bank Response"));
-        assertThat(transferMethod.getField(TRANSFER_METHOD_COUNTRY), is("US"));
-        assertThat(transferMethod.getField(TRANSFER_METHOD_CURRENCY), is("USD"));
+        assertThat(transferMethod.getField(TRANSFER_METHOD_COUNTRY), is(COUNTRY_US));
+        assertThat(transferMethod.getField(TRANSFER_METHOD_CURRENCY), is(CURRENCY_USD));
         assertThat(transferMethod.getField(BANK_ACCOUNT_ID), is("1411413412"));
     }
 
@@ -737,7 +854,7 @@ public class TransferMethodRepositoryImplTest {
             public Object answer(InvocationOnMock invocation) {
                 StatusTransition statusTransition = new StatusTransition.Builder()
                         .transition(DE_ACTIVATED)
-                        .notes("Closing this account.").build();
+                        .notes(NOTES_CLOSING_ACCOUNT).build();
                 HyperwalletListener listener = (HyperwalletListener) invocation.getArguments()[2];
                 listener.onSuccess(statusTransition);
                 return listener;
@@ -755,7 +872,7 @@ public class TransferMethodRepositoryImplTest {
         StatusTransition statusTransition = mStatusTransitionArgumentCaptor.getValue();
         assertThat(statusTransition, is(notNullValue()));
         assertThat(statusTransition.getTransition(), is(DE_ACTIVATED));
-        assertThat(statusTransition.getNotes(), is("Closing this account."));
+        assertThat(statusTransition.getNotes(), is(NOTES_CLOSING_ACCOUNT));
     }
 
     @Test
@@ -781,5 +898,14 @@ public class TransferMethodRepositoryImplTest {
         assertThat(mQueryParamCaptor.getValue().getLimit(), is(100));
         assertThat(mQueryParamCaptor.getValue().getStatus(), is(ACTIVATED));
         assertThat(mQueryParamCaptor.getValue().getSortBy(), is("-createdOn"));
+    }
+
+    private VenmoAccount buildVenmoAccount() {
+        return new VenmoAccount.Builder()
+                .transferMethodCurrency(CURRENCY_USD)
+                .transferMethodCountry(COUNTRY_US)
+                .accountId(VENMO_ACCOUNT_ID)
+                .token(TEST_TOKEN)
+                .build();
     }
 }

@@ -1,5 +1,6 @@
 package com.hyperwallet.android.ui.common.view;
 
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.VENMO_ACCOUNT;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -23,6 +24,7 @@ import com.hyperwallet.android.model.transfermethod.BankAccount;
 import com.hyperwallet.android.model.transfermethod.BankCard;
 import com.hyperwallet.android.model.transfermethod.PayPalAccount;
 import com.hyperwallet.android.model.transfermethod.TransferMethod;
+import com.hyperwallet.android.model.transfermethod.VenmoAccount;
 import com.hyperwallet.android.ui.common.R;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
 
@@ -155,6 +157,18 @@ public class TransferMethodUtilsTest {
 
         String actual = getTransferMethodDetail(mContext, transferMethod, PAYPAL_ACCOUNT);
         assertThat(actual, is("to sunshine.carreiro@hyperwallet.com"));
+    }
+
+    @Test
+    public void getTransferMethodDetail_returnsVenmoDetails() {
+        TransferMethod transferMethod = new VenmoAccount.Builder()
+                .accountId("1234567898").build();
+
+        when(mContext.getString(ArgumentMatchers.eq(R.string.endingIn),
+                eq("7898"))).thenReturn("Ending in 7898");
+
+        String actual = getTransferMethodDetail(mContext, transferMethod, VENMO_ACCOUNT);
+        assertThat(actual, is("Ending in 7898"));
     }
 
     @Test

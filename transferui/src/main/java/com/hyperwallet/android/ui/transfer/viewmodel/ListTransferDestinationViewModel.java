@@ -16,6 +16,9 @@
  */
 package com.hyperwallet.android.ui.transfer.viewmodel;
 
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TYPE;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.PREPAID_CARD;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -29,6 +32,8 @@ import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodReposi
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
+import java.util.Objects;
 
 /**
  * List Transfer Destination ViewModel
@@ -43,6 +48,7 @@ public class ListTransferDestinationViewModel extends ViewModel {
     private final TransferMethodRepository mTransferMethodRepository;
 
     private boolean mIsInitialized;
+    private boolean mIsSourcePrepaidCard;
 
     ListTransferDestinationViewModel(@NonNull final TransferMethodRepository repository) {
         mTransferMethodRepository = repository;
@@ -53,6 +59,10 @@ public class ListTransferDestinationViewModel extends ViewModel {
             mIsInitialized = true;
             loadTransferDestinationList();
         }
+    }
+
+    public void setIsSourcePrepaidCard(boolean isSourcePrepaidCard) {
+        mIsSourcePrepaidCard = isSourcePrepaidCard;
     }
 
     public void selectedTransferDestination(@NonNull final TransferMethod transferMethod) {
@@ -103,6 +113,14 @@ public class ListTransferDestinationViewModel extends ViewModel {
             @Override
             public void onTransferMethodListLoaded(List<TransferMethod> transferMethods) {
                 if (transferMethods != null) {
+                    if (mIsSourcePrepaidCard) {
+                        ListIterator<TransferMethod> transferMethod = transferMethods.listIterator();
+                        while (transferMethod.hasNext()) {
+                            if (Objects.equals(transferMethod.next().getField(TYPE), PREPAID_CARD)) {
+                                transferMethod.remove();
+                            }
+                        }
+                    }
                     mTransferDestinationList.postValue(transferMethods);
                 } else {
                     mTransferDestinationList.setValue(new ArrayList<TransferMethod>());

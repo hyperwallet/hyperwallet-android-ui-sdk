@@ -1,0 +1,70 @@
+<resources>
+    <string name="title_activity_create_transfer">Transferați fonduri</string>
+    <string name="mobileConfirmationHeader">Confirmați detaliile</string>
+    <string name="mobileConfirmNotesLabel">NOTĂ</string>
+    <string name="transfer_destination">Destinație</string>
+    <string name="mobileTransferToLabel">TRANSFER CĂTRE</string>
+    <string name="mobileTransferFundsHeader">Transferați fonduri</string>
+    <string name="mobileFXlabel">CURS VALUTAR</string>
+    <string name="transfer_header_label">Transfer</string>
+    <string name="noTransferMethodAdded">Este necesară o metodă de transfer</string>
+    <string name="transfer_amount_hint">Suma</string>
+    <string name="transfer_currency_placeholder">USD</string>
+    <string name="transfer_currency_code_placeholder">$</string>
+    <string name="transfer_all_funds_label">Suma maximă de transfer</string>
+    <string name="mobileAvailableBalance">Sumă disponibilă: %s %s %s</string>
+    <string name="mobileSummaryLabel">SUMAR</string>
+    <string name="mobileNoteLabel">Notă</string>
+    <string name="transfer_notes_label">Notă</string>
+    <string name="transfer_notes_additional_info_label">Adăugați o notă (opțional)</string>
+    <string name="continueButtonLabel">Continuați</string>
+    <string name="defaultTransferAmount">0</string>
+    <string name="transfer">Transfer</string>
+    <string name="add_text">+</string>
+    <string name="mobileAddTransferMethod">Adăugați metoda de transfer</string>
+    <string name="add_transfer_description_1">Adăugați o metodă de transfer pentru a începe.</string>
+    <string name="add_transfer_description_2">Adăugați o metodă de transfer pentru a începe.</string>
+    <string name="transfer_destination_selection_description">Selecție metodă de transfer</string>
+    <string name="destination_item_description">Element de destinație</string>
+
+    <string name="amount_currency_format">%s %s</string>
+
+    <string name="module_transfermethodui_unavailable_error">Nu puteți adăuga o metodă de transfer.</string>
+    <string name="transferAmountInvalid">Introduceți o sumă de transfer validă</string>
+
+    <string name="mobileFXsell">De la</string>
+    <string name="mobileFXbuy">Către</string>
+    <string name="mobileFXRateLabel">Curs de schimb</string>
+
+    <string name="mobileConfirmDetailsAmount">Suma</string>
+    <string name="mobileConfirmDetailsFee">Comision</string>
+    <string name="mobileConfirmDetailsTotal">Veți primi</string>
+    <string name="exchange_rate_change_warning">Datorită modificărilor cursului de schimb, veți primi acum %1$s %2$s.</string>
+
+
+    <string name="mobileTransferMax">Suma maximă de transfer</string>
+    <string name="transfer_summary_placeholder">Sumă disponibilă: 2.422,90 CAD</string>
+    <string name="transfer_notes_placeholder">Transfer parțial</string>
+    <string name="transfer_item_icon_placeholder">\ue000</string>
+    <string name="transfer_item_title_placeholder">Tip transfer</string>
+    <string name="transfer_item_country_placeholder">Denumire țară</string>
+    <string name="transfer_item_identification_placeholder">Se editează pe XXXX</string>
+    <string name="foreign_exchange_sell_placeholder">15,05 CAD</string>
+    <string name="foreign_exchange_buy_placeholder">11,00 USD</string>
+    <string name="foreign_exchange_rate_placeholder">1 CAD = 0,73897 USD</string>
+    <string name="summary_amount_placeholder">10,00 CAD</string>
+    <string name="summary_amount_fee_placeholder">0,25 CAD</string>
+    <string name="summary_amount_transfer_placeholder">9,75 CAD</string>
+    <string name="exchange_rate_change_warning_placeholder">Datorită modificărilor cursului de schimb, veți primi acum 10,00 CAD.</string>
+
+    <string name="mobileTransferSuccessMsg">Transferul dvs. este în curs de procesare</string>
+    <string name="mobileTransferSuccessDetails">Banii sunt în drum spre %s dumneavoastră</string>
+    <string name="doneButtonLabel">Efectuat</string>
+    <string name="mobileTransferMethodsHeader">Metode de transfer</string>
+    <string name="mobileTransferFromLabel">TRANSFER DE LA</string>
+    <string name="transferSource">Sursă</string>
+    <string name="mobileTransferFromHeader">Transfer de la</string>
+    <string name="availableFunds">Fonduri disponibile</string>
+    <string name="noTransferFromSourceAvailableError">Nu există transfer de la sursă disponibil</string>
+
+</resources>

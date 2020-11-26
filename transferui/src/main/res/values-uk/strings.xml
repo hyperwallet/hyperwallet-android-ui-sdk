@@ -1,0 +1,70 @@
+<resources>
+    <string name="title_activity_create_transfer">Переказати кошти</string>
+    <string name="mobileConfirmationHeader">Підтвердити дані</string>
+    <string name="mobileConfirmNotesLabel">ПРИМІТКА.</string>
+    <string name="transfer_destination">Призначення</string>
+    <string name="mobileTransferToLabel">ПЕРЕКАЗАТИ ДЛЯ</string>
+    <string name="mobileTransferFundsHeader">Переказати кошти</string>
+    <string name="mobileFXlabel">ОБМІН ВАЛЮТ</string>
+    <string name="transfer_header_label">Переказ</string>
+    <string name="noTransferMethodAdded">Потрібен спосіб переказу</string>
+    <string name="transfer_amount_hint">Сума</string>
+    <string name="transfer_currency_placeholder">USD</string>
+    <string name="transfer_currency_code_placeholder">$</string>
+    <string name="transfer_all_funds_label">Макс. сума переказу</string>
+    <string name="mobileAvailableBalance">Доступна сума: %s %s %s</string>
+    <string name="mobileSummaryLabel">ПІДСУМОК</string>
+    <string name="mobileNoteLabel">Примітка.</string>
+    <string name="transfer_notes_label">Примітка.</string>
+    <string name="transfer_notes_additional_info_label">Додати примітку (необов’язково)</string>
+    <string name="continueButtonLabel">Продовжити</string>
+    <string name="defaultTransferAmount">0</string>
+    <string name="transfer">Переказ</string>
+    <string name="add_text">+</string>
+    <string name="mobileAddTransferMethod">Додати спосіб переказу</string>
+    <string name="add_transfer_description_1">Щоб розпочати, додайте спосіб переказу.</string>
+    <string name="add_transfer_description_2">Щоб розпочати, додайте спосіб переказу.</string>
+    <string name="transfer_destination_selection_description">Вибір способу переказу</string>
+    <string name="destination_item_description">Елемент призначення</string>
+
+    <string name="amount_currency_format">%s %s</string>
+
+    <string name="module_transfermethodui_unavailable_error">Ви не можете додати спосіб переказу.</string>
+    <string name="transferAmountInvalid">Введіть дійсну суму для переказу</string>
+
+    <string name="mobileFXsell">Від</string>
+    <string name="mobileFXbuy">Для</string>
+    <string name="mobileFXRateLabel">Курс обміну</string>
+
+    <string name="mobileConfirmDetailsAmount">Сума</string>
+    <string name="mobileConfirmDetailsFee">Комісія</string>
+    <string name="mobileConfirmDetailsTotal">Ви отримаєте</string>
+    <string name="exchange_rate_change_warning">Через зміни в курсі обміну ви тепер отримаєте %1$s %2$s.</string>
+
+
+    <string name="mobileTransferMax">Макс. сума переказу</string>
+    <string name="transfer_summary_placeholder">Доступна сума:   2422,90 CAD</string>
+    <string name="transfer_notes_placeholder">Частковий переказ</string>
+    <string name="transfer_item_icon_placeholder">\ue000</string>
+    <string name="transfer_item_title_placeholder">Тип переказу</string>
+    <string name="transfer_item_country_placeholder">Назва країни</string>
+    <string name="transfer_item_identification_placeholder">Редагування в XXXX</string>
+    <string name="foreign_exchange_sell_placeholder">15,05 CAD</string>
+    <string name="foreign_exchange_buy_placeholder">11,00 USD</string>
+    <string name="foreign_exchange_rate_placeholder">1 CAD = 0,73897 USD</string>
+    <string name="summary_amount_placeholder">10,00 CAD</string>
+    <string name="summary_amount_fee_placeholder">0,25 CAD</string>
+    <string name="summary_amount_transfer_placeholder">9,75 CAD</string>
+    <string name="exchange_rate_change_warning_placeholder">Через зміни в курсі обміну ви тепер отримаєте 10,00 CAD.</string>
+
+    <string name="mobileTransferSuccessMsg">Ваш переказ обробляється</string>
+    <string name="mobileTransferSuccessDetails">Гроші скоро надійдуть на ваш %s</string>
+    <string name="doneButtonLabel">Готово</string>
+    <string name="mobileTransferMethodsHeader">Способи переказу</string>
+    <string name="mobileTransferFromLabel">ПЕРЕКАЗ ВІД</string>
+    <string name="transferSource">Джерело</string>
+    <string name="mobileTransferFromHeader">Переказ від</string>
+    <string name="availableFunds">Наявні кошти</string>
+    <string name="noTransferFromSourceAvailableError">Немає переказу від джерела</string>
+
+</resources>

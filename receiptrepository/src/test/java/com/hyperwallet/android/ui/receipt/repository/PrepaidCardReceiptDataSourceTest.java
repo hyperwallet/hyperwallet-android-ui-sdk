@@ -14,10 +14,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import static com.hyperwallet.android.model.receipt.Receipt.Entries.CREDIT;
-import static com.hyperwallet.android.model.receipt.Receipt.Entries.DEBIT;
 import static com.hyperwallet.android.model.receipt.Receipt.ReceiptTypes.ADJUSTMENT;
 import static com.hyperwallet.android.model.receipt.Receipt.ReceiptTypes.DEPOSIT;
-import static com.hyperwallet.android.model.receipt.Receipt.ReceiptTypes.PREPAID_CARD_SALE;
 
 import androidx.paging.PageKeyedDataSource;
 
@@ -34,6 +32,7 @@ import com.hyperwallet.android.util.DateUtil;
 
 import org.hamcrest.Matchers;
 import org.json.JSONObject;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -118,12 +117,12 @@ public class PrepaidCardReceiptDataSourceTest {
         // assert receipts information
         List<Receipt> receipts = mListArgumentCaptor.getValue();
         assertThat(receipts, Matchers.<Receipt>hasSize(7));
-        assertThat(receipts.get(0).getJournalId(), is("FISVL_5240220"));
-        assertThat(receipts.get(0).getType(), is(PREPAID_CARD_SALE));
-        assertThat(receipts.get(0).getCreatedOn(), is("2019-06-06T22:48:41"));
-        assertThat(receipts.get(0).getEntry(), is(DEBIT));
+        assertThat(receipts.get(0).getJournalId(), is("FISVL_5240221"));
+        assertThat(receipts.get(0).getType(), is(DEPOSIT));
+        assertThat(receipts.get(0).getCreatedOn(), is("2019-06-06T22:48:51"));
+        assertThat(receipts.get(0).getEntry(), is(CREDIT));
         assertThat(receipts.get(0).getDestinationToken(), is("test-fake-token"));
-        assertThat(receipts.get(0).getAmount(), is("10.00"));
+        assertThat(receipts.get(0).getAmount(), is("5.00"));
         assertThat(receipts.get(0).getCurrency(), is("USD"));
         assertThat(receipts.get(0).getDetails(), is(notNullValue()));
         assertThat(receipts.get(0).getDetails().getCardNumber(), is("************0673"));
@@ -401,4 +400,54 @@ public class PrepaidCardReceiptDataSourceTest {
         assertThat(date, is(notNullValue()));
     }
 
+    @Test
+    public void testSortPrepaidCardReceiptsByDateAndDesc_returnsReceipts() throws Exception {
+        String json = mExternalResourceManager.getResourceContent("prepaid_card_receipt_list_response.json");
+        JSONObject jsonObject = new JSONObject(json);
+        final PageList<Receipt> response = new PageList<>(jsonObject, Receipt.class);
+
+        mPrepaidCardReceiptDataSource.sortPrepaidCardReceiptsByDateAndDesc(response);
+
+        Assert.assertThat(response, Matchers.is(Matchers.notNullValue()));
+        Assert.assertThat(response.getDataList(), Matchers.is(Matchers.notNullValue()));
+        Assert.assertThat(response.getDataList().size(), Matchers.is(7));
+
+        // assert receipts information
+        List<Receipt> receipts = response.getDataList();
+        assertThat(receipts, Matchers.<Receipt>hasSize(7));
+        assertThat(receipts.get(0).getJournalId(), is("FISVL_5240221"));
+        assertThat(receipts.get(0).getType(), is(DEPOSIT));
+        assertThat(receipts.get(0).getCreatedOn(), is("2019-06-06T22:48:51"));
+        assertThat(receipts.get(0).getEntry(), is(CREDIT));
+        assertThat(receipts.get(0).getDestinationToken(), is("test-fake-token"));
+        assertThat(receipts.get(0).getAmount(), is("5.00"));
+        assertThat(receipts.get(0).getCurrency(), is("USD"));
+        assertThat(receipts.get(0).getDetails(), is(notNullValue()));
+        assertThat(receipts.get(0).getDetails().getCardNumber(), is("************0673"));
+        assertThat(receipts.get(6).getJournalId(), is("FISA_5240226"));
+        assertThat(receipts.get(6).getType(), is(ADJUSTMENT));
+        assertThat(receipts.get(6).getCreatedOn(), is("2019-02-21T23:55:17"));
+        assertThat(receipts.get(6).getEntry(), is(CREDIT));
+        assertThat(receipts.get(6).getSourceToken(), is("test-fake-token"));
+        assertThat(receipts.get(6).getAmount(), is("9.92"));
+        assertThat(receipts.get(6).getCurrency(), is("USD"));
+        assertThat(receipts.get(6).getDetails(), is(notNullValue()));
+        assertThat(receipts.get(6).getDetails().getCardNumber(), is("************0673"));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testListPrepaidCardReceiptViewModelFactory_throwsExceptionOnInvalidClassArgument() throws Exception {
+        String json = mExternalResourceManager.getResourceContent("prepaid_card_receipt_list_response.json");
+        JSONObject jsonObject = new JSONObject(json);
+        final PageList<Receipt> response = new PageList<>(jsonObject, Receipt.class);
+
+        List<Receipt> resultDataList = new ArrayList<>();
+        resultDataList.add(null);
+        resultDataList.add(null);
+        mPrepaidCardReceiptDataSource.parseDate("");
+
+        Assert.assertThat(response, Matchers.is(Matchers.notNullValue()));
+        Assert.assertThat(resultDataList, Matchers.is(Matchers.notNullValue()));
+        Assert.assertThat(resultDataList.size(), Matchers.is(7));
+    }
 }

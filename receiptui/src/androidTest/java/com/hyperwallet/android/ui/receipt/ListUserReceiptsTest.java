@@ -22,6 +22,7 @@ import static com.hyperwallet.android.ui.testutils.util.EspressoUtils.atPosition
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.util.Pair;
 import android.widget.TextView;
 
 import androidx.test.core.app.ApplicationProvider;
@@ -71,6 +72,12 @@ public class ListUserReceiptsTest {
     private String debitSymbol = "-";
     private String monthLabel1 = "June 2019";
     private String monthLabel2 = "December 2018";
+
+    Pair CAD = new Pair("CAD","CA$");
+    Pair USD = new Pair("USD","$");
+    Pair EURO = new Pair("EUR", "€");
+    Pair KRW = new Pair("KRW", "₩");
+    Pair JOD = new Pair("JOD", "JOD");
 
     @Before
     public void setup() {
@@ -149,6 +156,163 @@ public class ListUserReceiptsTest {
         onView(withId(R.id.list_receipts)).check(matches(atPosition(3, hasDescendant(withText("KRW")))));
 
         onView(withId(R.id.list_receipts)).check(new RecyclerViewCountAssertion(4));
+    }
+
+    @Test
+    public void testListReceipt_userHasMultipleTransactionCurrencyFormat() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("receipt_list_currency_format_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();
+
+        // run test
+        mActivityTestRule.launchActivity(null);
+
+        // assert
+        onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
+                .check(matches(withText(R.string.title_activity_receipt_list)));
+        //onView(withId(R.id.list_receipts)).check(matches(isDisplayed()));
+
+        onView(withId(R.id.list_receipts))
+                .check(matches(atPosition(0, hasDescendant(withText("June 2019")))));
+        onView(withId(R.id.list_receipts)).check(
+                matches(atPosition(0, hasDescendant(withText(R.string.payment)))));
+        onView(withId(R.id.list_receipts)).check(
+                matches(atPosition(0, hasDescendant(withText(KRW.second.toString() + "5,000,000")))));
+
+        onView(withId(R.id.list_receipts)).check(
+                matches(atPosition(0, hasDescendant(withText("June 7, 2019")))));
+        onView(withId(R.id.list_receipts)).check(matches(atPosition(0, hasDescendant(withText(KRW.first.toString())))));
+
+        onView(withId(R.id.list_receipts))
+                .check(matches(atPosition(1, hasDescendant(withText(monthLabel1)))));
+        onView(withId(R.id.list_receipts)).check(matches(atPosition(1,
+                hasDescendant(withText(R.string.credit)))));
+        onView(withId(R.id.list_receipts)).check(
+                matches(atPosition(1, hasDescendant(withText(R.string.payment)))));
+        onView(withId(R.id.list_receipts)).check(
+                matches(atPosition(1, hasDescendant(withText(USD.second.toString() + "9,000,000.00")))));
+        onView(withId(R.id.list_receipts)).check(
+                matches(atPosition(1, hasDescendant(withText("June 2, 2019")))));
+        onView(withId(R.id.list_receipts)).check(matches(atPosition(1, hasDescendant(withText("USD")))));
+
+        onView(withId(R.id.list_receipts)).check(matches(atPosition(2,
+                hasDescendant(withText(R.string.credit)))));
+        onView(withId(R.id.list_receipts)).check(
+                matches(atPosition(2, hasDescendant(withText(R.string.card_activation_fee)))));
+        onView(withId(R.id.list_receipts)).check(
+                matches(atPosition(2, hasDescendant(withText(debitSymbol + cadCurrencySymbol + "1,000,000.00")))));
+        onView(withId(R.id.list_receipts)).check(
+                matches(atPosition(2, hasDescendant(withText("June 1, 2019")))));
+        onView(withId(R.id.list_receipts)).check(matches(atPosition(2, hasDescendant(withText(CAD.first.toString())))));
+
+        onView(withId(R.id.list_receipts))
+                .check(matches(atPosition(3, hasDescendant(withText("December 2018")))));
+        onView(withId(R.id.list_receipts)).check(matches(atPosition(3,
+                hasDescendant(withText(R.string.debit)))));
+        onView(withId(R.id.list_receipts)).check(
+                matches(atPosition(3, hasDescendant(withText(R.string.transfer_to_prepaid_card)))));
+        onView(withId(R.id.list_receipts)).check(
+                matches(atPosition(3, hasDescendant(withText(debitSymbol + EURO.second.toString() + "10,000,000.00")))));
+        onView(withId(R.id.list_receipts)).check(
+                matches(atPosition(3, hasDescendant(withText("December 1, 2018")))));
+        onView(withId(R.id.list_receipts)).check(matches(atPosition(3, hasDescendant(withText(EURO.first.toString())))));
+
+        onView(withId(R.id.list_receipts))
+                .check(matches(atPosition(4, hasDescendant(withText("January 2018")))));
+        onView(withId(R.id.list_receipts)).check(matches(atPosition(4,
+                hasDescendant(withText(R.string.debit)))));
+        onView(withId(R.id.list_receipts)).check(
+                matches(atPosition(4, hasDescendant(withText(R.string.transfer_to_bank_account)))));
+        onView(withId(R.id.list_receipts)).check(
+                matches(atPosition(4, hasDescendant(withText(debitSymbol + JOD.second.toString() + "100,000,000.00")))));
+
+        onView(withId(R.id.list_receipts)).check(
+                matches(atPosition(4, hasDescendant(withText("January 22, 2018")))));
+        onView(withId(R.id.list_receipts)).check(matches(atPosition(4, hasDescendant(withText(JOD.first.toString())))));
+
+        onView(withId(R.id.list_receipts)).check(new RecyclerViewCountAssertion(5));
+    }
+
+    @Test
+    public void testListReceipt_clickTransactionDisplaysDetailsCurrencyFormatKRW() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("receipt_list_currency_format_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();
+
+        // run test
+        mActivityTestRule.launchActivity(null);
+
+        // assert
+        onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
+                .check(matches(withText(R.string.title_activity_receipt_list)));
+        onView(withId(R.id.list_receipts)).check(matches(isDisplayed()));
+
+        onView(withId(R.id.list_receipts)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+
+        onView(withId(R.id.transaction_header_text)).check(matches(withText(R.string.mobileTransactionTypeLabel)));
+        onView(withId(R.id.transaction_type_icon)).check(matches(withText(R.string.credit)));
+        onView(withId(R.id.transaction_title)).check(matches(withText(R.string.payment)));
+        onView(withId(R.id.transaction_amount)).check(matches(withText(KRW.second.toString() + "5,000,000")));
+        onView(withId(R.id.transaction_currency)).check(matches(withText(KRW.first.toString())));
+        onView(withId(R.id.transaction_date)).check(matches(withText("June 7, 2019")));
+
+    }
+
+    @Test
+    public void testListReceipt_clickTransactionDisplaysDetailsCurrencyFormatUSD() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("receipt_list_currency_format_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();
+
+        // run test
+        mActivityTestRule.launchActivity(null);
+
+        // assert
+        onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
+                .check(matches(withText(R.string.title_activity_receipt_list)));
+        onView(withId(R.id.list_receipts)).check(matches(isDisplayed()));
+
+        onView(withId(R.id.list_receipts)).perform(RecyclerViewActions.actionOnItemAtPosition(1, click()));
+
+        onView(withId(R.id.transaction_header_text)).check(matches(withText(R.string.mobileTransactionTypeLabel)));
+        onView(withId(R.id.transaction_type_icon)).check(matches(withText(R.string.credit)));
+        onView(withId(R.id.transaction_title)).check(matches(withText(R.string.payment)));
+        onView(withId(R.id.transaction_amount)).check(matches(withText(USD.second.toString() + "9,000,000.00")));
+        onView(withId(R.id.transaction_currency)).check(matches(withText(USD.first.toString())));
+        onView(withId(R.id.transaction_date)).check(matches(withText("June 2, 2019")));
+
+    }
+
+    @Test
+    public void testListReceipt_clickTransactionDisplaysDetailsCurrencyFormatJOD() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("receipt_list_currency_format_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();
+
+        // run test
+        mActivityTestRule.launchActivity(null);
+        // assert
+        onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
+                .check(matches(withText(R.string.title_activity_receipt_list)));
+        onView(withId(R.id.list_receipts)).check(matches(isDisplayed()));
+
+        onView(withId(R.id.list_receipts)).perform(RecyclerViewActions.actionOnItemAtPosition(4, click()));
+
+        onView(withId(R.id.transaction_header_text)).check(matches(withText(R.string.mobileTransactionTypeLabel)));
+        onView(withId(R.id.transaction_type_icon)).check(matches(withText(R.string.debit)));
+        onView(withId(R.id.transaction_title)).check(matches(withText(R.string.transfer_to_bank_account)));
+        onView(withId(R.id.transaction_amount)).check(matches(withText(debitSymbol + JOD.second.toString() + "100,000,000.00")));
+        onView(withId(R.id.transaction_currency)).check(matches(withText(JOD.first.toString())));
+        onView(withId(R.id.transaction_date)).check(matches(withText("January 22, 2018")));
+
+        onView(withId(R.id.details_header_text)).check(matches(withText(R.string.mobileFeeInfoLabel)));
+        onView(withId(R.id.details_amount_label)).check(matches(withText(R.string.amount)));
+        onView(withId(R.id.details_amount_value)).check(matches(withText(JOD.second.toString() + "100,000,000.00 JOD")));
+        onView(withId(R.id.details_fee_label)).check(matches(withText(R.string.mobileFeeLabel)));
+        onView(withId(R.id.details_fee_value)).check(matches(withText(JOD.second.toString() + "2.00 JOD")));
+        onView(withId(R.id.details_transfer_amount_label)).check(
+                matches(withText(R.string.mobileTransactionDetailsTotal)));
+        onView(withId(R.id.details_transfer_amount_value)).check(matches(withText(JOD.second.toString() + "99,999,998.00 JOD")));
     }
 
     @Test
@@ -249,6 +413,7 @@ public class ListUserReceiptsTest {
         onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
                 .check(matches(withText(R.string.title_activity_receipt_list)));
         //todo: check empty view when it will be ready
+        onView(withText(R.string.mobileNoTransactionsUser)).check(matches(isDisplayed()));
     }
 
     @Test
@@ -324,7 +489,7 @@ public class ListUserReceiptsTest {
         onView(withId(R.id.transaction_header_text)).check(matches(withText(R.string.mobileTransactionTypeLabel)));
         onView(withId(R.id.transaction_type_icon)).check(matches(withText(R.string.debit)));
         onView(withId(R.id.transaction_title)).check(matches(withText(R.string.transfer_to_prepaid_card)));
-        onView(withId(R.id.transaction_amount)).check(matches(withText(debitSymbol + krwCurrencySymbol + "40000")));
+        onView(withId(R.id.transaction_amount)).check(matches(withText(debitSymbol + krwCurrencySymbol + "40,000")));
         onView(withId(R.id.transaction_currency)).check(matches(withText("KRW")));
         onView(withId(R.id.transaction_date)).check(matches(withText("December 1, 2018")));
 

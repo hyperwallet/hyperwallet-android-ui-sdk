@@ -1,0 +1,79 @@
+<resources>
+    <string name="app_name">hyperwallet.ui</string>
+    <string name="title_account_add">アカウントを追加</string>
+    <string name="unknown">不明</string>
+
+    <string name="title_activity_select_transfer_method">送金方法を選択</string>
+    <!-- SelectTransferMethodActivity -->
+    <string name="select_transfer_method_title">@string/title_activity_select_transfer_method
+    </string>
+
+    <string name="mobileCountryRegion">国・地域</string>
+    <string name="mobileCurrencyLabel">通貨</string>
+    <string name="mobileAddTransferMethodHeader">送金方法を追加</string>
+    <string name="title_activity_add_transfer_method">送金方法を追加</string>
+    <string name="title_add_bank_account">銀行口座</string>
+    <string name="title_add_bank_card">デビットカード</string>
+
+    <string name="error_exact_length_field">このフィールドの長さは、正確に%dです。</string>
+    <string name="error_invalid_expiry_date">%sは無効です。</string>
+    <string name="error_min_max_length_field">このフィールドの長さは{0}以上、{1}以下で指定します。
+    </string>
+
+    <string name="createTransferMethodButtonLabel">送金方法を追加</string>
+    <string name="default_account_label">デフォルトアカウント</string>
+    <string name="default_account_sub_label">デフォルトの送金方法を選択</string>
+    <string name="api_expiry_date_format">MM/YY</string>
+
+    <string name="feeAndProcessingTimeInformation">%s手数料\u2022 %s</string>
+    <string name="feeInformation">%s手数料</string>
+
+    <string name="emptyStateAddTransferMethod">始めるには、送金方法を追加します。</string>
+
+    <!-- menu title -->
+    <string name="menu_transfer_funds">送金</string>
+
+    <!--Fee formatter-->
+    <string name="fee_flat_formatter">%1$s%2$s</string>
+    <string name="fee_percent_no_min_and_max_formatter">%1$s%%</string>
+    <string name="fee_percent_only_min_formatter">%1$s%%（最小：%2$s %3$s）</string>
+    <string name="fee_percent_only_max_formatter">%1$s%%（最大：%2$s %3$s）</string>
+    <string name="fee_percent_formatter">%1$s%%（最小：%2$s %3$s、最大：%2$s %4$s）</string>
+    <string name="fee_mix_no_min_and_max_formatter">%1$s%2$s + %3$s%%</string>
+    <string name="fee_mix_only_min_formatter">%1$s%2$s + %3$s%%（最小：%1$s %4$s）</string>
+    <string name="fee_mix_only_max_formatter">%1$s%2$s + %3$s%%（最大： %1$s %4$s）</string>
+    <string name="fee_mix_formatter">%1$s%2$s + %3$s%%（最小：%1$s %4$s、最大：%1$s %5$s）</string>
+
+    <string name="account_holder">口座名義人情報</string>
+    <string name="account_information">口座情報：%s（%s）</string>
+    <string name="address">住所</string>
+    <string name="contact_information">連絡先情報</string>
+    <string name="identification">身分証明</string>
+    <string name="intermediary_account">仲介口座</string>
+    <string name="mobileFeesAndProcessingTime">手数料と処理時間</string>
+
+    <string name="search_hint">検索のヒント</string>
+    <string name="search_country">検索対象国</string>
+    <string name="search_currency">検索対象通貨</string>
+    <string name="search_widget">検索</string>
+
+    <string name="select_transfer_method_currency_button_description">通貨のボタンを選択
+    </string>
+    <string name="select_transfer_method_country_button_description">国のボタンを選択</string>
+    <string name="selected_country_item_description">選択された国項目</string>
+    <string name="selected_currency_item_description">選択された通貨項目</string>
+    <string name="transfer_method_context_button_description">コンテキストメニューボタン</string>
+    <string name="item_select_description">選択された項目</string>
+
+    <string name="error_unmapped_field">マップされていないフィールドです。サポートにお問合わせください。</string>
+
+    <string name="country_placeholder">カナダ</string>
+    <string name="currency_placeholder">カナダドル</string>
+    <string name="feesAndProcessTimePlaceholder">20.00米ドル手数料\u2022 1～3営業日 </string>
+    <string name="mobileCountryCurrencyLabel">場所と通貨</string>
+    <string name="mobileTransferMethodLabel">送金方法</string>
+    <string name="mobileTransferMethodsHeader">送金方法</string>
+
+    <string name="mobileRemoveEAconfirm">送金方法を削除</string>
+    <string name="prepaidCardManagementInfo" >「ウェブブラウザでログインしてカードを管理する」</string>
+</resources>

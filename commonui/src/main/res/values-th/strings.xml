@@ -1,0 +1,27 @@
+<resources>
+    <string name="error_dialog_title">ข้อผิดพลาด</string>
+    <string name="error_dialog_connectivity_title">ปัญหาด้านการเชื่อมต่อ</string>
+    <string name="error_dialog_unexpected_title">ข้อผิดพลาดที่ไม่คาดคิด</string>
+    <string name="ok">ตกลง</string>
+    <string name="try_again_button_label">ลองอีกครั้ง</string>
+    <string name="not_available">ไม่ได้ให้บริการ</string>
+
+    <!-- title and font icon -->
+    <string name="bank_account">บัญชีธนาคาร</string>
+    <string name="bank_card">บัตรเดบิต</string>
+    <string name="wire_account">บัญชีโอนเงิน</string>
+    <string name="paper_check">เช็ค</string>
+    <string name="prepaid_card">บัตรเงินสด</string>
+    <string name="paypal_account">บัญชี Paypal</string>
+    <string name="venmo_account">บัญชี Venmo</string>
+    <string name="cash_pickup_mg">MoneyGram</string>
+
+    <string name="endingIn">ลงท้ายด้วย %s</string>
+    <string name="to">ไป %s</string>
+    <string name="not_translated_in_braces">(ไม่ได้แปล)</string>
+
+    <string name="authentication_error_header">ข้อผิดพลาดในการพิสูจน์ตัวตนถูกต้อง</string>
+    <string name="cancelButtonLabel">ยกเลิก</string>
+    <string name="remove">ลบ</string>
+    <string name="mobileAreYouSure">คุณแน่ใจหรือไม่</string>
+</resources>

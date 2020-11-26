@@ -47,7 +47,7 @@
 
             <Button
                 android:id="@+id/add_account_button"
-                style="@style/Widget.Hyperwallet.Text.Button"
+                style="@style/Widget.Hyperwallet.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal|center"

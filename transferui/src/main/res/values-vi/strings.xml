@@ -1,0 +1,70 @@
+<resources>
+    <string name="title_activity_create_transfer">Chuyển tiền</string>
+    <string name="mobileConfirmationHeader">Xác nhận các chi tiết</string>
+    <string name="mobileConfirmNotesLabel">LƯU Ý</string>
+    <string name="transfer_destination">Nơi đến</string>
+    <string name="mobileTransferToLabel">CHUYỂN TỚI</string>
+    <string name="mobileTransferFundsHeader">Chuyển tiền</string>
+    <string name="mobileFXlabel">NGOẠI HỐI</string>
+    <string name="transfer_header_label">Chuyển tiền</string>
+    <string name="noTransferMethodAdded">Phương thức chuyển tiền là bắt buộc</string>
+    <string name="transfer_amount_hint">Số tiền</string>
+    <string name="transfer_currency_placeholder">USD</string>
+    <string name="transfer_currency_code_placeholder">$</string>
+    <string name="transfer_all_funds_label">Chuyển số tiền tối đa</string>
+    <string name="mobileAvailableBalance">Số tiền khả dụng: %s %s %s</string>
+    <string name="mobileSummaryLabel">TÓM LƯỢC</string>
+    <string name="mobileNoteLabel">Lưu ý</string>
+    <string name="transfer_notes_label">Lưu ý</string>
+    <string name="transfer_notes_additional_info_label">Thêm ghi chú (tùy chọn)</string>
+    <string name="continueButtonLabel">Tiếp tục</string>
+    <string name="defaultTransferAmount">0</string>
+    <string name="transfer">Chuyển tiền</string>
+    <string name="add_text">+</string>
+    <string name="mobileAddTransferMethod">Thêm phương thức chuyển tiền</string>
+    <string name="add_transfer_description_1">Thêm phương thức chuyển tiền để bắt đầu.</string>
+    <string name="add_transfer_description_2">Thêm phương thức chuyển tiền để bắt đầu.</string>
+    <string name="transfer_destination_selection_description">Lựa chọn phương thức chuyển tiền</string>
+    <string name="destination_item_description">Mục nơi đến</string>
+
+    <string name="amount_currency_format">%s %s</string>
+
+    <string name="module_transfermethodui_unavailable_error">Bạn\'không thể thêm một phương thức chuyển tiền.</string>
+    <string name="transferAmountInvalid">Nhập số tiền chuyển hợp lệ</string>
+
+    <string name="mobileFXsell">Từ</string>
+    <string name="mobileFXbuy">Đến</string>
+    <string name="mobileFXRateLabel">Tỷ giá</string>
+
+    <string name="mobileConfirmDetailsAmount">Số tiền</string>
+    <string name="mobileConfirmDetailsFee">Phí</string>
+    <string name="mobileConfirmDetailsTotal">Bạn sẽ nhận</string>
+    <string name="exchange_rate_change_warning">Do tỷ giá hối đoái thay đổi, bây giờ bạn\'sẽ nhận %1$s %2$s.</string>
+
+
+    <string name="mobileTransferMax">Chuyển số tiền tối đa</string>
+    <string name="transfer_summary_placeholder">Số tiền khả dụng: 2.422,90 CAD</string>
+    <string name="transfer_notes_placeholder">Chuyển một phần</string>
+    <string name="transfer_item_icon_placeholder">\ue000</string>
+    <string name="transfer_item_title_placeholder">Loại chuyển tiền</string>
+    <string name="transfer_item_country_placeholder">Tên quốc gia</string>
+    <string name="transfer_item_identification_placeholder">Chỉnh sửa trên XXXX</string>
+    <string name="foreign_exchange_sell_placeholder">15,05 CAD</string>
+    <string name="foreign_exchange_buy_placeholder">11,00 USD</string>
+    <string name="foreign_exchange_rate_placeholder">1 CAD = 0,73897 USD</string>
+    <string name="summary_amount_placeholder">10,00 CAD</string>
+    <string name="summary_amount_fee_placeholder">0,25 CAD</string>
+    <string name="summary_amount_transfer_placeholder">9,75 CAD</string>
+    <string name="exchange_rate_change_warning_placeholder">Do tỷ giá hối đoái thay đổi, bây giờ bạn\' sẽ nhận được 10.00 CAD.</string>
+
+    <string name="mobileTransferSuccessMsg">Giao dịch chuyển tiền của bạn đang được xử lý</string>
+    <string name="mobileTransferSuccessDetails">Tiền đang được chuyển đến %s của bạn </string>
+    <string name="doneButtonLabel">Hoàn tất</string>
+    <string name="mobileTransferMethodsHeader">Phương thức chuyển tiền</string>
+    <string name="mobileTransferFromLabel">CHUYỂN TỪ</string>
+    <string name="transferSource">Nguồn</string>
+    <string name="mobileTransferFromHeader">Chuyển từ</string>
+    <string name="availableFunds">Tiền khả dụng</string>
+    <string name="noTransferFromSourceAvailableError">Không có chuyển tiền từ nguồn khả dụng</string>
+
+</resources>

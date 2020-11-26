@@ -1,0 +1,70 @@
+<resources>
+    <string name="title_activity_create_transfer">Pénzösszegek átutalása</string>
+    <string name="mobileConfirmationHeader">Adatok megerősítése</string>
+    <string name="mobileConfirmNotesLabel">MEGJEGYZÉS</string>
+    <string name="transfer_destination">Célszámla</string>
+    <string name="mobileTransferToLabel">ÁTUTALÁS CÍMZETTJE</string>
+    <string name="mobileTransferFundsHeader">Pénzösszegek átutalása</string>
+    <string name="mobileFXlabel">DEVIZA</string>
+    <string name="transfer_header_label">Átutalás</string>
+    <string name="noTransferMethodAdded">Az átutalási mód megadása kötelező</string>
+    <string name="transfer_amount_hint">Összeg</string>
+    <string name="transfer_currency_placeholder">USD</string>
+    <string name="transfer_currency_code_placeholder">$</string>
+    <string name="transfer_all_funds_label">Max. összeg átutalása</string>
+    <string name="mobileAvailableBalance">Elérhető összeg: %s %s %s</string>
+    <string name="mobileSummaryLabel">ÖSSZEGZÉS</string>
+    <string name="mobileNoteLabel">Megjegyzés</string>
+    <string name="transfer_notes_label">Megjegyzés</string>
+    <string name="transfer_notes_additional_info_label">Megjegyzés hozzáadása (opcionális)</string>
+    <string name="continueButtonLabel">Tovább</string>
+    <string name="defaultTransferAmount">0</string>
+    <string name="transfer">Átutalás</string>
+    <string name="add_text">+</string>
+    <string name="mobileAddTransferMethod">Átutalási mód hozzáadása</string>
+    <string name="add_transfer_description_1">A kezdéshez adjon hozzá egy átutalási módot</string>
+    <string name="add_transfer_description_2">A kezdéshez adjon hozzá egy átutalási módot</string>
+    <string name="transfer_destination_selection_description">Átutalás mód kiválasztása</string>
+    <string name="destination_item_description">Célszámla elem</string>
+
+    <string name="amount_currency_format">%s %s</string>
+
+    <string name="module_transfermethodui_unavailable_error">Önnek nem áll módjában átutalási módot hozzáadni.</string>
+    <string name="transferAmountInvalid">Adjon meg egy érvényes átutalási összeget</string>
+
+    <string name="mobileFXsell">Feladó</string>
+    <string name="mobileFXbuy">Címzett</string>
+    <string name="mobileFXRateLabel">Árfolyam</string>
+
+    <string name="mobileConfirmDetailsAmount">Összeg</string>
+    <string name="mobileConfirmDetailsFee">Díj</string>
+    <string name="mobileConfirmDetailsTotal">Az Ön által fogadott összeg:</string>
+    <string name="exchange_rate_change_warning">Árfolyamváltozás miatt a következő összeget fogja kapni: %1$s %2$s.</string>
+
+
+    <string name="mobileTransferMax">Max. összeg átutalása</string>
+    <string name="transfer_summary_placeholder">Elérhető összeg:   2422,90 CAD</string>
+    <string name="transfer_notes_placeholder">Részleges átutalás</string>
+    <string name="transfer_item_icon_placeholder">\ue000</string>
+    <string name="transfer_item_title_placeholder">Átutalás típusa</string>
+    <string name="transfer_item_country_placeholder">Ország neve</string>
+    <string name="transfer_item_identification_placeholder">Szerkesztés dátuma: XXXX</string>
+    <string name="foreign_exchange_sell_placeholder">15,05 CAD</string>
+    <string name="foreign_exchange_buy_placeholder">11,00 USD</string>
+    <string name="foreign_exchange_rate_placeholder">1 CAD = 0,73897 USD</string>
+    <string name="summary_amount_placeholder">10,00 CAD</string>
+    <string name="summary_amount_fee_placeholder">0,25 CAD</string>
+    <string name="summary_amount_transfer_placeholder">9,75 CAD</string>
+    <string name="exchange_rate_change_warning_placeholder">Árfolyamváltozás miatt 10,00 CAD-ot fog kapni.</string>
+
+    <string name="mobileTransferSuccessMsg">Átutalása feldolgozás alatt áll</string>
+    <string name="mobileTransferSuccessDetails">Pénzösszege úton van a következőre: %s.</string>
+    <string name="doneButtonLabel">Kész</string>
+    <string name="mobileTransferMethodsHeader">Átutalási módok</string>
+    <string name="mobileTransferFromLabel">ÁTUTALÁS FELADÓJA</string>
+    <string name="transferSource">Forrás</string>
+    <string name="mobileTransferFromHeader">Átutalás feladója</string>
+    <string name="availableFunds">Elérhető pénzösszegek</string>
+    <string name="noTransferFromSourceAvailableError">Nincs elérhető átutalási forrás</string>
+
+</resources>

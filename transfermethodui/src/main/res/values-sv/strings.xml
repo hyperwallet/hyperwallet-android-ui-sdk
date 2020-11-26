@@ -1,0 +1,79 @@
+<resources>
+    <string name="app_name">hyperwallet.ui</string>
+    <string name="title_account_add">Lägg till konto</string>
+    <string name="unknown">Okänd</string>
+
+    <string name="title_activity_select_transfer_method">Välj överföringsmetod</string>
+    <!-- SelectTransferMethodActivity -->
+    <string name="select_transfer_method_title">@string/title_activity_select_transfer_method
+    </string>
+
+    <string name="mobileCountryRegion">Land/område</string>
+    <string name="mobileCurrencyLabel">Valuta</string>
+    <string name="mobileAddTransferMethodHeader">Lägg till en överföringsmetod</string>
+    <string name="title_activity_add_transfer_method">Lägg till överföringsmetod</string>
+    <string name="title_add_bank_account">Bankkonto</string>
+    <string name="title_add_bank_card">Betalkort</string>
+
+    <string name="error_exact_length_field">Längden på detta fält är exakt %d.</string>
+    <string name="error_invalid_expiry_date">%s är ogiltigt.</string>
+    <string name="error_min_max_length_field">Detta fält måste minst vara {0} och kan maximalt vara {1}.
+    </string>
+
+    <string name="createTransferMethodButtonLabel">Lägg till överföringsmetod</string>
+    <string name="default_account_label">Standardkonto</string>
+    <string name="default_account_sub_label">Välj en standardöverföringsmetod</string>
+    <string name="api_expiry_date_format">MM/ÅÅ</string>
+
+    <string name="feeAndProcessingTimeInformation">%s avgift \u2022 %s</string>
+    <string name="feeInformation">%s avgift</string>
+
+    <string name="emptyStateAddTransferMethod">Lägg till en överföringsmetod för att komma igång.</string>
+
+    <!-- menu title -->
+    <string name="menu_transfer_funds">Överför</string>
+
+    <!--Fee formatter-->
+    <string name="fee_flat_formatter">%1$s%2$s</string>
+    <string name="fee_percent_no_min_and_max_formatter">%1$s%%</string>
+    <string name="fee_percent_only_min_formatter">%1$s%% (Min:%2$s %3$s)</string>
+    <string name="fee_percent_only_max_formatter">%1$s%% (Max:%2$s %3$s)</string>
+    <string name="fee_percent_formatter">%1$s%% (Min:%2$s %3$s, Max:%2$s %4$s)</string>
+    <string name="fee_mix_no_min_and_max_formatter">%1$s%2$s + %3$s%%</string>
+    <string name="fee_mix_only_min_formatter">%1$s%2$s + %3$s%% (Min:%1$s %4$s)</string>
+    <string name="fee_mix_only_max_formatter">%1$s%2$s + %3$s%% (Max:%1$s %4$s)</string>
+    <string name="fee_mix_formatter">%1$s%2$s + %3$s%% (Min:%1$s %4$s, Max:%1$s %5$s)</string>
+
+    <string name="account_holder">UPPGIFTER OM KONTOINNEHAVARE</string>
+    <string name="account_information">KONTOUPPGIFTER: %s(%s)</string>
+    <string name="address">ADRESS</string>
+    <string name="contact_information">KONTAKTUPPGIFTER</string>
+    <string name="identification">IDENTIFIKATION</string>
+    <string name="intermediary_account">MELLANHANDENS KONTO</string>
+    <string name="mobileFeesAndProcessingTime">AVGIFTER OCH BEHANDLINGSTID</string>
+
+    <string name="search_hint">Söktips</string>
+    <string name="search_country">Sök land</string>
+    <string name="search_currency">Sök valuta</string>
+    <string name="search_widget">Sök</string>
+
+    <string name="select_transfer_method_currency_button_description">Välj knappen valuta
+    </string>
+    <string name="select_transfer_method_country_button_description">Välj knappen land</string>
+    <string name="selected_country_item_description">Valt landobjekt</string>
+    <string name="selected_currency_item_description">Valt valutaobjekt</string>
+    <string name="transfer_method_context_button_description">Knapp för kontextmeny</string>
+    <string name="item_select_description">Valt objekt</string>
+
+    <string name="error_unmapped_field">Omappat fält, kontakta supporten.</string>
+
+    <string name="country_placeholder">Kanada</string>
+    <string name="currency_placeholder">CAD</string>
+    <string name="feesAndProcessTimePlaceholder">20,00 USD avgift \u2022 1\-3 arbetsdagar </string>
+    <string name="mobileCountryCurrencyLabel">PLATS OCH VALUTA</string>
+    <string name="mobileTransferMethodLabel">ÖVERFÖRINGSMETOD</string>
+    <string name="mobileTransferMethodsHeader">Överföringsmetoder</string>
+
+    <string name="mobileRemoveEAconfirm">Ta bort överföringsmetod</string>
+    <string name="prepaidCardManagementInfo" >”Logga in med en webbläsare för att hantera ditt kort”</string>
+</resources>

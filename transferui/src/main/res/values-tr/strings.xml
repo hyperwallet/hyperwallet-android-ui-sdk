@@ -1,0 +1,70 @@
+<resources>
+    <string name="title_activity_create_transfer">Para Aktar</string>
+    <string name="mobileConfirmationHeader">Detayları doğrula</string>
+    <string name="mobileConfirmNotesLabel">NOT</string>
+    <string name="transfer_destination">Gideceği yer</string>
+    <string name="mobileTransferToLabel">ŞURAYA AKTAR</string>
+    <string name="mobileTransferFundsHeader">Para aktar</string>
+    <string name="mobileFXlabel">DÖVİZ</string>
+    <string name="transfer_header_label">Aktarım</string>
+    <string name="noTransferMethodAdded">Aktarım yöntemi gerekli</string>
+    <string name="transfer_amount_hint">Tutar</string>
+    <string name="transfer_currency_placeholder">USD</string>
+    <string name="transfer_currency_code_placeholder">$</string>
+    <string name="transfer_all_funds_label">En yüksek miktarı aktar</string>
+    <string name="mobileAvailableBalance">Mevcut miktar: %s %s %s</string>
+    <string name="mobileSummaryLabel">ÖZET</string>
+    <string name="mobileNoteLabel">Not</string>
+    <string name="transfer_notes_label">Not</string>
+    <string name="transfer_notes_additional_info_label">Not ekle (isteğe bağlı)</string>
+    <string name="continueButtonLabel">Devam et</string>
+    <string name="defaultTransferAmount">0</string>
+    <string name="transfer">Aktarım</string>
+    <string name="add_text">+</string>
+    <string name="mobileAddTransferMethod">Aktarım yöntemi ekle</string>
+    <string name="add_transfer_description_1">Başlamak için bir aktarım yöntemi ekleyin.</string>
+    <string name="add_transfer_description_2">Başlamak için bir aktarım yöntemi ekleyin.</string>
+    <string name="transfer_destination_selection_description">Aktarım yöntemi seçimi</string>
+    <string name="destination_item_description">Gideceği yer</string>
+
+    <string name="amount_currency_format">%s %s</string>
+
+    <string name="module_transfermethodui_unavailable_error">Bir\' aktarım yöntemi ekleyemediniz.</string>
+    <string name="transferAmountInvalid">Geçerli bir aktarım tutarı gir</string>
+
+    <string name="mobileFXsell">Kimden</string>
+    <string name="mobileFXbuy">Kime</string>
+    <string name="mobileFXRateLabel">Döviz kuru</string>
+
+    <string name="mobileConfirmDetailsAmount">Tutar</string>
+    <string name="mobileConfirmDetailsFee">Ücret</string>
+    <string name="mobileConfirmDetailsTotal">Alacağınız tutar</string>
+    <string name="exchange_rate_change_warning">Döviz kurundaki değişikliklerden dolayı alacağınız\' tutar %1$s %2$s.</string>
+
+
+    <string name="mobileTransferMax">En yüksek miktarı aktar</string>
+    <string name="transfer_summary_placeholder">Mevcut miktar:   2.422,90 CAD</string>
+    <string name="transfer_notes_placeholder">Kısmi aktarım</string>
+    <string name="transfer_item_icon_placeholder">\ue000</string>
+    <string name="transfer_item_title_placeholder">Aktarım Türü</string>
+    <string name="transfer_item_country_placeholder">Ülke Adı</string>
+    <string name="transfer_item_identification_placeholder">XXXX üzerinde değişiklik</string>
+    <string name="foreign_exchange_sell_placeholder">15,05 CAD</string>
+    <string name="foreign_exchange_buy_placeholder">11,00 USD</string>
+    <string name="foreign_exchange_rate_placeholder">1 CAD = 0,73897 USD</string>
+    <string name="summary_amount_placeholder">10,00 CAD</string>
+    <string name="summary_amount_fee_placeholder">0,25 CAD</string>
+    <string name="summary_amount_transfer_placeholder">9,75 CAD</string>
+    <string name="exchange_rate_change_warning_placeholder">Döviz kurundaki değişikliklerden dolayı alacağınız\' tutar 10,00 CAD.  .</string>
+
+    <string name="mobileTransferSuccessMsg">Transferiniz işleme alındı</string>
+    <string name="mobileTransferSuccessDetails">Para %s hesabınıza gönderiliyor</string>
+    <string name="doneButtonLabel">İşlem gerçekleşti</string>
+    <string name="mobileTransferMethodsHeader">Aktarım yöntemleri</string>
+    <string name="mobileTransferFromLabel">AKTARIMI YAPAN</string>
+    <string name="transferSource">Kaynak</string>
+    <string name="mobileTransferFromHeader">Aktarımı Yapan</string>
+    <string name="availableFunds">Mevcut Para</string>
+    <string name="noTransferFromSourceAvailableError">Kaynaktan aktarım yok</string>
+
+</resources>

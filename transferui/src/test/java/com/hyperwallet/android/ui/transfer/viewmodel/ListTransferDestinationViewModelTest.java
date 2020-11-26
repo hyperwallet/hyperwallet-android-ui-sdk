@@ -19,14 +19,20 @@ import androidx.lifecycle.ViewModel;
 import com.google.common.collect.Lists;
 import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.HyperwalletAuthenticationTokenProvider;
+import com.hyperwallet.android.exception.HyperwalletException;
 import com.hyperwallet.android.model.Error;
 import com.hyperwallet.android.model.Errors;
+import com.hyperwallet.android.model.paging.PageList;
+import com.hyperwallet.android.model.transfermethod.PrepaidCard;
 import com.hyperwallet.android.model.transfermethod.TransferMethod;
+import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepository;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryImpl;
 
 import org.hamcrest.Matchers;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -48,24 +54,33 @@ public class ListTransferDestinationViewModelTest {
     private ListTransferDestinationViewModel mListTransferDestinationViewModel;
     private TransferMethodRepository mTransferMethodRepository;
 
+    @Rule
+    public HyperwalletExternalResourceManager mResourceManager = new HyperwalletExternalResourceManager();
+
     @Before
-    public void initializedViewModel() {
+    public void initializedViewModel() throws JSONException, HyperwalletException {
         Hyperwallet.getInstance(mock(HyperwalletAuthenticationTokenProvider.class));
         mTransferMethodRepository = mock(TransferMethodRepositoryImpl.class);
         ListTransferDestinationViewModel.ListTransferDestinationViewModelFactory factory =
                 new ListTransferDestinationViewModel.ListTransferDestinationViewModelFactory(mTransferMethodRepository);
 
+        String responseJson = mResourceManager.getResourceContent("transfer_method_list_response.json");
+        JSONObject jsonObject = new JSONObject(responseJson);
+        final PageList<TransferMethod> transferList = new PageList<>(jsonObject, TransferMethod.class);
+        transferList.getDataList();
+
         doAnswer(new Answer() {
             @Override
             public Object answer(InvocationOnMock invocation) {
                 TransferMethodRepository.LoadTransferMethodListCallback callback = invocation.getArgument(0);
-                callback.onTransferMethodListLoaded(new ArrayList<TransferMethod>());
+                callback.onTransferMethodListLoaded(transferList.getDataList());
                 return callback;
             }
         }).when(mTransferMethodRepository).loadTransferMethods(ArgumentMatchers.any(
                 TransferMethodRepository.LoadTransferMethodListCallback.class));
 
         mListTransferDestinationViewModel = spy(factory.create(ListTransferDestinationViewModel.class));
+        mListTransferDestinationViewModel.setIsSourcePrepaidCard(true);
     }
 
     @Test
@@ -73,7 +88,7 @@ public class ListTransferDestinationViewModelTest {
         mListTransferDestinationViewModel.init();
         assertThat(mListTransferDestinationViewModel.getTransferDestinationList(), is(notNullValue()));
         assertThat(mListTransferDestinationViewModel.getTransferDestinationList().getValue(),
-                Matchers.<TransferMethod>hasSize(0));
+                Matchers.<TransferMethod>hasSize(5));
     }
 
     @Test

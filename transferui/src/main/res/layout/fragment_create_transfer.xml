@@ -15,6 +15,7 @@
             android:id="@+id/create_transfer_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/section_header_height"
             android:orientation="vertical">
 
             <LinearLayout
@@ -65,6 +66,7 @@
                             android:paddingStart="@dimen/amount_padding"
                             android:paddingEnd="@dimen/amount_padding"
                             android:paddingTop="@dimen/currency_code_padding"
+                            android:layout_marginEnd="@dimen/transfer_currency_end"
                             android:textAppearance="@style/TextAppearance.Hyperwallet.Currency.Caption"
                             app:layout_constraintEnd_toStartOf="@+id/transfer_amount"
                             app:layout_constraintTop_toTopOf="parent"
@@ -77,9 +79,11 @@
                             android:background="@null"
                             android:enabled="false"
                             android:imeOptions="flagNoExtractUi|actionNext"
-                            android:inputType="numberDecimal"
+                            android:inputType="numberDecimal|none"
                             android:maxLines="1"
                             android:text="@string/defaultTransferAmount"
+                            android:longClickable = "false"
+                            android:textIsSelectable="false"
                             android:textAppearance="@style/TextAppearance.Hyperwallet.Headline2"
                             android:textColor="@color/regularColorSecondary"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -90,6 +94,7 @@
                         <TextView
                             android:id="@+id/transfer_amount_currency"
                             android:layout_width="wrap_content"
+                            android:layout_marginStart="@dimen/widget_default_margin"
                             android:layout_height="wrap_content"
                             android:paddingBottom="@dimen/currency_padding"
                             android:textAppearance="@style/TextAppearance.Hyperwallet.CurrencyCode.Caption"
@@ -159,6 +164,33 @@
                         android:text="@string/mobileTransferMax" />
                 </LinearLayout>
             </LinearLayout>
+            <LinearLayout
+                android:id="@+id/source_header_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/grid_padding_top"
+                android:paddingBottom="@dimen/item_horizontal_padding">
+
+                <TextView
+                    android:id="@+id/source_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/grid_margin_left"
+                    android:text="@string/mobileTransferFromLabel"
+                    android:textAppearance="@style/TextAppearance.Hyperwallet.Body2" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/source_data_container"
+                android:background="@drawable/content_border_bottom"
+                android:layout_marginStart="@dimen/grid_margin_left"
+                android:layout_marginEnd="@dimen/grid_margin_right"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <include
+                android:id="@+id/transfer_source"
+                layout="@layout/widget_transfer_source" />
+            </RelativeLayout>
 
             <LinearLayout
                 android:id="@+id/destination_header_container"

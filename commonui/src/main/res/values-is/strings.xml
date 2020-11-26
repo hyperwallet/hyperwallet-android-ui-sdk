@@ -1,0 +1,27 @@
+<resources>
+    <string name="error_dialog_title">Villa</string>
+    <string name="error_dialog_connectivity_title">Tengingarvandamál</string>
+    <string name="error_dialog_unexpected_title">Óvænt villa</string>
+    <string name="ok">Í lagi</string>
+    <string name="try_again_button_label">Reyndu aftur</string>
+    <string name="not_available">Ekki tiltækt</string>
+
+    <!-- title and font icon -->
+    <string name="bank_account">Bankareikningur</string>
+    <string name="bank_card">Debetkort</string>
+    <string name="wire_account">Reikningur fyrir millifærslu með símgreiðslu</string>
+    <string name="paper_check">Pappírsávísun</string>
+    <string name="prepaid_card">Fyrirframgreitt kort</string>
+    <string name="paypal_account">Paypal reikningur</string>
+    <string name="venmo_account">Venmo reikningur</string>
+    <string name="cash_pickup_mg">MoneyGram</string>
+
+    <string name="endingIn">endar á %s</string>
+    <string name="to">til %s</string>
+    <string name="not_translated_in_braces">(ekki þýtt)</string>
+
+    <string name="authentication_error_header">Sannvottunarvilla</string>
+    <string name="cancelButtonLabel">Hætta við</string>
+    <string name="remove">Fjarlægja</string>
+    <string name="mobileAreYouSure">Ertu viss?</string>
+</resources>

@@ -42,6 +42,7 @@ import com.hyperwallet.android.ui.common.view.error.OnNetworkErrorCallback;
 import com.hyperwallet.android.ui.transfer.R;
 import com.hyperwallet.android.ui.transfer.repository.TransferRepositoryFactory;
 import com.hyperwallet.android.ui.transfer.viewmodel.CreateTransferViewModel;
+import com.hyperwallet.android.ui.transfermethod.repository.PrepaidCardRepositoryFactory;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
 import com.hyperwallet.android.ui.user.repository.UserRepositoryFactory;
 
@@ -81,12 +82,14 @@ public class CreateTransferActivity extends AppCompatActivity implements OnNetwo
             factory = new CreateTransferViewModel.CreateTransferViewModelFactory(
                     TransferRepositoryFactory.getInstance().getTransferRepository(),
                     TransferMethodRepositoryFactory.getInstance().getTransferMethodRepository(),
-                    UserRepositoryFactory.getInstance().getUserRepository());
+                    UserRepositoryFactory.getInstance().getUserRepository(),
+                    PrepaidCardRepositoryFactory.getInstance().getPrepaidCardRepository());
         } else {
             factory = new CreateTransferViewModel.CreateTransferViewModelFactory(sourceToken,
                     TransferRepositoryFactory.getInstance().getTransferRepository(),
                     TransferMethodRepositoryFactory.getInstance().getTransferMethodRepository(),
-                    UserRepositoryFactory.getInstance().getUserRepository());
+                    UserRepositoryFactory.getInstance().getUserRepository(),
+                    PrepaidCardRepositoryFactory.getInstance().getPrepaidCardRepository());
         }
 
         mCreateTransferViewModel = ViewModelProviders.of(this, factory).get(CreateTransferViewModel.class);
@@ -126,6 +129,8 @@ public class CreateTransferActivity extends AppCompatActivity implements OnNetwo
             intent.putExtra(ScheduleTransferActivity.EXTRA_TRANSFER, event.getContent());
             intent.putExtra(ScheduleTransferActivity.EXTRA_TRANSFER_METHOD,
                     mCreateTransferViewModel.getTransferDestination().getValue());
+            intent.putExtra(ScheduleTransferActivity.EXTRA_TRANSFER_METHOD_SOURCE,
+                    mCreateTransferViewModel.getTransferSelectedSource().getValue());
             intent.putExtra(ScheduleTransferActivity.EXTRA_SHOW_FX_CHANGE_WARNING,
                     mCreateTransferViewModel.getShowFxRateChange().getValue());
 

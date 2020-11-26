@@ -1,0 +1,168 @@
+<resources>
+    <string name="app_name">受領</string>
+    <string name="title_activity_receipt_list">取引</string>
+    <string name="title_activity_receipt_detail">取引明細</string>
+    <string name="mobileTransactionDetailsHeader">取引明細</string>
+    <string name="transactions">取引</string>
+    <string name="mobileTransactionTypeLabel">取引</string>
+    <string name="mobileFeeInfoLabel">手数料情報</string>
+    <string name="amount">金額</string>
+    <string name="mobileFeeLabel">手数料</string>
+    <string name="mobileTransactionDetailsTotal">取引合計</string>
+    <string name="mobileTransactionDetailsLabel">明細</string>
+    <string name="mobileJournalNumberLabel">受領ID</string>
+    <string name="date">日付</string>
+    <string name="mobileMerchantTxnLabel">取引ID </string>
+    <string name="mobileConfirmNotesLabel">注</string>
+    <string name="mobileCharityName">慈善事業名</string>
+    <string name="mobileCheckNumber">小切手番号</string>
+    <string name="mobilePromoWebsite">プロモーションのウェブサイト</string>
+    <string name="concat_date_string_view_format">%s %s</string>
+
+    <string name="mobileNoTransactionsUser">表示するアクティビティはありません。</string>
+    <string name="mobileNoTransactionsPrepaidCard">過去365日間取引がありません</string>
+    <string name="title_transfer_funds">送金</string>
+    <string name="font_icon_placeholder">\ue908</string>
+    <string name="text_placeholder">プレースホルダー</string>
+
+
+
+    <!--Generic fee types-->
+    <string name="unknown_type">不明な取引タイプ</string>
+    <string name="annual_fee">年間手数料</string>
+    <string name="annual_fee_refund">年間手数料の払戻</string>
+    <string name="customer_service_fee">顧客サービス手数料</string>
+    <string name="customer_service_fee_refund">顧客サービス手数料の払戻</string>
+    <string name="expedited_shipping_fee">優先配送手数料</string>
+    <string name="generic_fee_refund">一般手数料の払戻</string>
+    <string name="monthly_fee">月間手数料</string>
+    <string name="monthly_fee_refund">月間手数料の払戻</string>
+    <string name="payment_expiry_fee">支払い期間満了手数料</string>
+    <string name="payment_fee">支払い手数料</string>
+    <string name="processing_fee">処理手数料</string>
+    <string name="standard_shipping_fee">標準配送手数料</string>
+    <string name="transfer_fee">送金手数料</string>
+
+    <!--Generic payment types-->
+    <string name="adjustment">残高調整</string>
+    <string name="foreign_exchange">外国為替</string>
+    <string name="deposit">支払い</string>
+    <string name="manual_adjustment">調整</string>
+    <string name="payment_expiration">支払いが期限切れになりました</string>
+
+    <!--Bank account-specific types-->
+    <string name="bank_account_transfer_fee">銀行口座の返金手数料</string>
+    <string name="bank_account_transfer_return">銀行口座の返金</string>
+    <string name="bank_account_transfer_return_fee">銀行口座の返金手数料</string>
+    <string name="transfer_to_bank_account">銀行口座</string>
+
+    <!--Card-specific types-->
+    <string name="card_activation_fee">カード有効化手数料</string>
+    <string name="card_activation_fee_waiver">カード有効化手数料の免除</string>
+    <string name="card_fee">カード手数料</string>
+    <string name="manual_transfer_to_prepaid_card">カードに送金</string>
+    <string name="prepaid_card_balance_inquiry_fee">残高照会手数料</string>
+    <string name="prepaid_card_cash_advance">キャッシングサービス</string>
+    <string name="prepaid_card_disputed_charge_refund">疑義が発生した料金の払戻</string>
+    <string name="prepaid_card_dispute_deposit">疑義が発生したカード預入</string>
+    <string name="prepaid_card_domestic_cash_withdrawal_fee">ATM引出</string>
+    <string name="prepaid_card_exchange_rate_difference">PREPAID_CARD_EXCHANGE_RATE_DIFFERENCE
+    </string>
+    <string name="prepaid_card_manual_unload">カードから送金</string>
+    <string name="prepaid_card_overseas_cash_withdrawal_fee">ATM引出</string>
+    <string name="prepaid_card_pin_change_fee">PIN変更手数料</string>
+    <string name="prepaid_card_refund">払戻</string>
+    <string name="prepaid_card_replacement_fee">カード交換手数料</string>
+    <string name="prepaid_card_sale">取引</string>
+    <string name="prepaid_card_sale_reversal">戻入された取引</string>
+    <string name="prepaid_card_unload">カードから送金</string>
+    <string name="transfer_to_prepaid_card">カードに送金</string>
+    <!---->
+    <!--Donation types-->
+    <string name="donation">寄付</string>
+    <string name="donation_fee">寄付手数料</string>
+    <string name="donation_return">寄付の返金</string>
+    <!---->
+    <!--Merchant payment types-->
+    <string name="merchant_payment">加盟店支払い</string>
+    <string name="merchant_payment_fee">加盟店支払い手数料</string>
+    <string name="merchant_payment_refund">加盟店支払いの払戻</string>
+    <string name="merchant_payment_return">加盟店支払いの返金</string>
+    <!---->
+    <!--MoneyGram types-->
+    <string name="moneygram_transfer_return">MoneyGramの返金</string>
+    <string name="transfer_to_moneygram">MoneyGram</string>
+    <!---->
+    <!--Paper check types-->
+    <string name="paper_check_fee">小切手手数料</string>
+    <string name="paper_check_refund">小切手の払戻</string>
+    <string name="transfer_to_paper_check">小切手</string>
+    <!---->
+    <!--User and program account types-->
+    <string name="account_closure">口座閉鎖</string>
+    <string name="account_closure_fee">口座閉鎖手数料</string>
+    <string name="account_unload">資金の返金</string>
+    <string name="dormant_user_fee">休眠ユーザー口座手数料</string>
+    <string name="dormant_user_fee_refund">休眠ユーザー口座手数料の払戻</string>
+    <string name="payment">支払い</string>
+    <string name="payment_cancellation">支払いのキャンセル</string>
+    <string name="payment_reversal">支払い戻入</string>
+    <string name="payment_reversal_fee">支払い戻入手数料</string>
+    <string name="payment_return">支払いの返金</string>
+    <string name="transfer_to_program_account">プログラムへの送金</string>
+    <string name="transfer_to_user">ユーザーへの送金</string>
+    <string name="transfer_to_paypal_account">PayPal</string>
+    <string name="transfer_to_bank_card">銀行カード</string>
+    <string name="transfer_to_debit_card">デビットカード</string>
+    <string name="prepaid_card_transfer_return">プリペイドカードロードの返金</string>
+    <!---->
+    <!--Virtual incentive types-->
+    <string name="virtual_incentive_cancellation">プロモーションのキャンセル</string>
+    <string name="virtual_incentive_issuance">発行されたプロモーション</string>
+    <string name="virtual_incentive_purchase">プロモーションの購入</string>
+    <string name="virtual_incentive_refund">プロモーションの払戻</string>
+    <!---->
+    <!--Western Union and WUBS types-->
+    <string name="transfer_to_western_union">Western Union</string>
+    <string name="transfer_to_wubs_wire">電信送金</string>
+    <string name="western_union_transfer_return">Western Union引出</string>
+    <string name="wubs_wire_transfer_return">電信送金の返金</string>
+    <!---->
+    <!--Wire transfer types-->
+    <string name="transfer_to_wire">電信送金</string>
+    <string name="wire_transfer_fee">電信送金手数料</string>
+    <string name="wire_transfer_return">電信送金の返金</string>
+
+    <!-- New exposed receipt types -->
+    <string name="paypal_account_transfer_return">現金引出の返金</string>
+    <string name="venmo_account_transfer_return">現金引出の返金</string>
+    <string name="prepaid_card_account_deposit">口座預入</string>
+    <string name="prepaid_card_annual_fee_discount">年間手数料割引</string>
+    <string name="prepaid_card_bill_reprint_fee">請求書再発行手数料</string>
+    <string name="prepaid_card_atm_or_cash_advance_fee">ATM／キャッシングサービス手数料</string>
+    <string name="prepaid_card_cash_advance_chargeback">キャッシングサービス支払拒否</string>
+    <string name="prepaid_card_cash_advance_chargeback_reversal">キャッシングサービス支払拒否の戻入</string>
+    <string name="prepaid_card_cash_advance_repress">キャッシングサービスの抑制</string>
+    <string name="prepaid_card_cash_advance_repress_reversal">高度な抑制の取消</string>
+    <string name="prepaid_card_chargeback">支払拒否</string>
+    <string name="prepaid_card_chargeback_refund">支払拒否の払戻</string>
+    <string name="prepaid_card_chargeback_refund_reversal">支払拒否の払戻の取消</string>
+    <string name="prepaid_card_chargeback_reversal">支払拒否の取消</string>
+    <string name="prepaid_card_commission_or_fee">手数料／コミッション</string>
+    <string name="prepaid_card_debit_transfer">借方／送金</string>
+    <string name="prepaid_card_document_request_fee">文書請求手数料</string>
+    <string name="prepaid_card_emergency_cash">緊急用資金</string>
+    <string name="prepaid_card_emergency_card">緊急用カード</string>
+    <string name="prepaid_card_income">収入</string>
+    <string name="prepaid_card_load_fee">PAN手数料</string>
+    <string name="prepaid_card_refund_fee">払戻手数料</string>
+    <string name="prepaid_card_monthly_maintenance_fee">月間維持手数料</string>
+    <string name="prepaid_card_transaction_fee">取引手数料</string>
+    <string name="prepaid_card_sms_fee">SMS手数料</string>
+    <string name="prepaid_card_declined_authorization_fee">オーソリゼーション手数料拒否</string>
+    <string name="fispc">購入</string>
+
+    <!-- Prepaid Cards Receipt   -->
+    <string name="mobileAvailableBalances">利用可能な資金</string>
+
+</resources>

@@ -1,0 +1,70 @@
+<resources>
+    <string name="title_activity_create_transfer">Överför pengar</string>
+    <string name="mobileConfirmationHeader">Bekräfta uppgifterna</string>
+    <string name="mobileConfirmNotesLabel">ANTECKNING</string>
+    <string name="transfer_destination">Destination</string>
+    <string name="mobileTransferToLabel">ÖVERFÖR TILL</string>
+    <string name="mobileTransferFundsHeader">Överför pengar</string>
+    <string name="mobileFXlabel">UTLÄNDSK VALUTA</string>
+    <string name="transfer_header_label">Överföring</string>
+    <string name="noTransferMethodAdded">Överföringsmetod krävs</string>
+    <string name="transfer_amount_hint">Belopp</string>
+    <string name="transfer_currency_placeholder">USD</string>
+    <string name="transfer_currency_code_placeholder">$</string>
+    <string name="transfer_all_funds_label">Överför maxbelopp</string>
+    <string name="mobileAvailableBalance">Tillgängligt belopp: %s %s %s</string>
+    <string name="mobileSummaryLabel">SAMMANFATTNING</string>
+    <string name="mobileNoteLabel">Anteckning</string>
+    <string name="transfer_notes_label">Anteckning</string>
+    <string name="transfer_notes_additional_info_label">Lägg till en anteckning (valfritt)</string>
+    <string name="continueButtonLabel">Fortsätt</string>
+    <string name="defaultTransferAmount">0</string>
+    <string name="transfer">Överföring</string>
+    <string name="add_text">+</string>
+    <string name="mobileAddTransferMethod">Lägg till överföringsmetod</string>
+    <string name="add_transfer_description_1">Lägg till en överföringsmetod för att komma igång.</string>
+    <string name="add_transfer_description_2">Lägg till en överföringsmetod för att komma igång.</string>
+    <string name="transfer_destination_selection_description">Val av överföringsmetod</string>
+    <string name="destination_item_description">Destinationsobjekt</string>
+
+    <string name="amount_currency_format">%s %s</string>
+
+    <string name="module_transfermethodui_unavailable_error">Du kan inte lägga till en överföringsmetod.</string>
+    <string name="transferAmountInvalid">Ange ett giltigt överföringsbelopp</string>
+
+    <string name="mobileFXsell">Från</string>
+    <string name="mobileFXbuy">Till</string>
+    <string name="mobileFXRateLabel">Valutakurs</string>
+
+    <string name="mobileConfirmDetailsAmount">Belopp</string>
+    <string name="mobileConfirmDetailsFee">Avgift</string>
+    <string name="mobileConfirmDetailsTotal">Du kommer att få</string>
+    <string name="exchange_rate_change_warning">På grund av förändringar i valutakursen, kommer du nu att få %1$s %2$s.</string>
+
+
+    <string name="mobileTransferMax">Överför maxbelopp</string>
+    <string name="transfer_summary_placeholder">Tillgängligt belopp: 2 422,90 CAD</string>
+    <string name="transfer_notes_placeholder">Delöverföring</string>
+    <string name="transfer_item_icon_placeholder">\ue000</string>
+    <string name="transfer_item_title_placeholder">Överföringstyp</string>
+    <string name="transfer_item_country_placeholder">Landets namn</string>
+    <string name="transfer_item_identification_placeholder">Ändring på XXXX</string>
+    <string name="foreign_exchange_sell_placeholder">15,05 CAD</string>
+    <string name="foreign_exchange_buy_placeholder">11,00 USD</string>
+    <string name="foreign_exchange_rate_placeholder">1 CAD = 0,73897 USD</string>
+    <string name="summary_amount_placeholder">10,00 CAD</string>
+    <string name="summary_amount_fee_placeholder">0,25 CAD</string>
+    <string name="summary_amount_transfer_placeholder">9,75 CAD</string>
+    <string name="exchange_rate_change_warning_placeholder">På grund av förändringar i valutakursen, kommer du nu att få 10,00 CAD.</string>
+
+    <string name="mobileTransferSuccessMsg">Din överföring behandlas</string>
+    <string name="mobileTransferSuccessDetails">Pengarna är på väg till ditt %s</string>
+    <string name="doneButtonLabel">Klart</string>
+    <string name="mobileTransferMethodsHeader">Överföringsmetoder</string>
+    <string name="mobileTransferFromLabel">ÖVERFÖRING FRÅN</string>
+    <string name="transferSource">Källa</string>
+    <string name="mobileTransferFromHeader">Överföring från</string>
+    <string name="availableFunds">Tillgängligt saldo</string>
+    <string name="noTransferFromSourceAvailableError">Det finns ingen överföring från källan tillgänglig</string>
+
+</resources>

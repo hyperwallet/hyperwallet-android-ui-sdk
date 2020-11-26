@@ -25,6 +25,7 @@ import static com.hyperwallet.android.model.StatusTransition.StatusDefinition.DE
 import static com.hyperwallet.android.ui.common.view.error.DefaultErrorDialogFragment.RESULT_ERROR;
 import static com.hyperwallet.android.ui.testutils.util.EspressoUtils.atPosition;
 import static com.hyperwallet.android.ui.testutils.util.EspressoUtils.withDrawable;
+import static org.hamcrest.Matchers.not;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -149,11 +150,10 @@ public class ListTransferMethodTest {
                 matches(atPosition(4, hasDescendant(withText(R.string.prepaid_card_font_icon)))));
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(4, hasDescendant(withText(R.string.prepaid_card)))));
-        onView(withId(R.id.list_transfer_method_item)).check(matches(atPosition(4, hasDescendant(withText("Canada")))));
         onView(withId(R.id.list_transfer_method_item)).check(
-                matches(atPosition(4, hasDescendant(withText(getEndingIn("3187"))))));
+                matches(atPosition(4, hasDescendant(withText(getCardBrandWithFourDigits("Visa", "3187"))))));
         onView(withId(R.id.list_transfer_method_item)).check(
-                matches(atPosition(4, hasDescendant(withDrawable(R.drawable.ic_three_dots_16dp)))));
+                matches(atPosition(4, hasDescendant(withText("Log in using a web browser to manage your card")))));
 
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(5, hasDescendant(withText(R.string.paypal_account_font_icon)))));
@@ -265,8 +265,9 @@ public class ListTransferMethodTest {
 
         // confirmation dialog is shown before deletion
         onView(withText(R.string.mobileAreYouSure)).check(matches(isDisplayed()));
-        String confirmMessageBody = getRemoveConfirmationMessage(InstrumentationRegistry.getInstrumentation().getTargetContext()
-                .getString(R.string.bank_account));
+        String confirmMessageBody = getRemoveConfirmationMessage(
+                InstrumentationRegistry.getInstrumentation().getTargetContext()
+                        .getString(R.string.bank_account));
         onView(withText(confirmMessageBody)).check(matches(isDisplayed()));
         onView(withId(android.R.id.button1)).check(matches(withText(R.string.remove)));
         onView(withId(android.R.id.button2)).check(matches(withText(R.string.cancelButtonLabel)));
@@ -343,8 +344,9 @@ public class ListTransferMethodTest {
 
         // confirmation dialog is shown before deletion
         onView(withText(R.string.mobileAreYouSure)).check(matches(isDisplayed()));
-        String confirmMessageBody = getRemoveConfirmationMessage(InstrumentationRegistry.getInstrumentation().getTargetContext()
-                .getString(R.string.bank_card));
+        String confirmMessageBody = getRemoveConfirmationMessage(
+                InstrumentationRegistry.getInstrumentation().getTargetContext()
+                        .getString(R.string.bank_card));
         onView(withText(confirmMessageBody)).check(matches(isDisplayed()));
         onView(withId(android.R.id.button1)).check(matches(withText(R.string.remove)));
         onView(withId(android.R.id.button2)).check(matches(withText(R.string.cancelButtonLabel)));
@@ -409,8 +411,9 @@ public class ListTransferMethodTest {
 
         // confirmation dialog is shown before deletion
         onView(withText(R.string.mobileAreYouSure)).check(matches(isDisplayed()));
-        String confirmMessageBody = getRemoveConfirmationMessage(InstrumentationRegistry.getInstrumentation().getTargetContext()
-                .getString(R.string.paypal_account));
+        String confirmMessageBody = getRemoveConfirmationMessage(
+                InstrumentationRegistry.getInstrumentation().getTargetContext()
+                        .getString(R.string.paypal_account));
         onView(withText(confirmMessageBody)).check(matches(isDisplayed()));
         onView(withId(android.R.id.button1)).check(matches(withText(R.string.remove)));
         onView(withId(android.R.id.button2)).check(matches(withText(R.string.cancelButtonLabel)));
@@ -458,8 +461,9 @@ public class ListTransferMethodTest {
 
         // confirmation dialog is shown before deletion
         onView(withText(R.string.mobileAreYouSure)).check(matches(isDisplayed()));
-        String confirmMessageBody = getRemoveConfirmationMessage(InstrumentationRegistry.getInstrumentation().getTargetContext()
-                .getString(R.string.bank_account));
+        String confirmMessageBody = getRemoveConfirmationMessage(
+                InstrumentationRegistry.getInstrumentation().getTargetContext()
+                        .getString(R.string.bank_account));
         onView(withText(confirmMessageBody)).check(matches(isDisplayed()));
         onView(withId(android.R.id.button1)).check(matches(withText(R.string.remove)));
         onView(withId(android.R.id.button2)).check(matches(withText(R.string.cancelButtonLabel)));
@@ -496,8 +500,9 @@ public class ListTransferMethodTest {
         onView(withText(R.string.remove)).check(matches(isDisplayed())).perform(click());
 
         // Assert Remove confirmation dialog is not shown
-        String confirmMessageBody = getRemoveConfirmationMessage(InstrumentationRegistry.getInstrumentation().getTargetContext()
-                .getString(R.string.paper_check));
+        String confirmMessageBody = getRemoveConfirmationMessage(
+                InstrumentationRegistry.getInstrumentation().getTargetContext()
+                        .getString(R.string.paper_check));
         onView(withText(R.string.mobileAreYouSure)).check(matches(isDisplayed()));
         onView(withText(confirmMessageBody)).check(matches(isDisplayed()));
 
@@ -514,10 +519,146 @@ public class ListTransferMethodTest {
                 mActivityTestRule.getActivityResult().getResultCode(), is(RESULT_ERROR));
     }
 
+    @Test
+    public void testListTransferMethod_prepaidCardTransferMethods() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_list_ppc_response.json")).mock();
+
+        // run test
+        mActivityTestRule.launchActivity(null);
+
+        // assert
+        onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
+                .check(matches(withText(R.string.mobileTransferMethodsHeader)));
+        onView(withId(R.id.fab)).check(matches(isDisplayed()));
+
+        onView(withId(R.id.list_transfer_method_item)).check(
+                matches(atPosition(0, hasDescendant(withText(R.string.prepaid_card_font_icon)))));
+        onView(withId(R.id.list_transfer_method_item)).check(
+                matches(atPosition(0, hasDescendant(withText(R.string.prepaid_card)))));
+        String visa = InstrumentationRegistry.getInstrumentation().getTargetContext()
+                .getString(R.string.visa);
+        onView(withId(R.id.list_transfer_method_item)).check(
+                matches(atPosition(0, hasDescendant(withText(getCardBrandWithFourDigits(visa,"8766"))))));
+        onView(withId(R.id.list_transfer_method_item)).check(
+                matches(atPosition(0, hasDescendant(withText(R.string.prepaidCardManagementInfo)))));
+
+        onView(withId(R.id.list_transfer_method_item)).check(
+                matches(atPosition(1, hasDescendant(withText(R.string.prepaid_card_font_icon)))));
+        onView(withId(R.id.list_transfer_method_item)).check(
+                matches(atPosition(1, hasDescendant(withText(R.string.prepaid_card)))));
+        String master = InstrumentationRegistry.getInstrumentation().getTargetContext()
+                .getString(R.string.mastercard);
+        onView(withId(R.id.list_transfer_method_item)).check(
+                matches(atPosition(1, hasDescendant(withText(getCardBrandWithFourDigits(master,"8767"))))));
+        onView(withId(R.id.list_transfer_method_item)).check(
+                matches(atPosition(1, hasDescendant(withText(R.string.prepaidCardManagementInfo)))));
+
+    }
+
+    @Test
+    public void testListTransferMethod_venmoTransferMethods() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_list_venmo_response.json")).mock();
+
+        // run test
+        mActivityTestRule.launchActivity(null);
+
+        // assert
+        onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
+                .check(matches(withText(R.string.mobileTransferMethodsHeader)));
+        onView(withId(R.id.fab)).check(matches(isDisplayed()));
+
+        onView(withId(R.id.list_transfer_method_item)).check(
+                matches(atPosition(0, hasDescendant(withText(R.string.venmo_account_font_icon)))));
+        onView(withId(R.id.list_transfer_method_item)).check(
+                matches(atPosition(0, hasDescendant(withText(R.string.venmo_account)))));
+        onView(withId(R.id.list_transfer_method_item)).check(
+                matches(atPosition(0, hasDescendant(withText("United States")))));
+        onView(withId(R.id.list_transfer_method_item)).check(
+                matches(atPosition(0, hasDescendant(withText(getEndingIn("1234"))))));
+        onView(withId(R.id.list_transfer_method_item)).check(
+                matches(atPosition(0, hasDescendant(withDrawable(R.drawable.ic_three_dots_16dp)))));
+    }
+
+    @Test
+    public void testListTransferMethod_removeVenmoAccount() throws InterruptedException {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_list_venmo_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_deactivate_success.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();
+
+
+        final CountDownLatch gate = new CountDownLatch(1);
+        final BroadcastReceiver br = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                gate.countDown();
+
+                StatusTransition statusTransition = intent.getParcelableExtra(
+                        "hyperwallet-local-broadcast-payload");
+                assertThat("Transition is not valid", statusTransition.getTransition(), is(DE_ACTIVATED));
+            }
+        };
+
+        // run test
+        mActivityTestRule.launchActivity(null);
+        LocalBroadcastManager.getInstance(mActivityTestRule.getActivity().getApplicationContext())
+                .registerReceiver(br, new IntentFilter("ACTION_HYPERWALLET_TRANSFER_METHOD_DEACTIVATED"));
+
+        // assert
+        onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
+        onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
+                .check(matches(withText(R.string.mobileTransferMethodsHeader)));
+        onView(withId(R.id.fab)).check(matches(isDisplayed()));
+
+
+        onView(withId(R.id.list_transfer_method_item)).check(
+                matches(atPosition(0, hasDescendant(withText(R.string.venmo_account_font_icon)))));
+        onView(withId(R.id.list_transfer_method_item)).check(
+                matches(atPosition(0, hasDescendant(withText(R.string.venmo_account)))));
+        onView(withId(R.id.list_transfer_method_item)).check(
+                matches(atPosition(0, hasDescendant(withText("United States")))));
+        onView(withId(R.id.list_transfer_method_item)).check(
+                matches(atPosition(0, hasDescendant(withText(getEndingIn("1234"))))));
+        onView(withId(R.id.list_transfer_method_item)).check(
+                matches(atPosition(0, hasDescendant(withDrawable(R.drawable.ic_three_dots_16dp)))));
+
+        onView(allOf(withDrawable(R.drawable.ic_three_dots_16dp), hasSibling(withText(R.string.venmo_account)))).perform(click());
+
+        onView(withDrawable(R.drawable.ic_trash)).check(matches(isDisplayed()));
+        onView(withText(R.string.remove)).check(matches(isDisplayed())).perform(click());
+
+        // confirmation dialog is shown before deletion
+        onView(withText(R.string.mobileAreYouSure)).check(matches(isDisplayed()));
+        String confirmMessageBody = getRemoveConfirmationMessage(
+                InstrumentationRegistry.getInstrumentation().getTargetContext()
+                        .getString(R.string.paypal_account));
+        onView(withText(confirmMessageBody)).check(matches(isDisplayed()));
+        onView(withId(android.R.id.button1)).check(matches(withText(R.string.remove)));
+        onView(withId(android.R.id.button2)).check(matches(withText(R.string.cancelButtonLabel)));
+
+        onView(withId(android.R.id.button1)).perform(click());
+
+        gate.await(5, SECONDS);
+        LocalBroadcastManager.getInstance(mActivityTestRule.getActivity().getApplicationContext()).unregisterReceiver(
+                br);
+        assertThat("Action is not broadcasted", gate.getCount(), is(0L));
+
+        onView(withId(R.id.empty_transfer_method_list_layout)).check(matches(isDisplayed()));
+        onView(withText(R.string.emptyStateAddTransferMethod)).check(matches(isDisplayed()));
+
+    }
+
     private String getEndingIn(String ending) {
         return String.format(InstrumentationRegistry.getInstrumentation().getTargetContext()
-                .getString(R.string.endingIn),ending);
+                .getString(R.string.endingIn), ending);
+    }
 
+
+    private String getCardBrandWithFourDigits(String cardBrand, String endingDigits) {
+        return cardBrand + "\u0020\u2022\u2022\u2022\u2022\u0020" + endingDigits;
     }
 
     private String getRemoveConfirmationMessage(String type) {

@@ -1,0 +1,168 @@
+<resources>
+    <string name="app_name">stvrzenka</string>
+    <string name="title_activity_receipt_list">Transakce</string>
+    <string name="title_activity_receipt_detail">Detaily transakce</string>
+    <string name="mobileTransactionDetailsHeader">Detaily transakce</string>
+    <string name="transactions">Transakce</string>
+    <string name="mobileTransactionTypeLabel">TRANSAKCE</string>
+    <string name="mobileFeeInfoLabel">INFORMACE O POPLATKU</string>
+    <string name="amount">Částka</string>
+    <string name="mobileFeeLabel">Poplatek</string>
+    <string name="mobileTransactionDetailsTotal">Transakce celkem</string>
+    <string name="mobileTransactionDetailsLabel">DETAILY</string>
+    <string name="mobileJournalNumberLabel">ID příjmu</string>
+    <string name="date">Datum</string>
+    <string name="mobileMerchantTxnLabel">ID transakce</string>
+    <string name="mobileConfirmNotesLabel">POZNÁMKA</string>
+    <string name="mobileCharityName">Název charitativní organizace</string>
+    <string name="mobileCheckNumber">Číslo šeku</string>
+    <string name="mobilePromoWebsite">Webové stránky akce</string>
+    <string name="concat_date_string_view_format">%s %s</string>
+
+    <string name="mobileNoTransactionsUser">Žádná aktivita k zobrazení.</string>
+    <string name="mobileNoTransactionsPrepaidCard">Žádné transakce za posledních 365 dnů</string>
+    <string name="title_transfer_funds">Převod</string>
+    <string name="font_icon_placeholder">\ue908</string>
+    <string name="text_placeholder">Zástupný znak</string>
+
+
+
+    <!--Generic fee types-->
+    <string name="unknown_type">Neznámý typ transakce</string>
+    <string name="annual_fee">Roční poplatek</string>
+    <string name="annual_fee_refund">Vrácení ročního poplatku</string>
+    <string name="customer_service_fee">Poplatek za služby zákazníkům</string>
+    <string name="customer_service_fee_refund">Vrácení poplatku za služby zákazníkům</string>
+    <string name="expedited_shipping_fee">Poplatek za urychlenou přepravu</string>
+    <string name="generic_fee_refund">Obecné vrácení poplatku</string>
+    <string name="monthly_fee">Měsíční poplatek</string>
+    <string name="monthly_fee_refund">Refundace měsíčního poplatku</string>
+    <string name="payment_expiry_fee">Poplatek za vypršení platnosti platby</string>
+    <string name="payment_fee">Poplatek za platbu</string>
+    <string name="processing_fee">Poplatek za zpracování</string>
+    <string name="standard_shipping_fee">Poplatek za standardní přepravu</string>
+    <string name="transfer_fee">Poplatek za převod</string>
+
+    <!--Generic payment types-->
+    <string name="adjustment">Úprava zůstatku</string>
+    <string name="foreign_exchange">Cizí měna</string>
+    <string name="deposit">Platba</string>
+    <string name="manual_adjustment">Úprava</string>
+    <string name="payment_expiration">Platnost platby vypršela</string>
+
+    <!--Bank account-specific types-->
+    <string name="bank_account_transfer_fee">Poplatek za vrácení na bankovní účet</string>
+    <string name="bank_account_transfer_return">Vrácení na bankovní účet</string>
+    <string name="bank_account_transfer_return_fee">Poplatek za vrácení na bankovní účet</string>
+    <string name="transfer_to_bank_account">Bankovní účet</string>
+
+    <!--Card-specific types-->
+    <string name="card_activation_fee">Poplatek za aktivaci karty</string>
+    <string name="card_activation_fee_waiver">Zřeknutí se poplatku za aktivaci karty</string>
+    <string name="card_fee">Poplatek za kartu</string>
+    <string name="manual_transfer_to_prepaid_card">Převod na kartu</string>
+    <string name="prepaid_card_balance_inquiry_fee">Poplatek za dotaz na zůstatek</string>
+    <string name="prepaid_card_cash_advance">Záloha v hotovosti</string>
+    <string name="prepaid_card_disputed_charge_refund">Sporná refundace poplatku</string>
+    <string name="prepaid_card_dispute_deposit">Sporný vklad na kartu</string>
+    <string name="prepaid_card_domestic_cash_withdrawal_fee">Výběr z bankomatu</string>
+    <string name="prepaid_card_exchange_rate_difference">PREPAID_CARD_EXCHANGE_RATE_DIFFERENCE
+    </string>
+    <string name="prepaid_card_manual_unload">Převod z karty</string>
+    <string name="prepaid_card_overseas_cash_withdrawal_fee">Výběr z bankomatu</string>
+    <string name="prepaid_card_pin_change_fee">Poplatek za změnu PINu</string>
+    <string name="prepaid_card_refund">Refundace</string>
+    <string name="prepaid_card_replacement_fee">Poplatek za výměnu karty</string>
+    <string name="prepaid_card_sale">Transakce</string>
+    <string name="prepaid_card_sale_reversal">Zpětná transakce</string>
+    <string name="prepaid_card_unload">Převod z karty</string>
+    <string name="transfer_to_prepaid_card">Převod na kartu</string>
+    <!---->
+    <!--Donation types-->
+    <string name="donation">Dar</string>
+    <string name="donation_fee">Poplatek za dar</string>
+    <string name="donation_return">Vrácení daru</string>
+    <!---->
+    <!--Merchant payment types-->
+    <string name="merchant_payment">Platba pro obchodníka</string>
+    <string name="merchant_payment_fee">Poplatek za platbu pro obchodníka</string>
+    <string name="merchant_payment_refund">Refundace platby pro obchodníka</string>
+    <string name="merchant_payment_return">Vrácení platby pro obchodníka</string>
+    <!---->
+    <!--MoneyGram types-->
+    <string name="moneygram_transfer_return">Vrácení platby přes MoneyGram</string>
+    <string name="transfer_to_moneygram">MoneyGram</string>
+    <!---->
+    <!--Paper check types-->
+    <string name="paper_check_fee">Poplatek za papírový šek</string>
+    <string name="paper_check_refund">Refundace papírového šeku</string>
+    <string name="transfer_to_paper_check">Papírový šek</string>
+    <!---->
+    <!--User and program account types-->
+    <string name="account_closure">Zrušení účtu</string>
+    <string name="account_closure_fee">Poplatek za zrušení účtu</string>
+    <string name="account_unload">Vrácení prostředků</string>
+    <string name="dormant_user_fee">Poplatek za účet neaktivního uživatele</string>
+    <string name="dormant_user_fee_refund">Vrácení poplatku za účet neaktivního uživatele</string>
+    <string name="payment">Platba</string>
+    <string name="payment_cancellation">Storno platby</string>
+    <string name="payment_reversal">Zrušení platby</string>
+    <string name="payment_reversal_fee">Poplatek za zrušení platby</string>
+    <string name="payment_return">Vrácení platby</string>
+    <string name="transfer_to_program_account">Převod do programu</string>
+    <string name="transfer_to_user">Převod uživateli</string>
+    <string name="transfer_to_paypal_account">PayPal</string>
+    <string name="transfer_to_bank_card">Bankovní karta</string>
+    <string name="transfer_to_debit_card">Debetní Karta</string>
+    <string name="prepaid_card_transfer_return">Vrácení částky nabité na předplacené kartě</string>
+    <!---->
+    <!--Virtual incentive types-->
+    <string name="virtual_incentive_cancellation">Zrušení akce</string>
+    <string name="virtual_incentive_issuance">Vystavená akce</string>
+    <string name="virtual_incentive_purchase">Nákup v rámci akce</string>
+    <string name="virtual_incentive_refund">Refundace v rámci akce</string>
+    <!---->
+    <!--Western Union and WUBS types-->
+    <string name="transfer_to_western_union">Western Union</string>
+    <string name="transfer_to_wubs_wire">Bezhotovostní převod</string>
+    <string name="western_union_transfer_return">Výběr u Western Union</string>
+    <string name="wubs_wire_transfer_return">Vrácení bezhotovostního převodu</string>
+    <!---->
+    <!--Wire transfer types-->
+    <string name="transfer_to_wire">Bezhotovostní převod</string>
+    <string name="wire_transfer_fee">Poplatek za bezhotovostní převod</string>
+    <string name="wire_transfer_return">Vrácení bezhotovostního převodu</string>
+
+    <!-- New exposed receipt types -->
+    <string name="paypal_account_transfer_return">Vrátit vyplacení hned</string>
+    <string name="venmo_account_transfer_return">Vrátit vyplacení hned</string>
+    <string name="prepaid_card_account_deposit">Vklad na účet</string>
+    <string name="prepaid_card_annual_fee_discount">Sleva z ročního poplatku</string>
+    <string name="prepaid_card_bill_reprint_fee">Poplatek za kopii faktury</string>
+    <string name="prepaid_card_atm_or_cash_advance_fee">Poplatek za výběr z bankomatu/hotovostní zálohu</string>
+    <string name="prepaid_card_cash_advance_chargeback">Zpětné zúčtování zálohy v hotovosti</string>
+    <string name="prepaid_card_cash_advance_chargeback_reversal">Zrušení zpětného zúčtování zálohy v hotovosti</string>
+    <string name="prepaid_card_cash_advance_repress">Odmítnutí zálohy v hotovosti</string>
+    <string name="prepaid_card_cash_advance_repress_reversal">Zrušení odmítnutí zálohy</string>
+    <string name="prepaid_card_chargeback">Zpětné zúčování</string>
+    <string name="prepaid_card_chargeback_refund">Refundace zpětného zúčtování</string>
+    <string name="prepaid_card_chargeback_refund_reversal">Zrušení refundace zpětného zúčtování</string>
+    <string name="prepaid_card_chargeback_reversal">Zrušení zpětného zúčtování</string>
+    <string name="prepaid_card_commission_or_fee">Poplatek/provize</string>
+    <string name="prepaid_card_debit_transfer">Debet/Převody</string>
+    <string name="prepaid_card_document_request_fee">Poplatek za vyžádání dokumentu</string>
+    <string name="prepaid_card_emergency_cash">Peníze pro případ nutnosti</string>
+    <string name="prepaid_card_emergency_card">Karta pro případ nutnosti</string>
+    <string name="prepaid_card_income">Příjem</string>
+    <string name="prepaid_card_load_fee">Poplatek za primární číslo účtu</string>
+    <string name="prepaid_card_refund_fee">Poplatek za refundaci</string>
+    <string name="prepaid_card_monthly_maintenance_fee">Měsíční poplatek za údržbu</string>
+    <string name="prepaid_card_transaction_fee">Poplatek za transakci</string>
+    <string name="prepaid_card_sms_fee">Poplatek za SMS</string>
+    <string name="prepaid_card_declined_authorization_fee">Poplatek za zamítnutí ověření</string>
+    <string name="fispc">Nákup</string>
+
+    <!-- Prepaid Cards Receipt   -->
+    <string name="mobileAvailableBalances">Dostupné prostředky</string>
+
+</resources>

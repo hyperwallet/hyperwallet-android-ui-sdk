@@ -43,9 +43,9 @@ import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletMockWebServer;
-import com.hyperwallet.android.ui.testutils.rule.HyperwalletSdkRule;
 import com.hyperwallet.android.ui.testutils.util.RecyclerViewCountAssertion;
 import com.hyperwallet.android.ui.transfer.repository.TransferRepositoryFactory;
+import com.hyperwallet.android.ui.transfer.rule.HyperwalletSdkMockRule;
 import com.hyperwallet.android.ui.transfer.view.CreateTransferActivity;
 import com.hyperwallet.android.ui.user.repository.UserRepositoryFactory;
 
@@ -65,8 +65,10 @@ public class SelectDestinationTest {
 
     @ClassRule
     public static HyperwalletExternalResourceManager sResourceManager = new HyperwalletExternalResourceManager();
+
     @Rule
-    public HyperwalletSdkRule mHyperwalletSdkRule = new HyperwalletSdkRule();
+    public HyperwalletSdkMockRule mHyperwalletMockRule = new HyperwalletSdkMockRule();
+
     @Rule
     public HyperwalletMockWebServer mMockWebServer = new HyperwalletMockWebServer(8080);
     @Rule
@@ -79,10 +81,13 @@ public class SelectDestinationTest {
     @Before
     public void setup() {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("authentication_token_response.json")).mock();
+                .getResourceContent("authentication_token_wallet_model_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("user_response.json")).mock();
         IdlingRegistry.getInstance().register(EspressoIdlingResource.getIdlingResource());
+
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("ppc/prepaid_cards_response.json")).mock();
     }
 
     @After
@@ -156,8 +161,9 @@ public class SelectDestinationTest {
         onView(withId(R.id.transfer_destination_list)).check(
                 matches(atPosition(4, hasDescendant(withText(R.string.prepaid_card)))));
         onView(withId(R.id.transfer_destination_list)).check(matches(atPosition(4, hasDescendant(withText("Canada")))));
+        String ppcInfo = getCardBrandWithFourDigits("Visa", "3187");
         onView(withId(R.id.transfer_destination_list)).check(
-                matches(atPosition(4, hasDescendant(withText("ending in 3187")))));
+                matches(atPosition(4, hasDescendant(withText(ppcInfo)))));
 
         onView(withId(R.id.transfer_destination_list)).check(
                 matches(atPosition(5, hasDescendant(withText(R.string.paypal_account_font_icon)))));
@@ -191,7 +197,7 @@ public class SelectDestinationTest {
         onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("ending in 0616")));
 
         onView(withId(R.id.transfer_summary)).perform(nestedScrollTo()).check(matches(isDisplayed()));
-        String availableFundUSD = getAvailableFund("998.00", "USD");
+        String availableFundUSD = getAvailableFund("$","998.00", "USD");
         onView(withId(R.id.transfer_summary)).check(matches(withText(availableFundUSD)));
 
         onView(withId(R.id.transfer_destination_title)).perform(click());
@@ -274,7 +280,7 @@ public class SelectDestinationTest {
         onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("ending in 5121")));
 
         onView(withId(R.id.transfer_summary)).perform(nestedScrollTo()).check(matches(isDisplayed()));
-        String availableFundCAD = getAvailableFund("1,157.40", "CAD");
+        String availableFundCAD = getAvailableFund("$","1,157.40", "CAD");
         onView(withId(R.id.transfer_summary)).check(matches(withText(availableFundCAD)));
 
     }
@@ -300,7 +306,7 @@ public class SelectDestinationTest {
         onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("ending in 0616")));
 
         onView(withId(R.id.transfer_summary)).perform(nestedScrollTo()).check(matches(isDisplayed()));
-        String availableFundUSD = getAvailableFund("998.00", "USD");
+        String availableFundUSD = getAvailableFund("$","998.00", "USD");
         onView(withId(R.id.transfer_summary)).check(matches(withText(availableFundUSD)));
 
         onView(withId(R.id.transfer_destination_title)).perform(click());
@@ -313,14 +319,14 @@ public class SelectDestinationTest {
         onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("to honey.thigpen@ukbuilder.com")));
 
         onView(withId(R.id.transfer_amount)).perform(nestedScrollTo()).check(matches(isDisplayed()));
-        onView(withId(R.id.transfer_amount)).check(matches(withText(R.string.defaultTransferAmount)));
+        onView(withId(R.id.transfer_amount)).check(matches(withText("0.00")));
         onView(withId(R.id.transfer_amount_currency)).check(matches(withText("USD")));
 
         //Check that the toggle is disabled by default
         onView(withId(R.id.transfer_all_funds)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_all_funds)).check(matches(not(isSelected())));
         onView(withId(R.id.transfer_summary)).perform(nestedScrollTo()).check(matches(isDisplayed()));
-        String availableFundUSD2 = getAvailableFund("1000.00", "USD");
+        String availableFundUSD2 = getAvailableFund("$","1,000.00", "USD");
         onView(withId(R.id.transfer_summary)).check(matches(withText(availableFundUSD2)));
 
         onView(withId(R.id.transfer_notes)).perform(nestedScrollTo()).check(matches(isDisplayed()));
@@ -402,8 +408,9 @@ public class SelectDestinationTest {
         onView(withId(R.id.transfer_destination_list)).check(
                 matches(atPosition(4, hasDescendant(withText(R.string.prepaid_card)))));
         onView(withId(R.id.transfer_destination_list)).check(matches(atPosition(4, hasDescendant(withText("Canada")))));
+        String ppcInfo = getCardBrandWithFourDigits("Visa", "3187");
         onView(withId(R.id.transfer_destination_list)).check(
-                matches(atPosition(4, hasDescendant(withText("ending in 3187")))));
+                matches(atPosition(4, hasDescendant(withText(ppcInfo)))));
 
         onView(withId(R.id.transfer_destination_list)).check(
                 matches(atPosition(5, hasDescendant(withText(R.string.paypal_account_font_icon)))));
@@ -418,10 +425,13 @@ public class SelectDestinationTest {
 
     }
 
-    private String getAvailableFund(String amount, String currency) {
+    private String getAvailableFund(String symbol,String amount, String currency) {
         String availableFund = String.format(InstrumentationRegistry.getInstrumentation().getTargetContext()
-                .getString(R.string.mobileAvailableBalance), amount , currency);
+                .getString(R.string.mobileAvailableBalance),symbol, amount , currency);
         return availableFund;
     }
 
+    private String getCardBrandWithFourDigits(String cardBrand, String endingDigits) {
+        return cardBrand + "\u0020\u2022\u2022\u2022\u2022\u0020" + endingDigits;
+    }
 }
