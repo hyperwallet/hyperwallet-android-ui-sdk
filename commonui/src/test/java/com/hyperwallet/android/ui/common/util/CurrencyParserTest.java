@@ -89,4 +89,33 @@ public class CurrencyParserTest {
             assertThat(currency, is(currencyMap.getValue()));
         }
     }
+
+    @Test
+    public void testCurrencyFormatWithSymbol() {
+        String amount = "1000000";
+            Context context = ApplicationProvider.getApplicationContext();
+            String currency = CurrencyParser.getInstance(context).formatCurrencyWithSymbol("USD", amount);
+            assertThat(currency, is("$1,000,000.00"));
+    }
+    @Test
+    public void testGetNumberOfFractionDigits_ThreeDigitDecimal(){
+        Context context = ApplicationProvider.getApplicationContext();
+        int noOfDigits = CurrencyParser.getInstance(context).getNumberOfFractionDigits("TND");
+        assertThat(noOfDigits, is(3));
+    }
+
+    @Test
+    public void testGetCurrency() {
+        Context context = ApplicationProvider.getApplicationContext();
+        CurrencyDetails currencyDetails = CurrencyParser.getInstance(context).getCurrency("TND");
+        assertThat(currencyDetails.getSymbol(), is("د.ت"));
+        assertThat(currencyDetails.getDecimals(),is(3));
+    }
+
+    @Test
+    public void testGetNumberOfFractionDigits_NoDigitDecimal(){
+        Context context = ApplicationProvider.getApplicationContext();
+        int noOfDigits = CurrencyParser.getInstance(context).getNumberOfFractionDigits("JPY");
+        assertThat(noOfDigits, is(0));
+    }
 }

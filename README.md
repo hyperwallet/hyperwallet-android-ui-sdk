@@ -18,9 +18,9 @@ Note that this SDK is geared towards those who need both backend data and UI fea
 To install Hyperwallet UI SDK, you just need to add the dependencies into your build.gradle file in Android Studio (or Gradle). For example:
 
 ```bash
-api 'com.hyperwallet.android.ui:transfermethodui:1.0.0-beta06'
-api 'com.hyperwallet.android.ui:receiptui:1.0.0-beta06'
-api 'com.hyperwallet.android.ui:transferui:1.0.0-beta06'
+api 'com.hyperwallet.android.ui:transfermethodui:1.0.0-beta07'
+api 'com.hyperwallet.android.ui:receiptui:1.0.0-beta07'
+api 'com.hyperwallet.android.ui:transferui:1.0.0-beta07'
 ```
 
 ### Proguard
@@ -28,7 +28,7 @@ api 'com.hyperwallet.android.ui:transferui:1.0.0-beta06'
 When enabling Proguard, please add a rule in `proguard-rules.pro` file in your main app
 
 ```properties
--keep public class com.hyperwallet.android.model.** { *; }
+-keep public class com.hyperwallet.android.** { *; }
 ```
 
 ## Initialization
@@ -134,7 +134,7 @@ public void onClick(View view) {
 }
 ```
 
-### Create a transfer using the logged in user as the source of funds
+### Display all the available sources to make a new transfer from. User can then select the transfer from source and make a new tansfer from that source
 The second argument is boolean flag to control view orientation, <code>lockScreenToPortrait</code> set to <code>true</code> 
 will lock the screen to Portrait orientation otherwise it will just follow device orientation.
 ```java
@@ -188,6 +188,16 @@ will lock the screen to Portrait orientation otherwise it will just follow devic
 ```java
 public void onClick(View view) {
     Intent intent = mHyperwalletReceiptUi.getIntentListPrepaidCardReceiptActivity(MainActivity.this, "trm-12345", false);
+    startActivity(intent);
+}
+```
+
+### List receipts from all available sources
+The second argument is boolean flag to control view orientation, <code>lockScreenToPortrait</code> set to <code>true</code>
+will lock the screen to Portrait orientation otherwise it will just follow device orientation.
+```java
+public void onClick(View view) {
+    Intent intent = mHyperwalletReceiptUi.getIntentListReceiptActivity(MainActivity.this, false);
     startActivity(intent);
 }
 ```
@@ -312,6 +322,17 @@ Listed below are the names of these styles:
 | Widget.Hyperwallet.ProgressBar.Receipts | @style/Widget.AppCompat.ProgressBar |
 | TextAppearance.Hyperwallet.Positive | TextAppearance.MaterialComponents.Subtitle1 |
 | TextAppearance.Hyperwallet.Negative | TextAppearance.MaterialComponents.Subtitle1 |
+
+## Material Components Version and Theme
+Hyperwallet UI SDK supports Material Components Version `1.0.0`, if your App needs to use higher version it may lead to unexpected behavior around floating text hints if you are not using Bridge theme.
+As a workaround you may override the themes of UI SDK activities to use Bridge themes. An example below:
+
+```
+ <activity
+        android:name="com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity"
+        android:theme="@style/Theme.MaterialComponents.NoActionBar.Bridge"
+        tools:replace="android:theme" />
+```
 
 ## Error Handling
 In Hyperwallet UI SDK, we categorize HyperwalletException into three groups:

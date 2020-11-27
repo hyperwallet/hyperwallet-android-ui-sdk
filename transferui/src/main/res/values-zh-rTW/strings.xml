@@ -12,7 +12,7 @@
     <string name="transfer_currency_placeholder">美元</string>
     <string name="transfer_currency_code_placeholder">$</string>
     <string name="transfer_all_funds_label">最高轉帳金額</string>
-    <string name="mobileAvailableBalance">可用金額：%s %s</string>
+    <string name="mobileAvailableBalance">可用金額：%s %s %s</string>
     <string name="mobileSummaryLabel">摘要</string>
     <string name="mobileNoteLabel">附註</string>
     <string name="transfer_notes_label">附註</string>
@@ -28,7 +28,6 @@
     <string name="destination_item_description">目的地項目</string>
 
     <string name="amount_currency_format">%s %s</string>
-    <string name="exchange_rate_format">1 %s = %s %s</string>
 
     <string name="module_transfermethodui_unavailable_error">您無法新增轉帳方式。</string>
     <string name="transferAmountInvalid">請輸入有效的轉帳金額</string>

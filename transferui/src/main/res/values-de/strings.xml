@@ -12,7 +12,7 @@
     <string name="transfer_currency_placeholder">USD</string>
     <string name="transfer_currency_code_placeholder">$</string>
     <string name="transfer_all_funds_label">Höchstbetrag überweisen</string>
-    <string name="mobileAvailableBalance">Verfügbarer Betrag: %s %s</string>
+    <string name="mobileAvailableBalance">Verfügbarer Betrag: %s %s %s</string>
     <string name="mobileSummaryLabel">ZUSAMMENFASSUNG</string>
     <string name="mobileNoteLabel">Anmerkung</string>
     <string name="transfer_notes_label">Anmerkung</string>
@@ -28,7 +28,6 @@
     <string name="destination_item_description">Zielelement</string>
 
     <string name="amount_currency_format">%s %s</string>
-    <string name="exchange_rate_format">1 %s = %s %s</string>
 
     <string name="module_transfermethodui_unavailable_error">Sie können keine Überweisungsmethode hinzufügen.</string>
     <string name="transferAmountInvalid">Geben Sie einen gültigen Überweisungsbetrag ein.</string>
