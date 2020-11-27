@@ -26,10 +26,9 @@
         android:background="@drawable/view_item_ripple"
         android:id="@+id/receipt_item"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/grid_margin_left"
         android:layout_marginEnd="@dimen/grid_margin_right"
-        android:minHeight="@dimen/item_receipt_information_height">
+        android:layout_height="wrap_content">
 
         <include layout="@layout/receipt" />
 
