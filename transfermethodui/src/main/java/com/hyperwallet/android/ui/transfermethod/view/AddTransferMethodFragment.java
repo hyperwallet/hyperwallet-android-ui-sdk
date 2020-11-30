@@ -22,6 +22,7 @@ import static com.hyperwallet.android.model.transfermethod.TransferMethod.Transf
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TYPE;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.BANK_ACCOUNT;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.BANK_CARD;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.PAPER_CHECK;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.PAYPAL_ACCOUNT;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.VENMO_ACCOUNT;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.WIRE_ACCOUNT;
@@ -59,6 +60,7 @@ import com.hyperwallet.android.model.graphql.field.Field;
 import com.hyperwallet.android.model.graphql.field.FieldGroup;
 import com.hyperwallet.android.model.transfermethod.BankAccount;
 import com.hyperwallet.android.model.transfermethod.BankCard;
+import com.hyperwallet.android.model.transfermethod.PaperCheck;
 import com.hyperwallet.android.model.transfermethod.PayPalAccount;
 import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import com.hyperwallet.android.model.transfermethod.VenmoAccount;
@@ -564,12 +566,12 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                             .transferMethodCurrency(mCurrency)
                             .build();
                     break;
-                //Todo case paper check
-               /* mTransferMethod = new VenmoAccount.Builder()
-                        .transferMethodCountry(mCountry)
-                        .transferMethodCurrency(mCurrency)
+                case PAPER_CHECK:
+                mTransferMethod = new PaperCheck.Builder()
+                        .addressLine1("")
+                        .city("")
                         .build();
-                break;*/
+                break;
                 default:
                     mTransferMethod = new TransferMethod();
                     mTransferMethod.setField(TRANSFER_METHOD_COUNTRY, mCountry);
