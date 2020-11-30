@@ -12,7 +12,7 @@
     <string name="transfer_currency_placeholder">ASD</string>
     <string name="transfer_currency_code_placeholder">$</string>
     <string name="transfer_all_funds_label">Pindah jumlah maks</string>
-    <string name="mobileAvailableBalance">Jumlah yang tersedia: %s %s</string>
+    <string name="mobileAvailableBalance">Jumlah yang tersedia: %s %s %s</string>
     <string name="mobileSummaryLabel">RINGKASAN</string>
     <string name="mobileNoteLabel">Nota</string>
     <string name="transfer_notes_label">Nota</string>
@@ -28,7 +28,6 @@
     <string name="destination_item_description">Item destinasi</string>
 
     <string name="amount_currency_format">%s %s</string>
-    <string name="exchange_rate_format">1 %s = %s %s</string>
 
     <string name="module_transfermethodui_unavailable_error">Anda tidak boleh menambah kaedah pemindahan.</string>
     <string name="transferAmountInvalid">Masukkan jumlah pemindahan yang sah</string>

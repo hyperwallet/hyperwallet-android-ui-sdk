@@ -12,7 +12,7 @@
     <string name="transfer_currency_placeholder">ам.доллар</string>
     <string name="transfer_currency_code_placeholder">$</string>
     <string name="transfer_all_funds_label">Шилжүүлгийн хамгийн их дүн</string>
-    <string name="mobileAvailableBalance">Боломжтой дүн: %s %s</string>
+    <string name="mobileAvailableBalance">Боломжтой дүн: %s %s %s</string>
     <string name="mobileSummaryLabel">ХУРААНГУЙ</string>
     <string name="mobileNoteLabel">Анхаар</string>
     <string name="transfer_notes_label">Анхаар</string>
@@ -28,7 +28,6 @@
     <string name="destination_item_description">Хүлээн авах зүйл</string>
 
     <string name="amount_currency_format">%s %s</string>
-    <string name="exchange_rate_format">1 %s = %s %s</string>
 
     <string name="module_transfermethodui_unavailable_error">Та шилжүүлгийн аргыг нэмэх боломжгүй.</string>
     <string name="transferAmountInvalid">Зөв шилжүүлгийн дүнг оруулна уу</string>

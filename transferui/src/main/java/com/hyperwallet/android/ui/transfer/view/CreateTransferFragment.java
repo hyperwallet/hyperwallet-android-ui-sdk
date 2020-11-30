@@ -88,8 +88,8 @@ public class CreateTransferFragment extends Fragment {
     private static final String ELLIPSIS = "...";
     private static final int NOTES_MAX_LINE_LENGTH = 40;
     private static final String REGEX_ONLY_NUMBER = "[^0-9]";
-    private static final String REGEX_REMOVE_TRAILING_EMPTY_SPACE = "\\s+$";
-    private static final String REGEX_ONLY_NUMBER_AND_DECIMAL = "[^0-9.]";
+    private static final String REGEX_REMOVE_EMPTY_SPACE = "^\\s+|\\s+$";
+    public static final String REGEX_ONLY_NUMBER_AND_DECIMAL = "[^0-9.]";
     private static final String US_CURRENCY_CODE = "USD";
     private static final String CURRENCY_FILE_NAME = "currency.json";
     private final String CURRENCY_CODE = "currencycode";
@@ -366,21 +366,16 @@ public class CreateTransferFragment extends Fragment {
                         if (cleanString.length() != 0) {
                             double parsed = Double.parseDouble(cleanString);
                             String formatted;
-                            switch (mNumberOfFractionDigits) {
-                                case 0:
-                                    formatted = formattedAmount(parsed, mCurrencyCode);
-                                    break;
-                                case 1:
-                                    formatted = formattedAmount(parsed / 10, mCurrencyCode);
-                                    break;
-                                case 2:
-                                    formatted = formattedAmount(parsed / 100, mCurrencyCode);
-                                    break;
-                                case 3:
-                                    formatted = formattedAmount(parsed / 1000, mCurrencyCode);
-                                    break;
-                                default:
-                                    formatted = "";
+                            int fractionalDenominator = 10;
+                            if (mNumberOfFractionDigits > 1) {
+                                for (int i = 1; i < mNumberOfFractionDigits; i++) {
+                                    fractionalDenominator *= 10;
+                                }
+                            }
+                            if (mNumberOfFractionDigits == 0) {
+                                formatted = formattedAmount(parsed, mCurrencyCode);
+                            } else {
+                                formatted = formattedAmount(parsed / fractionalDenominator, mCurrencyCode);
                             }
                             if (formatted.replaceAll(REGEX_ONLY_NUMBER, EMPTY_STRING).length()
                                     <= MAX_AMOUNT_WHOLE_NUMBER) {
@@ -563,10 +558,6 @@ public class CreateTransferFragment extends Fragment {
                     @Override
                     public void onChanged(TransferSource transferSource) {
 
-                        mTransferAmount.setText(formattedAmount(
-                                stringToDouble((String) getResources().getText(R.string.defaultTransferAmount)),
-                                mCurrencyCode));
-
                         showTransferSource(transferSource);
                     }
                 });
@@ -617,8 +608,11 @@ public class CreateTransferFragment extends Fragment {
             @Override
             public void onChanged(final Transfer transfer) {
                 if (transfer != null) {
+                    CurrencyDetails currencyDetails = getNumberOfFractionDigits(mCurrencyCode);
                     String summary = requireContext().getString(R.string.mobileAvailableBalance,
-                            transfer.getDestinationAmount(), transfer.getDestinationCurrency());
+                            currencyDetails == null ? "" : currencyDetails.getSymbol(),
+                            formattedAmount(stringToDouble(transfer.getDestinationAmount()), mCurrencyCode),
+                            transfer.getDestinationCurrency());
                     mTransferAllFundsSummary.setText(summary);
                     mTransferAllFundsSummary.setVisibility(View.VISIBLE);
                     if (mCreateTransferViewModel.isUpdateTransferAllFunds()) {
@@ -766,7 +760,7 @@ public class CreateTransferFragment extends Fragment {
         mGroupSeparator = Character.toString(decimalFormatSymbols.getGroupingSeparator());
         mCreateTransferViewModel.setDecimalSeparator(mDecimalSeparator);
         mCreateTransferViewModel.setGroupSeparator(mGroupSeparator);
-        return currencyFormatter.format(amount).replaceAll(REGEX_REMOVE_TRAILING_EMPTY_SPACE, EMPTY_STRING);
+        return currencyFormatter.format(amount).replaceAll(REGEX_REMOVE_EMPTY_SPACE, EMPTY_STRING);
     }
 
     private double stringToDouble(@NonNull final String amount) {

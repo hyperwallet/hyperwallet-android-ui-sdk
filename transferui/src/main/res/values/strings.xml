@@ -12,7 +12,7 @@
     <string name="transfer_currency_placeholder">USD</string>
     <string name="transfer_currency_code_placeholder">$</string>
     <string name="transfer_all_funds_label">Transfer max amount</string>
-    <string name="mobileAvailableBalance">Amount available: %s %s</string>
+    <string name="mobileAvailableBalance">Amount available: %s %s %s</string>
     <string name="mobileSummaryLabel">SUMMARY</string>
     <string name="mobileNoteLabel">Note</string>
     <string name="transfer_notes_label">Note</string>
@@ -28,7 +28,7 @@
     <string name="destination_item_description">Destination item</string>
 
     <string name="amount_currency_format">%s %s</string>
-    <string name="exchange_rate_format">1 %s = %s %s</string>
+    <string name="exchange_rate_format" translatable="false">%s1 %s = %s%s %s</string>
 
     <string name="module_transfermethodui_unavailable_error">You\'re not able to add a transfer method.</string>
     <string name="transferAmountInvalid">Enter a valid transfer amount</string>

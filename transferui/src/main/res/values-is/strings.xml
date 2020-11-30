@@ -12,7 +12,7 @@
     <string name="transfer_currency_placeholder">USD</string>
     <string name="transfer_currency_code_placeholder">$</string>
     <string name="transfer_all_funds_label">Millifæra hámarksfjárhæð</string>
-    <string name="mobileAvailableBalance">Tiltæk fjárhæð: %s %s</string>
+    <string name="mobileAvailableBalance">Tiltæk fjárhæð: %s %s %s</string>
     <string name="mobileSummaryLabel">SAMANTEKT</string>
     <string name="mobileNoteLabel">Skýring</string>
     <string name="transfer_notes_label">Skýring</string>
@@ -28,7 +28,6 @@
     <string name="destination_item_description">Viðtökustaður hlutur</string>
 
     <string name="amount_currency_format">%s %s</string>
-    <string name="exchange_rate_format">1 %s = %s %s</string>
 
     <string name="module_transfermethodui_unavailable_error">Þú getur ekki bætt við millifærsluaðferð.</string>
     <string name="transferAmountInvalid">Sláðu inn gilda millifærslufjárhæð</string>

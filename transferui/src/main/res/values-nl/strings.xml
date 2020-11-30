@@ -12,7 +12,7 @@
     <string name="transfer_currency_placeholder">USD</string>
     <string name="transfer_currency_code_placeholder">$</string>
     <string name="transfer_all_funds_label">Max. bedrag overboeken</string>
-    <string name="mobileAvailableBalance">Beschikbaar bedrag: %s %s</string>
+    <string name="mobileAvailableBalance">Beschikbaar bedrag: %s %s %s</string>
     <string name="mobileSummaryLabel">SAMENVATTING</string>
     <string name="mobileNoteLabel">Opmerking</string>
     <string name="transfer_notes_label">Opmerking</string>
@@ -28,7 +28,6 @@
     <string name="destination_item_description">Item bestemming</string>
 
     <string name="amount_currency_format">%s %s</string>
-    <string name="exchange_rate_format">1 %s = %s %s</string>
 
     <string name="module_transfermethodui_unavailable_error">U kunt geen overboekingsmethode toevoegen.</string>
     <string name="transferAmountInvalid">Voer een geldig overboekingsbedrag in</string>

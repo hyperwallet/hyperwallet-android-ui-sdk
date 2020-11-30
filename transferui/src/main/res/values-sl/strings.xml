@@ -12,7 +12,7 @@
     <string name="transfer_currency_placeholder">USD</string>
     <string name="transfer_currency_code_placeholder">$</string>
     <string name="transfer_all_funds_label">Prenesi najvišji možni znesek</string>
-    <string name="mobileAvailableBalance">Znesek na voljo: %s%s</string>
+    <string name="mobileAvailableBalance">Znesek na voljo: %s %s %s</string>
     <string name="mobileSummaryLabel">POVZETEK</string>
     <string name="mobileNoteLabel">Opomba</string>
     <string name="transfer_notes_label">Opomba</string>
@@ -28,7 +28,6 @@
     <string name="destination_item_description">Postavka Namembni cilj</string>
 
     <string name="amount_currency_format">%s %s</string>
-    <string name="exchange_rate_format">1 %s = %s %s</string>
 
     <string name="module_transfermethodui_unavailable_error">Ne morete dodati načina prenosa.</string>
     <string name="transferAmountInvalid">Vnesite veljavni znesek prenosa</string>
