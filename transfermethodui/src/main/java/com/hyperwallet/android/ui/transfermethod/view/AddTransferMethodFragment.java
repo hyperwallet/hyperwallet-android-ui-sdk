@@ -494,7 +494,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                         widget.showValidationError(error.getMessage());
                         widgetInputState.setErrorMessage(error.getMessage());
                         widgetInputState.setHasApiError(true);
-                    }else{
+                    } else {
                         widget.showValidationError(null);
                         widgetInputState.setErrorMessage(null);
                     }
@@ -567,11 +567,11 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
                             .build();
                     break;
                 case PAPER_CHECK:
-                mTransferMethod = new PaperCheck.Builder()
-                        .addressLine1("")
-                        .city("")
-                        .build();
-                break;
+                    mTransferMethod = new PaperCheck.Builder()
+                            .transferMethodCountry(mCountry)
+                            .transferMethodCurrency(mCurrency)
+                            .build();
+                    break;
                 default:
                     mTransferMethod = new TransferMethod();
                     mTransferMethod.setField(TRANSFER_METHOD_COUNTRY, mCountry);
@@ -628,6 +628,7 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
 
     /**
      * Use this to perform validation on an entire form, typically used during form submission.
+     *
      * @return true if the form is valid
      */
     private boolean performValidation() {

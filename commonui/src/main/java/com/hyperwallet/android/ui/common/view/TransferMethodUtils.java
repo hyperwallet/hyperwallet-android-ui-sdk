@@ -174,7 +174,7 @@ public class TransferMethodUtils {
                 return getFourDigitsIdentification(context, transferMethod, VENMO_ACCOUNT_ID,
                         R.string.endingIn);
             case PAPER_CHECK:
-                return getFourDigitsIdentification(context,transferMethod,POSTAL_CODE,R.string.to);
+                return context.getString(R.string.to, transferMethod.getField(POSTAL_CODE));
             default:
                 return "";
         }
