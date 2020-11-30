@@ -4,14 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginStart="@dimen/default_margin"
-    android:layout_marginTop="@dimen/default_margin"
     android:layout_marginEnd="@dimen/default_margin">
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/receipts_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/receipt_tab_margin_top"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <com.google.android.material.tabs.TabLayout
