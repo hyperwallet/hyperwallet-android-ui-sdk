@@ -107,5 +107,6 @@
     <item name="residence" type="id"/>
     <item name="residenceLabel" type="id"/>
     <item name="shippingMethod" type="id"/>
+    <item name="shippingMethodLabel" type="id"/>
 
 </resources>

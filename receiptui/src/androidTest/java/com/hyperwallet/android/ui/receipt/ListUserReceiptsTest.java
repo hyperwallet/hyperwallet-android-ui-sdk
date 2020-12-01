@@ -149,7 +149,7 @@ public class ListUserReceiptsTest {
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(3, hasDescendant(withText(R.string.transfer_to_prepaid_card)))));
         onView(withId(R.id.list_receipts)).check(
-                matches(atPosition(3, hasDescendant(withText(debitSymbol + krwCurrencySymbol + "40000")))));
+                matches(atPosition(3, hasDescendant(withText(debitSymbol + krwCurrencySymbol + "40,000")))));
 
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(3, hasDescendant(withText("December 1, 2018")))));
@@ -184,7 +184,7 @@ public class ListUserReceiptsTest {
         onView(withId(R.id.list_receipts)).check(matches(atPosition(0, hasDescendant(withText(KRW.first.toString())))));
 
         onView(withId(R.id.list_receipts))
-                .check(matches(atPosition(1, hasDescendant(withText(monthLabel1)))));
+                .check(matches(atPosition(1, hasDescendant(withText("June 2, 2019")))));
         onView(withId(R.id.list_receipts)).check(matches(atPosition(1,
                 hasDescendant(withText(R.string.credit)))));
         onView(withId(R.id.list_receipts)).check(
@@ -196,7 +196,7 @@ public class ListUserReceiptsTest {
         onView(withId(R.id.list_receipts)).check(matches(atPosition(1, hasDescendant(withText("USD")))));
 
         onView(withId(R.id.list_receipts)).check(matches(atPosition(2,
-                hasDescendant(withText(R.string.credit)))));
+                hasDescendant(withText(R.string.debit)))));
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(2, hasDescendant(withText(R.string.card_activation_fee)))));
         onView(withId(R.id.list_receipts)).check(

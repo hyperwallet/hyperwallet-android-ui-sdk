@@ -28,7 +28,7 @@
     <!-- entry types -->
     <string name="debit" translatable="false">\ue908</string>
     <string name="credit" translatable="false">\ue907</string>
-    <string name="debit_sign" translatable="false">-%s%s</string>
+    <string name="debit_sign" translatable="false">-%s</string>
     <string name="debit_sign_receipts" translatable="false">-%s</string>
     <string name="credit_sign" translatable="false">%s%s</string>
 

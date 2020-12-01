@@ -3,47 +3,28 @@ package com.hyperwallet.android.ui.transfermethod;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.replaceText;
-import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.RootMatchers.isDialog;
-import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.isEnabled;
 import static androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
 
-import static java.net.HttpURLConnection.HTTP_BAD_REQUEST;
-import static java.net.HttpURLConnection.HTTP_CREATED;
 import static java.net.HttpURLConnection.HTTP_OK;
-import static java.util.concurrent.TimeUnit.SECONDS;
 
-import static com.hyperwallet.android.ui.testutils.util.EspressoUtils.hasEmptyText;
 import static com.hyperwallet.android.ui.testutils.util.EspressoUtils.hasErrorText;
+import static com.hyperwallet.android.ui.testutils.util.EspressoUtils.hasNoErrorText;
 import static com.hyperwallet.android.ui.testutils.util.EspressoUtils.nestedScrollTo;
-import static com.hyperwallet.android.ui.testutils.util.EspressoUtils.withHint;
 
-import android.app.Activity;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.widget.TextView;
 
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.IdlingRegistry;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
-import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
@@ -58,8 +39,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import java.util.concurrent.CountDownLatch;
 
 @RunWith(AndroidJUnit4.class)
 public class PaperCheckTest {
@@ -122,6 +101,7 @@ public class PaperCheckTest {
     @Test
     public void testAddTransferMethod_verifyDefaultValues() {
         mActivityTestRule.launchActivity(null);
+
         onView(withId(R.id.shippingMethod)).check(matches(withText("Standard Mail")));
         onView(withId(R.id.country)).check(matches(withText("United States")));
         onView(withId(R.id.stateProvince)).check(matches(withText("BC")));
@@ -131,26 +111,62 @@ public class PaperCheckTest {
     }
 
     @Test
+    public void testAddTransferMethod_verifyEditableFields() {
+        mActivityTestRule.launchActivity(null);
+
+        onView(withId(R.id.shippingMethod)).check(matches(isEnabled()));
+        onView(withId(R.id.country)).check(matches(not(isEnabled())));
+        onView(withId(R.id.stateProvince)).check(matches(isEnabled()));
+        onView(withId(R.id.addressLine1)).check(matches(isEnabled()));
+        onView(withId(R.id.city)).check(matches(isEnabled()));
+        onView(withId(R.id.postalCode)).check(matches(isEnabled()));
+    }
+
+    @Test
     public void testAddTransferMethod_returnsErrorOnInvalidPattern() {
         mActivityTestRule.launchActivity(null);
 
+        onView(withId(R.id.addressLine1)).perform(nestedScrollTo(), replaceText("950 {G}ranville Street"));
+        onView(withId(R.id.city)).perform(nestedScrollTo(), replaceText("Vancouve{r}"));
+        onView(withId(R.id.stateProvince)).perform(nestedScrollTo(), replaceText("df{r}"));
         onView(withId(R.id.postalCode)).perform(nestedScrollTo(), replaceText("123456"));
 
         onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo(), click());
 
+        onView(withId(R.id.addressLine1Label))
+                .check(matches(hasErrorText("is invalid length or format.")));
+        onView(withId(R.id.cityLabel))
+                .check(matches(hasErrorText("is invalid length or format.")));
+        onView(withId(R.id.stateProvinceLabel))
+                .check(matches(hasErrorText("is invalid length or format.")));
         onView(withId(R.id.postalCodeLabel))
                 .check(matches(hasErrorText("is invalid length or format.")));
+
     }
 
     @Test
     public void testAddTransferMethod_returnsErrorOnInvalidPresence() {
         mActivityTestRule.launchActivity(null);
+
+        onView(withId(R.id.addressLine1)).perform(nestedScrollTo(), replaceText(""));
+        onView(withId(R.id.city)).perform(nestedScrollTo(), replaceText(""));
+        onView(withId(R.id.stateProvince)).perform(nestedScrollTo(), replaceText(""));
         onView(withId(R.id.postalCode)).perform(nestedScrollTo(), replaceText(""));
+
 
         onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo(), click());
 
+        onView(withId(R.id.addressLine1Label))
+                .check(matches(hasErrorText("You must provide a value for this field")));
+        onView(withId(R.id.cityLabel))
+                .check(matches(hasErrorText("You must provide a value for this field")));
+        onView(withId(R.id.stateProvinceLabel))
+                .check(matches(hasErrorText("You must provide a value for this field")));
         onView(withId(R.id.postalCodeLabel))
                 .check(matches(hasErrorText("You must provide a value for this field")));
-    }
 
+        onView(withId(R.id.shippingMethodLabel)).check(matches(hasNoErrorText()));
+        onView(withId(R.id.countryLabel)).check(matches(hasNoErrorText()));
+
+    }
 }
