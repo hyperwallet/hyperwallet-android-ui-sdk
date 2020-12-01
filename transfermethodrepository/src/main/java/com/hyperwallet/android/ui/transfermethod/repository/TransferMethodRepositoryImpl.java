@@ -247,7 +247,7 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
     }
 
     private void deactivateVenmoAccount(@NonNull final TransferMethod transferMethod,
-            @NonNull final DeactivateTransferMethodCallback callback) {
+                                        @NonNull final DeactivateTransferMethodCallback callback) {
         getHyperwallet().deactivateVenmoAccount(transferMethod.getField(TOKEN), null,
                 new HyperwalletListener<StatusTransition>() {
                     @Override
@@ -289,7 +289,7 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
     }
 
     private void createBankAccount(final TransferMethod transferMethod,
-            final LoadTransferMethodCallback callback) {
+                                   final LoadTransferMethodCallback callback) {
         BankAccount bankAccount = (BankAccount) transferMethod;
 
         getHyperwallet().createBankAccount(bankAccount, new HyperwalletListener<BankAccount>() {
@@ -333,7 +333,7 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
     }
 
     private void createPayPalAccount(@NonNull final TransferMethod transferMethod,
-            @NonNull final LoadTransferMethodCallback callback) {
+                                     @NonNull final LoadTransferMethodCallback callback) {
         PayPalAccount payPalAccount = (PayPalAccount) transferMethod;
 
         getHyperwallet().createPayPalAccount(payPalAccount, new HyperwalletListener<PayPalAccount>() {
@@ -355,7 +355,7 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
     }
 
     private void createVenmoAccount(@NonNull final TransferMethod transferMethod,
-            @NonNull final LoadTransferMethodCallback callback) {
+                                    @NonNull final LoadTransferMethodCallback callback) {
         VenmoAccount venmoAccount = (VenmoAccount) transferMethod;
 
         getHyperwallet().createVenmoAccount(venmoAccount, new HyperwalletListener<VenmoAccount>() {
