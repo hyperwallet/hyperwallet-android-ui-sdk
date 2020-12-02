@@ -1,0 +1,50 @@
+{
+  "count": 1,
+  "offset": 0,
+  "limit": 10,
+  "data": [
+    {
+      "token": "trm-token",
+      "type": "PAPER_CHECK",
+      "status": "ACTIVATED",
+      "verificationStatus": "NOT_REQUIRED",
+      "createdOn": "2020-11-30T10:43:25",
+      "transferMethodCountry": "US",
+      "transferMethodCurrency": "USD",
+      "userToken": "usr-token",
+      "profileType": "INDIVIDUAL",
+      "firstName": "Myles",
+      "lastName": "Tobias",
+      "dateOfBirth": "2000-01-01",
+      "gender": "MALE",
+      "phoneNumber": "605-555-1323",
+      "mobileNumber": "605-555-1323",
+      "governmentId": "444444444",
+      "addressLine1": "1234 IndividualAddress St",
+      "addressLine2": "1234 AddressLineTwo St",
+      "city": "Test",
+      "stateProvince": "CA",
+      "country": "US",
+      "postalCode": "V6Z1L2",
+      "shippingMethod": "STANDARD",
+      "links": [
+        {
+          "params": {
+            "rel": "self"
+          },
+          "href": "https://localhost/rest/v3/users/usr-token/venmo-accounts/trm-token"
+        }
+      ]
+    }
+  ],
+  "links": [
+    {
+      "params": {
+        "rel": "self"
+      },
+      "href": "https://localhost/rest/v3/users/usr-token/venmo-accounts?offset=0&limit=10&createdAfter=2018-01-01T17%3A12%3A00"
+    }
+  ]
+}
+
+
