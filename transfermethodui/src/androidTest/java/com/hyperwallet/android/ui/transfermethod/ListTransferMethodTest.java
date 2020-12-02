@@ -142,7 +142,7 @@ public class ListTransferMethodTest {
                 matches(atPosition(3, hasDescendant(withText(R.string.paper_check)))));
         onView(withId(R.id.list_transfer_method_item)).check(matches(atPosition(3, hasDescendant(withText("Canada")))));
         onView(withId(R.id.list_transfer_method_item)).check(
-                matches(atPosition(3, hasDescendant(withText("")))));
+                matches(atPosition(3, hasDescendant(withText("to V6Z1L2")))));
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(3, hasDescendant(withDrawable(R.drawable.ic_three_dots_16dp)))));
 
