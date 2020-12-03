@@ -4,12 +4,10 @@ import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.RootMatchers.isDialog;
 import static androidx.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static androidx.test.espresso.matcher.ViewMatchers.hasSibling;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -22,10 +20,8 @@ import static java.net.HttpURLConnection.HTTP_OK;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 import static com.hyperwallet.android.model.StatusTransition.StatusDefinition.DE_ACTIVATED;
-import static com.hyperwallet.android.ui.common.view.error.DefaultErrorDialogFragment.RESULT_ERROR;
 import static com.hyperwallet.android.ui.testutils.util.EspressoUtils.atPosition;
 import static com.hyperwallet.android.ui.testutils.util.EspressoUtils.withDrawable;
-import static org.hamcrest.Matchers.not;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -33,7 +29,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.view.MenuItem;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.test.espresso.IdlingRegistry;
@@ -99,8 +94,9 @@ public class ListTransferMethodTest {
         mActivityTestRule.launchActivity(null);
 
         // assert
-        onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
-                .check(matches(withText(R.string.mobileTransferMethodsHeader)));
+        onView(withId(R.id.toolbar))
+                .check(matches(
+                        hasDescendant(withText(R.string.mobileTransferMethodsHeader))));
         onView(withId(R.id.fab)).check(matches(isDisplayed()));
 
         onView(withId(R.id.list_transfer_method_item)).check(
@@ -180,8 +176,9 @@ public class ListTransferMethodTest {
 
         // assert
         onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
-        onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
-                .check(matches(withText(R.string.mobileTransferMethodsHeader)));
+        onView(withId(R.id.toolbar))
+                .check(matches(
+                        hasDescendant(withText(R.string.mobileTransferMethodsHeader))));
         onView(withId(R.id.fab)).check(matches(isDisplayed()));
 
         onView(withId(R.id.list_transfer_method_item)).check(
@@ -206,8 +203,9 @@ public class ListTransferMethodTest {
         mActivityTestRule.launchActivity(null);
 
         onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
-        onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
-                .check(matches(withText(R.string.mobileTransferMethodsHeader)));
+        onView(withId(R.id.toolbar))
+                .check(matches(
+                        hasDescendant(withText(R.string.mobileTransferMethodsHeader))));
         onView(withId(R.id.fab)).check(matches(isDisplayed()));
 
         onView(withId(R.id.empty_transfer_method_list_layout)).check(matches(isDisplayed()));
@@ -243,8 +241,9 @@ public class ListTransferMethodTest {
 
         // assert
         onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
-        onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
-                .check(matches(withText(R.string.mobileTransferMethodsHeader)));
+        onView(withId(R.id.toolbar))
+                .check(matches(
+                        hasDescendant(withText(R.string.mobileTransferMethodsHeader))));
         onView(withId(R.id.fab)).check(matches(isDisplayed()));
 
         onView(withId(R.id.list_transfer_method_item)).check(
@@ -322,8 +321,9 @@ public class ListTransferMethodTest {
 
         // assert
         onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
-        onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
-                .check(matches(withText(R.string.mobileTransferMethodsHeader)));
+        onView(withId(R.id.toolbar))
+                .check(matches(
+                        hasDescendant(withText(R.string.mobileTransferMethodsHeader))));
         onView(withId(R.id.fab)).check(matches(isDisplayed()));
 
         onView(withId(R.id.list_transfer_method_item)).check(
@@ -391,8 +391,9 @@ public class ListTransferMethodTest {
 
         // assert
         onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
-        onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
-                .check(matches(withText(R.string.mobileTransferMethodsHeader)));
+        onView(withId(R.id.toolbar))
+                .check(matches(
+                        hasDescendant(withText(R.string.mobileTransferMethodsHeader))));
         onView(withId(R.id.fab)).check(matches(isDisplayed()));
 
         onView(withId(R.id.list_transfer_method_item)).check(
@@ -439,8 +440,9 @@ public class ListTransferMethodTest {
         mActivityTestRule.launchActivity(null);
         // assert
         onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
-        onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
-                .check(matches(withText(R.string.mobileTransferMethodsHeader)));
+        onView(withId(R.id.toolbar))
+                .check(matches(
+                        hasDescendant(withText(R.string.mobileTransferMethodsHeader))));
         onView(withId(R.id.fab)).check(matches(isDisplayed()));
 
         onView(withId(R.id.list_transfer_method_item)).check(
@@ -486,8 +488,8 @@ public class ListTransferMethodTest {
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(0, hasDescendant(withDrawable(R.drawable.ic_three_dots_16dp)))));
     }
-
-    @Test
+   //supported Paper check there is no method is un supported transfer method.
+   /* @Test
     public void testListTransferMethod_removeUnsupportedTypeDisplaysUnexpectedError() {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_response.json")).mock();
@@ -517,7 +519,7 @@ public class ListTransferMethodTest {
         // verify activity is finished
         assertThat("Result code is incorrect",
                 mActivityTestRule.getActivityResult().getResultCode(), is(RESULT_ERROR));
-    }
+    }*/
 
     @Test
     public void testListTransferMethod_prepaidCardTransferMethods() {
@@ -528,8 +530,9 @@ public class ListTransferMethodTest {
         mActivityTestRule.launchActivity(null);
 
         // assert
-        onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
-                .check(matches(withText(R.string.mobileTransferMethodsHeader)));
+        onView(withId(R.id.toolbar))
+                .check(matches(
+                        hasDescendant(withText(R.string.mobileTransferMethodsHeader))));
         onView(withId(R.id.fab)).check(matches(isDisplayed()));
 
         onView(withId(R.id.list_transfer_method_item)).check(
@@ -539,7 +542,7 @@ public class ListTransferMethodTest {
         String visa = InstrumentationRegistry.getInstrumentation().getTargetContext()
                 .getString(R.string.visa);
         onView(withId(R.id.list_transfer_method_item)).check(
-                matches(atPosition(0, hasDescendant(withText(getCardBrandWithFourDigits(visa,"8766"))))));
+                matches(atPosition(0, hasDescendant(withText(getCardBrandWithFourDigits(visa, "8766"))))));
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(0, hasDescendant(withText(R.string.prepaidCardManagementInfo)))));
 
@@ -550,7 +553,7 @@ public class ListTransferMethodTest {
         String master = InstrumentationRegistry.getInstrumentation().getTargetContext()
                 .getString(R.string.mastercard);
         onView(withId(R.id.list_transfer_method_item)).check(
-                matches(atPosition(1, hasDescendant(withText(getCardBrandWithFourDigits(master,"8767"))))));
+                matches(atPosition(1, hasDescendant(withText(getCardBrandWithFourDigits(master, "8767"))))));
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(1, hasDescendant(withText(R.string.prepaidCardManagementInfo)))));
 
@@ -565,8 +568,9 @@ public class ListTransferMethodTest {
         mActivityTestRule.launchActivity(null);
 
         // assert
-        onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
-                .check(matches(withText(R.string.mobileTransferMethodsHeader)));
+        onView(withId(R.id.toolbar))
+                .check(matches(
+                        hasDescendant(withText(R.string.mobileTransferMethodsHeader))));
         onView(withId(R.id.fab)).check(matches(isDisplayed()));
 
         onView(withId(R.id.list_transfer_method_item)).check(
@@ -590,8 +594,9 @@ public class ListTransferMethodTest {
         mActivityTestRule.launchActivity(null);
 
         // assert
-        onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
-                .check(matches(withText(R.string.mobileTransferMethodsHeader)));
+        onView(withId(R.id.toolbar))
+                .check(matches(
+                        hasDescendant(withText(R.string.mobileTransferMethodsHeader))));
         onView(withId(R.id.fab)).check(matches(isDisplayed()));
 
         onView(withId(R.id.list_transfer_method_item)).check(
@@ -634,8 +639,9 @@ public class ListTransferMethodTest {
 
         // assert
         onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
-        onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
-                .check(matches(withText(R.string.mobileTransferMethodsHeader)));
+        onView(withId(R.id.toolbar))
+                .check(matches(
+                        hasDescendant(withText(R.string.mobileTransferMethodsHeader))));
         onView(withId(R.id.fab)).check(matches(isDisplayed()));
 
 
@@ -650,7 +656,8 @@ public class ListTransferMethodTest {
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(0, hasDescendant(withDrawable(R.drawable.ic_three_dots_16dp)))));
 
-        onView(allOf(withDrawable(R.drawable.ic_three_dots_16dp), hasSibling(withText(R.string.venmo_account)))).perform(click());
+        onView(allOf(withDrawable(R.drawable.ic_three_dots_16dp),
+                hasSibling(withText(R.string.venmo_account)))).perform(click());
 
         onView(withDrawable(R.drawable.ic_trash)).check(matches(isDisplayed()));
         onView(withText(R.string.remove)).check(matches(isDisplayed())).perform(click());
@@ -704,8 +711,9 @@ public class ListTransferMethodTest {
 
         // assert
         onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
-        onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
-                .check(matches(withText(R.string.mobileTransferMethodsHeader)));
+        onView(withId(R.id.toolbar))
+                .check(matches(
+                        hasDescendant(withText(R.string.mobileTransferMethodsHeader))));
         onView(withId(R.id.fab)).check(matches(isDisplayed()));
 
         onView(withId(R.id.list_transfer_method_item)).check(
@@ -719,7 +727,8 @@ public class ListTransferMethodTest {
         onView(withId(R.id.list_transfer_method_item)).check(
                 matches(atPosition(0, hasDescendant(withDrawable(R.drawable.ic_three_dots_16dp)))));
 
-        onView(allOf(withDrawable(R.drawable.ic_three_dots_16dp), hasSibling(withText(R.string.paper_check)))).perform(click());
+        onView(allOf(withDrawable(R.drawable.ic_three_dots_16dp), hasSibling(withText(R.string.paper_check)))).perform(
+                click());
 
         onView(withDrawable(R.drawable.ic_trash)).check(matches(isDisplayed()));
         onView(withText(R.string.remove)).check(matches(isDisplayed())).perform(click());
