@@ -43,6 +43,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hyperwallet.android.model.receipt.Receipt;
+import com.hyperwallet.android.ui.common.util.CurrencyParser;
 import com.hyperwallet.android.ui.common.util.DateUtils;
 import com.hyperwallet.android.ui.common.view.OneClickListener;
 import com.hyperwallet.android.ui.receipt.R;
@@ -285,8 +286,9 @@ public class ListReceiptFragment extends Fragment {
                 if (CREDIT.equals(receipt.getEntry())) {
                     transactionAmount.setTextColor(transactionAmount.getContext()
                             .getResources().getColor(R.color.positiveColor));
-                    transactionAmount.setText(transactionAmount.getContext()
-                            .getString(R.string.credit_sign, currencySymbol, receipt.getAmount()));
+                    transactionAmount.setText(
+                            CurrencyParser.getInstance(itemView.getContext()).formatCurrency(receipt.getCurrency(),
+                                    receipt.getAmount()));
                     transactionTypeIcon.setTextColor(transactionTypeIcon.getContext()
                             .getResources().getColor(R.color.positiveColor));
                     transactionTypeIcon.setText(transactionTypeIcon.getContext().getText(R.string.credit));
@@ -295,8 +297,9 @@ public class ListReceiptFragment extends Fragment {
                             .getResources().getColor(R.color.negativeColor));
                     transactionTypeIcon.setTextColor(transactionTypeIcon.getContext()
                             .getResources().getColor(R.color.negativeColor));
-                    transactionAmount.setText(transactionAmount.getContext()
-                            .getString(R.string.debit_sign, currencySymbol, receipt.getAmount()));
+                    transactionAmount.setText(transactionAmount.getContext().getString(R.string.debit_sign,
+                            CurrencyParser.getInstance(itemView.getContext()).formatCurrency(receipt.getCurrency(),
+                                    receipt.getAmount())));
                     transactionTypeIcon.setText(transactionTypeIcon.getContext().getText(R.string.debit));
                 }
 

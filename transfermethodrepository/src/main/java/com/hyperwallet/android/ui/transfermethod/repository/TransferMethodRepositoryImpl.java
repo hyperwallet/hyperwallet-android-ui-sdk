@@ -22,6 +22,7 @@ import static com.hyperwallet.android.model.transfermethod.TransferMethod.Transf
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TYPE;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.BANK_ACCOUNT;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.BANK_CARD;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.PAPER_CHECK;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.PAYPAL_ACCOUNT;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.VENMO_ACCOUNT;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.WIRE_ACCOUNT;
@@ -41,6 +42,7 @@ import com.hyperwallet.android.model.StatusTransition;
 import com.hyperwallet.android.model.paging.PageList;
 import com.hyperwallet.android.model.transfermethod.BankAccount;
 import com.hyperwallet.android.model.transfermethod.BankCard;
+import com.hyperwallet.android.model.transfermethod.PaperCheck;
 import com.hyperwallet.android.model.transfermethod.PayPalAccount;
 import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import com.hyperwallet.android.model.transfermethod.TransferMethodQueryParam;
@@ -79,6 +81,9 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
                 break;
             case VENMO_ACCOUNT:
                 createVenmoAccount(transferMethod, callback);
+                break;
+            case PAPER_CHECK:
+                createPaperCheck(transferMethod, callback);
                 break;
             default: // error on unknown transfer type
                 callback.onError(getErrorsOnUnsupportedTransferType());
@@ -170,6 +175,9 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
             case VENMO_ACCOUNT:
                 deactivateVenmoAccount(transferMethod, callback);
                 break;
+            case PAPER_CHECK:
+                deactivatePaperCheck(transferMethod, callback);
+                break;
             default: // error on unknown transfer type
                 callback.onError(getErrorsOnUnsupportedTransferType());
         }
@@ -241,6 +249,27 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
     private void deactivateVenmoAccount(@NonNull final TransferMethod transferMethod,
                                         @NonNull final DeactivateTransferMethodCallback callback) {
         getHyperwallet().deactivateVenmoAccount(transferMethod.getField(TOKEN), null,
+                new HyperwalletListener<StatusTransition>() {
+                    @Override
+                    public void onSuccess(@Nullable StatusTransition result) {
+                        callback.onTransferMethodDeactivated(result);
+                    }
+
+                    @Override
+                    public void onFailure(HyperwalletException exception) {
+                        callback.onError(exception.getErrors());
+                    }
+
+                    @Override
+                    public Handler getHandler() {
+                        return mHandler;
+                    }
+                });
+    }
+
+    private void deactivatePaperCheck(@NonNull final TransferMethod transferMethod,
+            @NonNull final DeactivateTransferMethodCallback callback) {
+        getHyperwallet().deactivatePaperCheck(transferMethod.getField(TOKEN), null,
                 new HyperwalletListener<StatusTransition>() {
                     @Override
                     public void onSuccess(@Nullable StatusTransition result) {
@@ -332,6 +361,28 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
         getHyperwallet().createVenmoAccount(venmoAccount, new HyperwalletListener<VenmoAccount>() {
             @Override
             public void onSuccess(@Nullable VenmoAccount result) {
+                callback.onTransferMethodLoaded(result);
+            }
+
+            @Override
+            public void onFailure(HyperwalletException exception) {
+                callback.onError(exception.getErrors());
+            }
+
+            @Override
+            public Handler getHandler() {
+                return mHandler;
+            }
+        });
+    }
+
+    private void createPaperCheck(@NonNull final TransferMethod transferMethod,
+            @NonNull final LoadTransferMethodCallback callback) {
+        PaperCheck paperCheck = (PaperCheck) transferMethod;
+
+        getHyperwallet().createPaperCheck(paperCheck, new HyperwalletListener<PaperCheck>() {
+            @Override
+            public void onSuccess(@Nullable PaperCheck result) {
                 callback.onTransferMethodLoaded(result);
             }
 
