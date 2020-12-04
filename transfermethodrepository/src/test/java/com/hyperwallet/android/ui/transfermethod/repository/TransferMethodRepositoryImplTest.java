@@ -87,6 +87,8 @@ public class TransferMethodRepositoryImplTest {
     @Captor
     private ArgumentCaptor<VenmoAccount> mVenmoAccountArgumentCaptor;
     @Captor
+    private ArgumentCaptor<VenmoAccount> mPaperCheckArgumentCaptor; //todo paper check
+    @Captor
     private ArgumentCaptor<StatusTransition> mStatusTransitionArgumentCaptor;
     @Captor
     private ArgumentCaptor<List<TransferMethod>> mListTransferMethodCaptor;
@@ -781,6 +783,38 @@ public class TransferMethodRepositoryImplTest {
     }
 
     @Test
+    public void createTransferMethod_paperCheckWithSuccess() {
+
+        //Todo paper check
+
+        final VenmoAccount returnedVenmoAccount = buildVenmoAccount();
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                HyperwalletListener listener = (HyperwalletListener) invocation.getArguments()[1];
+                returnedVenmoAccount.setField(STATUS, ACTIVATED);
+                listener.onSuccess(returnedVenmoAccount);
+                return listener;
+            }
+        }).when(mHyperwallet).createVenmoAccount(any(VenmoAccount.class), any(HyperwalletListener.class));
+
+        VenmoAccount parameter = new VenmoAccount.Builder().build();
+
+        mTransferMethodRepository.createTransferMethod(parameter, mLoadTransferMethodCallback);
+
+        verify(mLoadTransferMethodCallback).onTransferMethodLoaded(mVenmoAccountArgumentCaptor.capture());
+        verify(mLoadTransferMethodCallback, never()).onError(any(Errors.class));
+
+        VenmoAccount venmoAccount = mVenmoAccountArgumentCaptor.getValue();
+        assertThat(venmoAccount, is(notNullValue()));
+        assertThat(venmoAccount.getCountry(), is(COUNTRY_US));
+        assertThat(venmoAccount.getCurrency(), is(CURRENCY_USD));
+        assertThat(venmoAccount.getAccountId(), is(VENMO_ACCOUNT_ID));
+        assertThat(venmoAccount.getField(STATUS), is(ACTIVATED));
+        assertThat(venmoAccount.getField(TOKEN), is(TEST_TOKEN));
+    }
+
+    @Test
     public void createTransferMethod_venmoAccountWithError() {
         final Error returnedError = new Error(TEST_MESSAGE, TEST_CODE);
         doAnswer(new Answer() {
@@ -804,6 +838,32 @@ public class TransferMethodRepositoryImplTest {
         assertThat(mErrorsArgumentCaptor.getValue().getErrors(), hasItem(returnedError));
     }
 
+    @Test
+    public void createTransferMethod_paperCheckWithError() {
+
+        //Todo paper check
+
+        final Error returnedError = new Error(TEST_MESSAGE, TEST_CODE);
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                HyperwalletListener listener = (HyperwalletListener) invocation.getArguments()[1];
+
+                List<Error> errorList = new ArrayList<>();
+                errorList.add(returnedError);
+
+                listener.onFailure(new HyperwalletException(new Errors(errorList)));
+                return listener;
+            }
+        }).when(mHyperwallet).createVenmoAccount(any(VenmoAccount.class), any(HyperwalletListener.class));
+        VenmoAccount parameter = new VenmoAccount.Builder().build();
+
+        mTransferMethodRepository.createTransferMethod(parameter, mLoadTransferMethodCallback);
+
+        verify(mLoadTransferMethodCallback, never()).onTransferMethodLoaded(any(TransferMethod.class));
+        verify(mLoadTransferMethodCallback).onError(mErrorsArgumentCaptor.capture());
+        assertThat(mErrorsArgumentCaptor.getValue().getErrors(), hasItem(returnedError));
+    }
     @Test
     public void testCreateTransferMethod_wireAccountWithSuccess() {
         BankAccount bankAccount = new BankAccount
