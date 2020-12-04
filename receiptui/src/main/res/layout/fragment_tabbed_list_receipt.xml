@@ -4,34 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginStart="@dimen/default_margin"
-    android:layout_marginTop="@dimen/default_margin"
     android:layout_marginEnd="@dimen/default_margin">
-
-    <LinearLayout
-        android:id="@+id/transactions_header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="@dimen/default_margin"
-        android:paddingBottom="@dimen/item_horizontal_padding"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/transactions_header_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/transactions"
-            android:textAppearance="@style/TextAppearance.Hyperwallet.Headline5" />
-    </LinearLayout>
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/receipts_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/receipt_tab_margin_top"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/transactions_header">
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
