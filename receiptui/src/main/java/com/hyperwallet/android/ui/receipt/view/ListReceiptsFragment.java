@@ -334,7 +334,9 @@ public class ListReceiptsFragment extends Fragment {
                 if (CREDIT.equals(receipt.getEntry())) {
                     transactionAmount.setTextColor(transactionAmount.getContext()
                             .getResources().getColor(R.color.positiveColor));
-                    transactionAmount.setText(CurrencyParser.getInstance(itemView.getContext()).formatCurrency(receipt.getCurrency(), receipt.getAmount()));
+                    transactionAmount.setText(
+                            CurrencyParser.getInstance(itemView.getContext()).formatCurrency(receipt.getCurrency(),
+                                    receipt.getAmount()));
                     transactionTypeIcon.setTextColor(transactionTypeIcon.getContext()
                             .getResources().getColor(R.color.positiveColor));
                     transactionTypeIcon.setText(transactionTypeIcon.getContext().getText(R.string.credit));
@@ -343,8 +345,9 @@ public class ListReceiptsFragment extends Fragment {
                             .getResources().getColor(R.color.negativeColor));
                     transactionTypeIcon.setTextColor(transactionTypeIcon.getContext()
                             .getResources().getColor(R.color.negativeColor));
-                    transactionAmount.setText(transactionAmount.getContext().getString(R.string.debit_sign_receipts,
-                            CurrencyParser.getInstance(itemView.getContext()).formatCurrency(receipt.getCurrency(), receipt.getAmount())));
+                    transactionAmount.setText(transactionAmount.getContext().getString(R.string.debit_sign,
+                            CurrencyParser.getInstance(itemView.getContext()).formatCurrency(receipt.getCurrency(),
+                                    receipt.getAmount())));
                     transactionTypeIcon.setText(transactionTypeIcon.getContext().getText(R.string.debit));
                 }
 

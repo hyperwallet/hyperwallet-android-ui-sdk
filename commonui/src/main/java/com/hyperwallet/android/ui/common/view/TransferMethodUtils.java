@@ -20,6 +20,7 @@ import static com.hyperwallet.android.model.transfermethod.TransferMethod.Transf
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.CARD_BRAND;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.CARD_NUMBER;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.EMAIL;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.POSTAL_CODE;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TYPE;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.VENMO_ACCOUNT_ID;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.BANK_ACCOUNT;
@@ -172,6 +173,8 @@ public class TransferMethodUtils {
             case VENMO_ACCOUNT:
                 return getFourDigitsIdentification(context, transferMethod, VENMO_ACCOUNT_ID,
                         R.string.endingIn);
+            case PAPER_CHECK:
+                return context.getString(R.string.to, transferMethod.getField(POSTAL_CODE));
             default:
                 return "";
         }

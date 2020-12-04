@@ -22,6 +22,7 @@ import android.content.res.Resources;
 
 import com.hyperwallet.android.model.transfermethod.BankAccount;
 import com.hyperwallet.android.model.transfermethod.BankCard;
+import com.hyperwallet.android.model.transfermethod.PaperCheck;
 import com.hyperwallet.android.model.transfermethod.PayPalAccount;
 import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import com.hyperwallet.android.model.transfermethod.VenmoAccount;
@@ -197,11 +198,9 @@ public class TransferMethodUtilsTest {
 
     @Test
     public void getTransferMethodDetail_returnsPaperCheckDetails() {
-        TransferMethod transferMethod = new TransferMethod();
-
-        String actual = getTransferMethodDetail(mContext, transferMethod, PAPER_CHECK);
-        assertThat(actual, is(""));
-        verify(mContext, never()).getString(ArgumentMatchers.eq(R.string.endingIn),
-                anyString());
+        TransferMethod transferMethod = new PaperCheck.Builder().transferMethodCurrency("USD").transferMethodCountry("CA").build();
+        assertThat(transferMethod.getField(TransferMethod.TransferMethodFields.TRANSFER_METHOD_COUNTRY), is("CA"));
+        assertThat(transferMethod.getField(TransferMethod.TransferMethodFields.TRANSFER_METHOD_CURRENCY), is("USD"));
+        assertThat(transferMethod.getField(TransferMethod.TransferMethodFields.TYPE), is("PAPER_CHECK"));
     }
 }
