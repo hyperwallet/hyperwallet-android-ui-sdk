@@ -54,8 +54,11 @@ public class TransferConfirmationDialogFragment extends DialogFragment {
                 new ContextThemeWrapper(requireContext(),
                         com.hyperwallet.android.ui.common.R.style.Theme_Hyperwallet_Confirmation_Dialog));
         builder.setTitle(requireContext().getString(R.string.mobileTransferSuccessMsg));
-        builder.setMessage(requireContext().getString(R.string.mobileTransferSuccessDetails,
-                getArguments().getString(ARGUMENT_KEY_TRANSFER_DESTINATION)));
+        if (!getArguments().getString(ARGUMENT_KEY_TRANSFER_DESTINATION).equals(
+                requireContext().getString(R.string.paper_check))) {
+            builder.setMessage(requireContext().getString(R.string.mobileTransferSuccessDetails,
+                    getArguments().getString(ARGUMENT_KEY_TRANSFER_DESTINATION)));
+        }
 
         builder.setPositiveButton(getResources().getString(R.string.doneButtonLabel),
                 new DialogInterface.OnClickListener() {
