@@ -27,6 +27,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.hyperwallet.android.model.Error;
 import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.common.util.PageGroups;
@@ -68,6 +69,12 @@ public class AddTransferMethodActivity extends AppCompatActivity implements
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle(TransferMethodUtils.getTransferMethodName(this,
                 getIntent().getStringExtra(EXTRA_TRANSFER_METHOD_TYPE)));
+        CollapsingToolbarLayout collapsingToolbar = findViewById(R.id.collapsing_toolbar);
+        int titleStyleCollapsed = TransferMethodUtils.getAdjustCollapsedTitleStyle(getTitle().toString());
+        collapsingToolbar.setCollapsedTitleTextAppearance(titleStyleCollapsed);
+        int titleStyleExpanded = TransferMethodUtils.getAdjustExpandedTitleStyle(getTitle().toString());
+        collapsingToolbar.setExpandedTitleTextAppearance(titleStyleExpanded);
+
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

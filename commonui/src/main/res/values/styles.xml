@@ -291,14 +291,28 @@
 
     <style name="TextAppearance.Hyperwallet.CollapsingToolbar.Expanded" parent="@style/TextAppearance.Design.CollapsingToolbar.Expanded" />
 
-    <style name="TextAppearance.Hyperwallet.Title" parent="@style/TextAppearance.AppCompat.Title" />
-    <style name="TextAppearance.Hyperwallet.Title.Expanded.Small" parent="android:TextAppearance">
+    <style name="TextAppearance.Hyperwallet.Title.Collapsed.ExtraSmall" parent="android:TextAppearance">
+        <item name="android:textSize">10dp</item>
+    </style>
+    <style name="TextAppearance.Hyperwallet.Title.Collapsed.Small" parent="android:TextAppearance">
         <item name="android:textSize">12dp</item>
     </style>
+    <style name="TextAppearance.Hyperwallet.Title.Collapsed.Medium" parent="android:TextAppearance">
+        <item name="android:textSize">16dp</item>
+    </style>
+    <style name="TextAppearance.Hyperwallet.Title.Collapsed.Large" parent="android:TextAppearance">
+        <item name="android:textSize">22dp</item>
+    </style>
+    <style name="TextAppearance.Hyperwallet.Title.Expanded.ExtraSmall" parent="android:TextAppearance">
+        <item name="android:textSize">12dp</item>
+    </style>
+    <style name="TextAppearance.Hyperwallet.Title.Expanded.Small" parent="android:TextAppearance">
+        <item name="android:textSize">14dp</item>
+    </style>
     <style name="TextAppearance.Hyperwallet.Title.Expanded.Medium" parent="android:TextAppearance">
-        <item name="android:textSize">20dp</item>
+        <item name="android:textSize">18dp</item>
     </style>
     <style name="TextAppearance.Hyperwallet.Title.Expanded.Large" parent="android:TextAppearance">
-        <item name="android:textSize">32dp</item>
+        <item name="android:textSize">28dp</item>
     </style>
 </resources>

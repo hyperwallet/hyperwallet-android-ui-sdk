@@ -72,11 +72,14 @@ public class SelectTransferMethodActivity extends AppCompatActivity implements
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        CollapsingToolbarLayout collapsingToolbar = findViewById(R.id.collapsing_toolbar);
+        int titleStyleCollapsed = TransferMethodUtils.getAdjustCollapsedTitleStyle(getTitle().toString());
+        collapsingToolbar.setCollapsedTitleTextAppearance(titleStyleCollapsed);
+        int titleStyleExpanded = TransferMethodUtils.getAdjustExpandedTitleStyle(getTitle().toString());
+        collapsingToolbar.setExpandedTitleTextAppearance(titleStyleExpanded);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        CollapsingToolbarLayout collapsingToolbar = findViewById(R.id.collapsing_toolbar);
-        collapsingToolbar.setExpandedTitleTextAppearance(
-                TransferMethodUtils.getAdjustTitleStyle(getTitle().toString()));
 
         TextView titleText = findViewById(R.id.toolbar_title);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
