@@ -154,7 +154,7 @@ public class SelectDestinationTest {
                 matches(atPosition(3, hasDescendant(withText(R.string.paper_check)))));
         onView(withId(R.id.transfer_destination_list)).check(matches(atPosition(3, hasDescendant(withText("Canada")))));
         onView(withId(R.id.transfer_destination_list)).check(
-                matches(atPosition(3, hasDescendant(withText("")))));
+                matches(atPosition(3, hasDescendant(withText("to V6Z1L2")))));
 
         onView(withId(R.id.transfer_destination_list)).check(
                 matches(atPosition(4, hasDescendant(withText(R.string.prepaid_card_font_icon)))));
@@ -401,7 +401,7 @@ public class SelectDestinationTest {
                 matches(atPosition(3, hasDescendant(withText(R.string.paper_check)))));
         onView(withId(R.id.transfer_destination_list)).check(matches(atPosition(3, hasDescendant(withText("Canada")))));
         onView(withId(R.id.transfer_destination_list)).check(
-                matches(atPosition(3, hasDescendant(withText("")))));
+                matches(atPosition(3, hasDescendant(withText("to V6Z1L2")))));
 
         onView(withId(R.id.transfer_destination_list)).check(
                 matches(atPosition(4, hasDescendant(withText(R.string.prepaid_card_font_icon)))));

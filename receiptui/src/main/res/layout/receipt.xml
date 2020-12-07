@@ -14,19 +14,19 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/text_placeholder"
-        android:ellipsize="end"
-        android:maxLines="1"
         style="@style/ReceiptTitle"
         app:layout_constraintEnd_toStartOf="@+id/transaction_amount"
         app:layout_constraintStart_toEndOf="@+id/transaction_type_icon"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView android:id="@+id/transaction_date"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/transaction_date"
+        style="@style/ReceiptDate"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/text_placeholder"
-        style="@style/ReceiptDate"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/transaction_currency"
         app:layout_constraintStart_toEndOf="@+id/transaction_type_icon"
         app:layout_constraintTop_toBottomOf="@+id/transaction_title" />
 
