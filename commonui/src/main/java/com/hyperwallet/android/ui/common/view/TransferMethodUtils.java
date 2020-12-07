@@ -208,4 +208,15 @@ public class TransferMethodUtils {
 
         return cardBrand + "\u0020\u2022\u2022\u2022\u2022\u0020" + identificationText;
     }
+
+    public static int getAdjustTitleStyle(String title) {
+        int count = title.length();
+        if (count <= 20) {
+            return R.style.TextAppearance_Hyperwallet_Title_Expanded_Large;
+        } else if (count > 32) {
+            return R.style.TextAppearance_Hyperwallet_Title_Expanded_Medium;
+        } else {
+            return R.style.TextAppearance_Hyperwallet_Title_Expanded_Small;
+        }
+    }
 }

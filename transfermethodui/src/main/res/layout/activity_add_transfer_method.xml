@@ -23,7 +23,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:expandedTitleMarginStart="@dimen/grid_margin_left"
-                app:expandedTitleTextAppearance="@style/TextAppearance.Hyperwallet.Title.Expanded"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
                 <androidx.appcompat.widget.Toolbar
