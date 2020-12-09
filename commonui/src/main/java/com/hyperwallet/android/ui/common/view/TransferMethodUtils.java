@@ -209,20 +209,29 @@ public class TransferMethodUtils {
         return cardBrand + "\u0020\u2022\u2022\u2022\u2022\u0020" + identificationText;
     }
 
-    public static int getAdjustTitleStyle(String title, boolean expanded) {
+    public static int getAdjustCollapseTitleStyle(String title) {
         int count = title.length();
-        if (count <= 20) {
-            return expanded ? R.style.TextAppearance_Hyperwallet_Title_Expanded_Large
-                    : R.style.TextAppearance_Hyperwallet_Title_Collapsed_Large;
-        } else if (count <= 28) {
-            return expanded ? R.style.TextAppearance_Hyperwallet_Title_Expanded_Medium
-                    : R.style.TextAppearance_Hyperwallet_Title_Collapsed_Medium;
+        if (count <= 24) {
+            return R.style.TextAppearance_Hyperwallet_Title_Collapse_Large;
+        } else if (count <= 34) {
+            return R.style.TextAppearance_Hyperwallet_Title_Collapse_Medium;
         } else if (count <= 36) {
-            return expanded ? R.style.TextAppearance_Hyperwallet_Title_Expanded_Small
-                    : R.style.TextAppearance_Hyperwallet_Title_Collapsed_Small;
+            return R.style.TextAppearance_Hyperwallet_Title_Collapse_Small;
         } else {
-            return expanded ? R.style.TextAppearance_Hyperwallet_Title_Collapsed_ExtraSmall
-                    : R.style.TextAppearance_Hyperwallet_Title_Collapsed_ExtraSmall;
+            return R.style.TextAppearance_Hyperwallet_Title_Collapse_ExtraSmall;
+        }
+    }
+
+    public static int getAdjustExpandTitleStyle(String title) {
+        int count = title.length();
+        if (count <= 24) {
+            return R.style.TextAppearance_Hyperwallet_Title_Expanded_Large;
+        } else if (count <= 34) {
+            return R.style.TextAppearance_Hyperwallet_Title_Expanded_Medium;
+        } else if (count <= 40) {
+            return R.style.TextAppearance_Hyperwallet_Title_Expanded_Small;
+        } else {
+            return R.style.TextAppearance_Hyperwallet_Title_Expanded_ExtraSmall;
         }
     }
 }

@@ -75,9 +75,7 @@ public class ListTransferMethodActivity extends AppCompatActivity implements
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         CollapsingToolbarLayout collapsingToolbar = findViewById(R.id.collapsing_toolbar);
-        int titleStyleCollapsed = TransferMethodUtils.getAdjustTitleStyle(getTitle().toString(), false);
-        collapsingToolbar.setCollapsedTitleTextAppearance(titleStyleCollapsed);
-        int titleStyleExpanded = TransferMethodUtils.getAdjustTitleStyle(getTitle().toString(), true);
+        int titleStyleExpanded = TransferMethodUtils.getAdjustExpandTitleStyle(getTitle().toString());
         collapsingToolbar.setExpandedTitleTextAppearance(titleStyleExpanded);
 
         TextView titleText = findViewById(R.id.toolbar_title);

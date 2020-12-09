@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="collapse_toolbar_collapse_extrasmall">12dp</dimen>
+    <dimen name="collapse_toolbar_collapse_small">16dp</dimen>
+    <dimen name="collapse_toolbar_collapse_medium">18dp</dimen>
+    <dimen name="collapse_toolbar_collapse_large">16dp</dimen>
+<!--    -->
+    <dimen name="collapse_toolbar_expand_extrasmall">14dp</dimen>
+    <dimen name="collapse_toolbar_expand_small">18dp</dimen>
+    <dimen name="collapse_toolbar_expand_medium">20dp</dimen>
+    <dimen name="collapse_toolbar_expand_large">28dp</dimen>
+</resources>

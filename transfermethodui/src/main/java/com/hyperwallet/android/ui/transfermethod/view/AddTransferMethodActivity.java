@@ -70,9 +70,9 @@ public class AddTransferMethodActivity extends AppCompatActivity implements
         getSupportActionBar().setTitle(TransferMethodUtils.getTransferMethodName(this,
                 getIntent().getStringExtra(EXTRA_TRANSFER_METHOD_TYPE)));
         CollapsingToolbarLayout collapsingToolbar = findViewById(R.id.collapsing_toolbar);
-        int titleStyleCollapsed = TransferMethodUtils.getAdjustTitleStyle(getTitle().toString(), false);
-        collapsingToolbar.setCollapsedTitleTextAppearance(titleStyleCollapsed);
-        int titleStyleExpanded = TransferMethodUtils.getAdjustTitleStyle(getTitle().toString(), true);
+        int titleStyleCollapse = TransferMethodUtils.getAdjustCollapseTitleStyle(getTitle().toString());
+        collapsingToolbar.setCollapsedTitleTextAppearance(titleStyleCollapse);
+        int titleStyleExpanded = TransferMethodUtils.getAdjustExpandTitleStyle(getTitle().toString());
         collapsingToolbar.setExpandedTitleTextAppearance(titleStyleExpanded);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
