@@ -37,27 +37,26 @@ import com.hyperwallet.android.exception.HyperwalletException;
 import com.hyperwallet.android.listener.HyperwalletListener;
 import com.hyperwallet.android.model.graphql.HyperwalletTransferMethodConfigurationField;
 import com.hyperwallet.android.model.graphql.HyperwalletTransferMethodConfigurationKey;
-import com.hyperwallet.android.model.graphql.query.TransferMethodConfigurationFieldQuery;
 import com.hyperwallet.android.model.graphql.query.TransferMethodConfigurationKeysQuery;
+import com.hyperwallet.android.model.graphql.query.TransferMethodUpdateConfigurationFieldQuery;
 import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
-public class TransferMethodConfigurationRepositoryImpl implements TransferMethodConfigurationRepository {
+public class TransferMethodUpdateConfigurationRepositoryImpl implements TransferMethodUpdateConfigurationRepository {
     private final Handler mHandler;
     private final Map<FieldMapKey, HyperwalletTransferMethodConfigurationField> mFieldMap;
     private HyperwalletTransferMethodConfigurationKey mTransferMethodConfigurationKey;
 
     //todo use default modifier after RepositoryFactory is removed
-    public TransferMethodConfigurationRepositoryImpl() {
+    public TransferMethodUpdateConfigurationRepositoryImpl() {
         mHandler = new Handler();
         mFieldMap = new HashMap<>();
     }
 
     @VisibleForTesting()
-    protected TransferMethodConfigurationRepositoryImpl(@Nullable Handler handler,
+    protected TransferMethodUpdateConfigurationRepositoryImpl(@Nullable Handler handler,
             HyperwalletTransferMethodConfigurationKey transferMethodConfigurationKey,
             Map<FieldMapKey, HyperwalletTransferMethodConfigurationField> fieldMap) {
         mHandler = handler;
@@ -99,22 +98,19 @@ public class TransferMethodConfigurationRepositoryImpl implements TransferMethod
 
 
     @VisibleForTesting
-    void getTransferMethodConfigurationFieldResult(@NonNull final String country,
-            @NonNull final String currency,
+    void getTransferMethodConfigurationFieldResult(
             @NonNull final String transferMethodType,
-            @NonNull final String transferMethodProfileType,
             @NonNull final LoadFieldsCallback loadFieldsCallback) {
-        TransferMethodConfigurationFieldQuery query =
-                new TransferMethodConfigurationFieldQuery(country, currency,
-                        transferMethodType, transferMethodProfileType);
+        TransferMethodUpdateConfigurationFieldQuery query = new TransferMethodUpdateConfigurationFieldQuery(
+                transferMethodType);
         EspressoIdlingResource.increment();
 
-        getHyperwallet().retrieveTransferMethodConfigurationFields(
+        getHyperwallet().retrieveUpdateTransferMethodConfigurationFields(
                 query,
                 new HyperwalletListener<HyperwalletTransferMethodConfigurationField>() {
                     @Override
                     public void onSuccess(HyperwalletTransferMethodConfigurationField result) {
-                        FieldMapKey fieldMapKey = new FieldMapKey(country, currency, transferMethodType);
+                        FieldMapKey fieldMapKey = new FieldMapKey(transferMethodType);
                         mFieldMap.put(fieldMapKey, result);
                         loadFieldsCallback.onFieldsLoaded(result);
                         EspressoIdlingResource.decrement();
@@ -144,18 +140,15 @@ public class TransferMethodConfigurationRepositoryImpl implements TransferMethod
     }
 
     @Override
-    public synchronized void getFields(@NonNull final String country, @NonNull final String currency,
-            @NonNull final String transferMethodType,
-            @NonNull final String transferMethodProfileType,
+    public synchronized void getFields(@NonNull final String transferMethodType,
             @NonNull final LoadFieldsCallback loadFieldsCallback) {
 
-        FieldMapKey fieldMapKey = new FieldMapKey(country, currency, transferMethodType);
+        FieldMapKey fieldMapKey = new FieldMapKey(transferMethodType);
         HyperwalletTransferMethodConfigurationField transferMethodConfigurationField = mFieldMap.get(fieldMapKey);
         // if there is no value for country-currency-type combination,
         // it means api call was never made or this combination or it was refreshed
         if (transferMethodConfigurationField == null) {
-            getTransferMethodConfigurationFieldResult(country, currency, transferMethodType,
-                    transferMethodProfileType, loadFieldsCallback);
+            getTransferMethodConfigurationFieldResult(transferMethodType, loadFieldsCallback);
         } else {
             loadFieldsCallback.onFieldsLoaded(transferMethodConfigurationField);
         }
@@ -171,52 +164,4 @@ public class TransferMethodConfigurationRepositoryImpl implements TransferMethod
         mFieldMap.clear();
     }
 
-}
-
-class FieldMapKey {
-    private final String mCountry;
-    private final String mCurrency;
-    private final String mTransferMethodType;
-
-    FieldMapKey(String mCountry, String mCurrency, String mTransferMethodType) {
-        this.mCountry = mCountry;
-        this.mCurrency = mCurrency;
-        this.mTransferMethodType = mTransferMethodType;
-    }
-
-    FieldMapKey(String mTransferMethodType) {
-        this.mCountry = null;
-        this.mCurrency = null;
-        this.mTransferMethodType = mTransferMethodType;
-    }
-    private String getCountry() {
-        return mCountry;
-    }
-
-    private String getCurrency() {
-        return mCurrency;
-    }
-
-    private String getTransferMethodType() {
-        return mTransferMethodType;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-
-        if (o == this) return true;
-        if (!(o instanceof FieldMapKey)) {
-            return false;
-        }
-        FieldMapKey that = (FieldMapKey) o;
-
-        return Objects.equals(mCountry, that.mCountry)
-                && Objects.equals(mCurrency, that.mCurrency)
-                && Objects.equals(mTransferMethodType, that.mTransferMethodType);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(mCountry, mCurrency, mTransferMethodType);
-    }
 }

@@ -46,6 +46,17 @@ public interface TransferMethodRepository {
      */
     void loadTransferMethods(@NonNull LoadTransferMethodListCallback callback);
 
+
+    /**
+     * Update transfer method specified.
+     *
+     * @param transferMethod transfer method to deactivate @see {@link TransferMethod}
+     * @param callback       @see {@link DeactivateTransferMethodCallback}
+     */
+    void updateTransferMethod(@NonNull final TransferMethod transferMethod,
+            @NonNull LoadTransferMethodCallback callback);
+
+
     /**
      * Load latest transfer methods available, associated with current context
      *
