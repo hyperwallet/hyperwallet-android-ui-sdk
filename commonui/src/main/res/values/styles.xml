@@ -14,9 +14,9 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="Widget.Hyperwallet.ProgressBar" parent="@style/Widget.AppCompat.ProgressBar">
         <item name="colorAccent">@color/colorPrimary</item>
@@ -24,15 +24,13 @@
         <item name="android:indeterminateTintMode">src_in</item>
     </style>
 
-    <style name="Widget.Hyperwallet.ProgressBar.CreateButton"
-        parent="@style/Widget.AppCompat.ProgressBar">
+    <style name="Widget.Hyperwallet.ProgressBar.CreateButton" parent="@style/Widget.AppCompat.ProgressBar">
         <item name="colorAccent">@color/regularColorPrimary</item>
         <item name="android:indeterminateTint">@color/regularColorPrimary</item>
         <item name="android:elevation">@dimen/progress_bar_elevation</item>
     </style>
 
-    <style name="TextAppearance.Hyperwallet.Headline4"
-        parent="@style/TextAppearance.MaterialComponents.Headline4">
+    <style name="TextAppearance.Hyperwallet.Headline4" parent="@style/TextAppearance.MaterialComponents.Headline4">
         <item name="android:textColor">@color/regularColorPrimary</item>
     </style>
 
@@ -60,29 +58,24 @@
         <item name="android:background">@color/regularColorPrimary</item>
     </style>
 
-    <style name="Widget.Hyperwallet.CollapsingToolbar"
-        parent="@style/Widget.Design.CollapsingToolbar">
+    <style name="Widget.Hyperwallet.CollapsingToolbar" parent="@style/Widget.Design.CollapsingToolbar">
         <item name="android:background">@color/colorPrimary</item>
         <item name="contentScrim">@color/colorPrimary</item>
     </style>
 
-    <style name="Widget.Hyperwallet.FloatingActionButton"
-        parent="@style/Widget.MaterialComponents.FloatingActionButton">
+    <style name="Widget.Hyperwallet.FloatingActionButton" parent="@style/Widget.MaterialComponents.FloatingActionButton">
         <item name="backgroundTint">@color/colorPrimary</item>
     </style>
 
-    <style name="TextAppearance.Hyperwallet.Body2"
-        parent="@style/Base.TextAppearance.Hyperwallet.Body2">
+    <style name="TextAppearance.Hyperwallet.Body2" parent="@style/Base.TextAppearance.Hyperwallet.Body2">
         <item name="android:textColor">@color/colorSecondaryDark</item>
     </style>
 
-    <style name="TextAppearance.Hyperwallet.Subtitle2"
-        parent="@style/TextAppearance.MaterialComponents.Subtitle2">
+    <style name="TextAppearance.Hyperwallet.Subtitle2" parent="@style/TextAppearance.MaterialComponents.Subtitle2">
         <item name="android:textColor">@color/colorSecondaryDark</item>
     </style>
 
-    <style name="Base.TextAppearance.Hyperwallet.Body2"
-        parent="@style/TextAppearance.MaterialComponents.Body2">
+    <style name="Base.TextAppearance.Hyperwallet.Body2" parent="@style/TextAppearance.MaterialComponents.Body2">
         <item name="android:textColor">@color/colorPrimary</item>
     </style>
 
@@ -169,8 +162,7 @@
         <item name="android:background">@color/colorBackgroundDisabled</item>
     </style>
 
-    <style name="Widget.Hyperwallet.TextInputEditText"
-        parent="Base.Widget.MaterialComponents.TextInputEditText">
+    <style name="Widget.Hyperwallet.TextInputEditText" parent="Base.Widget.MaterialComponents.TextInputEditText">
         <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Subtitle1
         </item>
         <item name="colorControlNormal">@color/colorSecondaryLight</item>
@@ -185,14 +177,12 @@
         <item name="android:paddingEnd" tools:ignore="NewApi">0dp</item>
     </style>
 
-    <style name="Theme.Hyperwallet.Confirmation.Dialog"
-        parent="Base.Theme.MaterialComponents.Light">
+    <style name="Theme.Hyperwallet.Confirmation.Dialog" parent="Base.Theme.MaterialComponents.Light">
         <item name="alertDialogTheme">@style/Widget.Hyperwallet.Confirmation.Dialog.Alert</item>
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
-    <style name="Widget.Hyperwallet.Confirmation.Dialog.Alert"
-        parent="Base.Theme.MaterialComponents.Light.Dialog">
+    <style name="Widget.Hyperwallet.Confirmation.Dialog.Alert" parent="Base.Theme.MaterialComponents.Light.Dialog">
         <item name="android:textColorPrimary">@color/colorSecondaryDark</item>
         <item name="android:windowTitleStyle">@style/TextAppearance.Hyperwallet.Dialog.Alert.Title
         </item>
@@ -208,14 +198,12 @@
         <item name="android:windowMinWidthMinor">@android:dimen/dialog_min_width_minor</item>
     </style>
 
-    <style name="Widget.Hyperwallet.Confirmation.Button.Negative"
-        parent="Widget.MaterialComponents.Button.TextButton">
+    <style name="Widget.Hyperwallet.Confirmation.Button.Negative" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:textColor">@color/colorSecondaryDark</item>
         <item name="android:letterSpacing">0.12</item>
     </style>
 
-    <style name="Widget.Hyperwallet.Confirmation.Button.Positive"
-        parent="Widget.MaterialComponents.Button.TextButton">
+    <style name="Widget.Hyperwallet.Confirmation.Button.Positive" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:textColor">@color/colorAccent</item>
         <item name="android:letterSpacing">0.12</item>
     </style>
@@ -225,8 +213,7 @@
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
-    <style name="Widget.Hyperwallet.Dialog.Alert"
-        parent="Base.Theme.MaterialComponents.Light.Dialog">
+    <style name="Widget.Hyperwallet.Dialog.Alert" parent="Base.Theme.MaterialComponents.Light.Dialog">
         <item name="android:textColorPrimary">@color/colorSecondaryDark</item>
         <item name="buttonBarNegativeButtonStyle">
             @style/Widget.Hyperwallet.Button.Negative
@@ -242,26 +229,22 @@
         <item name="android:windowMinWidthMinor">@android:dimen/dialog_min_width_minor</item>
     </style>
 
-    <style name="Widget.Hyperwallet.Button.Negative"
-        parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+    <style name="Widget.Hyperwallet.Button.Negative" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
         <item name="android:textColor">@color/colorSecondaryDark</item>
         <item name="android:letterSpacing">0.12</item>
     </style>
 
-    <style name="Widget.Hyperwallet.Button.Positive"
-        parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+    <style name="Widget.Hyperwallet.Button.Positive" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:letterSpacing">0.12</item>
     </style>
 
-    <style name="TextAppearance.Hyperwallet.Dialog.Alert.Title"
-        parent="TextAppearance.MaterialComponents.Headline6">
+    <style name="TextAppearance.Hyperwallet.Dialog.Alert.Title" parent="TextAppearance.MaterialComponents.Headline6">
         <item name="android:textColor">@color/regularColorSecondary</item>
         <item name="android:textStyle">normal</item>
     </style>
 
-    <style name="TextAppearance.Hyperwallet.Dialog.Alert.Body"
-        parent="TextAppearance.MaterialComponents.Body1">
+    <style name="TextAppearance.Hyperwallet.Dialog.Alert.Body" parent="TextAppearance.MaterialComponents.Body1">
         <item name="android:textColor">@color/colorSecondaryDark</item>
         <item name="android:textStyle">normal</item>
     </style>
@@ -292,4 +275,44 @@
     <style name="TextAppearance.Hyperwallet.CollapsingToolbar.Expanded" parent="@style/TextAppearance.Design.CollapsingToolbar.Expanded" />
 
     <style name="TextAppearance.Hyperwallet.Title" parent="@style/TextAppearance.AppCompat.Title" />
+
+    <style name="TextAppearance.Hyperwallet.Title.Collapse.ExtraSmall" parent="android:TextAppearance">
+        <item name="android:textSize">@dimen/collapse_toolbar_collapse_extrasmall</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextAppearance.Hyperwallet.Title.Collapse.Small" parent="android:TextAppearance">
+        <item name="android:textSize">@dimen/collapse_toolbar_collapse_small</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextAppearance.Hyperwallet.Title.Collapse.Medium" parent="android:TextAppearance">
+        <item name="android:textSize">@dimen/collapse_toolbar_collapse_medium</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextAppearance.Hyperwallet.Title.Collapse.Large" parent="android:TextAppearance">
+        <item name="android:textSize">@dimen/collapse_toolbar_collapse_large</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextAppearance.Hyperwallet.Title.Expanded.ExtraSmall" parent="android:TextAppearance">
+        <item name="android:textSize">@dimen/collapse_toolbar_expand_extrasmall</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextAppearance.Hyperwallet.Title.Expanded.Small" parent="android:TextAppearance">
+        <item name="android:textSize">@dimen/collapse_toolbar_expand_small</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextAppearance.Hyperwallet.Title.Expanded.Medium" parent="android:TextAppearance">
+        <item name="android:textSize">@dimen/collapse_toolbar_expand_medium</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextAppearance.Hyperwallet.Title.Expanded.Large" parent="android:TextAppearance">
+        <item name="android:textSize">@dimen/collapse_toolbar_expand_large</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>

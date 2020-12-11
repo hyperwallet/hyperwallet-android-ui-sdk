@@ -208,4 +208,30 @@ public class TransferMethodUtils {
 
         return cardBrand + "\u0020\u2022\u2022\u2022\u2022\u0020" + identificationText;
     }
+
+    public static int getAdjustCollapseTitleStyle(String title) {
+        int count = title.length();
+        if (count <= 24) {
+            return R.style.TextAppearance_Hyperwallet_Title_Collapse_Large;
+        } else if (count <= 34) {
+            return R.style.TextAppearance_Hyperwallet_Title_Collapse_Medium;
+        } else if (count <= 36) {
+            return R.style.TextAppearance_Hyperwallet_Title_Collapse_Small;
+        } else {
+            return R.style.TextAppearance_Hyperwallet_Title_Collapse_ExtraSmall;
+        }
+    }
+
+    public static int getAdjustExpandTitleStyle(String title) {
+        int count = title.length();
+        if (count <= 24) {
+            return R.style.TextAppearance_Hyperwallet_Title_Expanded_Large;
+        } else if (count <= 34) {
+            return R.style.TextAppearance_Hyperwallet_Title_Expanded_Medium;
+        } else if (count <= 40) {
+            return R.style.TextAppearance_Hyperwallet_Title_Expanded_Small;
+        } else {
+            return R.style.TextAppearance_Hyperwallet_Title_Expanded_ExtraSmall;
+        }
+    }
 }
