@@ -315,7 +315,7 @@ public class ListPrepaidCardReceiptsTest {
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(0, hasDescendant(withText(R.string.adjustment)))));
         onView(withId(R.id.list_receipts)).check(
-                matches(atPosition(0, hasDescendant(withText(debitSymbol + usdCurrencySymbol + "8.90")))));
+                matches(atPosition(0, hasDescendant(withText(debitSymbol+ "8.90 "+ usdCurrencySymbol)))));
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(0, hasDescendant(withText("1. Juni 2019")))));
         onView(withId(R.id.list_receipts)).check(
@@ -394,7 +394,7 @@ public class ListPrepaidCardReceiptsTest {
         onView(withId(R.id.receipt_id_label)).check(matches(withText(R.string.mobileJournalNumberLabel)));
         onView(withId(R.id.receipt_id_value)).check(matches(withText("FISVL_5240220")));
         onView(withId(R.id.date_label)).check(matches(withText(R.string.date)));
-        onView(withId(R.id.date_value)).check(matches(withText("Thu, June 6, 2019, 3:48 PM PDT")));
+        onView(withId(R.id.date_value)).check(matches(withText("Jun 6, 2019, 3:48 PM PDT")));
 
         onView(withId(R.id.client_id_label)).check(matches(withText(R.string.mobileMerchantTxnLabel)));
         onView(withId(R.id.client_id_value)).check(matches(withText("AOxXefx9")));
@@ -448,7 +448,7 @@ public class ListPrepaidCardReceiptsTest {
         onView(withId(R.id.receipt_id_label)).check(matches(withText(R.string.mobileJournalNumberLabel)));
         onView(withId(R.id.receipt_id_value)).check(matches(withText("FISVL_5240221")));
         onView(withId(R.id.date_label)).check(matches(withText(R.string.date)));
-        onView(withId(R.id.date_value)).check(matches(withText("Thu, June 6, 2019, 3:48 PM PDT")));
+        onView(withId(R.id.date_value)).check(matches(withText("Jun 6, 2019, 3:48 PM PDT")));
 
         onView(withId(R.id.client_id_label)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
         onView(withId(R.id.client_id_value)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
