@@ -177,6 +177,7 @@ public class CreateTransferViewModel extends ViewModel {
      * or else it will just do nothing
      */
     public void refresh(String amount) {
+        mQuoteAvailableTransferFundsError = false;
         mTransferAmount.postValue(null);
         mTransferNotes.postValue(null);
         mSourceToken = null;
@@ -231,6 +232,7 @@ public class CreateTransferViewModel extends ViewModel {
 
     public void setTransferDestination(@NonNull final TransferMethod transferDestination) {
         mTransferDestination.postValue(transferDestination);
+        mQuoteAvailableTransferFundsError = true;
         quoteAvailableTransferFunds(mSourceToken, transferDestination);
     }
 
@@ -297,6 +299,7 @@ public class CreateTransferViewModel extends ViewModel {
     public void setSelectedTransferSource(@NonNull final TransferSource source) {
         mSelectedTransferSource.postValue(source);
         mSourceToken = source.getToken();
+        mQuoteAvailableTransferFundsError = true;
         if (mTransferDestination.getValue() == null) {
             loadTransferDestination(mSourceToken);
         } else if (source.getType().equals(PREPAID_CARD) && Objects.equals(mTransferDestination.getValue().getField(
