@@ -59,7 +59,7 @@ public class NumberWidget extends AbstractMaskedInputWidget {
             editText.setEnabled(mField.isEditable());
             setIdFromFieldLabel(mTextInputLayout);
             setIdFromFieldName(editText);
-
+            isEdited = true;
             editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
