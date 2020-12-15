@@ -158,7 +158,7 @@ public class TransferMethodUpdateConfigurationRepositoryImplTest {
                 });
 
         FieldMapKey fieldMapKey = new FieldMapKey(TRANSFER_METHOD_TYPE);
-      //  when(mFieldsMap.get(fieldMapKey)).thenReturn(result);
+        when(mFieldsMap.get(fieldMapKey)).thenReturn(result);
 
         mTransferMethodUpdateConfigurationRepositoryImplMock.getFields(TRANSFER_METHOD_TYPE, loadFieldsCallback);
 
@@ -176,7 +176,7 @@ public class TransferMethodUpdateConfigurationRepositoryImplTest {
         JSONObject jsonObject = new JSONObject(responseBody);
         FieldMapKey fieldMapKey = new FieldMapKey(TRANSFER_METHOD_TYPE);
         HashMap<FieldMapKey, HyperwalletTransferMethodConfigurationField> fieldMap = new HashMap<>();
-     //   fieldMap.put(fieldMapKey, new TransferMethodUpdateConfigurationFieldResult(jsonObject));
+        fieldMap.put(fieldMapKey, new TransferMethodUpdateConfigurationFieldResult(jsonObject));
         TransferMethodConfigurationRepositoryImpl repositoryWithCache = new TransferMethodConfigurationRepositoryImpl(
                 null, null, fieldMap);
         repositoryWithCache.refreshFields();
