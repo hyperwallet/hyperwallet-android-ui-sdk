@@ -13,6 +13,11 @@
             android:windowSoftInputMode="adjustResize"/>
 
         <activity
+            android:name="com.hyperwallet.android.ui.transfermethod.view.UpdateTransferMethodActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize"/>
+
+        <activity
             android:name="com.hyperwallet.android.ui.transfermethod.view.SelectTransferMethodActivity"
             android:label="@string/mobileAddTransferMethodHeader"
             android:theme="@style/AppTheme.NoActionBar">

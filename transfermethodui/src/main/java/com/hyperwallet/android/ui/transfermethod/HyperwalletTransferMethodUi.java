@@ -20,6 +20,7 @@ package com.hyperwallet.android.ui.transfermethod;
 import static com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_COUNTRY;
 import static com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_CURRENCY;
 import static com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_PROFILE_TYPE;
+import static com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_TOKEN;
 import static com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity.EXTRA_TRANSFER_METHOD_TYPE;
 
 import android.content.Context;
@@ -36,6 +37,7 @@ import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodReposi
 import com.hyperwallet.android.ui.transfermethod.view.AddTransferMethodActivity;
 import com.hyperwallet.android.ui.transfermethod.view.ListTransferMethodActivity;
 import com.hyperwallet.android.ui.transfermethod.view.SelectTransferMethodActivity;
+import com.hyperwallet.android.ui.transfermethod.view.UpdateTransferMethodActivity;
 import com.hyperwallet.android.ui.user.repository.UserRepositoryFactory;
 
 /**
@@ -127,6 +129,22 @@ public final class HyperwalletTransferMethodUi {
         intent.putExtra(EXTRA_TRANSFER_METHOD_CURRENCY, currency);
         intent.putExtra(EXTRA_TRANSFER_METHOD_TYPE, transferMethodType);
         intent.putExtra(EXTRA_TRANSFER_METHOD_PROFILE_TYPE, profileType);
+        intent.putExtra(AddTransferMethodActivity.EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT, lockScreenToPortrait);
+        return intent;
+    }
+
+    /**
+     * @param context              A Context of the application consuming this Intent.
+     * @param transferMethodToken  The Transfer method token.
+     * @param lockScreenToPortrait if set <code>true</code> screen will be locked to Portrait mode;
+     *                             otherwise <code>false</code> screen will follow whatever the
+     *                             device orientation is directed.
+     * @return an Intent with the data necessary to launch the {@link UpdateTransferMethodActivity}
+     */
+    public Intent getIntentUpdateTransferMethodActivity(@NonNull final Context context,
+            @NonNull final String transferMethodToken, final boolean lockScreenToPortrait) {
+        Intent intent = new Intent(context, UpdateTransferMethodActivity.class);
+        intent.putExtra(EXTRA_TRANSFER_METHOD_TOKEN, transferMethodToken);
         intent.putExtra(AddTransferMethodActivity.EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT, lockScreenToPortrait);
         return intent;
     }
