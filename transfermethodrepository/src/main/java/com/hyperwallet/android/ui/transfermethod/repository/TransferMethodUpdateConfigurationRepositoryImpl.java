@@ -37,7 +37,6 @@ import com.hyperwallet.android.exception.HyperwalletException;
 import com.hyperwallet.android.listener.HyperwalletListener;
 import com.hyperwallet.android.model.graphql.HyperwalletTransferMethodConfigurationField;
 import com.hyperwallet.android.model.graphql.HyperwalletTransferMethodConfigurationKey;
-import com.hyperwallet.android.model.graphql.query.TransferMethodConfigurationKeysQuery;
 import com.hyperwallet.android.model.graphql.query.TransferMethodUpdateConfigurationFieldQuery;
 import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
 

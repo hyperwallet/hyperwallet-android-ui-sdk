@@ -54,8 +54,7 @@ import java.util.List;
 
 @RunWith(RobolectricTestRunner.class)
 public class TransferMethodUpdateConfigurationRepositoryImplTest {
-    private static final String COUNTRY = "COUNTRY";
-    private static final String CURRENCY = "USD";
+
     private static final String TRANSFER_METHOD_TYPE = "BANK_ACCOUNT";
     @Rule
     public HyperwalletExternalResourceManager externalResourceManager = new HyperwalletExternalResourceManager();
@@ -85,7 +84,7 @@ public class TransferMethodUpdateConfigurationRepositoryImplTest {
             throws NoSuchMethodException, InstantiationException, IllegalAccessException, JSONException,
             InvocationTargetException {
         String responseBody = externalResourceManager.getResourceContent(
-                "successful_tmc_fields_bank_account_response.json");
+                "successful_tmc_update_field_bank_account_response.json");
         final TransferMethodUpdateConfigurationFieldResult result = JsonUtils.fromJsonString(responseBody,
                 new TypeReference<TransferMethodUpdateConfigurationFieldResult>() {
                 });
@@ -159,7 +158,7 @@ public class TransferMethodUpdateConfigurationRepositoryImplTest {
                 });
 
         FieldMapKey fieldMapKey = new FieldMapKey(TRANSFER_METHOD_TYPE);
-       // when(mFieldsMap.get(fieldMapKey)).thenReturn(result);
+      //  when(mFieldsMap.get(fieldMapKey)).thenReturn(result);
 
         mTransferMethodUpdateConfigurationRepositoryImplMock.getFields(TRANSFER_METHOD_TYPE, loadFieldsCallback);
 
@@ -177,7 +176,7 @@ public class TransferMethodUpdateConfigurationRepositoryImplTest {
         JSONObject jsonObject = new JSONObject(responseBody);
         FieldMapKey fieldMapKey = new FieldMapKey(TRANSFER_METHOD_TYPE);
         HashMap<FieldMapKey, HyperwalletTransferMethodConfigurationField> fieldMap = new HashMap<>();
-       // fieldMap.put(fieldMapKey, new TransferMethodUpdateConfigurationFieldResult(jsonObject));
+     //   fieldMap.put(fieldMapKey, new TransferMethodUpdateConfigurationFieldResult(jsonObject));
         TransferMethodConfigurationRepositoryImpl repositoryWithCache = new TransferMethodConfigurationRepositoryImpl(
                 null, null, fieldMap);
         repositoryWithCache.refreshFields();
