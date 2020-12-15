@@ -110,7 +110,7 @@ public class UpdateTransferMethodFragment extends Fragment implements WidgetEven
         updateTransferMethodFragment.mTransferMethodToken = transferMethodToken;
         updateTransferMethodFragment.mWidgetInputStateHashMap = new HashMap<>(1);
         updateTransferMethodFragment.mTransferMethod = null;
-        arguments.putParcelable(ARGUMENT_TRANSFER_METHOD_TOKEN, updateTransferMethodFragment.mTransferMethod);
+        arguments.putString(ARGUMENT_TRANSFER_METHOD_TOKEN, transferMethodToken);
         arguments.putSerializable(ARGUMENT_WIDGET_STATE_MAP, updateTransferMethodFragment.mWidgetInputStateHashMap);
         updateTransferMethodFragment.setArguments(arguments);
 
@@ -210,7 +210,7 @@ public class UpdateTransferMethodFragment extends Fragment implements WidgetEven
     @Override
     public void onResume() {
         super.onResume();
-        mPresenter.loadTransferMethodConfigurationFields(FORCE_UPDATE, mTransferMethodType);
+        mPresenter.loadTransferMethodConfigurationFields(FORCE_UPDATE, mTransferMethodType, mTransferMethodToken);
     }
 
     @Override
@@ -594,7 +594,7 @@ public class UpdateTransferMethodFragment extends Fragment implements WidgetEven
 
     @Override
     public void reloadTransferMethodConfigurationFields() {
-        mPresenter.loadTransferMethodConfigurationFields(FORCE_UPDATE, mTransferMethodType);
+        mPresenter.loadTransferMethodConfigurationFields(FORCE_UPDATE, mTransferMethodType, mTransferMethodToken);
     }
 
     @Override

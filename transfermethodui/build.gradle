@@ -25,6 +25,7 @@ dependencies {
     implementation project(':commonui')
     implementation project(":userrepository")
     implementation project(":transfermethodrepository")
+    implementation project(":transferui")
 
 
     androidTestImplementation "androidx.test:rules:$testRulesVersion"

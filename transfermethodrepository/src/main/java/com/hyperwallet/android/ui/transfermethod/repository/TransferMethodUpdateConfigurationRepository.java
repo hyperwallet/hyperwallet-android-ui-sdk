@@ -31,11 +31,10 @@ import androidx.annotation.Nullable;
 
 import com.hyperwallet.android.model.Errors;
 import com.hyperwallet.android.model.graphql.HyperwalletTransferMethodConfigurationField;
-import com.hyperwallet.android.model.graphql.HyperwalletTransferMethodConfigurationKey;
 
 public interface TransferMethodUpdateConfigurationRepository {
 
-    void getFields(@NonNull final String transferMethodType,
+    void getFields(@NonNull final String transferMethodType, @NonNull final String transferMethodToken,
             @NonNull final LoadFieldsCallback loadFieldsCallback);
 
 

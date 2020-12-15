@@ -30,14 +30,16 @@ public class UpdateTransferMethodPresenter implements UpdateTransferMethodContra
     }
 
     @Override
-    public void loadTransferMethodConfigurationFields(boolean forceUpdate, @NonNull String transferMethodType) {
+    public void loadTransferMethodConfigurationFields(boolean forceUpdate, @NonNull String transferMethodType,
+            @NonNull final String transferMethodToken) {
         mView.showProgressBar();
 
         if (forceUpdate) {
-         //   mTransferMethodConfigurationRepository.refreshFields();
+            mTransferMethodUpdateConfigurationRepository.refreshFields();
         }
 
         mTransferMethodUpdateConfigurationRepository.getFields(transferMethodType,
+                transferMethodToken,
                 new TransferMethodUpdateConfigurationRepository.LoadFieldsCallback() {
                     @Override
                     public void onFieldsLoaded(@Nullable HyperwalletTransferMethodConfigurationField field) {

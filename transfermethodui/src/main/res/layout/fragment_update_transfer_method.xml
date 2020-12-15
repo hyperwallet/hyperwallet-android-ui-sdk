@@ -95,7 +95,7 @@
                     android:layout_marginEnd="@dimen/button_right_margin"
                     android:layout_marginBottom="@dimen/button_bottom_margin"
                     android:maxWidth="@dimen/create_button_max_width"
-                    android:text="@string/createTransferMethodButtonLabel"
+                    android:text="@string/doneButtonLabel"
                     android:textAllCaps="false"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

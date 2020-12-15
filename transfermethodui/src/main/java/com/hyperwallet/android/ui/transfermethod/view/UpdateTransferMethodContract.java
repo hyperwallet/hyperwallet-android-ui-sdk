@@ -59,7 +59,7 @@ public class UpdateTransferMethodContract {
 
         void updateTransferMethod(@NonNull TransferMethod transferMethod);
 
-        void loadTransferMethodConfigurationFields(boolean forceUpdate, @NonNull final String transferMethodType);
+        void loadTransferMethodConfigurationFields(boolean forceUpdate, @NonNull final String transferMethodType, @NonNull final String transferMethodToken);
 
         void handleUnmappedFieldError(@NonNull final Map<String, ?> fieldSet,
                 @NonNull final List<Error> errors);
