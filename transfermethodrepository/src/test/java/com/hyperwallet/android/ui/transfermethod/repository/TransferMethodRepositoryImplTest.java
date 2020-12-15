@@ -34,6 +34,7 @@ import com.hyperwallet.android.model.StatusTransition;
 import com.hyperwallet.android.model.paging.PageList;
 import com.hyperwallet.android.model.transfermethod.BankAccount;
 import com.hyperwallet.android.model.transfermethod.BankCard;
+import com.hyperwallet.android.model.transfermethod.PaperCheck;
 import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import com.hyperwallet.android.model.transfermethod.TransferMethodQueryParam;
 import com.hyperwallet.android.model.transfermethod.PayPalAccount;
@@ -87,7 +88,7 @@ public class TransferMethodRepositoryImplTest {
     @Captor
     private ArgumentCaptor<VenmoAccount> mVenmoAccountArgumentCaptor;
     @Captor
-    private ArgumentCaptor<VenmoAccount> mPaperCheckArgumentCaptor; //todo paper check
+    private ArgumentCaptor<PaperCheck> mPaperCheckArgumentCaptor;
     @Captor
     private ArgumentCaptor<StatusTransition> mStatusTransitionArgumentCaptor;
     @Captor
@@ -144,6 +145,41 @@ public class TransferMethodRepositoryImplTest {
     }
 
     @Test
+    public void testUpdateTransferMethod_bankAccountWithSuccess() {
+        BankAccount bankAccount = new BankAccount
+                .Builder("CA", "CAD", "3423423432")
+                .build();
+
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                HyperwalletListener listener = (HyperwalletListener) invocation.getArguments()[1];
+                BankAccount returnedBank = new BankAccount
+                        .Builder("CA", "CAD", "3423423432")
+                        .bankName("Mock Bank Response")
+                        .build();
+                listener.onSuccess(returnedBank);
+                return listener;
+            }
+        }).when(mHyperwallet).updateBankAccount(any(BankAccount.class),
+                ArgumentMatchers.<HyperwalletListener<BankAccount>>any());
+
+        // test
+        mTransferMethodRepository.updateTransferMethod(bankAccount, mLoadTransferMethodCallback);
+
+        verify(mLoadTransferMethodCallback).onTransferMethodLoaded(mBankAccountArgumentCaptor.capture());
+        verify(mLoadTransferMethodCallback, never()).onError(any(Errors.class));
+
+        BankAccount transferMethod = mBankAccountArgumentCaptor.getValue();
+        assertThat(transferMethod, is(notNullValue()));
+        assertThat(transferMethod.getField(TYPE), is(TransferMethod.TransferMethodTypes.BANK_ACCOUNT));
+        assertThat(transferMethod.getField(BANK_NAME), is("Mock Bank Response"));
+        assertThat(transferMethod.getField(TRANSFER_METHOD_COUNTRY), is("CA"));
+        assertThat(transferMethod.getField(TRANSFER_METHOD_CURRENCY), is("CAD"));
+        assertThat(transferMethod.getField(BANK_ACCOUNT_ID), is("3423423432"));
+    }
+
+    @Test
     public void testCreateTransferMethod_bankAccountWithError() {
         BankAccount bankAccount = new BankAccount
                 .Builder(COUNTRY_US, CURRENCY_USD, "23432432")
@@ -173,6 +209,35 @@ public class TransferMethodRepositoryImplTest {
         assertThat(mErrorsArgumentCaptor.getValue().getErrors(), hasItem(error));
     }
 
+    @Test
+    public void testUpdateTransferMethod_bankAccountWithError() {
+        BankAccount bankAccount = new BankAccount
+                .Builder(COUNTRY_US, CURRENCY_USD, "23432432")
+                .build();
+
+        final Error error = new Error(TEST_MESSAGE, TEST_CODE);
+
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                HyperwalletListener listener = (HyperwalletListener) invocation.getArguments()[1];
+                List<Error> errorList = new ArrayList<>();
+                errorList.add(error);
+                Errors errors = new Errors(errorList);
+                HyperwalletException exception = new HyperwalletException(errors);
+                listener.onFailure(exception);
+                return listener;
+            }
+        }).when(mHyperwallet).updateBankAccount(any(BankAccount.class),
+                ArgumentMatchers.<HyperwalletListener<BankAccount>>any());
+
+        // test
+        mTransferMethodRepository.updateTransferMethod(bankAccount, mLoadTransferMethodCallback);
+
+        verify(mLoadTransferMethodCallback).onError(mErrorsArgumentCaptor.capture());
+        verify(mLoadTransferMethodCallback, never()).onTransferMethodLoaded(any(TransferMethod.class));
+        assertThat(mErrorsArgumentCaptor.getValue().getErrors(), hasItem(error));
+    }
     @Test
     public void testCreateTransferMethod_withUnsupportedTransferMethodType() {
         BankAccount bankAccount = new BankAccount
@@ -486,6 +551,40 @@ public class TransferMethodRepositoryImplTest {
     }
 
     @Test
+    public void testUpdateTransferMethod_bankCardWithSuccess() {
+        BankCard bankCard = new BankCard
+                .Builder("CA", "CAD", "1232345456784", "2019-05", "234")
+                .build();
+
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                HyperwalletListener listener = (HyperwalletListener) invocation.getArguments()[1];
+                BankCard returnedBankCard = new BankCard
+                        .Builder("CA", "CAD", "1232345456784", "2019-05", "234")
+                        .cardBrand("Brand")
+                        .cardType("cardType")
+                        .build();
+                listener.onSuccess(returnedBankCard);
+                return listener;
+            }
+        }).when(mHyperwallet).updateBankCard(any(BankCard.class),
+                ArgumentMatchers.<HyperwalletListener<BankCard>>any());
+
+        // test
+        mTransferMethodRepository.updateTransferMethod(bankCard, mLoadTransferMethodCallback);
+
+        verify(mLoadTransferMethodCallback).onTransferMethodLoaded(mBankCardArgumentCaptor.capture());
+        verify(mLoadTransferMethodCallback, never()).onError(any(Errors.class));
+
+        BankCard transferMethod = mBankCardArgumentCaptor.getValue();
+        assertThat(transferMethod, is(notNullValue()));
+        assertThat(transferMethod.getField(TYPE), is(TransferMethod.TransferMethodTypes.BANK_CARD));
+        assertThat(transferMethod.getField(TransferMethod.TransferMethodFields.CARD_BRAND), is("Brand"));
+        assertThat(transferMethod.getField(TransferMethod.TransferMethodFields.CARD_TYPE), is("cardType"));
+    }
+
+    @Test
     public void testCreateTransferMethod_bankCardWithError() {
         BankCard bankCard = new BankCard
                 .Builder("CA", "CAD", "1232345456784", "2019-05", "234")
@@ -514,7 +613,35 @@ public class TransferMethodRepositoryImplTest {
         verify(mLoadTransferMethodCallback, never()).onTransferMethodLoaded(any(TransferMethod.class));
         assertThat(mErrorsArgumentCaptor.getValue().getErrors(), hasItem(error));
     }
+    @Test
+    public void testUpdateTransferMethod_bankCardWithError() {
+        BankCard bankCard = new BankCard
+                .Builder("CA", "CAD", "1232345456784", "2019-05", "234")
+                .build();
 
+        final Error error = new Error("bank card test message", "BANK_CARD_TEST_CODE");
+
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                HyperwalletListener listener = (HyperwalletListener) invocation.getArguments()[1];
+                List<Error> errorList = new ArrayList<>();
+                errorList.add(error);
+                Errors errors = new Errors(errorList);
+                HyperwalletException exception = new HyperwalletException(errors);
+                listener.onFailure(exception);
+                return listener;
+            }
+        }).when(mHyperwallet).updateBankCard(any(BankCard.class),
+                ArgumentMatchers.<HyperwalletListener<BankCard>>any());
+
+        // test
+        mTransferMethodRepository.updateTransferMethod(bankCard, mLoadTransferMethodCallback);
+
+        verify(mLoadTransferMethodCallback).onError(mErrorsArgumentCaptor.capture());
+        verify(mLoadTransferMethodCallback, never()).onTransferMethodLoaded(any(TransferMethod.class));
+        assertThat(mErrorsArgumentCaptor.getValue().getErrors(), hasItem(error));
+    }
 
     @Test
     public void testLoadTransferMethod_returnsBankAccount() {
@@ -723,6 +850,42 @@ public class TransferMethodRepositoryImplTest {
     }
 
     @Test
+    public void testUpdateTransferMethod_payPalAccountWithSuccess() {
+        // prepare
+        final PayPalAccount returnedPayPalAccount = new PayPalAccount.Builder()
+                .email("money@mail.com")
+                .token("trm-token-1342242314")
+                .build();
+
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                HyperwalletListener listener = (HyperwalletListener) invocation.getArguments()[1];
+                returnedPayPalAccount.setField(STATUS, ACTIVATED);
+                listener.onSuccess(returnedPayPalAccount);
+                return listener;
+            }
+        }).when(mHyperwallet).updatePayPalAccount(any(PayPalAccount.class),
+                ArgumentMatchers.<HyperwalletListener<PayPalAccount>>any());
+
+        PayPalAccount parameter = new PayPalAccount.Builder().build();
+
+        // test
+        mTransferMethodRepository.updateTransferMethod(parameter, mLoadTransferMethodCallback);
+
+        // verify
+        verify(mLoadTransferMethodCallback).onTransferMethodLoaded(mPayPalAccountArgumentCaptor.capture());
+        verify(mLoadTransferMethodCallback, never()).onError(any(Errors.class));
+
+        // assert
+        PayPalAccount payPalAccount = mPayPalAccountArgumentCaptor.getValue();
+        assertThat(payPalAccount, is(notNullValue()));
+        assertThat(payPalAccount.getEmail(), is("money@mail.com"));
+        assertThat(payPalAccount.getField(STATUS), is(ACTIVATED));
+        assertThat(payPalAccount.getField(TOKEN), is("trm-token-1342242314"));
+    }
+
+    @Test
     public void testCreateTransferMethod_payPalAccountWithError() {
         // prepare
         final Error returnedError = new Error("PayPal test message", "PAYPAL_TEST_CODE");
@@ -744,6 +907,36 @@ public class TransferMethodRepositoryImplTest {
 
         // test
         mTransferMethodRepository.createTransferMethod(parameter, mLoadTransferMethodCallback);
+
+        // verify
+        verify(mLoadTransferMethodCallback, never()).onTransferMethodLoaded(any(TransferMethod.class));
+        verify(mLoadTransferMethodCallback).onError(mErrorsArgumentCaptor.capture());
+
+        // assert
+        assertThat(mErrorsArgumentCaptor.getValue().getErrors(), hasItem(returnedError));
+    }
+    @Test
+    public void testUpdateTransferMethod_payPalAccountWithError() {
+        // prepare
+        final Error returnedError = new Error("PayPal test message", "PAYPAL_TEST_CODE");
+
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                HyperwalletListener listener = (HyperwalletListener) invocation.getArguments()[1];
+
+                List<Error> errorList = new ArrayList<>();
+                errorList.add(returnedError);
+
+                listener.onFailure(new HyperwalletException(new Errors(errorList)));
+                return listener;
+            }
+        }).when(mHyperwallet).updatePayPalAccount(any(PayPalAccount.class),
+                ArgumentMatchers.<HyperwalletListener<PayPalAccount>>any());
+        PayPalAccount parameter = new PayPalAccount.Builder().build();
+
+        // test
+        mTransferMethodRepository.updateTransferMethod(parameter, mLoadTransferMethodCallback);
 
         // verify
         verify(mLoadTransferMethodCallback, never()).onTransferMethodLoaded(any(TransferMethod.class));
@@ -782,11 +975,7 @@ public class TransferMethodRepositoryImplTest {
         assertThat(venmoAccount.getField(TOKEN), is(TEST_TOKEN));
     }
 
-    @Test
-    public void createTransferMethod_paperCheckWithSuccess() {
-
-        //Todo paper check
-
+    public void updateTransferMethod_venmoAccountWithSuccess() {
         final VenmoAccount returnedVenmoAccount = buildVenmoAccount();
         doAnswer(new Answer() {
             @Override
@@ -796,11 +985,11 @@ public class TransferMethodRepositoryImplTest {
                 listener.onSuccess(returnedVenmoAccount);
                 return listener;
             }
-        }).when(mHyperwallet).createVenmoAccount(any(VenmoAccount.class), any(HyperwalletListener.class));
+        }).when(mHyperwallet).updateVenmoAccount(any(VenmoAccount.class), any(HyperwalletListener.class));
 
         VenmoAccount parameter = new VenmoAccount.Builder().build();
 
-        mTransferMethodRepository.createTransferMethod(parameter, mLoadTransferMethodCallback);
+        mTransferMethodRepository.updateTransferMethod(parameter, mLoadTransferMethodCallback);
 
         verify(mLoadTransferMethodCallback).onTransferMethodLoaded(mVenmoAccountArgumentCaptor.capture());
         verify(mLoadTransferMethodCallback, never()).onError(any(Errors.class));
@@ -814,6 +1003,61 @@ public class TransferMethodRepositoryImplTest {
         assertThat(venmoAccount.getField(TOKEN), is(TEST_TOKEN));
     }
 
+    @Test
+    public void createTransferMethod_paperCheckWithSuccess() {
+        final PaperCheck returnedPaperCheck = buildPaperCheck();
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                HyperwalletListener listener = (HyperwalletListener) invocation.getArguments()[1];
+                returnedPaperCheck.setField(STATUS, ACTIVATED);
+                listener.onSuccess(returnedPaperCheck);
+                return listener;
+            }
+        }).when(mHyperwallet).createPaperCheck(any(PaperCheck.class), any(HyperwalletListener.class));
+
+        PaperCheck parameter = new PaperCheck.Builder().build();
+
+        mTransferMethodRepository.createTransferMethod(parameter, mLoadTransferMethodCallback);
+
+        verify(mLoadTransferMethodCallback).onTransferMethodLoaded(mPaperCheckArgumentCaptor.capture());
+        verify(mLoadTransferMethodCallback, never()).onError(any(Errors.class));
+
+        PaperCheck paperCheck = mPaperCheckArgumentCaptor.getValue();
+        assertThat(paperCheck, is(notNullValue()));
+        assertThat(paperCheck.getCountry(), is(COUNTRY_US));
+        assertThat(paperCheck.getCurrency(), is(CURRENCY_USD));
+        assertThat(paperCheck.getField(STATUS), is(ACTIVATED));
+        assertThat(paperCheck.getField(TOKEN), is(TEST_TOKEN));
+    }
+
+    @Test
+    public void updateTransferMethod_paperCheckWithSuccess() {
+        final PaperCheck returnedPaperCheck = buildPaperCheck();
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                HyperwalletListener listener = (HyperwalletListener) invocation.getArguments()[1];
+                returnedPaperCheck.setField(STATUS, ACTIVATED);
+                listener.onSuccess(returnedPaperCheck);
+                return listener;
+            }
+        }).when(mHyperwallet).updatePaperCheck(any(PaperCheck.class), any(HyperwalletListener.class));
+
+        PaperCheck parameter = new PaperCheck.Builder().build();
+
+        mTransferMethodRepository.updateTransferMethod(parameter, mLoadTransferMethodCallback);
+
+        verify(mLoadTransferMethodCallback).onTransferMethodLoaded(mPaperCheckArgumentCaptor.capture());
+        verify(mLoadTransferMethodCallback, never()).onError(any(Errors.class));
+
+        PaperCheck paperCheck = mPaperCheckArgumentCaptor.getValue();
+        assertThat(paperCheck, is(notNullValue()));
+        assertThat(paperCheck.getCountry(), is(COUNTRY_US));
+        assertThat(paperCheck.getCurrency(), is(CURRENCY_USD));
+        assertThat(paperCheck.getField(STATUS), is(ACTIVATED));
+        assertThat(paperCheck.getField(TOKEN), is(TEST_TOKEN));
+    }
     @Test
     public void createTransferMethod_venmoAccountWithError() {
         final Error returnedError = new Error(TEST_MESSAGE, TEST_CODE);
@@ -839,10 +1083,7 @@ public class TransferMethodRepositoryImplTest {
     }
 
     @Test
-    public void createTransferMethod_paperCheckWithError() {
-
-        //Todo paper check
-
+    public void updateTransferMethod_venmoAccountWithError() {
         final Error returnedError = new Error(TEST_MESSAGE, TEST_CODE);
         doAnswer(new Answer() {
             @Override
@@ -855,8 +1096,32 @@ public class TransferMethodRepositoryImplTest {
                 listener.onFailure(new HyperwalletException(new Errors(errorList)));
                 return listener;
             }
-        }).when(mHyperwallet).createVenmoAccount(any(VenmoAccount.class), any(HyperwalletListener.class));
+        }).when(mHyperwallet).updateVenmoAccount(any(VenmoAccount.class), any(HyperwalletListener.class));
         VenmoAccount parameter = new VenmoAccount.Builder().build();
+
+        mTransferMethodRepository.updateTransferMethod(parameter, mLoadTransferMethodCallback);
+
+        verify(mLoadTransferMethodCallback, never()).onTransferMethodLoaded(any(TransferMethod.class));
+        verify(mLoadTransferMethodCallback).onError(mErrorsArgumentCaptor.capture());
+        assertThat(mErrorsArgumentCaptor.getValue().getErrors(), hasItem(returnedError));
+    }
+
+    @Test
+    public void createTransferMethod_paperCheckWithError() {
+        final Error returnedError = new Error(TEST_MESSAGE, TEST_CODE);
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                HyperwalletListener listener = (HyperwalletListener) invocation.getArguments()[1];
+
+                List<Error> errorList = new ArrayList<>();
+                errorList.add(returnedError);
+
+                listener.onFailure(new HyperwalletException(new Errors(errorList)));
+                return listener;
+            }
+        }).when(mHyperwallet).createPaperCheck(any(PaperCheck.class), any(HyperwalletListener.class));
+        PaperCheck parameter = new PaperCheck.Builder().build();
 
         mTransferMethodRepository.createTransferMethod(parameter, mLoadTransferMethodCallback);
 
@@ -864,6 +1129,31 @@ public class TransferMethodRepositoryImplTest {
         verify(mLoadTransferMethodCallback).onError(mErrorsArgumentCaptor.capture());
         assertThat(mErrorsArgumentCaptor.getValue().getErrors(), hasItem(returnedError));
     }
+
+    @Test
+    public void updateTransferMethod_paperCheckWithError() {
+        final Error returnedError = new Error(TEST_MESSAGE, TEST_CODE);
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                HyperwalletListener listener = (HyperwalletListener) invocation.getArguments()[1];
+
+                List<Error> errorList = new ArrayList<>();
+                errorList.add(returnedError);
+
+                listener.onFailure(new HyperwalletException(new Errors(errorList)));
+                return listener;
+            }
+        }).when(mHyperwallet).updatePaperCheck(any(PaperCheck.class), any(HyperwalletListener.class));
+        PaperCheck parameter = new PaperCheck.Builder().build();
+
+        mTransferMethodRepository.updateTransferMethod(parameter, mLoadTransferMethodCallback);
+
+        verify(mLoadTransferMethodCallback, never()).onTransferMethodLoaded(any(TransferMethod.class));
+        verify(mLoadTransferMethodCallback).onError(mErrorsArgumentCaptor.capture());
+        assertThat(mErrorsArgumentCaptor.getValue().getErrors(), hasItem(returnedError));
+    }
+
     @Test
     public void testCreateTransferMethod_wireAccountWithSuccess() {
         BankAccount bankAccount = new BankAccount
@@ -965,6 +1255,14 @@ public class TransferMethodRepositoryImplTest {
                 .transferMethodCurrency(CURRENCY_USD)
                 .transferMethodCountry(COUNTRY_US)
                 .accountId(VENMO_ACCOUNT_ID)
+                .token(TEST_TOKEN)
+                .build();
+    }
+
+    private PaperCheck buildPaperCheck() {
+        return new PaperCheck.Builder()
+                .transferMethodCountry(COUNTRY_US)
+                .transferMethodCurrency(CURRENCY_USD)
                 .token(TEST_TOKEN)
                 .build();
     }
