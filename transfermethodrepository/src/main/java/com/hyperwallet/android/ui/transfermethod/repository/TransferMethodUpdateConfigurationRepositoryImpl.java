@@ -70,34 +70,6 @@ public class TransferMethodUpdateConfigurationRepositoryImpl implements Transfer
     }
 
     @VisibleForTesting
-    void getTransferMethodConfigurationKeyResult(final LoadKeysCallback loadKeysCallback) {
-        TransferMethodConfigurationKeysQuery query = new TransferMethodConfigurationKeysQuery();
-        EspressoIdlingResource.increment();
-
-        getHyperwallet().retrieveTransferMethodConfigurationKeys(query,
-                new HyperwalletListener<HyperwalletTransferMethodConfigurationKey>() {
-                    @Override
-                    public void onSuccess(@Nullable HyperwalletTransferMethodConfigurationKey result) {
-                        mTransferMethodConfigurationKey = result;
-                        loadKeysCallback.onKeysLoaded(mTransferMethodConfigurationKey);
-                        EspressoIdlingResource.decrement();
-                    }
-
-                    @Override
-                    public void onFailure(HyperwalletException exception) {
-                        loadKeysCallback.onError(exception.getErrors());
-                        EspressoIdlingResource.decrement();
-                    }
-
-                    @Override
-                    public Handler getHandler() {
-                        return mHandler;
-                    }
-                });
-    }
-
-
-    @VisibleForTesting
     void getTransferMethodConfigurationFieldResult(
             @NonNull final String transferMethodType,
             @NonNull final LoadFieldsCallback loadFieldsCallback) {
@@ -131,15 +103,6 @@ public class TransferMethodUpdateConfigurationRepositoryImpl implements Transfer
     }
 
     @Override
-    public synchronized void getKeys(@NonNull final LoadKeysCallback loadKeysCallback) {
-        if (mTransferMethodConfigurationKey == null) {
-            getTransferMethodConfigurationKeyResult(loadKeysCallback);
-        } else {
-            loadKeysCallback.onKeysLoaded(mTransferMethodConfigurationKey);
-        }
-    }
-
-    @Override
     public synchronized void getFields(@NonNull final String transferMethodType,
             @NonNull final LoadFieldsCallback loadFieldsCallback) {
 
@@ -152,11 +115,6 @@ public class TransferMethodUpdateConfigurationRepositoryImpl implements Transfer
         } else {
             loadFieldsCallback.onFieldsLoaded(transferMethodConfigurationField);
         }
-    }
-
-    @Override
-    public void refreshKeys() {
-        mTransferMethodConfigurationKey = null;
     }
 
     @Override

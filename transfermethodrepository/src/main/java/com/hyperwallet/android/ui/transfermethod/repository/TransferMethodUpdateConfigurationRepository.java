@@ -35,21 +35,11 @@ import com.hyperwallet.android.model.graphql.HyperwalletTransferMethodConfigurat
 
 public interface TransferMethodUpdateConfigurationRepository {
 
-    void getKeys(@NonNull final LoadKeysCallback loadKeysCallback);
-
     void getFields(@NonNull final String transferMethodType,
             @NonNull final LoadFieldsCallback loadFieldsCallback);
 
-    void refreshKeys();
 
     void refreshFields();
-
-    interface LoadKeysCallback {
-
-        void onKeysLoaded(@Nullable final HyperwalletTransferMethodConfigurationKey transferMethodConfigurationKey);
-
-        void onError(@NonNull final Errors errors);
-    }
 
     interface LoadFieldsCallback {
 
