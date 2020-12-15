@@ -107,7 +107,7 @@ public class CreateTransferViewModel extends ViewModel {
     private boolean updateTransferAllFunds;
     private String mDecimalSeparator;
     private String mGroupSeparator;
-    private boolean mQuoteAvailableTransferFundsError = false;
+    private boolean mIsQuoteAvailableTransferFunds = false;
 
 
     /**
@@ -177,7 +177,7 @@ public class CreateTransferViewModel extends ViewModel {
      * or else it will just do nothing
      */
     public void refresh(String amount) {
-        mQuoteAvailableTransferFundsError = false;
+        mIsQuoteAvailableTransferFunds = false;
         mTransferAmount.postValue(null);
         mTransferNotes.postValue(null);
         mSourceToken = null;
@@ -188,6 +188,10 @@ public class CreateTransferViewModel extends ViewModel {
 
     public boolean isPortraitMode() {
         return mIsPortraitMode;
+    }
+
+    public void setQuoteAvailableTransferFunds(boolean availableTransferFundsError){
+        mIsQuoteAvailableTransferFunds = availableTransferFundsError;
     }
 
     public void setPortraitMode(final boolean portraitMode) {
@@ -232,7 +236,6 @@ public class CreateTransferViewModel extends ViewModel {
 
     public void setTransferDestination(@NonNull final TransferMethod transferDestination) {
         mTransferDestination.postValue(transferDestination);
-        mQuoteAvailableTransferFundsError = true;
         quoteAvailableTransferFunds(mSourceToken, transferDestination);
     }
 
@@ -299,7 +302,6 @@ public class CreateTransferViewModel extends ViewModel {
     public void setSelectedTransferSource(@NonNull final TransferSource source) {
         mSelectedTransferSource.postValue(source);
         mSourceToken = source.getToken();
-        mQuoteAvailableTransferFundsError = true;
         if (mTransferDestination.getValue() == null) {
             loadTransferDestination(mSourceToken);
         } else if (source.getType().equals(PREPAID_CARD) && Objects.equals(mTransferDestination.getValue().getField(
@@ -326,8 +328,8 @@ public class CreateTransferViewModel extends ViewModel {
 
     public void createTransfer() {
         mIsCreateQuoteLoading.postValue(Boolean.TRUE);
-        if (!mQuoteAvailableTransferFundsError) {
-            mQuoteAvailableTransferFundsError = true;
+        if (!mIsQuoteAvailableTransferFunds) {
+            mIsQuoteAvailableTransferFunds = true;
             quoteAvailableTransferFunds(mSourceToken, mTransferDestination.getValue());
         } else {
             String amount = isTransferRequestSameWithQuote() ? null : mTransferAmount.getValue();
@@ -586,6 +588,7 @@ public class CreateTransferViewModel extends ViewModel {
             @Override
             public void onTransferCreated(@Nullable Transfer transfer) {
                 mIsLoading.postValue(Boolean.FALSE);
+                mIsQuoteAvailableTransferFunds = true;
                 mQuoteAvailableFunds.postValue(transfer);
             }
 
@@ -593,7 +596,7 @@ public class CreateTransferViewModel extends ViewModel {
             public void onError(@NonNull Errors errors) {
                 mIsLoading.postValue(Boolean.FALSE);
                 mQuoteAvailableFunds.setValue(null);
-                if (mQuoteAvailableTransferFundsError) {
+                if (mIsQuoteAvailableTransferFunds) {
                     if (errors.containsInputError()) {
                         Error error = errors.getErrors().get(0);
                         if (Objects.equals(error.getFieldName(), DESTINATION_TOKEN_INPUT_FIELD)) {

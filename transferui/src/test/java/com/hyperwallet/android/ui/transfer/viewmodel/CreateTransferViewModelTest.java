@@ -443,7 +443,7 @@ public class CreateTransferViewModelTest {
         assertThat(viewModel.getTransferNotes().getValue(), is("Test transfer note"));
     }
 
-    //@Test
+    @Test
     public void testCreateQuoteTransfer_isSuccessful() {
         CreateTransferViewModel.CreateTransferViewModelFactory factory =
                 new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
@@ -480,7 +480,7 @@ public class CreateTransferViewModelTest {
     }
 
 
-   // @Test
+    @Test
     public void testCreateQuoteTransfer_isSuccessfulWithAllAvailableFunds() {
         CreateTransferViewModel.CreateTransferViewModelFactory factory =
                 new CreateTransferViewModel.CreateTransferViewModelFactory(mTransferRepository,
@@ -517,7 +517,7 @@ public class CreateTransferViewModelTest {
         assertThat(viewModel.getShowFxRateChange().getValue(), is(true));
     }
 
-    //@Test
+    @Test
     public void testCreateQuoteTransfer_hasGenericError() throws Exception {
         String errorResponse = mResourceManager.getResourceContent("errors/transfer_error_response.json");
         final Errors errors = JsonUtils.fromJsonString(errorResponse,
@@ -548,6 +548,7 @@ public class CreateTransferViewModelTest {
 
         viewModel.init("0");
         // test
+        viewModel.setQuoteAvailableTransferFunds(true);
         viewModel.createTransfer();
 
         assertThat(viewModel.getCreateTransferError().getValue(), is(notNullValue()));
@@ -559,7 +560,7 @@ public class CreateTransferViewModelTest {
                 is("INVALID_SOURCE_TOKEN"));
     }
 
-    //@Test
+    @Test
     public void testCreateQuoteTransfer_hasInvalidAmountError() throws Exception {
         String errorResponse = mResourceManager.getResourceContent(
                 "errors/create_transfer_error_invalid_amount_response.json");
@@ -592,6 +593,7 @@ public class CreateTransferViewModelTest {
 
         viewModel.init("0");
         // test
+        viewModel.setQuoteAvailableTransferFunds(true);
         viewModel.createTransfer();
 
         assertThat(viewModel.getInvalidAmountError().getValue(), is(notNullValue()));
