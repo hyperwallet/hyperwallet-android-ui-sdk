@@ -12,6 +12,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.instanceOf;
 
 import static java.net.HttpURLConnection.HTTP_NO_CONTENT;
@@ -309,13 +310,14 @@ public class ListPrepaidCardReceiptsTest {
         mActivityTestRule.launchActivity(null);
         // assert
         onView(withId(R.id.list_receipts))
-                .check(matches(atPosition(0, hasDescendant(withText("Juni 2019")))));
+                .check(matches(atPosition(0, hasDescendant(withText(containsString("Juni 2019"))))));
         onView(withId(R.id.list_receipts)).check(matches(atPosition(0,
                 hasDescendant(withText(com.hyperwallet.android.ui.receipt.R.string.debit)))));
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(0, hasDescendant(withText(R.string.adjustment)))));
+
         onView(withId(R.id.list_receipts)).check(
-                matches(atPosition(0, hasDescendant(withText(debitSymbol + usdCurrencySymbol + "8.90")))));
+                matches(atPosition(0, hasDescendant(withText(containsString(debitSymbol + "8,90"))))));
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(0, hasDescendant(withText("1. Juni 2019")))));
         onView(withId(R.id.list_receipts)).check(
