@@ -66,7 +66,6 @@ public class NumberWidget extends AbstractMaskedInputWidget {
                         String input = ((EditText) v).getText().toString();
                         mValue = formatToApi(input);
                         mListener.valueChanged(NumberWidget.this);
-                        isEdited = true;
                     } else {
                         mListener.widgetFocused(NumberWidget.this.getName());
                     }

@@ -64,7 +64,6 @@ public class TextWidget extends AbstractMaskedInputWidget {
                         String input = ((EditText) v).getText().toString();
                         mValue = formatToApi(input);
                         mListener.valueChanged(TextWidget.this);
-                        isEdited = true;
                     } else {
                         mListener.widgetFocused(TextWidget.this.getName());
                     }
