@@ -1188,8 +1188,7 @@ public class TransferUserFundsTest {
         onView(ViewMatchers.withText(ppcInfoFrom))
                 .perform(ViewActions.click());
 
-        // Verify Transfer From is Available Funds
-        // Select PPC from the Select From list
+        // Verify Transfer From is Prepaid Card
         verifyTransferFromPPC();
         String ppcInfo = VISA + MASK + "9285";
         Espresso.onView(ViewMatchers.withId(R.id.transfer_source_description_1))
