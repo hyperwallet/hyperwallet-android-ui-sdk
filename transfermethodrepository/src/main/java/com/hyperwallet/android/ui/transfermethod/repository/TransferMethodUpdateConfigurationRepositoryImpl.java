@@ -112,9 +112,9 @@ public class TransferMethodUpdateConfigurationRepositoryImpl implements Transfer
         // it means api call was never made or this combination or it was refreshed
        // if (transferMethodConfigurationField == null) {
             getTransferMethodConfigurationFieldResult(transferMethodType, transferMethodToken, loadFieldsCallback);
-    //    } else {
-   //         loadFieldsCallback.onFieldsLoaded(transferMethodConfigurationField);
-    //    }
+       // } else {
+          //  loadFieldsCallback.onFieldsLoaded(transferMethodConfigurationField);
+      // }
     }
 
     @Override
