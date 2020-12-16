@@ -36,7 +36,7 @@ public abstract class AbstractWidget {
     protected final WidgetEventListener mListener;
     protected int mBottomViewId = 0;
     protected WidgetInputState mWidgetInputState;
-    public Boolean isEdited;
+    public Boolean isEdited = false;
 
     public AbstractWidget(@Nullable Field field, @NonNull WidgetEventListener listener,
             @Nullable String defaultValue, @NonNull View defaultFocusView) {

@@ -1032,7 +1032,7 @@ public class TransferMethodRepositoryImplTest {
         assertThat(paperCheck.getField(TOKEN), is(TEST_TOKEN));
     }
 
-    //@Test
+    @Test
     public void updateTransferMethod_paperCheckWithSuccess() {
         final PaperCheck returnedPaperCheck = buildPaperCheck();
         doAnswer(new Answer() {
@@ -1083,7 +1083,7 @@ public class TransferMethodRepositoryImplTest {
         assertThat(mErrorsArgumentCaptor.getValue().getErrors(), hasItem(returnedError));
     }
 
-    //@Test
+    @Test
     public void updateTransferMethod_venmoAccountWithError() {
         final Error returnedError = new Error(TEST_MESSAGE, TEST_CODE);
         doAnswer(new Answer() {
@@ -1107,7 +1107,7 @@ public class TransferMethodRepositoryImplTest {
         assertThat(mErrorsArgumentCaptor.getValue().getErrors(), hasItem(returnedError));
     }
 
-    //@Test
+    @Test
     public void createTransferMethod_paperCheckWithError() {
         final Error returnedError = new Error(TEST_MESSAGE, TEST_CODE);
         doAnswer(new Answer() {
@@ -1131,7 +1131,7 @@ public class TransferMethodRepositoryImplTest {
         assertThat(mErrorsArgumentCaptor.getValue().getErrors(), hasItem(returnedError));
     }
 
-    //@Test
+    @Test
     public void updateTransferMethod_paperCheckWithError() {
         final Error returnedError = new Error(TEST_MESSAGE, TEST_CODE);
         doAnswer(new Answer() {
