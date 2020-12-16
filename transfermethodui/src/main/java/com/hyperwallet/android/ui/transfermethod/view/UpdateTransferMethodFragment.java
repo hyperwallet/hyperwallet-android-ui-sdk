@@ -70,11 +70,12 @@ public class UpdateTransferMethodFragment extends Fragment implements WidgetEven
 
     public static final String TAG = UpdateTransferMethodActivity.TAG;
 
+    private static final String ARGUMENT_TRANSFER_METHOD_TYPE = "ARGUMENT_TRANSFER_METHOD_TYPE";
     private static final String ARGUMENT_TRANSFER_METHOD_TOKEN = "ARGUMENT_TRANSFER_METHOD_TOKEN";
-    private static final String ARGUMENT_SHOW_CREATE_PROGRESS_BAR = "ARGUMENT_SHOW_CREATE_PROGRESS_BAR";
+    private static final String ARGUMENT_SHOW_UPDATE_PROGRESS_BAR = "ARGUMENT_SHOW_UPDATE_PROGRESS_BAR";
     private static final String ARGUMENT_WIDGET_STATE_MAP = "ARGUMENT_WIDGET_STATE_MAP";
     private static final boolean FORCE_UPDATE = false;
-    private View mCreateButtonProgressBar;
+    private View mUpdateButtonProgressBar;
     private Button mUpdateTransferMethodButton;
     private ViewGroup mDynamicContainer;
     private NestedScrollView mNestedScrollView;
@@ -83,7 +84,7 @@ public class UpdateTransferMethodFragment extends Fragment implements WidgetEven
             mOnLoadTransferMethodConfigurationFieldsNetworkErrorCallback;
     private UpdateTransferMethodContract.Presenter mPresenter;
     private View mProgressBar;
-    private boolean mUpdateButtonProgressBar;
+    private boolean mUpdateProgressBar;
     private String mTransferMethodType;
     private TransferMethod mTransferMethod;
     private String mTransferMethodToken;
@@ -98,18 +99,21 @@ public class UpdateTransferMethodFragment extends Fragment implements WidgetEven
     /**
      * Creates new instance of UpdateTransferMethodFragment this is the proper initialization of this class
      * since the default constructor is reserved for android framework when lifecycle is triggered.
-     * The parameters in {@link UpdateTransferMethodFragment#newInstance(String)} is mandatory
+     * The parameters in {@link UpdateTransferMethodFragment#newInstance(String,String)} is mandatory
      * and should be supplied with correct data or this fragment will not initialize properly.
      *
      * @param transferMethodToken the country selected when creating transfer method
      */
-    public static UpdateTransferMethodFragment newInstance(@NonNull String transferMethodToken) {
+    public static UpdateTransferMethodFragment newInstance(@NonNull String transferMethodType,
+            @NonNull String transferMethodToken) {
         UpdateTransferMethodFragment updateTransferMethodFragment = new UpdateTransferMethodFragment();
         Bundle arguments = new Bundle();
 
+        updateTransferMethodFragment.mTransferMethodType = transferMethodType;
         updateTransferMethodFragment.mTransferMethodToken = transferMethodToken;
         updateTransferMethodFragment.mWidgetInputStateHashMap = new HashMap<>(1);
         updateTransferMethodFragment.mTransferMethod = null;
+        arguments.putString(ARGUMENT_TRANSFER_METHOD_TYPE, transferMethodType);
         arguments.putString(ARGUMENT_TRANSFER_METHOD_TOKEN, transferMethodToken);
         arguments.putSerializable(ARGUMENT_WIDGET_STATE_MAP, updateTransferMethodFragment.mWidgetInputStateHashMap);
         updateTransferMethodFragment.setArguments(arguments);
@@ -158,7 +162,7 @@ public class UpdateTransferMethodFragment extends Fragment implements WidgetEven
         mDynamicContainer = view.findViewById(R.id.update_transfer_method_dynamic_container);
         mNestedScrollView = view.findViewById(R.id.update_transfer_method_scroll_view);
 
-        mCreateButtonProgressBar = view.findViewById(R.id.update_transfer_method_progress_bar);
+        mUpdateButtonProgressBar = view.findViewById(R.id.update_transfer_method_progress_bar);
         mProgressBar = view.findViewById(R.id.update_transfer_method_progress_bar_layout);
         mUpdateTransferMethodButton = view.findViewById(R.id.update_transfer_method_button);
 
@@ -177,7 +181,7 @@ public class UpdateTransferMethodFragment extends Fragment implements WidgetEven
 //                                .profileType(mTransferMethodProfileType)
                                 .build());
 
-                triggerSubmit();
+                triggerUpdate();
             }
         });
     }
@@ -198,11 +202,13 @@ public class UpdateTransferMethodFragment extends Fragment implements WidgetEven
 
         if (savedInstanceState != null) {
             mWidgetInputStateHashMap = (HashMap) savedInstanceState.getSerializable(ARGUMENT_WIDGET_STATE_MAP);
+            mTransferMethodType = savedInstanceState.getString(ARGUMENT_TRANSFER_METHOD_TYPE);
             mTransferMethodToken = savedInstanceState.getString(ARGUMENT_TRANSFER_METHOD_TOKEN);
-            mUpdateButtonProgressBar = savedInstanceState.getBoolean(ARGUMENT_SHOW_CREATE_PROGRESS_BAR);
+            mUpdateProgressBar = savedInstanceState.getBoolean(ARGUMENT_SHOW_UPDATE_PROGRESS_BAR);
             mTransferMethod = savedInstanceState.getParcelable(ARGUMENT_TRANSFER_METHOD_TOKEN);
         } else { // same as UpdateTransferMethodFragment#newInstance
             mWidgetInputStateHashMap = (HashMap) getArguments().getSerializable(ARGUMENT_WIDGET_STATE_MAP);
+            mTransferMethodType = getArguments().getString(ARGUMENT_TRANSFER_METHOD_TYPE);
             mTransferMethodToken = getArguments().getString(ARGUMENT_TRANSFER_METHOD_TOKEN);
         }
     }
@@ -222,54 +228,52 @@ public class UpdateTransferMethodFragment extends Fragment implements WidgetEven
     public void onSaveInstanceState(@NonNull Bundle outState) {
         outState.putSerializable(ARGUMENT_WIDGET_STATE_MAP, mWidgetInputStateHashMap);
         outState.putString(ARGUMENT_TRANSFER_METHOD_TOKEN, mTransferMethodToken);
-        outState.putBoolean(ARGUMENT_SHOW_CREATE_PROGRESS_BAR, mUpdateButtonProgressBar);
+        outState.putBoolean(ARGUMENT_SHOW_UPDATE_PROGRESS_BAR, mUpdateProgressBar);
         super.onSaveInstanceState(outState);
     }
 
-    private void triggerSubmit() {
+    private void triggerUpdate() {
         hideSoftKeys();
         if (performValidation()) {
             switch (mTransferMethodType) {
                 case BANK_ACCOUNT:
                     mTransferMethod = new BankAccount.Builder()
-//                            .transferMethodCountry(mCountry)
-//                            .transferMethodCurrency(mCurrency)
+                            .token(mTransferMethodToken)
+                            .bankAccountId("67890")
                             .build();
                     break;
                 case BANK_CARD:
                     mTransferMethod = new BankCard.Builder()
-//                            transferMethodCountry(mCountry).transferMethodCurrency(mCurrency)
+                            .token(mTransferMethodToken)
+                            .dateOfExpiry("2023-12")
                             .build();
                     break;
                 case PAYPAL_ACCOUNT:
                     mTransferMethod = new PayPalAccount.Builder()
-//                            .transferMethodCountry(mCountry)
-//                            .transferMethodCurrency(mCurrency)
+                            .token(mTransferMethodToken)
+                            .email("user2@domain.com")
                             .build();
                     break;
                 case WIRE_ACCOUNT:
                     mTransferMethod = new BankAccount.Builder()
-//                            .transferMethodCountry(mCountry)
-//                            .transferMethodCurrency(mCurrency)
+                            .token(mTransferMethodToken)
+                            .bankAccountId("67890")
                             .transferMethodType(WIRE_ACCOUNT)
                             .build();
                     break;
                 case VENMO_ACCOUNT:
                     mTransferMethod = new VenmoAccount.Builder()
-//                            .transferMethodCountry(mCountry)
-//                            .transferMethodCurrency(mCurrency)
+                            .token(mTransferMethodToken)
+                            .accountId("9876543211")
                             .build();
                     break;
                 case PAPER_CHECK:
                     mTransferMethod = new PaperCheck.Builder()
-//                            .transferMethodCountry(mCountry)
-//                            .transferMethodCurrency(mCurrency)
+                            .token("trm-fake-token")
                             .build();
                     break;
                 default:
                     mTransferMethod = new TransferMethod();
-//                    mTransferMethod.setField(TRANSFER_METHOD_COUNTRY, mCountry);
-//                    mTransferMethod.setField(TRANSFER_METHOD_CURRENCY, mCurrency);
                     mTransferMethod.setField(TYPE, mTransferMethodType);
             }
 
@@ -444,7 +448,7 @@ public class UpdateTransferMethodFragment extends Fragment implements WidgetEven
 //                            .profileType(mTransferMethodProfileType)
                             .build());
 
-            if (mUpdateButtonProgressBar) {
+            if (mUpdateProgressBar) {
                 setVisibleAndDisableFields();
             }
         } catch (HyperwalletException e) {
@@ -504,8 +508,8 @@ public class UpdateTransferMethodFragment extends Fragment implements WidgetEven
     }
 
     @Override
-    public void showCreateButtonProgressBar() {
-        mUpdateButtonProgressBar = true;
+    public void showUpdateButtonProgressBar() {
+        mUpdateProgressBar = true;
         setVisibleAndDisableFields();
     }
 
@@ -514,16 +518,16 @@ public class UpdateTransferMethodFragment extends Fragment implements WidgetEven
                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE);
-        mCreateButtonProgressBar.setVisibility(View.VISIBLE);
+        mUpdateButtonProgressBar.setVisibility(View.VISIBLE);
         mUpdateTransferMethodButton.setBackgroundColor(getResources().getColor(R.color.colorSecondaryDark));
     }
 
     @Override
-    public void hideCreateButtonProgressBar() {
-        mUpdateButtonProgressBar = false;
+    public void hideUpdateButtonProgressBar() {
+        mUpdateProgressBar = false;
         getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE);
-        mCreateButtonProgressBar.setVisibility(View.GONE);
+        mUpdateButtonProgressBar.setVisibility(View.GONE);
         mUpdateTransferMethodButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         mUpdateTransferMethodButton.setTextColor(getResources().getColor(R.color.regularColorPrimary));
     }

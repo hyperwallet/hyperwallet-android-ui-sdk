@@ -66,8 +66,8 @@ public class UpdateTransferMethodPresenter implements UpdateTransferMethodContra
 
     @Override
     public void updateTransferMethod(@NonNull TransferMethod transferMethod) {
-        mView.showCreateButtonProgressBar();
-        mTransferMethodRepository.createTransferMethod(transferMethod,
+        mView.showUpdateButtonProgressBar();
+        mTransferMethodRepository.updateTransferMethod(transferMethod,
                 new TransferMethodRepository.LoadTransferMethodCallback() {
                     @Override
                     public void onTransferMethodLoaded(TransferMethod transferMethod) {
@@ -75,7 +75,7 @@ public class UpdateTransferMethodPresenter implements UpdateTransferMethodContra
                         if (!mView.isActive()) {
                             return;
                         }
-                        mView.hideCreateButtonProgressBar();
+                        mView.hideUpdateButtonProgressBar();
                         mView.notifyTransferMethodUpdated(transferMethod);
                     }
 
@@ -85,7 +85,7 @@ public class UpdateTransferMethodPresenter implements UpdateTransferMethodContra
                             return;
                         }
 
-                        mView.hideCreateButtonProgressBar();
+                        mView.hideUpdateButtonProgressBar();
                         if (errors.containsInputError()) {
                             mView.showInputErrors(errors.getErrors());
                         } else {

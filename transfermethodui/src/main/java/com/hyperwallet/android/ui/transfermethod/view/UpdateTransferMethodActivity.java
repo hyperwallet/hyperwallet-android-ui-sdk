@@ -71,6 +71,7 @@ public class UpdateTransferMethodActivity extends AppCompatActivity implements
         }
         if (savedInstanceState == null) {
             ActivityUtils.initFragment(this, UpdateTransferMethodFragment.newInstance(
+                    getIntent().getStringExtra(EXTRA_TRANSFER_METHOD_TYPE),
                     getIntent().getStringExtra(EXTRA_TRANSFER_METHOD_TOKEN)
             ), R.id.update_transfer_method_fragment);
         } else {
@@ -129,6 +130,7 @@ public class UpdateTransferMethodActivity extends AppCompatActivity implements
 
         if (fragment == null) {
             fragment = UpdateTransferMethodFragment.newInstance(
+                    getIntent().getStringExtra(EXTRA_TRANSFER_METHOD_TYPE),
                     getIntent().getStringExtra(EXTRA_TRANSFER_METHOD_TOKEN)
             );
         }

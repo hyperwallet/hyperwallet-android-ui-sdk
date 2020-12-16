@@ -33,9 +33,9 @@ public class UpdateTransferMethodContract {
         void showTransactionInformation(@NonNull final List<Fee> fees,
                 @Nullable final ProcessingTime processingTime);
 
-        void showCreateButtonProgressBar();
+        void showUpdateButtonProgressBar();
 
-        void hideCreateButtonProgressBar();
+        void hideUpdateButtonProgressBar();
 
         void showProgressBar();
 
