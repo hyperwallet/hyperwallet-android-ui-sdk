@@ -54,6 +54,7 @@ public class TextWidget extends AbstractMaskedInputWidget {
                     new ContextThemeWrapper(viewGroup.getContext(), R.style.Widget_Hyperwallet_TextInputEditText));
             editText.setTextColor(viewGroup.getContext().getResources().getColor(R.color.regularColorSecondary));
             editText.setEnabled(mField.isEditable());
+            editText.setSelectAllOnFocus(mField.isFieldValueMasked());
             mTextInputLayout.setHint(mField.getLabel());
             setIdFromFieldLabel(mTextInputLayout);
             setIdFromFieldName(editText);
