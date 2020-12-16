@@ -49,7 +49,7 @@ public class ListTransferMethodActivity extends AppCompatActivity implements
         ListTransferMethodFragment.OnAddNewTransferMethodSelected,
         ListTransferMethodFragment.OnDeactivateTransferMethodNetworkErrorCallback,
         ListTransferMethodFragment.OnLoadTransferMethodNetworkErrorCallback,
-        ListTransferMethodFragment.OnTransferMethodContextMenuDeletionSelected,
+        ListTransferMethodFragment.OnTransferMethodContextMenuItemSelected,
         OnTransferMethodDeactivateCallback, OnNetworkErrorCallback {
 
     public static final String TAG = "transfer-method:list:list-transfer-methods";
@@ -175,6 +175,17 @@ public class ListTransferMethodActivity extends AppCompatActivity implements
         if (!fragment.isAdded()) {
             fragment.show(fragmentManager);
         }
+    }
+
+    @Override
+    public void invokeTransferMethodEdit(@NonNull TransferMethod transferMethod) {
+        String type = transferMethod.getField(TransferMethod.TransferMethodFields.TYPE);
+        String token = transferMethod.getField(TransferMethod.TransferMethodFields.TOKEN);
+        Intent intent = new Intent(this, UpdateTransferMethodActivity.class);
+        intent.putExtra(UpdateTransferMethodActivity.EXTRA_TRANSFER_METHOD_TYPE, type);
+        intent.putExtra(UpdateTransferMethodActivity.EXTRA_TRANSFER_METHOD_TOKEN, token);
+        intent.putExtra(UpdateTransferMethodActivity.EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT, true);
+        startActivity(intent);
     }
 
     @Override
