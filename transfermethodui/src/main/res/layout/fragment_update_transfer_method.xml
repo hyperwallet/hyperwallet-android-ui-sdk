@@ -48,6 +48,7 @@
             <LinearLayout
                 android:id="@+id/update_transfer_method_static_container_header"
                 android:layout_width="match_parent"
+                android:visibility="gone"
                 android:layout_height="@dimen/section_header_height">
 
                 <TextView
@@ -66,6 +67,7 @@
                 android:layout_height="@dimen/row_height_single_entry"
                 android:background="@color/colorBackgroundDisabled"
                 android:gravity="center_vertical"
+                android:visibility="gone"
                 android:orientation="vertical">
 
                 <TextView

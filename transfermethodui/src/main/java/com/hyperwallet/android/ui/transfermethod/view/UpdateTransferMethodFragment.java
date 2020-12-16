@@ -99,7 +99,7 @@ public class UpdateTransferMethodFragment extends Fragment implements WidgetEven
     /**
      * Creates new instance of UpdateTransferMethodFragment this is the proper initialization of this class
      * since the default constructor is reserved for android framework when lifecycle is triggered.
-     * The parameters in {@link UpdateTransferMethodFragment#newInstance(String,String)} is mandatory
+     * The parameters in {@link UpdateTransferMethodFragment#newInstance(String, String)} is mandatory
      * and should be supplied with correct data or this fragment will not initialize properly.
      *
      * @param transferMethodToken the country selected when creating transfer method
@@ -239,37 +239,32 @@ public class UpdateTransferMethodFragment extends Fragment implements WidgetEven
                 case BANK_ACCOUNT:
                     mTransferMethod = new BankAccount.Builder()
                             .token(mTransferMethodToken)
-                            .bankAccountId("67890")
                             .build();
                     break;
                 case BANK_CARD:
                     mTransferMethod = new BankCard.Builder()
                             .token(mTransferMethodToken)
-                            .dateOfExpiry("2023-12")
                             .build();
                     break;
                 case PAYPAL_ACCOUNT:
                     mTransferMethod = new PayPalAccount.Builder()
                             .token(mTransferMethodToken)
-                            .email("user2@domain.com")
                             .build();
                     break;
                 case WIRE_ACCOUNT:
                     mTransferMethod = new BankAccount.Builder()
                             .token(mTransferMethodToken)
-                            .bankAccountId("67890")
                             .transferMethodType(WIRE_ACCOUNT)
                             .build();
                     break;
                 case VENMO_ACCOUNT:
                     mTransferMethod = new VenmoAccount.Builder()
                             .token(mTransferMethodToken)
-                            .accountId("9876543211")
                             .build();
                     break;
                 case PAPER_CHECK:
                     mTransferMethod = new PaperCheck.Builder()
-                            .token("trm-fake-token")
+                            .token(mTransferMethodToken)
                             .build();
                     break;
                 default:
@@ -281,7 +276,9 @@ public class UpdateTransferMethodFragment extends Fragment implements WidgetEven
                 View view = mDynamicContainer.getChildAt(i);
                 if (view.getTag() instanceof AbstractWidget) {
                     AbstractWidget widget = (AbstractWidget) view.getTag();
-                    mTransferMethod.setField(widget.getName(), widget.getValue());
+                    if (widget.isEdited) {
+                        mTransferMethod.setField(widget.getName(), widget.getValue());
+                    }
                 }
             }
 
