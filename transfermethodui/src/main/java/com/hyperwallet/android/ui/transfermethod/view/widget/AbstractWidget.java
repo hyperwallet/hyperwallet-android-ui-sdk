@@ -36,7 +36,7 @@ public abstract class AbstractWidget {
     protected final WidgetEventListener mListener;
     protected int mBottomViewId = 0;
     protected WidgetInputState mWidgetInputState;
-    public Boolean isEdited;
+    public Boolean isEdited = false;
 
     public AbstractWidget(@Nullable Field field, @NonNull WidgetEventListener listener,
             @Nullable String defaultValue, @NonNull View defaultFocusView) {
@@ -165,12 +165,12 @@ public abstract class AbstractWidget {
         @Override
         public boolean onKey(View v, int keyCode, KeyEvent event) {
             if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                isEdited = true;
                 switch (keyCode) {
                     case KeyEvent.KEYCODE_DPAD_CENTER:
                     case KeyEvent.KEYCODE_ENTER:
                         mFocusView.requestFocus();
                         mClearFocusView.clearFocus();
-                        isEdited = true;
                         return true;
                     default:
                         break;
