@@ -479,7 +479,7 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
             @NonNull final LoadTransferMethodCallback callback) {
         PayPalAccount payPalAccount = (PayPalAccount) transferMethod;
 
-        getHyperwallet().createPayPalAccount(payPalAccount, new HyperwalletListener<PayPalAccount>() {
+        getHyperwallet().updatePayPalAccount(payPalAccount, new HyperwalletListener<PayPalAccount>() {
             @Override
             public void onSuccess(@Nullable PayPalAccount result) {
                 callback.onTransferMethodLoaded(result);
@@ -501,7 +501,7 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
             @NonNull final LoadTransferMethodCallback callback) {
         VenmoAccount venmoAccount = (VenmoAccount) transferMethod;
 
-        getHyperwallet().createVenmoAccount(venmoAccount, new HyperwalletListener<VenmoAccount>() {
+        getHyperwallet().updateVenmoAccount(venmoAccount, new HyperwalletListener<VenmoAccount>() {
             @Override
             public void onSuccess(@Nullable VenmoAccount result) {
                 callback.onTransferMethodLoaded(result);
@@ -523,7 +523,7 @@ public class TransferMethodRepositoryImpl implements TransferMethodRepository {
             @NonNull final LoadTransferMethodCallback callback) {
         PaperCheck paperCheck = (PaperCheck) transferMethod;
 
-        getHyperwallet().createPaperCheck(paperCheck, new HyperwalletListener<PaperCheck>() {
+        getHyperwallet().updatePaperCheck(paperCheck, new HyperwalletListener<PaperCheck>() {
             @Override
             public void onSuccess(@Nullable PaperCheck result) {
                 callback.onTransferMethodLoaded(result);
