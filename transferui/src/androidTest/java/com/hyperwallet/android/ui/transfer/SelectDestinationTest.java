@@ -15,6 +15,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
+import static java.net.HttpURLConnection.HTTP_BAD_REQUEST;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.not;
@@ -328,6 +329,52 @@ public class SelectDestinationTest {
         onView(withId(R.id.transfer_summary)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         String availableFundUSD2 = getAvailableFund("$","1,000.00", "USD");
         onView(withId(R.id.transfer_summary)).check(matches(withText(availableFundUSD2)));
+
+        onView(withId(R.id.transfer_notes)).perform(nestedScrollTo()).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_notes)).check(matches(withText("")));
+    }
+
+    @Test
+    public void testSelectDestination_verifySelectDestinationWithError() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("create_transfer_quote_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_list_response.json")).mock();
+
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_BAD_REQUEST).withBody(sResourceManager
+                .getResourceContent("errors/create_transfer_error_invalid_amount_response.json")).mock();
+
+        mActivityTestRule.launchActivity(null);
+
+        onView(withId(R.id.add_transfer_destination)).check(matches(not(isDisplayed())));
+        onView(withId(R.id.transfer_destination)).perform(nestedScrollTo()).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_destination_icon)).check(matches(withText(R.string.bank_account_font_icon)));
+        onView(withId(R.id.transfer_destination_title)).check(matches(withText(R.string.bank_account)));
+        onView(withId(R.id.transfer_destination_description_1)).check(matches(withText("United States")));
+        onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("ending in 0616")));
+
+        onView(withId(R.id.transfer_summary)).perform(nestedScrollTo()).check(matches(isDisplayed()));
+        String availableFundUSD = getAvailableFund("$","998.00", "USD");
+        onView(withId(R.id.transfer_summary)).check(matches(withText(availableFundUSD)));
+
+        onView(withId(R.id.transfer_destination_title)).perform(click());
+
+        onView(withId(R.id.transfer_destination_list)).perform(RecyclerViewActions.actionOnItemAtPosition(5, click()));
+        onView(withId(R.id.transfer_destination)).perform(nestedScrollTo()).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_destination_icon)).check(matches(withText(R.string.paypal_account_font_icon)));
+        onView(withId(R.id.transfer_destination_title)).check(matches(withText(R.string.paypal_account)));
+        onView(withId(R.id.transfer_destination_description_1)).check(matches(withText("United States")));
+        onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("to honey.thigpen@ukbuilder.com")));
+
+        // Check Transfer max amount is not displayed
+        onView(withId(R.id.transfer_all_funds)).check(matches(not(isDisplayed())));
+
+        onView(withId(R.id.transfer_summary)).perform(nestedScrollTo()).check(matches(isDisplayed()));
+        String notAvailableFund = InstrumentationRegistry.getInstrumentation().getTargetContext()
+                .getString(R.string.zeroAvailableBalance);
+        onView(withId(R.id.transfer_summary)).check(matches(withText(notAvailableFund)));
 
         onView(withId(R.id.transfer_notes)).perform(nestedScrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_notes)).check(matches(withText("")));
