@@ -377,10 +377,8 @@ public class ListTransferMethodFragment extends Fragment implements ListTransfer
                 itemView.setOnClickListener(new OneClickListener() {
                     @Override
                     public void onOneClick(View v) {
-                        String type = transferMethod.getField(TransferMethod.TransferMethodFields.TYPE);
                         String token = transferMethod.getField(TransferMethod.TransferMethodFields.TOKEN);
                         Intent intent = new Intent(itemView.getContext(), UpdateTransferMethodActivity.class);
-                        intent.putExtra(UpdateTransferMethodActivity.EXTRA_TRANSFER_METHOD_TYPE, type);
                         intent.putExtra(UpdateTransferMethodActivity.EXTRA_TRANSFER_METHOD_TOKEN, token);
                         intent.putExtra(UpdateTransferMethodActivity.EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT, true);
                         itemView.getContext().startActivity(intent);

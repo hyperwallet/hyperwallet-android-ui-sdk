@@ -99,13 +99,14 @@
                     android:maxWidth="@dimen/create_button_max_width"
                     android:text="@string/doneButtonLabel"
                     android:textAllCaps="false"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ProgressBar
-                    android:id="@+id/add_transfer_method_create_button_progress_bar"
+                    android:id="@+id/update_transfer_method_create_button_progress_bar"
                     style="?android:attr/progressBarStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

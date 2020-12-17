@@ -14,7 +14,6 @@ import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.hyperwallet.android.model.Error;
-import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.common.util.PageGroups;
 import com.hyperwallet.android.ui.common.view.ActivityUtils;
@@ -31,7 +30,6 @@ public class UpdateTransferMethodActivity extends AppCompatActivity implements
 
     public static final String TAG = "transfer-method:update:collect-transfer-method-information";
 
-    public static final String EXTRA_TRANSFER_METHOD_TYPE = "TRANSFER_METHOD_TYPE";
     public static final String EXTRA_TRANSFER_METHOD_TOKEN = "EXTRA_TRANSFER_METHOD_TOKEN";
     private static final String ARGUMENT_RETRY_ACTION = "ARGUMENT_RETRY_ACTION";
     public static final String EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT = "EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT";
@@ -51,8 +49,6 @@ public class UpdateTransferMethodActivity extends AppCompatActivity implements
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle(TransferMethodUtils.getTransferMethodName(this,
-                getIntent().getStringExtra(EXTRA_TRANSFER_METHOD_TYPE)));
         CollapsingToolbarLayout collapsingToolbar = findViewById(R.id.collapsing_toolbar);
         int titleStyleCollapse = TransferMethodUtils.getAdjustCollapseTitleStyle(getTitle().toString());
         collapsingToolbar.setCollapsedTitleTextAppearance(titleStyleCollapse);
@@ -71,7 +67,6 @@ public class UpdateTransferMethodActivity extends AppCompatActivity implements
         }
         if (savedInstanceState == null) {
             ActivityUtils.initFragment(this, UpdateTransferMethodFragment.newInstance(
-                    getIntent().getStringExtra(EXTRA_TRANSFER_METHOD_TYPE),
                     getIntent().getStringExtra(EXTRA_TRANSFER_METHOD_TOKEN)
             ), R.id.update_transfer_method_fragment);
         } else {
@@ -130,9 +125,7 @@ public class UpdateTransferMethodActivity extends AppCompatActivity implements
 
         if (fragment == null) {
             fragment = UpdateTransferMethodFragment.newInstance(
-                    getIntent().getStringExtra(EXTRA_TRANSFER_METHOD_TYPE),
-                    getIntent().getStringExtra(EXTRA_TRANSFER_METHOD_TOKEN)
-            );
+                    getIntent().getStringExtra(EXTRA_TRANSFER_METHOD_TOKEN));
         }
         return fragment;
     }

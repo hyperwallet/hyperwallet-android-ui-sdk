@@ -26,8 +26,6 @@ public class UpdateTransferMethodContract {
 
         void showErrorLoadTransferMethodConfigurationFields(@NonNull final List<Error> errors);
 
-        void showTransferMethodFields(@NonNull final List<FieldGroup> fields);
-
         void showTransferMethodFields(@NonNull final HyperwalletTransferMethodConfigurationField field);
 
         void showTransactionInformation(@NonNull final List<Fee> fees,
