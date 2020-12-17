@@ -20,12 +20,12 @@ public class TransferMethodRepositoryFactory {
     private static TransferMethodRepositoryFactory sInstance;
     private TransferMethodRepository mTransferMethodRepository;
     private TransferMethodConfigurationRepository mTransferMethodConfigurationRepository;
-    private TransferMethodUpdateConfigurationRepository mUpdateTransferMethodConfigurationRepository;
+    private TransferMethodUpdateConfigurationRepository mTransferMethodUpdateConfigurationRepository;
 
     private TransferMethodRepositoryFactory() {
         mTransferMethodRepository = new TransferMethodRepositoryImpl();
         mTransferMethodConfigurationRepository = new TransferMethodConfigurationRepositoryImpl();
-        mUpdateTransferMethodConfigurationRepository = new TransferMethodUpdateConfigurationRepositoryImpl();
+        mTransferMethodUpdateConfigurationRepository = new TransferMethodUpdateConfigurationRepositoryImpl();
     }
 
     public static synchronized TransferMethodRepositoryFactory getInstance() {
@@ -47,8 +47,8 @@ public class TransferMethodRepositoryFactory {
         return mTransferMethodConfigurationRepository;
     }
 
-    public TransferMethodUpdateConfigurationRepository getUpdateTransferMethodConfigurationRepository() {
-        return mUpdateTransferMethodConfigurationRepository;
+    public TransferMethodUpdateConfigurationRepository getTransferMethodUpdateConfigurationRepository() {
+        return mTransferMethodUpdateConfigurationRepository;
     }
 
 }

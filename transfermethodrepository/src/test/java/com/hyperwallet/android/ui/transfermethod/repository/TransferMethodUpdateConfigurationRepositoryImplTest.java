@@ -56,6 +56,7 @@ import java.util.List;
 public class TransferMethodUpdateConfigurationRepositoryImplTest {
 
     private static final String TRANSFER_METHOD_TYPE = "BANK_ACCOUNT";
+    private static final String TRANSFER_TOKEN = "trm-fake";
     @Rule
     public HyperwalletExternalResourceManager externalResourceManager = new HyperwalletExternalResourceManager();
     @Rule
@@ -99,7 +100,7 @@ public class TransferMethodUpdateConfigurationRepositoryImplTest {
                 ArgumentMatchers.<TransferMethodUpdateConfigurationFieldQuery>any(),
                 ArgumentMatchers.<HyperwalletListener<HyperwalletTransferMethodConfigurationField>>any());
 
-        mTransferMethodUpdateConfigurationRepositoryImplMock.getFields(TRANSFER_METHOD_TYPE,loadFieldsCallback);
+        mTransferMethodUpdateConfigurationRepositoryImplMock.getFields(TRANSFER_METHOD_TYPE,TRANSFER_TOKEN,loadFieldsCallback);
 
         verify(loadFieldsCallback).onFieldsLoaded(fieldResultArgumentCaptor.capture());
         verify(loadFieldsCallback, never()).onError(any(Errors.class));
@@ -136,7 +137,7 @@ public class TransferMethodUpdateConfigurationRepositoryImplTest {
                 ArgumentMatchers.<HyperwalletListener<HyperwalletTransferMethodConfigurationField>>any());
 
 
-        mTransferMethodUpdateConfigurationRepositoryImplMock.getFields(TRANSFER_METHOD_TYPE, loadFieldsCallback);
+        mTransferMethodUpdateConfigurationRepositoryImplMock.getFields(TRANSFER_METHOD_TYPE, TRANSFER_TOKEN, loadFieldsCallback);
 
         verify(loadFieldsCallback, never()).onFieldsLoaded(any(HyperwalletTransferMethodConfigurationField.class));
         verify(loadFieldsCallback).onError(mErrorsArgumentCaptor.capture());
@@ -160,9 +161,10 @@ public class TransferMethodUpdateConfigurationRepositoryImplTest {
         FieldMapKey fieldMapKey = new FieldMapKey(TRANSFER_METHOD_TYPE);
         when(mFieldsMap.get(fieldMapKey)).thenReturn(result);
 
-        mTransferMethodUpdateConfigurationRepositoryImplMock.getFields(TRANSFER_METHOD_TYPE, loadFieldsCallback);
+        mTransferMethodUpdateConfigurationRepositoryImplMock.getFields(TRANSFER_METHOD_TYPE,TRANSFER_TOKEN, loadFieldsCallback);
 
         verify(mTransferMethodUpdateConfigurationRepositoryImplMock, never()).getTransferMethodConfigurationFieldResult(
+                any(String.class),
                 any(String.class),
                 any(TransferMethodUpdateConfigurationRepository.LoadFieldsCallback.class));
         verify(loadFieldsCallback).onFieldsLoaded(fieldResultArgumentCaptor.capture());

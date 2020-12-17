@@ -71,9 +71,10 @@ public class TransferMethodUpdateConfigurationRepositoryImpl implements Transfer
     @VisibleForTesting
     void getTransferMethodConfigurationFieldResult(
             @NonNull final String transferMethodType,
+            @NonNull final String transferMethodToken,
             @NonNull final LoadFieldsCallback loadFieldsCallback) {
         TransferMethodUpdateConfigurationFieldQuery query = new TransferMethodUpdateConfigurationFieldQuery(
-                transferMethodType);
+                transferMethodToken);
         EspressoIdlingResource.increment();
 
         getHyperwallet().retrieveUpdateTransferMethodConfigurationFields(
@@ -103,6 +104,7 @@ public class TransferMethodUpdateConfigurationRepositoryImpl implements Transfer
 
     @Override
     public synchronized void getFields(@NonNull final String transferMethodType,
+            @NonNull final String transferMethodToken,
             @NonNull final LoadFieldsCallback loadFieldsCallback) {
 
         FieldMapKey fieldMapKey = new FieldMapKey(transferMethodType);
@@ -110,7 +112,7 @@ public class TransferMethodUpdateConfigurationRepositoryImpl implements Transfer
         // if there is no value for country-currency-type combination,
         // it means api call was never made or this combination or it was refreshed
         if (transferMethodConfigurationField == null) {
-            getTransferMethodConfigurationFieldResult(transferMethodType, loadFieldsCallback);
+            getTransferMethodConfigurationFieldResult(transferMethodType, transferMethodToken, loadFieldsCallback);
         } else {
             loadFieldsCallback.onFieldsLoaded(transferMethodConfigurationField);
         }
