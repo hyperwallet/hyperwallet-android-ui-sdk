@@ -235,6 +235,7 @@ public class CreateTransferViewModel extends ViewModel {
     }
 
     public void setTransferDestination(@NonNull final TransferMethod transferDestination) {
+        mIsQuoteAvailableTransferFunds=false;
         mTransferDestination.postValue(transferDestination);
         quoteAvailableTransferFunds(mSourceToken, transferDestination);
     }
@@ -300,6 +301,7 @@ public class CreateTransferViewModel extends ViewModel {
     }
 
     public void setSelectedTransferSource(@NonNull final TransferSource source) {
+        mIsQuoteAvailableTransferFunds = false;
         mSelectedTransferSource.postValue(source);
         mSourceToken = source.getToken();
         if (mTransferDestination.getValue() == null) {
