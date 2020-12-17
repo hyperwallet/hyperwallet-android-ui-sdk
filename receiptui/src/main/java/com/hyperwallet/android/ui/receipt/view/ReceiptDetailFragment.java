@@ -16,6 +16,7 @@
  */
 package com.hyperwallet.android.ui.receipt.view;
 
+import static android.text.format.DateUtils.FORMAT_ABBREV_MONTH;
 import static android.text.format.DateUtils.FORMAT_ABBREV_WEEKDAY;
 import static android.text.format.DateUtils.FORMAT_SHOW_DATE;
 import static android.text.format.DateUtils.FORMAT_SHOW_TIME;
@@ -187,7 +188,7 @@ public class ReceiptDetailFragment extends Fragment {
         dateView.setText(view.getContext().getString(R.string.concat_date_string_view_format,
                 formatDateTime(view.getContext(), date.getTime(),
                         FORMAT_SHOW_DATE | FORMAT_SHOW_TIME | FORMAT_SHOW_YEAR
-                                | FORMAT_SHOW_WEEKDAY | FORMAT_ABBREV_WEEKDAY), timezone));
+                                | FORMAT_ABBREV_MONTH), timezone));
 
         if (receipt.getDetails() != null) {
             ReceiptDetails receiptDetails = receipt.getDetails();
