@@ -103,18 +103,11 @@ public class TransferMethodUpdateConfigurationRepositoryImpl implements Transfer
     }
 
     @Override
-    public synchronized void getFields(@NonNull final String transferMethodType, @NonNull final String transferMethodToken,
+    public synchronized void getFields(@NonNull final String transferMethodType,
+            @NonNull final String transferMethodToken,
             @NonNull final LoadFieldsCallback loadFieldsCallback) {
 
-        FieldMapKey fieldMapKey = new FieldMapKey(transferMethodType);
-        HyperwalletTransferMethodConfigurationField transferMethodConfigurationField = mFieldMap.get(fieldMapKey);
-        // if there is no value for country-currency-type combination,
-        // it means api call was never made or this combination or it was refreshed
-       // if (transferMethodConfigurationField == null) {
-            getTransferMethodConfigurationFieldResult(transferMethodType, transferMethodToken, loadFieldsCallback);
-       // } else {
-          //  loadFieldsCallback.onFieldsLoaded(transferMethodConfigurationField);
-      // }
+        getTransferMethodConfigurationFieldResult(transferMethodType, transferMethodToken, loadFieldsCallback);
     }
 
     @Override
