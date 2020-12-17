@@ -135,8 +135,6 @@ public final class HyperwalletTransferMethodUi {
 
     /**
      * @param context              A Context of the application consuming this Intent.
-     * @param transferMethodType   The type of transfer method. For a complete list of transfer methods, see {@link
-     *                             com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes}
      * @param transferMethodToken  The Transfer method token.
      * @param lockScreenToPortrait if set <code>true</code> screen will be locked to Portrait mode;
      *                             otherwise <code>false</code> screen will follow whatever the
@@ -144,10 +142,8 @@ public final class HyperwalletTransferMethodUi {
      * @return an Intent with the data necessary to launch the {@link UpdateTransferMethodActivity}
      */
     public Intent getIntentUpdateTransferMethodActivity(@NonNull final Context context,
-            @NonNull final String transferMethodType, @NonNull final String transferMethodToken,
-            final boolean lockScreenToPortrait) {
+            @NonNull final String transferMethodToken, final boolean lockScreenToPortrait) {
         Intent intent = new Intent(context, UpdateTransferMethodActivity.class);
-        intent.putExtra(EXTRA_TRANSFER_METHOD_TYPE, transferMethodType);
         intent.putExtra(EXTRA_TRANSFER_METHOD_TOKEN, transferMethodToken);
         intent.putExtra(AddTransferMethodActivity.EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT, lockScreenToPortrait);
         return intent;

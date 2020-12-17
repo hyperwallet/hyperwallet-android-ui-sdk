@@ -40,6 +40,7 @@ import com.hyperwallet.android.model.graphql.HyperwalletTransferMethodConfigurat
 import com.hyperwallet.android.model.graphql.ProcessingTime;
 import com.hyperwallet.android.model.graphql.field.Field;
 import com.hyperwallet.android.model.graphql.field.FieldGroup;
+import com.hyperwallet.android.model.graphql.field.TransferMethodConfiguration;
 import com.hyperwallet.android.model.transfermethod.BankAccount;
 import com.hyperwallet.android.model.transfermethod.BankCard;
 import com.hyperwallet.android.model.transfermethod.PaperCheck;
@@ -67,10 +68,8 @@ import java.util.TreeMap;
 public class UpdateTransferMethodFragment extends Fragment implements WidgetEventListener,
         UpdateTransferMethodContract.View {
 
-
     public static final String TAG = UpdateTransferMethodActivity.TAG;
 
-    private static final String ARGUMENT_TRANSFER_METHOD_TYPE = "ARGUMENT_TRANSFER_METHOD_TYPE";
     private static final String ARGUMENT_TRANSFER_METHOD_TOKEN = "ARGUMENT_TRANSFER_METHOD_TOKEN";
     private static final String ARGUMENT_SHOW_UPDATE_PROGRESS_BAR = "ARGUMENT_SHOW_UPDATE_PROGRESS_BAR";
     private static final String ARGUMENT_WIDGET_STATE_MAP = "ARGUMENT_WIDGET_STATE_MAP";
@@ -99,21 +98,18 @@ public class UpdateTransferMethodFragment extends Fragment implements WidgetEven
     /**
      * Creates new instance of UpdateTransferMethodFragment this is the proper initialization of this class
      * since the default constructor is reserved for android framework when lifecycle is triggered.
-     * The parameters in {@link UpdateTransferMethodFragment#newInstance(String, String)} is mandatory
+     * The parameters in {@link UpdateTransferMethodFragment#newInstance(String)} is mandatory
      * and should be supplied with correct data or this fragment will not initialize properly.
      *
      * @param transferMethodToken the country selected when creating transfer method
      */
-    public static UpdateTransferMethodFragment newInstance(@NonNull String transferMethodType,
-            @NonNull String transferMethodToken) {
+    public static UpdateTransferMethodFragment newInstance(@NonNull String transferMethodToken) {
         UpdateTransferMethodFragment updateTransferMethodFragment = new UpdateTransferMethodFragment();
         Bundle arguments = new Bundle();
 
-        updateTransferMethodFragment.mTransferMethodType = transferMethodType;
         updateTransferMethodFragment.mTransferMethodToken = transferMethodToken;
         updateTransferMethodFragment.mWidgetInputStateHashMap = new HashMap<>(1);
         updateTransferMethodFragment.mTransferMethod = null;
-        arguments.putString(ARGUMENT_TRANSFER_METHOD_TYPE, transferMethodType);
         arguments.putString(ARGUMENT_TRANSFER_METHOD_TOKEN, transferMethodToken);
         arguments.putSerializable(ARGUMENT_WIDGET_STATE_MAP, updateTransferMethodFragment.mWidgetInputStateHashMap);
         updateTransferMethodFragment.setArguments(arguments);
@@ -175,10 +171,7 @@ public class UpdateTransferMethodFragment extends Fragment implements WidgetEven
                         TAG, PageGroups.TRANSFER_METHOD,
                         HyperwalletInsight.LINK_SELECT_TRANSFER_METHOD_CREATE,
                         new HyperwalletInsight.TransferMethodParamsBuilder()
-//                                .country(mCountry)
-//                                .currency(mCurrency)
                                 .type(mTransferMethodType)
-//                                .profileType(mTransferMethodProfileType)
                                 .build());
 
                 triggerUpdate();
@@ -192,7 +185,7 @@ public class UpdateTransferMethodFragment extends Fragment implements WidgetEven
 
         TransferMethodRepositoryFactory factory = TransferMethodRepositoryFactory.getInstance();
         mPresenter = new UpdateTransferMethodPresenter(this,
-                factory.getUpdateTransferMethodConfigurationRepository(),
+                factory.getTransferMethodUpdateConfigurationRepository(),
                 factory.getTransferMethodRepository());
     }
 
@@ -202,13 +195,11 @@ public class UpdateTransferMethodFragment extends Fragment implements WidgetEven
 
         if (savedInstanceState != null) {
             mWidgetInputStateHashMap = (HashMap) savedInstanceState.getSerializable(ARGUMENT_WIDGET_STATE_MAP);
-            mTransferMethodType = savedInstanceState.getString(ARGUMENT_TRANSFER_METHOD_TYPE);
             mTransferMethodToken = savedInstanceState.getString(ARGUMENT_TRANSFER_METHOD_TOKEN);
             mUpdateProgressBar = savedInstanceState.getBoolean(ARGUMENT_SHOW_UPDATE_PROGRESS_BAR);
             mTransferMethod = savedInstanceState.getParcelable(ARGUMENT_TRANSFER_METHOD_TOKEN);
         } else { // same as UpdateTransferMethodFragment#newInstance
             mWidgetInputStateHashMap = (HashMap) getArguments().getSerializable(ARGUMENT_WIDGET_STATE_MAP);
-            mTransferMethodType = getArguments().getString(ARGUMENT_TRANSFER_METHOD_TYPE);
             mTransferMethodToken = getArguments().getString(ARGUMENT_TRANSFER_METHOD_TOKEN);
         }
     }
@@ -297,7 +288,6 @@ public class UpdateTransferMethodFragment extends Fragment implements WidgetEven
         }
     }
 
-
     /**
      * Use this to perform validation on an entire form, typically used during form submission.
      *
@@ -354,10 +344,7 @@ public class UpdateTransferMethodFragment extends Fragment implements WidgetEven
                             .fieldName(widget.getName())
                             .type(ErrorTypes.FORM_ERROR)
                             .addAll(new HyperwalletInsight.TransferMethodParamsBuilder()
-//                                    .country(mCountry)
-//                                    .currency(mCurrency)
                                     .type(mTransferMethodType)
-//                                    .profileType(mTransferMethodProfileType)
                                     .build())
                             .build());
 
@@ -377,10 +364,7 @@ public class UpdateTransferMethodFragment extends Fragment implements WidgetEven
                 TAG, PageGroups.TRANSFER_METHOD,
                 new HyperwalletInsight.TransferMethodParamsBuilder()
                         .goal(HyperwalletInsight.TRANSFER_METHOD_GOAL)
-//                        .country(mCountry)
-//                        .currency(mCurrency)
                         .type(mTransferMethodType)
-//                        .profileType(mTransferMethodProfileType)
                         .build());
 
         Intent intent = TransferMethodLocalBroadcast.createBroadcastIntentTransferMethodUpdated(
@@ -400,64 +384,11 @@ public class UpdateTransferMethodFragment extends Fragment implements WidgetEven
                 errors);
     }
 
-    @Override
-    public void showTransferMethodFields(@NonNull List<FieldGroup> fields) {
-        mDynamicContainer.removeAllViews();
-
-        try {
-//            Locale locale = new Locale.Builder().setRegion(mCountry).build();
-            Locale locale = Locale.getDefault();
-
-            // group
-            for (FieldGroup group : fields) {
-                View sectionHeader = LayoutInflater.from(mDynamicContainer.getContext())
-                        .inflate(R.layout.item_widget_section_header, mDynamicContainer, false);
-                TextView sectionTitle = sectionHeader.findViewById(R.id.section_header_title);
-                sectionTitle.setText(getSectionHeaderText(group, locale));
-                sectionHeader.setId(View.generateViewId());
-                mDynamicContainer.addView(sectionHeader);
-
-                // group fields
-                for (final Field field : group.getFields()) {
-                    AbstractWidget widget = WidgetFactory
-                            .newWidget(field, this, mWidgetInputStateHashMap.containsKey(field.getName()) ?
-                                            mWidgetInputStateHashMap.get(field.getName()).getValue() : field.getValue(),
-                                    mUpdateTransferMethodButton);
-                    if (mWidgetInputStateHashMap.isEmpty() || !mWidgetInputStateHashMap.containsKey(widget.getName())) {
-                        mWidgetInputStateHashMap.put(widget.getName(), widget.getWidgetInputState());
-                    }
-
-                    View widgetView = widget.getView(mDynamicContainer);
-                    widgetView.setTag(widget);
-                    widgetView.setId(View.generateViewId());
-                    final String error = mWidgetInputStateHashMap.get(widget.getName()).getErrorMessage();
-                    widget.showValidationError(error);
-                    mDynamicContainer.addView(widgetView);
-                }
-            }
-
-            HyperwalletInsight.getInstance().trackImpression(requireContext(),
-                    TAG, PageGroups.TRANSFER_METHOD,
-                    new HyperwalletInsight.TransferMethodParamsBuilder()
-//                            .country(mCountry)
-//                            .currency(mCurrency)
-                            .type(mTransferMethodType)
-//                            .profileType(mTransferMethodProfileType)
-                            .build());
-
-            if (mUpdateProgressBar) {
-                setVisibleAndDisableFields();
-            }
-        } catch (HyperwalletException e) {
-            throw new IllegalStateException("Widget initialization error: " + e.getMessage());
-        }
-    }
-
-    private String getSectionHeaderText(@NonNull final FieldGroup group, @NonNull final Locale locale) {
+    private String getSectionHeaderText(@NonNull final FieldGroup group, @NonNull final Locale locale,
+            @NonNull final String currency) {
         if (FieldGroup.GroupTypes.ACCOUNT_INFORMATION.equals(group.getGroupName())) {
             return requireContext().getString(R.string.account_information,
-                    locale.getDisplayName().toUpperCase(), "USD");
-//                    locale.getDisplayName().toUpperCase(), mCurrency);
+                    locale.getDisplayName().toUpperCase(), currency);
         }
 
         return requireContext().getString(requireContext().getResources()
@@ -500,8 +431,57 @@ public class UpdateTransferMethodFragment extends Fragment implements WidgetEven
     }
 
     @Override
-    public void showTransferMethodFields(@NonNull HyperwalletTransferMethodConfigurationField field) {
+    public void showTransferMethodFields(
+            @NonNull HyperwalletTransferMethodConfigurationField hyperwalletTransferMethodConfigurationField) {
+        mDynamicContainer.removeAllViews();
+        mUpdateTransferMethodButton.setVisibility(View.VISIBLE);
 
+        try {
+            TransferMethodConfiguration fields = hyperwalletTransferMethodConfigurationField.getFields();
+            Locale locale = new Locale.Builder().setRegion(fields.getCountry()).build();
+            mTransferMethodType = fields.getTransferMethodType();
+//            getActivity().getActionBar().setTitle(
+//                    TransferMethodUtils.getTransferMethodName(getContext(), mTransferMethodType));
+            // group
+            for (FieldGroup group : fields.getFieldGroups()) {
+                View sectionHeader = LayoutInflater.from(mDynamicContainer.getContext())
+                        .inflate(R.layout.item_widget_section_header, mDynamicContainer, false);
+                TextView sectionTitle = sectionHeader.findViewById(R.id.section_header_title);
+                sectionTitle.setText(getSectionHeaderText(group, locale, fields.getCurrency()));
+                sectionHeader.setId(View.generateViewId());
+                mDynamicContainer.addView(sectionHeader);
+
+                // group fields
+                for (final Field field : group.getFields()) {
+                    AbstractWidget widget = WidgetFactory
+                            .newWidget(field, this, mWidgetInputStateHashMap.containsKey(field.getName()) ?
+                                            mWidgetInputStateHashMap.get(field.getName()).getValue() : field.getValue(),
+                                    mUpdateTransferMethodButton);
+                    if (mWidgetInputStateHashMap.isEmpty() || !mWidgetInputStateHashMap.containsKey(widget.getName())) {
+                        mWidgetInputStateHashMap.put(widget.getName(), widget.getWidgetInputState());
+                    }
+
+                    View widgetView = widget.getView(mDynamicContainer);
+                    widgetView.setTag(widget);
+                    widgetView.setId(View.generateViewId());
+                    final String error = mWidgetInputStateHashMap.get(widget.getName()).getErrorMessage();
+                    widget.showValidationError(error);
+                    mDynamicContainer.addView(widgetView);
+                }
+            }
+
+            HyperwalletInsight.getInstance().trackImpression(requireContext(),
+                    TAG, PageGroups.TRANSFER_METHOD,
+                    new HyperwalletInsight.TransferMethodParamsBuilder()
+                            .type(mTransferMethodType)
+                            .build());
+
+            if (mUpdateProgressBar) {
+                setVisibleAndDisableFields();
+            }
+        } catch (HyperwalletException e) {
+            throw new IllegalStateException("Widget initialization error: " + e.getMessage());
+        }
     }
 
     @Override

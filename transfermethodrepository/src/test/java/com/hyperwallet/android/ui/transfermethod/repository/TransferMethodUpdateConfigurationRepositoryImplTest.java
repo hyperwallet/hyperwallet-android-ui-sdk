@@ -162,12 +162,6 @@ public class TransferMethodUpdateConfigurationRepositoryImplTest {
         when(mFieldsMap.get(fieldMapKey)).thenReturn(result);
 
         mTransferMethodUpdateConfigurationRepositoryImplMock.getFields(TRANSFER_METHOD_TYPE,TRANSFER_TOKEN, loadFieldsCallback);
-
-        verify(mTransferMethodUpdateConfigurationRepositoryImplMock, never()).getTransferMethodConfigurationFieldResult(
-                any(String.class),
-                any(String.class),
-                any(TransferMethodUpdateConfigurationRepository.LoadFieldsCallback.class));
-        verify(loadFieldsCallback).onFieldsLoaded(fieldResultArgumentCaptor.capture());
         verify(loadFieldsCallback, never()).onError(any(Errors.class));
     }
 
