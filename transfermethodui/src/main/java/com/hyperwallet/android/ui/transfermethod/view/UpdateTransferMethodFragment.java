@@ -89,6 +89,7 @@ public class UpdateTransferMethodFragment extends Fragment implements WidgetEven
     private TransferMethod mTransferMethod;
     private String mTransferMethodToken;
     private HashMap<String, WidgetInputState> mWidgetInputStateHashMap;
+    private boolean isEdited;
 
     /**
      * Please do not use this to have instance of UpdateTransferMethodFragment this is reserved for android framework
@@ -269,12 +270,17 @@ public class UpdateTransferMethodFragment extends Fragment implements WidgetEven
                 if (view.getTag() instanceof AbstractWidget) {
                     AbstractWidget widget = (AbstractWidget) view.getTag();
                     if (widget.isEdited) {
+                        isEdited = true;
                         mTransferMethod.setField(widget.getName(), widget.getValue());
                     }
                 }
             }
 
-            mPresenter.updateTransferMethod(mTransferMethod);
+            if (isEdited) {
+                mPresenter.updateTransferMethod(mTransferMethod);
+            } else {
+                getActivity().finish();
+            }
         }
     }
 
