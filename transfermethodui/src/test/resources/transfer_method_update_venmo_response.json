@@ -1,0 +1,45 @@
+{
+  "data": {
+    "transferMethodUpdateUIConfigurations": {
+      "nodes": [
+        {
+          "country": "US",
+          "currency": "USD",
+          "transferMethodType": "VENMO_ACCOUNT",
+          "profile": "INDIVIDUAL",
+          "fieldGroups": {
+            "nodes": [
+              {
+                "group": "ACCOUNT_INFORMATION",
+                "isEditable": true,
+                "instruction": {
+                },
+                "fields": [
+                  {
+                    "category": "ACCOUNT",
+                    "value": "5555555555",
+                    "dataType": "TEXT",
+                    "isRequired": true,
+                    "isEditable": true,
+                    "label": "Mobile Number",
+                    "maxLength": 10,
+                    "minLength": 10,
+                    "name": "accountId",
+                    "placeholder": "",
+                    "regularExpression": "^([0-9]{10})$",
+                    "validationMessage": {
+                      "length": "The exact length of this field is 10.",
+                      "pattern": "is invalid. The number you provided is not a valid US mobile number. Please use this format: 5555555555",
+                      "empty": "You must provide a value for this field"
+                    },
+                    "fieldValueMasked": false
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

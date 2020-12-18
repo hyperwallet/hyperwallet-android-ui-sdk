@@ -69,7 +69,7 @@ abstract class AbstractMaskedInputWidget extends AbstractWidget {
      * @return a String formatted to the specification in the mask pattern
      */
     String formatToDisplay(@NonNull final String apiValue) {
-        if (mField != null && mField.getMask() != null) {
+        if (mField != null && mField.getMask() != null && !mField.isFieldValueMasked()) {
             // format
             String pattern = mField.getMask().getPattern(apiValue);
             if (!TextUtils.isEmpty(pattern)) {

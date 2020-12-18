@@ -151,6 +151,21 @@ public class TransferMethodUpdateConfigurationRepositoryImplTest {
     }
 
     @Test
+    public void testGetFields_callsListenerWithFieldResultFromCacheWhenNotNull() throws Exception {
+        String responseBody = externalResourceManager.getResourceContent(
+                "successful_tmc_update_field_bank_account_response.json");
+        final TransferMethodUpdateConfigurationFieldResult result = JsonUtils.fromJsonString(responseBody,
+                new TypeReference<TransferMethodUpdateConfigurationFieldResult>() {
+                });
+
+        FieldMapKey fieldMapKey = new FieldMapKey(TRANSFER_METHOD_TYPE);
+        when(mFieldsMap.get(fieldMapKey)).thenReturn(result);
+
+        mTransferMethodUpdateConfigurationRepositoryImplMock.getFields(TRANSFER_METHOD_TYPE,TRANSFER_TOKEN, loadFieldsCallback);
+        verify(loadFieldsCallback, never()).onError(any(Errors.class));
+    }
+
+    @Test
     public void testRefreshFields_clearsFieldMapWhenNotEmpty() throws Exception {
         String responseBody = externalResourceManager.getResourceContent(
                 "successful_tmc_update_field_bank_account_response.json");

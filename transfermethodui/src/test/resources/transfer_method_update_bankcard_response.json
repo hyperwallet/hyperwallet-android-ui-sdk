@@ -1,0 +1,90 @@
+{
+  "data": {
+    "transferMethodUpdateUIConfigurations": {
+      "nodes": [
+        {
+          "country": "US",
+          "currency": "USD",
+          "transferMethodType": "BANK_CARD",
+          "profile": "INDIVIDUAL",
+          "fieldGroups": {
+            "nodes": [
+              {
+                "group": "ACCOUNT_INFORMATION",
+                "isEditable": true,
+                "instruction": {
+                  "textBottom": "CVV is a 3 digit number, typically found on the back of a debit card."
+                },
+                "fields": [
+                  {
+                    "category": "ACCOUNT",
+                    "value": "****0006",
+                    "dataType": "NUMBER",
+                    "isRequired": true,
+                    "isEditable": true,
+                    "label": "Card Number",
+                    "maxLength": 19,
+                    "minLength": 13,
+                    "name": "cardNumber",
+                    "placeholder": "",
+                    "regularExpression": "^[0-9]{13,19}$",
+                    "validationMessage": {
+                      "length": "The minimum length of this field is 13 and maximum length is 19.",
+                      "pattern": "is invalid length or format.",
+                      "empty": "You must provide a value for this field"
+                    },
+                    "fieldValueMasked": true,
+                    "mask": {
+                      "defaultPattern": "#### #### #### ####",
+                      "scrubRegex": " "
+                    }
+                  },
+                  {
+                    "category": "ACCOUNT",
+                    "value": "2024-10-01",
+                    "dataType": "EXPIRY_DATE",
+                    "isRequired": true,
+                    "isEditable": true,
+                    "label": "Expiration Date",
+                    "maxLength": 7,
+                    "minLength": 7,
+                    "name": "dateOfExpiry",
+                    "placeholder": "",
+                    "regularExpression": "^[0-9]{4}-(1[0-2]|0[1-9])$",
+                    "validationMessage": {
+                      "length": "The exact length of this field is 7.",
+                      "pattern": "is invalid length or format.",
+                      "empty": "You must provide a value for this field"
+                    },
+                    "fieldValueMasked": false
+                  },
+                  {
+                    "category": "ACCOUNT",
+                    "dataType": "NUMBER",
+                    "isRequired": true,
+                    "isEditable": true,
+                    "label": "CVV (Card Security Code)",
+                    "maxLength": 4,
+                    "minLength": 3,
+                    "name": "cvv",
+                    "placeholder": "",
+                    "regularExpression": "^[0-9]{3,4}$",
+                    "validationMessage": {
+                      "length": "The minimum length of this field is 3 and maximum length is 4.",
+                      "pattern": "is invalid length or format.",
+                      "empty": "You must provide a value for this field"
+                    },
+                    "fieldValueMasked": false,
+                    "mask": {
+                      "defaultPattern": "###"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
