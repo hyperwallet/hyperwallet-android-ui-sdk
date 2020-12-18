@@ -1,0 +1,167 @@
+{
+  "data": {
+    "transferMethodUpdateUIConfigurations": {
+      "nodes": [
+        {
+          "country": "CA",
+          "currency": "CAD",
+          "transferMethodType": "PAPER_CHECK",
+          "profile": "INDIVIDUAL",
+          "fieldGroups": {
+            "nodes": [
+              {
+                "group": "ACCOUNT_INFORMATION",
+                "isEditable": true,
+                "instruction": {
+                },
+                "fields": [
+                  {
+                    "category": "ACCOUNT",
+                    "value": "STANDARD",
+                    "dataType": "SELECTION",
+                    "isRequired": false,
+                    "isEditable": true,
+                    "label": "Shipping Method",
+                    "name": "shippingMethod",
+                    "placeholder": "",
+                    "fieldSelectionOptions": [
+                      {
+                        "label": "Expedited Delivery",
+                        "value": "EXPEDITED"
+                      },
+                      {
+                        "label": "Standard Mail",
+                        "value": "STANDARD"
+                      }
+                    ],
+                    "validationMessage": {
+                      "length": "",
+                      "pattern": "is invalid length or format.",
+                      "empty": "You must provide a value for this field"
+                    },
+                    "fieldValueMasked": false
+                  }
+                ]
+              },
+              {
+                "group": "ADDRESS",
+                "isEditable": true,
+                "instruction": {
+                },
+                "fields": [
+                  {
+                    "category": "ADDRESS",
+                    "value": "CA",
+                    "dataType": "SELECTION",
+                    "isRequired": true,
+                    "isEditable": false,
+                    "label": "Country",
+                    "name": "country",
+                    "placeholder": "",
+                    "fieldSelectionOptions": [
+                      {
+                        "label": "Canada",
+                        "value": "CA"
+                      }
+                    ],
+                    "validationMessage": {
+                      "length": "",
+                      "pattern": "is invalid length or format.",
+                      "empty": "You must provide a value for this field"
+                    },
+                    "fieldValueMasked": false
+                  },
+                  {
+                    "category": "ADDRESS",
+                    "value": "BC",
+                    "dataType": "TEXT",
+                    "isRequired": true,
+                    "isEditable": true,
+                    "label": "State/Province",
+                    "name": "stateProvince",
+                    "placeholder": "",
+                    "regularExpression": "[A-Z]{2}",
+                    "validationMessage": {
+                      "length": "",
+                      "pattern": "is invalid length or format.",
+                      "empty": "You must provide a value for this field"
+                    },
+                    "fieldValueMasked": false
+                  },
+                  {
+                    "category": "ADDRESS",
+                    "value": "475 howe st",
+                    "dataType": "TEXT",
+                    "isRequired": true,
+                    "isEditable": true,
+                    "label": "Address Line 1",
+                    "name": "addressLine1",
+                    "placeholder": "",
+                    "regularExpression": "^$||[\\sa-zA-Z0-9/\\-?:().,+]{1,50}",
+                    "validationMessage": {
+                      "length": "",
+                      "pattern": "is invalid length or format.",
+                      "empty": "You must provide a value for this field"
+                    },
+                    "fieldValueMasked": false
+                  },
+                  {
+                    "category": "ADDRESS",
+                    "value": "",
+                    "dataType": "TEXT",
+                    "isRequired": false,
+                    "isEditable": true,
+                    "label": "Address Line 2",
+                    "name": "addressLine2",
+                    "placeholder": "",
+                    "regularExpression": "^$||[\\sa-zA-Z0-9/\\-?:().,+]{1,50}",
+                    "validationMessage": {
+                      "length": "",
+                      "pattern": "is invalid length or format.",
+                      "empty": "You must provide a value for this field"
+                    },
+                    "fieldValueMasked": false
+                  },
+                  {
+                    "category": "ADDRESS",
+                    "value": "vancouver",
+                    "dataType": "TEXT",
+                    "isRequired": true,
+                    "isEditable": true,
+                    "label": "City",
+                    "name": "city",
+                    "placeholder": "",
+                    "regularExpression": "^$||[\\sa-zA-Z0-9/\\-?:().,+]+",
+                    "validationMessage": {
+                      "length": "",
+                      "pattern": "is invalid length or format.",
+                      "empty": "You must provide a value for this field"
+                    },
+                    "fieldValueMasked": false
+                  },
+                  {
+                    "category": "ADDRESS",
+                    "value": "V6Z1L2",
+                    "dataType": "TEXT",
+                    "isRequired": true,
+                    "isEditable": true,
+                    "label": "Zip/Postal Code",
+                    "name": "postalCode",
+                    "placeholder": "",
+                    "regularExpression": "^$||[\\p{Nd}\\p{L}\\p{Z}-]+",
+                    "validationMessage": {
+                      "length": "",
+                      "pattern": "is invalid length or format.",
+                      "empty": "You must provide a value for this field"
+                    },
+                    "fieldValueMasked": false
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

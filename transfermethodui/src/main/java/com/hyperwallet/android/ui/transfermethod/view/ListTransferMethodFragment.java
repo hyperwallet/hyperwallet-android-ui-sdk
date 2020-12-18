@@ -69,7 +69,7 @@ public class ListTransferMethodFragment extends Fragment implements ListTransfer
     private View mProgressBar;
     private ArrayList<TransferMethod> mTransferMethodList;
     private OnAddNewTransferMethodSelected mOnAddNewTransferMethodSelected;
-    private OnTransferMethodContextMenuDeletionSelected mOnTransferMethodContextMenuDeletionSelected;
+    private OnTransferMethodContextMenuItemSelected mOnTransferMethodContextMenuItemSelected;
     private OnDeactivateTransferMethodNetworkErrorCallback mOnDeactivateTransferMethodNetworkErrorCallback;
     private OnLoadTransferMethodNetworkErrorCallback mOnLoadTransferMethodNetworkErrorCallback;
     private boolean mIsTransferMethodsReloadNeeded;
@@ -105,10 +105,10 @@ public class ListTransferMethodFragment extends Fragment implements ListTransfer
         }
 
         try {
-            mOnTransferMethodContextMenuDeletionSelected = (OnTransferMethodContextMenuDeletionSelected) context;
+            mOnTransferMethodContextMenuItemSelected = (OnTransferMethodContextMenuItemSelected) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(getActivity().toString() + " must implement "
-                    + OnTransferMethodContextMenuDeletionSelected.class.getCanonicalName());
+                    + OnTransferMethodContextMenuItemSelected.class.getCanonicalName());
         }
 
         try {
@@ -144,7 +144,7 @@ public class ListTransferMethodFragment extends Fragment implements ListTransfer
             mIsTransferMethodsReloadNeeded = true;
         }
         mListTransferMethodAdapter = new ListTransferMethodAdapter(mTransferMethodList,
-                mOnTransferMethodContextMenuDeletionSelected);
+                mOnTransferMethodContextMenuItemSelected);
 
         recyclerView.setAdapter(mListTransferMethodAdapter);
     }
@@ -187,7 +187,11 @@ public class ListTransferMethodFragment extends Fragment implements ListTransfer
     public void onResume() {
         super.onResume();
         mIsTransferMethodsReloadNeeded = getArguments().getBoolean(ARGUMENT_IS_TRANSFER_METHODS_RELOAD_NEEDED, true);
-        if (mIsTransferMethodsReloadNeeded) {
+        loadTransferMethodsList(mIsTransferMethodsReloadNeeded);
+    }
+
+    private void loadTransferMethodsList(boolean shouldReload) {
+        if (shouldReload) {
             getArguments().putBoolean(ARGUMENT_IS_TRANSFER_METHODS_RELOAD_NEEDED, false);
             mPresenter.loadTransferMethods();
         } else {
@@ -272,9 +276,11 @@ public class ListTransferMethodFragment extends Fragment implements ListTransfer
         mPresenter.loadTransferMethods();
     }
 
-    interface OnTransferMethodContextMenuDeletionSelected {
+    interface OnTransferMethodContextMenuItemSelected {
 
         void showConfirmationDialog(@NonNull final TransferMethod transferMethod);
+
+        void invokeTransferMethodEdit(@NonNull final TransferMethod transferMethod);
     }
 
     interface OnAddNewTransferMethodSelected {
@@ -294,12 +300,12 @@ public class ListTransferMethodFragment extends Fragment implements ListTransfer
 
     private static class ListTransferMethodAdapter extends RecyclerView.Adapter<ListTransferMethodAdapter.ViewHolder> {
         private List<TransferMethod> mTransferMethodList;
-        private OnTransferMethodContextMenuDeletionSelected mOnTransferMethodContextMenuDeletionSelected;
+        private OnTransferMethodContextMenuItemSelected mOnTransferMethodContextMenuItemSelected;
 
         ListTransferMethodAdapter(final List<TransferMethod> transferMethodList,
-                final OnTransferMethodContextMenuDeletionSelected onTransferMethodContextMenuSelection) {
+                final OnTransferMethodContextMenuItemSelected onTransferMethodContextMenuSelection) {
             mTransferMethodList = transferMethodList;
-            mOnTransferMethodContextMenuDeletionSelected = onTransferMethodContextMenuSelection;
+            mOnTransferMethodContextMenuItemSelected = onTransferMethodContextMenuSelection;
         }
 
         @NonNull
@@ -373,18 +379,6 @@ public class ListTransferMethodFragment extends Fragment implements ListTransfer
                     mTransferMethodIdentification.setText(transferMethodIdentification);
                 }
 
-                //  Todo: Remove before code merge. Used for Debugging purpose.
-                itemView.setOnClickListener(new OneClickListener() {
-                    @Override
-                    public void onOneClick(View v) {
-                        String token = transferMethod.getField(TransferMethod.TransferMethodFields.TOKEN);
-                        Intent intent = new Intent(itemView.getContext(), UpdateTransferMethodActivity.class);
-                        intent.putExtra(UpdateTransferMethodActivity.EXTRA_TRANSFER_METHOD_TOKEN, token);
-                        intent.putExtra(UpdateTransferMethodActivity.EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT, true);
-                        itemView.getContext().startActivity(intent);
-                    }
-                });
-
                 mImageButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     @SuppressWarnings("RestrictedApi")
@@ -400,7 +394,10 @@ public class ListTransferMethodFragment extends Fragment implements ListTransfer
                             @Override
                             public boolean onMenuItemClick(MenuItem item) {
                                 if (item.getItemId() == R.id.remove_account_context_option) {
-                                    mOnTransferMethodContextMenuDeletionSelected.showConfirmationDialog(transferMethod);
+                                    mOnTransferMethodContextMenuItemSelected.showConfirmationDialog(transferMethod);
+                                    return true;
+                                } if (item.getItemId() == R.id.edit_account_context_option) {
+                                    mOnTransferMethodContextMenuItemSelected.invokeTransferMethodEdit(transferMethod);
                                     return true;
                                 }
                                 return false;

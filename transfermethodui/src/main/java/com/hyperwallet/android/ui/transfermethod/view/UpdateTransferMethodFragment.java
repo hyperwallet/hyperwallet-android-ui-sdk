@@ -51,6 +51,7 @@ import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.common.insight.HyperwalletInsight;
 import com.hyperwallet.android.ui.common.util.ErrorTypes;
 import com.hyperwallet.android.ui.common.util.PageGroups;
+import com.hyperwallet.android.ui.common.view.TransferMethodUtils;
 import com.hyperwallet.android.ui.transfermethod.TransferMethodLocalBroadcast;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
 import com.hyperwallet.android.ui.transfermethod.view.widget.AbstractWidget;
@@ -88,6 +89,7 @@ public class UpdateTransferMethodFragment extends Fragment implements WidgetEven
     private TransferMethod mTransferMethod;
     private String mTransferMethodToken;
     private HashMap<String, WidgetInputState> mWidgetInputStateHashMap;
+    private boolean isEdited;
 
     /**
      * Please do not use this to have instance of UpdateTransferMethodFragment this is reserved for android framework
@@ -158,7 +160,7 @@ public class UpdateTransferMethodFragment extends Fragment implements WidgetEven
         mDynamicContainer = view.findViewById(R.id.update_transfer_method_dynamic_container);
         mNestedScrollView = view.findViewById(R.id.update_transfer_method_scroll_view);
 
-        mUpdateButtonProgressBar = view.findViewById(R.id.update_transfer_method_progress_bar);
+        mUpdateButtonProgressBar = view.findViewById(R.id.update_transfer_method_button_progress_bar);
         mProgressBar = view.findViewById(R.id.update_transfer_method_progress_bar_layout);
         mUpdateTransferMethodButton = view.findViewById(R.id.update_transfer_method_button);
 
@@ -268,12 +270,17 @@ public class UpdateTransferMethodFragment extends Fragment implements WidgetEven
                 if (view.getTag() instanceof AbstractWidget) {
                     AbstractWidget widget = (AbstractWidget) view.getTag();
                     if (widget.isEdited) {
+                        isEdited = true;
                         mTransferMethod.setField(widget.getName(), widget.getValue());
                     }
                 }
             }
 
-            mPresenter.updateTransferMethod(mTransferMethod);
+            if (isEdited) {
+                mPresenter.updateTransferMethod(mTransferMethod);
+            } else {
+                getActivity().finish();
+            }
         }
     }
 
@@ -440,8 +447,8 @@ public class UpdateTransferMethodFragment extends Fragment implements WidgetEven
             TransferMethodConfiguration fields = hyperwalletTransferMethodConfigurationField.getFields();
             Locale locale = new Locale.Builder().setRegion(fields.getCountry()).build();
             mTransferMethodType = fields.getTransferMethodType();
-//            getActivity().getActionBar().setTitle(
-//                    TransferMethodUtils.getTransferMethodName(getContext(), mTransferMethodType));
+            String transferMethod = TransferMethodUtils.getTransferMethodName(getContext(), mTransferMethodType);
+            ((UpdateTransferMethodActivity) getActivity()).getSupportActionBar().setTitle(transferMethod);
             // group
             for (FieldGroup group : fields.getFieldGroups()) {
                 View sectionHeader = LayoutInflater.from(mDynamicContainer.getContext())
