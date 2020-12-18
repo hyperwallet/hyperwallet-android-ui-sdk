@@ -54,6 +54,7 @@ public class UpdateTransferMethodActivity extends AppCompatActivity implements
         collapsingToolbar.setCollapsedTitleTextAppearance(titleStyleCollapse);
         int titleStyleExpanded = TransferMethodUtils.getAdjustExpandTitleStyle(getTitle().toString());
         collapsingToolbar.setExpandedTitleTextAppearance(titleStyleExpanded);
+        getSupportActionBar().setTitle("");
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

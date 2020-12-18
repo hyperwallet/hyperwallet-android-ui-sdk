@@ -3,7 +3,7 @@
     <item
         android:id="@+id/edit_account_context_option"
         android:title="@string/edit"
-        android:icon="@drawable/ic_trash" />
+        android:icon="@drawable/ic_edit" />
     <item
         android:id="@+id/remove_account_context_option"
         android:title="@string/remove"

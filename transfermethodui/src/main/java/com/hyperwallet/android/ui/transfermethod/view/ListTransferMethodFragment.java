@@ -187,7 +187,11 @@ public class ListTransferMethodFragment extends Fragment implements ListTransfer
     public void onResume() {
         super.onResume();
         mIsTransferMethodsReloadNeeded = getArguments().getBoolean(ARGUMENT_IS_TRANSFER_METHODS_RELOAD_NEEDED, true);
-        if (mIsTransferMethodsReloadNeeded) {
+        loadTransferMethodsList(mIsTransferMethodsReloadNeeded);
+    }
+
+    private void loadTransferMethodsList(boolean shouldReload) {
+        if (shouldReload) {
             getArguments().putBoolean(ARGUMENT_IS_TRANSFER_METHODS_RELOAD_NEEDED, false);
             mPresenter.loadTransferMethods();
         } else {
