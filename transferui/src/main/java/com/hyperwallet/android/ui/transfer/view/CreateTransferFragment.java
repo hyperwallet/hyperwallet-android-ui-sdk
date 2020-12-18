@@ -115,6 +115,7 @@ public class CreateTransferFragment extends Fragment {
     private String mDecimalSeparator;
     private String mGroupSeparator;
     private List<CurrencyDetails> mCurrencyDetailsList = new ArrayList<>();
+    private  TextView mTransferAllFunds;
 
     /**
      * Please don't use this constructor this is reserved for Android Core Framework
@@ -166,8 +167,8 @@ public class CreateTransferFragment extends Fragment {
         LoadCurrencyList();
 
         // transfer all funds
-        TextView transferAllFunds = view.findViewById(R.id.transfer_all_funds);
-        transferAllFunds.setOnClickListener(new View.OnClickListener() {
+        mTransferAllFunds  = view.findViewById(R.id.transfer_all_funds);
+        mTransferAllFunds.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mCreateTransferViewModel.setTransferAllAvailableFunds(Boolean.TRUE);
@@ -615,6 +616,7 @@ public class CreateTransferFragment extends Fragment {
                             transfer.getDestinationCurrency());
                     mTransferAllFundsSummary.setText(summary);
                     mTransferAllFundsSummary.setVisibility(View.VISIBLE);
+                    mTransferAllFunds.setVisibility(View.VISIBLE);
                     if (mCreateTransferViewModel.isUpdateTransferAllFunds()) {
                         Boolean transferAllAvailableFunds =
                                 mCreateTransferViewModel.isTransferAllAvailableFunds().getValue();
@@ -623,7 +625,8 @@ public class CreateTransferFragment extends Fragment {
                     }
                 } else {
                     mTransferAmount.setText(getString(R.string.defaultTransferAmount));
-                    mTransferAllFundsSummary.setVisibility(View.GONE);
+                    mTransferAllFunds.setVisibility(View.GONE);
+                    mTransferAllFundsSummary.setText(requireContext().getString(R.string.zeroAvailableBalance));
                 }
             }
         });

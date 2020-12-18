@@ -176,6 +176,52 @@ public class TransferUserFundsTest {
     }
 
     @Test
+    public void testTransferFunds_verifyTransferWithQuoteError() {
+        // Mock Response for the PPC
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("ppc/prepaid_card_response.json")).mock();
+
+        // if there is sources, we load the transfer method destination
+        // transfer_method_list_with_ppc_response
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
+
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_BAD_REQUEST).withBody(sResourceManager
+                .getResourceContent("errors/create_transfer_error_invalid_amount_response.json")).mock();
+
+        mActivityTestRule.launchActivity(null);
+
+        // Transfer From
+        verifyTransferFromAvailbleFunds();
+
+        // Transfer To
+        onView(withId(R.id.add_transfer_destination)).check(matches(not(isDisplayed())));
+        onView(withId(R.id.transfer_destination)).perform(nestedScrollTo()).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_destination_icon)).check(matches(withText(R.string.bank_account_font_icon)));
+        onView(withId(R.id.transfer_destination_title)).check(matches(withText(R.string.bank_account)));
+        onView(withId(R.id.transfer_destination_description_1)).check(matches(withText("United States")));
+        onView(withId(R.id.transfer_destination_description_2)).check(matches(withText("ending in 0616")));
+
+        onView(withId(R.id.transfer_amount)).perform(nestedScrollTo()).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_amount_currency)).check(matches(withText("USD")));
+
+        // Check Transfer max amount is not displayed
+        onView(withId(R.id.transfer_all_funds)).check(matches(not(isDisplayed())));
+
+        onView(withId(R.id.transfer_summary)).perform(nestedScrollTo()).check(matches(isDisplayed()));
+
+        String notAvailableFund = getZeroAvailableFund();
+        onView(withId(R.id.transfer_summary)).check(matches(withText(notAvailableFund)));
+
+        onView(withId(R.id.transfer_action_button)).perform(nestedScrollTo());
+        onView(withId(R.id.transfer_notes)).perform(nestedScrollTo()).check(matches(isDisplayed()));
+
+        onView(withId(R.id.transfer_action_button)).perform(nestedScrollTo()).check(matches(isDisplayed()));
+        onView(withId(R.id.transfer_action_button)).check(matches(isEnabled()));
+    }
+
+
+    @Test
     public void testTransferFunds_verifyTransferScreenAmountCurrencyFormatUSD() {
         // Mock Response for the PPC
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
@@ -1435,6 +1481,12 @@ public class TransferUserFundsTest {
         String availableFund = String.format(InstrumentationRegistry.getInstrumentation().getTargetContext()
                 .getString(R.string.mobileAvailableBalance),symbol, amount , currency);
         return availableFund;
+    }
+
+    private String getZeroAvailableFund() {
+        String zeroAvailableFund = InstrumentationRegistry.getInstrumentation().getTargetContext()
+                .getString(R.string.zeroAvailableBalance);
+        return zeroAvailableFund;
     }
 
     private void verifyTransferFromAvailbleFunds() {
