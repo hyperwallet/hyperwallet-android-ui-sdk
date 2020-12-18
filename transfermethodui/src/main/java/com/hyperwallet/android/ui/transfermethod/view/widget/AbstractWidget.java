@@ -164,8 +164,8 @@ public abstract class AbstractWidget {
 
         @Override
         public boolean onKey(View v, int keyCode, KeyEvent event) {
+            isEdited = true;
             if (event.getAction() == KeyEvent.ACTION_DOWN) {
-                isEdited = true;
                 switch (keyCode) {
                     case KeyEvent.KEYCODE_DPAD_CENTER:
                     case KeyEvent.KEYCODE_ENTER:
