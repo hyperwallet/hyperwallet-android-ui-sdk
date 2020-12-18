@@ -548,6 +548,7 @@ public class CreateTransferViewModelTest {
 
         viewModel.init("0");
         // test
+        viewModel.setQuoteAvailableTransferFunds(true);
         viewModel.createTransfer();
 
         assertThat(viewModel.getCreateTransferError().getValue(), is(notNullValue()));
@@ -592,6 +593,7 @@ public class CreateTransferViewModelTest {
 
         viewModel.init("0");
         // test
+        viewModel.setQuoteAvailableTransferFunds(true);
         viewModel.createTransfer();
 
         assertThat(viewModel.getInvalidAmountError().getValue(), is(notNullValue()));
