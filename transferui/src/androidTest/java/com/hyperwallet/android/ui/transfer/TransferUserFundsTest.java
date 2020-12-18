@@ -135,11 +135,7 @@ public class TransferUserFundsTest {
         // Mock Response for the PPC
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("ppc/prepaid_card_response.json")).mock();
-        // Mock the response by using trm-token to fetch the card info
-//        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-//                .getResourceContent("ppc/get_prepaid_card_success_response.json")).mock();
 
-        // if there is sources, we load the transfer method destination
         // transfer_method_list_with_ppc_response
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
@@ -1210,13 +1206,8 @@ public class TransferUserFundsTest {
     public void testTransferFragment_verifyTransferFromPrepaidCard() {
         // Mock the response with PPC source
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("ppc/prepaid_card_response.json")).mock();
+                .getResourceContent("ppc/prepaid_cards_response.json")).mock();
 
-        // Mock the response by using trm-token to fetch the card info
-//        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-//                .getResourceContent("ppc/get_prepaid_card_success_response.json")).mock();
-
-        // if there is sources, we load the transfer method destination with PPC transfer method
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
 
@@ -1225,20 +1216,25 @@ public class TransferUserFundsTest {
                 .getResourceContent("create_transfer_quote_response.json")).mock();
 
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
-                .getResourceContent("ppc/get_prepaid_card_success_response.json")).mock();
+                .getResourceContent("create_transfer_quote_all_funds_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("create_transfer_all_funds_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("schedule_transfer_success_response.json")).mock();
 
         mActivityTestRule.launchActivity(null);
 
         // Transfer From
         verifyTransferFromAvailbleFunds();
-        onView(ViewMatchers.withId(R.id.source_data_container))
-                        .perform(ViewActions.click());
-        // Select PPC from the Select From list
-        onView(ViewMatchers.withText(R.string.prepaid_card))
-                        .perform(ViewActions.click());
+        onView(ViewMatchers.withText(R.string.availableFunds))
+                .perform(ViewActions.click());
 
-        // Verify Transfer From is Available Funds
         // Select PPC from the Select From list
+        String ppcInfoFrom = VISA + MASK + "9285";
+        onView(ViewMatchers.withText(ppcInfoFrom))
+                .perform(ViewActions.click());
+
+        // Verify Transfer From is Prepaid Card
         verifyTransferFromPPC();
         String ppcInfo = VISA + MASK + "9285";
         Espresso.onView(ViewMatchers.withId(R.id.transfer_source_description_1))
