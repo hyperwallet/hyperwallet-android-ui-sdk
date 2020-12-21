@@ -38,7 +38,8 @@ public class UpdateTransferMethodPresenter implements UpdateTransferMethodContra
             mTransferMethodUpdateConfigurationRepository.refreshFields();
         }
 
-        mTransferMethodUpdateConfigurationRepository.getFields(transferMethodToken,
+        mTransferMethodUpdateConfigurationRepository.getFields(transferMethodType,
+                transferMethodToken,
                 new TransferMethodUpdateConfigurationRepository.LoadFieldsCallback() {
                     @Override
                     public void onFieldsLoaded(@Nullable HyperwalletTransferMethodConfigurationField field) {
@@ -48,6 +49,8 @@ public class UpdateTransferMethodPresenter implements UpdateTransferMethodContra
 
                         mView.hideProgressBar();
                         mView.showTransferMethodFields(field);
+                        // there can be multiple fees when we have flat fee + percentage fees
+                        mView.showTransactionInformation(field.getFees(), field.getProcessingTime());
                     }
 
                     @Override

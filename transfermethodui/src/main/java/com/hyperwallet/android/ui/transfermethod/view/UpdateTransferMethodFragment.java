@@ -404,6 +404,40 @@ public class UpdateTransferMethodFragment extends Fragment implements WidgetEven
     }
 
     @Override
+    public void showTransactionInformation(@NonNull List<Fee> fees,
+            @Nullable ProcessingTime processingTime) {
+        View header = getView().findViewById(R.id.update_transfer_method_static_container_header);
+        View container = getView().findViewById(R.id.update_transfer_method_static_container);
+        TextView feeAndProcessingTime = getView().findViewById(R.id.update_transfer_method_information);
+
+        if (isFeeAvailable(fees) && isProcessingTimeAvailable(processingTime)) {
+            String formattedFee = FeeFormatter.getFormattedFee(header.getContext(), fees);
+            feeAndProcessingTime.setVisibility(View.VISIBLE);
+            feeAndProcessingTime.setText(
+                    feeAndProcessingTime.getContext().getString(R.string.feeAndProcessingTimeInformation, formattedFee,
+                            processingTime.getValue()));
+        } else if (isFeeAvailable(fees) && !isProcessingTimeAvailable(processingTime)) {
+            String formattedFee = FeeFormatter.getFormattedFee(header.getContext(), fees);
+            feeAndProcessingTime.setVisibility(View.VISIBLE);
+            feeAndProcessingTime.setText(
+                    feeAndProcessingTime.getContext().getString(R.string.feeInformation, formattedFee));
+        } else if (isProcessingTimeAvailable(processingTime) && !isFeeAvailable(fees)) {
+            feeAndProcessingTime.setVisibility(View.VISIBLE);
+            feeAndProcessingTime.setText(processingTime.getValue());
+        } else {
+            feeAndProcessingTime.setVisibility(View.GONE);
+        }
+
+        if (feeAndProcessingTime.getVisibility() == View.VISIBLE) {
+            header.setVisibility(View.VISIBLE);
+            container.setVisibility(View.VISIBLE);
+        } else {
+            header.setVisibility(View.GONE);
+            container.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
     public void showTransferMethodFields(
             @NonNull HyperwalletTransferMethodConfigurationField hyperwalletTransferMethodConfigurationField) {
         mDynamicContainer.removeAllViews();

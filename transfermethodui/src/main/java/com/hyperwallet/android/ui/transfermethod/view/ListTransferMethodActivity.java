@@ -182,7 +182,7 @@ public class ListTransferMethodActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void invokeTransferMethodUpdate(@NonNull TransferMethod transferMethod) {
+    public void invokeTransferMethodEdit(@NonNull TransferMethod transferMethod) {
         String token = transferMethod.getField(TransferMethod.TransferMethodFields.TOKEN);
         Intent intent = new Intent(this, UpdateTransferMethodActivity.class);
         intent.putExtra(UpdateTransferMethodActivity.EXTRA_TRANSFER_METHOD_TOKEN, token);

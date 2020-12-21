@@ -280,7 +280,7 @@ public class ListTransferMethodFragment extends Fragment implements ListTransfer
 
         void showConfirmationDialog(@NonNull final TransferMethod transferMethod);
 
-        void invokeTransferMethodUpdate(@NonNull final TransferMethod transferMethod);
+        void invokeTransferMethodEdit(@NonNull final TransferMethod transferMethod);
     }
 
     interface OnAddNewTransferMethodSelected {
@@ -397,7 +397,7 @@ public class ListTransferMethodFragment extends Fragment implements ListTransfer
                                     mOnTransferMethodContextMenuItemSelected.showConfirmationDialog(transferMethod);
                                     return true;
                                 } if (item.getItemId() == R.id.edit_account_context_option) {
-                                    mOnTransferMethodContextMenuItemSelected.invokeTransferMethodUpdate(transferMethod);
+                                    mOnTransferMethodContextMenuItemSelected.invokeTransferMethodEdit(transferMethod);
                                     return true;
                                 }
                                 return false;

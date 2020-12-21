@@ -28,6 +28,9 @@ public class UpdateTransferMethodContract {
 
         void showTransferMethodFields(@NonNull final HyperwalletTransferMethodConfigurationField field);
 
+        void showTransactionInformation(@NonNull final List<Fee> fees,
+                @Nullable final ProcessingTime processingTime);
+
         void showUpdateButtonProgressBar();
 
         void hideUpdateButtonProgressBar();
