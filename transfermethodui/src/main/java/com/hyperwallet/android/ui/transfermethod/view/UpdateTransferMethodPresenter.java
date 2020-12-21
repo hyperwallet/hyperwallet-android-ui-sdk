@@ -38,8 +38,7 @@ public class UpdateTransferMethodPresenter implements UpdateTransferMethodContra
             mTransferMethodUpdateConfigurationRepository.refreshFields();
         }
 
-        mTransferMethodUpdateConfigurationRepository.getFields(transferMethodType,
-                transferMethodToken,
+        mTransferMethodUpdateConfigurationRepository.getFields(transferMethodToken,
                 new TransferMethodUpdateConfigurationRepository.LoadFieldsCallback() {
                     @Override
                     public void onFieldsLoaded(@Nullable HyperwalletTransferMethodConfigurationField field) {

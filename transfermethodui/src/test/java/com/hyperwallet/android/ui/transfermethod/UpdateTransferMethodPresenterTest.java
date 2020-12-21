@@ -156,11 +156,11 @@ public class UpdateTransferMethodPresenterTest {
             @Override
             public Object answer(InvocationOnMock invocation) {
                 TransferMethodUpdateConfigurationRepository.LoadFieldsCallback callback =
-                        (TransferMethodUpdateConfigurationRepository.LoadFieldsCallback) invocation.getArguments()[2];
+                        (TransferMethodUpdateConfigurationRepository.LoadFieldsCallback) invocation.getArguments()[1];
                 callback.onFieldsLoaded(result);
                 return callback;
             }
-        }).when(tmcRepository).getFields(anyString(), anyString(),
+        }).when(tmcRepository).getFields(anyString(),
                 any(TransferMethodUpdateConfigurationRepository.LoadFieldsCallback.class));
 
         // Then
@@ -182,11 +182,11 @@ public class UpdateTransferMethodPresenterTest {
             @Override
             public Object answer(InvocationOnMock invocation) {
                 TransferMethodUpdateConfigurationRepository.LoadFieldsCallback callback =
-                        (TransferMethodUpdateConfigurationRepository.LoadFieldsCallback) invocation.getArguments()[2];
+                        (TransferMethodUpdateConfigurationRepository.LoadFieldsCallback) invocation.getArguments()[1];
                 callback.onError(errors);
                 return callback;
             }
-        }).when(tmcRepository).getFields(anyString(), anyString(),
+        }).when(tmcRepository).getFields(anyString(),
                 any(TransferMethodUpdateConfigurationRepository.LoadFieldsCallback.class));
 
         // Then
@@ -203,7 +203,7 @@ public class UpdateTransferMethodPresenterTest {
         presenter.loadTransferMethodConfigurationFields(true, "BANK_ACCOUNT", "trm-fake-token");
 
         verify(tmcRepository, atLeastOnce()).refreshFields();
-        verify(tmcRepository, atLeastOnce()).getFields(anyString(), anyString(),
+        verify(tmcRepository, atLeastOnce()).getFields(anyString(),
                 any(TransferMethodUpdateConfigurationRepository
                         .LoadFieldsCallback.class));
         verify(view, never()).showTransferMethodFields(fieldResultArgumentCaptor.capture());
@@ -221,7 +221,7 @@ public class UpdateTransferMethodPresenterTest {
         presenter.loadTransferMethodConfigurationFields(true, "BANK_ACCOUNT", "trm-fake-token");
 
         verify(tmcRepository, atLeastOnce()).refreshFields();
-        verify(tmcRepository, atLeastOnce()).getFields(anyString(), anyString(),
+        verify(tmcRepository, atLeastOnce()).getFields(anyString(),
                 any(TransferMethodUpdateConfigurationRepository.LoadFieldsCallback.class));
         verify(view, never()).hideProgressBar();
         verify(view, never()).showTransferMethodFields(fieldResultArgumentCaptor.capture());
@@ -239,11 +239,11 @@ public class UpdateTransferMethodPresenterTest {
             @Override
             public Object answer(InvocationOnMock invocation) {
                 TransferMethodUpdateConfigurationRepository.LoadFieldsCallback callback =
-                        (TransferMethodUpdateConfigurationRepository.LoadFieldsCallback) invocation.getArguments()[2];
+                        (TransferMethodUpdateConfigurationRepository.LoadFieldsCallback) invocation.getArguments()[1];
                 callback.onError(errors);
                 return callback;
             }
-        }).when(tmcRepository).getFields(anyString(), anyString(),
+        }).when(tmcRepository).getFields(anyString(),
                 any(TransferMethodUpdateConfigurationRepository.LoadFieldsCallback.class));
 
         // Then
