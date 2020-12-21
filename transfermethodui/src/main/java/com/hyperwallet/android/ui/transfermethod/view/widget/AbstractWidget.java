@@ -36,6 +36,7 @@ public abstract class AbstractWidget {
     protected final WidgetEventListener mListener;
     protected int mBottomViewId = 0;
     protected WidgetInputState mWidgetInputState;
+    public boolean isEdited = false;
 
     public AbstractWidget(@Nullable Field field, @NonNull WidgetEventListener listener,
             @Nullable String defaultValue, @NonNull View defaultFocusView) {
@@ -62,6 +63,9 @@ public abstract class AbstractWidget {
 
     public boolean isValid() {
         if (mField == null) {
+            return true;
+        }
+        else if(!isEdited && mField.isFieldValueMasked()) {
             return true;
         }
         return !isInvalidEmptyValue() && !isInvalidLength() && !isInvalidRegex();
@@ -163,6 +167,7 @@ public abstract class AbstractWidget {
 
         @Override
         public boolean onKey(View v, int keyCode, KeyEvent event) {
+            isEdited = true;
             if (event.getAction() == KeyEvent.ACTION_DOWN) {
                 switch (keyCode) {
                     case KeyEvent.KEYCODE_DPAD_CENTER:

@@ -17,6 +17,7 @@
 package com.hyperwallet.android.ui.transfermethod.view;
 
 import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.SELECT_TRANSFER_METHOD_REQUEST_CODE;
+import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.UPDATE_TRANSFER_METHOD_REQUEST_CODE;
 import static com.hyperwallet.android.ui.transfermethod.view.ListTransferMethodFragment.ARGUMENT_IS_TRANSFER_METHODS_RELOAD_NEEDED;
 
 import android.content.Intent;
@@ -49,7 +50,7 @@ public class ListTransferMethodActivity extends AppCompatActivity implements
         ListTransferMethodFragment.OnAddNewTransferMethodSelected,
         ListTransferMethodFragment.OnDeactivateTransferMethodNetworkErrorCallback,
         ListTransferMethodFragment.OnLoadTransferMethodNetworkErrorCallback,
-        ListTransferMethodFragment.OnTransferMethodContextMenuDeletionSelected,
+        ListTransferMethodFragment.OnTransferMethodContextMenuItemSelected,
         OnTransferMethodDeactivateCallback, OnNetworkErrorCallback {
 
     public static final String TAG = "transfer-method:list:list-transfer-methods";
@@ -134,6 +135,9 @@ public class ListTransferMethodActivity extends AppCompatActivity implements
             if (fragment != null && fragment.getArguments() != null) {
                 fragment.getArguments().putBoolean(ARGUMENT_IS_TRANSFER_METHODS_RELOAD_NEEDED, true);
             }
+        } else if (requestCode == UPDATE_TRANSFER_METHOD_REQUEST_CODE && resultCode == RESULT_OK) {
+            ActivityUtils.initFragment(this, ListTransferMethodFragment.newInstance(),
+                    R.id.list_transfer_method_fragment);
         }
     }
 
@@ -175,6 +179,15 @@ public class ListTransferMethodActivity extends AppCompatActivity implements
         if (!fragment.isAdded()) {
             fragment.show(fragmentManager);
         }
+    }
+
+    @Override
+    public void invokeTransferMethodEdit(@NonNull TransferMethod transferMethod) {
+        String token = transferMethod.getField(TransferMethod.TransferMethodFields.TOKEN);
+        Intent intent = new Intent(this, UpdateTransferMethodActivity.class);
+        intent.putExtra(UpdateTransferMethodActivity.EXTRA_TRANSFER_METHOD_TOKEN, token);
+        intent.putExtra(UpdateTransferMethodActivity.EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT, true);
+        startActivityForResult(intent, UPDATE_TRANSFER_METHOD_REQUEST_CODE);
     }
 
     @Override

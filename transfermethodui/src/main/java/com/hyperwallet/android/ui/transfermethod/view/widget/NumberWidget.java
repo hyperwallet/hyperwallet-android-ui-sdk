@@ -57,9 +57,9 @@ public class NumberWidget extends AbstractMaskedInputWidget {
             editText.setTextColor(viewGroup.getContext().getResources().getColor(R.color.regularColorSecondary));
 
             editText.setEnabled(mField.isEditable());
+            editText.setSelectAllOnFocus(mField.isFieldValueMasked());
             setIdFromFieldLabel(mTextInputLayout);
             setIdFromFieldName(editText);
-
             editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
