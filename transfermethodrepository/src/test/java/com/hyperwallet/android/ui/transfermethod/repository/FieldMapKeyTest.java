@@ -15,7 +15,7 @@ public class FieldMapKeyTest {
 
     @Test
     public void testEquals_withSameReference_withAnotherConstructor() {
-        FieldMapKey thisKey = new FieldMapKey("BANK_ACCOUNT");
+        FieldMapKey thisKey = new FieldMapKey();
         assertEquals(thisKey, thisKey);
     }
 
@@ -37,12 +37,6 @@ public class FieldMapKeyTest {
     public void testEquals_withDifferentReferencesDifferentValues() {
         FieldMapKey thisKey = new FieldMapKey("US", "USD", "BANK_ACCOUNT");
         FieldMapKey thatKey = new FieldMapKey("CA", "CAD", "BANK_ACCOUNT");
-        assertNotEquals(thisKey, thatKey);
-    }
-    @Test
-    public void testEquals_withDifferentReferencesDifferentValues_withConstructor() {
-        FieldMapKey thisKey = new FieldMapKey("BANK_ACCOUNT");
-        FieldMapKey thatKey = new FieldMapKey("BANK_CARD");
         assertNotEquals(thisKey, thatKey);
     }
 }

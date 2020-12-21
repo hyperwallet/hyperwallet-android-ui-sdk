@@ -46,9 +46,7 @@ import java.util.Map;
 public class TransferMethodUpdateConfigurationRepositoryImpl implements TransferMethodUpdateConfigurationRepository {
     private final Handler mHandler;
     private final Map<FieldMapKey, HyperwalletTransferMethodConfigurationField> mFieldMap;
-    private HyperwalletTransferMethodConfigurationKey mTransferMethodConfigurationKey;
 
-    //todo use default modifier after RepositoryFactory is removed
     public TransferMethodUpdateConfigurationRepositoryImpl() {
         mHandler = new Handler();
         mFieldMap = new HashMap<>();
@@ -56,10 +54,8 @@ public class TransferMethodUpdateConfigurationRepositoryImpl implements Transfer
 
     @VisibleForTesting()
     protected TransferMethodUpdateConfigurationRepositoryImpl(@Nullable Handler handler,
-            HyperwalletTransferMethodConfigurationKey transferMethodConfigurationKey,
             Map<FieldMapKey, HyperwalletTransferMethodConfigurationField> fieldMap) {
         mHandler = handler;
-        mTransferMethodConfigurationKey = transferMethodConfigurationKey;
         mFieldMap = fieldMap;
     }
 
@@ -70,7 +66,6 @@ public class TransferMethodUpdateConfigurationRepositoryImpl implements Transfer
 
     @VisibleForTesting
     void getTransferMethodConfigurationFieldResult(
-            @NonNull final String transferMethodType,
             @NonNull final String transferMethodToken,
             @NonNull final LoadFieldsCallback loadFieldsCallback) {
         TransferMethodUpdateConfigurationFieldQuery query = new TransferMethodUpdateConfigurationFieldQuery(
@@ -82,7 +77,7 @@ public class TransferMethodUpdateConfigurationRepositoryImpl implements Transfer
                 new HyperwalletListener<HyperwalletTransferMethodConfigurationField>() {
                     @Override
                     public void onSuccess(HyperwalletTransferMethodConfigurationField result) {
-                        FieldMapKey fieldMapKey = new FieldMapKey(transferMethodType);
+                        FieldMapKey fieldMapKey = new FieldMapKey();
                         mFieldMap.put(fieldMapKey, result);
                         loadFieldsCallback.onFieldsLoaded(result);
                         EspressoIdlingResource.decrement();
@@ -103,11 +98,11 @@ public class TransferMethodUpdateConfigurationRepositoryImpl implements Transfer
     }
 
     @Override
-    public synchronized void getFields(@NonNull final String transferMethodType,
+    public synchronized void getFields(
             @NonNull final String transferMethodToken,
             @NonNull final LoadFieldsCallback loadFieldsCallback) {
 
-        getTransferMethodConfigurationFieldResult(transferMethodType, transferMethodToken, loadFieldsCallback);
+        getTransferMethodConfigurationFieldResult(transferMethodToken, loadFieldsCallback);
     }
 
     @Override

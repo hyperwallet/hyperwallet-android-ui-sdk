@@ -55,7 +55,6 @@ import java.util.List;
 @RunWith(RobolectricTestRunner.class)
 public class TransferMethodUpdateConfigurationRepositoryImplTest {
 
-    private static final String TRANSFER_METHOD_TYPE = "BANK_ACCOUNT";
     private static final String TRANSFER_TOKEN = "trm-fake";
     @Rule
     public HyperwalletExternalResourceManager externalResourceManager = new HyperwalletExternalResourceManager();
@@ -100,7 +99,7 @@ public class TransferMethodUpdateConfigurationRepositoryImplTest {
                 ArgumentMatchers.<TransferMethodUpdateConfigurationFieldQuery>any(),
                 ArgumentMatchers.<HyperwalletListener<HyperwalletTransferMethodConfigurationField>>any());
 
-        mTransferMethodUpdateConfigurationRepositoryImplMock.getFields(TRANSFER_METHOD_TYPE,TRANSFER_TOKEN,loadFieldsCallback);
+        mTransferMethodUpdateConfigurationRepositoryImplMock.getFields(TRANSFER_TOKEN,loadFieldsCallback);
 
         verify(loadFieldsCallback).onFieldsLoaded(fieldResultArgumentCaptor.capture());
         verify(loadFieldsCallback, never()).onError(any(Errors.class));
@@ -137,7 +136,7 @@ public class TransferMethodUpdateConfigurationRepositoryImplTest {
                 ArgumentMatchers.<HyperwalletListener<HyperwalletTransferMethodConfigurationField>>any());
 
 
-        mTransferMethodUpdateConfigurationRepositoryImplMock.getFields(TRANSFER_METHOD_TYPE, TRANSFER_TOKEN, loadFieldsCallback);
+        mTransferMethodUpdateConfigurationRepositoryImplMock.getFields(TRANSFER_TOKEN, loadFieldsCallback);
 
         verify(loadFieldsCallback, never()).onFieldsLoaded(any(HyperwalletTransferMethodConfigurationField.class));
         verify(loadFieldsCallback).onError(mErrorsArgumentCaptor.capture());
@@ -158,10 +157,10 @@ public class TransferMethodUpdateConfigurationRepositoryImplTest {
                 new TypeReference<TransferMethodUpdateConfigurationFieldResult>() {
                 });
 
-        FieldMapKey fieldMapKey = new FieldMapKey(TRANSFER_METHOD_TYPE);
+        FieldMapKey fieldMapKey = new FieldMapKey();
         when(mFieldsMap.get(fieldMapKey)).thenReturn(result);
 
-        mTransferMethodUpdateConfigurationRepositoryImplMock.getFields(TRANSFER_METHOD_TYPE,TRANSFER_TOKEN, loadFieldsCallback);
+        mTransferMethodUpdateConfigurationRepositoryImplMock.getFields(TRANSFER_TOKEN, loadFieldsCallback);
         verify(loadFieldsCallback, never()).onError(any(Errors.class));
     }
 
@@ -170,7 +169,7 @@ public class TransferMethodUpdateConfigurationRepositoryImplTest {
         String responseBody = externalResourceManager.getResourceContent(
                 "successful_tmc_update_field_bank_account_response.json");
         JSONObject jsonObject = new JSONObject(responseBody);
-        FieldMapKey fieldMapKey = new FieldMapKey(TRANSFER_METHOD_TYPE);
+        FieldMapKey fieldMapKey = new FieldMapKey();
         HashMap<FieldMapKey, HyperwalletTransferMethodConfigurationField> fieldMap = new HashMap<>();
         fieldMap.put(fieldMapKey, new TransferMethodUpdateConfigurationFieldResult(jsonObject));
         TransferMethodConfigurationRepositoryImpl repositoryWithCache = new TransferMethodConfigurationRepositoryImpl(

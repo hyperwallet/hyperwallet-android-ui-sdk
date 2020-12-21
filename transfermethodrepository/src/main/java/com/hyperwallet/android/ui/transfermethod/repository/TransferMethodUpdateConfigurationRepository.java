@@ -34,7 +34,7 @@ import com.hyperwallet.android.model.graphql.HyperwalletTransferMethodConfigurat
 
 public interface TransferMethodUpdateConfigurationRepository {
 
-    void getFields(@NonNull final String transferMethodType, @NonNull final String transferMethodToken,
+    void getFields(@NonNull final String transferMethodToken,
             @NonNull final LoadFieldsCallback loadFieldsCallback);
 
 
