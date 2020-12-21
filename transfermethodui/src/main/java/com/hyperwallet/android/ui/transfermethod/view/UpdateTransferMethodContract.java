@@ -16,7 +16,7 @@ import java.util.Map;
 /**
  * View and Presenter Contract for Updating Transfer Method
  */
-public class UpdateTransferMethodContract {
+public interface UpdateTransferMethodContract {
 
     interface View {
 
