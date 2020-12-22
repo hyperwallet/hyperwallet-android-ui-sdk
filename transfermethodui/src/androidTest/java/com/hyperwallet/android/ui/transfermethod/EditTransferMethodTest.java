@@ -13,6 +13,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.IdlingRegistry;
 import androidx.test.espresso.Root;
+import androidx.test.espresso.action.ViewActions;
 import androidx.test.espresso.assertion.ViewAssertions;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -72,9 +73,6 @@ import static org.hamcrest.Matchers.is;
 
 @RunWith(AndroidJUnit4.class)
 public class EditTransferMethodTest {
-
-    private static final String ACCOUNT_NUMBER = "8017110254";
-    private static final String ROUTING_NUMBER = "211179539";
 
     @ClassRule
     public static HyperwalletExternalResourceManager sResourceManager = new HyperwalletExternalResourceManager();
@@ -247,6 +245,352 @@ public class EditTransferMethodTest {
         onView(ViewMatchers.withId(R.id.postalCodeLabel))
                 .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
 
+    }
+
+    @Test
+    public void testUpdateTransferMethodFragment_verifyUpdateBankcardTransferMethod() {
+
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_list_bankcard_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_update_bankcard_response.json")).mock();
+
+
+        final CountDownLatch gate = new CountDownLatch(1);
+        final BroadcastReceiver br = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                gate.countDown();
+
+                StatusTransition statusTransition = intent.getParcelableExtra(
+                        "hyperwallet-local-broadcast-payload");
+                assertThat("Transition is not valid", statusTransition.getTransition(), is(DE_ACTIVATED));
+            }
+        };
+
+        // run test
+        mActivityTestRule.launchActivity(null);
+        LocalBroadcastManager.getInstance(mActivityTestRule.getActivity().getApplicationContext())
+                .registerReceiver(br, new IntentFilter("ACTION_HYPERWALLET_TRANSFER_METHOD_DEACTIVATED"));
+
+        // assert
+        onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
+        onView(withId(R.id.toolbar))
+                .check(matches(
+                        hasDescendant(withText(R.string.mobileTransferMethodsHeader))));
+        onView(withId(R.id.fab)).check(matches(isDisplayed()));
+
+        onView(withId(R.id.list_transfer_method_item)).check(
+                matches(atPosition(0, hasDescendant(withText(R.string.bank_card_font_icon)))));
+        onView(withId(R.id.list_transfer_method_item)).check(
+                matches(atPosition(0, hasDescendant(withText(R.string.bank_card)))));
+        onView(withId(R.id.list_transfer_method_item)).check(
+                matches(atPosition(0, hasDescendant(withText("Debit Card")))));
+        onView(withId(R.id.list_transfer_method_item)).check(
+                matches(atPosition(0, hasDescendant(withText(getEndingIn("0006"))))));
+        onView(withId(R.id.list_transfer_method_item)).check(
+                matches(atPosition(0, hasDescendant(withDrawable(R.drawable.ic_three_dots_16dp)))));
+
+        onView(allOf(instanceOf(ImageButton.class), hasSibling(withText(R.string.bank_card)))).perform(click())
+                .inRoot(Matchers.<Root>instanceOf(MenuItem.class));
+        onView(withDrawable(R.drawable.ic_trash)).check(matches(isDisplayed()));
+        onView(withText(R.string.edit)).check(matches(isDisplayed())).perform(click());
+
+        onView(withId(R.id.cardNumber)).check(matches(isDisplayed()));
+
+        onView(ViewMatchers.withId(R.id.cardNumber))
+                .perform(nestedScrollTo())
+                .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
+                .check(matches(withText("****0006")));
+
+        onView(ViewMatchers.withId(R.id.dateOfExpiry))
+                .perform(nestedScrollTo())
+                .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
+                .check(matches(withText("10/24")));
+
+        // cvv has no value when loaded for update
+        onView(ViewMatchers.withId(R.id.cvv)).perform(nestedScrollTo())
+                .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
+
+        onView(ViewMatchers.withId(R.id.cardNumber))
+                .perform(nestedScrollTo(), ViewActions.replaceText("1111222233334444"));
+
+        onView(ViewMatchers.withId(R.id.dateOfExpiry))
+                .perform(nestedScrollTo(), ViewActions.replaceText("12/25"));
+
+        onView(ViewMatchers.withId(R.id.cvv))
+                .perform(nestedScrollTo(), ViewActions.replaceText("321"));
+
+        // update transfer method
+        onView(ViewMatchers.withId(R.id.update_transfer_method_button))
+                .perform(nestedScrollTo(), ViewActions.click());
+    }
+
+    @Test
+    public void testUpdateTransferMethodFragment_verifyWireTransferMethod() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_list_wireaccount_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_update_wireaccount_response.json")).mock();
+
+
+        final CountDownLatch gate = new CountDownLatch(1);
+        final BroadcastReceiver br = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                gate.countDown();
+
+                StatusTransition statusTransition = intent.getParcelableExtra(
+                        "hyperwallet-local-broadcast-payload");
+                assertThat("Transition is not valid", statusTransition.getTransition(), is(DE_ACTIVATED));
+            }
+        };
+
+        // run test
+        mActivityTestRule.launchActivity(null);
+        LocalBroadcastManager.getInstance(mActivityTestRule.getActivity().getApplicationContext())
+                .registerReceiver(br, new IntentFilter("ACTION_HYPERWALLET_TRANSFER_METHOD_DEACTIVATED"));
+
+        // assert
+        onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
+        onView(withId(R.id.toolbar))
+                .check(matches(
+                        hasDescendant(withText(R.string.mobileTransferMethodsHeader))));
+        onView(withId(R.id.fab)).check(matches(isDisplayed()));
+
+        onView(withId(R.id.list_transfer_method_item)).check(
+                matches(atPosition(0, hasDescendant(withText(R.string.wire_account_font_icon)))));
+        onView(withId(R.id.list_transfer_method_item)).check(
+                matches(atPosition(0, hasDescendant(withText(R.string.wire_account)))));
+        onView(withId(R.id.list_transfer_method_item)).check(
+                matches(atPosition(0, hasDescendant(withText("Wire Transfer Account")))));
+        onView(withId(R.id.list_transfer_method_item)).check(
+                matches(atPosition(0, hasDescendant(withText(getEndingIn("8888"))))));
+        onView(withId(R.id.list_transfer_method_item)).check(
+                matches(atPosition(0, hasDescendant(withDrawable(R.drawable.ic_three_dots_16dp)))));
+
+        onView(allOf(instanceOf(ImageButton.class), hasSibling(withText(R.string.wire_account)))).perform(click())
+                .inRoot(Matchers.<Root>instanceOf(MenuItem.class));
+        onView(withDrawable(R.drawable.ic_trash)).check(matches(isDisplayed()));
+        onView(withText(R.string.edit)).check(matches(isDisplayed())).perform(click());
+
+        onView(withId(R.id.bankAccountId)).check(matches(isDisplayed()));
+
+
+        onView(withId(R.id.bankAccountId))
+                .perform(nestedScrollTo(),ViewActions.replaceText("1234567890"));
+
+        onView(withId(R.id.bankId))
+                .perform(nestedScrollTo(),ViewActions.replaceText("ACMTCAXX"));
+
+        // update transfer method
+        onView(ViewMatchers.withId(R.id.update_transfer_method_button))
+                .perform(nestedScrollTo(), ViewActions.click());
+    }
+
+    @Test
+    public void testUpdateTransferMethodFragment_verifyUpdatePaypalTransferMethod() {
+
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_list_paypal_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_update_paypal_response.json")).mock();
+
+
+        final CountDownLatch gate = new CountDownLatch(1);
+        final BroadcastReceiver br = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                gate.countDown();
+
+                StatusTransition statusTransition = intent.getParcelableExtra(
+                        "hyperwallet-local-broadcast-payload");
+                assertThat("Transition is not valid", statusTransition.getTransition(), is(DE_ACTIVATED));
+            }
+        };
+
+        // run test
+        mActivityTestRule.launchActivity(null);
+        LocalBroadcastManager.getInstance(mActivityTestRule.getActivity().getApplicationContext())
+                .registerReceiver(br, new IntentFilter("ACTION_HYPERWALLET_TRANSFER_METHOD_DEACTIVATED"));
+
+        // assert
+        onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
+        onView(withId(R.id.toolbar))
+                .check(matches(
+                        hasDescendant(withText(R.string.mobileTransferMethodsHeader))));
+        onView(withId(R.id.fab)).check(matches(isDisplayed()));
+
+        onView(withId(R.id.list_transfer_method_item)).check(
+                matches(atPosition(0, hasDescendant(withText(R.string.paypal_account_font_icon)))));
+        onView(withId(R.id.list_transfer_method_item)).check(
+                matches(atPosition(0, hasDescendant(withText(R.string.paypal_account)))));
+        onView(withId(R.id.list_transfer_method_item)).check(
+                matches(atPosition(0, hasDescendant(withText("PayPal Account")))));
+        onView(withId(R.id.list_transfer_method_item)).check(
+                matches(atPosition(0, hasDescendant(withDrawable(R.drawable.ic_three_dots_16dp)))));
+
+        onView(allOf(instanceOf(ImageButton.class), hasSibling(withText(R.string.paypal_account)))).perform(click())
+                .inRoot(Matchers.<Root>instanceOf(MenuItem.class));
+        onView(withDrawable(R.drawable.ic_trash)).check(matches(isDisplayed()));
+        onView(withText(R.string.edit)).check(matches(isDisplayed())).perform(click());
+
+        onView(withId(R.id.email)).check(matches(isDisplayed()));
+
+        onView(withId(R.id.email)).perform(nestedScrollTo())
+                .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
+                .check(matches(withText("hello@hw.com")));
+
+        onView(withId(R.id.emailLabel)).perform(nestedScrollTo())
+                .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
+
+        onView(ViewMatchers.withId(R.id.email))
+                .perform(nestedScrollTo(), ViewActions.replaceText("update@test.com"));
+
+        // update transfer method
+        onView(ViewMatchers.withId(R.id.update_transfer_method_button))
+                .perform(nestedScrollTo(), ViewActions.click());
+
+    }
+
+    @Test
+    public void testUpdateTransferMethodFragment_verifyUpdatePaperCheckTransferMethod() {
+
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_list_paper_check_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_update_papercheck_response.json")).mock();
+
+
+        final CountDownLatch gate = new CountDownLatch(1);
+        final BroadcastReceiver br = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                gate.countDown();
+
+                StatusTransition statusTransition = intent.getParcelableExtra(
+                        "hyperwallet-local-broadcast-payload");
+                assertThat("Transition is not valid", statusTransition.getTransition(), is(DE_ACTIVATED));
+            }
+        };
+
+        // run test
+        mActivityTestRule.launchActivity(null);
+        LocalBroadcastManager.getInstance(mActivityTestRule.getActivity().getApplicationContext())
+                .registerReceiver(br, new IntentFilter("ACTION_HYPERWALLET_TRANSFER_METHOD_DEACTIVATED"));
+
+        // assert
+        onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
+        onView(withId(R.id.toolbar))
+                .check(matches(
+                        hasDescendant(withText(R.string.mobileTransferMethodsHeader))));
+        onView(withId(R.id.fab)).check(matches(isDisplayed()));
+
+        onView(withId(R.id.list_transfer_method_item)).check(
+                matches(atPosition(0, hasDescendant(withText(R.string.paper_check_font_icon)))));
+        onView(withId(R.id.list_transfer_method_item)).check(
+                matches(atPosition(0, hasDescendant(withText(R.string.paper_check)))));
+        onView(withId(R.id.list_transfer_method_item)).check(
+                matches(atPosition(0, hasDescendant(withText("Paper Check")))));
+        onView(withId(R.id.list_transfer_method_item)).check(
+                matches(atPosition(0, hasDescendant(withDrawable(R.drawable.ic_three_dots_16dp)))));
+
+        onView(allOf(instanceOf(ImageButton.class), hasSibling(withText(R.string.paper_check)))).perform(click())
+                .inRoot(Matchers.<Root>instanceOf(MenuItem.class));
+        onView(withDrawable(R.drawable.ic_trash)).check(matches(isDisplayed()));
+        onView(withText(R.string.edit)).check(matches(isDisplayed())).perform(click());
+
+
+        onView(withId(com.hyperwallet.android.ui.R.id.shippingMethod))
+                .check(ViewAssertions.matches(ViewMatchers.withText("Standard Mail")));
+
+        onView(withId(com.hyperwallet.android.ui.R.id.country))
+                .check(ViewAssertions.matches(ViewMatchers.withText("Canada")));
+
+        onView(withId(com.hyperwallet.android.ui.R.id.stateProvince))
+                .check(ViewAssertions.matches(ViewMatchers.withText("BC")));
+
+        onView(withId(com.hyperwallet.android.ui.R.id.addressLine1))
+                .check(ViewAssertions.matches(ViewMatchers.withText("475 howe st")));
+
+        onView(withId(com.hyperwallet.android.ui.R.id.addressLine2))
+                .check(ViewAssertions.matches(ViewMatchers.withText("")));
+
+        onView(withId(com.hyperwallet.android.ui.R.id.city))
+                .check(ViewAssertions.matches(ViewMatchers.withText("vancouver")));
+
+        onView(withId(com.hyperwallet.android.ui.R.id.postalCode))
+                .check(ViewAssertions.matches(ViewMatchers.withText("V6Z1L2")));
+
+        onView(ViewMatchers.withId(R.id.city))
+                .perform(nestedScrollTo(), ViewActions.replaceText("UpdateCityTest"));
+
+        // update transfer method
+        onView(ViewMatchers.withId(R.id.update_transfer_method_button))
+                .perform(nestedScrollTo(), ViewActions.click());
+    }
+
+    @Test
+    public void testUpdateTransferMethodFragment_verifyUpdateVenmoTransferMethod() {
+
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_list_venmo_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_update_venmo_response.json")).mock();
+
+
+        final CountDownLatch gate = new CountDownLatch(1);
+        final BroadcastReceiver br = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                gate.countDown();
+
+                StatusTransition statusTransition = intent.getParcelableExtra(
+                        "hyperwallet-local-broadcast-payload");
+                assertThat("Transition is not valid", statusTransition.getTransition(), is(DE_ACTIVATED));
+            }
+        };
+
+        // run test
+        mActivityTestRule.launchActivity(null);
+        LocalBroadcastManager.getInstance(mActivityTestRule.getActivity().getApplicationContext())
+                .registerReceiver(br, new IntentFilter("ACTION_HYPERWALLET_TRANSFER_METHOD_DEACTIVATED"));
+
+        // assert
+        onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
+        onView(withId(R.id.toolbar))
+                .check(matches(
+                        hasDescendant(withText(R.string.mobileTransferMethodsHeader))));
+        onView(withId(R.id.fab)).check(matches(isDisplayed()));
+
+        onView(withId(R.id.list_transfer_method_item)).check(
+                matches(atPosition(0, hasDescendant(withText(R.string.venmo_account_font_icon)))));
+        onView(withId(R.id.list_transfer_method_item)).check(
+                matches(atPosition(0, hasDescendant(withText(R.string.venmo_account)))));
+        onView(withId(R.id.list_transfer_method_item)).check(
+                matches(atPosition(0, hasDescendant(withText("Venmo Account")))));
+        onView(withId(R.id.list_transfer_method_item)).check(
+                matches(atPosition(0, hasDescendant(withText(getEndingIn("1234"))))));
+        onView(withId(R.id.list_transfer_method_item)).check(
+                matches(atPosition(0, hasDescendant(withDrawable(R.drawable.ic_three_dots_16dp)))));
+
+        onView(allOf(instanceOf(ImageButton.class), hasSibling(withText(R.string.venmo_account)))).perform(click())
+                .inRoot(Matchers.<Root>instanceOf(MenuItem.class));
+        onView(withDrawable(R.drawable.ic_trash)).check(matches(isDisplayed()));
+        onView(withText(R.string.edit)).check(matches(isDisplayed())).perform(click());
+
+        onView(withId(R.id.mobileNumber)).perform(nestedScrollTo())
+                .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
+
+        onView(ViewMatchers.withId(R.id.mobileNumber))
+                .check(ViewAssertions.matches(ViewMatchers.hasDescendant(ViewMatchers.withText("5555555555"))));
+
+        onView(ViewMatchers.withId(R.id.mobileNumber))
+                .perform(nestedScrollTo(), ViewActions.replaceText("1234567890"));
+
+        // update transfer method
+        onView(ViewMatchers.withId(R.id.update_transfer_method_button))
+                .perform(nestedScrollTo(), ViewActions.click());
     }
 
     private String getEndingIn(String ending) {
