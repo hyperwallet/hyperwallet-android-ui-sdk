@@ -579,13 +579,13 @@ public class EditTransferMethodTest {
         onView(withDrawable(R.drawable.ic_trash)).check(matches(isDisplayed()));
         onView(withText(R.string.edit)).check(matches(isDisplayed())).perform(click());
 
-        onView(withId(R.id.mobileNumber)).perform(nestedScrollTo())
+        onView(withId(R.id.accountIdLabel))
                 .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
 
-        onView(ViewMatchers.withId(R.id.mobileNumber))
+        onView(ViewMatchers.withId(R.id.accountIdLabel))
                 .check(ViewAssertions.matches(ViewMatchers.hasDescendant(ViewMatchers.withText("5555555555"))));
 
-        onView(ViewMatchers.withId(R.id.mobileNumber))
+        onView(ViewMatchers.withId(R.id.accountId))
                 .perform(nestedScrollTo(), ViewActions.replaceText("1234567890"));
 
         // update transfer method
