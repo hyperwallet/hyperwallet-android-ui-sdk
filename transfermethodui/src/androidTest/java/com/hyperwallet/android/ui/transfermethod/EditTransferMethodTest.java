@@ -144,6 +144,7 @@ public class EditTransferMethodTest {
         onView(allOf(instanceOf(ImageButton.class), hasSibling(withText(R.string.bank_account)))).perform(click())
                 .inRoot(Matchers.<Root>instanceOf(MenuItem.class));
 
+
 //        Assert both icons
         onView(withDrawable(R.drawable.ic_trash)).check(matches(isDisplayed()));
         onView(withText(R.string.edit)).check(matches(isDisplayed())).perform(click());
