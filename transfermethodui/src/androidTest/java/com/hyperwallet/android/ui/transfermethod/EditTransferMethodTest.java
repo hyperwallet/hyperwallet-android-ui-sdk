@@ -143,6 +143,9 @@ public class EditTransferMethodTest {
 
         onView(allOf(instanceOf(ImageButton.class), hasSibling(withText(R.string.bank_account)))).perform(click())
                 .inRoot(Matchers.<Root>instanceOf(MenuItem.class));
+
+
+//        Assert both icons
         onView(withDrawable(R.drawable.ic_trash)).check(matches(isDisplayed()));
         onView(withText(R.string.edit)).check(matches(isDisplayed())).perform(click());
 
@@ -293,6 +296,8 @@ public class EditTransferMethodTest {
 
         onView(allOf(instanceOf(ImageButton.class), hasSibling(withText(R.string.bank_card)))).perform(click())
                 .inRoot(Matchers.<Root>instanceOf(MenuItem.class));
+
+//        Assert both icons
         onView(withDrawable(R.drawable.ic_trash)).check(matches(isDisplayed()));
         onView(withText(R.string.edit)).check(matches(isDisplayed())).perform(click());
 
@@ -371,6 +376,8 @@ public class EditTransferMethodTest {
 
         onView(allOf(instanceOf(ImageButton.class), hasSibling(withText(R.string.wire_account)))).perform(click())
                 .inRoot(Matchers.<Root>instanceOf(MenuItem.class));
+
+        //        Assert both icons
         onView(withDrawable(R.drawable.ic_trash)).check(matches(isDisplayed()));
         onView(withText(R.string.edit)).check(matches(isDisplayed())).perform(click());
 
@@ -432,6 +439,8 @@ public class EditTransferMethodTest {
 
         onView(allOf(instanceOf(ImageButton.class), hasSibling(withText(R.string.paypal_account)))).perform(click())
                 .inRoot(Matchers.<Root>instanceOf(MenuItem.class));
+
+        //        Assert both icons
         onView(withDrawable(R.drawable.ic_trash)).check(matches(isDisplayed()));
         onView(withText(R.string.edit)).check(matches(isDisplayed())).perform(click());
 
@@ -497,6 +506,8 @@ public class EditTransferMethodTest {
 
         onView(allOf(instanceOf(ImageButton.class), hasSibling(withText(R.string.paper_check)))).perform(click())
                 .inRoot(Matchers.<Root>instanceOf(MenuItem.class));
+
+        //        Assert both icons
         onView(withDrawable(R.drawable.ic_trash)).check(matches(isDisplayed()));
         onView(withText(R.string.edit)).check(matches(isDisplayed())).perform(click());
 
@@ -576,16 +587,18 @@ public class EditTransferMethodTest {
 
         onView(allOf(instanceOf(ImageButton.class), hasSibling(withText(R.string.venmo_account)))).perform(click())
                 .inRoot(Matchers.<Root>instanceOf(MenuItem.class));
+
+        //        Assert both icons
         onView(withDrawable(R.drawable.ic_trash)).check(matches(isDisplayed()));
         onView(withText(R.string.edit)).check(matches(isDisplayed())).perform(click());
 
-        onView(withId(R.id.mobileNumber)).perform(nestedScrollTo())
+        onView(withId(R.id.accountIdLabel))
                 .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
 
-        onView(ViewMatchers.withId(R.id.mobileNumber))
+        onView(ViewMatchers.withId(R.id.accountIdLabel))
                 .check(ViewAssertions.matches(ViewMatchers.hasDescendant(ViewMatchers.withText("5555555555"))));
 
-        onView(ViewMatchers.withId(R.id.mobileNumber))
+        onView(ViewMatchers.withId(R.id.accountId))
                 .perform(nestedScrollTo(), ViewActions.replaceText("1234567890"));
 
         // update transfer method

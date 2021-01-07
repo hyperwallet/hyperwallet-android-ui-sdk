@@ -83,7 +83,7 @@ public class VenmoTest {
                 .check(matches(withText(R.string.venmo_account)));
 
         // Not working will investigate later
-        // onView(withId(R.id.mobileNumberLabel)).check(matches(isDisplayed()));
+         onView(withId(R.id.accountIdLabel)).check(matches(isDisplayed()));
         onView(withId(R.id.transfer_method_information)).check(
                 matches(withText(R.string.mobileFeesAndProcessingTime)));
 
