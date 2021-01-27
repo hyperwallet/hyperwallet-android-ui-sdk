@@ -23,5 +23,5 @@
     <string name="authentication_error_header">Authentifizierungsfehler</string>
     <string name="cancelButtonLabel">Abbrechen</string>
     <string name="remove">Entfernen</string>
-    <string name="mobileAreYouSure">Sind Sie sicher?</string>
+    <string name="remove_transfer_method_title">Sind Sie sicher?</string>
 </resources>

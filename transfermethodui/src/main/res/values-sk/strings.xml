@@ -74,6 +74,5 @@
     <string name="mobileTransferMethodLabel">SPÔSOB PREVODU</string>
     <string name="mobileTransferMethodsHeader">Spôsoby prevodu</string>
 
-    <string name="mobileRemoveEAconfirm">Odstrániť spôsob prevodu</string>
     <string name="prepaidCardManagementInfo" >„Prihláste sa pomocou webového prehliadača, aby ste mohli spravovať svoju kartu.“</string>
 </resources>

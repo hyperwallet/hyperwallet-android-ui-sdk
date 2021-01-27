@@ -23,5 +23,5 @@
     <string name="authentication_error_header">Chyba ověření</string>
     <string name="cancelButtonLabel">Zrušit</string>
     <string name="remove">Odebrat</string>
-    <string name="mobileAreYouSure">Jste si jistí?</string>
+    <string name="remove_transfer_method_title">Jste si jistí?</string>
 </resources>

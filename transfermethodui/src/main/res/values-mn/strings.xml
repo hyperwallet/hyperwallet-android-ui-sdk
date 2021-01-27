@@ -74,6 +74,5 @@
     <string name="mobileTransferMethodLabel">ШИЛЖҮҮЛГИЙН АРГА</string>
     <string name="mobileTransferMethodsHeader">Шилжүүлгийн аргууд</string>
 
-    <string name="mobileRemoveEAconfirm">Шилжүүлгийн аргыг устгах</string>
     <string name="prepaidCardManagementInfo" >“Картаа удирдахын тулд вэб хөтөч ашиглан нэвтэрнэ үү”</string>
 </resources>

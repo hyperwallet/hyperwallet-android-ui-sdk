@@ -23,5 +23,5 @@
     <string name="authentication_error_header">Баталгаажуулалтын алдаа</string>
     <string name="cancelButtonLabel">Цуцлах</string>
     <string name="remove">Устгах</string>
-    <string name="mobileAreYouSure">Та итгэлтэй байна уу?</string>
+    <string name="remove_transfer_method_title">Та итгэлтэй байна уу?</string>
 </resources>

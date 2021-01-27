@@ -23,5 +23,5 @@
     <string name="authentication_error_header">Chyba overenia</string>
     <string name="cancelButtonLabel">Zrušiť</string>
     <string name="remove">Odstrániť</string>
-    <string name="mobileAreYouSure">Naozaj?</string>
+    <string name="remove_transfer_method_title">Naozaj?</string>
 </resources>

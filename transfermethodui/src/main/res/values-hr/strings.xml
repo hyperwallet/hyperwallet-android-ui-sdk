@@ -74,6 +74,5 @@
     <string name="mobileTransferMethodLabel">NAČIN PRIJENOSA</string>
     <string name="mobileTransferMethodsHeader">Načini prijenosa</string>
 
-    <string name="mobileRemoveEAconfirm">Uklonite način prijenosa</string>
     <string name="prepaidCardManagementInfo" >„Prijavite se putem web-preglednika da biste mogli upravljati svojom karticom”</string>
 </resources>

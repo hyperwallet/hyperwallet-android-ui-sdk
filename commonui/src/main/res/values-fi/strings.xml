@@ -23,5 +23,5 @@
     <string name="authentication_error_header">Varmennusvirhe</string>
     <string name="cancelButtonLabel">Peruuta</string>
     <string name="remove">Poista</string>
-    <string name="mobileAreYouSure">Oletko varma?</string>
+    <string name="remove_transfer_method_title">Oletko varma?</string>
 </resources>

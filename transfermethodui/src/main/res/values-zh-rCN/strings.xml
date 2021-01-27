@@ -74,6 +74,5 @@
     <string name="mobileTransferMethodLabel">转账方式</string>
     <string name="mobileTransferMethodsHeader">转账方式</string>
 
-    <string name="mobileRemoveEAconfirm">移除转账方式</string>
     <string name="prepaidCardManagementInfo" >“使用网页浏览器登录，管理您的卡”</string>
 </resources>

@@ -23,5 +23,5 @@
     <string name="authentication_error_header">Verificatiefout</string>
     <string name="cancelButtonLabel">Annuleren</string>
     <string name="remove">Verwijderen</string>
-    <string name="mobileAreYouSure">Weet u het zeker?</string>
+    <string name="remove_transfer_method_title">Weet u het zeker?</string>
 </resources>
