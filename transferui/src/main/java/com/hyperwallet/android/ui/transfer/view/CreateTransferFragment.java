@@ -743,13 +743,14 @@ public class CreateTransferFragment extends Fragment {
         if (transferSource.getType().equals(PREPAID_CARD)) {
             transferSourceTitle.setText(
                     getTransferMethodName(transferSourceIdentifier.getContext(), transferSource.getType()));
+            transferSourceIcon.setText(getStringFontIcon(transferSourceIcon.getContext(), transferSource.getType()));
         } else {
             transferSourceTitle.setText(transferSourceIdentifier.getContext().getString(R.string.availableFunds));
+            transferSourceIcon.setText(transferSourceIcon.getContext().getString(R.string.available_funds_font_icon));
         }
         transferSourceIdentifier.setText(transferSource.getIdentification() == null ? ""
                 : getTransferMethodDetail(transferSourceIdentifier.getContext(),
                         transferSource.getIdentification(), transferSource.getType()));
-        transferSourceIcon.setText(getStringFontIcon(transferSourceIcon.getContext(), transferSource.getType()));
     }
 
     private String formattedAmount(final double amount, final String currencyCode) {
