@@ -18,9 +18,9 @@ Note that this SDK is geared towards those who need both backend data and UI fea
 To install Hyperwallet UI SDK, you just need to add the dependencies into your build.gradle file in Android Studio (or Gradle). For example:
 
 ```bash
-api 'com.hyperwallet.android.ui:transfermethodui:1.0.0-beta07'
-api 'com.hyperwallet.android.ui:receiptui:1.0.0-beta07'
-api 'com.hyperwallet.android.ui:transferui:1.0.0-beta07'
+api 'com.hyperwallet.android.ui:transfermethodui:1.0.0-beta08'
+api 'com.hyperwallet.android.ui:receiptui:1.0.0-beta08'
+api 'com.hyperwallet.android.ui:transferui:1.0.0-beta08'
 ```
 
 ### Proguard
@@ -166,6 +166,21 @@ public void onClick(View view) {
             "USD",
             "BANK_ACCOUNT",
             "INDIVIDUAL",
+            false);
+    startActivity(intent);
+}
+```
+
+### Update a transfer method
+The second argument is a token that represents a Transfer method.
+The third argument is boolean flag to control view orientation, <code>lockScreenToPortrait</code> set to <code>true</code>
+The form fields are based on the country, currency, user's profile type, and transfer method type should be passed to this Activity to create a new Transfer Method for those values.
+```java
+@Override
+public void onClick(View view) {
+    Intent intent = mHyperwalletTransferMethodUi.getIntentUpdateTransferMethodActivity(
+            MainActivity.this,
+            "trm-12345",
             false);
     startActivity(intent);
 }
