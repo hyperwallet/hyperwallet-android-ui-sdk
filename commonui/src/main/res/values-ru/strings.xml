@@ -23,5 +23,5 @@
     <string name="authentication_error_header">Ошибка аутентификации</string>
     <string name="cancelButtonLabel">Отмена</string>
     <string name="remove">Удалить</string>
-    <string name="mobileAreYouSure">Вы уверены?</string>
+    <string name="remove_transfer_method_title">Вы уверены?</string>
 </resources>

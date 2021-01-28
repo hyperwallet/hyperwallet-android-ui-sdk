@@ -74,6 +74,5 @@
     <string name="mobileTransferMethodLabel">PHƯƠNG THỨC CHUYỂN TIỀN</string>
     <string name="mobileTransferMethodsHeader">Phương thức chuyển tiền</string>
 
-    <string name="mobileRemoveEAconfirm">Xóa phương thức chuyển tiền</string>
     <string name="prepaidCardManagementInfo" >"Đăng nhập bằng trình duyệt web để quản lý thẻ của bạn"</string>
 </resources>

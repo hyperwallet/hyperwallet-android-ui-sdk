@@ -23,5 +23,5 @@
     <string name="authentication_error_header">認証エラー</string>
     <string name="cancelButtonLabel">キャンセル</string>
     <string name="remove">削除</string>
-    <string name="mobileAreYouSure">よろしいですか？</string>
+    <string name="remove_transfer_method_title">よろしいですか？</string>
 </resources>

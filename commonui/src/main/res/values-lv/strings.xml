@@ -23,5 +23,5 @@
     <string name="authentication_error_header">Autorizācijas kļūda</string>
     <string name="cancelButtonLabel">Atcelt</string>
     <string name="remove">Dzēst</string>
-    <string name="mobileAreYouSure">Vai tiešām?</string>
+    <string name="remove_transfer_method_title">Vai tiešām?</string>
 </resources>

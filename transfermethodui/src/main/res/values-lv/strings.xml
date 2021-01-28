@@ -74,6 +74,5 @@
     <string name="mobileTransferMethodLabel">PĀRSKAITĪJUMA VEIDS</string>
     <string name="mobileTransferMethodsHeader">Pārskaitījumu veidi</string>
 
-    <string name="mobileRemoveEAconfirm">Dzēst pārskaitījuma veidu</string>
     <string name="prepaidCardManagementInfo" >“Pierakstieties, izmantojot tīmekļa pārlūku, lai pārvaldītu savu karti”</string>
 </resources>

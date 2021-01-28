@@ -74,6 +74,5 @@
     <string name="mobileTransferMethodLabel">МЕТОД НА ТРАНСФЕР</string>
     <string name="mobileTransferMethodsHeader">Методи на трансфер</string>
 
-    <string name="mobileRemoveEAconfirm">Отстрани метод на трансфер</string>
     <string name="prepaidCardManagementInfo" >„Најави се со прелистувач за да управуваш сотвојата картичка“</string>
 </resources>

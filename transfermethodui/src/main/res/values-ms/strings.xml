@@ -74,6 +74,5 @@
     <string name="mobileTransferMethodLabel">KAEDAH PEMINDAHAN</string>
     <string name="mobileTransferMethodsHeader">Kaedah pemindahan</string>
 
-    <string name="mobileRemoveEAconfirm">Alih keluar kaedah pemindahan</string>
     <string name="prepaidCardManagementInfo" >"Log masuk menggunakan penyemak imbas web untuk menguruskan kad anda"</string>
 </resources>

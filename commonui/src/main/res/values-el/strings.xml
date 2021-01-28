@@ -23,5 +23,5 @@
     <string name="authentication_error_header">Σφάλμα ελέγχου ταυτότητας</string>
     <string name="cancelButtonLabel">Ακύρωση</string>
     <string name="remove">Κατάργηση</string>
-    <string name="mobileAreYouSure">Είστε βέβαιος/-η;</string>
+    <string name="remove_transfer_method_title">Είστε βέβαιος/-η;</string>
 </resources>
