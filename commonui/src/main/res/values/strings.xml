@@ -26,6 +26,7 @@
     <string name="paypal_account_font_icon" translatable="false">\ue906</string>
     <string name="venmo_account_font_icon" translatable="false">\ue909</string>
     <string name="cash_pickup_mg_font_icon" translatable="false">\ue905</string>
+    <string name="available_funds_font_icon" translatable="false">\ue90b</string>
 
     <string name="endingIn">ending in %s</string>
     <string name="to">to %s</string>
