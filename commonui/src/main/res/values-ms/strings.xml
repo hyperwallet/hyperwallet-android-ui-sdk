@@ -23,5 +23,5 @@
     <string name="authentication_error_header">Ralat Pengesahan</string>
     <string name="cancelButtonLabel">Batal</string>
     <string name="remove">Alih keluar</string>
-    <string name="mobileAreYouSure">Adakah anda pasti?</string>
+    <string name="remove_transfer_method_title">Adakah anda pasti?</string>
 </resources>

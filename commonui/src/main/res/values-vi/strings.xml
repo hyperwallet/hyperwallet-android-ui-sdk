@@ -23,5 +23,5 @@
     <string name="authentication_error_header">Lỗi xác thực</string>
     <string name="cancelButtonLabel">Huỷ bỏ</string>
     <string name="remove">Xóa</string>
-    <string name="mobileAreYouSure">Bạn có chắc không?</string>
+    <string name="remove_transfer_method_title">Bạn có chắc không?</string>
 </resources>

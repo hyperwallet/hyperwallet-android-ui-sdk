@@ -74,6 +74,5 @@
     <string name="mobileTransferMethodLabel">ÁTUTALÁSI MÓD</string>
     <string name="mobileTransferMethodsHeader">Átutalási módok</string>
 
-    <string name="mobileRemoveEAconfirm">Átutalási mód eltávolítása</string>
     <string name="prepaidCardManagementInfo" >„A kártyája kezeléséhez webböngészőből jelentkezzen be.”</string>
 </resources>

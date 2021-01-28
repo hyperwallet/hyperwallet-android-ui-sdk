@@ -23,5 +23,5 @@
     <string name="authentication_error_header">Hitelesítési hiba</string>
     <string name="cancelButtonLabel">Mégse</string>
     <string name="remove">Eltávolítás</string>
-    <string name="mobileAreYouSure">Biztos benne?</string>
+    <string name="remove_transfer_method_title">Biztos benne?</string>
 </resources>

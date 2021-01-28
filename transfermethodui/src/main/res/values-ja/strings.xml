@@ -74,6 +74,5 @@
     <string name="mobileTransferMethodLabel">送金方法</string>
     <string name="mobileTransferMethodsHeader">送金方法</string>
 
-    <string name="mobileRemoveEAconfirm">送金方法を削除</string>
     <string name="prepaidCardManagementInfo" >「ウェブブラウザでログインしてカードを管理する」</string>
 </resources>

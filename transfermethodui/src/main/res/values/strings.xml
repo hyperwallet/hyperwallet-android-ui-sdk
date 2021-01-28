@@ -10,7 +10,7 @@
 
     <string name="mobileCountryRegion">Country/Region</string>
     <string name="mobileCurrencyLabel">Currency</string>
-    <string name="mobileAddTransferMethodHeader">Add a transfer method</string>
+    <string name="mobileAddTransferMethodHeader">Add transfer method</string>
     <string name="title_activity_add_transfer_method">Add Transfer Method</string>
     <string name="title_add_bank_account">Bank Account</string>
     <string name="title_add_bank_card">Debit Card</string>
@@ -75,6 +75,5 @@
     <string name="mobileTransferMethodLabel">TRANSFER METHOD</string>
     <string name="mobileTransferMethodsHeader">Transfer methods</string>
 
-    <string name="mobileRemoveEAconfirm">Remove transfer method</string>
     <string name="prepaidCardManagementInfo" >"Log in using a web browser to manage your card"</string>
 </resources>

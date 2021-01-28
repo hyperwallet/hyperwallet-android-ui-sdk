@@ -23,5 +23,5 @@
     <string name="authentication_error_header">ข้อผิดพลาดในการพิสูจน์ตัวตนถูกต้อง</string>
     <string name="cancelButtonLabel">ยกเลิก</string>
     <string name="remove">ลบ</string>
-    <string name="mobileAreYouSure">คุณแน่ใจหรือไม่</string>
+    <string name="remove_transfer_method_title">คุณแน่ใจหรือไม่</string>
 </resources>

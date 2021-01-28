@@ -74,6 +74,5 @@
     <string name="mobileTransferMethodLabel">MÉTHODE DE TRANSFERT</string>
     <string name="mobileTransferMethodsHeader">Méthodes de transfert</string>
 
-    <string name="mobileRemoveEAconfirm">Supprimer la méthode de transfert</string>
     <string name="prepaidCardManagementInfo" >« Connectez-vous via un navigateur pour gérer votre carte »</string>
 </resources>
