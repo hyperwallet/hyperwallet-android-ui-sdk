@@ -19,6 +19,7 @@ package com.hyperwallet.android.ui.receipt.view;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -50,6 +51,8 @@ public class TabbedListReceiptsActivity extends AppCompatActivity implements OnN
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+
         setContentView(R.layout.activity_tabbed_list_receipt);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
