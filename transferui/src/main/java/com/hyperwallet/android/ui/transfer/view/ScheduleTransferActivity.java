@@ -67,6 +67,8 @@ public class ScheduleTransferActivity extends AppCompatActivity implements OnNet
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+
         setContentView(R.layout.activity_schedule_transfer);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
