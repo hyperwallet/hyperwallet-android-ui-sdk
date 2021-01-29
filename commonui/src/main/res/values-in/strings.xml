@@ -23,5 +23,5 @@
     <string name="authentication_error_header">Kesalahan Autentikasi</string>
     <string name="cancelButtonLabel">Batalkan</string>
     <string name="remove">Hapus</string>
-    <string name="mobileAreYouSure">Apa Anda yakin?</string>
+    <string name="remove_transfer_method_title">Apa Anda yakin?</string>
 </resources>

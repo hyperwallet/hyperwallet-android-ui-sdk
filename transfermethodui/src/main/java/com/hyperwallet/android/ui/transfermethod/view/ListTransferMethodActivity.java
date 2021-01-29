@@ -17,12 +17,14 @@
 package com.hyperwallet.android.ui.transfermethod.view;
 
 import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.SELECT_TRANSFER_METHOD_REQUEST_CODE;
+import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.UPDATE_TRANSFER_METHOD_REQUEST_CODE;
 import static com.hyperwallet.android.ui.transfermethod.view.ListTransferMethodFragment.ARGUMENT_IS_TRANSFER_METHODS_RELOAD_NEEDED;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -31,6 +33,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.hyperwallet.android.model.Error;
 import com.hyperwallet.android.model.transfermethod.TransferMethod;
@@ -48,7 +51,7 @@ public class ListTransferMethodActivity extends AppCompatActivity implements
         ListTransferMethodFragment.OnAddNewTransferMethodSelected,
         ListTransferMethodFragment.OnDeactivateTransferMethodNetworkErrorCallback,
         ListTransferMethodFragment.OnLoadTransferMethodNetworkErrorCallback,
-        ListTransferMethodFragment.OnTransferMethodContextMenuDeletionSelected,
+        ListTransferMethodFragment.OnTransferMethodContextMenuItemSelected,
         OnTransferMethodDeactivateCallback, OnNetworkErrorCallback {
 
     public static final String TAG = "transfer-method:list:list-transfer-methods";
@@ -67,12 +70,17 @@ public class ListTransferMethodActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+
         setContentView(R.layout.activity_list_transfer_method);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        CollapsingToolbarLayout collapsingToolbar = findViewById(R.id.collapsing_toolbar);
+        int titleStyleExpanded = TransferMethodUtils.getAdjustExpandTitleStyle(getTitle().toString());
+        collapsingToolbar.setExpandedTitleTextAppearance(titleStyleExpanded);
 
         TextView titleText = findViewById(R.id.toolbar_title);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -130,6 +138,9 @@ public class ListTransferMethodActivity extends AppCompatActivity implements
             if (fragment != null && fragment.getArguments() != null) {
                 fragment.getArguments().putBoolean(ARGUMENT_IS_TRANSFER_METHODS_RELOAD_NEEDED, true);
             }
+        } else if (requestCode == UPDATE_TRANSFER_METHOD_REQUEST_CODE && resultCode == RESULT_OK) {
+            ActivityUtils.initFragment(this, ListTransferMethodFragment.newInstance(),
+                    R.id.list_transfer_method_fragment);
         }
     }
 
@@ -171,6 +182,15 @@ public class ListTransferMethodActivity extends AppCompatActivity implements
         if (!fragment.isAdded()) {
             fragment.show(fragmentManager);
         }
+    }
+
+    @Override
+    public void invokeTransferMethodEdit(@NonNull TransferMethod transferMethod) {
+        String token = transferMethod.getField(TransferMethod.TransferMethodFields.TOKEN);
+        Intent intent = new Intent(this, UpdateTransferMethodActivity.class);
+        intent.putExtra(UpdateTransferMethodActivity.EXTRA_TRANSFER_METHOD_TOKEN, token);
+        intent.putExtra(UpdateTransferMethodActivity.EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT, true);
+        startActivityForResult(intent, UPDATE_TRANSFER_METHOD_REQUEST_CODE);
     }
 
     @Override

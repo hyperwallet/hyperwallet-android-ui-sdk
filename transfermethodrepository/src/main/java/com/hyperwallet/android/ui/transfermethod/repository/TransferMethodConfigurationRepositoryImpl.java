@@ -184,6 +184,11 @@ class FieldMapKey {
         this.mTransferMethodType = mTransferMethodType;
     }
 
+    FieldMapKey() {
+        this.mCountry = null;
+        this.mCurrency = null;
+        this.mTransferMethodType = null;
+    }
     private String getCountry() {
         return mCountry;
     }

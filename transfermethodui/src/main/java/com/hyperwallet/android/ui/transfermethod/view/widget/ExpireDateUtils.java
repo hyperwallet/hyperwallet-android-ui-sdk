@@ -154,8 +154,11 @@ class ExpireDateUtils {
 
     //get month from server month part
     private String getMonthFromServer(String[] splitDate) {
-        return splitDate.length != 2 ? "" :
-                splitDate[1].length() == 1 && Integer.parseInt(splitDate[1]) > 1 ?
-                        ZERO.concat(splitDate[1]) : splitDate[1];
+        if (splitDate.length >= 2) {
+            return splitDate[1].length() == 1 && Integer.parseInt(splitDate[1]) > 1 ? ZERO.concat(splitDate[1])
+                    : splitDate[1];
+        } else {
+            return "";
+        }
     }
 }

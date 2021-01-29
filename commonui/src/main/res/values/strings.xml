@@ -26,6 +26,7 @@
     <string name="paypal_account_font_icon" translatable="false">\ue906</string>
     <string name="venmo_account_font_icon" translatable="false">\ue909</string>
     <string name="cash_pickup_mg_font_icon" translatable="false">\ue905</string>
+    <string name="available_funds_font_icon" translatable="false">\ue90b</string>
 
     <string name="endingIn">ending in %s</string>
     <string name="to">to %s</string>
@@ -33,6 +34,7 @@
 
     <string name="authentication_error_header">Authentication Error</string>
     <string name="cancelButtonLabel">Cancel</string>
+    <string name="edit" translatable="false">Edit</string>
     <string name="remove">Remove</string>
-    <string name="mobileAreYouSure">Are you sure?</string>
+    <string name="remove_transfer_method_title" translatable="false">Remove this transfer method?</string>
 </resources>

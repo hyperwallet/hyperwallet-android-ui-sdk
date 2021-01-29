@@ -23,5 +23,5 @@
     <string name="authentication_error_header">Грешка при удостоверяване</string>
     <string name="cancelButtonLabel">Отмяна</string>
     <string name="remove">Премахване</string>
-    <string name="mobileAreYouSure">Сигурни ли сте?</string>
+    <string name="remove_transfer_method_title">Сигурни ли сте?</string>
 </resources>

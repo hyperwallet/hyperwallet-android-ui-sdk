@@ -23,6 +23,7 @@
                 style="@style/HeaderTitleAppearance"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="vertical"
                 android:paddingTop="@dimen/grid_padding_top">
 
                 <TextView
@@ -40,7 +41,7 @@
                 android:layout_marginStart="@dimen/grid_margin_left"
                 android:layout_marginEnd="@dimen/grid_margin_right"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/item_receipt_information_height">
+                android:layout_height="wrap_content">
 
                 <include layout="@layout/receipt" />
 
@@ -103,8 +104,6 @@
                         android:layout_alignParentTop="true"
                         android:layout_alignParentEnd="true"
                         android:gravity="end"
-                        android:ellipsize="end"
-                        android:maxLines="1"
                         android:layout_marginStart="@dimen/grid_margin_left"
                         android:layout_toEndOf="@+id/receipt_id_label"
                         android:layout_marginTop="@dimen/grid_margin_top"
@@ -138,8 +137,6 @@
                         android:layout_alignParentEnd="true"
                         android:layout_marginStart="@dimen/grid_margin_left"
                         android:gravity="end"
-                        android:ellipsize="end"
-                        android:maxLines="1"
                         android:paddingTop="@dimen/item_text_top_bottom_margin"
                         tools:text="@string/text_placeholder"
                         android:textAppearance="@style/TextAppearance.Hyperwallet.Caption" />
@@ -176,8 +173,6 @@
                         android:paddingEnd="@dimen/item_text_top_bottom_margin"
                         android:layout_marginTop="@dimen/item_text_top_bottom_margin"
                         android:layout_toEndOf="@+id/client_id_label"
-                        android:ellipsize="end"
-                        android:maxLines="1"
                         android:gravity="end"
                         tools:text="@string/text_placeholder"
                         android:textAppearance="@style/TextAppearance.Hyperwallet.Caption"
@@ -213,8 +208,6 @@
                               android:layout_marginStart="@dimen/item_text_top_bottom_margin"
                               android:layout_marginTop="@dimen/item_text_top_bottom_margin"
                               android:layout_toEndOf="@+id/charity_label"
-                              android:ellipsize="end"
-                              android:maxLines="1"
                         android:gravity="end"
                         tools:text="@string/text_placeholder"
                         android:textAppearance="@style/TextAppearance.Hyperwallet.Caption"
@@ -251,8 +244,6 @@
                         android:layout_marginStart="@dimen/item_text_top_bottom_margin"
                         android:layout_marginTop="@dimen/item_text_top_bottom_margin"
                         android:layout_toEndOf="@+id/check_number_label"
-                        android:ellipsize="end"
-                        android:maxLines="1"
                         android:gravity="end"
                         tools:text="@string/text_placeholder"
                         android:textAppearance="@style/TextAppearance.Hyperwallet.Caption"
@@ -289,8 +280,6 @@
                         android:layout_marginStart="@dimen/item_text_top_bottom_margin"
                         android:layout_marginTop="@dimen/item_text_top_bottom_margin"
                         android:layout_toEndOf="@+id/website_label"
-                        android:ellipsize="end"
-                        android:maxLines="1"
                         android:gravity="end"
                         tools:text="@string/text_placeholder"
                         android:textAppearance="@style/TextAppearance.Hyperwallet.Caption"
@@ -397,8 +386,6 @@
                         android:layout_alignParentTop="true"
                         android:layout_alignParentEnd="true"
                         android:gravity="end"
-                        android:ellipsize="end"
-                        android:maxLines="1"
                         android:layout_marginStart="@dimen/grid_margin_left"
                         android:layout_toEndOf="@+id/details_amount_label"
                         android:layout_marginTop="@dimen/grid_margin_top"
@@ -437,8 +424,6 @@
                         android:layout_alignParentTop="true"
                         android:layout_alignParentEnd="true"
                         android:gravity="end"
-                        android:ellipsize="end"
-                        android:maxLines="1"
                         android:layout_marginStart="@dimen/grid_margin_left"
                         android:layout_toEndOf="@+id/details_fee_label"
                         android:layout_marginTop="@dimen/grid_margin_top"
@@ -477,8 +462,6 @@
                         android:layout_alignParentTop="true"
                         android:layout_alignParentEnd="true"
                         android:gravity="end"
-                        android:ellipsize="end"
-                        android:maxLines="1"
                         android:layout_marginStart="@dimen/grid_margin_left"
                         android:layout_toEndOf="@+id/details_transfer_amount_label"
                         android:layout_marginTop="@dimen/grid_margin_top"

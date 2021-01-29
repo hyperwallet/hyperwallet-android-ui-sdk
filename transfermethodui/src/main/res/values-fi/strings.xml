@@ -75,6 +75,5 @@
     <string name="mobileTransferMethodLabel">SIIRTOMENETELMÄ</string>
     <string name="mobileTransferMethodsHeader">Siirtomenetelmät</string>
 
-    <string name="mobileRemoveEAconfirm">Poista siirtomenetelmä</string>
     <string name="prepaidCardManagementInfo" >”Kirjaudu sisään verkkoselaimessa hallinnoidaksesi korttiasi”</string>
 </resources>

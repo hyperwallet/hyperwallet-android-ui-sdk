@@ -14,6 +14,7 @@ public class TransferMethodRepositoryFactoryTest {
         assertThat(repositoryFactory, is(notNullValue()));
         assertThat(repositoryFactory.getTransferMethodRepository(), is(notNullValue()));
         assertThat(repositoryFactory.getTransferMethodConfigurationRepository(), is(notNullValue()));
+        assertThat(repositoryFactory.getTransferMethodUpdateConfigurationRepository(), is(notNullValue()));
     }
 
     @Test
@@ -23,10 +24,13 @@ public class TransferMethodRepositoryFactoryTest {
         TransferMethodRepository transferMethodRepository = repositoryFactory.getTransferMethodRepository();
         TransferMethodConfigurationRepository configurationRepository =
                 repositoryFactory.getTransferMethodConfigurationRepository();
+        TransferMethodUpdateConfigurationRepository transferMethodUpdateConfigurationRepository =
+                repositoryFactory.getTransferMethodUpdateConfigurationRepository();
         TransferMethodRepositoryFactory currentRepositoryFactory = TransferMethodRepositoryFactory.getInstance();
         assertThat(repositoryFactory, is(currentRepositoryFactory));
         assertThat(transferMethodRepository, is(currentRepositoryFactory.getTransferMethodRepository()));
         assertThat(configurationRepository, is(currentRepositoryFactory.getTransferMethodConfigurationRepository()));
+        assertThat(transferMethodUpdateConfigurationRepository,is(currentRepositoryFactory.getTransferMethodUpdateConfigurationRepository()));
 
         TransferMethodRepositoryFactory.clearInstance();
 
@@ -35,5 +39,6 @@ public class TransferMethodRepositoryFactoryTest {
         assertThat(transferMethodRepository, is(not(anotherRepositoryFactory.getTransferMethodRepository())));
         assertThat(configurationRepository,
                 is(not(anotherRepositoryFactory.getTransferMethodConfigurationRepository())));
+        assertThat(transferMethodUpdateConfigurationRepository,is(not(anotherRepositoryFactory.getTransferMethodUpdateConfigurationRepository())));
     }
 }

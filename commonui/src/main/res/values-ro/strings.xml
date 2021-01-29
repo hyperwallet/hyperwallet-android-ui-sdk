@@ -23,5 +23,5 @@
     <string name="authentication_error_header">Eroare de autentificare</string>
     <string name="cancelButtonLabel">Anulați</string>
     <string name="remove">Eliminați</string>
-    <string name="mobileAreYouSure">Sunteți sigur(ă)?</string>
+    <string name="remove_transfer_method_title">Sunteți sigur(ă)?</string>
 </resources>

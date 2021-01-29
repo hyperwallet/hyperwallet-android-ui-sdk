@@ -23,5 +23,5 @@
     <string name="authentication_error_header">Doğrulama Hatası</string>
     <string name="cancelButtonLabel">İptal et</string>
     <string name="remove">Kaldır</string>
-    <string name="mobileAreYouSure">Emin misiniz?</string>
+    <string name="remove_transfer_method_title">Emin misiniz?</string>
 </resources>

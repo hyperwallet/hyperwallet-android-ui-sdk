@@ -74,6 +74,5 @@
     <string name="mobileTransferMethodLabel">OVERBOEKINGSMETHODE</string>
     <string name="mobileTransferMethodsHeader">Overboekingsmethoden</string>
 
-    <string name="mobileRemoveEAconfirm">Overboekingsmethode verwijderen</string>
     <string name="prepaidCardManagementInfo" >"Log in met een webbrowser om uw kaart te beheren"</string>
 </resources>

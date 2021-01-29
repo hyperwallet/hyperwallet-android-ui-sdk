@@ -144,6 +144,7 @@ public class SelectionWidget extends AbstractWidget implements WidgetSelectionDi
         mListener.valueChanged(SelectionWidget.this);
         mEditText.setText(getKeyFromValue(selectedValue));
         mEditText.requestFocus();
+        isEdited = true;
     }
 
     private void hideSoftKey(@NonNull View focusedView) {

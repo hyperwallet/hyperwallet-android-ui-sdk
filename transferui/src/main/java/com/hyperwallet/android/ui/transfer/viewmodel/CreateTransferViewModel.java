@@ -107,7 +107,7 @@ public class CreateTransferViewModel extends ViewModel {
     private boolean updateTransferAllFunds;
     private String mDecimalSeparator;
     private String mGroupSeparator;
-
+    private boolean mIsQuoteAvailableTransferFunds = false;
 
 
     /**
@@ -177,6 +177,7 @@ public class CreateTransferViewModel extends ViewModel {
      * or else it will just do nothing
      */
     public void refresh(String amount) {
+        mIsQuoteAvailableTransferFunds = false;
         mTransferAmount.postValue(null);
         mTransferNotes.postValue(null);
         mSourceToken = null;
@@ -187,6 +188,10 @@ public class CreateTransferViewModel extends ViewModel {
 
     public boolean isPortraitMode() {
         return mIsPortraitMode;
+    }
+
+    public void setQuoteAvailableTransferFunds(boolean availableTransferFundsError){
+        mIsQuoteAvailableTransferFunds = availableTransferFundsError;
     }
 
     public void setPortraitMode(final boolean portraitMode) {
@@ -230,6 +235,7 @@ public class CreateTransferViewModel extends ViewModel {
     }
 
     public void setTransferDestination(@NonNull final TransferMethod transferDestination) {
+        mIsQuoteAvailableTransferFunds=false;
         mTransferDestination.postValue(transferDestination);
         quoteAvailableTransferFunds(mSourceToken, transferDestination);
     }
@@ -295,6 +301,7 @@ public class CreateTransferViewModel extends ViewModel {
     }
 
     public void setSelectedTransferSource(@NonNull final TransferSource source) {
+        mIsQuoteAvailableTransferFunds = false;
         mSelectedTransferSource.postValue(source);
         mSourceToken = source.getToken();
         if (mTransferDestination.getValue() == null) {
@@ -323,34 +330,39 @@ public class CreateTransferViewModel extends ViewModel {
 
     public void createTransfer() {
         mIsCreateQuoteLoading.postValue(Boolean.TRUE);
-        String amount = isTransferRequestSameWithQuote() ? null : mTransferAmount.getValue();
-        if (amount != null) {
-            amount = amount.replace(mGroupSeparator, EMPTY_STRING).replace(mDecimalSeparator, CURRENCY_DOT_SEPARATOR);
+        if (!mIsQuoteAvailableTransferFunds) {
+            mIsQuoteAvailableTransferFunds = true;
+            quoteAvailableTransferFunds(mSourceToken, mTransferDestination.getValue());
+        } else {
+            String amount = isTransferRequestSameWithQuote() ? null : mTransferAmount.getValue();
+            if (amount != null) {
+                amount = amount.replace(mGroupSeparator, EMPTY_STRING).replace(mDecimalSeparator, CURRENCY_DOT_SEPARATOR);
+            }
+            Transfer transfer = new Transfer.Builder()
+                    .clientTransferID(CLIENT_IDENTIFICATION_PREFIX + UUID.randomUUID().toString())
+                    .sourceToken(mSourceToken)
+                    .destinationToken(mTransferDestination.getValue().getField(TOKEN))
+                    .destinationCurrency(mTransferDestination.getValue().getField(TRANSFER_METHOD_CURRENCY))
+                    .notes(mTransferNotes.getValue())
+                    .destinationAmount(amount)
+                    .build();
+
+            mTransferRepository.createTransfer(transfer, new TransferRepository.CreateTransferCallback() {
+                @Override
+                public void onTransferCreated(@Nullable Transfer transfer) {
+                    mShowFxRateChange.setValue(hasTransferAmountChanged(transfer));
+                    mCreateTransfer.postValue(new Event<>(transfer));
+                    mTransferAvailableFunds.setValue(Boolean.FALSE);
+                }
+
+                @Override
+                public void onError(@NonNull final Errors errors) {
+                    processCreateTransferError(errors);
+                    mIsCreateQuoteLoading.postValue(Boolean.FALSE);
+                    mTransferAvailableFunds.setValue(Boolean.FALSE);
+                }
+            });
         }
-        Transfer transfer = new Transfer.Builder()
-                .clientTransferID(CLIENT_IDENTIFICATION_PREFIX + UUID.randomUUID().toString())
-                .sourceToken(mSourceToken)
-                .destinationToken(mTransferDestination.getValue().getField(TOKEN))
-                .destinationCurrency(mTransferDestination.getValue().getField(TRANSFER_METHOD_CURRENCY))
-                .notes(mTransferNotes.getValue())
-                .destinationAmount(amount)
-                .build();
-
-        mTransferRepository.createTransfer(transfer, new TransferRepository.CreateTransferCallback() {
-            @Override
-            public void onTransferCreated(@Nullable Transfer transfer) {
-                mShowFxRateChange.setValue(hasTransferAmountChanged(transfer));
-                mCreateTransfer.postValue(new Event<>(transfer));
-                mTransferAvailableFunds.setValue(Boolean.FALSE);
-            }
-
-            @Override
-            public void onError(@NonNull final Errors errors) {
-                processCreateTransferError(errors);
-                mIsCreateQuoteLoading.postValue(Boolean.FALSE);
-                mTransferAvailableFunds.setValue(Boolean.FALSE);
-            }
-        });
     }
 
     public void refreshTransferDestination() {
@@ -578,6 +590,7 @@ public class CreateTransferViewModel extends ViewModel {
             @Override
             public void onTransferCreated(@Nullable Transfer transfer) {
                 mIsLoading.postValue(Boolean.FALSE);
+                mIsQuoteAvailableTransferFunds = true;
                 mQuoteAvailableFunds.postValue(transfer);
             }
 
@@ -585,14 +598,16 @@ public class CreateTransferViewModel extends ViewModel {
             public void onError(@NonNull Errors errors) {
                 mIsLoading.postValue(Boolean.FALSE);
                 mQuoteAvailableFunds.setValue(null);
-                if (errors.containsInputError()) {
-                    Error error = errors.getErrors().get(0);
-                    if (Objects.equals(error.getFieldName(), DESTINATION_TOKEN_INPUT_FIELD)) {
-                        mInvalidDestinationError.postValue(new Event<>(error));
-                        return;
+                if (mIsQuoteAvailableTransferFunds) {
+                    if (errors.containsInputError()) {
+                        Error error = errors.getErrors().get(0);
+                        if (Objects.equals(error.getFieldName(), DESTINATION_TOKEN_INPUT_FIELD)) {
+                            mInvalidDestinationError.postValue(new Event<>(error));
+                            return;
+                        }
                     }
+                    mLoadTransferRequiredDataErrors.postValue(new Event<>(errors));
                 }
-                mLoadTransferRequiredDataErrors.postValue(new Event<>(errors));
             }
         });
     }

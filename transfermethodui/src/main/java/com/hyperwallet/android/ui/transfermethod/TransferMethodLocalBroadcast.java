@@ -19,6 +19,7 @@ package com.hyperwallet.android.ui.transfermethod;
 import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.HYPERWALLET_LOCAL_BROADCAST_PAYLOAD_KEY;
 import static com.hyperwallet.android.ui.transfermethod.TransferMethodLocalBroadcast.TransferMethodLocalBroadcastAction.ACTION_HYPERWALLET_TRANSFER_METHOD_ADDED;
 import static com.hyperwallet.android.ui.transfermethod.TransferMethodLocalBroadcast.TransferMethodLocalBroadcastAction.ACTION_HYPERWALLET_TRANSFER_METHOD_DEACTIVATED;
+import static com.hyperwallet.android.ui.transfermethod.TransferMethodLocalBroadcast.TransferMethodLocalBroadcastAction.ACTION_HYPERWALLET_TRANSFER_METHOD_UPDATED;
 
 import android.content.Intent;
 import android.os.Parcelable;
@@ -40,6 +41,12 @@ public class TransferMethodLocalBroadcast {
                 ACTION_HYPERWALLET_TRANSFER_METHOD_ADDED);
     }
 
+    public static Intent createBroadcastIntentTransferMethodUpdated(
+            @NonNull final TransferMethod transferMethod) {
+        return createBroadcastIntent(transferMethod,
+                ACTION_HYPERWALLET_TRANSFER_METHOD_UPDATED);
+    }
+
     public static Intent createBroadcastIntentTransferMethodDeactivated(
             @NonNull final StatusTransition StatusTransition) {
         return createBroadcastIntent(StatusTransition,
@@ -57,6 +64,7 @@ public class TransferMethodLocalBroadcast {
     @Retention(RetentionPolicy.SOURCE)
     @StringDef({
             ACTION_HYPERWALLET_TRANSFER_METHOD_ADDED,
+            ACTION_HYPERWALLET_TRANSFER_METHOD_UPDATED,
             ACTION_HYPERWALLET_TRANSFER_METHOD_DEACTIVATED
     })
     public @interface TransferMethodLocalBroadcastActionType {
@@ -69,5 +77,7 @@ public class TransferMethodLocalBroadcast {
                 "ACTION_HYPERWALLET_TRANSFER_METHOD_ADDED";
         public static final String ACTION_HYPERWALLET_TRANSFER_METHOD_DEACTIVATED =
                 "ACTION_HYPERWALLET_TRANSFER_METHOD_DEACTIVATED";
+        public static final String ACTION_HYPERWALLET_TRANSFER_METHOD_UPDATED =
+                "ACTION_HYPERWALLET_TRANSFER_METHOD_UPDATED";
     }
 }

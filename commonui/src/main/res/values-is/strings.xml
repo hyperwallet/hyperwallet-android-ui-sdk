@@ -23,5 +23,5 @@
     <string name="authentication_error_header">Sannvottunarvilla</string>
     <string name="cancelButtonLabel">Hætta við</string>
     <string name="remove">Fjarlægja</string>
-    <string name="mobileAreYouSure">Ertu viss?</string>
+    <string name="remove_transfer_method_title">Ertu viss?</string>
 </resources>

@@ -23,5 +23,5 @@
     <string name="authentication_error_header">Грешка во автентикација</string>
     <string name="cancelButtonLabel">Откажи</string>
     <string name="remove">Отстрани</string>
-    <string name="mobileAreYouSure">Дали сте сигурни?</string>
+    <string name="remove_transfer_method_title">Дали сте сигурни?</string>
 </resources>

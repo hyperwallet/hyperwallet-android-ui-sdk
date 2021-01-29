@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <item name="accountId" type="id" />
+    <item name="accountIdLabel" type="id" />
     <item name="branchId" type="id" />
     <item name="branchIdLabel" type="id" />
     <item name="bankAccountId" type="id" />
@@ -106,4 +108,7 @@
     <item name="taxIdLabel" type="id"/>
     <item name="residence" type="id"/>
     <item name="residenceLabel" type="id"/>
+    <item name="shippingMethod" type="id"/>
+    <item name="shippingMethodLabel" type="id"/>
+
 </resources>

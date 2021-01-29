@@ -27,6 +27,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.hyperwallet.android.model.Error;
 import com.hyperwallet.android.ui.R;
 import com.hyperwallet.android.ui.common.util.PageGroups;
@@ -58,9 +59,9 @@ public class AddTransferMethodActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_transfer_method);
-
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+
+        setContentView(R.layout.activity_add_transfer_method);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -68,6 +69,12 @@ public class AddTransferMethodActivity extends AppCompatActivity implements
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle(TransferMethodUtils.getTransferMethodName(this,
                 getIntent().getStringExtra(EXTRA_TRANSFER_METHOD_TYPE)));
+        CollapsingToolbarLayout collapsingToolbar = findViewById(R.id.collapsing_toolbar);
+        int titleStyleCollapse = TransferMethodUtils.getAdjustCollapseTitleStyle(getTitle().toString());
+        collapsingToolbar.setCollapsedTitleTextAppearance(titleStyleCollapse);
+        int titleStyleExpanded = TransferMethodUtils.getAdjustExpandTitleStyle(getTitle().toString());
+        collapsingToolbar.setExpandedTitleTextAppearance(titleStyleExpanded);
+
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

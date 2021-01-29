@@ -20,6 +20,7 @@ import static com.hyperwallet.android.model.transfermethod.TransferMethod.Transf
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.CARD_BRAND;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.CARD_NUMBER;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.EMAIL;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.POSTAL_CODE;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TYPE;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.VENMO_ACCOUNT_ID;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.BANK_ACCOUNT;
@@ -172,6 +173,8 @@ public class TransferMethodUtils {
             case VENMO_ACCOUNT:
                 return getFourDigitsIdentification(context, transferMethod, VENMO_ACCOUNT_ID,
                         R.string.endingIn);
+            case PAPER_CHECK:
+                return context.getString(R.string.to, transferMethod.getField(POSTAL_CODE));
             default:
                 return "";
         }
@@ -204,5 +207,31 @@ public class TransferMethodUtils {
                         : !TextUtils.isEmpty(transferIdentification) ? transferIdentification : "";
 
         return cardBrand + "\u0020\u2022\u2022\u2022\u2022\u0020" + identificationText;
+    }
+
+    public static int getAdjustCollapseTitleStyle(String title) {
+        int count = title.length();
+        if (count <= 24) {
+            return R.style.TextAppearance_Hyperwallet_Title_Collapse_Large;
+        } else if (count <= 34) {
+            return R.style.TextAppearance_Hyperwallet_Title_Collapse_Medium;
+        } else if (count <= 36) {
+            return R.style.TextAppearance_Hyperwallet_Title_Collapse_Small;
+        } else {
+            return R.style.TextAppearance_Hyperwallet_Title_Collapse_ExtraSmall;
+        }
+    }
+
+    public static int getAdjustExpandTitleStyle(String title) {
+        int count = title.length();
+        if (count <= 24) {
+            return R.style.TextAppearance_Hyperwallet_Title_Expanded_Large;
+        } else if (count <= 34) {
+            return R.style.TextAppearance_Hyperwallet_Title_Expanded_Medium;
+        } else if (count <= 40) {
+            return R.style.TextAppearance_Hyperwallet_Title_Expanded_Small;
+        } else {
+            return R.style.TextAppearance_Hyperwallet_Title_Expanded_ExtraSmall;
+        }
     }
 }

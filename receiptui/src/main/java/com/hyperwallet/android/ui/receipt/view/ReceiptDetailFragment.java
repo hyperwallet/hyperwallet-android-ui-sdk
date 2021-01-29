@@ -16,6 +16,7 @@
  */
 package com.hyperwallet.android.ui.receipt.view;
 
+import static android.text.format.DateUtils.FORMAT_ABBREV_MONTH;
 import static android.text.format.DateUtils.FORMAT_ABBREV_WEEKDAY;
 import static android.text.format.DateUtils.FORMAT_SHOW_DATE;
 import static android.text.format.DateUtils.FORMAT_SHOW_TIME;
@@ -119,15 +120,18 @@ public class ReceiptDetailFragment extends Fragment {
         if (CREDIT.equals(receipt.getEntry())) {
             transactionAmount.setTextColor(transactionAmount.getContext()
                     .getResources().getColor(R.color.positiveColor));
-            transactionAmount.setText(CurrencyParser.getInstance(view.getContext()).formatCurrency(receipt.getCurrency(), receipt.getAmount()));
+            transactionAmount.setText(
+                    CurrencyParser.getInstance(view.getContext()).formatCurrency(receipt.getCurrency(),
+                            receipt.getAmount()));
             transactionTypeIcon.setTextColor(transactionTypeIcon.getContext()
                     .getResources().getColor(R.color.positiveColor));
             transactionTypeIcon.setText(transactionTypeIcon.getContext().getText(R.string.credit));
         } else if (DEBIT.equals(receipt.getEntry())) {
             transactionAmount.setTextColor(transactionAmount.getContext()
                     .getResources().getColor(R.color.negativeColor));
-            transactionAmount.setText(transactionAmount.getContext().getString(R.string.debit_sign_receipts,
-                    CurrencyParser.getInstance(view.getContext()).formatCurrency(receipt.getCurrency(), receipt.getAmount())));
+            transactionAmount.setText(transactionAmount.getContext().getString(R.string.debit_sign,
+                    CurrencyParser.getInstance(view.getContext()).formatCurrency(receipt.getCurrency(),
+                            receipt.getAmount())));
             transactionTypeIcon.setTextColor(transactionTypeIcon.getContext()
                     .getResources().getColor(R.color.negativeColor));
             transactionTypeIcon.setText(transactionTypeIcon.getContext().getText(R.string.debit));
@@ -161,13 +165,16 @@ public class ReceiptDetailFragment extends Fragment {
             String currencySymbol = Currency.getInstance(receipt.getCurrency()).getSymbol(Locale.getDefault());
 
             TextView amountView = view.findViewById(R.id.details_amount_value);
-            amountView.setText(CurrencyParser.getInstance(view.getContext()).formatCurrency(receipt.getCurrency(), receipt.getAmount()) + " " + receipt.getCurrency());
+            amountView.setText(CurrencyParser.getInstance(view.getContext()).formatCurrency(receipt.getCurrency(),
+                    receipt.getAmount()) + " " + receipt.getCurrency());
 
             TextView fee = view.findViewById(R.id.details_fee_value);
-            fee.setText(CurrencyParser.getInstance(view.getContext()).formatCurrency(receipt.getCurrency(), receipt.getFee()) + " " + receipt.getCurrency());
+            fee.setText(CurrencyParser.getInstance(view.getContext()).formatCurrency(receipt.getCurrency(),
+                    receipt.getFee()) + " " + receipt.getCurrency());
 
             TextView transfer = view.findViewById(R.id.details_transfer_amount_value);
-            transfer.setText(CurrencyParser.getInstance(view.getContext()).formatCurrency(receipt.getCurrency(), transferAmountTotal) + " " + receipt.getCurrency());
+            transfer.setText(CurrencyParser.getInstance(view.getContext()).formatCurrency(receipt.getCurrency(),
+                    transferAmountTotal) + " " + receipt.getCurrency());
         }
     }
 
@@ -181,7 +188,7 @@ public class ReceiptDetailFragment extends Fragment {
         dateView.setText(view.getContext().getString(R.string.concat_date_string_view_format,
                 formatDateTime(view.getContext(), date.getTime(),
                         FORMAT_SHOW_DATE | FORMAT_SHOW_TIME | FORMAT_SHOW_YEAR
-                                | FORMAT_SHOW_WEEKDAY | FORMAT_ABBREV_WEEKDAY), timezone));
+                                | FORMAT_ABBREV_MONTH), timezone));
 
         if (receipt.getDetails() != null) {
             ReceiptDetails receiptDetails = receipt.getDetails();

@@ -224,13 +224,14 @@ public class ListTransferSourceFragment extends DialogFragment {
             mSource = source;
             if (source.getType().equals(PREPAID_CARD)) {
                 mTitle.setText(getTransferMethodName(mTitle.getContext(), source.getType()));
+                mIcon.setText(getStringFontIcon(mIcon.getContext(), source.getType()));
             } else {
                 mTitle.setText(mTitle.getContext().getString(R.string.availableFunds));
+                mIcon.setText(mIcon.getContext().getString(R.string.available_funds_font_icon));
             }
             mTransferSourceIdentification.setText(source.getIdentification() == null ? ""
                     : getTransferMethodDetail(mTransferSourceIdentification.getContext(),
                             source.getIdentification(), source.getType()));
-            mIcon.setText(getStringFontIcon(mIcon.getContext(), source.getType()));
 
             if (selected) {
                 mSelectedIcon.setVisibility(View.VISIBLE);

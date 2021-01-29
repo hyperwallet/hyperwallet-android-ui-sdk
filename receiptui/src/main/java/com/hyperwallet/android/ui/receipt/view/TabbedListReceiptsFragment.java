@@ -51,7 +51,6 @@ public class TabbedListReceiptsFragment extends Fragment {
     private ListReceiptsViewPagerAdapter mListReceiptsViewPagerAdapter;
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
-    private LinearLayout mHeader;
 
     private TabbedListReceiptsViewModel mTabbedListReceiptsViewModel;
 
@@ -80,7 +79,6 @@ public class TabbedListReceiptsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mViewPager = view.findViewById(R.id.receipts_pager);
         mTabLayout = view.findViewById(R.id.tab_layout);
-        mHeader = view.findViewById(R.id.transactions_header);
     }
 
     void retry() {
@@ -90,9 +88,6 @@ public class TabbedListReceiptsFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if (getActivity() instanceof TabbedListReceiptsActivity) {
-            mHeader.setVisibility(View.GONE);
-        }
         mTabbedListReceiptsViewModel = ViewModelProviders.of(requireActivity()).get(TabbedListReceiptsViewModel.class);
         mListReceiptsViewPagerAdapter = new ListReceiptsViewPagerAdapter(getFragmentManager(),
                 FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, new ArrayList<Parcelable>(),

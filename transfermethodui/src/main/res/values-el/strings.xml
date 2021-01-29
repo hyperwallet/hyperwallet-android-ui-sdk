@@ -74,6 +74,5 @@
     <string name="mobileTransferMethodLabel">ΤΡΟΠΟΣ ΜΕΤΑΦΟΡΑΣ</string>
     <string name="mobileTransferMethodsHeader">Τρόποι μεταφοράς</string>
 
-    <string name="mobileRemoveEAconfirm">Κατάργηση τρόπου μεταφοράς</string>
     <string name="prepaidCardManagementInfo" >«Συνδεθείτε χρησιμοποιώντας ένα πρόγραμμα περιήγησης για να διαχειριστείτε την κάρτα σας»</string>
 </resources>

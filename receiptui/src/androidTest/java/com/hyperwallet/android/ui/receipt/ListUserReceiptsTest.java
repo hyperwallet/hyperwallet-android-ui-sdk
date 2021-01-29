@@ -149,7 +149,7 @@ public class ListUserReceiptsTest {
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(3, hasDescendant(withText(R.string.transfer_to_prepaid_card)))));
         onView(withId(R.id.list_receipts)).check(
-                matches(atPosition(3, hasDescendant(withText(debitSymbol + krwCurrencySymbol + "40000")))));
+                matches(atPosition(3, hasDescendant(withText(debitSymbol + krwCurrencySymbol + "40,000")))));
 
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(3, hasDescendant(withText("December 1, 2018")))));
@@ -184,7 +184,7 @@ public class ListUserReceiptsTest {
         onView(withId(R.id.list_receipts)).check(matches(atPosition(0, hasDescendant(withText(KRW.first.toString())))));
 
         onView(withId(R.id.list_receipts))
-                .check(matches(atPosition(1, hasDescendant(withText(monthLabel1)))));
+                .check(matches(atPosition(1, hasDescendant(withText("June 2, 2019")))));
         onView(withId(R.id.list_receipts)).check(matches(atPosition(1,
                 hasDescendant(withText(R.string.credit)))));
         onView(withId(R.id.list_receipts)).check(
@@ -196,7 +196,7 @@ public class ListUserReceiptsTest {
         onView(withId(R.id.list_receipts)).check(matches(atPosition(1, hasDescendant(withText("USD")))));
 
         onView(withId(R.id.list_receipts)).check(matches(atPosition(2,
-                hasDescendant(withText(R.string.credit)))));
+                hasDescendant(withText(R.string.debit)))));
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(2, hasDescendant(withText(R.string.card_activation_fee)))));
         onView(withId(R.id.list_receipts)).check(
@@ -444,7 +444,7 @@ public class ListUserReceiptsTest {
         onView(withId(R.id.receipt_id_label)).check(matches(withText(R.string.mobileJournalNumberLabel)));
         onView(withId(R.id.receipt_id_value)).check(matches(withText("3051579")));
         onView(withId(R.id.date_label)).check(matches(withText(R.string.date)));
-        onView(withId(R.id.date_value)).check(matches(withText("Fri, June 7, 2019, 10:08 AM PDT")));
+        onView(withId(R.id.date_value)).check(matches(withText("Jun 7, 2019, 10:08 AM PDT")));
 
         onView(withId(R.id.client_id_label)).check(matches(withText(R.string.mobileMerchantTxnLabel)));
         onView(withId(R.id.client_id_value)).check(matches(withText("8OxXefx5")));
@@ -498,7 +498,7 @@ public class ListUserReceiptsTest {
         onView(withId(R.id.receipt_id_label)).check(matches(withText(R.string.mobileJournalNumberLabel)));
         onView(withId(R.id.receipt_id_value)).check(matches(withText("3051590")));
         onView(withId(R.id.date_label)).check(matches(withText(R.string.date)));
-        onView(withId(R.id.date_value)).check(matches(withText("Sat, December 1, 2018, 9:12 AM PST")));
+        onView(withId(R.id.date_value)).check(matches(withText("Dec 1, 2018, 9:12 AM PST")));
 
         onView(withId(R.id.client_id_label)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
         onView(withId(R.id.client_id_value)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
