@@ -174,7 +174,6 @@ public void onClick(View view) {
 ### Update a transfer method
 The second argument is a token that represents a Transfer method.
 The third argument is boolean flag to control view orientation, <code>lockScreenToPortrait</code> set to <code>true</code>
-The form fields are based on the country, currency, user's profile type, and transfer method type should be passed to this Activity to create a new Transfer Method for those values.
 ```java
 @Override
 public void onClick(View view) {
