@@ -15,4 +15,5 @@
     <dimen name="currency_code_padding_2">18dp</dimen>
     <dimen name="currency_code_padding_3">25dp</dimen>
     <dimen name="amount_container_height">80dp</dimen>
+    <dimen name="clickable_text_padding">10dp</dimen>
 </resources>
