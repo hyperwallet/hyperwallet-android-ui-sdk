@@ -37,6 +37,6 @@
     <string name="edit" translatable="false">Edit</string>
     <string name="remove">Remove</string>
     <string name="remove_transfer_method_title" translatable="false">Remove this transfer method?</string>
-    <string name="navigate_back" translatable="false">Navigate back</string>
+    <string name="navigate_back_description" translatable="false">Navigate back</string>
     <string name="transfer_method_add_transfer_button_description" translatable="false">Add a new transfer method</string>
 </resources>
