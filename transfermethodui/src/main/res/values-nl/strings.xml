@@ -56,12 +56,12 @@
     <string name="search_currency">Valuta zoeken</string>
     <string name="search_widget">Zoeken</string>
 
-    <string name="select_transfer_method_currency_button_description">Knop \'Valuta selecteren'
+    <string name="select_transfer_method_currency_button_description">Knop \'Valuta selecteren\'
     </string>
-    <string name="select_transfer_method_country_button_description">Knop \'Land selecteren'</string>
+    <string name="select_transfer_method_country_button_description">Knop \'Land selecteren\'</string>
     <string name="selected_country_item_description">Item geselecteerd land</string>
     <string name="selected_currency_item_description">Item geselecteerde valuta</string>
-    <string name="transfer_method_context_button_description">Knop \'Contextmenu'</string>
+    <string name="transfer_method_context_button_description">Knop \'Contextmenu\'</string>
     <string name="item_select_description">Geselecteerd item</string>
 
     <string name="error_unmapped_field">Niet-gekoppeld veld. Neem contact op met ondersteuning.</string>
@@ -73,5 +73,5 @@
     <string name="mobileTransferMethodLabel">OVERBOEKINGSMETHODE</string>
     <string name="mobileTransferMethodsHeader">Overboekingsmethoden</string>
 
-    <string name="prepaidCardManagementInfo" >"Log in met een webbrowser om uw kaart te beheren"</string>
+    <string name="prepaidCardManagementInfo">"Log in met een webbrowser om uw kaart te beheren"</string>
 </resources>

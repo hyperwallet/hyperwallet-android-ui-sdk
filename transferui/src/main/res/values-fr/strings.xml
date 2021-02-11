@@ -39,7 +39,7 @@
     <string name="mobileConfirmDetailsAmount">Montant</string>
     <string name="mobileConfirmDetailsFee">Frais</string>
     <string name="mobileConfirmDetailsTotal">Vous recevrez</string>
-    <string name="exchange_rate_change_warning">Suite à des changements du taux de change, vous recevrez désormais %1 $s %2 $s.</string>
+    <string name="exchange_rate_change_warning">Suite à des changements du taux de change, vous recevrez désormais %1$s %2$s.</string>
 
 
     <string name="mobileTransferMax">Montant max. de transfert</string>
