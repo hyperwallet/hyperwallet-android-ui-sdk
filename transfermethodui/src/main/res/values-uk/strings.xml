@@ -15,7 +15,7 @@
     <string name="title_add_bank_account">Банківський рахунок</string>
     <string name="title_add_bank_card">Дебетова картка</string>
 
-    <string name="error_exact_length_field">Довжина цього поля становить саме %d.</string>
+    <string name="error_exact_length_field">Довжина цього поля становить рівно %d.</string>
     <string name="error_invalid_expiry_date">%s недійсне.</string>
     <string name="error_min_max_length_field">Мінімальна довжина цього поля: {0}. Максимальна довжина цього поля: {1}.
     </string>

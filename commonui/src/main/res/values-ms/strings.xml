@@ -16,12 +16,13 @@
     <string name="venmo_account">Akaun Venmo</string>
     <string name="cash_pickup_mg">MoneyGram</string>
 
-    <string name="endingIn">berakhir dengan %s</string>
+    <string name="endingIn">berakhir pada %s</string>
     <string name="to">kepada %s</string>
     <string name="not_translated_in_braces">(tidak diterjemahkan)</string>
 
     <string name="authentication_error_header">Ralat Pengesahan</string>
     <string name="cancelButtonLabel">Batal</string>
+    <string name="edit">Edit</string>
     <string name="remove">Alih keluar</string>
-    <string name="remove_transfer_method_title">Adakah anda pasti?</string>
+    <string name="remove_transfer_method_title">Alih keluar kaedah pemindahan ini?</string>
 </resources>

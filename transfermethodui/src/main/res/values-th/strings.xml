@@ -15,9 +15,9 @@
     <string name="title_add_bank_account">บัญชีธนาคาร</string>
     <string name="title_add_bank_card">บัตรเดบิต</string>
 
-    <string name="error_exact_length_field">ความยาวสำหรับช่องข้อมูลนี้คือ %d เท่านั้น</string>
+    <string name="error_exact_length_field">ความยาวสำหรับช่องข้อมูลนี้คือ  เท่านั้น%d.</string>
     <string name="error_invalid_expiry_date">%s ไม่ถูกต้อง</string>
-    <string name="error_min_max_length_field">ความยาวขั้นต่ำของช่องข้อมูลนี้คือ {0} และความยาวสูงสุดคือ {1}
+    <string name="error_min_max_length_field">ความยาวขั้นต่ำของช่องข้อมูลนี้คือ {0} และความยาวสูงสุดคือ {1}.
     </string>
 
     <string name="createTransferMethodButtonLabel">เพิ่มวิธีการโอนเงิน</string>
@@ -25,8 +25,8 @@
     <string name="default_account_sub_label">เลือกวิธีการโอนเงินเริ่มต้น</string>
     <string name="api_expiry_date_format">ดด/ปป</string>
 
-    <string name="feeAndProcessingTimeInformation">%s ค่าธรรมเนียม \u2022 %s</string>
-    <string name="feeInformation">%s ค่าธรรมเนียม</string>
+    <string name="feeAndProcessingTimeInformation">ค่าธรรมเนียม %s \u2022 %s</string>
+    <string name="feeInformation">ค่าธรรมเนียม %s</string>
 
     <string name="emptyStateAddTransferMethod">เพิ่มวิธีการโอนเงินเพื่อเริ่มต้นใช้งาน</string>
 

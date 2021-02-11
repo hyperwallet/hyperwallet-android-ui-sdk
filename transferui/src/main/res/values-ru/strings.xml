@@ -33,7 +33,7 @@
     <string name="transferAmountInvalid">Введите действительную сумму перевода</string>
 
     <string name="mobileFXsell">С</string>
-    <string name="mobileFXbuy">НА</string>
+    <string name="mobileFXbuy">На</string>
     <string name="mobileFXRateLabel">Курс обмена</string>
 
     <string name="mobileConfirmDetailsAmount">Сумма</string>
@@ -61,10 +61,11 @@
     <string name="mobileTransferSuccessDetails">Средства отправлены на ваш %s</string>
     <string name="doneButtonLabel">Выполнено</string>
     <string name="mobileTransferMethodsHeader">Способы перевода</string>
-    <string name="mobileTransferFromLabel">ПЕРЕВОД ИЗ</string>
+    <string name="mobileTransferFromLabel">ПЕРЕВОД С</string>
     <string name="transferSource">Источник</string>
-    <string name="mobileTransferFromHeader">Перевод из</string>
+    <string name="mobileTransferFromHeader">Перевод с</string>
     <string name="availableFunds">Свободные средства</string>
     <string name="noTransferFromSourceAvailableError">Перевод из источника отсутствует</string>
+    <string name="zeroAvailableBalance">Доступная сумма: Н/Д</string>
 
 </resources>

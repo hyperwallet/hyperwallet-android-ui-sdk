@@ -22,6 +22,7 @@
 
     <string name="authentication_error_header">Błąd uwierzytelniania</string>
     <string name="cancelButtonLabel">Anuluj</string>
+    <string name="edit">Edytuj</string>
     <string name="remove">Usuń</string>
-    <string name="remove_transfer_method_title">Na pewno?</string>
+    <string name="remove_transfer_method_title">Usunąć tę metodę przelewu?</string>
 </resources>

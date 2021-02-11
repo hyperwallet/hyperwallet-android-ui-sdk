@@ -66,5 +66,6 @@
     <string name="mobileTransferFromHeader">轉帳自</string>
     <string name="availableFunds">可用資金</string>
     <string name="noTransferFromSourceAvailableError">無可用資源可供轉帳</string>
+    <string name="zeroAvailableBalance">可用金額：不適用</string>
 
 </resources>

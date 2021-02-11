@@ -20,7 +20,7 @@
     <string name="concat_date_string_view_format">%s %s</string>
 
     <string name="mobileNoTransactionsUser">표시할 내용이 없습니다.</string>
-    <string name="mobileNoTransactionsPrepaidCard">지난 365일간 거래 내역이 없습니다</string>
+    <string name="mobileNoTransactionsPrepaidCard">최근 365일간 거래 내역이 없습니다</string>
     <string name="title_transfer_funds">이체</string>
     <string name="font_icon_placeholder">\ue908</string>
     <string name="text_placeholder">플레이스홀더</string>
@@ -60,7 +60,7 @@
     <string name="card_activation_fee">카드 활성화 수수료</string>
     <string name="card_activation_fee_waiver">카드 활성화 수수료 면제</string>
     <string name="card_fee">카드 수수료</string>
-    <string name="manual_transfer_to_prepaid_card">카드로의 이체</string>
+    <string name="manual_transfer_to_prepaid_card">카드에 이체</string>
     <string name="prepaid_card_balance_inquiry_fee">잔액 문의 수수료</string>
     <string name="prepaid_card_cash_advance">현금 서비스</string>
     <string name="prepaid_card_disputed_charge_refund">분쟁 청구 환불</string>
@@ -68,15 +68,15 @@
     <string name="prepaid_card_domestic_cash_withdrawal_fee">ATM 인출</string>
     <string name="prepaid_card_exchange_rate_difference">PREPAID_CARD_EXCHANGE_RATE_DIFFERENCE
     </string>
-    <string name="prepaid_card_manual_unload">카드로부터의 이체</string>
+    <string name="prepaid_card_manual_unload">카드로부터 이체</string>
     <string name="prepaid_card_overseas_cash_withdrawal_fee">ATM 인출</string>
     <string name="prepaid_card_pin_change_fee">PIN 변경 수수료</string>
     <string name="prepaid_card_refund">환불</string>
     <string name="prepaid_card_replacement_fee">카드 교체 수수료</string>
     <string name="prepaid_card_sale">거래</string>
     <string name="prepaid_card_sale_reversal">역처리된 거래</string>
-    <string name="prepaid_card_unload">카드로부터의 이체</string>
-    <string name="transfer_to_prepaid_card">카드로의 이체</string>
+    <string name="prepaid_card_unload">카드로부터 이체</string>
+    <string name="transfer_to_prepaid_card">카드에 이체</string>
     <!---->
     <!--Donation types-->
     <string name="donation">기부</string>
@@ -109,8 +109,8 @@
     <string name="payment_reversal">지급 역처리</string>
     <string name="payment_reversal_fee">지급 역처리 수수료</string>
     <string name="payment_return">지급 반환</string>
-    <string name="transfer_to_program_account">프로그램으로의 이체</string>
-    <string name="transfer_to_user">사용자로의 이체</string>
+    <string name="transfer_to_program_account">프로그램에 이체</string>
+    <string name="transfer_to_user">사용자에게 이체</string>
     <string name="transfer_to_paypal_account">PayPal</string>
     <string name="transfer_to_bank_card">은행 카드</string>
     <string name="transfer_to_debit_card">체크카드</string>

@@ -5,8 +5,7 @@
 
     <string name="title_activity_select_transfer_method">Выбрать метод перевода</string>
     <!-- SelectTransferMethodActivity -->
-    <string name="select_transfer_method_title">@string/title_activity_select_transfer_method
-    </string>
+    <string name="select_transfer_method_title">заглавное_действие_выбрать_метод_перевода</string>
 
     <string name="mobileCountryRegion">Страна/регион</string>
     <string name="mobileCurrencyLabel">Валюта</string>

@@ -13,13 +13,13 @@
     <string name="mobileJournalNumberLabel">Номер квитанції</string>
     <string name="date">Дата</string>
     <string name="mobileMerchantTxnLabel">Номер транзакції</string>
-    <string name="mobileConfirmNotesLabel">ПРИМІТКА.</string>
+    <string name="mobileConfirmNotesLabel">ПРИМІТКА</string>
     <string name="mobileCharityName">Назва пожертви</string>
     <string name="mobileCheckNumber">Номер чека</string>
     <string name="mobilePromoWebsite">Рекламний вебсайт</string>
     <string name="concat_date_string_view_format">%s %s</string>
 
-    <string name="mobileNoTransactionsUser">Немає видів діяльності для відображення.</string>
+    <string name="mobileNoTransactionsUser">Немає\' видів діяльності для відображення.</string>
     <string name="mobileNoTransactionsPrepaidCard">Жодних транзакцій за останні 365 днів</string>
     <string name="title_transfer_funds">Переказ</string>
     <string name="font_icon_placeholder">\ue908</string>
@@ -36,9 +36,9 @@
     <string name="expedited_shipping_fee">Комісія за експрес-доставку</string>
     <string name="generic_fee_refund">Компенсація загальної комісії</string>
     <string name="monthly_fee">Щомісячна комісія</string>
-    <string name="monthly_fee_refund">Повернення щомісячної комісії</string>
+    <string name="monthly_fee_refund">Компенсація щомісячної комісії</string>
     <string name="payment_expiry_fee">Комісія за закінчення терміну оплати</string>
-    <string name="payment_fee">Комісія за плату</string>
+    <string name="payment_fee">Комісія за оплату</string>
     <string name="processing_fee">Комісія за обробку</string>
     <string name="standard_shipping_fee">Комісія за стандартну доставку</string>
     <string name="transfer_fee">Комісія за переказ</string>
@@ -46,7 +46,7 @@
     <!--Generic payment types-->
     <string name="adjustment">Регулювання балансу</string>
     <string name="foreign_exchange">Обмін валют</string>
-    <string name="deposit">Плата</string>
+    <string name="deposit">Оплата</string>
     <string name="manual_adjustment">Регулювання</string>
     <string name="payment_expiration">Термін оплати сплив</string>
 
@@ -63,7 +63,7 @@
     <string name="manual_transfer_to_prepaid_card">Переказ на картку</string>
     <string name="prepaid_card_balance_inquiry_fee">Комісія за запит балансу</string>
     <string name="prepaid_card_cash_advance">Аванс готівкою</string>
-    <string name="prepaid_card_disputed_charge_refund">Компенсація спірної плати</string>
+    <string name="prepaid_card_disputed_charge_refund">Компенсація спірної оплати</string>
     <string name="prepaid_card_dispute_deposit">Спірний залишок на картці</string>
     <string name="prepaid_card_domestic_cash_withdrawal_fee">Зняття в банкоматі</string>
     <string name="prepaid_card_exchange_rate_difference">PREPAID_CARD_EXCHANGE_RATE_DIFFERENCE
@@ -84,10 +84,10 @@
     <string name="donation_return">Повернення пожертви</string>
     <!---->
     <!--Merchant payment types-->
-    <string name="merchant_payment">Плата продавцю</string>
-    <string name="merchant_payment_fee">Комісія за плату продавцю</string>
-    <string name="merchant_payment_refund">Компенсація за плату продавцю</string>
-    <string name="merchant_payment_return">Повернення плати продавцю</string>
+    <string name="merchant_payment">Оплата продавцю</string>
+    <string name="merchant_payment_fee">Комісія за оплату продавцю</string>
+    <string name="merchant_payment_refund">Компенсація за оплату продавцю</string>
+    <string name="merchant_payment_return">Повернення оплати продавцю</string>
     <!---->
     <!--MoneyGram types-->
     <string name="moneygram_transfer_return">Повернення MoneyGram</string>
@@ -104,11 +104,11 @@
     <string name="account_unload">Повернення коштів</string>
     <string name="dormant_user_fee">Комісія за обліковий запис неактивного користувача</string>
     <string name="dormant_user_fee_refund">Компенсація комісії за обліковий запис неактивного користувача</string>
-    <string name="payment">Плата</string>
-    <string name="payment_cancellation">Скасування плати</string>
-    <string name="payment_reversal">Повернення плати</string>
-    <string name="payment_reversal_fee">Комісія за повернення плати</string>
-    <string name="payment_return">Повернення плати</string>
+    <string name="payment">Оплата</string>
+    <string name="payment_cancellation">Скасування оплати</string>
+    <string name="payment_reversal">Повернення оплати</string>
+    <string name="payment_reversal_fee">Комісія за повернення оплати</string>
+    <string name="payment_return">Повернення оплати</string>
     <string name="transfer_to_program_account">Переказ на програму</string>
     <string name="transfer_to_user">Переказ користувачу</string>
     <string name="transfer_to_paypal_account">PayPal</string>

@@ -19,7 +19,7 @@
     <string name="mobilePromoWebsite">Webové stránky akce</string>
     <string name="concat_date_string_view_format">%s %s</string>
 
-    <string name="mobileNoTransactionsUser">Žádná aktivita k zobrazení.</string>
+    <string name="mobileNoTransactionsUser">Žádná aktivita k zobrazení.</string>
     <string name="mobileNoTransactionsPrepaidCard">Žádné transakce za posledních 365 dnů</string>
     <string name="title_transfer_funds">Převod</string>
     <string name="font_icon_placeholder">\ue908</string>
@@ -63,7 +63,7 @@
     <string name="manual_transfer_to_prepaid_card">Převod na kartu</string>
     <string name="prepaid_card_balance_inquiry_fee">Poplatek za dotaz na zůstatek</string>
     <string name="prepaid_card_cash_advance">Záloha v hotovosti</string>
-    <string name="prepaid_card_disputed_charge_refund">Sporná refundace poplatku</string>
+    <string name="prepaid_card_disputed_charge_refund">Refundace sporného poplatku</string>
     <string name="prepaid_card_dispute_deposit">Sporný vklad na kartu</string>
     <string name="prepaid_card_domestic_cash_withdrawal_fee">Výběr z bankomatu</string>
     <string name="prepaid_card_exchange_rate_difference">PREPAID_CARD_EXCHANGE_RATE_DIFFERENCE
@@ -144,7 +144,7 @@
     <string name="prepaid_card_cash_advance_chargeback_reversal">Zrušení zpětného zúčtování zálohy v hotovosti</string>
     <string name="prepaid_card_cash_advance_repress">Odmítnutí zálohy v hotovosti</string>
     <string name="prepaid_card_cash_advance_repress_reversal">Zrušení odmítnutí zálohy</string>
-    <string name="prepaid_card_chargeback">Zpětné zúčování</string>
+    <string name="prepaid_card_chargeback">Zpětné zúčtování</string>
     <string name="prepaid_card_chargeback_refund">Refundace zpětného zúčtování</string>
     <string name="prepaid_card_chargeback_refund_reversal">Zrušení refundace zpětného zúčtování</string>
     <string name="prepaid_card_chargeback_reversal">Zrušení zpětného zúčtování</string>

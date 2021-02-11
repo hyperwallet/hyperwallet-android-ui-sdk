@@ -12,7 +12,7 @@
     <string name="transfer_currency_placeholder">USD</string>
     <string name="transfer_currency_code_placeholder">$</string>
     <string name="transfer_all_funds_label">Siirrä suurin sallittu summa</string>
-    <string name="mobileAvailableBalance">Käytettävissä oleva summa: %s %s %s</string>
+    <string name="mobileAvailableBalance">Käytettävissä oleva summa:%s %s %s</string>
     <string name="mobileSummaryLabel">YHTEENVETO</string>
     <string name="mobileNoteLabel">Huomautus</string>
     <string name="transfer_notes_label">Huomautus</string>
@@ -29,7 +29,7 @@
 
     <string name="amount_currency_format">%s %s</string>
 
-    <string name="module_transfermethodui_unavailable_error">Et pysty lisäämään siirtomenetelmää.</string>
+    <string name="module_transfermethodui_unavailable_error">Siirtomenetelmiä ei voida lisätä.</string>
     <string name="transferAmountInvalid">Syötä kelvollinen siirrettävä summa</string>
 
     <string name="mobileFXsell">Kohteesta</string>
@@ -39,7 +39,7 @@
     <string name="mobileConfirmDetailsAmount">Summa</string>
     <string name="mobileConfirmDetailsFee">Maksu</string>
     <string name="mobileConfirmDetailsTotal">Tulet vastaanottamaan</string>
-    <string name="exchange_rate_change_warning">Vaihtokurssin muutosten vuoksi tulet vastaanottamaan %1$s %2$s.</string>
+    <string name="exchange_rate_change_warning">Vaihtokurssin muutoksista johtuen tulet vastaanottamaan %1$s %2$s.</string>
 
 
     <string name="mobileTransferMax">Siirrä suurin sallittu summa</string>
@@ -55,7 +55,7 @@
     <string name="summary_amount_placeholder">10,00 CAD</string>
     <string name="summary_amount_fee_placeholder">0,25 CAD</string>
     <string name="summary_amount_transfer_placeholder">9,75 CAD</string>
-    <string name="exchange_rate_change_warning_placeholder">Vaihtokurssin muutosten vuoksi tulet vastaanottamaan 10,00 CAD.</string>
+    <string name="exchange_rate_change_warning_placeholder">Vaihtokurssin muutosten vuoksi tulet vastaanottamaan 10,00 CAD.</string>
 
     <string name="mobileTransferSuccessMsg">Siirtoasi käsitellään</string>
     <string name="mobileTransferSuccessDetails">Rahat ovat matkalla kohteeseen %s</string>
@@ -66,5 +66,7 @@
     <string name="mobileTransferFromHeader">Siirrä kohteesta</string>
     <string name="availableFunds">Käytettävissä olevat varat</string>
     <string name="noTransferFromSourceAvailableError">Lähteestä ei ole käytettävissä siirtoja</string>
+    <string name="zeroAvailableBalance">Käytettävissä oleva summa: Ei saatavilla</string>
+
 
 </resources>

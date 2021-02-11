@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">hyperwallet.ui</string>
-    <string name="title_account_add">Додади сметка</string>
+    <string name="title_account_add">Додај сметка</string>
     <string name="unknown">Непознато</string>
 
     <string name="title_activity_select_transfer_method">Избери метод на трансфер</string>
@@ -10,8 +10,8 @@
 
     <string name="mobileCountryRegion">Земја/Регион</string>
     <string name="mobileCurrencyLabel">Валута</string>
-    <string name="mobileAddTransferMethodHeader">Додади метод на трансфер</string>
-    <string name="title_activity_add_transfer_method">Додади метод на трансфер</string>
+    <string name="mobileAddTransferMethodHeader">Додај метод на трансфер</string>
+    <string name="title_activity_add_transfer_method">Додај метод на трансфер</string>
     <string name="title_add_bank_account">Сметка во банка</string>
     <string name="title_add_bank_card">Дебитна картичка</string>
 
@@ -20,7 +20,7 @@
     <string name="error_min_max_length_field">Минималната должина на ова поле е {0}, а максималната     должина е {1}.
     </string>
 
-    <string name="createTransferMethodButtonLabel">Додади метод на трансфер</string>
+    <string name="createTransferMethodButtonLabel">Додај метод на трансфер</string>
     <string name="default_account_label">Стандардна сметка</string>
     <string name="default_account_sub_label">Избери стандарден метод на трансфер</string>
     <string name="api_expiry_date_format">ММ/ГГ</string>

@@ -3,7 +3,7 @@
     <string name="title_account_add">Pievienot kontu</string>
     <string name="unknown">Nezināms</string>
 
-    <string name="title_activity_select_transfer_method">Atlasiet pārskaitījuma veidu</string>
+    <string name="title_activity_select_transfer_method">Atlasīt pārskaitījuma veidu</string>
     <!-- SelectTransferMethodActivity -->
     <string name="select_transfer_method_title">@string/title_activity_select_transfer_method
     </string>
@@ -25,8 +25,8 @@
     <string name="default_account_sub_label">Atlasiet noklusēto pārskaitījuma veidu</string>
     <string name="api_expiry_date_format">MM/GG</string>
 
-    <string name="feeAndProcessingTimeInformation">%s maksa \u2022 %s</string>
-    <string name="feeInformation">%s maksa</string>
+    <string name="feeAndProcessingTimeInformation">%s komisijas maksa \u2022 %s</string>
+    <string name="feeInformation">%s komisijas maksa</string>
 
     <string name="emptyStateAddTransferMethod">Pievienojiet pārskaitījuma veidu, lai uzsāktu darījumu.</string>
 
@@ -52,16 +52,16 @@
     <string name="intermediary_account">STARPNIEKBANKAS KONTS</string>
     <string name="mobileFeesAndProcessingTime">KOMISIJAS MAKSA UN APSTRĀDES LAIKS</string>
 
-    <string name="search_hint">Meklēt padomu</string>
+    <string name="search_hint">Meklēšanas padoms</string>
     <string name="search_country">Meklēt valsti</string>
     <string name="search_currency">Meklēt valūtu</string>
     <string name="search_widget">Meklēt</string>
 
-    <string name="select_transfer_method_currency_button_description">Atlasiet valūtas pogu
+    <string name="select_transfer_method_currency_button_description">Poga Atlasīt valūtu
     </string>
-    <string name="select_transfer_method_country_button_description">Atlasiet valsts pogu</string>
-    <string name="selected_country_item_description">Atlasītais valsts vienums</string>
-    <string name="selected_currency_item_description">Atlasītais valūtas vienums</string>
+    <string name="select_transfer_method_country_button_description">Poga Atlasīt valsti</string>
+    <string name="selected_country_item_description">Atlasītās valsts vienums</string>
+    <string name="selected_currency_item_description">Atlasītās valūtas vienums</string>
     <string name="transfer_method_context_button_description">Konteksta izvēlnes poga</string>
     <string name="item_select_description">Atlasītais vienums</string>
 

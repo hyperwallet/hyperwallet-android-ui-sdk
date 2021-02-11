@@ -12,16 +12,18 @@
     <string name="wire_account">Банкны шилжүүлгийн данс</string>
     <string name="paper_check">Цаасан чек</string>
     <string name="prepaid_card">Урьдчилсан төлбөрт карт</string>
-    <string name="paypal_account">Paypal данс</string>
+    <string name="paypal_account">PayPal данс</string>
     <string name="venmo_account">Venmo данс</string>
     <string name="cash_pickup_mg">MoneyGram</string>
 
-    <string name="endingIn">%s-аар төгссөн</string>
+    <string name="endingIn">%s-р төгссөн</string>
     <string name="to">%s уруу</string>
     <string name="not_translated_in_braces">(орчуулаагүй)</string>
 
     <string name="authentication_error_header">Баталгаажуулалтын алдаа</string>
     <string name="cancelButtonLabel">Цуцлах</string>
-    <string name="remove">Устгах</string>
-    <string name="remove_transfer_method_title">Та итгэлтэй байна уу?</string>
+    <string name="edit">Засварлах</string>
+    <string name="remove">Хасах</string>
+    <string name="remove_transfer_method_title">Энэ шилжүүлгийн аргыг хасах уу?</string>
+
 </resources>

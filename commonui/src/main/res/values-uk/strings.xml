@@ -16,12 +16,13 @@
     <string name="venmo_account">Рахунок Venmo</string>
     <string name="cash_pickup_mg">MoneyGram</string>
 
-    <string name="endingIn">закінчується на %s</string>
+    <string name="endingIn">закінчується у %s</string>
     <string name="to">для %s</string>
     <string name="not_translated_in_braces">(не перекладено)</string>
 
     <string name="authentication_error_header">Помилка автентифікації</string>
     <string name="cancelButtonLabel">Скасувати</string>
+    <string name="edit">Редагувати</string>
     <string name="remove">Видалити</string>
-    <string name="remove_transfer_method_title">Ви впевнені?</string>
+    <string name="remove_transfer_method_title">Видалити цей спосіб переказу?</string>
 </resources>

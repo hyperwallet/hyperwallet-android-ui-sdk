@@ -67,6 +67,6 @@
     <string name="mobileTransferFromHeader">Transfer from</string>
     <string name="availableFunds">Available Funds</string>
     <string name="noTransferFromSourceAvailableError">No Transfer from source available</string>
-    <string name="zeroAvailableBalance" translatable="false">Amount available: N/A</string>
+    <string name="zeroAvailableBalance">Amount available: N/A</string>
 
 </resources>

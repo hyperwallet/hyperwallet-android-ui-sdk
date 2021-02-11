@@ -1,6 +1,6 @@
 <resources>
     <string name="title_activity_create_transfer">Μεταφορά ποσού</string>
-    <string name="mobileConfirmationHeader">Επιβεβαιώστε τα στοιχεία</string>
+    <string name="mobileConfirmationHeader">Επιβεβαίωση στοιχείων</string>
     <string name="mobileConfirmNotesLabel">ΣΗΜΕΙΩΣΗ</string>
     <string name="transfer_destination">Προορισμός</string>
     <string name="mobileTransferToLabel">ΜΕΤΑΦΟΡΑ ΠΡΟΣ</string>
@@ -12,7 +12,7 @@
     <string name="transfer_currency_placeholder">USD</string>
     <string name="transfer_currency_code_placeholder">$</string>
     <string name="transfer_all_funds_label">Μέγιστο ποσό μεταφοράς</string>
-    <string name="mobileAvailableBalance">Διαθέσιμο ποσό: %s %s %s</string>
+    <string name="mobileAvailableBalance">Διαθέσιμο ποσό:  %s %s %s</string>
     <string name="mobileSummaryLabel">ΣΥΝΟΨΗ</string>
     <string name="mobileNoteLabel">Σημείωση</string>
     <string name="transfer_notes_label">Σημείωση</string>
@@ -39,7 +39,7 @@
     <string name="mobileConfirmDetailsAmount">Ποσό</string>
     <string name="mobileConfirmDetailsFee">Τέλος</string>
     <string name="mobileConfirmDetailsTotal">Θα λάβετε</string>
-    <string name="exchange_rate_change_warning">Λόγω αλλαγών στην ισοτιμία, τελικά θα λάβετε %1$s %2$s.</string>
+    <string name="exchange_rate_change_warning">Λόγω αλλαγών στην ισοτιμία, τελικά θα λάβετε %1$s %2$s.</string>
 
 
     <string name="mobileTransferMax">Μέγιστο ποσό μεταφοράς</string>
@@ -66,5 +66,6 @@
     <string name="mobileTransferFromHeader">Μεταφορά από</string>
     <string name="availableFunds">Διαθέσιμο ποσό</string>
     <string name="noTransferFromSourceAvailableError">Δεν υπάρχει καμία διαθέσιμη μεταφορά από αυτή την προέλευση</string>
+    <string name="zeroAvailableBalance">Διαθέσιμο ποσό:   Δ/Ι</string>
 
 </resources>

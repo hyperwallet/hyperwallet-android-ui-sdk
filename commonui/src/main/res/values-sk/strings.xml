@@ -22,6 +22,8 @@
 
     <string name="authentication_error_header">Chyba overenia</string>
     <string name="cancelButtonLabel">Zrušiť</string>
+    <string name="edit">Upraviť</string>
     <string name="remove">Odstrániť</string>
-    <string name="remove_transfer_method_title">Naozaj?</string>
+    <string name="remove_transfer_method_title">Chcete tento spôsob prevodu odstrániť?</string>
+
 </resources>

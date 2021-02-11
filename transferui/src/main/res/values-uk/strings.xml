@@ -1,7 +1,7 @@
 <resources>
     <string name="title_activity_create_transfer">Переказати кошти</string>
     <string name="mobileConfirmationHeader">Підтвердити дані</string>
-    <string name="mobileConfirmNotesLabel">ПРИМІТКА.</string>
+    <string name="mobileConfirmNotesLabel">ПРИМІТКА</string>
     <string name="transfer_destination">Призначення</string>
     <string name="mobileTransferToLabel">ПЕРЕКАЗАТИ ДЛЯ</string>
     <string name="mobileTransferFundsHeader">Переказати кошти</string>
@@ -14,8 +14,8 @@
     <string name="transfer_all_funds_label">Макс. сума переказу</string>
     <string name="mobileAvailableBalance">Доступна сума: %s %s %s</string>
     <string name="mobileSummaryLabel">ПІДСУМОК</string>
-    <string name="mobileNoteLabel">Примітка.</string>
-    <string name="transfer_notes_label">Примітка.</string>
+    <string name="mobileNoteLabel">Примітка</string>
+    <string name="transfer_notes_label">Примітка</string>
     <string name="transfer_notes_additional_info_label">Додати примітку (необов’язково)</string>
     <string name="continueButtonLabel">Продовжити</string>
     <string name="defaultTransferAmount">0</string>
@@ -29,7 +29,7 @@
 
     <string name="amount_currency_format">%s %s</string>
 
-    <string name="module_transfermethodui_unavailable_error">Ви не можете додати спосіб переказу.</string>
+    <string name="module_transfermethodui_unavailable_error">Ви \'не можете додати спосіб переказу.</string>
     <string name="transferAmountInvalid">Введіть дійсну суму для переказу</string>
 
     <string name="mobileFXsell">Від</string>
@@ -39,11 +39,11 @@
     <string name="mobileConfirmDetailsAmount">Сума</string>
     <string name="mobileConfirmDetailsFee">Комісія</string>
     <string name="mobileConfirmDetailsTotal">Ви отримаєте</string>
-    <string name="exchange_rate_change_warning">Через зміни в курсі обміну ви тепер отримаєте %1$s %2$s.</string>
+    <string name="exchange_rate_change_warning">Через зміни в курсі обміну ви\' тепер отримаєте %1$s %2$s.</string>
 
 
     <string name="mobileTransferMax">Макс. сума переказу</string>
-    <string name="transfer_summary_placeholder">Доступна сума:   2422,90 CAD</string>
+    <string name="transfer_summary_placeholder">Доступна сума: 2422,90 CAD</string>
     <string name="transfer_notes_placeholder">Частковий переказ</string>
     <string name="transfer_item_icon_placeholder">\ue000</string>
     <string name="transfer_item_title_placeholder">Тип переказу</string>
@@ -55,7 +55,7 @@
     <string name="summary_amount_placeholder">10,00 CAD</string>
     <string name="summary_amount_fee_placeholder">0,25 CAD</string>
     <string name="summary_amount_transfer_placeholder">9,75 CAD</string>
-    <string name="exchange_rate_change_warning_placeholder">Через зміни в курсі обміну ви тепер отримаєте 10,00 CAD.</string>
+    <string name="exchange_rate_change_warning_placeholder">Через зміни в курсі обміну ви\' тепер отримаєте 10,00 CAD.</string>
 
     <string name="mobileTransferSuccessMsg">Ваш переказ обробляється</string>
     <string name="mobileTransferSuccessDetails">Гроші скоро надійдуть на ваш %s</string>
@@ -66,5 +66,6 @@
     <string name="mobileTransferFromHeader">Переказ від</string>
     <string name="availableFunds">Наявні кошти</string>
     <string name="noTransferFromSourceAvailableError">Немає переказу від джерела</string>
+    <string name="zeroAvailableBalance">Доступна сума: Н/З</string>
 
 </resources>

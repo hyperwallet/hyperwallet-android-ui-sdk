@@ -1,6 +1,6 @@
 <resources>
     <string name="title_activity_create_transfer">Převést Prostředky</string>
-    <string name="mobileConfirmationHeader">Potvrďte podrobné údaje</string>
+    <string name="mobileConfirmationHeader">Potvrdit údaje</string>
     <string name="mobileConfirmNotesLabel">POZNÁMKA</string>
     <string name="transfer_destination">Místo určení</string>
     <string name="mobileTransferToLabel">PŘEVOD PRO</string>
@@ -12,7 +12,7 @@
     <string name="transfer_currency_placeholder">USD</string>
     <string name="transfer_currency_code_placeholder">$</string>
     <string name="transfer_all_funds_label">Maximální převáděná částka</string>
-    <string name="mobileAvailableBalance">Dostupná částka: %s %s %s</string>
+    <string name="mobileAvailableBalance">Dostupná částka:%s %s %s</string>
     <string name="mobileSummaryLabel">SHRNUTÍ</string>
     <string name="mobileNoteLabel">Poznámka</string>
     <string name="transfer_notes_label">Poznámka</string>
@@ -55,7 +55,7 @@
     <string name="summary_amount_placeholder">10,00 CAD</string>
     <string name="summary_amount_fee_placeholder">0,25 CAD</string>
     <string name="summary_amount_transfer_placeholder">9,75 CAD</string>
-    <string name="exchange_rate_change_warning_placeholder">Vzhledem ke změnám směnného kurzu nyní obdržíte 10,00 CAD.</string>
+    <string name="exchange_rate_change_warning_placeholder">Vzhledem ke změnám směnného kurzu nyní obdržíte 10,00 CAD.</string>
 
     <string name="mobileTransferSuccessMsg">Váš převod se zpracovává</string>
     <string name="mobileTransferSuccessDetails">Peníze jsou na cestě na váš %s</string>
@@ -66,5 +66,6 @@
     <string name="mobileTransferFromHeader">Převod od</string>
     <string name="availableFunds">Dostupné prostředky</string>
     <string name="noTransferFromSourceAvailableError">Od zdroje není k dispozici žádný převod</string>
+    <string name="zeroAvailableBalance">Dostupná částka: není k dispozici</string>
 
 </resources>

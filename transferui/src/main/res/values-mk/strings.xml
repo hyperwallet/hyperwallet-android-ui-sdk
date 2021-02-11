@@ -12,7 +12,7 @@
     <string name="transfer_currency_placeholder">USD</string>
     <string name="transfer_currency_code_placeholder">$</string>
     <string name="transfer_all_funds_label">Префрли максимален износ</string>
-    <string name="mobileAvailableBalance">Достапен износ: %s %s %s</string>
+    <string name="mobileAvailableBalance">Достапен износ:  %s %s %s</string>
     <string name="mobileSummaryLabel">РЕЗИМЕ</string>
     <string name="mobileNoteLabel">Забелешка</string>
     <string name="transfer_notes_label">Забелешка</string>
@@ -66,5 +66,6 @@
     <string name="mobileTransferFromHeader">Трансфер од</string>
     <string name="availableFunds">Достапни средства</string>
     <string name="noTransferFromSourceAvailableError">Нема достапен трансфер од извор</string>
+    <string name="zeroAvailableBalance">Достапен износ:   N/A (Н/П, не е применливо)</string>
 
 </resources>

@@ -10,7 +10,7 @@
 
     <string name="mobileCountryRegion">País/região</string>
     <string name="mobileCurrencyLabel">Moeda</string>
-    <string name="mobileAddTransferMethodHeader">Adicionar um método de transferência</string>
+    <string name="mobileAddTransferMethodHeader">Adicionar método de transferência</string>
     <string name="title_activity_add_transfer_method">Adicionar método de transferência</string>
     <string name="title_add_bank_account">Conta bancária</string>
     <string name="title_add_bank_card">Cartão de débito</string>
@@ -26,7 +26,7 @@
     <string name="api_expiry_date_format">MM/AA</string>
 
     <string name="feeAndProcessingTimeInformation">%staxa \u2022 %s</string>
-    <string name="feeInformation">%staxa</string>
+    <string name="feeInformation">%s taxa</string>
 
     <string name="emptyStateAddTransferMethod">Adicione um método de transferência para começar.</string>
 
