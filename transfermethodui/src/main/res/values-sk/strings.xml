@@ -26,7 +26,7 @@
     <string name="api_expiry_date_format">MM/RR</string>
 
     <string name="feeAndProcessingTimeInformation">%s poplatok \u2022 %s</string>
-    <string name="feeInformation">%s poplatok</string>
+    <string name="feeInformation">Poplatok %s</string>
 
     <string name="emptyStateAddTransferMethod">Pridajte spôsob prevodu, aby ste mohli začať.</string>
 
@@ -36,13 +36,13 @@
     <!--Fee formatter-->
     <string name="fee_flat_formatter">%1$s%2$s</string>
     <string name="fee_percent_no_min_and_max_formatter">%1$s%%</string>
-    <string name="fee_percent_only_min_formatter">%1$s%% (Min.:%2$s %3$s)</string>
-    <string name="fee_percent_only_max_formatter">%1$s%% (Max.:%2$s %3$s)</string>
-    <string name="fee_percent_formatter">%1$s%% (Min.:%2$s %3$s, max.:%2$s %4$s)</string>
+    <string name="fee_percent_only_min_formatter">%1$s%% (min.:%2$s %3$s)</string>
+    <string name="fee_percent_only_max_formatter">%1$s%% (max.:%2$s %3$s)</string>
+    <string name="fee_percent_formatter">%1$s%% (min.:%2$s %3$s, max.:%2$s %4$s)</string>
     <string name="fee_mix_no_min_and_max_formatter">%1$s%2$s + %3$s%%</string>
-    <string name="fee_mix_only_min_formatter">%1$s%2$s + %3$s%% (Min.:%1$s %4$s)</string>
-    <string name="fee_mix_only_max_formatter">%1$s%2$s + %3$s%% (Max.:%1$s %4$s)</string>
-    <string name="fee_mix_formatter">%1$s%2$s + %3$s%% (Min.:%1$s %4$s, max.:%1$s %5$s)</string>
+    <string name="fee_mix_only_min_formatter">%1$s%2$s + %3$s%% (min.:%1$s %4$s)</string>
+    <string name="fee_mix_only_max_formatter">%1$s%2$s + %3$s%% (max.:%1$s %4$s)</string>
+    <string name="fee_mix_formatter">%1$s%2$s + %3$s%% (min.:%1$s %4$s, max.:%1$s %5$s)</string>
 
     <string name="account_holder">INFORMÁCIE O DRŽITEĽOVI ÚČTU</string>
     <string name="account_information">INFORMÁCIE O ÚČTE: %s(%s)</string>
@@ -69,7 +69,7 @@
 
     <string name="country_placeholder">Kanada</string>
     <string name="currency_placeholder">CAD</string>
-    <string name="feesAndProcessTimePlaceholder">Poplatok $20,00 USD \u2022 1 – 3 pracovné dni </string>
+    <string name="feesAndProcessTimePlaceholder">Poplatok 20,00 USD \u2022 1 – 3 pracovné dni </string>
     <string name="mobileCountryCurrencyLabel">LOKALITA A MENA</string>
     <string name="mobileTransferMethodLabel">SPÔSOB PREVODU</string>
     <string name="mobileTransferMethodsHeader">Spôsoby prevodu</string>

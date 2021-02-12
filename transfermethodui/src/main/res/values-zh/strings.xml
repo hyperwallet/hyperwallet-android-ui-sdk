@@ -25,7 +25,7 @@
     <string name="default_account_sub_label">選擇預設轉帳方式</string>
     <string name="api_expiry_date_format">月/年</string>
 
-    <string name="feeAndProcessingTimeInformation">%s手續費\u2022%s</string>
+    <string name="feeAndProcessingTimeInformation">%s手續費\u2022 %s</string>
     <string name="feeInformation">%s手續費</string>
 
     <string name="emptyStateAddTransferMethod">新增轉帳方式以開始使用。</string>

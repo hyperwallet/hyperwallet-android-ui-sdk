@@ -1,6 +1,6 @@
 <resources>
     <string name="title_activity_create_transfer">Para Aktar</string>
-    <string name="mobileConfirmationHeader">Detayları doğrula</string>
+    <string name="mobileConfirmationHeader">Detayları onayla</string>
     <string name="mobileConfirmNotesLabel">NOT</string>
     <string name="transfer_destination">Gideceği yer</string>
     <string name="mobileTransferToLabel">ŞURAYA AKTAR</string>
@@ -12,7 +12,7 @@
     <string name="transfer_currency_placeholder">USD</string>
     <string name="transfer_currency_code_placeholder">$</string>
     <string name="transfer_all_funds_label">En yüksek miktarı aktar</string>
-    <string name="mobileAvailableBalance">Mevcut miktar: %s %s %s</string>
+    <string name="mobileAvailableBalance">Mevcut miktar:  %s %s %s</string>
     <string name="mobileSummaryLabel">ÖZET</string>
     <string name="mobileNoteLabel">Not</string>
     <string name="transfer_notes_label">Not</string>
@@ -22,8 +22,8 @@
     <string name="transfer">Aktarım</string>
     <string name="add_text">+</string>
     <string name="mobileAddTransferMethod">Aktarım yöntemi ekle</string>
-    <string name="add_transfer_description_1">Başlamak için bir aktarım yöntemi ekleyin.</string>
-    <string name="add_transfer_description_2">Başlamak için bir aktarım yöntemi ekleyin.</string>
+    <string name="add_transfer_description_1">Başlamak için bir aktarım yöntemi ekle.</string>
+    <string name="add_transfer_description_2">Başlamak için bir aktarım yöntemi ekle.</string>
     <string name="transfer_destination_selection_description">Aktarım yöntemi seçimi</string>
     <string name="destination_item_description">Gideceği yer</string>
 
@@ -58,13 +58,14 @@
     <string name="exchange_rate_change_warning_placeholder">Döviz kurundaki değişikliklerden dolayı alacağınız\' tutar 10,00 CAD.  .</string>
 
     <string name="mobileTransferSuccessMsg">Transferiniz işleme alındı</string>
-    <string name="mobileTransferSuccessDetails">Para %s hesabınıza gönderiliyor</string>
+    <string name="mobileTransferSuccessDetails">Para  hesabınıza gönderiliyor.%s</string>
     <string name="doneButtonLabel">İşlem gerçekleşti</string>
-    <string name="mobileTransferMethodsHeader">Aktarım yöntemleri</string>
+    <string name="mobileTransferMethodsHeader">Aktarım Yöntemleri</string>
     <string name="mobileTransferFromLabel">AKTARIMI YAPAN</string>
     <string name="transferSource">Kaynak</string>
     <string name="mobileTransferFromHeader">Aktarımı Yapan</string>
     <string name="availableFunds">Mevcut Para</string>
     <string name="noTransferFromSourceAvailableError">Kaynaktan aktarım yok</string>
+    <string name="zeroAvailableBalance">Mevcut miktar:   Geçerli Değil</string>
 
 </resources>

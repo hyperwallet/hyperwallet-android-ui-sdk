@@ -12,7 +12,7 @@
     <string name="transfer_currency_placeholder">ดอลลาร์สหรัฐ</string>
     <string name="transfer_currency_code_placeholder">$</string>
     <string name="transfer_all_funds_label">จำนวนเงินที่โอนได้สูงสุด</string>
-    <string name="mobileAvailableBalance">จำนวนเงินที่ใช้ได้: %s %s %s</string>
+    <string name="mobileAvailableBalance">จำนวนเงินที่ใช้ได้:%s %s %s</string>
     <string name="mobileSummaryLabel">สรุป</string>
     <string name="mobileNoteLabel">หมายเหตุ</string>
     <string name="transfer_notes_label">หมายเหตุ</string>
@@ -39,7 +39,7 @@
     <string name="mobileConfirmDetailsAmount">จำนวนเงิน</string>
     <string name="mobileConfirmDetailsFee">ค่าธรรมเนียม</string>
     <string name="mobileConfirmDetailsTotal">คุณจะได้รับ</string>
-    <string name="exchange_rate_change_warning">เนื่องจากการเปลี่ยนแปลงของอัตราแลกเปลี่ยน ตอนนี้คุณ\'จะได้รับ %1$s %2$s</string>
+    <string name="exchange_rate_change_warning">เนื่องจากการเปลี่ยนแปลงของอัตราแลกเปลี่ยน ตอนนี้คุณ\'จะได้รับ %1$s %2$s.</string>
 
 
     <string name="mobileTransferMax">จำนวนเงินที่โอนได้สูงสุด</string>
@@ -66,5 +66,6 @@
     <string name="mobileTransferFromHeader">โอนมาจาก</string>
     <string name="availableFunds">ยอดเงินที่ใช้ได้</string>
     <string name="noTransferFromSourceAvailableError">ไม่มีการโอนเงินจากแหล่งที่มา</string>
+    <string name="zeroAvailableBalance">จำนวนเงินที่ใช้ได้: ไม่มี</string>
 
 </resources>

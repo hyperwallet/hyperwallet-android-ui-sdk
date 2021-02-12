@@ -1,9 +1,9 @@
 <resources>
     <string name="error_dialog_title">エラー</string>
-    <string name="error_dialog_connectivity_title">接続の問題</string>
+    <string name="error_dialog_connectivity_title">接続性の問題</string>
     <string name="error_dialog_unexpected_title">予期しないエラー</string>
     <string name="ok">OK</string>
-    <string name="try_again_button_label">もう一度試す</string>
+    <string name="try_again_button_label">再試行する</string>
     <string name="not_available">ご利用になれません</string>
 
     <!-- title and font icon -->
@@ -16,12 +16,13 @@
     <string name="venmo_account">Venmo口座</string>
     <string name="cash_pickup_mg">MoneyGram</string>
 
-    <string name="endingIn">%s末尾4桁</string>
-    <string name="to">送金先%s</string>
+    <string name="endingIn">末尾4桁が%s</string>
+    <string name="to">送金先：%s</string>
     <string name="not_translated_in_braces">（翻訳なし）</string>
 
     <string name="authentication_error_header">認証エラー</string>
     <string name="cancelButtonLabel">キャンセル</string>
+    <string name="edit">編集</string>
     <string name="remove">削除</string>
-    <string name="remove_transfer_method_title">よろしいですか？</string>
+    <string name="remove_transfer_method_title">この送金方法を削除しますか?</string>
 </resources>

@@ -15,13 +15,13 @@
     <string name="paypal_account">Compte Paypal</string>
     <string name="venmo_account">Compte Venmo</string>
     <string name="cash_pickup_mg">MoneyGram</string>
-
     <string name="endingIn">termine par %s</string>
     <string name="to">à %s</string>
     <string name="not_translated_in_braces">(non traduit)</string>
 
     <string name="authentication_error_header">Erreur d’authentification</string>
     <string name="cancelButtonLabel">Annuler</string>
+    <string name="edit">Modifier</string>
     <string name="remove">Supprimer</string>
-    <string name="remove_transfer_method_title">Êtes-vous sûr(e) ?</string>
+    <string name="remove_transfer_method_title">Supprimer cette méthode de transfert ?</string>
 </resources>

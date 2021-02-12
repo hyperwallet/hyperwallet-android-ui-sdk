@@ -15,9 +15,9 @@
     <string name="title_add_bank_account">은행 계좌</string>
     <string name="title_add_bank_card">체크카드</string>
 
-    <string name="error_exact_length_field">이 필드의 길이는 정확히 %d자입니다.</string>
+    <string name="error_exact_length_field">이 필드의 길이는 정확히 %d자이어야 합니다.</string>
     <string name="error_invalid_expiry_date">%s이(가) 유효하지 않습니다.</string>
-    <string name="error_min_max_length_field">이 필드의 길이는 최소 {0}자, 최대 {1}자입니다.
+    <string name="error_min_max_length_field">이 필드의 길이는 최소 {0}자, 최대 {1}자이어야 합니다.
     </string>
 
     <string name="createTransferMethodButtonLabel">이체 방법 추가</string>
@@ -25,7 +25,7 @@
     <string name="default_account_sub_label">기본 이체 방법 선택</string>
     <string name="api_expiry_date_format">월월/년년</string>
 
-    <string name="feeAndProcessingTimeInformation">%s 수수료\u2022 %s</string>
+    <string name="feeAndProcessingTimeInformation">%s 수수료 \u2022 %s</string>
     <string name="feeInformation">%s 수수료</string>
 
     <string name="emptyStateAddTransferMethod">시작하려면 이체 방법을 추가하십시오.</string>
@@ -65,7 +65,7 @@
     <string name="transfer_method_context_button_description">컨텍스트 메뉴 버튼</string>
     <string name="item_select_description">선택된 항목</string>
 
-    <string name="error_unmapped_field">매핑되지 않은 필드, 지원팀에 문의하십시오.</string>
+    <string name="error_unmapped_field">매핑되지 않은 필드입니다. 지원팀에 문의하십시오.</string>
 
     <string name="country_placeholder">캐나다</string>
     <string name="currency_placeholder">CAD</string>

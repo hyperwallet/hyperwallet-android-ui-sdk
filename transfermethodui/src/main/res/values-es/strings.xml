@@ -10,7 +10,7 @@
 
     <string name="mobileCountryRegion">País/región</string>
     <string name="mobileCurrencyLabel">Divisa</string>
-    <string name="mobileAddTransferMethodHeader">Añadir un método de transferencia</string>
+    <string name="mobileAddTransferMethodHeader">Añadir método de transferencia</string>
     <string name="title_activity_add_transfer_method">Añadir método de transferencia</string>
     <string name="title_add_bank_account">Cuenta bancaria</string>
     <string name="title_add_bank_card">Tarjeta de débito</string>
@@ -36,13 +36,13 @@
     <!--Fee formatter-->
     <string name="fee_flat_formatter">%1$s%2$s</string>
     <string name="fee_percent_no_min_and_max_formatter">%1$s%%</string>
-    <string name="fee_percent_only_min_formatter">%1$s%% (Min:%2$s %3$s)</string>
-    <string name="fee_percent_only_max_formatter">%1$s%% (Max:%2$s %3$s)</string>
-    <string name="fee_percent_formatter">%1$s%% (Min:%2$s %3$s, Max:%2$s %4$s)</string>
+    <string name="fee_percent_only_min_formatter">%1$s%% (Mín.:%2$s %3$s)</string>
+    <string name="fee_percent_only_max_formatter">%1$s%% (Máx.:%2$s %3$s)</string>
+    <string name="fee_percent_formatter">%1$s%% (Mín.:%2$s %3$s, Máx.:%2$s %4$s)</string>
     <string name="fee_mix_no_min_and_max_formatter">%1$s%2$s + %3$s%%</string>
-    <string name="fee_mix_only_min_formatter">%1$s%2$s + %3$s%% (Min:%1$s %4$s)</string>
-    <string name="fee_mix_only_max_formatter">%1$s%2$s + %3$s%% (Max:%1$s %4$s)</string>
-    <string name="fee_mix_formatter">%1$s%2$s + %3$s%% (Min:%1$s %4$s, Max:%1$s %5$s)</string>
+    <string name="fee_mix_only_min_formatter">%1$s%2$s + %3$s%% (Mín.:%1$s %4$s)</string>
+    <string name="fee_mix_only_max_formatter">%1$s%2$s + %3$s%% (Máx.:%1$s %4$s)</string>
+    <string name="fee_mix_formatter">%1$s%2$s + %3$s%% (Mín.:%1$s %4$s, Máx.:%1$s %5$s)</string>
 
     <string name="account_holder">INFORMACIÓN DEL TITULAR DE LA CUENTA</string>
     <string name="account_information">INFORMACIÓN DE LA CUENTA: %s(%s)</string>

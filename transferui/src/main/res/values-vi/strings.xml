@@ -1,6 +1,6 @@
 <resources>
     <string name="title_activity_create_transfer">Chuyển tiền</string>
-    <string name="mobileConfirmationHeader">Xác nhận các chi tiết</string>
+    <string name="mobileConfirmationHeader">Xác nhận thông tin chi tiết</string>
     <string name="mobileConfirmNotesLabel">LƯU Ý</string>
     <string name="transfer_destination">Nơi đến</string>
     <string name="mobileTransferToLabel">CHUYỂN TỚI</string>
@@ -12,7 +12,7 @@
     <string name="transfer_currency_placeholder">USD</string>
     <string name="transfer_currency_code_placeholder">$</string>
     <string name="transfer_all_funds_label">Chuyển số tiền tối đa</string>
-    <string name="mobileAvailableBalance">Số tiền khả dụng: %s %s %s</string>
+    <string name="mobileAvailableBalance">Số tiền khả dụng:%s %s %s</string>
     <string name="mobileSummaryLabel">TÓM LƯỢC</string>
     <string name="mobileNoteLabel">Lưu ý</string>
     <string name="transfer_notes_label">Lưu ý</string>
@@ -58,7 +58,7 @@
     <string name="exchange_rate_change_warning_placeholder">Do tỷ giá hối đoái thay đổi, bây giờ bạn\' sẽ nhận được 10.00 CAD.</string>
 
     <string name="mobileTransferSuccessMsg">Giao dịch chuyển tiền của bạn đang được xử lý</string>
-    <string name="mobileTransferSuccessDetails">Tiền đang được chuyển đến %s của bạn </string>
+    <string name="mobileTransferSuccessDetails">Tiền đang được chuyển đến của bạn.%s</string>
     <string name="doneButtonLabel">Hoàn tất</string>
     <string name="mobileTransferMethodsHeader">Phương thức chuyển tiền</string>
     <string name="mobileTransferFromLabel">CHUYỂN TỪ</string>
@@ -66,5 +66,6 @@
     <string name="mobileTransferFromHeader">Chuyển từ</string>
     <string name="availableFunds">Tiền khả dụng</string>
     <string name="noTransferFromSourceAvailableError">Không có chuyển tiền từ nguồn khả dụng</string>
+    <string name="zeroAvailableBalance">Số tiền khả dụng: Không áp dụng</string>
 
 </resources>

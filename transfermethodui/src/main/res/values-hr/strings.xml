@@ -13,7 +13,7 @@
     <string name="mobileAddTransferMethodHeader">Dodajte način prijenosa</string>
     <string name="title_activity_add_transfer_method">Dodajte Način Prijenosa</string>
     <string name="title_add_bank_account">Bankovni račun</string>
-    <string name="title_add_bank_card">Debitna Kartica</string>
+    <string name="title_add_bank_card">Debitna kartica</string>
 
     <string name="error_exact_length_field">Duljina ovog polja je točno %d.</string>
     <string name="error_invalid_expiry_date">%s nije valjan.</string>
@@ -46,7 +46,7 @@
 
     <string name="account_holder">INFORMACIJE O VLASNIKU RAČUNA</string>
     <string name="account_information">INFORMACIJE O RAČUNU: %s(%s)</string>
-    <string name="address">ADRESA</string>
+    <string name="address">Adresa</string>
     <string name="contact_information">KONTAKT INFORMACIJE</string>
     <string name="identification">IDENTIFIKACIJA</string>
     <string name="intermediary_account">RAČUN POSREDNIKA</string>

@@ -12,7 +12,7 @@
     <string name="transfer_currency_placeholder">USD</string>
     <string name="transfer_currency_code_placeholder">$</string>
     <string name="transfer_all_funds_label">Максимална сума за трансфер</string>
-    <string name="mobileAvailableBalance">Налична сума: %s %s %s</string>
+    <string name="mobileAvailableBalance">Налична сума:%s %s %s</string>
     <string name="mobileSummaryLabel">РЕЗЮМЕ</string>
     <string name="mobileNoteLabel">Забележка</string>
     <string name="transfer_notes_label">Забележка</string>
@@ -66,5 +66,6 @@
     <string name="mobileTransferFromHeader">Трансфер от</string>
     <string name="availableFunds">Налични средства</string>
     <string name="noTransferFromSourceAvailableError">Не е наличен трансфер от източника</string>
+    <string name="zeroAvailableBalance">Налична сума: Неприложимо</string>
 
 </resources>

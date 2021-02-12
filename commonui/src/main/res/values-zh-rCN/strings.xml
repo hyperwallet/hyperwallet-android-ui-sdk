@@ -22,6 +22,7 @@
 
     <string name="authentication_error_header">验证错误</string>
     <string name="cancelButtonLabel">取消</string>
+    <string name="edit">编辑</string>
     <string name="remove">删除</string>
-    <string name="remove_transfer_method_title">是否确定？</string>
+    <string name="remove_transfer_method_title">移除此转账方式？</string>
 </resources>

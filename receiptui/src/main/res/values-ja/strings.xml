@@ -12,7 +12,7 @@
     <string name="mobileTransactionDetailsLabel">明細</string>
     <string name="mobileJournalNumberLabel">受領ID</string>
     <string name="date">日付</string>
-    <string name="mobileMerchantTxnLabel">取引ID </string>
+    <string name="mobileMerchantTxnLabel">取引ID</string>
     <string name="mobileConfirmNotesLabel">注</string>
     <string name="mobileCharityName">慈善事業名</string>
     <string name="mobileCheckNumber">小切手番号</string>
@@ -139,7 +139,7 @@
     <string name="prepaid_card_account_deposit">口座預入</string>
     <string name="prepaid_card_annual_fee_discount">年間手数料割引</string>
     <string name="prepaid_card_bill_reprint_fee">請求書再発行手数料</string>
-    <string name="prepaid_card_atm_or_cash_advance_fee">ATM／キャッシングサービス手数料</string>
+    <string name="prepaid_card_atm_or_cash_advance_fee">ATM/キャッシングサービス手数料</string>
     <string name="prepaid_card_cash_advance_chargeback">キャッシングサービス支払拒否</string>
     <string name="prepaid_card_cash_advance_chargeback_reversal">キャッシングサービス支払拒否の戻入</string>
     <string name="prepaid_card_cash_advance_repress">キャッシングサービスの抑制</string>
@@ -148,8 +148,8 @@
     <string name="prepaid_card_chargeback_refund">支払拒否の払戻</string>
     <string name="prepaid_card_chargeback_refund_reversal">支払拒否の払戻の取消</string>
     <string name="prepaid_card_chargeback_reversal">支払拒否の取消</string>
-    <string name="prepaid_card_commission_or_fee">手数料／コミッション</string>
-    <string name="prepaid_card_debit_transfer">借方／送金</string>
+    <string name="prepaid_card_commission_or_fee">手数料/コミッション</string>
+    <string name="prepaid_card_debit_transfer">借方/送金</string>
     <string name="prepaid_card_document_request_fee">文書請求手数料</string>
     <string name="prepaid_card_emergency_cash">緊急用資金</string>
     <string name="prepaid_card_emergency_card">緊急用カード</string>

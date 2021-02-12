@@ -12,7 +12,7 @@
     <string name="wire_account">Reikningur fyrir millifærslu með símgreiðslu</string>
     <string name="paper_check">Pappírsávísun</string>
     <string name="prepaid_card">Fyrirframgreitt kort</string>
-    <string name="paypal_account">Paypal reikningur</string>
+    <string name="paypal_account">PayPal reikningur</string>
     <string name="venmo_account">Venmo reikningur</string>
     <string name="cash_pickup_mg">MoneyGram</string>
 
@@ -22,6 +22,7 @@
 
     <string name="authentication_error_header">Sannvottunarvilla</string>
     <string name="cancelButtonLabel">Hætta við</string>
+    <string name="edit">Breyta</string>
     <string name="remove">Fjarlægja</string>
-    <string name="remove_transfer_method_title">Ertu viss?</string>
+    <string name="remove_transfer_method_title">Fjarlægja þessa millifærsluaðferð?</string>
 </resources>

@@ -19,8 +19,8 @@
     <string name="mobilePromoWebsite">Site-ul web al ofertei promoționale</string>
     <string name="concat_date_string_view_format">%s %s</string>
 
-    <string name="mobileNoTransactionsUser">Nu există nicio activitate de afișat.</string>
-    <string name="mobileNoTransactionsPrepaidCard">Nu există tranzacții în ultimele 365 de zile.</string>
+    <string name="mobileNoTransactionsUser">Nu\' există nicio activitate de afișat.</string>
+    <string name="mobileNoTransactionsPrepaidCard">Nu există tranzacții în ultimele 365 de zile</string>
     <string name="title_transfer_funds">Transfer</string>
     <string name="font_icon_placeholder">\ue908</string>
     <string name="text_placeholder">Împuternicit</string>
@@ -74,7 +74,7 @@
     <string name="prepaid_card_refund">Rambursare</string>
     <string name="prepaid_card_replacement_fee">Comision înlocuire card</string>
     <string name="prepaid_card_sale">Tranzacție</string>
-    <string name="prepaid_card_sale_reversal">Tranzacție reversată</string>
+    <string name="prepaid_card_sale_reversal">Tranzacție inversată</string>
     <string name="prepaid_card_unload">Transfer de pe card</string>
     <string name="transfer_to_prepaid_card">Transfer pe card</string>
     <!---->
