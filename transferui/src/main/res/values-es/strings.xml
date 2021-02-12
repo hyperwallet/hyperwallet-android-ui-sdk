@@ -12,7 +12,7 @@
     <string name="transfer_currency_placeholder">USD</string>
     <string name="transfer_currency_code_placeholder">$</string>
     <string name="transfer_all_funds_label">Importe máximo de transferencia</string>
-    <string name="mobileAvailableBalance">Importe disponible: %s %s %s</string>
+    <string name="mobileAvailableBalance">Importe disponible:%s %s %s</string>
     <string name="mobileSummaryLabel">RESUMEN</string>
     <string name="mobileNoteLabel">Nota</string>
     <string name="transfer_notes_label">Nota</string>
@@ -39,11 +39,11 @@
     <string name="mobileConfirmDetailsAmount">Importe</string>
     <string name="mobileConfirmDetailsFee">Tarifa</string>
     <string name="mobileConfirmDetailsTotal">Usted recibirá</string>
-    <string name="exchange_rate_change_warning">Debido a los cambios en el tipo de cambio, ahora recibirá %1$s %2$s.</string>
+    <string name="exchange_rate_change_warning">Debido a las variaciones en el tipo de cambio, ahora recibirá %1$s %2$s.</string>
 
 
     <string name="mobileTransferMax">Importe máximo de transferencia</string>
-    <string name="transfer_summary_placeholder">Importe disponible: 2.422,90 CAD</string>
+    <string name="transfer_summary_placeholder">Importe disponible: 2422,90 CAD</string>
     <string name="transfer_notes_placeholder">Transferencia parcial</string>
     <string name="transfer_item_icon_placeholder">\ue000</string>
     <string name="transfer_item_title_placeholder">Tipo de transferencia</string>
@@ -55,7 +55,7 @@
     <string name="summary_amount_placeholder">10,00 CAD</string>
     <string name="summary_amount_fee_placeholder">0,25 CAD</string>
     <string name="summary_amount_transfer_placeholder">9,75 CAD</string>
-    <string name="exchange_rate_change_warning_placeholder">Debido a los cambios en el tipo de cambio, ahora recibirá 10,00 CAD.</string>
+    <string name="exchange_rate_change_warning_placeholder">Debido a las variaciones en el tipo de cambio, ahora recibirá 10,00 CAD.</string>
 
     <string name="mobileTransferSuccessMsg">Su transferencia está siendo procesada</string>
     <string name="mobileTransferSuccessDetails">El dinero está de camino a su %s</string>
@@ -66,5 +66,6 @@
     <string name="mobileTransferFromHeader">Transferir de</string>
     <string name="availableFunds">Fondos disponibles</string>
     <string name="noTransferFromSourceAvailableError">La transferencia de la fuente no está disponible</string>
+    <string name="zeroAvailableBalance">Importe disponible: No disponible</string>
 
 </resources>

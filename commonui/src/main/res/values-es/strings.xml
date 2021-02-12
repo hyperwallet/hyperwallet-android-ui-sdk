@@ -11,17 +11,17 @@
     <string name="bank_card">Tarjeta de débito</string>
     <string name="wire_account">Cuenta de transferencia bancaria</string>
     <string name="paper_check">Cheque impreso</string>
-    <string name="prepaid_card">Tarjeta prepagada</string>
+    <string name="prepaid_card">Tarjeta de prepago</string>
     <string name="paypal_account">Cuenta de Paypal</string>
     <string name="venmo_account">Cuenta de Venmo</string>
     <string name="cash_pickup_mg">MoneyGram</string>
-
-    <string name="endingIn">finaliza el %s</string>
+    <string name="endingIn">termina en %s</string>
     <string name="to">para %s</string>
     <string name="not_translated_in_braces">(no traducido)</string>
-
     <string name="authentication_error_header">Error de autenticación</string>
     <string name="cancelButtonLabel">Cancelar</string>
+    <string name="edit">Editar</string>
     <string name="remove">Eliminar</string>
-    <string name="remove_transfer_method_title">¿Está seguro?</string>
+    <string name="remove_transfer_method_title">¿Desea eliminar este método de transferencia?</string>
+
 </resources>

@@ -22,6 +22,7 @@
 
     <string name="authentication_error_header">Autentiseringsfel</string>
     <string name="cancelButtonLabel">Avbryt</string>
+    <string name="edit">Redigera</string>
     <string name="remove">Ta bort</string>
-    <string name="remove_transfer_method_title">Är du säker?</string>
+    <string name="remove_transfer_method_title">Ta bort den här överföringsmetoden?</string>
 </resources>

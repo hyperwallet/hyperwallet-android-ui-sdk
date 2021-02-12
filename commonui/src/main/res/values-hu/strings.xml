@@ -10,7 +10,7 @@
     <string name="bank_account">Bankszámla</string>
     <string name="bank_card">Betéti kártya</string>
     <string name="wire_account">Átutalási számla</string>
-    <string name="paper_check">Papír alapú csekk</string>
+    <string name="paper_check">Papíralapú csekk</string>
     <string name="prepaid_card">Előre fizetett kártya</string>
     <string name="paypal_account">Paypal-számla</string>
     <string name="venmo_account">Venmo-számla</string>
@@ -22,6 +22,7 @@
 
     <string name="authentication_error_header">Hitelesítési hiba</string>
     <string name="cancelButtonLabel">Mégse</string>
+    <string name="edit">Szerkesztés</string>
     <string name="remove">Eltávolítás</string>
-    <string name="remove_transfer_method_title">Biztos benne?</string>
+    <string name="remove_transfer_method_title">Eltávolítja ezt az átutalási módot?</string>
 </resources>

@@ -22,6 +22,7 @@
 
     <string name="authentication_error_header">Napaka pri avtentifikaciji</string>
     <string name="cancelButtonLabel">Prekliči</string>
+    <string name="edit">Urejanje</string>
     <string name="remove">Odstrani</string>
-    <string name="remove_transfer_method_title">Ali ste prepričani?</string>
+    <string name="remove_transfer_method_title">Ali želite odstraniti ta način prenosa?</string>
 </resources>

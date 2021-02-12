@@ -23,7 +23,7 @@
     <string name="createTransferMethodButtonLabel">添加转账方式</string>
     <string name="default_account_label">默认账户</string>
     <string name="default_account_sub_label">选择默认转账方式</string>
-    <string name="api_expiry_date_format">月月/年年</string>
+    <string name="api_expiry_date_format">MM/YY</string>
 
     <string name="feeAndProcessingTimeInformation">%s 费用 \u2022 %s</string>
     <string name="feeInformation">%s 费用</string>
@@ -74,5 +74,5 @@
     <string name="mobileTransferMethodLabel">转账方式</string>
     <string name="mobileTransferMethodsHeader">转账方式</string>
 
-    <string name="prepaidCardManagementInfo" >“使用网页浏览器登录，管理您的卡”</string>
+    <string name="prepaidCardManagementInfo" >“使用网页浏览器登录以管理您的卡”</string>
 </resources>

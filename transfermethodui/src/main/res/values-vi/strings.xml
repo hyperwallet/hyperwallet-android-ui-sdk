@@ -5,8 +5,7 @@
 
     <string name="title_activity_select_transfer_method">Chọn phương thức chuyển tiền</string>
     <!-- SelectTransferMethodActivity -->
-    <string name="select_transfer_method_title">@schuỗi/tiêu đề_hoạt động_chọn_phương thức_chuyển khoản
-    </string>
+    <string name="select_transfer_method_title">tiêu đề_hoạt động_chọn_phương thức_chuyển khoản</string>
 
     <string name="mobileCountryRegion">Quốc gia/khu vực</string>
     <string name="mobileCurrencyLabel">Đơn vị tiền tệ</string>

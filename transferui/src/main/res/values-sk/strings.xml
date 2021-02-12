@@ -1,6 +1,6 @@
 <resources>
     <string name="title_activity_create_transfer">Previesť prostriedky</string>
-    <string name="mobileConfirmationHeader">Potvrdenie údajov</string>
+    <string name="mobileConfirmationHeader">Potvrdiť podrobnosti</string>
     <string name="mobileConfirmNotesLabel">POZNÁMKA</string>
     <string name="transfer_destination">Destinácia</string>
     <string name="mobileTransferToLabel">PREVOD NA</string>
@@ -12,7 +12,7 @@
     <string name="transfer_currency_placeholder">USD</string>
     <string name="transfer_currency_code_placeholder">$</string>
     <string name="transfer_all_funds_label">Max. suma prevodu</string>
-    <string name="mobileAvailableBalance">Disponibilná suma: %s %s %s</string>
+    <string name="mobileAvailableBalance">Disponibilná suma:%s %s %s</string>
     <string name="mobileSummaryLabel">ZHRNUTIE</string>
     <string name="mobileNoteLabel">Poznámka</string>
     <string name="transfer_notes_label">Poznámka</string>
@@ -55,7 +55,7 @@
     <string name="summary_amount_placeholder">10,00 CAD</string>
     <string name="summary_amount_fee_placeholder">0,25 CAD</string>
     <string name="summary_amount_transfer_placeholder">9,75 CAD</string>
-    <string name="exchange_rate_change_warning_placeholder">Vzhľadom na zmeny výmenného kurzu dostanete 10,00 CAD.</string>
+    <string name="exchange_rate_change_warning_placeholder">Vzhľadom na zmeny výmenného kurzu dostanete 10,00 CAD.</string>
 
     <string name="mobileTransferSuccessMsg">Váš prevod sa spracováva</string>
     <string name="mobileTransferSuccessDetails">Peniaze sú na ceste na váš účet %s</string>
@@ -66,5 +66,6 @@
     <string name="mobileTransferFromHeader">Prevod z</string>
     <string name="availableFunds">Dostupné finančné prostriedky</string>
     <string name="noTransferFromSourceAvailableError">Žiadny prevod z dostupného zdroja</string>
+    <string name="zeroAvailableBalance">Disponibilná suma: Neuplatňuje sa</string>
 
 </resources>

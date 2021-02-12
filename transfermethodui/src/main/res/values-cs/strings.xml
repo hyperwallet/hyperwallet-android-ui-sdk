@@ -10,7 +10,7 @@
 
     <string name="mobileCountryRegion">Země / oblast</string>
     <string name="mobileCurrencyLabel">Měna</string>
-    <string name="mobileAddTransferMethodHeader">Přidejte způsob převodu</string>
+    <string name="mobileAddTransferMethodHeader">Přidat způsob převodu</string>
     <string name="title_activity_add_transfer_method">Přidejte Způsob Převodu</string>
     <string name="title_add_bank_account">Bankovní účet</string>
     <string name="title_add_bank_card">Debetní Karta</string>

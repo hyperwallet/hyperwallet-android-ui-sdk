@@ -12,7 +12,7 @@
     <string name="transfer_currency_placeholder">USD</string>
     <string name="transfer_currency_code_placeholder">$</string>
     <string name="transfer_all_funds_label">Montant max. de transfert</string>
-    <string name="mobileAvailableBalance">Montant disponible : %s %s %s</string>
+    <string name="mobileAvailableBalance">Montant disponible :%s %s %s</string>
     <string name="mobileSummaryLabel">RÉCAPITULATIF</string>
     <string name="mobileNoteLabel">Note</string>
     <string name="transfer_notes_label">Note</string>
@@ -25,7 +25,7 @@
     <string name="add_transfer_description_1">Ajouter une méthode de transfert pour commencer.</string>
     <string name="add_transfer_description_2">Ajouter une méthode de transfert pour commencer.</string>
     <string name="transfer_destination_selection_description">Sélection de la méthode de transfert</string>
-    <string name="destination_item_description">Destination</string>
+    <string name="destination_item_description">Destination de l’article</string>
 
     <string name="amount_currency_format">%s %s</string>
 
@@ -66,5 +66,6 @@
     <string name="mobileTransferFromHeader">Transfert de</string>
     <string name="availableFunds">Fonds disponibles</string>
     <string name="noTransferFromSourceAvailableError">Transfert depuis cette source indisponible</string>
+    <string name="zeroAvailableBalance">Montant disponible : S.O.</string>
 
 </resources>

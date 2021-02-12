@@ -1,6 +1,6 @@
 <resources>
     <string name="title_activity_create_transfer">Transferir dinheiro</string>
-    <string name="mobileConfirmationHeader">Confirme os dados</string>
+    <string name="mobileConfirmationHeader">Confirme os detalhes</string>
     <string name="mobileConfirmNotesLabel">OBSERVAÇÃO</string>
     <string name="transfer_destination">Favorecido</string>
     <string name="mobileTransferToLabel">TRANSFERIR PARA</string>
@@ -55,7 +55,7 @@
     <string name="summary_amount_placeholder">CAD 10,00</string>
     <string name="summary_amount_fee_placeholder">CAD 0,25</string>
     <string name="summary_amount_transfer_placeholder">CAD 9,75</string>
-    <string name="exchange_rate_change_warning_placeholder">Devido a variações na taxa de câmbio, você receberá agora CAD 10,00</string>
+    <string name="exchange_rate_change_warning_placeholder">Devido a variações na taxa de câmbio, você receberá agora CAD 10,00.</string>
 
     <string name="mobileTransferSuccessMsg">Sua transferência está sendo processada</string>
     <string name="mobileTransferSuccessDetails">O dinheiro está a caminho da sua %s</string>
@@ -66,5 +66,6 @@
     <string name="mobileTransferFromHeader">Transferir de</string>
     <string name="availableFunds">Saldo disponível</string>
     <string name="noTransferFromSourceAvailableError">Nenhuma transferência da origem está disponível</string>
+    <string name="zeroAvailableBalance">Valor disponível: Não disponível</string>
 
 </resources>

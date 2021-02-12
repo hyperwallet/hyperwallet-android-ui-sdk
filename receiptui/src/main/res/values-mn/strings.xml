@@ -13,7 +13,7 @@
     <string name="mobileJournalNumberLabel">Баримтын ID</string>
     <string name="date">Огноо</string>
     <string name="mobileMerchantTxnLabel">Гүйлгээний ID</string>
-    <string name="mobileConfirmNotesLabel">АНХААР</string>
+    <string name="mobileConfirmNotesLabel">ТЭМДЭГЛЭЛ</string>
     <string name="mobileCharityName">Буяны байгууллагын нэр</string>
     <string name="mobileCheckNumber">Чекийн дугаар</string>
     <string name="mobilePromoWebsite">Сурталчилгааны вэбсайт</string>
@@ -31,12 +31,12 @@
     <string name="unknown_type">Үл мэдэгдэх гүйлгээний төрөл</string>
     <string name="annual_fee">Жилийн хураамж</string>
     <string name="annual_fee_refund">Жилийн хураамжийн буцаан олголт</string>
-    <string name="customer_service_fee">Хэрэглэгчий үйлчилгээний хураамж</string>
-    <string name="customer_service_fee_refund">Хэрэглэгчийн үйлчилгээний хураамжийг буцаан олгох</string>
+    <string name="customer_service_fee">Хэрэглэгчийн үйлчилгээний хураамж</string>
+    <string name="customer_service_fee_refund">Хэрэглэгчийн үйлчилгээний хураамжийн буцаан олголт</string>
     <string name="expedited_shipping_fee">Түргэвчилсэн хүргэлтийн хураамж</string>
     <string name="generic_fee_refund">Ерөнхий хураамжийн буцаан олголт</string>
     <string name="monthly_fee">Сарын хураамж</string>
-    <string name="monthly_fee_refund">Сарын хураамжийг буцаан олголт</string>
+    <string name="monthly_fee_refund">Сарын хураамжийн буцаан олголт</string>
     <string name="payment_expiry_fee">Төлбөрийн хугацаа дуусахад авах хураамж</string>
     <string name="payment_fee">Төлбөрийн хураамж</string>
     <string name="processing_fee">Гүйцэтгэх хураамж</string>
@@ -45,7 +45,7 @@
 
     <!--Generic payment types-->
     <string name="adjustment">Үлдэгдлийн тохируулга</string>
-    <string name="foreign_exchange">ГАДААД ВАЛЮТ</string>
+    <string name="foreign_exchange">Гадаад валют</string>
     <string name="deposit">Төлбөр</string>
     <string name="manual_adjustment">Тохируулга</string>
     <string name="payment_expiration">Төлбөрийн хугацаа дууссан</string>
@@ -60,11 +60,11 @@
     <string name="card_activation_fee">Карт идэвхжүүлэх хураамж</string>
     <string name="card_activation_fee_waiver">Карт идэвхжүүлэх хураамжаас чөлөөлөх</string>
     <string name="card_fee">Картын хураамж</string>
-    <string name="manual_transfer_to_prepaid_card">Карт уруу шилжүүлэх</string>
+    <string name="manual_transfer_to_prepaid_card">Карт руу шилжүүлэх</string>
     <string name="prepaid_card_balance_inquiry_fee">Үлдэгдэл лавлах хураамж</string>
     <string name="prepaid_card_cash_advance">Бэлэн мөнгө урьдчилан авах</string>
     <string name="prepaid_card_disputed_charge_refund">Маргаантай төлбөрийн буцаан олголт</string>
-    <string name="prepaid_card_dispute_deposit">Маргаантай картын мөнгө</string>
+    <string name="prepaid_card_dispute_deposit">Маргаантай картын орлого</string>
     <string name="prepaid_card_domestic_cash_withdrawal_fee">АТМ-с мөнгө авах</string>
     <string name="prepaid_card_exchange_rate_difference">УРЬДЧИЛСАН_ТӨЛБӨРТ_КАРТЫН_ХАНШИЙН_ЗӨРҮҮ
     </string>
@@ -76,7 +76,7 @@
     <string name="prepaid_card_sale">Гүйлгээ</string>
     <string name="prepaid_card_sale_reversal">Буцаасан гүйлгээ</string>
     <string name="prepaid_card_unload">Картаас шилжүүлэх</string>
-    <string name="transfer_to_prepaid_card">Карт уруу шилжүүлэх</string>
+    <string name="transfer_to_prepaid_card">Карт руу шилжүүлэх</string>
     <!---->
     <!--Donation types-->
     <string name="donation">Хандив</string>
@@ -119,13 +119,13 @@
     <!--Virtual incentive types-->
     <string name="virtual_incentive_cancellation">Урамшуулал цуцлах</string>
     <string name="virtual_incentive_issuance">Гаргасан урамшуулал</string>
-    <string name="virtual_incentive_purchase">Урамшуулал худалдан авах</string>
+    <string name="virtual_incentive_purchase">Урамшууллаар худалдан авах</string>
     <string name="virtual_incentive_refund">Урамшууллын буцаан олголт</string>
     <!---->
     <!--Western Union and WUBS types-->
     <string name="transfer_to_western_union">Western Union</string>
     <string name="transfer_to_wubs_wire">Банкны шилжүүлэг</string>
-    <string name="western_union_transfer_return">Western Union-ээс мөнгө авах</string>
+    <string name="western_union_transfer_return">Western Union-с мөнгө авах</string>
     <string name="wubs_wire_transfer_return">Банкны шилжүүлгийг буцаах</string>
     <!---->
     <!--Wire transfer types-->
@@ -145,11 +145,11 @@
     <string name="prepaid_card_cash_advance_repress">Урьдчилж бэлэн мөнгө авахыг зогсоох</string>
     <string name="prepaid_card_cash_advance_repress_reversal">Урьдчилж бэлэн мөнгө авахыг зогсоохыг цуцлах</string>
     <string name="prepaid_card_chargeback">Буцаах</string>
-    <string name="prepaid_card_chargeback_refund">Буцаалтыг зогсоох</string>
-    <string name="prepaid_card_chargeback_refund_reversal">Буцаалт зогсоохыг цуцлах</string>
-    <string name="prepaid_card_chargeback_reversal">Буцаалтыг зогсоох</string>
+    <string name="prepaid_card_chargeback_refund">Буцаалтын буцаан олголт</string>
+    <string name="prepaid_card_chargeback_refund_reversal">Буцаалтын буцаан олголтыг цуцлах</string>
+    <string name="prepaid_card_chargeback_reversal">Буцаалтыг цуцлах</string>
     <string name="prepaid_card_commission_or_fee">Хураамж/Шимтгэл</string>
-    <string name="prepaid_card_debit_transfer">Дебет/Шилжүүлэг</string>
+    <string name="prepaid_card_debit_transfer">Дебит/Шилжүүлэг</string>
     <string name="prepaid_card_document_request_fee">Баримт бичгийн хүсэлтийн хураамж</string>
     <string name="prepaid_card_emergency_cash">Яаралтай тусламжийн мөнгө</string>
     <string name="prepaid_card_emergency_card">Яаралтай тусламжийн карт</string>

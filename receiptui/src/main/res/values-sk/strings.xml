@@ -19,7 +19,7 @@
     <string name="mobilePromoWebsite">Webstránka Promo</string>
     <string name="concat_date_string_view_format">%s %s</string>
 
-    <string name="mobileNoTransactionsUser">Na zobrazenie nie je žiadna aktivita.</string>
+    <string name="mobileNoTransactionsUser">Neexistuje žiadna aktivita na zobrazenie.</string>
     <string name="mobileNoTransactionsPrepaidCard">Žiadne transakcie za uplynulých 365 dní</string>
     <string name="title_transfer_funds">Prevod</string>
     <string name="font_icon_placeholder">\ue908</string>

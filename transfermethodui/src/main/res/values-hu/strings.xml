@@ -10,14 +10,14 @@
 
     <string name="mobileCountryRegion">Ország/régió</string>
     <string name="mobileCurrencyLabel">Pénznem</string>
-    <string name="mobileAddTransferMethodHeader">Adjon hozzá egy átutalási módot</string>
-    <string name="title_activity_add_transfer_method">Adjon hozzá egy átutalási módot</string>
+    <string name="mobileAddTransferMethodHeader">Átutalási mód hozzáadása</string>
+    <string name="title_activity_add_transfer_method">Átutalási mód hozzáadása</string>
     <string name="title_add_bank_account">Bankszámla</string>
     <string name="title_add_bank_card">Betéti kártya</string>
 
     <string name="error_exact_length_field">A mező hosszúsága pontosan %d.</string>
-    <string name="error_invalid_expiry_date">A(z) %s érvénytelen.</string>
-    <string name="error_min_max_length_field">A mező minimális hossza: {0}, maximális hossza pedig: {1}.
+    <string name="error_invalid_expiry_date">%s érvénytelen.</string>
+    <string name="error_min_max_length_field">A mező minimális hossza {0}, maximális hossza pedig {1}.
     </string>
 
     <string name="createTransferMethodButtonLabel">Adjon hozzá egy átutalási módot</string>
@@ -28,7 +28,7 @@
     <string name="feeAndProcessingTimeInformation">%s díj \u2022 %s</string>
     <string name="feeInformation">%s díj</string>
 
-    <string name="emptyStateAddTransferMethod">A kezdéshez adjon hozzá egy átutalási módot</string>
+    <string name="emptyStateAddTransferMethod">A kezdéshez adjon hozzá egy átutalási módot.</string>
 
     <!-- menu title -->
     <string name="menu_transfer_funds">Átutalás</string>
@@ -44,7 +44,7 @@
     <string name="fee_mix_only_max_formatter">%1$s%2$s + %3$s%% (Max.:%1$s %4$s)</string>
     <string name="fee_mix_formatter">%1$s%2$s + %3$s%% (Min.:%1$s %4$s, Max.:%1$s %5$s)</string>
 
-    <string name="account_holder">SZÁMLATULAJDONOS ADATAI</string>
+    <string name="account_holder">SZÁMLATULAJDONOSI ADATOK</string>
     <string name="account_information">SZÁMLAADATOK: %s(%s)</string>
     <string name="address">CÍM</string>
     <string name="contact_information">ELÉRHETŐSÉG</string>
@@ -55,14 +55,14 @@
     <string name="search_hint">Keresési tipp</string>
     <string name="search_country">Ország keresése</string>
     <string name="search_currency">Pénznem keresése</string>
-    <string name="search_widget">Keresése</string>
+    <string name="search_widget">Keresés</string>
 
     <string name="select_transfer_method_currency_button_description">Pénznem gomb kiválasztása
     </string>
     <string name="select_transfer_method_country_button_description">Ország gomb kiválasztása</string>
     <string name="selected_country_item_description">Ország elem kiválasztva</string>
     <string name="selected_currency_item_description">Pénznem elem kiválasztva</string>
-    <string name="transfer_method_context_button_description">Kontext menü gomb</string>
+    <string name="transfer_method_context_button_description">Kontextus menü gomb</string>
     <string name="item_select_description">Kiválasztott elem</string>
 
     <string name="error_unmapped_field">Feltérképezetlen mező. Kérjük, lépjen kapcsolatba az ügyfélszolgálattal.</string>

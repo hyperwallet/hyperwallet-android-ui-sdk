@@ -22,6 +22,7 @@
 
     <string name="authentication_error_header">인증 오류</string>
     <string name="cancelButtonLabel">취소</string>
+    <string name="edit" translatable="false">편집</string>
     <string name="remove">삭제</string>
-    <string name="remove_transfer_method_title">계속 진행하시겠습니까?</string>
+    <string name="remove_transfer_method_title" translatable="false">이 이체 방법을 삭제할까요?</string>
 </resources>

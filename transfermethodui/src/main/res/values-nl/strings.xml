@@ -5,12 +5,11 @@
 
     <string name="title_activity_select_transfer_method">Selecteer overschrijvingsmethode</string>
     <!-- SelectTransferMethodActivity -->
-    <string name="select_transfer_method_title">@string/title_activity_select_transfer_method
-    </string>
+    <string name="select_transfer_method_title">title_activity_select_transfer_method</string>
 
     <string name="mobileCountryRegion">Land/regio</string>
     <string name="mobileCurrencyLabel">Valuta</string>
-    <string name="mobileAddTransferMethodHeader">Een overboekingsmethode toevoegen</string>
+    <string name="mobileAddTransferMethodHeader">Overboekingsmethode toevoegen</string>
     <string name="title_activity_add_transfer_method">Overboekingsmethode toevoegen</string>
     <string name="title_add_bank_account">Bankrekening</string>
     <string name="title_add_bank_card">Debetkaart</string>
@@ -74,5 +73,5 @@
     <string name="mobileTransferMethodLabel">OVERBOEKINGSMETHODE</string>
     <string name="mobileTransferMethodsHeader">Overboekingsmethoden</string>
 
-    <string name="prepaidCardManagementInfo" >"Log in met een webbrowser om uw kaart te beheren"</string>
+    <string name="prepaidCardManagementInfo">"Log in met een webbrowser om uw kaart te beheren"</string>
 </resources>

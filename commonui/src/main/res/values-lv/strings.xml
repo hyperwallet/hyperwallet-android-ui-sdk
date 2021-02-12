@@ -16,12 +16,13 @@
     <string name="venmo_account">Venmo konts</string>
     <string name="cash_pickup_mg">MoneyGram</string>
 
-    <string name="endingIn">Derīguma termiņš %s</string>
-    <string name="to">līdz %s</string>
+    <string name="endingIn">derīguma termiņš %s</string>
+    <string name="to">kam %s</string>
     <string name="not_translated_in_braces">(nav iztulkots)</string>
 
     <string name="authentication_error_header">Autorizācijas kļūda</string>
     <string name="cancelButtonLabel">Atcelt</string>
+    <string name="edit">Rediģēt</string>
     <string name="remove">Dzēst</string>
-    <string name="remove_transfer_method_title">Vai tiešām?</string>
+    <string name="remove_transfer_method_title">Vai dzēst šo pārskaitījuma veidu?</string>
 </resources>

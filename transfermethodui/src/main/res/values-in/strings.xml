@@ -26,7 +26,7 @@
     <string name="api_expiry_date_format">BB/TT</string>
 
     <string name="feeAndProcessingTimeInformation">Biaya %s \u2022 %s</string>
-    <string name="feeInformation">Biaya %s</string>
+    <string name="feeInformation">Biaya %s </string>
 
     <string name="emptyStateAddTransferMethod">Tambahkan metode transfer untuk memulai.</string>
 
@@ -59,7 +59,7 @@
 
     <string name="select_transfer_method_currency_button_description">Pilih tombol mata uang
     </string>
-    <string name="select_transfer_method_country_button_description">Piih tombol negara</string>
+    <string name="select_transfer_method_country_button_description">Pilih tombol negara</string>
     <string name="selected_country_item_description">Item negara yang dipilih</string>
     <string name="selected_currency_item_description">Item mata uang yang dipilih</string>
     <string name="transfer_method_context_button_description">Tombol menu konteks</string>

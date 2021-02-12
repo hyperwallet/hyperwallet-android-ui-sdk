@@ -15,13 +15,13 @@
     <string name="paypal_account">PayPal-tili</string>
     <string name="venmo_account">Venmo-tili</string>
     <string name="cash_pickup_mg">MoneyGram</string>
-
     <string name="endingIn">päättyy %s</string>
     <string name="to">kohteeseen %s</string>
     <string name="not_translated_in_braces">(ei käännetty)</string>
 
     <string name="authentication_error_header">Varmennusvirhe</string>
     <string name="cancelButtonLabel">Peruuta</string>
+    <string name="edit">Muokkaa</string>
     <string name="remove">Poista</string>
-    <string name="remove_transfer_method_title">Oletko varma?</string>
+    <string name="remove_transfer_method_title">Poistetaanko tämä siirtomenetelmä?</string>
 </resources>

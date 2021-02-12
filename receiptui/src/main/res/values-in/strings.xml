@@ -19,7 +19,7 @@
     <string name="mobilePromoWebsite">Situs web promo</string>
     <string name="concat_date_string_view_format">%s %s</string>
 
-    <string name="mobileNoTransactionsUser">Tidak \'ada kegiatan untuk ditampilkan.</string>
+    <string name="mobileNoTransactionsUser">Tidak ada kegiatan yang ditampilkan.</string>
     <string name="mobileNoTransactionsPrepaidCard">Tidak ada transaksi dalam 365 hari terakhir</string>
     <string name="title_transfer_funds">Transfer</string>
     <string name="font_icon_placeholder">\ue908</string>
@@ -37,7 +37,7 @@
     <string name="generic_fee_refund">Pengembalian Dana Biaya Generik</string>
     <string name="monthly_fee">Biaya Bulanan</string>
     <string name="monthly_fee_refund">Pengembalian Dana Biaya Bulanan</string>
-    <string name="payment_expiry_fee">Biaya Pengakhiran Pembayaran</string>
+    <string name="payment_expiry_fee">Biaya Kedaluwarsa Pembayaran</string>
     <string name="payment_fee">Biaya Pembayaran</string>
     <string name="processing_fee">Biaya Pemrosesan</string>
     <string name="standard_shipping_fee">Biaya Pengiriman Standar</string>
@@ -61,7 +61,7 @@
     <string name="card_activation_fee_waiver">Pengecualian Biaya Aktivasi Kartu</string>
     <string name="card_fee">Biaya Kartu</string>
     <string name="manual_transfer_to_prepaid_card">Transfer ke Kartu</string>
-    <string name="prepaid_card_balance_inquiry_fee">Biaya Pertanyaan Saldo</string>
+    <string name="prepaid_card_balance_inquiry_fee">Biaya Informasi Saldo</string>
     <string name="prepaid_card_cash_advance">Tarik Tunai</string>
     <string name="prepaid_card_disputed_charge_refund">Pengembalian Dana Biaya yang Disengketakan</string>
     <string name="prepaid_card_dispute_deposit">Setoran Kartu yang Disengketakan</string>
@@ -136,10 +136,10 @@
     <!-- New exposed receipt types -->
     <string name="paypal_account_transfer_return">Pengembalian Penarikan Dana</string>
     <string name="venmo_account_transfer_return">Pengembalian Penarikan Dana</string>
-    <string name="prepaid_card_account_deposit">Deposito Rekening</string>
+    <string name="prepaid_card_account_deposit">Setoran Rekening</string>
     <string name="prepaid_card_annual_fee_discount">Diskon biaya tahunan</string>
     <string name="prepaid_card_bill_reprint_fee">Biaya Pencetakan Kembali Tagihan</string>
-    <string name="prepaid_card_atm_or_cash_advance_fee">Biaya ATM/Tarik Tunai</string>
+    <string name="prepaid_card_atm_or_cash_advance_fee">Biaya Tarik Tunai/ATM</string>
     <string name="prepaid_card_cash_advance_chargeback">Pengembalian Tagihan Tarik Tunai</string>
     <string name="prepaid_card_cash_advance_chargeback_reversal">Pembalikan Pengembalian Tagihan Tarik Tunai</string>
     <string name="prepaid_card_cash_advance_repress">Penahanan Tarik Tunai</string>

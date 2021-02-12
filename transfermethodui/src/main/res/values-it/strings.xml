@@ -10,13 +10,13 @@
 
     <string name="mobileCountryRegion">Paese/regione</string>
     <string name="mobileCurrencyLabel">Valuta</string>
-    <string name="mobileAddTransferMethodHeader">Aggiungi un metodo di trasferimento</string>
+    <string name="mobileAddTransferMethodHeader">Aggiungi metodo di trasferimento</string>
     <string name="title_activity_add_transfer_method">Aggiungi metodo di trasferimento</string>
     <string name="title_add_bank_account">Conto bancario</string>
     <string name="title_add_bank_card">Carta di debito</string>
 
     <string name="error_exact_length_field">La lunghezza di questo campo è esattamente %d.</string>
-    <string name="error_invalid_expiry_date">%s non è valido.</string>
+    <string name="error_invalid_expiry_date">%s non valido.</string>
     <string name="error_min_max_length_field">La lunghezza minima di questo campo è {0} e la lunghezza massima è {1}.
     </string>
 
@@ -25,8 +25,8 @@
     <string name="default_account_sub_label">Seleziona un metodo di trasferimento predefinito</string>
     <string name="api_expiry_date_format">MM/AA</string>
 
-    <string name="feeAndProcessingTimeInformation">Commissione %s \u2022 %s</string>
-    <string name="feeInformation">Commissione %s</string>
+    <string name="feeAndProcessingTimeInformation">%sCommissione  \u2022 %s</string>
+    <string name="feeInformation">%sCommissione </string>
 
     <string name="emptyStateAddTransferMethod">Aggiungi un metodo di trasferimento per iniziare.</string>
 

@@ -22,6 +22,7 @@
 
     <string name="authentication_error_header">ข้อผิดพลาดในการพิสูจน์ตัวตนถูกต้อง</string>
     <string name="cancelButtonLabel">ยกเลิก</string>
+    <string name="edit">แก้ไข</string>
     <string name="remove">ลบ</string>
-    <string name="remove_transfer_method_title">คุณแน่ใจหรือไม่</string>
+    <string name="remove_transfer_method_title">ต้องการลบวิธีการโอนเงินนี้ใช่หรือไม่</string>
 </resources>

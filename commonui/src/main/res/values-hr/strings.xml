@@ -22,6 +22,7 @@
 
     <string name="authentication_error_header">Pogreška provjere autentičnosti</string>
     <string name="cancelButtonLabel">Poništite</string>
+    <string name="edit">Uredite</string>
     <string name="remove">Uklonite</string>
-    <string name="remove_transfer_method_title">Jeste li sigurni?</string>
+    <string name="remove_transfer_method_title">Želite ukloniti ovaj način prijenosa?</string>
 </resources>

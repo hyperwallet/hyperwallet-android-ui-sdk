@@ -94,7 +94,7 @@
     <string name="transfer_to_moneygram">MoneyGram</string>
     <!---->
     <!--Paper check types-->
-    <string name="paper_check_fee">Kosten papieren check</string>
+    <string name="paper_check_fee">Kosten papieren cheque</string>
     <string name="paper_check_refund">Terugbetaling papieren cheque</string>
     <string name="transfer_to_paper_check">Papieren cheque</string>
     <!---->
@@ -146,7 +146,7 @@
     <string name="prepaid_card_cash_advance_repress_reversal">Terugboeking voorschot onderdrukken</string>
     <string name="prepaid_card_chargeback">Terugboeking</string>
     <string name="prepaid_card_chargeback_refund">Terugbetaling terugboeking</string>
-    <string name="prepaid_card_chargeback_refund_reversal">Terugbetaling van terugbetaling terugboeking</string>
+    <string name="prepaid_card_chargeback_refund_reversal">Terugboeking van terugbetaling terugboeking</string>
     <string name="prepaid_card_chargeback_reversal">Terugboeking van terugboeking</string>
     <string name="prepaid_card_commission_or_fee">Kosten/commissie</string>
     <string name="prepaid_card_debit_transfer">Debet/overboekingen</string>

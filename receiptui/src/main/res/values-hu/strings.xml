@@ -19,8 +19,8 @@
     <string name="mobilePromoWebsite">Promó weboldal</string>
     <string name="concat_date_string_view_format">%s %s</string>
 
-    <string name="mobileNoTransactionsUser">Nincs megjeleníthető tevékenység.</string>
-    <string name="mobileNoTransactionsPrepaidCard">Nincs tranzakció az elmúlt 365 napban.</string>
+    <string name="mobileNoTransactionsUser">Nincs\'megjeleníthető tevékenység.</string>
+    <string name="mobileNoTransactionsPrepaidCard">Nincs tranzakció az elmúlt 365 napban</string>
     <string name="title_transfer_funds">Átutalás</string>
     <string name="font_icon_placeholder">\ue908</string>
     <string name="text_placeholder">Helykitöltő</string>
@@ -32,11 +32,11 @@
     <string name="annual_fee">Éves díj</string>
     <string name="annual_fee_refund">Éves díjvisszatérítés</string>
     <string name="customer_service_fee">Ügyfélszolgálati díj</string>
-    <string name="customer_service_fee_refund">Ügyfélszolgálati djjvisszatérítés</string>
+    <string name="customer_service_fee_refund">Ügyfélszolgálati díjvisszatérítés</string>
     <string name="expedited_shipping_fee">Gyorsított szállítási díj</string>
     <string name="generic_fee_refund">Általános díjvisszatérítés</string>
     <string name="monthly_fee">Havi díj</string>
-    <string name="monthly_fee_refund">MoneyGram-díjvisszatérítés</string>
+    <string name="monthly_fee_refund">Havi díj visszatérítése</string>
     <string name="payment_expiry_fee">Lejárt fizetés díja</string>
     <string name="payment_fee">Fizetés díja</string>
     <string name="processing_fee">Feldolgozási díj</string>
@@ -66,7 +66,7 @@
     <string name="prepaid_card_disputed_charge_refund">Vitatott terhelés visszatérítése</string>
     <string name="prepaid_card_dispute_deposit">Vitatott kártyaelőleg</string>
     <string name="prepaid_card_domestic_cash_withdrawal_fee">ATM-pénzfelvétel</string>
-    <string name="prepaid_card_exchange_rate_difference">ELŐRE_FIZETETT-KÁRTYA_ÁRFOLYAM_KÜLÖNBÖZET
+    <string name="prepaid_card_exchange_rate_difference">ELŐRE_FIZETETT_KÁRTYA_ÁRFOLYAM_KÜLÖNBÖZET
     </string>
     <string name="prepaid_card_manual_unload">Átutalás kártyáról</string>
     <string name="prepaid_card_overseas_cash_withdrawal_fee">ATM-pénzfelvétel</string>
@@ -94,9 +94,9 @@
     <string name="transfer_to_moneygram">MoneyGram</string>
     <!---->
     <!--Paper check types-->
-    <string name="paper_check_fee">Papír alapú csekk díj</string>
-    <string name="paper_check_refund">Papír alapú csekk visszatérítés</string>
-    <string name="transfer_to_paper_check">Papír alapú csekk</string>
+    <string name="paper_check_fee">Papíralapú csekk díj</string>
+    <string name="paper_check_refund">Papíralapú csekk visszatérítés</string>
+    <string name="transfer_to_paper_check">Papíralapú csekk</string>
     <!---->
     <!--User and program account types-->
     <string name="account_closure">Számlazárás</string>

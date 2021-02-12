@@ -1,6 +1,6 @@
 <resources>
     <string name="title_activity_create_transfer">Geld overboeken</string>
-    <string name="mobileConfirmationHeader">Bevestig de gegevens</string>
+    <string name="mobileConfirmationHeader">Bevestig gegevens</string>
     <string name="mobileConfirmNotesLabel">OPMERKING</string>
     <string name="transfer_destination">Bestemming</string>
     <string name="mobileTransferToLabel">OVERBOEKEN NAAR</string>
@@ -66,5 +66,5 @@
     <string name="mobileTransferFromHeader">Overboeken van</string>
     <string name="availableFunds">Beschikbaar geld</string>
     <string name="noTransferFromSourceAvailableError">Geen overboeking van bron beschikbaar</string>
-
+    <string name="zeroAvailableBalance">Beschikbaar bedrag: Niet van toepassing</string>
 </resources>

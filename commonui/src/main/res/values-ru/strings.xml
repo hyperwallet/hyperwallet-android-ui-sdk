@@ -12,7 +12,7 @@
     <string name="wire_account">Счет для банковского перевода</string>
     <string name="paper_check">Бумажный чек</string>
     <string name="prepaid_card">Предоплаченная карта</string>
-    <string name="paypal_account">Счет PayPal</string>
+    <string name="paypal_account">Счет Paypal</string>
     <string name="venmo_account">Счет Venmo</string>
     <string name="cash_pickup_mg">MoneyGram</string>
 
@@ -22,6 +22,7 @@
 
     <string name="authentication_error_header">Ошибка аутентификации</string>
     <string name="cancelButtonLabel">Отмена</string>
+    <string name="edit">Редактировать</string>
     <string name="remove">Удалить</string>
-    <string name="remove_transfer_method_title">Вы уверены?</string>
+    <string name="remove_transfer_method_title">Удалить этот способ перевода?</string>
 </resources>

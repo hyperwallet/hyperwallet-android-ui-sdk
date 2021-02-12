@@ -19,7 +19,7 @@
     <string name="mobilePromoWebsite">Vefsíða kynningartilboðs</string>
     <string name="concat_date_string_view_format">%s %s</string>
 
-    <string name="mobileNoTransactionsUser">Engar hreyfingar til að sýna.</string>
+    <string name="mobileNoTransactionsUser">Engar hreyfingar til að sýna.\'</string>
     <string name="mobileNoTransactionsPrepaidCard">Engar færslur síðustu 365 daga</string>
     <string name="title_transfer_funds">Millifæra</string>
     <string name="font_icon_placeholder">\ue908</string>
@@ -40,8 +40,8 @@
     <string name="payment_expiry_fee">Gjald vegna þess að greiðsla er útrunnin</string>
     <string name="payment_fee">Greiðslugjald</string>
     <string name="processing_fee">Afgreiðslugjald</string>
-    <string name="standard_shipping_fee">Venjulegt sendingargjald</string>
-    <string name="transfer_fee">Flutningsgjald</string>
+    <string name="standard_shipping_fee">Gjald vegna venjulegs flutnings</string>
+    <string name="transfer_fee">Millifærslugjald</string>
 
     <!--Generic payment types-->
     <string name="adjustment">Leiðrétting stöðu</string>
@@ -142,8 +142,8 @@
     <string name="prepaid_card_atm_or_cash_advance_fee">Gjald vegna úttektar úr hraðbanka/reiðufjárúttektar</string>
     <string name="prepaid_card_cash_advance_chargeback">Bakfærsla reiðufjárúttektar</string>
     <string name="prepaid_card_cash_advance_chargeback_reversal">Bakfærð bakfærsla reiðufjárúttektar</string>
-    <string name="prepaid_card_cash_advance_repress">Þvinguð reiðufjárúttekt</string>
-    <string name="prepaid_card_cash_advance_repress_reversal">Bakfærsla þvingaðrar úttektar</string>
+    <string name="prepaid_card_cash_advance_repress">Repress reiðufjárúttekt</string>
+    <string name="prepaid_card_cash_advance_repress_reversal">Bakfærsla Repress úttektar</string>
     <string name="prepaid_card_chargeback">Bakfærsla</string>
     <string name="prepaid_card_chargeback_refund">Endurgreiðsla bakfærslu</string>
     <string name="prepaid_card_chargeback_refund_reversal">Bakfærð endurgreiðsla bakfærslu</string>

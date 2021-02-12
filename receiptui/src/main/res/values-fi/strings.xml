@@ -19,7 +19,7 @@
     <string name="mobilePromoWebsite">Kampanjaverkkosivusto</string>
     <string name="concat_date_string_view_format">%s %s</string>
 
-    <string name="mobileNoTransactionsUser">Näytettäviä toimia ei ole.</string>
+    <string name="mobileNoTransactionsUser">Näytettävää toimintaa ei ole.</string>
     <string name="mobileNoTransactionsPrepaidCard">Ei tapahtumia edellisen 365 päivän aikana</string>
     <string name="title_transfer_funds">Siirrä</string>
     <string name="font_icon_placeholder">\ue908</string>
@@ -28,7 +28,7 @@
 
 
     <!--Generic fee types-->
-    <string name="unknown_type">Tuntematon tapahtuman tyyppi</string>
+    <string name="unknown_type">Tuntematon tapahtumatyyppi</string>
     <string name="annual_fee">Vuosittainen maksu</string>
     <string name="annual_fee_refund">Vuosittaisen maksun hyvitys</string>
     <string name="customer_service_fee">Asiakaspalvelumaksu</string>
@@ -37,7 +37,7 @@
     <string name="generic_fee_refund">Yleisen maksun hyvitys</string>
     <string name="monthly_fee">Kuukausimaksu</string>
     <string name="monthly_fee_refund">Kuukausimaksun hyvitys</string>
-    <string name="payment_expiry_fee">Maksun erääntymispäivä</string>
+    <string name="payment_expiry_fee">Maksun erääntymismaksu</string>
     <string name="payment_fee">Maksu</string>
     <string name="processing_fee">Käsittelymaksu</string>
     <string name="standard_shipping_fee">Normaalin toimituksen maksu</string>

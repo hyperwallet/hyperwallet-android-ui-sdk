@@ -17,8 +17,7 @@
 
     <string name="error_exact_length_field">Tämän kentän pituus on tasan %d.</string>
     <string name="error_invalid_expiry_date">%s on virheellinen.</string>
-    <string name="error_min_max_length_field">Tämän kentän vähimmäispituus on {0} ja enimmäispituus
-        on {1}.
+    <string name="error_min_max_length_field">Tämän kentän vähimmäispituus on {0} ja enimmäispituus on {1}.
     </string>
 
     <string name="createTransferMethodButtonLabel">Lisää siirtomenetelmä</string>

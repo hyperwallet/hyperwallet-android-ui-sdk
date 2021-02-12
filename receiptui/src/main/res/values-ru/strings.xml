@@ -66,7 +66,7 @@
     <string name="prepaid_card_disputed_charge_refund">Возврат спорных платежей</string>
     <string name="prepaid_card_dispute_deposit">Спорный депозит по карте</string>
     <string name="prepaid_card_domestic_cash_withdrawal_fee">Снятие в банкомате</string>
-    <string name="prepaid_card_exchange_rate_difference">PREPAID_CARD_EXCHANGE_RATE_DIFFERENCE
+    <string name="prepaid_card_exchange_rate_difference">ПРЕДОПЛАЧЕННАЯ_КАРТА_РАЗНИЦА_ОБМЕННЫХ_КУРСОВ
     </string>
     <string name="prepaid_card_manual_unload">Перевод с карты</string>
     <string name="prepaid_card_overseas_cash_withdrawal_fee">Снятие в банкомате</string>
@@ -102,8 +102,8 @@
     <string name="account_closure">Закрытие счета</string>
     <string name="account_closure_fee">Комиссия за закрытие счета</string>
     <string name="account_unload">Возврат средств</string>
-    <string name="dormant_user_fee">Комиссия за бездействующий аккаунт пользователя</string>
-    <string name="dormant_user_fee_refund">Возврат комиссии за бездействующий аккаунт пользователя</string>
+    <string name="dormant_user_fee">Комиссия за бездействующий счет пользователя</string>
+    <string name="dormant_user_fee_refund">Возврат комиссии за бездействующий счет пользователя</string>
     <string name="payment">Платеж</string>
     <string name="payment_cancellation">Отмена платежа</string>
     <string name="payment_reversal">Отзыв платежа</string>
@@ -139,7 +139,7 @@
     <string name="prepaid_card_account_deposit">Депозит на счет</string>
     <string name="prepaid_card_annual_fee_discount">Скидка на годовую комиссию</string>
     <string name="prepaid_card_bill_reprint_fee">Комиссия за повторную печать счета</string>
-    <string name="prepaid_card_atm_or_cash_advance_fee">Комиссия за банкомат/ аванс</string>
+    <string name="prepaid_card_atm_or_cash_advance_fee">Комиссия за банкомат/аванс</string>
     <string name="prepaid_card_cash_advance_chargeback">Возврат денежного аванса</string>
     <string name="prepaid_card_cash_advance_chargeback_reversal">Аннулирование возврата аванса</string>
     <string name="prepaid_card_cash_advance_repress">Удерживание денежного аванса</string>
@@ -148,8 +148,8 @@
     <string name="prepaid_card_chargeback_refund">Возмещение средств</string>
     <string name="prepaid_card_chargeback_refund_reversal">Аннулирование возмещения средств</string>
     <string name="prepaid_card_chargeback_reversal">Аннулирование возврата средств</string>
-    <string name="prepaid_card_commission_or_fee">Сбор/ комиссия</string>
-    <string name="prepaid_card_debit_transfer">Дебет/ переводы</string>
+    <string name="prepaid_card_commission_or_fee">Сбор/комиссия</string>
+    <string name="prepaid_card_debit_transfer">Дебет/переводы</string>
     <string name="prepaid_card_document_request_fee">Плата за запрос документов</string>
     <string name="prepaid_card_emergency_cash">Деньги на экстренные цели</string>
     <string name="prepaid_card_emergency_card">Карта для экстренных целей</string>

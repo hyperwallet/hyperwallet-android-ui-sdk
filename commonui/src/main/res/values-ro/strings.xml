@@ -22,6 +22,8 @@
 
     <string name="authentication_error_header">Eroare de autentificare</string>
     <string name="cancelButtonLabel">Anulați</string>
+    <string name="edit">Editare</string>
     <string name="remove">Eliminați</string>
-    <string name="remove_transfer_method_title">Sunteți sigur(ă)?</string>
+    <string name="remove_transfer_method_title">Eliminați metoda de transfer?</string>
+
 </resources>
