@@ -3,7 +3,7 @@
     <string name="mobileConfirmationHeader">确认详细信息</string>
     <string name="mobileConfirmNotesLabel">注</string>
     <string name="transfer_destination">目的</string>
-    <string name="mobileTransferToLabel">转至</string>
+    <string name="mobileTransferToLabel">转入账户</string>
     <string name="mobileTransferFundsHeader">转账资金</string>
     <string name="mobileFXlabel">外汇</string>
     <string name="transfer_header_label">转账</string>
@@ -13,7 +13,7 @@
     <string name="transfer_currency_code_placeholder">$</string>
     <string name="transfer_all_funds_label">最高转账限额</string>
     <string name="mobileAvailableBalance">可用金额：%s %s %s</string>
-    <string name="mobileSummaryLabel">总结</string>
+    <string name="mobileSummaryLabel">汇总</string>
     <string name="mobileNoteLabel">注</string>
     <string name="transfer_notes_label">注</string>
     <string name="transfer_notes_additional_info_label">添加留言（可选）</string>
@@ -32,7 +32,7 @@
     <string name="module_transfermethodui_unavailable_error">您无法添加转账方式。\'</string>
     <string name="transferAmountInvalid">请输入有效转账金额</string>
 
-    <string name="mobileFXsell">从</string>
+    <string name="mobileFXsell">自</string>
     <string name="mobileFXbuy">至</string>
     <string name="mobileFXRateLabel">汇率</string>
 
@@ -58,13 +58,14 @@
     <string name="exchange_rate_change_warning_placeholder">由于汇率变化，您现在将收到 10.00 加元。\'</string>
 
     <string name="mobileTransferSuccessMsg">您的转账正在处理中</string>
-    <string name="mobileTransferSuccessDetails">正在向您的 %s 转账</string>
+    <string name="mobileTransferSuccessDetails">正在向您的 %s 转账。</string>
     <string name="doneButtonLabel">完成</string>
     <string name="mobileTransferMethodsHeader">转账方式</string>
     <string name="mobileTransferFromLabel">转出账户</string>
     <string name="transferSource">来源</string>
     <string name="mobileTransferFromHeader">转出账户</string>
     <string name="availableFunds">可用资金</string>
-    <string name="noTransferFromSourceAvailableError">没有可用的从来源转出的转账</string>
+    <string name="noTransferFromSourceAvailableError">没有可用的转出账户来源</string>
+    <string name="zeroAvailableBalance">可用金额：不适用</string>
 
 </resources>

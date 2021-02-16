@@ -5,7 +5,7 @@
     <string name="mobileTransactionDetailsHeader">Информация за трансакция</string>
     <string name="transactions">Трансакции</string>
     <string name="mobileTransactionTypeLabel">ТРАНСАКЦИЯ</string>
-    <string name="mobileFeeInfoLabel">ИНОРМАЦИЯ ЗА ТАКСИ</string>
+    <string name="mobileFeeInfoLabel">ИНФОРМАЦИЯ ЗА ТАКСИ</string>
     <string name="amount">Сума</string>
     <string name="mobileFeeLabel">Такса</string>
     <string name="mobileTransactionDetailsTotal">Обща стойност на трансакцията</string>

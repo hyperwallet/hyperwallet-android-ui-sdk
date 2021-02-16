@@ -12,7 +12,7 @@
     <string name="transfer_currency_placeholder">USD</string>
     <string name="transfer_currency_code_placeholder">$</string>
     <string name="transfer_all_funds_label">Pārskaitīt maksimālo summu</string>
-    <string name="mobileAvailableBalance">Pieejamā summa: %s %s %s</string>
+    <string name="mobileAvailableBalance">Pieejamā summa:  %s %s %s</string>
     <string name="mobileSummaryLabel">KOPSAVILKUMS</string>
     <string name="mobileNoteLabel">Piezīme</string>
     <string name="transfer_notes_label">Piezīme</string>
@@ -37,9 +37,9 @@
     <string name="mobileFXRateLabel">Valūtas maiņas kurss</string>
 
     <string name="mobileConfirmDetailsAmount">Summa</string>
-    <string name="mobileConfirmDetailsFee">Maksa</string>
+    <string name="mobileConfirmDetailsFee">Komisijas maksa</string>
     <string name="mobileConfirmDetailsTotal">Jūs saņemsiet</string>
-    <string name="exchange_rate_change_warning">Valūtas maiņas kursa izmaiņu dēļ jūs tagad saņemsiet \'%1$s %2$s.</string>
+    <string name="exchange_rate_change_warning">Valūtas maiņas kursa izmaiņu dēļ jūs tagad saņemsiet %1$s %2$s.</string>
 
 
     <string name="mobileTransferMax">Pārskaitīt maksimālo summu</string>
@@ -55,7 +55,7 @@
     <string name="summary_amount_placeholder">10,00 CAD</string>
     <string name="summary_amount_fee_placeholder">0,25 CAD</string>
     <string name="summary_amount_transfer_placeholder">9,75 CAD</string>
-    <string name="exchange_rate_change_warning_placeholder">Valūtas maiņas kursa izmaiņu dēļ jūs tagad saņemsiet \' 10,00 CAD.</string>
+    <string name="exchange_rate_change_warning_placeholder">Valūtas maiņas kursa izmaiņu dēļ jūs tagad saņemsiet 10,00 CAD.</string>
 
     <string name="mobileTransferSuccessMsg">Jūsu pārskaitījums tiek apstrādāts</string>
     <string name="mobileTransferSuccessDetails">Nauda ir ceļā uz jūsu %s</string>
@@ -65,6 +65,7 @@
     <string name="transferSource">Avots</string>
     <string name="mobileTransferFromHeader">Pārskaitīt no</string>
     <string name="availableFunds">Pieejamie līdzekļi</string>
-    <string name="noTransferFromSourceAvailableError">Nav pieejams pārskaitījums no avota</string>
+    <string name="noTransferFromSourceAvailableError">Pārskaitījumi no avota nav pieejami</string>
+    <string name="zeroAvailableBalance">Pieejamā summa:   Nav norādīts</string>
 
 </resources>

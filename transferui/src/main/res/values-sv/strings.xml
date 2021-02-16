@@ -1,9 +1,9 @@
 <resources>
     <string name="title_activity_create_transfer">Överför pengar</string>
-    <string name="mobileConfirmationHeader">Bekräfta uppgifterna</string>
+    <string name="mobileConfirmationHeader">Bekräfta uppgifter</string>
     <string name="mobileConfirmNotesLabel">ANTECKNING</string>
     <string name="transfer_destination">Destination</string>
-    <string name="mobileTransferToLabel">ÖVERFÖR TILL</string>
+    <string name="mobileTransferToLabel">ÖVERFÖRING TILL</string>
     <string name="mobileTransferFundsHeader">Överför pengar</string>
     <string name="mobileFXlabel">UTLÄNDSK VALUTA</string>
     <string name="transfer_header_label">Överföring</string>
@@ -39,7 +39,7 @@
     <string name="mobileConfirmDetailsAmount">Belopp</string>
     <string name="mobileConfirmDetailsFee">Avgift</string>
     <string name="mobileConfirmDetailsTotal">Du kommer att få</string>
-    <string name="exchange_rate_change_warning">På grund av förändringar i valutakursen, kommer du nu att få %1$s %2$s.</string>
+    <string name="exchange_rate_change_warning">På grund av förändringar i valutakursen kommer du nu att få %1$s %2$s.</string>
 
 
     <string name="mobileTransferMax">Överför maxbelopp</string>
@@ -55,7 +55,7 @@
     <string name="summary_amount_placeholder">10,00 CAD</string>
     <string name="summary_amount_fee_placeholder">0,25 CAD</string>
     <string name="summary_amount_transfer_placeholder">9,75 CAD</string>
-    <string name="exchange_rate_change_warning_placeholder">På grund av förändringar i valutakursen, kommer du nu att få 10,00 CAD.</string>
+    <string name="exchange_rate_change_warning_placeholder">På grund av förändringar i valutakursen kommer du nu att få 10,00 CAD.</string>
 
     <string name="mobileTransferSuccessMsg">Din överföring behandlas</string>
     <string name="mobileTransferSuccessDetails">Pengarna är på väg till ditt %s</string>
@@ -66,5 +66,6 @@
     <string name="mobileTransferFromHeader">Överföring från</string>
     <string name="availableFunds">Tillgängligt saldo</string>
     <string name="noTransferFromSourceAvailableError">Det finns ingen överföring från källan tillgänglig</string>
+    <string name="zeroAvailableBalance">Tillgängligt belopp: Ej tillämpligt</string>
 
 </resources>

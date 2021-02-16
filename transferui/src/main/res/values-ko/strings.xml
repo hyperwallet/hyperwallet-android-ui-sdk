@@ -39,7 +39,7 @@
     <string name="mobileConfirmDetailsAmount">금액</string>
     <string name="mobileConfirmDetailsFee">수수료</string>
     <string name="mobileConfirmDetailsTotal">다음의 금액을 수취하실 수 있습니다.</string>
-    <string name="exchange_rate_change_warning">환율 변동으로 인해 %1$s %2$s 금액을 수취하실 수 있습니다.</string>
+    <string name="exchange_rate_change_warning">환율 변동으로 인해 수취하실 수 있는 금액은 %1$s %2$s입니다.</string>
 
 
     <string name="mobileTransferMax">최대 이체 금액</string>
@@ -55,16 +55,17 @@
     <string name="summary_amount_placeholder">CAD 10.00</string>
     <string name="summary_amount_fee_placeholder">CAD 0.25</string>
     <string name="summary_amount_transfer_placeholder">CAD 9.75</string>
-    <string name="exchange_rate_change_warning_placeholder">환율 변동으로 인해 CAD 10.00를 수취하실 수 있습니다.</string>
+    <string name="exchange_rate_change_warning_placeholder">환율 변동으로 인해 수취하실 수 있는 금액은 CAD 10.00입니다.</string>
 
     <string name="mobileTransferSuccessMsg">이체가 처리 중입니다</string>
-    <string name="mobileTransferSuccessDetails">귀하의 %s(으)로 자금 이체 중입니다.</string>
+    <string name="mobileTransferSuccessDetails">귀하의 (으)로 자금이 이체 중입니다.%s</string>
     <string name="doneButtonLabel">완료</string>
     <string name="mobileTransferMethodsHeader">이체 방법</string>
     <string name="mobileTransferFromLabel">송금인:</string>
     <string name="transferSource">자금 원천</string>
     <string name="mobileTransferFromHeader">송금인:</string>
     <string name="availableFunds">사용 가능한 자금</string>
-    <string name="noTransferFromSourceAvailableError">자금 원천으로부터 이체 불가</string>
+    <string name="noTransferFromSourceAvailableError">자금 원천으로부터 이체할 수 없음</string>
+    <string name="zeroAvailableBalance">사용 가능한 금액:  해당 없음</string>
 
 </resources>

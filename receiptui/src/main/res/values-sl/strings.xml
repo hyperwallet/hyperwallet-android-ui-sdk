@@ -19,7 +19,7 @@
     <string name="mobilePromoWebsite">Spletno mesto promocije</string>
     <string name="concat_date_string_view_format">%s %s</string>
 
-    <string name="mobileNoTransactionsUser">Ni aktivnosti za prikaz</string>
+    <string name="mobileNoTransactionsUser">Ni aktivnosti za prikaz.</string>
     <string name="mobileNoTransactionsPrepaidCard">Ni transakcij v zadnjih 365 dneh</string>
     <string name="title_transfer_funds">Prenos</string>
     <string name="font_icon_placeholder">\ue908</string>
@@ -48,7 +48,7 @@
     <string name="foreign_exchange">Devizna sredstva</string>
     <string name="deposit">Plačilo</string>
     <string name="manual_adjustment">Prilagoditev</string>
-    <string name="payment_expiration">Plačilo poteklo</string>
+    <string name="payment_expiration">Plačilo je poteklo</string>
 
     <!--Bank account-specific types-->
     <string name="bank_account_transfer_fee">Pristojbina za vračilo na račun</string>

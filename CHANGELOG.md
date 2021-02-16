@@ -1,6 +1,10 @@
 Changelog
 =========
 
+[1.0.0-beta09](https://github.com/hyperwallet/hyperwallet-android-ui-sdk/releases/tag/1.0.0-beta09)
+-------------------
+* UI Enhancements
+
 [1.0.0-beta08](https://github.com/hyperwallet/hyperwallet-android-ui-sdk/releases/tag/1.0.0-beta08)
 -------------------
 * Added support for update Transfer method

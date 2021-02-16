@@ -12,7 +12,7 @@
     <string name="transfer_currency_placeholder">USD</string>
     <string name="transfer_currency_code_placeholder">$</string>
     <string name="transfer_all_funds_label">Maksimalni iznos za prijenos</string>
-    <string name="mobileAvailableBalance">Dostupan iznos: %s %s %s</string>
+    <string name="mobileAvailableBalance">Dostupan iznos:%s %s %s</string>
     <string name="mobileSummaryLabel">SPECIFIKACIJA</string>
     <string name="mobileNoteLabel">Napomena</string>
     <string name="transfer_notes_label">Napomena</string>
@@ -66,5 +66,6 @@
     <string name="mobileTransferFromHeader">Prijenos sa</string>
     <string name="availableFunds">Dostupna sredstva</string>
     <string name="noTransferFromSourceAvailableError">Prijenos sa izvora nije dostupan</string>
+    <string name="zeroAvailableBalance">Dostupan iznos: Nije primjenjivo</string>
 
 </resources>

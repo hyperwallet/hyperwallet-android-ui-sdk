@@ -39,7 +39,7 @@
     <string name="mobileConfirmDetailsAmount">Suma</string>
     <string name="mobileConfirmDetailsFee">Comision</string>
     <string name="mobileConfirmDetailsTotal">Veți primi</string>
-    <string name="exchange_rate_change_warning">Datorită modificărilor cursului de schimb, veți primi acum %1$s %2$s.</string>
+    <string name="exchange_rate_change_warning">Datorită modificărilor cursului de schimb, veți\' primi acum %1$s %2$s.</string>
 
 
     <string name="mobileTransferMax">Suma maximă de transfer</string>
@@ -55,10 +55,10 @@
     <string name="summary_amount_placeholder">10,00 CAD</string>
     <string name="summary_amount_fee_placeholder">0,25 CAD</string>
     <string name="summary_amount_transfer_placeholder">9,75 CAD</string>
-    <string name="exchange_rate_change_warning_placeholder">Datorită modificărilor cursului de schimb, veți primi acum 10,00 CAD.</string>
+    <string name="exchange_rate_change_warning_placeholder">Datorită modificărilor cursului de schimb, veți\' primi acum 10,00 CAD.</string>
 
     <string name="mobileTransferSuccessMsg">Transferul dvs. este în curs de procesare</string>
-    <string name="mobileTransferSuccessDetails">Banii sunt în drum spre %s dumneavoastră</string>
+    <string name="mobileTransferSuccessDetails">Veți primi banii în curând %s</string>
     <string name="doneButtonLabel">Efectuat</string>
     <string name="mobileTransferMethodsHeader">Metode de transfer</string>
     <string name="mobileTransferFromLabel">TRANSFER DE LA</string>
@@ -66,5 +66,6 @@
     <string name="mobileTransferFromHeader">Transfer de la</string>
     <string name="availableFunds">Fonduri disponibile</string>
     <string name="noTransferFromSourceAvailableError">Nu există transfer de la sursă disponibil</string>
+    <string name="zeroAvailableBalance">Sumă disponibilă: Nu este cazul</string>
 
 </resources>

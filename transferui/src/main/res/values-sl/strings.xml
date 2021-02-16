@@ -1,7 +1,7 @@
 <resources>
     <string name="title_activity_create_transfer">Prenesi sredstva</string>
     <string name="mobileConfirmationHeader">Potrdi podatke</string>
-    <string name="mobileConfirmNotesLabel">OPOMBA:</string>
+    <string name="mobileConfirmNotesLabel">OPOMBA</string>
     <string name="transfer_destination">Namembni cilj</string>
     <string name="mobileTransferToLabel">PRENOS V/DO</string>
     <string name="mobileTransferFundsHeader">Prenesi sredstva</string>
@@ -39,7 +39,7 @@
     <string name="mobileConfirmDetailsAmount">Znesek</string>
     <string name="mobileConfirmDetailsFee">Pristojbina</string>
     <string name="mobileConfirmDetailsTotal">Prejeli boste</string>
-    <string name="exchange_rate_change_warning">Zaradi sprememb v menjalnem tečaju boste zdaj prejeli %1$s%2$s.</string>
+    <string name="exchange_rate_change_warning">Zaradi sprememb v menjalnem tečaju boste zdaj prejeli %1$s %2$s.</string>
 
 
     <string name="mobileTransferMax">Prenesi najvišji možni znesek</string>
@@ -65,6 +65,7 @@
     <string name="transferSource">Vir</string>
     <string name="mobileTransferFromHeader">Prenos od</string>
     <string name="availableFunds">Sredstva na voljo</string>
-    <string name="noTransferFromSourceAvailableError">Prenos iz vira ni na voljo</string>
+    <string name="noTransferFromSourceAvailableError">Iz vira ni na voljo prenosa</string>
+    <string name="zeroAvailableBalance">Znesek na voljo:  Ni na voljo</string>
 
 </resources>

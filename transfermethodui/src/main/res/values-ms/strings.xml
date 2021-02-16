@@ -11,7 +11,7 @@
     <string name="mobileCountryRegion">Negara/Wilayah</string>
     <string name="mobileCurrencyLabel">Mata wang</string>
     <string name="mobileAddTransferMethodHeader">Tambah kaedah pemindahan</string>
-    <string name="title_activity_add_transfer_method">Tambah Kedah Pemindahan</string>
+    <string name="title_activity_add_transfer_method">Tambah Kaedah Pemindahan</string>
     <string name="title_add_bank_account">Akaun Bank</string>
     <string name="title_add_bank_card">Kad Debit</string>
 
@@ -20,7 +20,7 @@
     <string name="error_min_max_length_field">Panjang minimum medan ini ialah {0} panjang        maksimum ialah {1}.
     </string>
 
-    <string name="createTransferMethodButtonLabel">Tambah Kedah Pemindahan</string>
+    <string name="createTransferMethodButtonLabel">Tambah Kaedah Pemindahan</string>
     <string name="default_account_label">Akaun Lalai</string>
     <string name="default_account_sub_label">Pilih kaedah pemindahan lalai</string>
     <string name="api_expiry_date_format">BB/TT</string>
@@ -28,7 +28,7 @@
     <string name="feeAndProcessingTimeInformation">%s yuran \u2022 %s</string>
     <string name="feeInformation">%s yuran</string>
 
-    <string name="emptyStateAddTransferMethod">Tambahkan kaedah pemindahan untuk memulakan.</string>
+    <string name="emptyStateAddTransferMethod">Tambah kaedah pemindahan untuk memulakan.</string>
 
     <!-- menu title -->
     <string name="menu_transfer_funds">Pindah</string>
@@ -55,7 +55,7 @@
     <string name="search_hint">Cari Petua</string>
     <string name="search_country">Cari Negara</string>
     <string name="search_currency">Cari Mata Wang</string>
-    <string name="search_widget">Cari</string>
+    <string name="search_widget">Cari/carian</string>
 
     <string name="select_transfer_method_currency_button_description">Pilih butang mata wang
     </string>

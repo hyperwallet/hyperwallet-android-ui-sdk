@@ -10,14 +10,14 @@
 
     <string name="mobileCountryRegion">Ülke/Bölge</string>
     <string name="mobileCurrencyLabel">Para Birimi</string>
-    <string name="mobileAddTransferMethodHeader">Bir aktarım yöntemi ekle</string>
+    <string name="mobileAddTransferMethodHeader">Aktarım yöntemi ekle</string>
     <string name="title_activity_add_transfer_method">Aktarım Yöntemi Ekle</string>
     <string name="title_add_bank_account">Banka Hesabı</string>
     <string name="title_add_bank_card">Banka Kartı</string>
 
     <string name="error_exact_length_field">Bu alanın uzunluğu tam olarak %d.</string>
     <string name="error_invalid_expiry_date">%s geçersizdir.</string>
-    <string name="error_min_max_length_field">Bu alanın minimum uzunluğu {0} ve maksimum uzunluğu {1} olmalıdır.
+    <string name="error_min_max_length_field">Bu alanın minimum uzunluğu {0} ve maksimum uzunluğu {1}. olmalıdır.
     </string>
 
     <string name="createTransferMethodButtonLabel">Aktarım Yöntemi Ekle</string>

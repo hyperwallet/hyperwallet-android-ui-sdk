@@ -62,7 +62,7 @@
     <string name="card_fee">卡费</string>
     <string name="manual_transfer_to_prepaid_card">转账至卡</string>
     <string name="prepaid_card_balance_inquiry_fee">余额查询费</string>
-    <string name="prepaid_card_cash_advance">现金预付</string>
+    <string name="prepaid_card_cash_advance">现金预支</string>
     <string name="prepaid_card_disputed_charge_refund">争议收费退款</string>
     <string name="prepaid_card_dispute_deposit">争议卡存款</string>
     <string name="prepaid_card_domestic_cash_withdrawal_fee">ATM 取款</string>
@@ -70,7 +70,7 @@
     </string>
     <string name="prepaid_card_manual_unload">从卡转账</string>
     <string name="prepaid_card_overseas_cash_withdrawal_fee">ATM 取款</string>
-    <string name="prepaid_card_pin_change_fee">PIN 更改费</string>
+    <string name="prepaid_card_pin_change_fee">PIN 变更费</string>
     <string name="prepaid_card_refund">退款</string>
     <string name="prepaid_card_replacement_fee">换卡费</string>
     <string name="prepaid_card_sale">交易</string>
@@ -139,11 +139,11 @@
     <string name="prepaid_card_account_deposit">账户存款</string>
     <string name="prepaid_card_annual_fee_discount">年费打折</string>
     <string name="prepaid_card_bill_reprint_fee">票据重印费</string>
-    <string name="prepaid_card_atm_or_cash_advance_fee">ATM/现金预付费</string>
-    <string name="prepaid_card_cash_advance_chargeback">现金预付退单</string>
-    <string name="prepaid_card_cash_advance_chargeback_reversal">现金预付退单返还</string>
-    <string name="prepaid_card_cash_advance_repress">现金预付抑制</string>
-    <string name="prepaid_card_cash_advance_repress_reversal">现金预付抑制返还</string>
+    <string name="prepaid_card_atm_or_cash_advance_fee">ATM/现金预支费</string>
+    <string name="prepaid_card_cash_advance_chargeback">现金预支退单</string>
+    <string name="prepaid_card_cash_advance_chargeback_reversal">现金预支退单返还</string>
+    <string name="prepaid_card_cash_advance_repress">现金预支抑制</string>
+    <string name="prepaid_card_cash_advance_repress_reversal">预支抑制返还</string>
     <string name="prepaid_card_chargeback">退单</string>
     <string name="prepaid_card_chargeback_refund">退单退款</string>
     <string name="prepaid_card_chargeback_refund_reversal">退单退款返还</string>
@@ -155,7 +155,7 @@
     <string name="prepaid_card_emergency_card">应急卡</string>
     <string name="prepaid_card_income">收入</string>
     <string name="prepaid_card_load_fee">PAN 费用</string>
-    <string name="prepaid_card_refund_fee">退款手续费</string>
+    <string name="prepaid_card_refund_fee">退款费</string>
     <string name="prepaid_card_monthly_maintenance_fee">每月维护费</string>
     <string name="prepaid_card_transaction_fee">交易费</string>
     <string name="prepaid_card_sms_fee">短信服务费</string>

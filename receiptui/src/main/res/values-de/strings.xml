@@ -19,7 +19,7 @@
     <string name="mobilePromoWebsite">Aktions-Website</string>
     <string name="concat_date_string_view_format">%s %s</string>
 
-    <string name="mobileNoTransactionsUser">Es sind keine Aktivitäten vorhanden.</string>
+    <string name="mobileNoTransactionsUser">Es sind keine Aktivitäten zum Anzeigen vorhanden.</string>
     <string name="mobileNoTransactionsPrepaidCard">Keine Transaktionen in den letzten 365 Tagen</string>
     <string name="title_transfer_funds">Überweisung</string>
     <string name="font_icon_placeholder">\ue908</string>

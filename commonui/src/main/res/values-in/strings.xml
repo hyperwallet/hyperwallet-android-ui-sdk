@@ -12,16 +12,17 @@
     <string name="wire_account">Rekening Transfer Bank</string>
     <string name="paper_check">Cek Kertas</string>
     <string name="prepaid_card">Kartu Prabayar</string>
-    <string name="paypal_account">Akun PayPal</string>
-    <string name="venmo_account">Akun Venmo</string>
+    <string name="paypal_account">Rekening PayPal</string>
+    <string name="venmo_account">Rekening Venmo</string>
     <string name="cash_pickup_mg">MoneyGram</string>
 
     <string name="endingIn">berakhiran %s</string>
     <string name="to">ke %s</string>
-    <string name="not_translated_in_braces">(not translated)</string>
+    <string name="not_translated_in_braces">(tidak diterjemahkan)</string>
 
     <string name="authentication_error_header">Kesalahan Autentikasi</string>
     <string name="cancelButtonLabel">Batalkan</string>
+    <string name="edit">Edit</string>
     <string name="remove">Hapus</string>
-    <string name="remove_transfer_method_title">Apa Anda yakin?</string>
+    <string name="remove_transfer_method_title">Hapus metode transfer ini?</string>
 </resources>

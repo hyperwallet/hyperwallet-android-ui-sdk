@@ -10,7 +10,7 @@
 
     <string name="mobileCountryRegion">Land/område</string>
     <string name="mobileCurrencyLabel">Valuta</string>
-    <string name="mobileAddTransferMethodHeader">Lägg till en överföringsmetod</string>
+    <string name="mobileAddTransferMethodHeader">Lägg till överföringsmetod</string>
     <string name="title_activity_add_transfer_method">Lägg till överföringsmetod</string>
     <string name="title_add_bank_account">Bankkonto</string>
     <string name="title_add_bank_card">Betalkort</string>
@@ -31,7 +31,7 @@
     <string name="emptyStateAddTransferMethod">Lägg till en överföringsmetod för att komma igång.</string>
 
     <!-- menu title -->
-    <string name="menu_transfer_funds">Överför</string>
+    <string name="menu_transfer_funds">Överföring</string>
 
     <!--Fee formatter-->
     <string name="fee_flat_formatter">%1$s%2$s</string>

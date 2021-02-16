@@ -12,7 +12,7 @@
     <string name="transfer_currency_placeholder">USD</string>
     <string name="transfer_currency_code_placeholder">$</string>
     <string name="transfer_all_funds_label">Maks. kwota przelewu</string>
-    <string name="mobileAvailableBalance">Dostępna kwota: %s %s %s</string>
+    <string name="mobileAvailableBalance">Dostępna kwota:  %s %s %s</string>
     <string name="mobileSummaryLabel">PODSUMOWANIE</string>
     <string name="mobileNoteLabel">Uwaga</string>
     <string name="transfer_notes_label">Uwaga</string>
@@ -66,5 +66,6 @@
     <string name="mobileTransferFromHeader">Przelew od</string>
     <string name="availableFunds">Dostępne środki</string>
     <string name="noTransferFromSourceAvailableError">Brak dostępnych przelewów od źródła</string>
+    <string name="zeroAvailableBalance">Dostępna kwota:   Nie dotyczy</string>
 
 </resources>
