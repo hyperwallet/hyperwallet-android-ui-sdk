@@ -63,7 +63,7 @@
     <string name="select_transfer_method_country_button_description">Select country button</string>
     <string name="selected_country_item_description">Selected country item</string>
     <string name="selected_currency_item_description">Selected currency item</string>
-    <string name="transfer_method_context_button_description">Context menu button</string>
+    <string name="transfer_method_context_button_description">Context menu</string>
     <string name="item_select_description">Selected item</string>
 
     <string name="error_unmapped_field">Unmapped field, Please contact support.</string>

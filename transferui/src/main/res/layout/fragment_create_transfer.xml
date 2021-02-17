@@ -160,7 +160,9 @@
                         android:layout_height="wrap_content"
                         android:clickable="true"
                         android:focusable="true"
+                        android:padding="@dimen/clickable_text_padding"
                         android:textAppearance="@style/TextAppearance.Hyperwallet.Clickable.Caption"
+                        android:textSize="@dimen/font_clickable_text_size"
                         android:text="@string/mobileTransferMax" />
                 </LinearLayout>
             </LinearLayout>

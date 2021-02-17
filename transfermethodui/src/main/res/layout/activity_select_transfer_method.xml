@@ -23,6 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
+                app:navigationContentDescription="@string/navigate_back_description"
                 app:popupTheme="@style/AppTheme.PopupOverlay" >
 
                 <TextView

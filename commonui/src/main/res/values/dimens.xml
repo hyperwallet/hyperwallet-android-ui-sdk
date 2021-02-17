@@ -77,8 +77,8 @@
     <dimen name="progress_bar_elevation">7dp</dimen>
     <dimen name="dynamic_widget_margin">22dp</dimen>
     <dimen name="icon_margin_top">1dp</dimen>
-    <dimen name="icon_default_width">24dp</dimen>
-    <dimen name="icon_default_height">24dp</dimen>
+    <dimen name="icon_default_width">32dp</dimen>
+    <dimen name="icon_default_height">32dp</dimen>
     <dimen name="menu_icon_default_margin">4dp</dimen>
     <dimen name="text_input_hint_text_padding">6dp</dimen>
     <dimen name="widget_left_margin_offset">32dp</dimen>
@@ -93,4 +93,5 @@
     <dimen name="image_offset">32dp</dimen>
     <dimen name="divider_offset">58dp</dimen>
     <dimen name="margin_top_header_value">10dp</dimen>
+    <dimen name="font_clickable_text_size">16sp</dimen>
 </resources>

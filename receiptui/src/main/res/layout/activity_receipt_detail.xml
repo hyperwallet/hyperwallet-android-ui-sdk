@@ -18,6 +18,7 @@
             android:layout_height="?attr/actionBarSize"
             app:titleTextAppearance="@style/TextAppearance.Hyperwallet.Headline5"
             app:layout_collapseMode="pin"
+            app:navigationContentDescription="@string/navigate_back_description"
             app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
     </com.google.android.material.appbar.AppBarLayout>
