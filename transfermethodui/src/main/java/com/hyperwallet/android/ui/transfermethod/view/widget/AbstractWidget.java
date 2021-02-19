@@ -16,6 +16,8 @@
  */
 package com.hyperwallet.android.ui.transfermethod.view.widget;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +41,7 @@ public abstract class AbstractWidget {
     public boolean isEdited = false;
 
     public AbstractWidget(@Nullable Field field, @NonNull WidgetEventListener listener,
-            @Nullable String defaultValue, @NonNull View defaultFocusView) {
+                          @Nullable String defaultValue, @NonNull View defaultFocusView) {
         mField = field;
         mListener = listener;
         mDefaultValue = defaultValue;
@@ -64,8 +66,7 @@ public abstract class AbstractWidget {
     public boolean isValid() {
         if (mField == null) {
             return true;
-        }
-        else if(!isEdited && mField.isFieldValueMasked()) {
+        } else if (!isEdited && mField.isFieldValueMasked()) {
             return true;
         }
         return !isInvalidEmptyValue() && !isInvalidLength() && !isInvalidRegex();
@@ -180,6 +181,24 @@ public abstract class AbstractWidget {
                 }
             }
             return false;
+        }
+    }
+
+    protected class TextChangeListener implements TextWatcher {
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            isEdited = true;
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
         }
     }
 }

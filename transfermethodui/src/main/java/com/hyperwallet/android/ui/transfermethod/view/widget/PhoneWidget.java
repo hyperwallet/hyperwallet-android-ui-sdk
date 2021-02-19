@@ -76,6 +76,7 @@ public class PhoneWidget extends AbstractMaskedInputWidget {
             editText.setText(mDefaultValue);
             editText.setInputType(InputType.TYPE_CLASS_PHONE);
             editText.setOnKeyListener(new DefaultKeyListener(mDefaultFocusView, editText));
+            editText.addTextChangedListener(new TextChangeListener());
             editText.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI | EditorInfo.IME_ACTION_NEXT);
             editText.setCustomSelectionActionModeCallback(new ActionModeCallbackInterceptor());
             appendLayout(mTextInputLayout, true);
