@@ -162,13 +162,6 @@ public class ListTransferMethodFragment extends Fragment implements ListTransfer
         super.onViewCreated(view, savedInstanceState);
         mProgressBar = view.findViewById(R.id.list_transfer_method_progress_bar_layout);
         mEmptyListView = view.findViewById(R.id.empty_transfer_method_list_layout);
-        Button button = view.findViewById(R.id.add_account_button);
-        button.setOnClickListener(new OneClickListener() {
-            @Override
-            public void onOneClick(View v) {
-                mOnAddNewTransferMethodSelected.showSelectTransferMethodView();
-            }
-        });
 
         recyclerView = view.findViewById(R.id.list_transfer_method_item);
         recyclerView.setHasFixedSize(true);

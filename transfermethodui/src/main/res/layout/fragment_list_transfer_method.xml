@@ -44,19 +44,6 @@
                 android:gravity="center"
                 android:text="@string/emptyStateAddTransferMethod"
                 android:textAppearance="@style/TextAppearance.Hyperwallet.Headline6" />
-
-            <Button
-                android:id="@+id/add_account_button"
-                style="@style/Widget.Hyperwallet.Button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal|center"
-                android:layout_marginStart="@dimen/grid_margin_left"
-                android:layout_marginTop="@dimen/grid_margin_top"
-                android:layout_marginEnd="@dimen/grid_margin_right"
-                android:layout_marginBottom="@dimen/grid_margin_bottom"
-                android:maxWidth="@dimen/create_button_max_width"
-                android:text="@string/mobileAddTransferMethodHeader" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
