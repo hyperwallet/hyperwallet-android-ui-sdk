@@ -47,7 +47,7 @@
             <LinearLayout
                 android:id="@+id/add_transfer_method_static_container_header"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/section_header_height">
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/transfer_method_information"
