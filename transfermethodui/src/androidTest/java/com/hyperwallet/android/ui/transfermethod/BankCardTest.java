@@ -85,8 +85,8 @@ public class BankCardTest {
     private static final String CARD_NUMBER_MASKED = "************0006";
     private static final String WRONG_LENGTH_CARD_NUMBER = "489514223212";
     private static final String NOT_VALID_CARD_NUMBER = "0101010101010101";
-    private static final String VALID_EXPIRATION_DATE = "1020";
-    private static final String VALID_EXPIRATION_DATE_FORMATTED = "10/20";
+    private static final String VALID_EXPIRATION_DATE = "1021";
+    private static final String VALID_EXPIRATION_DATE_FORMATTED = "10/21";
     private static final String INVALID_PATTERN_EXPIRATION_DATE = "1100";
     private static final String VALID_CVV = "022";
     private static final String CARD_NUMBER_LABEL = "Card Number";
@@ -328,7 +328,7 @@ public class BankCardTest {
         JSONObject bankCard = new JSONObject(createBankCardRequest.getBody().readUtf8());
 
         assertThat("Card number is incorrect", bankCard.getString("cardNumber"), is(DEFAULT_CARD_NUMBER));
-        assertThat("Date of expiry is incorrect", bankCard.getString("dateOfExpiry"), is("2020-10"));
+        assertThat("Date of expiry is incorrect", bankCard.getString("dateOfExpiry"), is("2021-10"));
         assertThat("CVV is incorrect", bankCard.getString("cvv"), is("344"));
     }
 
@@ -356,7 +356,7 @@ public class BankCardTest {
         JSONObject bankCard = new JSONObject(createBankCardRequest.getBody().readUtf8());
 
         assertThat("Card number is incorrect", bankCard.getString("cardNumber"), is(DEFAULT_CARD_NUMBER));
-        assertThat("Date of expiry is incorrect", bankCard.getString("dateOfExpiry"), is("2020-10"));
+        assertThat("Date of expiry is incorrect", bankCard.getString("dateOfExpiry"), is("2021-10"));
         assertThat("CVV is incorrect", bankCard.getString("cvv"), is("344"));
     }
 

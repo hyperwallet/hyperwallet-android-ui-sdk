@@ -101,8 +101,7 @@ public class SelectTransferMethodTest {
         mActivityTestRule.launchActivity(null);
 
         onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
-        onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar)))).check(
-                matches(withText(R.string.mobileAddTransferMethodHeader)));
+        onView(withText(R.string.mobileAddTransferMethodHeader)).check(matches(withParent(withId(R.id.toolbar))));
 
         onView(withId(R.id.select_transfer_method_country_label)).check(
                 matches(withText(R.string.mobileCountryRegion)));
