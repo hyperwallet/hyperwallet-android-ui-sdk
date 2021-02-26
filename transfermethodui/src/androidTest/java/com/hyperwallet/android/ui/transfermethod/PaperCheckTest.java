@@ -95,7 +95,7 @@ public class PaperCheckTest {
         onView(withId(R.id.add_transfer_method_information)).check(
                 matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
         onView(withId(R.id.add_transfer_method_information)).check(
-                matches(withText("US$0.25 fee \u2022 5 - 7 Business days")));
+                matches(withText("$0.25 fee \u2022 5 - 7 Business days")));
     }
 
     @Test

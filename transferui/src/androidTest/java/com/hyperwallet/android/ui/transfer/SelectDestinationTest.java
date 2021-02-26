@@ -207,7 +207,7 @@ public class SelectDestinationTest {
                 withParent(withId(R.id.transfer_destination_selection_toolbar)))).check(
                 matches(withText(R.string.mobileTransferMethodsHeader)));
 
-        onView(withContentDescription(R.string.abc_action_bar_up_description)).perform(click());
+        onView(withContentDescription(R.string.navigate_back_description)).perform(click());
 
         onView(withId(R.id.add_transfer_destination)).check(matches(not(isDisplayed())));
         onView(withId(R.id.transfer_destination)).perform(nestedScrollTo()).check(matches(isDisplayed()));
