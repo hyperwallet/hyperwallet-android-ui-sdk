@@ -75,7 +75,7 @@ public class ListReceiptsFragment extends Fragment {
     private View mProgressBar;
     private View mEmptyTransactionPlaceholder;
     private TextView mEmptyTransactionTextView;
-    private Boolean mShouldShowNoTransactionPlaceholder = Boolean.TRUE;
+    private Boolean mShouldShowNoTransactionPlaceholder = Boolean.FALSE;
     private ListReceiptsFragmentCallback callback;
 
     static ListReceiptsFragment newInstance() {
@@ -164,20 +164,6 @@ public class ListReceiptsFragment extends Fragment {
             @Override
             public void onChanged(final PagedList<Receipt> receipts) {
                 mListReceiptsAdapter.submitList(receipts);
-                receipts.addWeakCallback(null, new PagedList.Callback() {
-                    @Override
-                    public void onChanged(int position, int count) {
-                    }
-
-                    @Override
-                    public void onInserted(int position, int count) {
-                        mShouldShowNoTransactionPlaceholder = (receipts.size() > 0) ? Boolean.FALSE : Boolean.TRUE;
-                    }
-
-                    @Override
-                    public void onRemoved(int position, int count) {
-                    }
-                });
             }
         });
 
@@ -189,6 +175,7 @@ public class ListReceiptsFragment extends Fragment {
                     mProgressBar.setVisibility(View.VISIBLE);
                 } else {
                     mProgressBar.setVisibility(View.GONE);
+                    mShouldShowNoTransactionPlaceholder = (Objects.requireNonNull(mReceiptViewModel.receipts().getValue()).size() > 0) ? Boolean.FALSE : Boolean.TRUE;
                     if (mShouldShowNoTransactionPlaceholder) {
                         if (mReceiptViewModel instanceof ListUserReceiptsViewModel) {
                             mEmptyTransactionTextView.setText(R.string.mobileNoTransactionsUser);
