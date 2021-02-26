@@ -33,6 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
+            android:layout_marginBottom="@dimen/collapse_toolbar_expand_large"
             android:orientation="vertical">
 
             <TextView
