@@ -49,7 +49,7 @@ import java.util.Map;
 public class BankCardInsightTest {
     private static final String INVALID_PATTERN_EXPIRATION_DATE = "1100";
     private static final String VALID_CARD_NUMBER = "4895142232120006";
-    private static final String VALID_EXPIRATION_DATE = "1020";
+    private static final String VALID_EXPIRATION_DATE = "1021";
     private static final String VALID_CVV = "022";
 
     @ClassRule
