@@ -188,8 +188,7 @@ abstract class AbstractMaskedInputWidget extends AbstractWidget {
 
         @Override
         public void afterTextChanged(Editable s) {
-            if(mEditText.hasFocus())
-            {
+            if (mEditText.hasFocus()) {
                 isEdited = true;
             }
         }
@@ -237,8 +236,7 @@ abstract class AbstractMaskedInputWidget extends AbstractWidget {
                     mEditText.addTextChangedListener(this);
                 }
             }
-            if(mEditText.hasFocus())
-            {
+            if (mEditText.hasFocus()) {
                 isEdited = true;
             }
         }
