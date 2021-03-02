@@ -39,7 +39,7 @@ public abstract class AbstractWidget {
     public boolean isEdited = false;
 
     public AbstractWidget(@Nullable Field field, @NonNull WidgetEventListener listener,
-            @Nullable String defaultValue, @NonNull View defaultFocusView) {
+                          @Nullable String defaultValue, @NonNull View defaultFocusView) {
         mField = field;
         mListener = listener;
         mDefaultValue = defaultValue;
@@ -64,8 +64,7 @@ public abstract class AbstractWidget {
     public boolean isValid() {
         if (mField == null) {
             return true;
-        }
-        else if(!isEdited && mField.isFieldValueMasked()) {
+        } else if (!isEdited && mField.isFieldValueMasked()) {
             return true;
         }
         return !isInvalidEmptyValue() && !isInvalidLength() && !isInvalidRegex();
