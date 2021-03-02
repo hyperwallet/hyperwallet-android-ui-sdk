@@ -213,6 +213,7 @@ public class ListTransferMethodFragment extends Fragment implements ListTransfer
         if (transferMethodList != null && !transferMethodList.isEmpty()) {
             mTransferMethodList = new ArrayList<>(transferMethodList);
             initializeNonEmptyListView();
+            appBarLayout.setExpanded(true);
             mIsTransferMethodsReloadNeeded = false;
         } else {
             mTransferMethodList = new ArrayList<>(1);
