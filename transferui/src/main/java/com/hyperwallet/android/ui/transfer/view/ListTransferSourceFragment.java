@@ -229,7 +229,7 @@ public class ListTransferSourceFragment extends DialogFragment {
                 mTitle.setText(mTitle.getContext().getString(R.string.availableFunds));
                 mIcon.setText(mIcon.getContext().getString(R.string.available_funds_font_icon));
             }
-            mTransferSourceIdentification.setText(source.getIdentification() == null ? ""
+            mTransferSourceIdentification.setText(source.getIdentification() == null ? source.getCurrencyCodes()
                     : getTransferMethodDetail(mTransferSourceIdentification.getContext(),
                             source.getIdentification(), source.getType()));
 

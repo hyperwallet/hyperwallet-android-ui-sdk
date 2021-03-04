@@ -10,6 +10,7 @@ public class TransferSource implements Parcelable {
     private TransferMethod identification;
     private String type;
     private String token;
+    private String currencyCodes;
 
     public TransferSource() {
     }
@@ -18,6 +19,7 @@ public class TransferSource implements Parcelable {
         identification = in.readParcelable(TransferMethod.class.getClassLoader());
         type = in.readString();
         token = in.readString();
+        currencyCodes = in.readString();
     }
 
     @Override
@@ -25,6 +27,7 @@ public class TransferSource implements Parcelable {
         dest.writeParcelable(identification, flags);
         dest.writeString(type);
         dest.writeString(token);
+        dest.writeString(currencyCodes);
     }
 
     public static final Creator<TransferSource> CREATOR = new Creator<TransferSource>() {
@@ -63,8 +66,13 @@ public class TransferSource implements Parcelable {
     public void setIdentification(final TransferMethod identification) {
         this.identification = identification;
     }
+    public void setCurrencyCodes(final String currencyCodes) {
+        this.currencyCodes = currencyCodes;
+    }
 
-
+    public String getCurrencyCodes() {
+        return currencyCodes;
+    }
     @Override
     public int describeContents() {
         return 0;

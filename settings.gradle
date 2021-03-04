@@ -7,4 +7,5 @@ include ':commonui',
         ':transferrepository',
         ':transferui',
         ':userrepository',
+        ':userbalancerepository',
         ':testutils'

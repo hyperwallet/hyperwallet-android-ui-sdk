@@ -1,0 +1,12 @@
+apply from: "$rootProject.projectDir/android-library.gradle"
+description = 'Hyperwallet User Balance Repository SDK for Android to integrate with the Hyperwallet Platform'
+project.ext {
+    mavenName = 'Hyperwallet Android User Balance Repository SDK'
+}
+apply from: "$rootProject.projectDir/publish.gradle"
+
+dependencies {
+    testImplementation "org.robolectric:robolectric:$robolectricVersion"
+    testImplementation "com.squareup.okhttp3:mockwebserver:$mockWebServerVersion"
+    testImplementation project(':testutils')
+}

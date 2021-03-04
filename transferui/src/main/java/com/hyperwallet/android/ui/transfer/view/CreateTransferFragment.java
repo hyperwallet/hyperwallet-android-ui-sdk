@@ -87,7 +87,7 @@ public class CreateTransferFragment extends Fragment {
     private static final String NOTES_TAG = "NOTES_TAGGED";
     private static final String ELLIPSIS = "...";
     private static final int NOTES_MAX_LINE_LENGTH = 40;
-    private static final String REGEX_ONLY_NUMBER = "[^0-9]";
+    public static final String REGEX_ONLY_NUMBER = "[^0-9]";
     private static final String REGEX_REMOVE_EMPTY_SPACE = "^\\s+|\\s+$";
     public static final String REGEX_ONLY_NUMBER_AND_DECIMAL = "[^0-9.]";
     private static final String US_CURRENCY_CODE = "USD";
