@@ -451,8 +451,7 @@ public class CreateTransferViewModel extends ViewModel {
                     sourceWrapperForAvailableFunds.setToken(user.getToken());
                     sourceWrapperForAvailableFunds.setType(BANK_ACCOUNT);
                     sources.add(sourceWrapperForAvailableFunds);
-                    loadUserBalance(sources.get(0));
-                    loadPrepaidCardList(sources);
+                    loadUserBalance(sources,false);
                 }
 
                 @Override
@@ -466,20 +465,25 @@ public class CreateTransferViewModel extends ViewModel {
         }
     }
 
-    void loadUserBalance(final TransferSource source)
+    void loadUserBalance(@NonNull final ArrayList<TransferSource> sources, final Boolean isSourceTokenAvailable)
     {
         mIsLoading.postValue(Boolean.TRUE);
         mUserBalanceRepository.loadUserBalances(new UserBalanceRepository.LoadUserBalanceListCallback() {
             @Override
             public void onUserBalanceListLoaded(@NonNull List<Balance> balances) {
-                source.setCurrencyCodes(getCurrencyCode(balances));
-                System.out.println(" currency code "+getCurrencyCode(balances)+"  -- "+balances.size());
+                sources.get(0).setCurrencyCodes(getCurrencyCode(balances));
+                if(!isSourceTokenAvailable) {
+                    loadPrepaidCardList(sources);
+                }
             }
 
             @Override
             public void onError(@NonNull Errors errors) {
                 mIsLoading.postValue(Boolean.FALSE);
                 mLoadTransferRequiredDataErrors.postValue(new Event<>(errors));
+                if(!isSourceTokenAvailable) {
+                    loadPrepaidCardList(sources);
+                }
             }
         });
     }
@@ -654,6 +658,7 @@ public class CreateTransferViewModel extends ViewModel {
                     sourceWrapperForAvailableFunds.setToken(user.getToken());
                     sourceWrapperForAvailableFunds.setType(BANK_ACCOUNT);
                     sources.add(sourceWrapperForAvailableFunds);
+                    loadUserBalance(sources,true);
                     mSelectedTransferSource.postValue(sourceWrapperForAvailableFunds);
                     mTransferSources.postValue(sources);
                     loadTransferDestination(mSourceToken);

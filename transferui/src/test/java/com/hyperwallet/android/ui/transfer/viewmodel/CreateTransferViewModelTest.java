@@ -34,6 +34,7 @@ import com.hyperwallet.android.listener.HyperwalletListener;
 import com.hyperwallet.android.model.Error;
 import com.hyperwallet.android.model.Errors;
 import com.hyperwallet.android.model.TypeReference;
+import com.hyperwallet.android.model.balance.Balance;
 import com.hyperwallet.android.model.paging.PageList;
 import com.hyperwallet.android.model.transfer.Transfer;
 import com.hyperwallet.android.model.transfermethod.PrepaidCard;
@@ -105,6 +106,7 @@ public class CreateTransferViewModelTest {
     private TransferMethod mTransferMethod;
     private PrepaidCard mPrepaidCard;
     private List<PrepaidCard> mPrepaidCardList;
+    private List<Balance> mUserBalanceList;
 
     @Mock
     private Hyperwallet mHyperwallet;
@@ -138,6 +140,11 @@ public class CreateTransferViewModelTest {
         JSONObject jsonObject = new JSONObject(responseJson);
         final PageList<PrepaidCard> prepaidCardList = new PageList<>(jsonObject, PrepaidCard.class);
         mPrepaidCardList = prepaidCardList.getDataList();
+
+        String balanceJson = mResourceManager.getResourceContent("user_balance_single_currency_response.json");
+        JSONObject balanceJsonObject = new JSONObject(balanceJson);
+        final PageList<Balance> balanceList = new PageList<>(balanceJsonObject, Balance.class);
+        mUserBalanceList = balanceList.getDataList();
 
 
         final String transferListResponse = mResourceManager.getResourceContent("transfer_method_list_response.json");
@@ -190,6 +197,15 @@ public class CreateTransferViewModelTest {
                 return callback;
             }
         }).when(mUserRepository).loadUser(any(UserRepository.LoadUserCallback.class));
+
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) throws Throwable {
+                UserBalanceRepository.LoadUserBalanceListCallback callback = invocation.getArgument(0);
+                callback.onUserBalanceListLoaded(mUserBalanceList);
+                return callback;
+            }
+        }).when(mUserBalanceRepository).loadUserBalances(any(UserBalanceRepository.LoadUserBalanceListCallback.class));
 
         doAnswer(new Answer() {
             @Override
