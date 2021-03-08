@@ -173,6 +173,7 @@ public class CreateTransferViewModelTest {
         mTransferSource = new TransferSource();
         mTransferSource.setToken("usr-fake");
         mTransferSource.setType(BANK_ACCOUNT);
+        mTransferSource.setCurrencyCodes("USD, CAD");
         mTransferSource.setIdentification(null);
 
 

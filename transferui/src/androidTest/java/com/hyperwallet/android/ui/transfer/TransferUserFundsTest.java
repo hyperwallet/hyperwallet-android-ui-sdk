@@ -298,6 +298,10 @@ public class TransferUserFundsTest {
 
     @Test
     public void testTransferFunds_verifyTransferScreenAmountCurrencyFormatJPY() {
+        //Mock Response for user balance
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("user_balance_single_currency_response.json")).mock();
+
         // Mock Response for the PPC
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("ppc/prepaid_card_response.json")).mock();
