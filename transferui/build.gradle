@@ -15,7 +15,7 @@ dependencies {
     implementation project(":transfermethodrepository")
     implementation project(":userrepository")
     implementation project(":commonui")
-    implementation project(":userbalancerepository")
+    implementation project(":balancerepository")
     implementation "androidx.constraintlayout:constraintlayout:$constraintlayoutVersion"
     implementation "androidx.legacy:legacy-support-v4:$legacySupportV4Version"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleExtensionsVersion"
