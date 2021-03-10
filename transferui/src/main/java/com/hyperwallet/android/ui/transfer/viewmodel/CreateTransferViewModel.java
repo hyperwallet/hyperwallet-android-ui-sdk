@@ -116,10 +116,11 @@ public class CreateTransferViewModel extends ViewModel {
 
     /**
      * Initialize Create Transfer View Model with designated transfer source token
-     *  @param sourceToken              Source token that represents either from User, Bank or PrepaidCard tokens
+     *
+     * @param sourceToken              Source token that represents either from User, Bank or PrepaidCard tokens
      * @param transferRepository       Transfer repository for making transfer calls to Hyperwallet
      * @param transferMethodRepository Transfer Method repository for making transfer method calls to
- *                                 Hyperwallet
+     *                                 Hyperwallet
      * @param userRepository           User repository for making user calls to Hyperwallet
      * @param prepaidCardRepository    prepaid card repository for making prepaid calls to Hyperwallet
      * @param userBalanceRepository
