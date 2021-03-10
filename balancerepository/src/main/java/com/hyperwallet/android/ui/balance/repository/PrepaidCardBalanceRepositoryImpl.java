@@ -15,8 +15,7 @@
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
-package com.hyperwallet.android.ui.user.balance.repository;
+package com.hyperwallet.android.ui.balance.repository;
 
 import android.os.Handler;
 
@@ -28,12 +27,12 @@ import com.hyperwallet.android.Hyperwallet;
 import com.hyperwallet.android.exception.HyperwalletException;
 import com.hyperwallet.android.listener.HyperwalletListener;
 import com.hyperwallet.android.model.balance.Balance;
-import com.hyperwallet.android.model.balance.BalanceQueryParam;
+import com.hyperwallet.android.model.balance.PrepaidCardBalanceQueryParam;
 import com.hyperwallet.android.model.paging.PageList;
 
 import java.util.ArrayList;
 
-public class UserBalanceRepositoryImpl implements UserBalanceRepository {
+public class PrepaidCardBalanceRepositoryImpl implements PrepaidCardBalanceRepository {
 
     private Handler mHandler = new Handler();
     private int LIMIT = 100;
@@ -43,24 +42,32 @@ public class UserBalanceRepositoryImpl implements UserBalanceRepository {
         return Hyperwallet.getDefault();
     }
 
+
     @Override
-    public void loadUserBalances(@NonNull final LoadUserBalanceListCallback callback) {
-        BalanceQueryParam queryParam = new BalanceQueryParam.Builder().limit(LIMIT).build();
-        getHyperwallet().listUserBalances(queryParam, new HyperwalletListener<PageList<Balance>>() {
-            @Override
-            public void onSuccess(@Nullable PageList<Balance> result) {
-                callback.onUserBalanceListLoaded(result != null ? result.getDataList() : new ArrayList<Balance>());
-            }
+    public void loadPrepaidCardBalances(String prepaidCardToken,
+            @NonNull final LoadPrepaidCardBalanceCallback callback) {
+        PrepaidCardBalanceQueryParam queryParam = new PrepaidCardBalanceQueryParam.Builder()
+                .limit(LIMIT)
+                .sortByCurrencyAsc()
+                .build();
 
-            @Override
-            public void onFailure(HyperwalletException exception) {
-                callback.onError(exception.getErrors());
-            }
+        getHyperwallet().listPrepaidCardBalances(prepaidCardToken, queryParam,
+                new HyperwalletListener<PageList<Balance>>() {
+                    @Override
+                    public void onSuccess(@Nullable PageList<Balance> result) {
+                        callback.onPrepaidCardBalanceLoaded(
+                                result != null ? result.getDataList() : new ArrayList<Balance>());
+                    }
 
-            @Override
-            public Handler getHandler() {
-                return mHandler;
-            }
-        });
+                    @Override
+                    public void onFailure(HyperwalletException exception) {
+                        callback.onError(exception.getErrors());
+                    }
+
+                    @Override
+                    public Handler getHandler() {
+                        return mHandler;
+                    }
+                });
     }
 }

@@ -40,6 +40,8 @@ import com.hyperwallet.android.model.transfer.Transfer;
 import com.hyperwallet.android.model.transfermethod.PrepaidCard;
 import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import com.hyperwallet.android.model.user.User;
+import com.hyperwallet.android.ui.balance.repository.UserBalanceRepository;
+import com.hyperwallet.android.ui.balance.repository.UserBalanceRepositoryFactory;
 import com.hyperwallet.android.ui.common.view.ProgramModel;
 import com.hyperwallet.android.ui.testutils.TestAuthenticationProvider;
 import com.hyperwallet.android.ui.testutils.rule.HyperwalletExternalResourceManager;
@@ -52,8 +54,6 @@ import com.hyperwallet.android.ui.transfermethod.repository.PrepaidCardRepositor
 import com.hyperwallet.android.ui.transfermethod.repository.PrepaidCardRepositoryFactory;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepository;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
-import com.hyperwallet.android.ui.user.balance.repository.UserBalanceRepository;
-import com.hyperwallet.android.ui.user.balance.repository.UserBalanceRepositoryFactory;
 import com.hyperwallet.android.ui.user.repository.UserRepository;
 import com.hyperwallet.android.ui.user.repository.UserRepositoryFactory;
 import com.hyperwallet.android.util.JsonUtils;

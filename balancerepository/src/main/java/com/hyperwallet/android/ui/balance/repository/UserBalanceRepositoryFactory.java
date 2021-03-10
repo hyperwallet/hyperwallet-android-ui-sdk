@@ -15,42 +15,28 @@
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.hyperwallet.android.ui.user.balance.repository;
+package com.hyperwallet.android.ui.balance.repository;
 
-import androidx.annotation.NonNull;
+public class UserBalanceRepositoryFactory {
+    private static UserBalanceRepositoryFactory sInstance;
+    private UserBalanceRepository mUserBalanceRepository;
 
-import com.hyperwallet.android.model.Errors;
-import com.hyperwallet.android.model.balance.Balance;
+    private UserBalanceRepositoryFactory() {
+        mUserBalanceRepository = new UserBalanceRepositoryImpl();
+    }
 
-import java.util.List;
+    public static synchronized UserBalanceRepositoryFactory getInstance() {
+        if (sInstance == null) {
+            sInstance = new UserBalanceRepositoryFactory();
+        }
+        return sInstance;
+    }
 
-/**
- * User balance repository
- */
-public interface UserBalanceRepository {
-    /**
-     * Load user balances
-     *
-     * @param callback
-     */
-    void loadUserBalances(@NonNull final LoadUserBalanceListCallback callback);
+    public static void clearInstance() {
+        sInstance = null;
+    }
 
-    /**
-     * Load User balance callback
-     */
-    interface LoadUserBalanceListCallback {
-        /**
-         * User balance loaded callback
-         *
-         * @param balances
-         */
-        void onUserBalanceListLoaded(@NonNull final List<Balance> balances);
-
-        /**
-         * User balance load error
-         *
-         * @param errors
-         */
-        void onError(@NonNull final Errors errors);
+    public UserBalanceRepository getUserBalanceRepository() {
+        return mUserBalanceRepository;
     }
 }

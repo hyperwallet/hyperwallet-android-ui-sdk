@@ -36,6 +36,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.hyperwallet.android.model.Errors;
 import com.hyperwallet.android.model.transfer.Transfer;
+import com.hyperwallet.android.ui.balance.repository.UserBalanceRepositoryFactory;
 import com.hyperwallet.android.ui.common.repository.Event;
 import com.hyperwallet.android.ui.common.util.PageGroups;
 import com.hyperwallet.android.ui.common.view.ActivityUtils;
@@ -45,7 +46,6 @@ import com.hyperwallet.android.ui.transfer.repository.TransferRepositoryFactory;
 import com.hyperwallet.android.ui.transfer.viewmodel.CreateTransferViewModel;
 import com.hyperwallet.android.ui.transfermethod.repository.PrepaidCardRepositoryFactory;
 import com.hyperwallet.android.ui.transfermethod.repository.TransferMethodRepositoryFactory;
-import com.hyperwallet.android.ui.user.balance.repository.UserBalanceRepositoryFactory;
 import com.hyperwallet.android.ui.user.repository.UserRepositoryFactory;
 
 /**

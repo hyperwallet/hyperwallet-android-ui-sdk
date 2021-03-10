@@ -1,11 +1,11 @@
-package com.hyperwallet.android.ui.user.balance.repository;
-
-import org.junit.Test;
+package com.hyperwallet.android.ui.balance.repository;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.notNullValue;
+
+import org.junit.Test;
 
 public class UserBalanceRepositoryFactoryTest {
 
