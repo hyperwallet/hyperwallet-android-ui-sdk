@@ -1,2 +1,2 @@
 <manifest
-    package="com.hyperwallet.android.ui.user.balance.repository"/>
+    package="com.hyperwallet.android.ui.balance.repository"/>
