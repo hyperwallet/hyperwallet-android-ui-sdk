@@ -92,7 +92,7 @@ public class PrepaidCardBalanceRepositoryImplTest {
     }
 
     @Test
-    public void testLoadUserBalances_returnsEmptyBalances() {
+    public void testPrepaidCardBalances_returnsEmptyPrepaidCardBalances() {
 
         doAnswer(new Answer() {
             @Override
@@ -113,7 +113,7 @@ public class PrepaidCardBalanceRepositoryImplTest {
     }
 
     @Test
-    public void testLoadUserBalances_onFailure() {
+    public void testPrepaidCardBalances_onFailure() {
 
         final Error error = new Error("test message", "TEST_CODE");
 
