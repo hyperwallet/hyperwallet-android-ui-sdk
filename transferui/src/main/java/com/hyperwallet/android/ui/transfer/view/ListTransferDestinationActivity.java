@@ -126,10 +126,6 @@ public class ListTransferDestinationActivity extends AppCompatActivity implement
 
     @Override
     public void onBackPressed() {
-        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
-        getWindow().getDecorView().setSystemUiVisibility(0);
         super.onBackPressed();
     }
 
@@ -140,10 +136,6 @@ public class ListTransferDestinationActivity extends AppCompatActivity implement
 
     @Override
     protected void onStop() {
-        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
-        getWindow().getDecorView().setSystemUiVisibility(0);
         super.onStop();
     }
 

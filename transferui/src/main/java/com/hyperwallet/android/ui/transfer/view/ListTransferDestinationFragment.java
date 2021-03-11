@@ -178,13 +178,7 @@ public class ListTransferDestinationFragment extends DialogFragment {
     }
 
     private void onView() {
-        requireActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        requireActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            getActivity().getWindow().setStatusBarColor(
-                    ContextCompat.getColor(getContext(), R.color.regularColorPrimary));
-            getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        }
+       //do nothing
     }
 
     private static class ListTransferDestinationAdapter extends RecyclerView.Adapter<TransferDestinationViewHolder> {

@@ -209,21 +209,12 @@ public class CurrencySelectionDialogFragment extends DialogFragment implements T
 
     @Override
     public void onClose() {
-        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        getActivity().getWindow().setStatusBarColor(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark));
-        getActivity().getWindow().getDecorView().setSystemUiVisibility(0);
+        //do nothing
     }
 
     @Override
     public void onView() {
-        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            getActivity().getWindow().setStatusBarColor(
-                    ContextCompat.getColor(getContext(), R.color.regularColorPrimary));
-            getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        }
+        //do nothing
     }
 
     @Override
