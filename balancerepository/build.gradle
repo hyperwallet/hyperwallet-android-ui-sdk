@@ -1,7 +1,7 @@
 apply from: "$rootProject.projectDir/android-library.gradle"
-description = 'Hyperwallet User Balance Repository SDK for Android to integrate with the Hyperwallet Platform'
+description = 'Hyperwallet Balance Repository SDK for Android to integrate with the Hyperwallet Platform'
 project.ext {
-    mavenName = 'Hyperwallet Android User Balance Repository SDK'
+    mavenName = 'Hyperwallet Android Balance Repository SDK'
 }
 apply from: "$rootProject.projectDir/publish.gradle"
 
