@@ -1,0 +1,67 @@
+{
+  "count": 3,
+  "offset": 0,
+  "limit": 10,
+  "data": [
+    {
+      "currency": "CAD",
+      "amount": "100.00"
+    },
+    {
+      "currency": "TWD",
+      "amount": "199001"
+    },
+    {
+      "currency": "TND",
+      "amount": "1990"
+    },
+    {
+      "currency": "COP",
+      "amount": "1280"
+    },
+    {
+      "currency": "CNY",
+      "amount": "1001"
+    },
+    {
+      "currency": "INR",
+      "amount": "2001"
+    },
+    {
+      "currency": "KRW",
+      "amount": "19901"
+    },
+    {
+      "currency": "SEK",
+      "amount": "2201"
+    },
+    {
+      "currency": "JOD",
+      "amount": "12001"
+    },
+    {
+      "currency": "GBP",
+      "amount": "3901"
+    },
+    {
+      "currency": "JPY",
+      "amount": "19001"
+    },
+    {
+      "currency": "IDR",
+      "amount": "3901"
+    },
+    {
+      "currency": "USD",
+      "amount": "191.00"
+    }
+  ],
+  "links": [
+    {
+      "params": {
+        "rel": "self"
+      },
+      "href": "https://localhost-hyperwallet.aws.paylution.net:8181/rest/v3/users/usr-token/balances?offset=0&limit=10"
+    }
+  ]
+}

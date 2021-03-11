@@ -1194,6 +1194,9 @@ public class TransferUserFundsTest {
         onView(withId(R.id.transfer_amount)).perform(nestedScrollTo(), replaceText("100.00"));
         onView(withId(R.id.transfer_action_button)).perform(nestedScrollTo(), click());
 
+        onView(ViewMatchers.withId(R.id.transfer_source_description_1))
+                .check(ViewAssertions.matches(ViewMatchers.withText("CAD")));
+
         onView(withId(R.id.list_foreign_exchange)).check(matches(not(isDisplayed())));
         onView(withId(R.id.amount_label)).check(matches(withText(R.string.mobileConfirmDetailsAmount)));
         onView(withId(R.id.amount_value)).check(matches(withText("$102.00 USD")));
@@ -1323,6 +1326,10 @@ public class TransferUserFundsTest {
         verifyTransferFromAvailbleFunds();
         onView(ViewMatchers.withText(R.string.availableFunds))
                 .perform(ViewActions.click());
+
+        //Verify currency code in Transfer From
+        onView(withId(R.id.transfer_source_list)).check(
+                matches(atPosition(0, hasDescendant(withText("CAD")))));
 
         // Select PPC from the Select From list
         String ppcInfoFrom = VISA + MASK + "9285";
@@ -1455,6 +1462,88 @@ public class TransferUserFundsTest {
         assertThat("Action is not broadcasted", gate.getCount(), is(0L));
         // Assert Confirmation Dialog
         verifyTransferConfirmationDialog("Bank Account");
+
+    }
+
+    //Single Currency Code Validation
+    @Test
+    public void testTransferFragment_verifyAvailableFundsWithCurrencyCode() {
+        //Mock Response for user balance
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("user_balance_single_currency_response.json")).mock();
+
+        // Mock the response with PPC source
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("ppc/prepaid_cards_response.json")).mock();
+
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_list_with_one_ppc_response.json")).mock();
+
+        //  only when transferMethods.size() > 0, get the quote by the source token
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("create_transfer_quote_response.json")).mock();
+
+        mActivityTestRule.launchActivity(null);
+
+        // Transfer From
+        verifyTransferFromAvailbleFunds();
+
+        onView(ViewMatchers.withId(R.id.transfer_source_description_1))
+                .check(ViewAssertions.matches(ViewMatchers.withText("CAD")));
+    }
+
+    //Multiple Currency Code Validation
+    @Test
+    public void testTransferFragment_verifyAvailableFundsWithMultipleCurrencyCode() {
+        //Mock Response for user balance
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("user_balance_multi_currencies_response.json")).mock();
+
+        // Mock the response with PPC source
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("ppc/prepaid_cards_response.json")).mock();
+
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_list_with_one_ppc_response.json")).mock();
+
+        //  only when transferMethods.size() > 0, get the quote by the source token
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("create_transfer_quote_response.json")).mock();
+
+        mActivityTestRule.launchActivity(null);
+
+        // Transfer From
+        verifyTransferFromAvailbleFunds();
+
+        onView(ViewMatchers.withId(R.id.transfer_source_description_1))
+                .check(ViewAssertions.matches(ViewMatchers.withText("CAD, TWD, TND, COP, CNY, INR, KRW, SEK, JOD, GBP, JPY, IDR, USD")));
+    }
+
+    //Error for CurrencyCode Validation
+    @Test
+    public void testTransferFragment_verifyErrorCurrencyCode() {
+        //Mock Response for user balance
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("errors/create_transfer_error_invalid_amount_response.json")).mock();
+
+        // Mock the response with PPC source
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("ppc/prepaid_cards_response.json")).mock();
+
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("transfer_method_list_with_one_ppc_response.json")).mock();
+
+        //  only when transferMethods.size() > 0, get the quote by the source token
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("create_transfer_quote_response.json")).mock();
+
+        mActivityTestRule.launchActivity(null);
+
+        onView(withText(R.string.error_dialog_unexpected_title))
+                .inRoot(RootMatchers.isDialog())
+                .check(matches(ViewMatchers.isDisplayed()));
+        onView(ViewMatchers.withId(android.R.id.button1))
+                .check(matches(withText(R.string.ok)));
 
     }
 
