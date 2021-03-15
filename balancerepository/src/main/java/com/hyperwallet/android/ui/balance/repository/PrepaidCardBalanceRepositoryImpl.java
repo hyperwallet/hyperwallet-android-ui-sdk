@@ -34,8 +34,8 @@ import java.util.ArrayList;
 
 public class PrepaidCardBalanceRepositoryImpl implements PrepaidCardBalanceRepository {
 
-    private Handler mHandler = new Handler();
-    private int LIMIT = 100;
+    private final Handler mHandler = new Handler();
+    private final int LIMIT = 100;
 
     @VisibleForTesting
     Hyperwallet getHyperwallet() {
