@@ -23,6 +23,7 @@ import static com.hyperwallet.android.model.transfermethod.TransferMethod.Transf
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.BANK_ACCOUNT;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.PREPAID_CARD;
 import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.ERROR_SDK_MODULE_UNAVAILABLE;
+import static com.hyperwallet.android.ui.transfer.view.CreateTransferFragment.REGEX_ONLY_NUMBER;
 
 import android.os.Handler;
 import android.text.TextUtils;
@@ -41,10 +42,12 @@ import com.hyperwallet.android.exception.HyperwalletException;
 import com.hyperwallet.android.listener.HyperwalletListener;
 import com.hyperwallet.android.model.Error;
 import com.hyperwallet.android.model.Errors;
+import com.hyperwallet.android.model.balance.Balance;
 import com.hyperwallet.android.model.transfer.Transfer;
 import com.hyperwallet.android.model.transfermethod.PrepaidCard;
 import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import com.hyperwallet.android.model.user.User;
+import com.hyperwallet.android.ui.balance.repository.UserBalanceRepository;
 import com.hyperwallet.android.ui.common.repository.Event;
 import com.hyperwallet.android.ui.common.view.ProgramModel;
 import com.hyperwallet.android.ui.transfer.R;
@@ -73,12 +76,13 @@ public class CreateTransferViewModel extends ViewModel {
     private static final String DESTINATION_TOKEN_INPUT_FIELD = "destinationToken";
     private static final String PRIVATE_TOKEN_PREFIX = "trm-";
     public static final String CURRENCY_DOT_SEPARATOR = ".";
-
+    public static final String COMMA_SEPARATOR = ", ";
 
     private final TransferRepository mTransferRepository;
     private final TransferMethodRepository mTransferMethodRepository;
     private final UserRepository mUserRepository;
     private final PrepaidCardRepository mPrepaidCardRepository;
+    private final UserBalanceRepository mUserBalanceRepository;
 
     private final MutableLiveData<TransferMethod> mTransferDestination = new MutableLiveData<>();
     private final MutableLiveData<Boolean> mTransferAvailableFunds = new MutableLiveData<>();
@@ -119,17 +123,20 @@ public class CreateTransferViewModel extends ViewModel {
      *                                 Hyperwallet
      * @param userRepository           User repository for making user calls to Hyperwallet
      * @param prepaidCardRepository    prepaid card repository for making prepaid calls to Hyperwallet
+     * @param userBalanceRepository    User balance repository for making user balance calls to Hyperwallet
      */
     CreateTransferViewModel(@NonNull final String sourceToken,
-            @NonNull final TransferRepository transferRepository,
-            @NonNull final TransferMethodRepository transferMethodRepository,
-            @NonNull final UserRepository userRepository, @NonNull PrepaidCardRepository prepaidCardRepository) {
+                            @NonNull final TransferRepository transferRepository,
+                            @NonNull final TransferMethodRepository transferMethodRepository,
+                            @NonNull final UserRepository userRepository, @NonNull PrepaidCardRepository prepaidCardRepository,
+                            @NonNull UserBalanceRepository userBalanceRepository) {
 
         mTransferRepository = transferRepository;
         mTransferMethodRepository = transferMethodRepository;
         mUserRepository = userRepository;
         mSourceToken = sourceToken;
         mPrepaidCardRepository = prepaidCardRepository;
+        mUserBalanceRepository = userBalanceRepository;
 
         // initialize
         initialize();
@@ -141,15 +148,18 @@ public class CreateTransferViewModel extends ViewModel {
      * @param transferRepository       Transfer repository for making transfer calls to Hyperwallet
      * @param transferMethodRepository Transfer Method repository for making transfer method calls to Hyperwallet
      * @param userRepository           User repository for making user calls to Hyperwallet
+     * @param userBalanceRepository    User balance repository for making user balance calls to Hyperwallet
      */
     CreateTransferViewModel(@NonNull final TransferRepository transferRepository,
-            @NonNull final TransferMethodRepository transferMethodRepository,
-            @NonNull final UserRepository userRepository, @NonNull final PrepaidCardRepository prepaidCardRepository) {
+                            @NonNull final TransferMethodRepository transferMethodRepository,
+                            @NonNull final UserRepository userRepository, @NonNull final PrepaidCardRepository prepaidCardRepository,
+                            @NonNull UserBalanceRepository userBalanceRepository) {
 
         mTransferRepository = transferRepository;
         mTransferMethodRepository = transferMethodRepository;
         mUserRepository = userRepository;
         mPrepaidCardRepository = prepaidCardRepository;
+        mUserBalanceRepository = userBalanceRepository;
 
         // Initialize
         initialize();
@@ -443,7 +453,7 @@ public class CreateTransferViewModel extends ViewModel {
                     sourceWrapperForAvailableFunds.setToken(user.getToken());
                     sourceWrapperForAvailableFunds.setType(BANK_ACCOUNT);
                     sources.add(sourceWrapperForAvailableFunds);
-                    loadPrepaidCardList(sources);
+                    loadUserBalance(sources, false);
                 }
 
                 @Override
@@ -455,6 +465,28 @@ public class CreateTransferViewModel extends ViewModel {
         } else {
             loadPrepaidCardList(new ArrayList<TransferSource>());
         }
+    }
+
+    void loadUserBalance(@NonNull final ArrayList<TransferSource> sources, final Boolean isSourceTokenAvailable) {
+        mIsLoading.postValue(Boolean.TRUE);
+        mUserBalanceRepository.loadUserBalances(new UserBalanceRepository.LoadUserBalanceListCallback() {
+            @Override
+            public void onUserBalanceListLoaded(@NonNull List<Balance> balances) {
+                sources.get(0).setCurrencyCodes(getCurrencyCodes(balances));
+                if (!isSourceTokenAvailable) {
+                    loadPrepaidCardList(sources);
+                }
+            }
+
+            @Override
+            public void onError(@NonNull Errors errors) {
+                mIsLoading.postValue(Boolean.FALSE);
+                mLoadTransferRequiredDataErrors.postValue(new Event<>(errors));
+                if (!isSourceTokenAvailable) {
+                    loadPrepaidCardList(sources);
+                }
+            }
+        });
     }
 
     @VisibleForTesting
@@ -627,6 +659,7 @@ public class CreateTransferViewModel extends ViewModel {
                     sourceWrapperForAvailableFunds.setToken(user.getToken());
                     sourceWrapperForAvailableFunds.setType(BANK_ACCOUNT);
                     sources.add(sourceWrapperForAvailableFunds);
+                    loadUserBalance(sources, true);
                     mSelectedTransferSource.postValue(sourceWrapperForAvailableFunds);
                     mTransferSources.postValue(sources);
                     loadTransferDestination(mSourceToken);
@@ -644,6 +677,16 @@ public class CreateTransferViewModel extends ViewModel {
     private boolean hasTransferAmountChanged(@Nullable final Transfer transfer) {
         return mTransferAvailableFunds.getValue() && transfer != null && !TextUtils.equals(
                 transfer.getDestinationAmount(), mTransferAmount.getValue());
+    }
+
+    private String getCurrencyCodes(List<Balance> balances) {
+        ArrayList<String> currencyCodes = new ArrayList<>();
+        for (Balance balance : balances) {
+            if (Double.parseDouble(balance.getAmount().replaceAll(REGEX_ONLY_NUMBER, EMPTY_STRING)) != 0.0) {
+                currencyCodes.add(balance.getCurrency());
+            }
+        }
+        return currencyCodes.size() > 0 ? TextUtils.join(COMMA_SEPARATOR, currencyCodes) : "";
     }
 
     public ProgramModel getProgramModel() {
@@ -696,28 +739,33 @@ public class CreateTransferViewModel extends ViewModel {
         private final UserRepository userRepository;
         private final String sourceToken;
         private final PrepaidCardRepository prepaidCardRepository;
+        private final UserBalanceRepository userBalanceRepository;
 
         public CreateTransferViewModelFactory(@NonNull final String sourceToken,
                 @NonNull final TransferRepository transferRepository,
                 @NonNull final TransferMethodRepository transferMethodRepository,
                 @NonNull final UserRepository userRepository,
-                @NonNull final PrepaidCardRepository prepaidCardRepository) {
+                @NonNull final PrepaidCardRepository prepaidCardRepository,
+                @NonNull final UserBalanceRepository userBalanceRepository) {
             this.sourceToken = sourceToken;
             this.transferMethodRepository = transferMethodRepository;
             this.transferRepository = transferRepository;
             this.userRepository = userRepository;
             this.prepaidCardRepository = prepaidCardRepository;
+            this.userBalanceRepository = userBalanceRepository;
         }
 
         public CreateTransferViewModelFactory(@NonNull final TransferRepository transferRepository,
                 @NonNull final TransferMethodRepository transferMethodRepository,
                 @NonNull final UserRepository userRepository,
-                @NonNull final PrepaidCardRepository prepaidCardRepository) {
+                @NonNull final PrepaidCardRepository prepaidCardRepository,
+                @NonNull final UserBalanceRepository userBalanceRepository) {
             this.sourceToken = null;
             this.transferMethodRepository = transferMethodRepository;
             this.transferRepository = transferRepository;
             this.userRepository = userRepository;
             this.prepaidCardRepository = prepaidCardRepository;
+            this.userBalanceRepository = userBalanceRepository;
         }
 
         @NonNull
@@ -726,10 +774,10 @@ public class CreateTransferViewModel extends ViewModel {
             if (modelClass.isAssignableFrom(CreateTransferViewModel.class)) {
                 if (TextUtils.isEmpty(sourceToken)) {
                     return (T) new CreateTransferViewModel(transferRepository, transferMethodRepository,
-                            userRepository, prepaidCardRepository);
+                            userRepository, prepaidCardRepository, userBalanceRepository);
                 }
                 return (T) new CreateTransferViewModel(sourceToken, transferRepository, transferMethodRepository,
-                        userRepository, prepaidCardRepository);
+                        userRepository, prepaidCardRepository, userBalanceRepository);
             }
 
             throw new IllegalArgumentException("Expecting ViewModel class: " + CreateTransferViewModel.class.getName());

@@ -88,6 +88,9 @@ public class SelectDestinationTest {
         IdlingRegistry.getInstance().register(EspressoIdlingResource.getIdlingResource());
 
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("user_balance_single_currency_response.json")).mock();
+
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("ppc/prepaid_cards_response.json")).mock();
     }
 
@@ -100,6 +103,7 @@ public class SelectDestinationTest {
 
     @Test
     public void testSelectDestination_verifyActiveExternalAccountsDisplayed() {
+
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("transfer_method_list_single_bank_account_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
