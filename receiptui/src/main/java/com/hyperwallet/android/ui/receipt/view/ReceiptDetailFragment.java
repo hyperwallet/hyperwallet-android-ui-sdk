@@ -26,6 +26,7 @@ import static android.text.format.DateUtils.formatDateTime;
 
 import static com.hyperwallet.android.model.receipt.Receipt.Entries.CREDIT;
 import static com.hyperwallet.android.model.receipt.Receipt.Entries.DEBIT;
+import static com.hyperwallet.android.ui.common.util.CurrencyParser.getRateWithFourDecimal;
 
 import android.content.Context;
 import android.os.Build;
@@ -213,8 +214,14 @@ public class ReceiptDetailFragment extends Fragment {
             }
 
             if (!TextUtils.isEmpty(receiptDetails.getNotes())) {
-                setViewInformation(R.id.receipt_notes_information, R.id.notes_value,
-                        view, receiptDetails.getNotes());
+                if (receipt.getForeignExchangeRate() != null) {
+                    String fxRate = getRateWithFourDecimal(receipt.getForeignExchangeRate());
+                    setViewInformation(R.id.receipt_notes_information, R.id.notes_value,
+                            view, receiptDetails.getNotes().replace(receipt.getForeignExchangeRate(), fxRate));
+                } else {
+                    setViewInformation(R.id.receipt_notes_information, R.id.notes_value,
+                            view, receiptDetails.getNotes());
+                }
             }
         }
     }

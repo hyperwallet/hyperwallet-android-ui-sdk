@@ -12,6 +12,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
@@ -126,5 +127,14 @@ public class CurrencyParser {
             }
         }
         return null;
+    }
+
+    public static String getRateWithFourDecimal(String rate)
+    {
+        NumberFormat nf = NumberFormat.getNumberInstance();
+        nf.setMaximumFractionDigits(4);
+        nf.setRoundingMode(RoundingMode.FLOOR);
+        double amount = Double.parseDouble(rate);
+        return nf.format(amount);
     }
 }

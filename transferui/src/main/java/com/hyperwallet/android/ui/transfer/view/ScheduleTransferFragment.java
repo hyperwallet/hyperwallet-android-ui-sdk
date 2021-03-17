@@ -20,6 +20,7 @@ import static com.hyperwallet.android.model.transfer.Transfer.EMPTY_STRING;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TRANSFER_METHOD_COUNTRY;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TYPE;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.PREPAID_CARD;
+import static com.hyperwallet.android.ui.common.util.CurrencyParser.getRateWithFourDecimal;
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getStringFontIcon;
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getStringResourceByName;
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getTransferMethodDetail;
@@ -327,7 +328,7 @@ public class ScheduleTransferFragment extends Fragment {
                 buyValue.setText(itemView.getContext().getString(R.string.amount_currency_format,
                         buyFormattedAmount, fx.getDestinationCurrency()));
                 exchangeRateValue.setText(itemView.getContext().getString(R.string.exchange_rate_format,
-                        sourceCurrency.getSymbol(),fx.getSourceCurrency(), destinationCurrency.getSymbol(),fx.getRate(), fx.getDestinationCurrency()));
+                        sourceCurrency.getSymbol(),fx.getSourceCurrency(), destinationCurrency.getSymbol(),getRateWithFourDecimal(fx.getRate()), fx.getDestinationCurrency()));
             }
         }
     }
