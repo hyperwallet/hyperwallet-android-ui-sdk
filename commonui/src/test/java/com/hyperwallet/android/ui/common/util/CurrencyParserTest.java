@@ -118,4 +118,13 @@ public class CurrencyParserTest {
         int noOfDigits = CurrencyParser.getInstance(context).getNumberOfFractionDigits("JPY");
         assertThat(noOfDigits, is(0));
     }
+
+    @Test
+    public void testFXRateWithFourDecimal()
+    {
+        assertThat("1.2345",is(CurrencyParser.getRateWithFourDecimal("1.234567")));
+        assertThat("1.234",is(CurrencyParser.getRateWithFourDecimal("1.234")));
+        assertThat("1.0000",is(CurrencyParser.getRateWithFourDecimal("1.000056")));
+        assertThat("1",is(CurrencyParser.getRateWithFourDecimal("1")));
+    }
 }
