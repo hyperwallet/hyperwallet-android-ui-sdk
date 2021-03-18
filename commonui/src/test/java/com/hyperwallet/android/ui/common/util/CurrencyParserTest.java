@@ -126,5 +126,6 @@ public class CurrencyParserTest {
         assertThat("1.234",is(CurrencyParser.getRateWithFourDecimal("1.234")));
         assertThat("1.0000",is(CurrencyParser.getRateWithFourDecimal("1.000056")));
         assertThat("1",is(CurrencyParser.getRateWithFourDecimal("1")));
+        assertThat("",is(CurrencyParser.getRateWithFourDecimal(null)));
     }
 }

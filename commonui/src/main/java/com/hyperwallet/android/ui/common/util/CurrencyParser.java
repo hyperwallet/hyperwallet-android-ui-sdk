@@ -129,16 +129,20 @@ public class CurrencyParser {
     }
 
     public static String getRateWithFourDecimal(String rate) {
-        StringBuilder builder = new StringBuilder();
-        String[] amount = rate.split("\\.");
-        if(amount.length == 2) {
-            String wholeNumber = amount[0];
-            String decimal = amount[1];
-            if (decimal.length() > 4) {
-                decimal = decimal.substring(0, 4);
+        if (rate != null) {
+            StringBuilder builder = new StringBuilder();
+            String[] amount = rate.split("\\.");
+            if (amount.length == 2) {
+                String wholeNumber = amount[0];
+                String decimal = amount[1];
+                if (decimal.length() > 4) {
+                    decimal = decimal.substring(0, 4);
+                }
+                return builder.append(wholeNumber).append(".").append(decimal).toString();
             }
-            return builder.append(wholeNumber).append(".").append(decimal).toString();
+            return rate;
+        } else {
+            return "";
         }
-        return rate;
     }
 }
