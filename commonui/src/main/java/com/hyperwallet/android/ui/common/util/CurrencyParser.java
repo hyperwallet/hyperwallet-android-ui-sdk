@@ -19,6 +19,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Currency;
 import java.util.List;
+import java.util.Locale;
 
 public class CurrencyParser {
     private static CurrencyParser instance;
@@ -129,12 +130,17 @@ public class CurrencyParser {
         return null;
     }
 
-    public static String getRateWithFourDecimal(String rate)
-    {
-        NumberFormat nf = NumberFormat.getNumberInstance();
-        nf.setMaximumFractionDigits(4);
-        nf.setRoundingMode(RoundingMode.FLOOR);
-        double amount = Double.parseDouble(rate);
-        return nf.format(amount);
+    public static String getRateWithFourDecimal(String rate) {
+        StringBuilder builder = new StringBuilder();
+        String[] amount = rate.split("\\.");
+        if(amount.length == 2) {
+            String wholeNumber = amount[0];
+            String decimal = amount[1];
+            if (decimal.length() > 4) {
+                decimal = decimal.substring(0, 4);
+            }
+            return builder.append(wholeNumber).append(".").append(decimal).toString();
+        }
+        return rate;
     }
 }
