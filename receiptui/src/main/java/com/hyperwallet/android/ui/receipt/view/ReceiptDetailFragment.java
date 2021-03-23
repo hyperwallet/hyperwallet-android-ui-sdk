@@ -17,16 +17,14 @@
 package com.hyperwallet.android.ui.receipt.view;
 
 import static android.text.format.DateUtils.FORMAT_ABBREV_MONTH;
-import static android.text.format.DateUtils.FORMAT_ABBREV_WEEKDAY;
 import static android.text.format.DateUtils.FORMAT_SHOW_DATE;
 import static android.text.format.DateUtils.FORMAT_SHOW_TIME;
-import static android.text.format.DateUtils.FORMAT_SHOW_WEEKDAY;
 import static android.text.format.DateUtils.FORMAT_SHOW_YEAR;
 import static android.text.format.DateUtils.formatDateTime;
 
 import static com.hyperwallet.android.model.receipt.Receipt.Entries.CREDIT;
 import static com.hyperwallet.android.model.receipt.Receipt.Entries.DEBIT;
-import static com.hyperwallet.android.ui.common.util.CurrencyParser.getRateWithFourDecimal;
+import static com.hyperwallet.android.ui.common.util.CurrencyParser.getValueWithTruncateDecimals;
 
 import android.content.Context;
 import android.os.Build;
@@ -215,7 +213,7 @@ public class ReceiptDetailFragment extends Fragment {
 
             if (!TextUtils.isEmpty(receiptDetails.getNotes())) {
                 if (receipt.getForeignExchangeRate() != null) {
-                    String fxRate = getRateWithFourDecimal(receipt.getForeignExchangeRate());
+                    String fxRate = getValueWithTruncateDecimals(receipt.getForeignExchangeRate(),4);
                     setViewInformation(R.id.receipt_notes_information, R.id.notes_value,
                             view, receiptDetails.getNotes().replace(receipt.getForeignExchangeRate(), fxRate));
                 } else {

@@ -128,19 +128,26 @@ public class CurrencyParser {
         return null;
     }
 
-    public static String getRateWithFourDecimal(String rate) {
-        if (rate != null) {
+    /**
+     * truncate decimals for given value
+     *
+     * @param value Any value in string.
+     * @param noOfDecimals   number of decimal to be truncate.
+     * @return Returns truncated decimal value.
+     */
+    public static String getValueWithTruncateDecimals(String value, int noOfDecimals) {
+        if (value != null) {
             StringBuilder builder = new StringBuilder();
-            String[] amount = rate.split("\\.");
+            String[] amount = value.split("\\.");
             if (amount.length == 2) {
                 String wholeNumber = amount[0];
                 String decimal = amount[1];
-                if (decimal.length() > 4) {
-                    decimal = decimal.substring(0, 4);
+                if (decimal.length() > noOfDecimals) {
+                    decimal = decimal.substring(0, noOfDecimals);
                 }
                 return builder.append(wholeNumber).append(".").append(decimal).toString();
             }
-            return rate;
+            return value;
         } else {
             return "";
         }
