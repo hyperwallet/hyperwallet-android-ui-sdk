@@ -137,17 +137,15 @@ public class CurrencyParser {
      */
     public static String getValueWithTruncateDecimals(String value, int noOfDecimals) {
         if (value != null) {
-            StringBuilder builder = new StringBuilder();
-            String[] amount = value.split("\\.");
-            if (amount.length == 2) {
-                String wholeNumber = amount[0];
-                String decimal = amount[1];
-                if (decimal.length() > noOfDecimals) {
-                    decimal = decimal.substring(0, noOfDecimals);
-                }
-                return builder.append(wholeNumber).append(".").append(decimal).toString();
+            String returnValue = value;
+            int decimalLength = 0;
+            if (value.contains(".")) {
+                decimalLength = value.substring(value.indexOf(".")).length();
             }
-            return value;
+            if (decimalLength > noOfDecimals) {
+                returnValue = value.substring(0, value.indexOf(".") + noOfDecimals + 1);
+            }
+            return returnValue;
         } else {
             return "";
         }
