@@ -33,9 +33,6 @@
                     android:layout_marginStart="@dimen/grid_margin_left"
                     android:layout_marginTop="@dimen/grid_margin_top"
                     android:text="@string/mobileTransactionTypeLabel"
-                    android:textIsSelectable="true"
-                    android:focusable="true"
-                    android:longClickable="true"
                     android:textAppearance="@style/TextAppearance.Hyperwallet.HeaderTitle" />
             </LinearLayout>
 
@@ -122,9 +119,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="@string/mobileTransactionDetailsLabel"
-                    android:textIsSelectable="true"
-                    android:focusable="true"
-                    android:longClickable="true"
                     android:layout_marginStart="@dimen/grid_margin_left"
                     android:layout_marginTop="@dimen/grid_margin_top"
                     android:textAppearance="@style/TextAppearance.Hyperwallet.HeaderTitle" />
@@ -405,9 +399,6 @@
                         android:layout_marginStart="@dimen/grid_margin_left"
                         android:layout_marginEnd="@dimen/grid_margin_right"
                         android:text="@string/mobileConfirmNotesLabel"
-                        android:textIsSelectable="true"
-                        android:focusable="true"
-                        android:longClickable="true"
                         android:layout_marginTop="@dimen/grid_margin_top"
                         android:textAppearance="@style/TextAppearance.Hyperwallet.HeaderTitle" />
                 </LinearLayout>
@@ -457,9 +448,6 @@
                         android:layout_marginStart="@dimen/grid_margin_left"
                         android:layout_marginEnd="@dimen/grid_margin_right"
                         android:text="@string/mobileFeeInfoLabel"
-                        android:textIsSelectable="true"
-                        android:focusable="true"
-                        android:longClickable="true"
                         android:layout_marginTop="@dimen/grid_margin_top"
                         android:textAppearance="@style/TextAppearance.Hyperwallet.HeaderTitle" />
                 </LinearLayout>
