@@ -104,7 +104,7 @@
 
         <TextView
             android:id="@+id/exchange_rate_label"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/grid_margin_left"
             android:layout_marginTop="@dimen/grid_margin_top"
@@ -112,6 +112,7 @@
             android:text="@string/mobileFXRateLabel"
             android:textAppearance="@style/TextAppearance.Hyperwallet.Body1"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/exchange_rate_value"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
@@ -127,7 +128,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:textDirection="ltr"
             tools:text="@string/foreign_exchange_rate_placeholder" />
 
         <View
