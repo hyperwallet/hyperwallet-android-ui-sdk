@@ -117,6 +117,22 @@ public class ReceiptDetailFragment extends Fragment {
         TextView transactionCurrency = view.findViewById(R.id.transaction_currency);
         String currencyString = Currency.getInstance(receipt.getCurrency()).getSymbol(Locale.getDefault());
 
+        transactionTitle.setTextIsSelectable(true);
+        transactionTitle.setLongClickable(true);
+        transactionTitle.setFocusable(true);
+
+        transactionDate.setTextIsSelectable(true);
+        transactionDate.setLongClickable(true);
+        transactionDate.setFocusable(true);
+
+        transactionAmount.setTextIsSelectable(true);
+        transactionAmount.setLongClickable(true);
+        transactionAmount.setFocusable(true);
+
+        transactionCurrency.setTextIsSelectable(true);
+        transactionCurrency.setLongClickable(true);
+        transactionCurrency.setFocusable(true);
+
         if (CREDIT.equals(receipt.getEntry())) {
             transactionAmount.setTextColor(transactionAmount.getContext()
                     .getResources().getColor(R.color.positiveColor));

@@ -43,62 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                    <TextView android:id="@+id/transaction_type_icon"
-                        style="@style/ReceiptTypeIcon"
-                        android:layout_marginStart="@dimen/widget_default_margin"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView android:id="@+id/transaction_title"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/text_placeholder"
-                        style="@style/ReceiptTitle"
-                        android:textIsSelectable="true"
-                        android:focusable="true"
-                        android:longClickable="true"
-                        app:layout_constraintEnd_toStartOf="@+id/transaction_amount"
-                        app:layout_constraintStart_toEndOf="@+id/transaction_type_icon"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/transaction_date"
-                        style="@style/ReceiptDate"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/text_placeholder"
-                        android:textIsSelectable="true"
-                        android:focusable="true"
-                        android:longClickable="true"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/transaction_currency"
-                        app:layout_constraintStart_toEndOf="@+id/transaction_type_icon"
-                        app:layout_constraintTop_toBottomOf="@+id/transaction_title" />
-
-                    <TextView android:id="@+id/transaction_amount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/text_placeholder"
-                        style="@style/ReceiptAmount"
-                        android:textIsSelectable="true"
-                        android:focusable="true"
-                        android:longClickable="true"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView android:id="@+id/transaction_currency"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/text_placeholder"
-                        style="@style/ReceiptCurrency"
-                        android:textIsSelectable="true"
-                        android:focusable="true"
-                        android:longClickable="true"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/transaction_title" />
+                <include layout="@layout/receipt" />
 
                 <View
                     android:layout_width="match_parent"
