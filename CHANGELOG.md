@@ -1,6 +1,11 @@
 Changelog
 =========
 
+[1.0.0-beta10](https://github.com/hyperwallet/hyperwallet-android-ui-sdk/releases/tag/1.0.0-beta10)
+-------------------
+* UI Enhancements
+* Bug fixes
+
 [1.0.0-beta09](https://github.com/hyperwallet/hyperwallet-android-ui-sdk/releases/tag/1.0.0-beta09)
 -------------------
 * UI Enhancements
