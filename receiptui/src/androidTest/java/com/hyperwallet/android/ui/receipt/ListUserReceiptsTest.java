@@ -2,6 +2,7 @@ package com.hyperwallet.android.ui.receipt;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.longClick;
 import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.hasDescendant;
@@ -28,6 +29,7 @@ import android.widget.TextView;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.IdlingRegistry;
 import androidx.test.espresso.contrib.RecyclerViewActions;
+import androidx.test.espresso.matcher.RootMatchers;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
@@ -563,6 +565,39 @@ public class ListUserReceiptsTest {
         onView(withId(R.id.list_receipts))
                 .check(matches(atPosition(0, hasDescendant(withText("maggio 2019")))));
         onView(withId(R.id.list_receipts)).check(matches(atPosition(0, hasDescendant(withText("2 maggio 2019")))));
+    }
+
+    @Test
+    public void testListReceipt_selectTransactionDetails() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("receipt_list_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();
+        // run test
+        mActivityTestRule.launchActivity(null);
+        // assert
+        onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
+                .check(matches(withText(R.string.title_activity_receipt_list)));
+        onView(withId(R.id.list_receipts)).check(matches(isDisplayed()));
+        onView(withId(R.id.list_receipts)).perform(RecyclerViewActions.actionOnItemAtPosition(3, click()));
+        onView(withId(R.id.transaction_header_text)).check(matches(withText(R.string.mobileTransactionTypeLabel)));
+        onView(withId(R.id.transaction_type_icon)).check(matches(withText(R.string.debit)));
+        onView(withId(R.id.transaction_title)).check(matches(withText(R.string.transfer_to_prepaid_card)));
+        onView(withId(R.id.transaction_title)).perform(longClick());
+        onView(withText("Copy")).inRoot(RootMatchers.isPlatformPopup()).check(matches(isDisplayed()));
+        onView(withId(R.id.transaction_amount)).perform(longClick());
+        onView(withText("Copy")).inRoot(RootMatchers.isPlatformPopup()).check(matches(isDisplayed()));
+        onView(withId(R.id.transaction_currency)).perform(longClick());
+        onView(withText("Copy")).inRoot(RootMatchers.isPlatformPopup()).check(matches(isDisplayed()));
+        onView(withId(R.id.transaction_date)).perform(longClick());
+        onView(withText("Copy")).inRoot(RootMatchers.isPlatformPopup()).check(matches(isDisplayed()));
+        onView(withId(R.id.receipt_id_label)).perform(longClick());
+        onView(withText("Copy")).inRoot(RootMatchers.isPlatformPopup()).check(matches(isDisplayed()));
+        onView(withId(R.id.receipt_id_value)).perform(longClick());
+        onView(withText("Copy")).inRoot(RootMatchers.isPlatformPopup()).check(matches(isDisplayed()));
+        onView(withId(R.id.date_label)).perform(longClick());
+        onView(withText("Copy")).inRoot(RootMatchers.isPlatformPopup()).check(matches(isDisplayed()));
+        onView(withId(R.id.date_value)).perform(longClick());
+        onView(withText("Copy")).inRoot(RootMatchers.isPlatformPopup()).check(matches(isDisplayed()));
     }
 
     @Test
