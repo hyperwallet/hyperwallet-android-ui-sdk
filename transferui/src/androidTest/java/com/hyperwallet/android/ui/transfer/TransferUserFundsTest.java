@@ -486,7 +486,7 @@ public class TransferUserFundsTest {
                         allOf(withId(R.id.exchange_rate_label), withText(R.string.mobileFXRateLabel))))));
         onView(withId(R.id.list_foreign_exchange)).check(
                 matches(atPosition(0,
-                        hasDescendant(allOf(withId(R.id.exchange_rate_value), withText("$1 USD = $1.291253 CAD"))))));
+                        hasDescendant(allOf(withId(R.id.exchange_rate_value), withText("$1 USD = $1.2912 CAD"))))));
         onView(withId(R.id.amount_label)).check(matches(withText(R.string.mobileConfirmDetailsAmount)));
         onView(withId(R.id.amount_value)).check(matches(withText("$152.20 CAD")));
         onView(withId(R.id.fee_label)).check(matches(withText(R.string.mobileConfirmDetailsFee)));
@@ -806,7 +806,7 @@ public class TransferUserFundsTest {
                         allOf(withId(R.id.exchange_rate_label), withText(R.string.mobileFXRateLabel))))));
         onView(withId(R.id.list_foreign_exchange)).check(
                 matches(atPosition(0,
-                        hasDescendant(allOf(withId(R.id.exchange_rate_value), withText("$1 CAD = $0.774400 USD"))))));
+                        hasDescendant(allOf(withId(R.id.exchange_rate_value), withText("$1 CAD = $0.7744 USD"))))));
 
         onView(withId(R.id.list_foreign_exchange)).check(
                 matches(atPosition(1, hasDescendant(
@@ -823,7 +823,7 @@ public class TransferUserFundsTest {
                         allOf(withId(R.id.exchange_rate_label), withText(R.string.mobileFXRateLabel))))));
         onView(withId(R.id.list_foreign_exchange)).check(
                 matches(atPosition(1,
-                        hasDescendant(allOf(withId(R.id.exchange_rate_value), withText("€1 EUR = $1.126100 USD"))))));
+                        hasDescendant(allOf(withId(R.id.exchange_rate_value), withText("€1 EUR = $1.1261 USD"))))));
 
         onView(withId(R.id.amount_label)).check(matches(withText(R.string.mobileConfirmDetailsAmount)));
         onView(withId(R.id.amount_value)).check(matches(withText("$290.05 USD")));
@@ -919,7 +919,7 @@ public class TransferUserFundsTest {
                         allOf(withId(R.id.exchange_rate_label), withText(R.string.mobileFXRateLabel))))));
         onView(withId(R.id.list_foreign_exchange)).check(
                 matches(atPosition(0,
-                        hasDescendant(allOf(withId(R.id.exchange_rate_value), withText("$1 CAD = $0.784400 USD"))))));
+                        hasDescendant(allOf(withId(R.id.exchange_rate_value), withText("$1 CAD = $0.7844 USD"))))));
 
         onView(withId(R.id.list_foreign_exchange)).check(
                 matches(atPosition(1, hasDescendant(
@@ -936,7 +936,7 @@ public class TransferUserFundsTest {
                         allOf(withId(R.id.exchange_rate_label), withText(R.string.mobileFXRateLabel))))));
         onView(withId(R.id.list_foreign_exchange)).check(
                 matches(atPosition(1,
-                        hasDescendant(allOf(withId(R.id.exchange_rate_value), withText("€1 EUR = $1.136100 USD"))))));
+                        hasDescendant(allOf(withId(R.id.exchange_rate_value), withText("€1 EUR = $1.1361 USD"))))));
 
         onView(withId(R.id.amount_label)).check(matches(withText(R.string.mobileConfirmDetailsAmount)));
         onView(withId(R.id.amount_value)).check(matches(withText("$194.05 USD")));
