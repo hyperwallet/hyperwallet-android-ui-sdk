@@ -155,7 +155,7 @@ public class ScheduleTransferFragment extends Fragment {
             transferSourceTitle.setText(transferSourceIdentifier.getContext().getString(R.string.availableFunds));
             transferSourceIcon.setText(transferSourceIcon.getContext().getString(R.string.available_funds_font_icon));
         }
-        transferSourceIdentifier.setText(transferSource.getIdentification() == null ? ""
+        transferSourceIdentifier.setText(transferSource.getIdentification() == null ? transferSource.getCurrencyCodes()
                 : getTransferMethodDetail(transferSourceIdentifier.getContext(),
                         transferSource.getIdentification(), transferSource.getType()));
     }

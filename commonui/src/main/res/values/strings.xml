@@ -24,8 +24,8 @@
     <string name="paper_check_font_icon" translatable="false">\ue902</string>
     <string name="prepaid_card_font_icon" translatable="false">\ue901</string>
     <string name="paypal_account_font_icon" translatable="false">\ue906</string>
-    <string name="venmo_account_font_icon" translatable="false">\ue909</string>
-    <string name="cash_pickup_mg_font_icon" translatable="false">\ue905</string>
+    <string name="venmo_account_font_icon" translatable="false">\ue905</string>
+    <string name="cash_pickup_mg_font_icon" translatable="false">\ue904</string>
     <string name="available_funds_font_icon" translatable="false">\ue90b</string>
 
     <string name="endingIn">ending in %s</string>
@@ -37,4 +37,6 @@
     <string name="edit" translatable="false">Edit</string>
     <string name="remove">Remove</string>
     <string name="remove_transfer_method_title" translatable="false">Remove this transfer method?</string>
+    <string name="navigate_back_description" translatable="false">Navigate back</string>
+    <string name="transfer_method_add_transfer_button_description" translatable="false">Add a new transfer method</string>
 </resources>

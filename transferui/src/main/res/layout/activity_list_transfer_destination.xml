@@ -22,6 +22,7 @@
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="@dimen/fab_right_margin"
         android:layout_marginBottom="@dimen/button_bottom_margin"
+        android:contentDescription="@string/transfer_method_add_transfer_button_description"
         app:srcCompat="@mipmap/ic_launcher_foreground"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

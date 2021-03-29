@@ -36,6 +36,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.hyperwallet.android.model.Errors;
 import com.hyperwallet.android.model.transfer.Transfer;
+import com.hyperwallet.android.ui.balance.repository.UserBalanceRepositoryFactory;
 import com.hyperwallet.android.ui.common.repository.Event;
 import com.hyperwallet.android.ui.common.util.PageGroups;
 import com.hyperwallet.android.ui.common.view.ActivityUtils;
@@ -86,13 +87,15 @@ public class CreateTransferActivity extends AppCompatActivity implements OnNetwo
                     TransferRepositoryFactory.getInstance().getTransferRepository(),
                     TransferMethodRepositoryFactory.getInstance().getTransferMethodRepository(),
                     UserRepositoryFactory.getInstance().getUserRepository(),
-                    PrepaidCardRepositoryFactory.getInstance().getPrepaidCardRepository());
+                    PrepaidCardRepositoryFactory.getInstance().getPrepaidCardRepository(),
+                    UserBalanceRepositoryFactory.getInstance().getUserBalanceRepository());
         } else {
             factory = new CreateTransferViewModel.CreateTransferViewModelFactory(sourceToken,
                     TransferRepositoryFactory.getInstance().getTransferRepository(),
                     TransferMethodRepositoryFactory.getInstance().getTransferMethodRepository(),
                     UserRepositoryFactory.getInstance().getUserRepository(),
-                    PrepaidCardRepositoryFactory.getInstance().getPrepaidCardRepository());
+                    PrepaidCardRepositoryFactory.getInstance().getPrepaidCardRepository(),
+                    UserBalanceRepositoryFactory.getInstance().getUserBalanceRepository());
         }
 
         mCreateTransferViewModel = ViewModelProviders.of(this, factory).get(CreateTransferViewModel.class);

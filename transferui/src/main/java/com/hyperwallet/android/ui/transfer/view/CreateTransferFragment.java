@@ -87,7 +87,7 @@ public class CreateTransferFragment extends Fragment {
     private static final String NOTES_TAG = "NOTES_TAGGED";
     private static final String ELLIPSIS = "...";
     private static final int NOTES_MAX_LINE_LENGTH = 40;
-    private static final String REGEX_ONLY_NUMBER = "[^0-9]";
+    public static final String REGEX_ONLY_NUMBER = "[^0-9]";
     private static final String REGEX_REMOVE_EMPTY_SPACE = "^\\s+|\\s+$";
     public static final String REGEX_ONLY_NUMBER_AND_DECIMAL = "[^0-9.]";
     private static final String US_CURRENCY_CODE = "USD";
@@ -748,7 +748,7 @@ public class CreateTransferFragment extends Fragment {
             transferSourceTitle.setText(transferSourceIdentifier.getContext().getString(R.string.availableFunds));
             transferSourceIcon.setText(transferSourceIcon.getContext().getString(R.string.available_funds_font_icon));
         }
-        transferSourceIdentifier.setText(transferSource.getIdentification() == null ? ""
+        transferSourceIdentifier.setText(transferSource.getIdentification() == null ? transferSource.getCurrencyCodes()
                 : getTransferMethodDetail(transferSourceIdentifier.getContext(),
                         transferSource.getIdentification(), transferSource.getType()));
     }

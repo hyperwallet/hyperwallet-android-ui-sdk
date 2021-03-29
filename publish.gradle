@@ -46,7 +46,8 @@ publishing {
                                         "transfermethodui",
                                         "transferrepository",
                                         "transferui",
-                                        "userrepository"
+                                        "userrepository",
+                                        "balancerepository"
                         ]) {
                             dependencyNode.appendNode('groupId', "com.hyperwallet.android.ui")
                         } else {

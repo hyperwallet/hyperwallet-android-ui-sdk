@@ -178,6 +178,9 @@ public class ExpiryDateWidget extends AbstractWidget {
 
                 @Override
                 public void afterTextChanged(Editable s) {
+                    if (editText.hasFocus()) {
+                        isEdited = true;
+                    }
                 }
             });
 

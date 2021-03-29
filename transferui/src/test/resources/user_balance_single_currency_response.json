@@ -1,0 +1,19 @@
+{
+  "count": 1,
+  "offset": 0,
+  "limit": 10,
+  "data": [
+    {
+      "currency": "CAD",
+      "amount": "100.00"
+    }
+  ],
+  "links": [
+    {
+      "params": {
+        "rel": "self"
+      },
+      "href": "https://localhost:8181/rest/v3/users/usr-token/balances?offset=0&limit=10"
+    }
+  ]
+}

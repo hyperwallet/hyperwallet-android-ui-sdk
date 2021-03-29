@@ -1,0 +1,23 @@
+{
+  "count": 2,
+  "offset": 0,
+  "limit": 10,
+  "data": [
+    {
+      "currency": "CAD",
+      "amount": "110.45"
+    },
+    {
+      "currency": "USD",
+      "amount": "530.77"
+    }
+  ],
+  "links": [
+    {
+      "params": {
+        "rel": "self"
+      },
+      "href": "https://localhost/rest/v3/users/usr-token/balances?offset=0&limit=10"
+    }
+  ]
+}
