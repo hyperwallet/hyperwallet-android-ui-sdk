@@ -127,4 +127,27 @@ public class CurrencyParser {
         }
         return null;
     }
+
+    /**
+     * truncate decimals for given value
+     *
+     * @param value Any value in string.
+     * @param noOfDecimals   number of decimal to be truncate.
+     * @return Returns truncated decimal value.
+     */
+    public static String getValueWithTruncateDecimals(String value, int noOfDecimals) {
+        if (value != null) {
+            String returnValue = value;
+            int decimalLength = 0;
+            if (value.contains(".")) {
+                decimalLength = value.substring(value.indexOf(".")).length();
+            }
+            if (decimalLength > noOfDecimals) {
+                returnValue = value.substring(0, value.indexOf(".") + noOfDecimals + 1);
+            }
+            return returnValue;
+        } else {
+            return "";
+        }
+    }
 }
