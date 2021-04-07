@@ -165,7 +165,7 @@ public class SelectDestinationTest {
                 matches(atPosition(4, hasDescendant(withText(R.string.prepaid_card_font_icon)))));
         onView(withId(R.id.transfer_destination_list)).check(
                 matches(atPosition(4, hasDescendant(withText(R.string.prepaid_card)))));
-        onView(withId(R.id.transfer_destination_list)).check(matches(atPosition(4, hasDescendant(withText("Canada")))));
+        onView(withId(R.id.transfer_destination_list)).check(matches(atPosition(4, hasDescendant(withText("USD")))));
         String ppcInfo = getCardBrandWithFourDigits("Visa", "3187");
         onView(withId(R.id.transfer_destination_list)).check(
                 matches(atPosition(4, hasDescendant(withText(ppcInfo)))));
@@ -458,7 +458,7 @@ public class SelectDestinationTest {
                 matches(atPosition(4, hasDescendant(withText(R.string.prepaid_card_font_icon)))));
         onView(withId(R.id.transfer_destination_list)).check(
                 matches(atPosition(4, hasDescendant(withText(R.string.prepaid_card)))));
-        onView(withId(R.id.transfer_destination_list)).check(matches(atPosition(4, hasDescendant(withText("Canada")))));
+        onView(withId(R.id.transfer_destination_list)).check(matches(atPosition(4, hasDescendant(withText("USD")))));
         String ppcInfo = getCardBrandWithFourDigits("Visa", "3187");
         onView(withId(R.id.transfer_destination_list)).check(
                 matches(atPosition(4, hasDescendant(withText(ppcInfo)))));

@@ -730,7 +730,11 @@ public class CreateTransferFragment extends Fragment {
         transferIdentifier.setText(transferMethodIdentification);
         transferTitle.setText(getStringResourceByName(transferTitle.getContext(), type));
         transferIcon.setText(getStringFontIcon(transferIcon.getContext(), type));
-        transferCountry.setText(locale.getDisplayName());
+        if (type.equals(PREPAID_CARD)) {
+            transferCountry.setText(transferMethod.getField(TRANSFER_METHOD_CURRENCY));
+        } else {
+            transferCountry.setText(locale.getDisplayName());
+        }
 
         mTransferCurrency.setText(transferMethod.getField(TRANSFER_METHOD_CURRENCY));
         mTransferDestination.setVisibility(View.VISIBLE);
@@ -739,18 +743,22 @@ public class CreateTransferFragment extends Fragment {
     private void showTransferSource(@NonNull final TransferSource transferSource) {
         TextView transferSourceIcon = getView().findViewById(R.id.transfer_source_icon);
         TextView transferSourceTitle = getView().findViewById(R.id.transfer_source_title);
-        TextView transferSourceIdentifier = getView().findViewById(R.id.transfer_source_description_1);
+        TextView transferSourceCurrency = getView().findViewById(R.id.transfer_source_description_1);
+        TextView transferSourceIdentifier = getView().findViewById(R.id.transfer_source_description_2);
         if (transferSource.getType().equals(PREPAID_CARD)) {
+            transferSourceIdentifier.setVisibility(View.VISIBLE);
             transferSourceTitle.setText(
                     getTransferMethodName(transferSourceIdentifier.getContext(), transferSource.getType()));
             transferSourceIcon.setText(getStringFontIcon(transferSourceIcon.getContext(), transferSource.getType()));
+            transferSourceCurrency.setText(transferSource.getCurrencyCodes());
+            transferSourceIdentifier.setText(getTransferMethodDetail(transferSourceIdentifier.getContext(),
+                    transferSource.getIdentification(), transferSource.getType()));
         } else {
+            transferSourceIdentifier.setVisibility(View.GONE);
             transferSourceTitle.setText(transferSourceIdentifier.getContext().getString(R.string.availableFunds));
             transferSourceIcon.setText(transferSourceIcon.getContext().getString(R.string.available_funds_font_icon));
+            transferSourceCurrency.setText(transferSource.getCurrencyCodes());
         }
-        transferSourceIdentifier.setText(transferSource.getIdentification() == null ? transferSource.getCurrencyCodes()
-                : getTransferMethodDetail(transferSourceIdentifier.getContext(),
-                        transferSource.getIdentification(), transferSource.getType()));
     }
 
     private String formattedAmount(final double amount, final String currencyCode) {

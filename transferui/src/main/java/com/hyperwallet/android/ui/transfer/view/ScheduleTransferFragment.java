@@ -18,6 +18,7 @@ package com.hyperwallet.android.ui.transfer.view;
 
 import static com.hyperwallet.android.model.transfer.Transfer.EMPTY_STRING;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TRANSFER_METHOD_COUNTRY;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TRANSFER_METHOD_CURRENCY;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TYPE;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.PREPAID_CARD;
 import static com.hyperwallet.android.ui.common.util.CurrencyParser.getValueWithTruncateDecimals;
@@ -140,25 +141,32 @@ public class ScheduleTransferFragment extends Fragment {
         transferIdentifier.setText(transferMethodIdentification);
         transferTitle.setText(getStringResourceByName(transferTitle.getContext(), type));
         transferIcon.setText(getStringFontIcon(transferIcon.getContext(), type));
-        transferCountry.setText(locale.getDisplayName());
+        if (type.equals(PREPAID_CARD)) {
+            transferCountry.setText(
+                    mScheduleTransferViewModel.getTransferDestination().getField(TRANSFER_METHOD_CURRENCY));
+        } else {
+            transferCountry.setText(locale.getDisplayName());
+        }
     }
 
     private void showTransferSource() {
         TransferSource transferSource = mScheduleTransferViewModel.getTransferSource();
         TextView transferSourceIcon = getView().findViewById(R.id.transfer_source_icon);
         TextView transferSourceTitle = getView().findViewById(R.id.transfer_source_title);
-        TextView transferSourceIdentifier = getView().findViewById(R.id.transfer_source_description_1);
+        TextView transferSourceCurrency = getView().findViewById(R.id.transfer_source_description_1);
+        TextView transferSourceIdentifier = getView().findViewById(R.id.transfer_source_description_2);
         if (transferSource.getType().equals(PREPAID_CARD)) {
             transferSourceTitle.setText(
                     getTransferMethodName(transferSourceIdentifier.getContext(), transferSource.getType()));
             transferSourceIcon.setText(getStringFontIcon(transferSourceIcon.getContext(), transferSource.getType()));
+            transferSourceCurrency.setText(transferSource.getCurrencyCodes());
+            transferSourceIdentifier.setText(getTransferMethodDetail(transferSourceIdentifier.getContext(),
+                    transferSource.getIdentification(), transferSource.getType()));
         } else {
             transferSourceTitle.setText(transferSourceIdentifier.getContext().getString(R.string.availableFunds));
             transferSourceIcon.setText(transferSourceIcon.getContext().getString(R.string.available_funds_font_icon));
+            transferSourceCurrency.setText(transferSource.getCurrencyCodes());
         }
-        transferSourceIdentifier.setText(transferSource.getIdentification() == null ? transferSource.getCurrencyCodes()
-                : getTransferMethodDetail(transferSourceIdentifier.getContext(),
-                        transferSource.getIdentification(), transferSource.getType()));
     }
 
     private void showForeignExchange() {
