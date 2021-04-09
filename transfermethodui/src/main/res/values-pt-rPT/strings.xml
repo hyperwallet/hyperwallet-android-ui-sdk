@@ -25,8 +25,8 @@
     <string name="default_account_sub_label">Selecione um método de transferência padrão</string>
     <string name="api_expiry_date_format">MM/AA</string>
 
-    <string name="feeAndProcessingTimeInformation">%s taxa \u2022 %s</string>
     <string name="feeInformation">%s taxa</string>
+    <string name="noFee">Sem taxa</string>
 
     <string name="emptyStateAddTransferMethod">Adicione um método de transferência para começar.</string>
 

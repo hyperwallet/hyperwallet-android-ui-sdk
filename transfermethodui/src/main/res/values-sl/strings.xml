@@ -25,8 +25,8 @@
     <string name="default_account_sub_label">Izberi privzeti način prenosa</string>
     <string name="api_expiry_date_format">MM/LL</string>
 
-    <string name="feeAndProcessingTimeInformation">%sPristojbina \u2022 %s</string>
     <string name="feeInformation">%s pristojbina</string>
+    <string name="noFee">Brez pristojbine</string>
 
     <string name="emptyStateAddTransferMethod">Za začetek dodajte način prenosa.</string>
 

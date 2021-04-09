@@ -26,10 +26,9 @@
     <string name="default_account_sub_label">Select a default transfer method</string>
     <string name="api_expiry_date_format">MM/YY</string>
 
-    <string name="feeAndProcessingTimeInformation">%s fee \u2022 %s</string>
     <string name="feeInformation">%s fee</string>
     <string name="processingTimeInformation" translatable="false">\u0020\u2022 %s</string>
-    <string name="noFee" translatable="false">No fee</string>
+    <string name="noFee">No fee</string>
 
     <string name="emptyStateAddTransferMethod">Add a transfer method to get started.</string>
 

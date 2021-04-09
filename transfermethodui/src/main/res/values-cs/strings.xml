@@ -25,8 +25,8 @@
     <string name="default_account_sub_label">Vyberte výchozí způsob převodu</string>
     <string name="api_expiry_date_format">MM/RR</string>
 
-    <string name="feeAndProcessingTimeInformation">%s poplatek \u2022 %s</string>
     <string name="feeInformation">%s poplatek</string>
+    <string name="noFee">Bez poplatku</string>
 
     <string name="emptyStateAddTransferMethod">Chcete-li začít, přidejte způsob převodu.</string>
 

@@ -25,8 +25,8 @@
     <string name="default_account_sub_label">Wybierz domyślną metodę przelewu</string>
     <string name="api_expiry_date_format">MM/RR</string>
 
-    <string name="feeAndProcessingTimeInformation">%s opłata \u2022 %s</string>
     <string name="feeInformation">%s opłata</string>
+    <string name="noFee">Brak opłat</string>
 
     <string name="emptyStateAddTransferMethod">Dodaj metodę przelewu, aby zacząć.</string>
 

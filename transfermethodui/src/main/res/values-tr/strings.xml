@@ -25,8 +25,8 @@
     <string name="default_account_sub_label">Varsayılan bir aktarım yöntemi seç</string>
     <string name="api_expiry_date_format">AA/YY</string>
 
-    <string name="feeAndProcessingTimeInformation">%s ücret \u2022 %s</string>
     <string name="feeInformation">%s ücret</string>
+    <string name="noFee">Ücret Yok</string>
 
     <string name="emptyStateAddTransferMethod">Başlamak için bir aktarım yöntemi ekle.</string>
 

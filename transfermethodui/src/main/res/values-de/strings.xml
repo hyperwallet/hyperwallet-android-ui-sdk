@@ -25,8 +25,8 @@
     <string name="default_account_sub_label">Wählen Sie eine Standard-Überweisungsmethode</string>
     <string name="api_expiry_date_format">MM/JJ</string>
 
-    <string name="feeAndProcessingTimeInformation">%s Gebühr \u2022 %s</string>
     <string name="feeInformation">%s Gebühr</string>
+    <string name="noFee">Keine Gebühr</string>
 
     <string name="emptyStateAddTransferMethod">Fügen Sie eine Überweisungsmethode hinzu, um zu beginnen.</string>
 

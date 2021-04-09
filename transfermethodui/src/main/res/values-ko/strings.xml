@@ -25,8 +25,8 @@
     <string name="default_account_sub_label">기본 이체 방법 선택</string>
     <string name="api_expiry_date_format">월월/년년</string>
 
-    <string name="feeAndProcessingTimeInformation">%s 수수료 \u2022 %s</string>
     <string name="feeInformation">%s 수수료</string>
+    <string name="noFee">수수료 없음</string>
 
     <string name="emptyStateAddTransferMethod">시작하려면 이체 방법을 추가하십시오.</string>
 

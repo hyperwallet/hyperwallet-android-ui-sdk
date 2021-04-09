@@ -25,8 +25,8 @@
     <string name="default_account_sub_label">Избери стандарден метод на трансфер</string>
     <string name="api_expiry_date_format">ММ/ГГ</string>
 
-    <string name="feeAndProcessingTimeInformation">%s цена \u2022 %s</string>
     <string name="feeInformation">%s цена</string>
+    <string name="noFee">Без провизија</string>
 
     <string name="emptyStateAddTransferMethod">Додади метод на трансфер за да почнеш.</string>
 

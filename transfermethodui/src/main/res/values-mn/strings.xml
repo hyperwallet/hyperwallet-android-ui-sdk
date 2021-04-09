@@ -25,8 +25,8 @@
     <string name="default_account_sub_label">Анхдагч шилжүүлгийн аргыг сонгоно уу</string>
     <string name="api_expiry_date_format">СС/ОО</string>
 
-    <string name="feeAndProcessingTimeInformation">%s хураамж \u2022 %s</string>
     <string name="feeInformation">%s хураамж</string>
+    <string name="noFee">Хураамжгүй</string>
 
     <string name="emptyStateAddTransferMethod">Эхлэхийн тулд шилжүүлгийн аргыг нэмнэ үү.</string>
 
