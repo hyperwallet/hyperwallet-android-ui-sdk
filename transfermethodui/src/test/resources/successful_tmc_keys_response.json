@@ -466,6 +466,7 @@
                         ]
                       }
                     },
+
                     {
                       "code": "WIRE_ACCOUNT",
                       "name": "Wire Transfer",
@@ -487,6 +488,33 @@
                             "country": "CN",
                             "currency": "USD",
                             "transferMethodType": "WIRE_ACCOUNT"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "code": "PAYPAL_ACCOUNT",
+                      "name": "PayPal",
+                      "fees": {
+                        "nodes": [
+                          {
+                            "country": "CN",
+                            "currency": "USD",
+                            "transferMethodType": "PAYPAL_ACCOUNT",
+                            "value": "0.00",
+                            "feeRateType": "PERCENT",
+                            "minimum": "4.00",
+                            "maximum": "10.00"
+                          }
+                        ]
+                      },
+                      "processingTimes": {
+                        "nodes": [
+                          {
+                            "value": "IMMEDIATE",
+                            "country": "CN",
+                            "currency": "USD",
+                            "transferMethodType": "PAYPAL_ACCOUNT"
                           }
                         ]
                       }

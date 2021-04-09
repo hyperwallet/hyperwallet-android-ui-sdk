@@ -505,5 +505,14 @@ public class SelectTransferMethodTest {
         onView(withId(R.id.select_transfer_method_types_list)).check(
                 matches(atPosition(2, hasDescendant(withText(wireTransferFee+wireTransferProcessingTime)))));
 
+        String paypalTransferFee = InstrumentationRegistry.getInstrumentation().getTargetContext()
+                .getString(R.string.noFee);
+        String paypalTransferProcessingTime = InstrumentationRegistry.getInstrumentation().getTargetContext()
+                .getString(R.string.processingTimeInformation, "IMMEDIATE");
+
+        onView(withId(R.id.select_transfer_method_types_list)).check(
+                matches(atPosition(3, hasDescendant(withText(paypalTransferFee+paypalTransferProcessingTime)))));
+
+
     }
 }
