@@ -73,5 +73,26 @@
         "maximum": ""
       }
     ]
+  },
+  "FEE_EIGHT": {
+    "nodes": [
+      {
+        "currency": "USD",
+        "feeRateType": "PERCENT",
+        "value": "0.00",
+        "minimum": "10.00",
+        "maximum": ""
+      }
+    ]
+  },
+  "FEE_NINE": {
+    "nodes": [
+      {
+        "currency": "USD",
+        "value": "0.00",
+        "feeRateType": "FLAT"
+      }
+    ]
   }
+
 }

@@ -148,4 +148,22 @@ public class FeeFormatterTest {
         assertThat(resourceIdCaptorValue, is(R.string.fee_mix_only_min_formatter));
         assertThat(argumentList.size(), is(4));
     }
+
+    @Test
+    public void testGetFormattedFee_returnsFlatNoFee() {
+        Fee flatFee = new Fee(mJSONObject.optJSONObject("FEE_NINE").optJSONArray("nodes").optJSONObject(0));
+        FeeFormatter.getFormattedFee(context, Arrays.asList(flatFee));
+        verify(resources).getString(resourceIdCaptor.capture());
+        int resourceIdCaptorValue = resourceIdCaptor.getValue();
+        assertThat(resourceIdCaptorValue, is(R.string.noFee));
+    }
+
+    @Test
+    public void testGetFormattedFee_returnsPercentNoFee() {
+        Fee percentFee = new Fee(mJSONObject.optJSONObject("FEE_EIGHT").optJSONArray("nodes").optJSONObject(0));
+        FeeFormatter.getFormattedFee(context, Arrays.asList(percentFee));
+        verify(resources).getString(resourceIdCaptor.capture());
+        int resourceIdCaptorValue = resourceIdCaptor.getValue();
+        assertThat(resourceIdCaptorValue, is(R.string.noFee));
+    }
 }
