@@ -30,6 +30,7 @@ import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.EXTRA_T
 import static com.hyperwallet.android.ui.transfermethod.TransferMethodLocalBroadcast.TransferMethodLocalBroadcastAction.ACTION_HYPERWALLET_TRANSFER_METHOD_ADDED;
 import static com.hyperwallet.android.ui.transfermethod.view.FeeFormatter.isFeeAvailable;
 import static com.hyperwallet.android.ui.transfermethod.view.FeeFormatter.isProcessingTimeAvailable;
+import static com.hyperwallet.android.ui.transfermethod.view.FeeFormatter.isZeroFeeAvailable;
 
 import android.app.Activity;
 import android.content.Context;
@@ -411,14 +412,26 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
         if (isFeeAvailable(fees) && isProcessingTimeAvailable(processingTime)) {
             String formattedFee = FeeFormatter.getFormattedFee(header.getContext(), fees);
             feeAndProcessingTime.setVisibility(View.VISIBLE);
-            feeAndProcessingTime.setText(
-                    feeAndProcessingTime.getContext().getString(R.string.feeAndProcessingTimeInformation, formattedFee,
-                            processingTime.getValue()));
+            if (isZeroFeeAvailable(feeAndProcessingTime.getContext(), formattedFee)) {
+                feeAndProcessingTime.setText(String.format("%s%s",
+                        feeAndProcessingTime.getContext().getString(R.string.noFee),
+                        feeAndProcessingTime.getContext().getString(R.string.processingTimeInformation,
+                                processingTime.getValue())));
+            } else {
+                feeAndProcessingTime.setText(String.format("%s%s",
+                        feeAndProcessingTime.getContext().getString(R.string.feeInformation, formattedFee),
+                        feeAndProcessingTime.getContext().getString(R.string.processingTimeInformation,
+                                processingTime.getValue())));
+            }
         } else if (isFeeAvailable(fees) && !isProcessingTimeAvailable(processingTime)) {
             String formattedFee = FeeFormatter.getFormattedFee(header.getContext(), fees);
             feeAndProcessingTime.setVisibility(View.VISIBLE);
-            feeAndProcessingTime.setText(
-                    feeAndProcessingTime.getContext().getString(R.string.feeInformation, formattedFee));
+            if (isZeroFeeAvailable(feeAndProcessingTime.getContext(), formattedFee)) {
+                feeAndProcessingTime.setText(feeAndProcessingTime.getContext().getString(R.string.noFee));
+            } else {
+                feeAndProcessingTime.setText(
+                        feeAndProcessingTime.getContext().getString(R.string.feeInformation, formattedFee));
+            }
         } else if (isProcessingTimeAvailable(processingTime) && !isFeeAvailable(fees)) {
             feeAndProcessingTime.setVisibility(View.VISIBLE);
             feeAndProcessingTime.setText(processingTime.getValue());

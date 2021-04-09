@@ -207,10 +207,12 @@ public class SelectTransferMethodTest {
                 matches(atPosition(0, hasDescendant(withText(R.string.bank_account)))));
 
         String bankCardFee = InstrumentationRegistry.getInstrumentation().getTargetContext()
-                .getString(R.string.feeAndProcessingTimeInformation, usdDollarSymbol + "2.00", "1-2 Business days");
+                .getString(R.string.feeInformation, usdDollarSymbol + "2.00");
+        String bankCardProcessingTime = InstrumentationRegistry.getInstrumentation().getTargetContext()
+                .getString(R.string.processingTimeInformation, "1-2 Business days");
 
         onView(withId(R.id.select_transfer_method_types_list)).check(
-                matches(atPosition(0, hasDescendant(withText(bankCardFee)))));
+                matches(atPosition(0, hasDescendant(withText(bankCardFee+bankCardProcessingTime)))));
 
         onView(withId(R.id.select_transfer_method_types_list)).check(
                 matches(atPosition(1, hasDescendant(withText(R.string.bank_card_font_icon)))));
@@ -218,10 +220,13 @@ public class SelectTransferMethodTest {
                 matches(atPosition(1, hasDescendant(withText(R.string.bank_card)))));
 
         String debitCardFee = InstrumentationRegistry.getInstrumentation().getTargetContext()
-                .getString(R.string.feeAndProcessingTimeInformation, usdDollarSymbol + "1.75", "IMMEDIATE");
+                .getString(R.string.feeInformation, usdDollarSymbol + "1.75");
+
+        String debitCardProcessingTime = InstrumentationRegistry.getInstrumentation().getTargetContext()
+                .getString(R.string.processingTimeInformation, "IMMEDIATE");
 
         onView(withId(R.id.select_transfer_method_types_list)).check(
-                matches(atPosition(1, hasDescendant(withText(debitCardFee)))));
+                matches(atPosition(1, hasDescendant(withText(debitCardFee+debitCardProcessingTime)))));
 
 
         onView(withId(R.id.select_transfer_method_types_list)).check(
@@ -233,10 +238,12 @@ public class SelectTransferMethodTest {
                 matches(atPosition(2, hasDescendant(wireAccountViewMatchers))));
 
         String wireTransferFee = InstrumentationRegistry.getInstrumentation().getTargetContext()
-                .getString(R.string.feeAndProcessingTimeInformation, usdDollarSymbol + "20.00", "1-3 Business days");
+                .getString(R.string.feeInformation, usdDollarSymbol + "20.00");
+        String wireTransferProcessingTime = InstrumentationRegistry.getInstrumentation().getTargetContext()
+                .getString(R.string.processingTimeInformation, "1-3 Business days");
 
         onView(withId(R.id.select_transfer_method_types_list)).check(
-                matches(atPosition(2, hasDescendant(withText(wireTransferFee)))));
+                matches(atPosition(2, hasDescendant(withText(wireTransferFee+wireTransferProcessingTime)))));
 
         onView(withId(R.id.select_transfer_method_types_list)).check(
                 matches(atPosition(3, hasDescendant(withText(R.string.paypal_account_font_icon)))));
@@ -244,10 +251,12 @@ public class SelectTransferMethodTest {
                 matches(atPosition(3, hasDescendant(withText("PayPal")))));
 
         String paypalFee = InstrumentationRegistry.getInstrumentation().getTargetContext()
-                .getString(R.string.feeAndProcessingTimeInformation, usdDollarSymbol + "0.25", "IMMEDIATE");
+                .getString(R.string.feeInformation, usdDollarSymbol + "0.25");
+        String paypalProcessingTime = InstrumentationRegistry.getInstrumentation().getTargetContext()
+                .getString(R.string.processingTimeInformation, "IMMEDIATE");
 
         onView(withId(R.id.select_transfer_method_types_list)).check(
-                matches(atPosition(3, hasDescendant(withText(paypalFee)))));
+                matches(atPosition(3, hasDescendant(withText(paypalFee+paypalProcessingTime)))));
     }
 
     @Test
@@ -318,10 +327,12 @@ public class SelectTransferMethodTest {
                 matches(atPosition(0, hasDescendant(withText(R.string.bank_account)))));
 
         String bankAccountFee = InstrumentationRegistry.getInstrumentation().getTargetContext()
-                .getString(R.string.feeAndProcessingTimeInformation, cdnDollarSymbol + "2.20", "1-2 Business days");
+                .getString(R.string.feeInformation, cdnDollarSymbol + "2.20");
+        String bankCardProcessingTime = InstrumentationRegistry.getInstrumentation().getTargetContext()
+                .getString(R.string.processingTimeInformation, "1-2 Business days");
 
         onView(withId(R.id.select_transfer_method_types_list)).check(
-                matches(atPosition(0, hasDescendant(withText(bankAccountFee)))));
+                matches(atPosition(0, hasDescendant(withText(bankAccountFee+bankCardProcessingTime)))));
 
         onView(withId(R.id.select_transfer_method_types_list)).check(
                 matches(atPosition(1, hasDescendant(withText(R.string.paypal_account_font_icon)))));
@@ -329,10 +340,12 @@ public class SelectTransferMethodTest {
                 matches(atPosition(1, hasDescendant(withText("PayPal")))));
 
         String paypalFee = InstrumentationRegistry.getInstrumentation().getTargetContext()
-                .getString(R.string.feeAndProcessingTimeInformation, cdnDollarSymbol + "0.25", "IMMEDIATE");
+                .getString(R.string.feeInformation, cdnDollarSymbol + "0.25");
+        String paypalProcessingTime = InstrumentationRegistry.getInstrumentation().getTargetContext()
+                .getString(R.string.processingTimeInformation, "IMMEDIATE");
 
         onView(withId(R.id.select_transfer_method_types_list)).check(
-                matches(atPosition(1, hasDescendant(withText(paypalFee)))));
+                matches(atPosition(1, hasDescendant(withText(paypalFee+paypalProcessingTime)))));
     }
 
     @Test
@@ -444,5 +457,53 @@ public class SelectTransferMethodTest {
 
         onView(withId(R.id.select_transfer_method_country_value)).check(matches(withText("United States")));
         onView(withId(R.id.select_transfer_method_currency_value)).check(matches(withText("USD")));
+    }
+
+    @Test
+    public void testSelectTransferMethod_verifyNoFeeLabelsDisplayed() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("user_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_keys_response.json")).mock();
+
+        mActivityTestRule.launchActivity(null);
+
+        onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
+        onView(withText(R.string.mobileAddTransferMethodHeader)).check(matches(withParent(withId(R.id.toolbar))));
+
+        onView(withId(R.id.select_transfer_method_country_value)).check(matches(withText("United States")));
+        onView(withId(R.id.select_transfer_method_currency_value)).check(matches(withText("USD")));
+        onView(withId(R.id.select_transfer_method_types_list)).check(new RecyclerViewCountAssertion(4));
+
+        onView(withId(R.id.select_transfer_method_country_value)).perform(click());
+        onView(allOf(withId(R.id.country_name), withText("CHINA"))).perform(click());
+
+        String bankAccountFee = InstrumentationRegistry.getInstrumentation().getTargetContext()
+                .getString(R.string.noFee);
+        String bankAccountProcessingTime = InstrumentationRegistry.getInstrumentation().getTargetContext()
+                .getString(R.string.processingTimeInformation, "1-2 Business days");
+
+        onView(withId(R.id.select_transfer_method_types_list)).check(
+                matches(atPosition(0, hasDescendant(withText(bankAccountFee+bankAccountProcessingTime)))));
+
+
+        String bankCardFee = InstrumentationRegistry.getInstrumentation().getTargetContext()
+                .getString(R.string.noFee);
+        String bankCardProcessingTime = InstrumentationRegistry.getInstrumentation().getTargetContext()
+                .getString(R.string.processingTimeInformation, "IMMEDIATE");
+
+        onView(withId(R.id.select_transfer_method_types_list)).check(
+                matches(atPosition(1, hasDescendant(withText(bankCardFee+bankCardProcessingTime)))));
+
+
+
+        String wireTransferFee = InstrumentationRegistry.getInstrumentation().getTargetContext()
+                .getString(R.string.noFee);
+        String wireTransferProcessingTime = InstrumentationRegistry.getInstrumentation().getTargetContext()
+                .getString(R.string.processingTimeInformation, "1-3 Business days");
+
+        onView(withId(R.id.select_transfer_method_types_list)).check(
+                matches(atPosition(2, hasDescendant(withText(wireTransferFee+wireTransferProcessingTime)))));
+
     }
 }

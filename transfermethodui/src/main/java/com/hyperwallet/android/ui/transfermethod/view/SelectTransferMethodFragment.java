@@ -22,6 +22,7 @@ import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.ADD_TRA
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getStringFontIcon;
 import static com.hyperwallet.android.ui.transfermethod.view.FeeFormatter.isFeeAvailable;
 import static com.hyperwallet.android.ui.transfermethod.view.FeeFormatter.isProcessingTimeAvailable;
+import static com.hyperwallet.android.ui.transfermethod.view.FeeFormatter.isZeroFeeAvailable;
 
 import android.content.Context;
 import android.content.Intent;
@@ -501,14 +502,29 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
                 if (isFeeAvailable(selectionItem.getFees())
                         && isProcessingTimeAvailable(selectionItem.getProcessingTime())) {
                     mDescriptionFeesAndProcessingTime.setVisibility(View.VISIBLE);
-                    mDescriptionFeesAndProcessingTime.setText(mDescriptionFeesAndProcessingTime.getContext()
-                            .getString(R.string.feeAndProcessingTimeInformation, formattedFee,
-                                    selectionItem.getProcessingTime().getValue()));
+                    if (isZeroFeeAvailable(mDescriptionFeesAndProcessingTime.getContext(), formattedFee)) {
+                        mDescriptionFeesAndProcessingTime.setText(String.format("%s%s",
+                                mDescriptionFeesAndProcessingTime.getContext().getString(R.string.noFee),
+                                mDescriptionFeesAndProcessingTime.getContext().getString(
+                                        R.string.processingTimeInformation,
+                                        selectionItem.getProcessingTime().getValue())));
+                    } else {
+                        mDescriptionFeesAndProcessingTime.setText(String.format("%s%s",
+                                mDescriptionFeesAndProcessingTime.getContext().getString(R.string.feeInformation,
+                                        formattedFee),
+                                mDescriptionFeesAndProcessingTime.getContext().getString(
+                                        R.string.processingTimeInformation,
+                                        selectionItem.getProcessingTime().getValue())));
+                    }
                 } else if (isFeeAvailable(selectionItem.getFees())
                         && !isProcessingTimeAvailable(selectionItem.getProcessingTime())) {
                     mDescriptionFeesAndProcessingTime.setVisibility(View.VISIBLE);
-                    mDescriptionFeesAndProcessingTime.setText(mDescriptionFeesAndProcessingTime.getContext()
-                            .getString(R.string.feeInformation, formattedFee));
+                    if (isZeroFeeAvailable(mDescriptionFeesAndProcessingTime.getContext(), formattedFee)) {
+                        mDescriptionFeesAndProcessingTime.setText(mDescriptionFeesAndProcessingTime.getContext().getString(R.string.noFee));
+                    } else {
+                        mDescriptionFeesAndProcessingTime.setText(
+                                mDescriptionFeesAndProcessingTime.getContext().getString(R.string.feeInformation, formattedFee));
+                    }
                 } else if (isProcessingTimeAvailable(selectionItem.getProcessingTime())
                         && !isFeeAvailable(selectionItem.getFees())) {
                     mDescriptionFeesAndProcessingTime.setVisibility(View.VISIBLE);

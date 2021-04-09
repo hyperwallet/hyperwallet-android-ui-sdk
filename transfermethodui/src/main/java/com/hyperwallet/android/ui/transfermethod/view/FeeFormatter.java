@@ -35,7 +35,7 @@ import java.util.Locale;
 public class FeeFormatter {
 
     public static String getFormattedFee(@NonNull final Context context, @NonNull final List<Fee> fees) {
-        String formattedString = context.getResources().getString(R.string.unknown);
+        String formattedString = context.getResources().getString(R.string.noFee);
         if (fees.size() == 1) {
             formattedString = getSingleFormattedFee(context, fees, formattedString);
         } else {
@@ -48,10 +48,13 @@ public class FeeFormatter {
             String formattedString) {
         Fee fee = fees.get(0);
         if (Fee.FeeRate.FLAT.equals(fee.getFeeRateType())) {
+            if (!TextUtils.isEmpty(fee.getValue()) && Double.parseDouble(fee.getValue()) == 0.0) {
+                return formattedString;
+            }
             formattedString = context.getResources().getString(R.string.fee_flat_formatter,
                     Currency.getInstance(fee.getCurrency()).getSymbol(Locale.getDefault()), fee.getValue());
         } else if (Fee.FeeRate.PERCENT.equals(fee.getFeeRateType())) {
-            formattedString = getPercentFormattedFee(context, fee);
+            formattedString = getPercentFormattedFee(context, fee, formattedString);
         }
         return formattedString;
     }
@@ -94,10 +97,14 @@ public class FeeFormatter {
     }
 
 
-    private static String getPercentFormattedFee(@NonNull final Context context, @NonNull final Fee fee) {
+    private static String getPercentFormattedFee(@NonNull final Context context, @NonNull final Fee fee,
+            String formattedString) {
         String formattedFee;
         String minimumAmount = fee.getMin();
         String maximumAmount = fee.getMax();
+        if (!TextUtils.isEmpty(fee.getValue()) && Double.parseDouble(fee.getValue()) == 0.0) {
+            return formattedString;
+        }
         if (maximumAmount.isEmpty() && minimumAmount.isEmpty()) {
             formattedFee = context.getResources().getString(R.string.fee_percent_no_min_and_max_formatter,
                     fee.getValue());
@@ -121,5 +128,9 @@ public class FeeFormatter {
 
     protected static boolean isProcessingTimeAvailable(@Nullable final ProcessingTime processingTime) {
         return processingTime != null && !TextUtils.isEmpty(processingTime.getValue());
+    }
+
+    protected static boolean isZeroFeeAvailable(@NonNull final Context context, String fee) {
+        return fee.contains(context.getResources().getString(R.string.noFee));
     }
 }

@@ -405,6 +405,97 @@
               }
             ]
           }
+        },
+        {
+          "code": "CN",
+          "name": "CHINA",
+          "currencies": {
+            "nodes": [
+              {
+                "code": "USD",
+                "name": "USD",
+                "transferMethodTypes": {
+                  "nodes": [
+                    {
+                      "code": "BANK_ACCOUNT",
+                      "name": "Bank Account",
+                      "fees": {
+                        "nodes": [
+                          {
+                            "country": "CN",
+                            "currency": "USD",
+                            "transferMethodType": "BANK_ACCOUNT",
+                            "value": "0.0",
+                            "feeRateType": "FLAT"
+                          }
+                        ]
+                      },
+                      "processingTimes": {
+                        "nodes": [
+                          {
+                            "value": "1-2 Business days",
+                            "country": "CN",
+                            "currency": "USD",
+                            "transferMethodType": "BANK_ACCOUNT"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "code": "BANK_CARD",
+                      "name": "Debit Card",
+                      "fees": {
+                        "nodes": [
+                          {
+                            "country": "CN",
+                            "currency": "USD",
+                            "transferMethodType": "BANK_CARD",
+                            "value": "0.00",
+                            "feeRateType": "FLAT"
+                          }
+                        ]
+                      },
+                      "processingTimes": {
+                        "nodes": [
+                          {
+                            "value": "IMMEDIATE",
+                            "country": "CN",
+                            "currency": "USD",
+                            "transferMethodType": "BANK_CARD"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "code": "WIRE_ACCOUNT",
+                      "name": "Wire Transfer",
+                      "fees": {
+                        "nodes": [
+                          {
+                            "country": "CN",
+                            "currency": "USD",
+                            "transferMethodType": "WIRE_ACCOUNT",
+                            "value": "0.000",
+                            "feeRateType": "FLAT"
+                          }
+                        ]
+                      },
+                      "processingTimes": {
+                        "nodes": [
+                          {
+                            "value": "1-3 Business days",
+                            "country": "CN",
+                            "currency": "USD",
+                            "transferMethodType": "WIRE_ACCOUNT"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
         }
       ]
     }
