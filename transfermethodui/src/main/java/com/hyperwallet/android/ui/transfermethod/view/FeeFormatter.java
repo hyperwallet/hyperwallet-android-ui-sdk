@@ -36,6 +36,7 @@ public class FeeFormatter {
 
     public static String getFormattedFee(@NonNull final Context context, @NonNull final List<Fee> fees) {
         String formattedString = context.getResources().getString(R.string.noFee);
+        System.out.println(" fees size " + fees.size());
         if (fees.size() == 1) {
             formattedString = getSingleFormattedFee(context, fees, formattedString);
         } else {
@@ -48,14 +49,17 @@ public class FeeFormatter {
             String formattedString) {
         Fee fee = fees.get(0);
         if (Fee.FeeRate.FLAT.equals(fee.getFeeRateType())) {
-            if (!TextUtils.isEmpty(fee.getValue()) && Double.parseDouble(fee.getValue()) == 0.0) {
+            System.out.println("Flat fee value " + fee.getValue());
+            if (!isValidFee(fee.getValue())) {
                 return formattedString;
             }
             formattedString = context.getResources().getString(R.string.fee_flat_formatter,
                     Currency.getInstance(fee.getCurrency()).getSymbol(Locale.getDefault()), fee.getValue());
         } else if (Fee.FeeRate.PERCENT.equals(fee.getFeeRateType())) {
+            System.out.println("Percentage fee value " + fee.getValue());
             formattedString = getPercentFormattedFee(context, fee, formattedString);
         }
+        System.out.println("result in single" + formattedString);
         return formattedString;
     }
 
@@ -73,16 +77,40 @@ public class FeeFormatter {
             }
         }
         if (flatFee != null && percentFee != null) {
+            System.out.println("mixed formatted value flatFee " + flatFee.getValue() + " percent fee " + percentFee.getValue());
             String minimumAmount = percentFee.getMin();
             String maximumAmount = percentFee.getMax();
-            if (maximumAmount.isEmpty() && minimumAmount.isEmpty()) {
+
+            if (!isValidFee(flatFee.getValue()) && !isValidFee(percentFee.getValue())) {
+                return formattedString;
+            } else if (maximumAmount.isEmpty() && minimumAmount.isEmpty() && !isValidFee(percentFee.getValue())) {
+                formattedString = context.getResources().getString(R.string.fee_flat_formatter,
+                        Currency.getInstance(flatFee.getCurrency()).getSymbol(Locale.getDefault()), flatFee.getValue());
+            } else if (maximumAmount.isEmpty() && minimumAmount.isEmpty() && !isValidFee(flatFee.getValue())) {
+                formattedString = context.getResources().getString(R.string.fee_percent_no_min_and_max_formatter,
+                        percentFee.getValue());
+            } else if (maximumAmount.isEmpty() && minimumAmount.isEmpty()) {
                 formattedString = context.getResources().getString(R.string.fee_mix_no_min_and_max_formatter,
                         Currency.getInstance(flatFee.getCurrency()).getSymbol(Locale.getDefault()),
                         flatFee.getValue(), percentFee.getValue());
+            } else if (maximumAmount.isEmpty() && !isValidFee(percentFee.getValue())) {
+                formattedString = context.getResources().getString(R.string.fee_flat_formatter,
+                        Currency.getInstance(flatFee.getCurrency()).getSymbol(Locale.getDefault()), flatFee.getValue());
+            } else if (maximumAmount.isEmpty() && !isValidFee(flatFee.getValue())) {
+                formattedString = context.getResources().getString(R.string.fee_percent_only_max_formatter,
+                        percentFee.getValue(),
+                        percentFee.getCurrency(), maximumAmount);
             } else if (maximumAmount.isEmpty()) {
                 formattedString = context.getResources().getString(R.string.fee_mix_only_min_formatter,
                         Currency.getInstance(flatFee.getCurrency()).getSymbol(Locale.getDefault()),
                         flatFee.getValue(), percentFee.getValue(), minimumAmount);
+            } else if (minimumAmount.isEmpty() && !isValidFee(percentFee.getValue())) {
+                formattedString = context.getResources().getString(R.string.fee_flat_formatter,
+                        Currency.getInstance(flatFee.getCurrency()).getSymbol(Locale.getDefault()), flatFee.getValue());
+            } else if (minimumAmount.isEmpty() && !isValidFee(flatFee.getValue())) {
+                formattedString = context.getResources().getString(R.string.fee_percent_only_max_formatter,
+                        percentFee.getValue(),
+                        percentFee.getCurrency(), maximumAmount);
             } else if (minimumAmount.isEmpty()) {
                 formattedString = context.getResources().getString(R.string.fee_mix_only_max_formatter,
                         Currency.getInstance(flatFee.getCurrency()).getSymbol(Locale.getDefault()),
@@ -93,6 +121,7 @@ public class FeeFormatter {
                         flatFee.getValue(), percentFee.getValue(), minimumAmount, maximumAmount);
             }
         }
+        System.out.println("result in mixed " + formattedString);
         return formattedString;
     }
 
@@ -102,7 +131,8 @@ public class FeeFormatter {
         String formattedFee;
         String minimumAmount = fee.getMin();
         String maximumAmount = fee.getMax();
-        if (!TextUtils.isEmpty(fee.getValue()) && Double.parseDouble(fee.getValue()) == 0.0) {
+
+        if (!isValidFee(fee.getValue())) {
             return formattedString;
         }
         if (maximumAmount.isEmpty() && minimumAmount.isEmpty()) {
@@ -132,5 +162,13 @@ public class FeeFormatter {
 
     protected static boolean isZeroFeeAvailable(@NonNull final Context context, String fee) {
         return fee.contains(context.getResources().getString(R.string.noFee));
+    }
+
+    protected static boolean isValidFee(String fee) {
+        if (TextUtils.isEmpty(fee)) {
+            return false;
+        } else {
+            return Double.parseDouble(fee) != 0.0;
+        }
     }
 }

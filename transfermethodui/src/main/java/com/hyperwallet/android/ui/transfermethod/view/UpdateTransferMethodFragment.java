@@ -436,7 +436,10 @@ public class UpdateTransferMethodFragment extends Fragment implements WidgetEven
             }
         } else if (isProcessingTimeAvailable(processingTime) && !isFeeAvailable(fees)) {
             feeAndProcessingTime.setVisibility(View.VISIBLE);
-            feeAndProcessingTime.setText(processingTime.getValue());
+            feeAndProcessingTime.setText(String.format("%s%s",
+                    feeAndProcessingTime.getContext().getString(R.string.noFee),
+                    feeAndProcessingTime.getContext().getString(R.string.processingTimeInformation,
+                            processingTime.getValue())));
         } else {
             feeAndProcessingTime.setVisibility(View.GONE);
         }
