@@ -36,7 +36,6 @@ public class FeeFormatter {
 
     public static String getFormattedFee(@NonNull final Context context, @NonNull final List<Fee> fees) {
         String formattedString = context.getResources().getString(R.string.noFee);
-        System.out.println(" fees size " + fees.size());
         if (fees.size() == 1) {
             formattedString = getSingleFormattedFee(context, fees, formattedString);
         } else {
@@ -49,17 +48,14 @@ public class FeeFormatter {
             String formattedString) {
         Fee fee = fees.get(0);
         if (Fee.FeeRate.FLAT.equals(fee.getFeeRateType())) {
-            System.out.println("Flat fee value " + fee.getValue());
             if (!isValidFee(fee.getValue())) {
                 return formattedString;
             }
             formattedString = context.getResources().getString(R.string.fee_flat_formatter,
                     Currency.getInstance(fee.getCurrency()).getSymbol(Locale.getDefault()), fee.getValue());
         } else if (Fee.FeeRate.PERCENT.equals(fee.getFeeRateType())) {
-            System.out.println("Percentage fee value " + fee.getValue());
             formattedString = getPercentFormattedFee(context, fee, formattedString);
         }
-        System.out.println("result in single" + formattedString);
         return formattedString;
     }
 
@@ -77,7 +73,6 @@ public class FeeFormatter {
             }
         }
         if (flatFee != null && percentFee != null) {
-            System.out.println("mixed formatted value flatFee " + flatFee.getValue() + " percent fee " + percentFee.getValue());
             String minimumAmount = percentFee.getMin();
             String maximumAmount = percentFee.getMax();
 
@@ -97,9 +92,9 @@ public class FeeFormatter {
                 formattedString = context.getResources().getString(R.string.fee_flat_formatter,
                         Currency.getInstance(flatFee.getCurrency()).getSymbol(Locale.getDefault()), flatFee.getValue());
             } else if (maximumAmount.isEmpty() && !isValidFee(flatFee.getValue())) {
-                formattedString = context.getResources().getString(R.string.fee_percent_only_max_formatter,
+                formattedString = context.getResources().getString(R.string.fee_percent_only_min_formatter,
                         percentFee.getValue(),
-                        percentFee.getCurrency(), maximumAmount);
+                        percentFee.getCurrency(), minimumAmount);
             } else if (maximumAmount.isEmpty()) {
                 formattedString = context.getResources().getString(R.string.fee_mix_only_min_formatter,
                         Currency.getInstance(flatFee.getCurrency()).getSymbol(Locale.getDefault()),
@@ -115,13 +110,19 @@ public class FeeFormatter {
                 formattedString = context.getResources().getString(R.string.fee_mix_only_max_formatter,
                         Currency.getInstance(flatFee.getCurrency()).getSymbol(Locale.getDefault()),
                         flatFee.getValue(), percentFee.getValue(), maximumAmount);
+            } else if (isValidFee(percentFee.getValue()) && !isValidFee(flatFee.getValue())) {
+                formattedString = context.getResources().getString(R.string.fee_percent_formatter,
+                        percentFee.getValue(),
+                        percentFee.getCurrency(), minimumAmount, maximumAmount);
+            } else if (isValidFee(flatFee.getValue()) && !isValidFee(percentFee.getValue())) {
+                formattedString = context.getResources().getString(R.string.fee_flat_formatter,
+                        Currency.getInstance(flatFee.getCurrency()).getSymbol(Locale.getDefault()), flatFee.getValue());
             } else {
                 formattedString = context.getResources().getString(R.string.fee_mix_formatter,
                         Currency.getInstance(flatFee.getCurrency()).getSymbol(Locale.getDefault()),
                         flatFee.getValue(), percentFee.getValue(), minimumAmount, maximumAmount);
             }
         }
-        System.out.println("result in mixed " + formattedString);
         return formattedString;
     }
 

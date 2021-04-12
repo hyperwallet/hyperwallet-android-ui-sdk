@@ -93,6 +93,38 @@
         "feeRateType": "FLAT"
       }
     ]
+  },
+  "FEE_TEN": {
+    "nodes": [
+      {
+        "currency": "USD",
+        "feeRateType": "PERCENT",
+        "value": "0.00",
+        "minimum": "10.00",
+        "maximum": "20.00"
+      }
+    ]
+  },
+  "FEE_ELEVEN": {
+    "nodes": [
+      {
+        "currency": "USD",
+        "feeRateType": "PERCENT",
+        "value": "0.00",
+        "minimum": "10.00",
+        "maximum": ""
+      }
+    ]
+  },
+  "FEE_TWELVE": {
+    "nodes": [
+      {
+        "currency": "USD",
+        "feeRateType": "PERCENT",
+        "value": "0.00",
+        "minimum": "",
+        "maximum": "20.00"
+      }
+    ]
   }
-
 }

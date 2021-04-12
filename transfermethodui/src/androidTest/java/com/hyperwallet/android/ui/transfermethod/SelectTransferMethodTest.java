@@ -126,7 +126,7 @@ public class SelectTransferMethodTest {
         onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.country_selection_toolbar)))).check(
                 matches(withText(R.string.mobileCountryRegion)));
         onView(withId(R.id.search_button)).check(doesNotExist());
-        onView(withId(R.id.country_selection_list)).check(new RecyclerViewCountAssertion(5));
+        onView(withId(R.id.country_selection_list)).check(new RecyclerViewCountAssertion(6));
         onView(allOf(withId(R.id.country_name), withText("Canada"))).check(matches(isDisplayed()));
         onView(allOf(withId(R.id.country_name), withText("Croatia"))).check(matches(isDisplayed()));
         onView(allOf(withId(R.id.country_name), withText("Mexico"))).check(matches(isDisplayed()));
@@ -277,7 +277,7 @@ public class SelectTransferMethodTest {
         onView(withId(R.id.select_transfer_method_types_list)).check(
                 matches(atPosition(0, hasDescendant(withText(R.string.bank_account)))));
         onView(withId(R.id.select_transfer_method_types_list)).check(
-                matches(atPosition(0, hasDescendant(withText("1-2 Business days")))));
+                matches(atPosition(0, hasDescendant(withText("No fee \u2022 1-2 Business days")))));
     }
 
     @Test
