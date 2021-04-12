@@ -199,6 +199,7 @@ public class ListTransferSourceFragment extends DialogFragment {
         private final TextView mTitle;
         private final TextView mIcon;
         private final TextView mTransferSourceIdentification;
+        private final TextView mTransferSourceCurrency;
         private final ImageView mSelectedIcon;
         private final ListTransferSourceViewModel mViewModel;
         private TransferSource mSource;
@@ -209,8 +210,8 @@ public class ListTransferSourceFragment extends DialogFragment {
 
             mIcon = itemView.findViewById(R.id.icon);
             mTitle = itemView.findViewById(R.id.title);
-            mTransferSourceIdentification = itemView.findViewById(R.id.description_1);
-            itemView.findViewById(R.id.description_2).setVisibility(View.GONE);
+            mTransferSourceIdentification = itemView.findViewById(R.id.description_2);
+            mTransferSourceCurrency = itemView.findViewById(R.id.description_1);
             mSelectedIcon = itemView.findViewById(R.id.item_selected_image);
             mViewModel = viewModel;
         }
@@ -225,14 +226,17 @@ public class ListTransferSourceFragment extends DialogFragment {
             if (source.getType().equals(PREPAID_CARD)) {
                 mTitle.setText(getTransferMethodName(mTitle.getContext(), source.getType()));
                 mIcon.setText(getStringFontIcon(mIcon.getContext(), source.getType()));
+                mTransferSourceIdentification.setText(
+                        getTransferMethodDetail(mTransferSourceIdentification.getContext(),
+                                source.getIdentification(), source.getType()));
+                mTransferSourceCurrency.setText(source.getCurrencyCodes());
+                mTransferSourceIdentification.setVisibility(View.VISIBLE);
             } else {
                 mTitle.setText(mTitle.getContext().getString(R.string.availableFunds));
                 mIcon.setText(mIcon.getContext().getString(R.string.available_funds_font_icon));
+                mTransferSourceCurrency.setText(source.getCurrencyCodes());
+                mTransferSourceIdentification.setVisibility(View.GONE);
             }
-            mTransferSourceIdentification.setText(source.getIdentification() == null ? source.getCurrencyCodes()
-                    : getTransferMethodDetail(mTransferSourceIdentification.getContext(),
-                            source.getIdentification(), source.getType()));
-
             if (selected) {
                 mSelectedIcon.setVisibility(View.VISIBLE);
             } else {

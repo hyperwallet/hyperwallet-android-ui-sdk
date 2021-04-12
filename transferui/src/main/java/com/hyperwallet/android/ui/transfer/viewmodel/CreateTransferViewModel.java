@@ -525,6 +525,7 @@ public class CreateTransferViewModel extends ViewModel {
                     TransferSource sourceWrapper = new TransferSource();
                     sourceWrapper.setToken(prepaidCard.getField(TOKEN));
                     sourceWrapper.setType(PREPAID_CARD);
+                    sourceWrapper.setCurrencyCodes(prepaidCard.getField(TRANSFER_METHOD_CURRENCY));
                     sourceWrapper.setIdentification(prepaidCard);
                     sources.add(sourceWrapper);
                     mSelectedTransferSource.postValue(sourceWrapper);
@@ -555,6 +556,7 @@ public class CreateTransferViewModel extends ViewModel {
                     TransferSource sourceWrapper = new TransferSource();
                     sourceWrapper.setToken(prepaidCard.getField(TOKEN));
                     sourceWrapper.setType(PREPAID_CARD);
+                    sourceWrapper.setCurrencyCodes(prepaidCard.getField(TRANSFER_METHOD_CURRENCY));
                     sourceWrapper.setIdentification(prepaidCard);
                     sources.add(sourceWrapper);
                 }
