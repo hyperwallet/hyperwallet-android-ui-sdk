@@ -535,8 +535,11 @@ public class SelectTransferMethodTest {
         onView(withId(R.id.select_transfer_method_country_value)).perform(click());
         onView(allOf(withId(R.id.country_name), withText("CHINA"))).perform(click());
 
-        String venmoTransferFee = InstrumentationRegistry.getInstrumentation().getTargetContext()
+        String mixedFee = InstrumentationRegistry.getInstrumentation().getTargetContext()
                 .getString(R.string.fee_mix_formatter,usdDollarSymbol,"5.00","4.50","4.00","10.00");
+
+        String venmoTransferFee = InstrumentationRegistry.getInstrumentation().getTargetContext()
+                .getString(R.string.feeInformation,mixedFee);
 
         String venmoTransferProcessingTime = InstrumentationRegistry.getInstrumentation().getTargetContext()
                 .getString(R.string.processingTimeInformation, "1-2 Business days");
