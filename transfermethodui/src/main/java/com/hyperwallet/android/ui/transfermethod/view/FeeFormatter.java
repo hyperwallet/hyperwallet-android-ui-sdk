@@ -161,7 +161,7 @@ public class FeeFormatter {
         return processingTime != null && !TextUtils.isEmpty(processingTime.getValue());
     }
 
-    protected static boolean isZeroFeeAvailable(@NonNull final Context context, String fee) {
+    protected static boolean isNoFeeStringAvailable(@NonNull final Context context, String fee) {
         return fee.contains(context.getResources().getString(R.string.noFee));
     }
 
@@ -170,6 +170,31 @@ public class FeeFormatter {
             return false;
         } else {
             return Double.parseDouble(fee) != 0.0;
+        }
+    }
+
+    public static String getFormattedFeeAndProcessingTime(@NonNull Context context, @NonNull final List<Fee> fees,
+            @Nullable final ProcessingTime processingTime) {
+        if (isFeeAvailable(fees)) {
+            String formattedFee = getFormattedFee(context, fees);
+            if (isNoFeeStringAvailable(context, formattedFee) && isProcessingTimeAvailable(processingTime)) {
+                return String.format("%s%s", context.getResources().getString(R.string.noFee),
+                        context.getResources().getString(R.string.processingTimeInformation,
+                                processingTime.getValue()));
+            } else if (!isNoFeeStringAvailable(context, formattedFee) && !isProcessingTimeAvailable(processingTime)) {
+                return context.getResources().getString(R.string.feeInformation, formattedFee);
+            } else if (!isNoFeeStringAvailable(context, formattedFee) && isProcessingTimeAvailable(processingTime)) {
+                return String.format("%s%s", context.getResources().getString(R.string.feeInformation, formattedFee),
+                        context.getResources().getString(R.string.processingTimeInformation,
+                                processingTime.getValue()));
+            } else {
+                return context.getResources().getString(R.string.noFee);
+            }
+        } else if (isProcessingTimeAvailable(processingTime) && !isFeeAvailable(fees)) {
+            return String.format("%s%s", context.getResources().getString(R.string.noFee),
+                    context.getResources().getString(R.string.processingTimeInformation, processingTime.getValue()));
+        } else {
+            return context.getResources().getString(R.string.noFee);
         }
     }
 }
