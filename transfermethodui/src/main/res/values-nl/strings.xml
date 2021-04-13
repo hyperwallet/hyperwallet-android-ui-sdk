@@ -24,8 +24,8 @@
     <string name="default_account_sub_label">Selecteer een standaard overboekingsmethode</string>
     <string name="api_expiry_date_format">MM/JJ</string>
 
-    <string name="feeAndProcessingTimeInformation">%s kosten \u2022 %s</string>
     <string name="feeInformation">%s kosten</string>
+    <string name="noFee">Geen kosten</string>
 
     <string name="emptyStateAddTransferMethod">Voeg een overboekingsmethode toe om te beginnen.</string>
 

@@ -25,8 +25,8 @@
     <string name="default_account_sub_label">Välj en standardöverföringsmetod</string>
     <string name="api_expiry_date_format">MM/ÅÅ</string>
 
-    <string name="feeAndProcessingTimeInformation">%s avgift \u2022 %s</string>
     <string name="feeInformation">%s avgift</string>
+    <string name="noFee">Ingen avgift</string>
 
     <string name="emptyStateAddTransferMethod">Lägg till en överföringsmetod för att komma igång.</string>
 

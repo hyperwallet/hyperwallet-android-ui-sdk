@@ -518,6 +518,40 @@
                           }
                         ]
                       }
+                    },
+                    {
+                      "code": "VENMO_ACCOUNT",
+                      "name": "VENMO",
+                      "fees": {
+                        "nodes": [
+                          {
+                            "country": "CN",
+                            "currency": "USD",
+                            "transferMethodType": "VENMO_ACCOUNT",
+                            "value": "5.00",
+                            "feeRateType": "FLAT"
+                          },
+                          {
+                            "country": "CN",
+                            "currency": "USD",
+                            "transferMethodType": "VENMO_ACCOUNT",
+                            "value": "4.50",
+                            "feeRateType": "PERCENT",
+                            "minimum": "4.00",
+                            "maximum": "10.00"
+                          }
+                        ]
+                      },
+                      "processingTimes": {
+                        "nodes": [
+                          {
+                            "value": "1-2 Business days",
+                            "country": "CN",
+                            "currency": "USD",
+                            "transferMethodType": "VENMO_ACCOUNT"
+                          }
+                        ]
+                      }
                     }
                   ]
                 }

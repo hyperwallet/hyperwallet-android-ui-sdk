@@ -25,8 +25,8 @@
     <string name="default_account_sub_label">デフォルトの送金方法を選択</string>
     <string name="api_expiry_date_format">MM/YY</string>
 
-    <string name="feeAndProcessingTimeInformation">%s手数料 \u2022 %s</string>
     <string name="feeInformation">%s手数料</string>
+    <string name="noFee">手数料なし</string>
 
     <string name="emptyStateAddTransferMethod">始めるには、送金方法を追加します。</string>
 

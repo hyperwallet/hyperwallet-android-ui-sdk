@@ -25,8 +25,8 @@
     <string name="default_account_sub_label">Selectați o metodă implicită de transfer</string>
     <string name="api_expiry_date_format">LL/AA</string>
 
-    <string name="feeAndProcessingTimeInformation">%s comision \u2022 %s</string>
     <string name="feeInformation">%s comision</string>
+    <string name="noFee">Nicio taxă</string>
 
     <string name="emptyStateAddTransferMethod">Adăugați o metodă de transfer pentru a începe.</string>
 

@@ -24,8 +24,8 @@
     <string name="default_account_sub_label">Выбрать способ перевода по умолчанию</string>
     <string name="api_expiry_date_format">ММ/ГГ</string>
 
-    <string name="feeAndProcessingTimeInformation">%s сбор \u2022 %s</string>
     <string name="feeInformation">%s сбор</string>
+    <string name="noFee">Комиссия отсутствует</string>
 
     <string name="emptyStateAddTransferMethod">Чтобы начать, добавьте способ перевода.</string>
 

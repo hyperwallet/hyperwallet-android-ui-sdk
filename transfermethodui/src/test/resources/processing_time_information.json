@@ -1,0 +1,22 @@
+{
+  "PROCESSING_TIME_ONE": {
+    "nodes": [
+      {
+        "value": "1-2 Business days",
+        "country": "CN",
+        "currency": "USD",
+        "transferMethodType": "BANK_ACCOUNT"
+      }
+    ]
+  },
+  "PROCESSING_TIME_TWO": {
+    "nodes": [
+      {
+        "value": "IMMEDIATE",
+        "country": "CN",
+        "currency": "USD",
+        "transferMethodType": "PAYPAL_ACCOUNT"
+      }
+    ]
+  }
+}

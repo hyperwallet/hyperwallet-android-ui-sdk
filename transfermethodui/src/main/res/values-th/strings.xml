@@ -25,8 +25,8 @@
     <string name="default_account_sub_label">เลือกวิธีการโอนเงินเริ่มต้น</string>
     <string name="api_expiry_date_format">ดด/ปป</string>
 
-    <string name="feeAndProcessingTimeInformation">ค่าธรรมเนียม %s \u2022 %s</string>
     <string name="feeInformation">ค่าธรรมเนียม %s</string>
+    <string name="noFee">ไม่มีค่าธรรมเนียม</string>
 
     <string name="emptyStateAddTransferMethod">เพิ่มวิธีการโอนเงินเพื่อเริ่มต้นใช้งาน</string>
 

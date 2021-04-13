@@ -25,8 +25,8 @@
     <string name="default_account_sub_label">Pilih metode transfer standar</string>
     <string name="api_expiry_date_format">BB/TT</string>
 
-    <string name="feeAndProcessingTimeInformation">Biaya %s \u2022 %s</string>
     <string name="feeInformation">Biaya %s </string>
+    <string name="noFee">Tidak Ada Biaya</string>
 
     <string name="emptyStateAddTransferMethod">Tambahkan metode transfer untuk memulai.</string>
 

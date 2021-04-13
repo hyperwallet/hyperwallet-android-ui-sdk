@@ -24,8 +24,8 @@
     <string name="default_account_sub_label">Chọn phương thức chuyển mặc định</string>
     <string name="api_expiry_date_format">MM/YY</string>
 
-    <string name="feeAndProcessingTimeInformation">%s phí \u2022 %s</string>
     <string name="feeInformation">%s phí</string>
+    <string name="noFee">Miễn phí</string>
 
     <string name="emptyStateAddTransferMethod">Thêm phương thức chuyển tiền để bắt đầu.</string>
 
