@@ -515,4 +515,35 @@ public class SelectTransferMethodTest {
 
 
     }
+
+    @Test
+    public void testSelectTransferMethod_verifyMixedFeeIsDisplayed() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("user_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_keys_mixedfee_response.json")).mock();
+
+        mActivityTestRule.launchActivity(null);
+
+        onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
+        onView(withText(R.string.mobileAddTransferMethodHeader)).check(matches(withParent(withId(R.id.toolbar))));
+
+        onView(withId(R.id.select_transfer_method_country_value)).check(matches(withText("United States")));
+        onView(withId(R.id.select_transfer_method_currency_value)).check(matches(withText("USD")));
+        onView(withId(R.id.select_transfer_method_types_list)).check(new RecyclerViewCountAssertion(4));
+
+        onView(withId(R.id.select_transfer_method_country_value)).perform(click());
+        onView(allOf(withId(R.id.country_name), withText("CHINA"))).perform(click());
+
+        String venmoTransferFee = InstrumentationRegistry.getInstrumentation().getTargetContext()
+                .getString(R.string.fee_mix_formatter,usdDollarSymbol,"5.00","4.50","4.00","10.00");
+
+        String venmoTransferProcessingTime = InstrumentationRegistry.getInstrumentation().getTargetContext()
+                .getString(R.string.processingTimeInformation, "1-2 Business days");
+
+        onView(withId(R.id.select_transfer_method_types_list)).check(
+                matches(atPosition(4, hasDescendant(withText(venmoTransferFee+venmoTransferProcessingTime)))));
+
+
+    }
 }
