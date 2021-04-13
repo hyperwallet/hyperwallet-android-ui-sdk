@@ -18,7 +18,9 @@ package com.hyperwallet.android.ui.transfer.view;
 
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TOKEN;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TRANSFER_METHOD_COUNTRY;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TRANSFER_METHOD_CURRENCY;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TYPE;
+import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.PREPAID_CARD;
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getStringFontIcon;
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getStringResourceByName;
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getTransferMethodDetail;
@@ -266,7 +268,11 @@ public class ListTransferDestinationFragment extends DialogFragment {
 
             mTitle.setText(getStringResourceByName(mTitle.getContext(), type));
             mIcon.setText(getStringFontIcon(mIcon.getContext(), type));
-            mTransferDestinationCountry.setText(locale.getDisplayName());
+            if (type.equals(PREPAID_CARD)) {
+                mTransferDestinationCountry.setText(destination.getField(TRANSFER_METHOD_CURRENCY));
+            } else {
+                mTransferDestinationCountry.setText(locale.getDisplayName());
+            }
             mTransferDestinationIdentification.setText(transferId);
 
             if (selected) {
