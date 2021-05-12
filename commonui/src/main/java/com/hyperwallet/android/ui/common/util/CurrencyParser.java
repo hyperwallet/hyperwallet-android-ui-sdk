@@ -12,6 +12,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
@@ -137,15 +138,11 @@ public class CurrencyParser {
      */
     public static String getValueWithTruncateDecimals(String value, int noOfDecimals) {
         if (value != null) {
-            String returnValue = value;
-            int decimalLength = 0;
-            if (value.contains(".")) {
-                decimalLength = value.substring(value.indexOf(".")).length();
-            }
-            if (decimalLength > noOfDecimals) {
-                returnValue = value.substring(0, value.indexOf(".") + noOfDecimals + 1);
-            }
-            return returnValue;
+            NumberFormat nf = NumberFormat.getNumberInstance();
+            nf.setMaximumFractionDigits(noOfDecimals);
+            nf.setRoundingMode(RoundingMode.HALF_UP);
+            double amount = Double.parseDouble(value);
+            return nf.format(amount);
         } else {
             return "";
         }
