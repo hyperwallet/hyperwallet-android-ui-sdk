@@ -66,14 +66,15 @@ public class TabbedListReceiptsActivity extends AppCompatActivity implements OnN
             }
         });
 
-        if (getIntent().getBooleanExtra(EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT, false)) {
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        }
-
         mTabbedListReceiptsViewModel = ViewModelProviders.of(this,
                 new TabbedListReceiptsViewModel.TabbedListReceiptsViewModelFactory(new UserRepositoryImpl(),
                         new PrepaidCardRepositoryImpl()))
                 .get(TabbedListReceiptsViewModel.class);
+
+        if (getIntent().getBooleanExtra(EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT, false)) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+            mTabbedListReceiptsViewModel.setPortraitMode(true);
+        }
 
         registerObservers();
 

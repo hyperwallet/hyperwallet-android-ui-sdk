@@ -197,9 +197,9 @@ public class TabbedListReceiptsFragment extends Fragment {
                 if (prepaidCard != null && prepaidCard.getField(TOKEN) != null) {
                     token = prepaidCard.getField(TOKEN);
                 }
-                return ListReceiptsFragment.newInstance(token);
+                return ListReceiptsFragment.newInstance(token, mTabbedListReceiptsViewModel.isPortraitMode());
             }
-            return ListReceiptsFragment.newInstance();
+            return ListReceiptsFragment.newInstance(mTabbedListReceiptsViewModel.isPortraitMode());
         }
 
         @Nullable
