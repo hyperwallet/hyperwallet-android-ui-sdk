@@ -19,6 +19,7 @@ package com.hyperwallet.android.ui.transfer.view;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.WindowManager;
@@ -44,6 +45,7 @@ public class ListTransferSourceActivity extends AppCompatActivity implements OnN
     public static final String EXTRA_SELECTED_SOURCE = "EXTRA_SELECTED_SOURCE";
     public static final String EXTRA_SELECTED_SOURCE_TOKEN = "SELECTED_SOURCE_TOKEN";
     public static final String EXTRA_TRANSFER_SOURCE_LIST = "TRANSFER_SOURCE_LIST";
+    public static final String EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT = "EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT";
 
     private ListTransferSourceViewModel mListTransferSourceViewModel;
 
@@ -68,6 +70,10 @@ public class ListTransferSourceActivity extends AppCompatActivity implements OnN
         if (savedInstanceState == null) {
             ActivityUtils.initFragment(this, ListTransferSourceFragment.newInstance(transferToken, sourceList),
                     R.id.list_source_fragment);
+        }
+
+        if (getIntent().getBooleanExtra(EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT, false)) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
 
         registerObservers();

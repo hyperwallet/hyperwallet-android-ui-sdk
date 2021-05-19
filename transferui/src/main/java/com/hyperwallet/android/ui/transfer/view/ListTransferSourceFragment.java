@@ -61,7 +61,7 @@ public class ListTransferSourceFragment extends DialogFragment {
     private RecyclerView mRecyclerView;
     private ListTransferSourceAdapter mListTransferSourceAdapter;
     private String mActiveTransferSourceToken;
-    private List<TransferSource> mTransferSourceList = new ArrayList<>();
+    private ArrayList<TransferSource> mTransferSourceList = new ArrayList<>();
 
     /**
      * Please don't use this constructor this is reserved for Android Core Framework
@@ -88,6 +88,12 @@ public class ListTransferSourceFragment extends DialogFragment {
         super.onCreate(savedInstanceState);
         mListTransferSourceViewModel = ViewModelProviders.of(requireActivity()).get(
                 ListTransferSourceViewModel.class);
+
+        if (savedInstanceState != null) {
+            mActiveTransferSourceToken = savedInstanceState.getString(ARGUMENT_SELECTED_TRANSFER_SOURCE_TOKEN);
+            mTransferSourceList = savedInstanceState.getParcelableArrayList(ARGUMENT_TRANSFER_SOURCE_LIST);
+        }
+
     }
 
     @Override
@@ -248,5 +254,13 @@ public class ListTransferSourceFragment extends DialogFragment {
         void recycle() {
             itemView.setOnClickListener(null);
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(ARGUMENT_SELECTED_TRANSFER_SOURCE_TOKEN,mActiveTransferSourceToken);
+        outState.putParcelableArrayList(ARGUMENT_TRANSFER_SOURCE_LIST,mTransferSourceList);
+
     }
 }
