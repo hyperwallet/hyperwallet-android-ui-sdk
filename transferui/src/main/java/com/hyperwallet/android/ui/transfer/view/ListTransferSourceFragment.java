@@ -25,6 +25,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,7 +62,7 @@ public class ListTransferSourceFragment extends DialogFragment {
     private RecyclerView mRecyclerView;
     private ListTransferSourceAdapter mListTransferSourceAdapter;
     private String mActiveTransferSourceToken;
-    private ArrayList<TransferSource> mTransferSourceList = new ArrayList<>();
+    private List<TransferSource> mTransferSourceList = new ArrayList<>();
 
     /**
      * Please don't use this constructor this is reserved for Android Core Framework
@@ -260,7 +261,7 @@ public class ListTransferSourceFragment extends DialogFragment {
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString(ARGUMENT_SELECTED_TRANSFER_SOURCE_TOKEN,mActiveTransferSourceToken);
-        outState.putParcelableArrayList(ARGUMENT_TRANSFER_SOURCE_LIST,mTransferSourceList);
+        outState.putParcelableArrayList(ARGUMENT_TRANSFER_SOURCE_LIST,(ArrayList<? extends Parcelable>)mTransferSourceList);
 
     }
 }
