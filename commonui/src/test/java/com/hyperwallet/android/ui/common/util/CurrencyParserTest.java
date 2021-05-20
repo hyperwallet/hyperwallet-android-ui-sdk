@@ -122,12 +122,12 @@ public class CurrencyParserTest {
     @Test
     public void testFXRateWithFourDecimal()
     {
-        assertThat("1.2345",is(CurrencyParser.getValueWithTruncateDecimals("1.234567",4)));
+        assertThat("1.2346",is(CurrencyParser.getValueWithTruncateDecimals("1.234567",4)));
         assertThat("1.234",is(CurrencyParser.getValueWithTruncateDecimals("1.234",4)));
-        assertThat("1.0000",is(CurrencyParser.getValueWithTruncateDecimals("1.000056",4)));
+        assertThat("1.0001",is(CurrencyParser.getValueWithTruncateDecimals("1.000056",4)));
         assertThat("1",is(CurrencyParser.getValueWithTruncateDecimals("1",4)));
         assertThat("",is(CurrencyParser.getValueWithTruncateDecimals(null,4)));
-        assertThat("1.234",is(CurrencyParser.getValueWithTruncateDecimals("1.234567",3)));
+        assertThat("1.235",is(CurrencyParser.getValueWithTruncateDecimals("1.234567",3)));
         assertThat("1.23",is(CurrencyParser.getValueWithTruncateDecimals("1.234567",2)));
         assertThat("1.2",is(CurrencyParser.getValueWithTruncateDecimals("1.234567",1)));
     }
