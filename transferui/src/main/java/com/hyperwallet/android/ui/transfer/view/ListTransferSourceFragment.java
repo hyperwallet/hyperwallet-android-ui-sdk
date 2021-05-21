@@ -25,6 +25,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,6 +89,12 @@ public class ListTransferSourceFragment extends DialogFragment {
         super.onCreate(savedInstanceState);
         mListTransferSourceViewModel = ViewModelProviders.of(requireActivity()).get(
                 ListTransferSourceViewModel.class);
+
+        if (savedInstanceState != null) {
+            mActiveTransferSourceToken = savedInstanceState.getString(ARGUMENT_SELECTED_TRANSFER_SOURCE_TOKEN);
+            mTransferSourceList = savedInstanceState.getParcelableArrayList(ARGUMENT_TRANSFER_SOURCE_LIST);
+        }
+
     }
 
     @Override
@@ -248,5 +255,13 @@ public class ListTransferSourceFragment extends DialogFragment {
         void recycle() {
             itemView.setOnClickListener(null);
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(ARGUMENT_SELECTED_TRANSFER_SOURCE_TOKEN,mActiveTransferSourceToken);
+        outState.putParcelableArrayList(ARGUMENT_TRANSFER_SOURCE_LIST,(ArrayList<? extends Parcelable>)mTransferSourceList);
+
     }
 }

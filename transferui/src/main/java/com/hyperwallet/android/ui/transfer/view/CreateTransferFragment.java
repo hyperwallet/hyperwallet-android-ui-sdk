@@ -231,6 +231,8 @@ public class CreateTransferFragment extends Fragment {
                         sourceList);
                 intent.putExtra(ListTransferSourceActivity.EXTRA_SELECTED_SOURCE_TOKEN,
                         activeSource.getToken());
+                intent.putExtra(ListTransferSourceActivity.EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT,
+                        mCreateTransferViewModel.isPortraitMode());
                 startActivityForResult(intent, SELECT_TRANSFER_SOURCE_REQUEST_CODE);
             }
         });
@@ -584,6 +586,8 @@ public class CreateTransferFragment extends Fragment {
                                             sourceList);
                                     intent.putExtra(ListTransferSourceActivity.EXTRA_SELECTED_SOURCE_TOKEN,
                                             activeSource.getToken());
+                                    intent.putExtra(ListTransferSourceActivity.EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT,
+                                            mCreateTransferViewModel.isPortraitMode());
                                     startActivityForResult(intent, SELECT_TRANSFER_SOURCE_REQUEST_CODE);
                                 }
                             });

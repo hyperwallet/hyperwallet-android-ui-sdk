@@ -48,6 +48,7 @@ public class TabbedListReceiptsViewModel extends ViewModel {
     private MutableLiveData<Boolean> retryListReceipts = new MutableLiveData<Boolean>();
     public ProgramModel mProgramModel;
     private boolean mIsInitialized;
+    private boolean mIsPortraitMode;
 
     public MutableLiveData<User> getUser() {
         return mUser;
@@ -68,6 +69,14 @@ public class TabbedListReceiptsViewModel extends ViewModel {
 
     public MutableLiveData<Boolean> getRetryListReceipts() {
         return retryListReceipts;
+    }
+
+    public boolean isPortraitMode() {
+        return mIsPortraitMode;
+    }
+
+    public void setPortraitMode(final boolean portraitMode) {
+        mIsPortraitMode = portraitMode;
     }
 
     public TabbedListReceiptsViewModel(
