@@ -767,7 +767,11 @@ public class CreateTransferFragment extends Fragment {
 
     private String formattedAmount(final double amount, final String currencyCode) {
         DecimalFormat currencyFormatter = (DecimalFormat) DecimalFormat.getCurrencyInstance();
-        currencyFormatter.setMinimumFractionDigits(mNumberOfFractionDigits);
+        if (mNumberOfFractionDigits < 3) {
+            currencyFormatter.setMaximumFractionDigits(mNumberOfFractionDigits);
+        } else {
+            currencyFormatter.setMinimumFractionDigits(mNumberOfFractionDigits);
+        }
         currencyFormatter.setCurrency(Currency.getInstance(currencyCode == null ? US_CURRENCY_CODE : currencyCode));
         DecimalFormatSymbols decimalFormatSymbols = currencyFormatter.getDecimalFormatSymbols();
         decimalFormatSymbols.setCurrencySymbol("");
