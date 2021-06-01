@@ -1,6 +1,6 @@
 {
   "data": {
-    "transferMethodUIConfigurations": {
+    "transferMethodCreateUIConfigurations": {
       "nodes": [
         {
           "country": "US",
