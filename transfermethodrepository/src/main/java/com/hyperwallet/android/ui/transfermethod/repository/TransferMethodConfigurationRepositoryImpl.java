@@ -37,6 +37,7 @@ import com.hyperwallet.android.exception.HyperwalletException;
 import com.hyperwallet.android.listener.HyperwalletListener;
 import com.hyperwallet.android.model.graphql.HyperwalletTransferMethodConfigurationField;
 import com.hyperwallet.android.model.graphql.HyperwalletTransferMethodConfigurationKey;
+import com.hyperwallet.android.model.graphql.query.TransferMethodConfigurationFeeAndProcessingTimeQuery;
 import com.hyperwallet.android.model.graphql.query.TransferMethodConfigurationFieldQuery;
 import com.hyperwallet.android.model.graphql.query.TransferMethodConfigurationKeysQuery;
 import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
@@ -97,6 +98,31 @@ public class TransferMethodConfigurationRepositoryImpl implements TransferMethod
                 });
     }
 
+    @VisibleForTesting
+    void getTransferMethodConfigurationFeeAndProcessingTimeKeyResult(final String country, final String currency, final LoadKeysCallback loadKeysCallback){
+        TransferMethodConfigurationFeeAndProcessingTimeQuery query = new TransferMethodConfigurationFeeAndProcessingTimeQuery(country, currency);
+        EspressoIdlingResource.increment();
+        getHyperwallet().retrieveTransferMethodConfigurationKeysForFeeAndProcessingTime(query,
+                new HyperwalletListener<HyperwalletTransferMethodConfigurationKey>() {
+                    @Override
+                    public void onSuccess(@Nullable HyperwalletTransferMethodConfigurationKey result) {
+                        loadKeysCallback.onKeysLoaded(result);
+                        EspressoIdlingResource.decrement();
+                    }
+
+                    @Override
+                    public void onFailure(HyperwalletException exception) {
+                        loadKeysCallback.onError(exception.getErrors());
+                        EspressoIdlingResource.decrement();
+                    }
+
+                    @Override
+                    public Handler getHandler() {
+                        return mHandler;
+                    }
+                });
+    }
+
 
     @VisibleForTesting
     void getTransferMethodConfigurationFieldResult(@NonNull final String country,
@@ -141,6 +167,12 @@ public class TransferMethodConfigurationRepositoryImpl implements TransferMethod
         } else {
             loadKeysCallback.onKeysLoaded(mTransferMethodConfigurationKey);
         }
+    }
+
+    @Override
+    public synchronized void getFeeAndProcessingTime(@NonNull String country, @NonNull String currency,
+            @NonNull LoadKeysCallback loadKeysCallback) {
+            getTransferMethodConfigurationFeeAndProcessingTimeKeyResult(country, currency, loadKeysCallback);
     }
 
     @Override

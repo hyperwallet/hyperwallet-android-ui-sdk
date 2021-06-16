@@ -1,0 +1,93 @@
+{
+  "data": {
+    "countries": {
+      "nodes": [
+        {
+          "code": "CA",
+          "name": "Canada",
+          "currencies": {
+            "nodes": [
+              {
+                "code": "CAD",
+                "name": "CAD",
+                "transferMethodTypes": {
+                  "nodes": [
+                    {
+                      "code": "BANK_ACCOUNT",
+                      "name": "Bank Account",
+                      "processingTimes": {
+                        "nodes": [
+                          {
+                            "country": "CA",
+                            "currency": "CAD",
+                            "transferMethodType": "BANK_ACCOUNT",
+                            "value": "1 - 3 Business days"
+                          }
+                        ]
+                      },
+                      "fees": {
+                        "nodes": [
+                          {
+                            "currency": "CAD",
+                            "feeRateType": "FLAT",
+                            "value": "2.20"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "code": "PAPER_CHECK",
+                      "name": "Paper Check",
+                      "processingTimes": {
+                        "nodes": [
+                          {
+                            "country": "CA",
+                            "currency": "CAD",
+                            "transferMethodType": "PAPER_CHECK",
+                            "value": "5 - 7 Business days"
+                          }
+                        ]
+                      },
+                      "fees": {
+                        "nodes": [
+                          {
+                            "currency": "CAD",
+                            "feeRateType": "FLAT",
+                            "value": "1.00"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "code": "PAYPAL_ACCOUNT",
+                      "name": "PayPal",
+                      "processingTimes": {
+                        "nodes": [
+                          {
+                            "country": "CA",
+                            "currency": "CAD",
+                            "transferMethodType": "PAYPAL_ACCOUNT",
+                            "value": "IMMEDIATE"
+                          }
+                        ]
+                      },
+                      "fees": {
+                        "nodes": [
+                          {
+                            "currency": "CAD",
+                            "feeRateType": "FLAT",
+                            "value": "0.25"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
