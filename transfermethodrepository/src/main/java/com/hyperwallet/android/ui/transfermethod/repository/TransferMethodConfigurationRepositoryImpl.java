@@ -39,7 +39,7 @@ import com.hyperwallet.android.model.graphql.HyperwalletTransferMethodConfigurat
 import com.hyperwallet.android.model.graphql.HyperwalletTransferMethodConfigurationKey;
 import com.hyperwallet.android.model.graphql.query.TransferMethodConfigurationFieldQuery;
 import com.hyperwallet.android.model.graphql.query.TransferMethodConfigurationKeysQuery;
-import com.hyperwallet.android.model.graphql.query.TransferMethodConfigurationTransferTypesFeeAndProcessingTimeQuery;
+import com.hyperwallet.android.model.graphql.query.TransferMethodTypesFeeAndProcessingTimesQuery;
 import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
 
 import java.util.HashMap;
@@ -100,7 +100,7 @@ public class TransferMethodConfigurationRepositoryImpl implements TransferMethod
 
     @VisibleForTesting
     void getTransferMethodTypesFeeAndProcessingTimeKeyResult(final String country, final String currency, final LoadKeysCallback loadKeysCallback){
-        TransferMethodConfigurationTransferTypesFeeAndProcessingTimeQuery query = new TransferMethodConfigurationTransferTypesFeeAndProcessingTimeQuery(country, currency);
+        TransferMethodTypesFeeAndProcessingTimesQuery query = new TransferMethodTypesFeeAndProcessingTimesQuery(country, currency);
         EspressoIdlingResource.increment();
         getHyperwallet().retrieveTransferMethodTypesFeesAndProcessingTimes(query,
                 new HyperwalletListener<HyperwalletTransferMethodConfigurationKey>() {
