@@ -1,0 +1,124 @@
+{
+  "data": {
+    "countries": {
+      "nodes": [
+        {
+          "code": "US",
+          "name": "United States",
+          "currencies": {
+            "nodes": [
+              {
+                "code": "USD",
+                "name": "United States Dollar",
+                "transferMethodTypes": {
+                  "nodes": [
+                    {
+                      "code": "BANK_ACCOUNT",
+                      "name": "Bank Account",
+                      "fees": {
+                        "nodes": [
+                          {
+                            "country": "US",
+                            "currency": "USD",
+                            "transferMethodType": "BANK_ACCOUNT",
+                            "value": "2.00",
+                            "feeRateType": "FLAT"
+                          }
+                        ]
+                      },
+                      "processingTimes": {
+                        "nodes": [
+                          {
+                            "value": "1-2 Business days",
+                            "country": "US",
+                            "currency": "USD",
+                            "transferMethodType": "BANK_ACCOUNT"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "code": "BANK_CARD",
+                      "name": "Debit Card",
+                      "fees": {
+                        "nodes": [
+                          {
+                            "country": "US",
+                            "currency": "USD",
+                            "transferMethodType": "BANK_CARD",
+                            "value": "1.75",
+                            "feeRateType": "FLAT"
+                          }
+                        ]
+                      },
+                      "processingTimes": {
+                        "nodes": [
+                          {
+                            "value": "IMMEDIATE",
+                            "country": "US",
+                            "currency": "USD",
+                            "transferMethodType": "BANK_CARD"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "code": "WIRE_ACCOUNT",
+                      "name": "Wire Transfer",
+                      "fees": {
+                        "nodes": [
+                          {
+                            "country": "US",
+                            "currency": "USD",
+                            "transferMethodType": "WIRE_ACCOUNT",
+                            "value": "20.00",
+                            "feeRateType": "FLAT"
+                          }
+                        ]
+                      },
+                      "processingTimes": {
+                        "nodes": [
+                          {
+                            "value": "1-3 Business days",
+                            "country": "US",
+                            "currency": "USD",
+                            "transferMethodType": "WIRE_ACCOUNT"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "code": "PAYPAL_ACCOUNT",
+                      "name": "PayPal",
+                      "fees": {
+                        "nodes": [
+                          {
+                            "country": "US",
+                            "currency": "USD",
+                            "transferMethodType": "PAYPAL_ACCOUNT",
+                            "value": "0.25",
+                            "feeRateType": "FLAT"
+                          }
+                        ]
+                      },
+                      "processingTimes": {
+                        "nodes": [
+                          {
+                            "value": "IMMEDIATE",
+                            "country": "US",
+                            "currency": "USD",
+                            "transferMethodType": "PAYPAL_ACCOUNT"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

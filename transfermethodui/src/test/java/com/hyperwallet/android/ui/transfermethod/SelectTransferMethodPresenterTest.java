@@ -84,7 +84,8 @@ public class SelectTransferMethodPresenterTest {
         final JSONObject userJsonObject = new JSONObject(userResponseBody);
         mUser = new User(userJsonObject);
 
-        String feeAndProcessingTimeResponseBody = externalResourceManager.getResourceContent("successful_tmc_keys_fee_processing_time_response.json");
+        String feeAndProcessingTimeResponseBody = externalResourceManager.getResourceContent(
+                "successful_tmc_keys_fee_processing_time_CA_response.json");
         final JSONObject feeAndProcessingTimeJsonObject = new JSONObject(feeAndProcessingTimeResponseBody);
         mFeeAndProcessingTimeResult = new TransferMethodConfigurationKeyResult(feeAndProcessingTimeJsonObject);
 
@@ -116,7 +117,7 @@ public class SelectTransferMethodPresenterTest {
                 callback.onKeysLoaded(mFeeAndProcessingTimeResult);
                 return callback;
             }
-        }).when(mTransferMethodConfigurationRepository).getFeeAndProcessingTime(anyString(), anyString(), any(
+        }).when(mTransferMethodConfigurationRepository).getTransferMethodTypesFeeAndProcessingTime(anyString(), anyString(), any(
                 TransferMethodConfigurationRepository.LoadKeysCallback.class));
 
         doAnswer(new Answer() {
@@ -169,7 +170,7 @@ public class SelectTransferMethodPresenterTest {
                 callback.onError(errors);
                 return callback;
             }
-        }).when(mTransferMethodConfigurationRepository).getFeeAndProcessingTime(anyString(), anyString(), any(
+        }).when(mTransferMethodConfigurationRepository).getTransferMethodTypesFeeAndProcessingTime(anyString(), anyString(), any(
                 TransferMethodConfigurationRepository.LoadKeysCallback.class));
 
         doAnswer(new Answer() {
@@ -221,7 +222,7 @@ public class SelectTransferMethodPresenterTest {
                 callback.onKeysLoaded(mFeeAndProcessingTimeResult);
                 return callback;
             }
-        }).when(mTransferMethodConfigurationRepository).getFeeAndProcessingTime(anyString(), anyString(), any(
+        }).when(mTransferMethodConfigurationRepository).getTransferMethodTypesFeeAndProcessingTime(anyString(), anyString(), any(
                 TransferMethodConfigurationRepository.LoadKeysCallback.class));
 
         doAnswer(new Answer() {
@@ -273,7 +274,7 @@ public class SelectTransferMethodPresenterTest {
                 callback.onKeysLoaded(mFeeAndProcessingTimeResult);
                 return callback;
             }
-        }).when(mTransferMethodConfigurationRepository).getFeeAndProcessingTime(anyString(), anyString(), any(
+        }).when(mTransferMethodConfigurationRepository).getTransferMethodTypesFeeAndProcessingTime(anyString(), anyString(), any(
                 TransferMethodConfigurationRepository.LoadKeysCallback.class));
 
         doAnswer(new Answer() {
@@ -319,7 +320,7 @@ public class SelectTransferMethodPresenterTest {
                 callback.onKeysLoaded(mFeeAndProcessingTimeResult);
                 return callback;
             }
-        }).when(mTransferMethodConfigurationRepository).getFeeAndProcessingTime(anyString(), anyString(), any(
+        }).when(mTransferMethodConfigurationRepository).getTransferMethodTypesFeeAndProcessingTime(anyString(), anyString(), any(
                 TransferMethodConfigurationRepository.LoadKeysCallback.class));
 
         doAnswer(new Answer() {
@@ -372,7 +373,7 @@ public class SelectTransferMethodPresenterTest {
                 callback.onKeysLoaded(mFeeAndProcessingTimeResult);
                 return callback;
             }
-        }).when(mTransferMethodConfigurationRepository).getFeeAndProcessingTime(anyString(), anyString(), any(
+        }).when(mTransferMethodConfigurationRepository).getTransferMethodTypesFeeAndProcessingTime(anyString(), anyString(), any(
                 TransferMethodConfigurationRepository.LoadKeysCallback.class));
 
         doAnswer(new Answer() {
@@ -430,7 +431,7 @@ public class SelectTransferMethodPresenterTest {
                 callback.onKeysLoaded(mFeeAndProcessingTimeResult);
                 return callback;
             }
-        }).when(mTransferMethodConfigurationRepository).getFeeAndProcessingTime(anyString(), anyString(), any(
+        }).when(mTransferMethodConfigurationRepository).getTransferMethodTypesFeeAndProcessingTime(anyString(), anyString(), any(
                 TransferMethodConfigurationRepository.LoadKeysCallback.class));
 
         doAnswer(new Answer() {
@@ -484,7 +485,7 @@ public class SelectTransferMethodPresenterTest {
                 callback.onKeysLoaded(mFeeAndProcessingTimeResult);
                 return callback;
             }
-        }).when(mTransferMethodConfigurationRepository).getFeeAndProcessingTime(anyString(), anyString(), any(
+        }).when(mTransferMethodConfigurationRepository).getTransferMethodTypesFeeAndProcessingTime(anyString(), anyString(), any(
                 TransferMethodConfigurationRepository.LoadKeysCallback.class));
 
 
@@ -544,7 +545,7 @@ public class SelectTransferMethodPresenterTest {
                 callback.onKeysLoaded(mFeeAndProcessingTimeResult);
                 return callback;
             }
-        }).when(mTransferMethodConfigurationRepository).getFeeAndProcessingTime(anyString(), anyString(), any(
+        }).when(mTransferMethodConfigurationRepository).getTransferMethodTypesFeeAndProcessingTime(anyString(), anyString(), any(
                 TransferMethodConfigurationRepository.LoadKeysCallback.class));
 
         doAnswer(new Answer() {
@@ -591,7 +592,7 @@ public class SelectTransferMethodPresenterTest {
                 callback.onKeysLoaded(mFeeAndProcessingTimeResult);
                 return callback;
             }
-        }).when(mTransferMethodConfigurationRepository).getFeeAndProcessingTime(anyString(), anyString(), any(
+        }).when(mTransferMethodConfigurationRepository).getTransferMethodTypesFeeAndProcessingTime(anyString(), anyString(), any(
                 TransferMethodConfigurationRepository.LoadKeysCallback.class));
 
         doAnswer(new Answer() {
@@ -644,7 +645,7 @@ public class SelectTransferMethodPresenterTest {
                 callback.onKeysLoaded(mFeeAndProcessingTimeResult);
                 return callback;
             }
-        }).when(mTransferMethodConfigurationRepository).getFeeAndProcessingTime(anyString(), anyString(), any(
+        }).when(mTransferMethodConfigurationRepository).getTransferMethodTypesFeeAndProcessingTime(anyString(), anyString(), any(
                 TransferMethodConfigurationRepository.LoadKeysCallback.class));
 
         doAnswer(new Answer() {
@@ -697,7 +698,7 @@ public class SelectTransferMethodPresenterTest {
                 callback.onKeysLoaded(mFeeAndProcessingTimeResult);
                 return callback;
             }
-        }).when(mTransferMethodConfigurationRepository).getFeeAndProcessingTime(anyString(), anyString(), any(
+        }).when(mTransferMethodConfigurationRepository).getTransferMethodTypesFeeAndProcessingTime(anyString(), anyString(), any(
                 TransferMethodConfigurationRepository.LoadKeysCallback.class));
 
         doAnswer(new Answer() {
@@ -742,7 +743,7 @@ public class SelectTransferMethodPresenterTest {
                 callback.onKeysLoaded(mFeeAndProcessingTimeResult);
                 return callback;
             }
-        }).when(mTransferMethodConfigurationRepository).getFeeAndProcessingTime(anyString(), anyString(), any(
+        }).when(mTransferMethodConfigurationRepository).getTransferMethodTypesFeeAndProcessingTime(anyString(), anyString(), any(
                 TransferMethodConfigurationRepository.LoadKeysCallback.class));
 
         doAnswer(new Answer() {

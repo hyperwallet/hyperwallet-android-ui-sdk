@@ -37,9 +37,9 @@ import com.hyperwallet.android.exception.HyperwalletException;
 import com.hyperwallet.android.listener.HyperwalletListener;
 import com.hyperwallet.android.model.graphql.HyperwalletTransferMethodConfigurationField;
 import com.hyperwallet.android.model.graphql.HyperwalletTransferMethodConfigurationKey;
-import com.hyperwallet.android.model.graphql.query.TransferMethodConfigurationFeeAndProcessingTimeQuery;
 import com.hyperwallet.android.model.graphql.query.TransferMethodConfigurationFieldQuery;
 import com.hyperwallet.android.model.graphql.query.TransferMethodConfigurationKeysQuery;
+import com.hyperwallet.android.model.graphql.query.TransferMethodConfigurationTransferTypesFeeAndProcessingTimeQuery;
 import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
 
 import java.util.HashMap;
@@ -99,10 +99,10 @@ public class TransferMethodConfigurationRepositoryImpl implements TransferMethod
     }
 
     @VisibleForTesting
-    void getTransferMethodConfigurationFeeAndProcessingTimeKeyResult(final String country, final String currency, final LoadKeysCallback loadKeysCallback){
-        TransferMethodConfigurationFeeAndProcessingTimeQuery query = new TransferMethodConfigurationFeeAndProcessingTimeQuery(country, currency);
+    void getTransferMethodTypesFeeAndProcessingTimeKeyResult(final String country, final String currency, final LoadKeysCallback loadKeysCallback){
+        TransferMethodConfigurationTransferTypesFeeAndProcessingTimeQuery query = new TransferMethodConfigurationTransferTypesFeeAndProcessingTimeQuery(country, currency);
         EspressoIdlingResource.increment();
-        getHyperwallet().retrieveTransferMethodConfigurationKeysForFeeAndProcessingTime(query,
+        getHyperwallet().retrieveTransferMethodTypesFeesAndProcessingTimes(query,
                 new HyperwalletListener<HyperwalletTransferMethodConfigurationKey>() {
                     @Override
                     public void onSuccess(@Nullable HyperwalletTransferMethodConfigurationKey result) {
@@ -170,9 +170,9 @@ public class TransferMethodConfigurationRepositoryImpl implements TransferMethod
     }
 
     @Override
-    public synchronized void getFeeAndProcessingTime(@NonNull String country, @NonNull String currency,
+    public synchronized void getTransferMethodTypesFeeAndProcessingTime(@NonNull String country, @NonNull String currency,
             @NonNull LoadKeysCallback loadKeysCallback) {
-            getTransferMethodConfigurationFeeAndProcessingTimeKeyResult(country, currency, loadKeysCallback);
+            getTransferMethodTypesFeeAndProcessingTimeKeyResult(country, currency, loadKeysCallback);
     }
 
     @Override

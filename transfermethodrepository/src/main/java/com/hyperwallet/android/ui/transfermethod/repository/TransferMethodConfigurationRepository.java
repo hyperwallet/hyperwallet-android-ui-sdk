@@ -37,7 +37,7 @@ public interface TransferMethodConfigurationRepository {
 
     void getKeys(@NonNull final LoadKeysCallback loadKeysCallback);
 
-    void getFeeAndProcessingTime(@NonNull final String country, @NonNull final String currency,
+    void getTransferMethodTypesFeeAndProcessingTime(@NonNull final String country, @NonNull final String currency,
             @NonNull final LoadKeysCallback loadKeysCallback);
 
     void getFields(@NonNull final String country, @NonNull final String currency,

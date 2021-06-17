@@ -312,7 +312,7 @@ public class SelectTransferMethodPresenter implements SelectTransferMethodContra
 
     private void loadFeeAndProcessingTimeAndShowTransferMethods(final String countryCode, final String currencyCode,
             final User user) {
-        mTransferMethodConfigurationRepository.getFeeAndProcessingTime(countryCode, currencyCode,
+        mTransferMethodConfigurationRepository.getTransferMethodTypesFeeAndProcessingTime(countryCode, currencyCode,
                 new TransferMethodConfigurationRepository.LoadKeysCallback() {
                     @Override
                     public void onKeysLoaded(
