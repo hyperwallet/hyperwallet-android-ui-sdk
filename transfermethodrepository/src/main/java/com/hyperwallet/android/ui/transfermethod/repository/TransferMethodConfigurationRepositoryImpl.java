@@ -39,6 +39,7 @@ import com.hyperwallet.android.model.graphql.HyperwalletTransferMethodConfigurat
 import com.hyperwallet.android.model.graphql.HyperwalletTransferMethodConfigurationKey;
 import com.hyperwallet.android.model.graphql.query.TransferMethodConfigurationFieldQuery;
 import com.hyperwallet.android.model.graphql.query.TransferMethodConfigurationKeysQuery;
+import com.hyperwallet.android.model.graphql.query.TransferMethodTypesFeeAndProcessingTimesQuery;
 import com.hyperwallet.android.ui.common.repository.EspressoIdlingResource;
 
 import java.util.HashMap;
@@ -81,6 +82,31 @@ public class TransferMethodConfigurationRepositoryImpl implements TransferMethod
                     public void onSuccess(@Nullable HyperwalletTransferMethodConfigurationKey result) {
                         mTransferMethodConfigurationKey = result;
                         loadKeysCallback.onKeysLoaded(mTransferMethodConfigurationKey);
+                        EspressoIdlingResource.decrement();
+                    }
+
+                    @Override
+                    public void onFailure(HyperwalletException exception) {
+                        loadKeysCallback.onError(exception.getErrors());
+                        EspressoIdlingResource.decrement();
+                    }
+
+                    @Override
+                    public Handler getHandler() {
+                        return mHandler;
+                    }
+                });
+    }
+
+    @VisibleForTesting
+    void getTransferMethodTypesFeeAndProcessingTimeKeyResult(final String country, final String currency, final LoadKeysCallback loadKeysCallback){
+        TransferMethodTypesFeeAndProcessingTimesQuery query = new TransferMethodTypesFeeAndProcessingTimesQuery(country, currency);
+        EspressoIdlingResource.increment();
+        getHyperwallet().retrieveTransferMethodTypesFeesAndProcessingTimes(query,
+                new HyperwalletListener<HyperwalletTransferMethodConfigurationKey>() {
+                    @Override
+                    public void onSuccess(@Nullable HyperwalletTransferMethodConfigurationKey result) {
+                        loadKeysCallback.onKeysLoaded(result);
                         EspressoIdlingResource.decrement();
                     }
 
@@ -141,6 +167,12 @@ public class TransferMethodConfigurationRepositoryImpl implements TransferMethod
         } else {
             loadKeysCallback.onKeysLoaded(mTransferMethodConfigurationKey);
         }
+    }
+
+    @Override
+    public synchronized void getTransferMethodTypesFeeAndProcessingTime(@NonNull String country, @NonNull String currency,
+            @NonNull LoadKeysCallback loadKeysCallback) {
+            getTransferMethodTypesFeeAndProcessingTimeKeyResult(country, currency, loadKeysCallback);
     }
 
     @Override

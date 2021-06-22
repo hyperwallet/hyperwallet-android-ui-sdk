@@ -1,0 +1,74 @@
+{
+  "data": {
+    "countries": {
+      "nodes": [
+        {
+          "code": "CA",
+          "name": "Canada",
+          "currencies": {
+            "nodes": [
+              {
+                "code": "CAD",
+                "name": "Canadian Dollar",
+                "transferMethodTypes": {
+                  "nodes": [
+                    {
+                      "code": "BANK_ACCOUNT",
+                      "name": "Bank Account",
+                      "fees": {
+                        "nodes": [
+                          {
+                            "country": "CA",
+                            "currency": "CAD",
+                            "transferMethodType": "BANK_ACCOUNT",
+                            "value": "2.20",
+                            "feeRateType": "FLAT"
+                          }
+                        ]
+                      },
+                      "processingTimes": {
+                        "nodes": [
+                          {
+                            "value": "1-2 Business days",
+                            "country": "CA",
+                            "currency": "CAD",
+                            "transferMethodType": "BANK_ACCOUNT"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "code": "PAYPAL_ACCOUNT",
+                      "name": "PayPal",
+                      "fees": {
+                        "nodes": [
+                          {
+                            "country": "CA",
+                            "currency": "CAD",
+                            "transferMethodType": "PAYPAL_ACCOUNT",
+                            "value": "0.25",
+                            "feeRateType": "FLAT"
+                          }
+                        ]
+                      },
+                      "processingTimes": {
+                        "nodes": [
+                          {
+                            "value": "IMMEDIATE",
+                            "country": "CA",
+                            "currency": "CAD",
+                            "transferMethodType": "PAYPAL_ACCOUNT"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

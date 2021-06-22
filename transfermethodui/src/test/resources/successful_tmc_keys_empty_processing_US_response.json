@@ -1,0 +1,39 @@
+{
+  "data": {
+    "countries": {
+      "nodes": [
+        {
+          "code": "US",
+          "name": "United States",
+          "currencies": {
+            "nodes": [
+              {
+                "code": "USD",
+                "name": "USD",
+                "transferMethodTypes": {
+                  "nodes": [
+                    {
+                      "code": "BANK_ACCOUNT",
+                      "name": "Bank Account",
+                      "fees": {
+                        "nodes": [
+                          {
+                            "country": "US",
+                            "currency": "USD",
+                            "transferMethodType": "BANK_ACCOUNT",
+                            "value": "2.00",
+                            "feeRateType": "FLAT"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
