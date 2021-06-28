@@ -214,7 +214,7 @@ public class ListUserReceiptsTest {
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(3, hasDescendant(withText(R.string.transfer_to_prepaid_card)))));
         onView(withId(R.id.list_receipts)).check(
-                matches(atPosition(3, hasDescendant(withText(debitSymbol + EURO.second.toString() + "10.000.000,00")))));
+                matches(atPosition(3, hasDescendant(withText(debitSymbol + EURO.second.toString() + "10.000.000,00 ")))));
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(3, hasDescendant(withText("December 1, 2018")))));
         onView(withId(R.id.list_receipts)).check(matches(atPosition(3, hasDescendant(withText(EURO.first.toString())))));

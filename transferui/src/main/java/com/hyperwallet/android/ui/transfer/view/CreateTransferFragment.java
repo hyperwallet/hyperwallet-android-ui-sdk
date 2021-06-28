@@ -547,9 +547,19 @@ public class CreateTransferFragment extends Fragment {
                             CurrencyDetails currencyDetails = getNumberOfFractionDigits(mCurrencyCode);
                             mNumberOfFractionDigits = currencyDetails == null ? 0 : currencyDetails.getDecimals();
                             mTransferCurrencyCode.setText(currencyDetails == null ? "" : currencyDetails.getSymbol());
-                            mTransferAmount.setText(
-                                    formattedAmount(stringToDouble(mTransferAmount.getText().toString()),
-                                            mCurrencyCode));
+                            System.out.println(" " + mDecimalSeparator + mGroupSeparator);
+                            if (mDecimalSeparator != null && mGroupSeparator != null) {
+                                mTransferAmount.setText(
+                                        formattedAmount(stringToDouble(
+                                                mTransferAmount.getText().toString().replace(mGroupSeparator,
+                                                        EMPTY_STRING).replace(mDecimalSeparator,
+                                                        CURRENCY_DOT_SEPARATOR)),
+                                                mCurrencyCode));
+                            } else {
+                                mTransferAmount.setText(
+                                        formattedAmount(stringToDouble(mTransferAmount.getText().toString()),
+                                                mCurrencyCode));
+                            }
                             showTransferDestination(transferMethod);
                             enableInputControls();
                         } else {
