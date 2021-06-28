@@ -76,25 +76,6 @@ public class CurrencyParser {
         return mCurrencyDetailsList;
     }
 
-    /**
-     * Formats the currency as per currency code.
-     *
-     * @return Returns the formatted number as per currency.
-     */
-   /* public String formatCurrency(String currency, String amount) {
-        NumberFormat format;
-        int numberOfFractions = getNumberOfFractionDigits(currency);
-        if(localeList.containsKey(currency)) {
-            LocalDetails locale = localeList.get(currency);
-            format = NumberFormat.getCurrencyInstance(new Locale(locale.getLanguage(),locale.getCountryCode()));
-        }else {
-            format = NumberFormat.getCurrencyInstance();
-        }
-        format.setMinimumFractionDigits(numberOfFractions);
-        format.setCurrency(Currency.getInstance(currency));
-        return format.format(Double.parseDouble(amount));
-    }*/
-
     @VisibleForTesting
     int getNumberOfFractionDigits(String currencyCode) {
         for (CurrencyDetails list : currencyList) {
