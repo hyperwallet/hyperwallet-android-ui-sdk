@@ -812,7 +812,7 @@ public class TransferUserFundsTest {
                 matches(atPosition(1, hasDescendant(
                         allOf(withId(R.id.sell_label), withText(R.string.mobileFXsell))))));
         onView(withId(R.id.list_foreign_exchange)).check(
-                matches(atPosition(1, hasDescendant(allOf(withId(R.id.sell_value), withText("€100.00 EUR"))))));
+                matches(atPosition(1, hasDescendant(allOf(withId(R.id.sell_value), withText("€100,00 EUR"))))));
         onView(withId(R.id.list_foreign_exchange)).check(
                 matches(atPosition(1,
                         hasDescendant(allOf(withId(R.id.buy_label), withText(R.string.mobileFXbuy))))));
@@ -925,7 +925,7 @@ public class TransferUserFundsTest {
                 matches(atPosition(1, hasDescendant(
                         allOf(withId(R.id.sell_label), withText(R.string.mobileFXsell))))));
         onView(withId(R.id.list_foreign_exchange)).check(
-                matches(atPosition(1, hasDescendant(allOf(withId(R.id.sell_value), withText("€100.00 EUR"))))));
+                matches(atPosition(1, hasDescendant(allOf(withId(R.id.sell_value), withText("€100,00 EUR"))))));
         onView(withId(R.id.list_foreign_exchange)).check(
                 matches(atPosition(1,
                         hasDescendant(allOf(withId(R.id.buy_label), withText(R.string.mobileFXbuy))))));
