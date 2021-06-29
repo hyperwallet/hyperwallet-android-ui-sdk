@@ -1229,24 +1229,49 @@
         }
       ]
     },
-    "fees": {
+    "countries": {
       "nodes": [
         {
-          "country": "US",
-          "currency": "USD",
-          "transferMethodType": "BANK_ACCOUNT",
-          "value": "2.00",
-          "feeRateType": "FLAT"
-        }
-      ]
-    },
-    "processingTimes": {
-      "nodes": [
-        {
-          "country": "US",
-          "currency": "USD",
-          "transferMethodType": "BANK_ACCOUNT",
-          "value": "1-2 Business days"
+          "code": "CA",
+          "name": "Canada",
+          "iso3": "CAN",
+          "currencies": {
+            "nodes": [
+              {
+                "code": "CAD",
+                "name": "CAD",
+                "transferMethodTypes": {
+                  "nodes": [
+                    {
+                      "code": "BANK_ACCOUNT",
+                      "name": "Bank Account",
+                      "processingTimes": {
+                        "nodes": [
+                          {
+                            "country": "US",
+                            "currency": "USD",
+                            "transferMethodType": "BANK_ACCOUNT",
+                            "value": "1-2 Business days"
+                          }
+                        ]
+                      },
+                      "fees": {
+                        "nodes": [
+                          {
+                            "country": "US",
+                            "currency": "USD",
+                            "transferMethodType": "BANK_ACCOUNT",
+                            "value": "2.00",
+                            "feeRateType": "FLAT"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
         }
       ]
     }
