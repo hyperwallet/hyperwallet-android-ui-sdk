@@ -202,7 +202,7 @@ public class CurrencyParser {
         localeList.put("SVG",new LocaleDetails("en","US"));
         localeList.put("SZL",new LocaleDetails("en","SZ"));
         localeList.put("THB",new LocaleDetails("th","TH"));
-        localeList.put("TND",new LocaleDetails("ar","TN"));
+        localeList.put("TND",new LocaleDetails("en","TN"));
         localeList.put("TOP",new LocaleDetails("to","TO"));
         localeList.put("TRY",new LocaleDetails("tr","TR"));
         localeList.put("TWD",new LocaleDetails("zh","TW"));
