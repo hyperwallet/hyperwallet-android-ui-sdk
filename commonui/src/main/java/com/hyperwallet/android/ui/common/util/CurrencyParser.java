@@ -128,7 +128,7 @@ public class CurrencyParser {
     public void setLocaleList() {
         localeList.clear();
         localeList.put("AED",new LocaleDetails("en","AE"));
-        localeList.put("ALL",new LocaleDetails("en","AL"));
+        localeList.put("ALL",new LocaleDetails("en","US"));
         localeList.put("AMD",new LocaleDetails("hy","AM"));
         localeList.put("ARS",new LocaleDetails("es","AR"));
         localeList.put("AUD",new LocaleDetails("en","AU"));
