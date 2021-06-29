@@ -1,10 +1,10 @@
 package com.hyperwallet.android.ui.common.util;
 
-public class LocalDetails {
+public class LocaleDetails {
     private String language;
     private String countryCode;
 
-    public LocalDetails(String language, String countryCode) {
+    public LocaleDetails(String language, String countryCode) {
         this.language = language;
         this.countryCode = countryCode;
     }

@@ -62,7 +62,7 @@ import com.hyperwallet.android.ui.common.intent.HyperwalletIntent;
 import com.hyperwallet.android.ui.common.repository.Event;
 import com.hyperwallet.android.ui.common.util.CurrencyDetails;
 import com.hyperwallet.android.ui.common.util.CurrencyParser;
-import com.hyperwallet.android.ui.common.util.LocalDetails;
+import com.hyperwallet.android.ui.common.util.LocaleDetails;
 import com.hyperwallet.android.ui.common.view.OneClickListener;
 import com.hyperwallet.android.ui.transfer.R;
 import com.hyperwallet.android.ui.transfer.TransferSource;
@@ -778,10 +778,10 @@ public class CreateTransferFragment extends Fragment {
     }
 
     private String formattedAmount(final double amount, final String currencyCode) {
-        HashMap<String, LocalDetails> localeList = CurrencyParser.getInstance(requireContext()).getLocaleList();
+        HashMap<String, LocaleDetails> localeList = CurrencyParser.getInstance(requireContext()).getLocaleList();
         DecimalFormat currencyFormatter;
         if(localeList.containsKey(currencyCode)) {
-            LocalDetails locale = localeList.get(currencyCode);
+            LocaleDetails locale = localeList.get(currencyCode);
             currencyFormatter = (DecimalFormat) DecimalFormat.getCurrencyInstance((new Locale(locale.getLanguage(),locale.getCountryCode())));
         }else {
             currencyFormatter = (DecimalFormat) DecimalFormat.getCurrencyInstance();
