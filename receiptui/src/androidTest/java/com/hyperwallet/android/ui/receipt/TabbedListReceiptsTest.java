@@ -89,7 +89,7 @@ public class TabbedListReceiptsTest {
     private TimeZone mDefaultTimeZone;
 
     private String monthLabel1 = "June 2019";
-    private String cadCurrencySymbol = "CA$";
+    private String cadCurrencySymbol = "$";
     private String usdCurrencySymbol = "$";
     private String debitSymbol = "-";
     Pair KRW = new Pair("KRW", "₩");

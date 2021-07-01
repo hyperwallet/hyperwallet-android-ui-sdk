@@ -20,62 +20,62 @@ import java.util.Map;
 public class UtilsTest {
     private Map<String, String> currenciesMap = new HashMap<String, String>() {
         {
-            put("ALL", "ALL1,000,000.00");         // Albania Currency
-            put("ARS", "ARS1,000,000.00");      // Argentina Currency
-            put("AMD", "AMD1,000,000.00");       // Armenia Currency
-            put("AUD", "AUD1,000,000.00");      // Australia Currency
-            put("BDT", "BDT1,000,000.00");      // Bangladesh Currency
-            put("BRL", "BRL1,000,000.00");      // Brazil Currency
-            put("BGN", "BGN1,000,000.00");      // Bulgaria Currency
-            put("KHR", "KHR1,000,000.00");      // Cambodia Currency
-            put("CAD", "CAD1,000,000.00");      // Canada Currency
-            put("CLP", "CLP1,000,000");         // Chile Currency
-            put("CNY", "CNY1,000,000.00");      // China Currency
-            put("COP", "COP1,000,000.00");         // Colombia Currency
-            put("HRK", "HRK1,000,000.00");      // Croatia Currency
-            put("CZK", "CZK1,000,000.00");      // Czech Republic Currency
-            put("DKK", "DKK1,000,000.00");      // Denmark Currency
-            put("EGP", "EGP1,000,000.00");      // Egypt Currency
-            put("EUR", "EUR1,000,000.00");      // Austria Currency
-            put("HKD", "HKD1,000,000.00");      // Hong Kong Currency
-            put("HUF", "HUF1,000,000.00");      // Hungary Currency
-            put("INR", "INR1,000,000.00");       // India Currency
-            put("IDR", "IDR1,000,000");         // Indonesia Currency
-            put("JMD", "JMD1,000,000.00");      // Jamaica Currency
-            put("JPY", "JPY1,000,000");         // Japan Currency
-            put("JOD", "JOD1,000,000.00");     // Jordan Currency
-            put("KZT", "KZT1,000,000.00");      // Kazakhstan Currency
-            put("KES", "KES1,000,000.00");      // Kenya Currency
-            put("LAK", "LAK1,000,000.00");         // Laos Currency
-            put("MYR", "MYR1,000,000.00");      // Malaysia Currency
-            put("MXN", "MXN1,000,000.00");      // Mexico Currency
-            put("MAD", "MAD1,000,000.00");      // Morocco Currency
-            put("ILS", "ILS1,000,000.00");      // Israel Currency
-            put("TWD", "TWD1,000,000");      // Taiwan Currency
-            put("TRY", "TRY1,000,000.00");      // Turkey Currency
-            put("NZD", "NZD1,000,000.00");      // New Zealand Currency
-            put("NGN", "NGN1,000,000.00");      // Nigeria Currency
-            put("NOK", "NOK1,000,000.00");      // Norway Currency
-            put("PKR", "PKR1,000,000.00");         // Pakistan Currency
-            put("PEN", "PEN1,000,000.00");      // Peru Currency
-            put("PHP", "PHP1,000,000.00");      // Philippines Currency
-            put("PLN", "PLN1,000,000.00");      // Poland Currency
-            put("GBP", "GBP1,000,000.00");      // Isle of Man
-            put("RON", "RON1,000,000.00");      // Romania Currency
-            put("RUB", "RUB1,000,000.00");      // Russia Currency
-            put("RSD", "RSD1,000,000.00");         // Serbia Currency
-            put("SGD", "SGD1,000,000.00");      // Singapore Currency
-            put("ZAR", "ZAR1,000,000.00");      // South Africa Currency
-            put("KRW", "KRW1,000,000");         // South Korea Currency
-            put("LKR", "LKR1,000,000.00");      // Sri Lanka Currency
-            put("SEK", "SEK1,000,000.00");      // Sweden Currency
-            put("CHF", "CHF1,000,000.00");      // Switzerland Currency
-            put("THB", "THB1,000,000.00");      // Thailand Currency
-            put("TND", "TND1,000,000.000");     // Tunisia Currency
-            put("AED", "AED1,000,000.00");      // United Arab Emirates Currency
-            put("UGX", "UGX1,000,000");         // Uganda Currency
+            put("ALL", "L1,000,000.00");         // Albania Currency
+            put("ARS", "$1.000.000,00");      // Argentina Currency
+            put("AMD", "֏1,000,000.00");       // Armenia Currency
+            put("AUD", "A$1,000,000.00");      // Australia Currency
+            put("BDT", "Tk1,000,000.00");      // Bangladesh Currency
+            put("BRL", "R$1,000,000.00");      // Brazil Currency
+            put("BGN", "лв.1 000 000,00");      // Bulgaria Currency
+            put("KHR", "៛1,000,000.00");      // Cambodia Currency
+            put("CAD", "$1,000,000.00");      // Canada Currency
+            put("CLP", "$1.000.000");         // Chile Currency
+            put("CNY", "¥1,000,000.00");      // China Currency
+            put("COP", "$1.000.000,00");         // Colombia Currency
+            put("HRK", "kn1.000.000,00");      // Croatia Currency
+            put("CZK", "Kč1 000 000,00");      // Czech Republic Currency
+            put("DKK", "kr1,000,000.00");      // Denmark Currency
+            put("EGP", "E£1,000,000.00");      // Egypt Currency
+            put("EUR", "€1.000.000,00");      // Austria Currency
+            put("HKD", "HK$1,000,000.00");      // Hong Kong Currency
+            put("HUF", "Ft1 000 000,00");      // Hungary Currency
+            put("INR", "₹1,000,000.00");       // India Currency
+            put("IDR", "rp1,000,000");         // Indonesia Currency
+            put("JMD", "$1,000,000.00");      // Jamaica Currency
+            put("JPY", "¥1,000,000");         // Japan Currency
+            put("JOD", "د.ا1,000,000.00");     // Jordan Currency
+            put("KZT", "₸1 000 000,00");      // Kazakhstan Currency
+            put("KES", "KSh1,000,000.00");      // Kenya Currency
+            put("LAK", "₭1,000,000.00");         // Laos Currency
+            put("MYR", "RM1,000,000.00");      // Malaysia Currency
+            put("MXN", "$1,000,000.00");      // Mexico Currency
+            put("MAD", "د.م.1,000,000.00");      // Morocco Currency
+            put("ILS", "₪1,000,000.00");      // Israel Currency
+            put("TWD", "NT$1,000,000");      // Taiwan Currency
+            put("TRY", "TL1.000.000,00");      // Turkey Currency
+            put("NZD", "NZ$1,000,000.00");      // New Zealand Currency
+            put("NGN", "₦1,000,000.00");      // Nigeria Currency
+            put("NOK", "kr1 000 000,00");      // Norway Currency
+            put("PKR", "Rs1,000,000.00");         // Pakistan Currency
+            put("PEN", "S/.1,000,000.00");      // Peru Currency
+            put("PHP", "₱1,000,000.00");      // Philippines Currency
+            put("PLN", "zł1 000 000,00");      // Poland Currency
+            put("GBP", "£1,000,000.00");      // Isle of Man
+            put("RON", "lei1.000.000,00");      // Romania Currency
+            put("RUB", "руб1 000 000,00");      // Russia Currency
+            put("RSD", "Дин.1.000.000,00");         // Serbia Currency
+            put("SGD", "S$1,000,000.00");      // Singapore Currency
+            put("ZAR", "R1,000,000.00");      // South Africa Currency
+            put("KRW", "₩1,000,000");         // South Korea Currency
+            put("LKR", "රු1,000,000.00");      // Sri Lanka Currency
+            put("SEK", "kr1,000,000.00");      // Sweden Currency
+            put("CHF", "1,000,000.00");      // Switzerland Currency
+            put("THB", "฿1,000,000.00");      // Thailand Currency
+            put("TND", "د.ت1,000,000.000");     // Tunisia Currency
+            put("AED", "د.إ1,000,000.00");      // United Arab Emirates Currency
+            put("UGX", "USh1,000,000");         // Uganda Currency
             put("USD", "$1,000,000.00");      // United States Currency
-            put("VND", "VND1,000,000.00");         // Vietnam Currency
+            put("VND", "₫1.000.000,00");         // Vietnam Currency
         }
     };
 
@@ -85,7 +85,7 @@ public class UtilsTest {
 
         for (Map.Entry<String, String> currencyMap : currenciesMap.entrySet()) {
             Context context = ApplicationProvider.getApplicationContext();
-            String currency = CurrencyParser.getInstance(context).formatCurrency(currencyMap.getKey(), amount);
+            String currency = CurrencyParser.getInstance(context).formatCurrencyWithSymbol(currencyMap.getKey(), amount);
             assertThat(currency, is(currencyMap.getValue()));
         }
     }
