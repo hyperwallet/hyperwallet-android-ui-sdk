@@ -244,6 +244,10 @@ public class ListTransferSourceFragment extends DialogFragment {
                 mTransferSourceCurrency.setText(source.getCurrencyCodes());
                 mTransferSourceIdentification.setVisibility(View.GONE);
             }
+            mTransferSourceIdentification.setText(source.getIdentification() == null ? source.getCurrencyCodes()
+                    : getTransferMethodDetail(mTransferSourceIdentification.getContext(),
+                            source.getIdentification(), source.getType()));
+
             if (selected) {
                 mSelectedIcon.setVisibility(View.VISIBLE);
             } else {

@@ -167,6 +167,9 @@ public class ScheduleTransferFragment extends Fragment {
             transferSourceIcon.setText(transferSourceIcon.getContext().getString(R.string.available_funds_font_icon));
             transferSourceCurrency.setText(transferSource.getCurrencyCodes());
         }
+        transferSourceIdentifier.setText(transferSource.getIdentification() == null ? transferSource.getCurrencyCodes()
+                : getTransferMethodDetail(transferSourceIdentifier.getContext(),
+                        transferSource.getIdentification(), transferSource.getType()));
     }
 
     private void showForeignExchange() {
