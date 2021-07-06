@@ -1,6 +1,6 @@
 {
   "data": {
-    "transferMethodUIConfigurations": {
+    "transferMethodCreateUIConfigurations": {
       "nodes": [
         {
           "country": "US",
@@ -91,23 +91,48 @@
         }
       ]
     },
-    "fees": {
+    "countries": {
       "nodes": [
         {
-          "value": "1.75",
-          "feeRateType": "FLAT",
-          "country": "US",
-          "currency": "USD"
-        }
-      ]
-    },
-    "processingTimes": {
-      "nodes": [
-        {
-          "country": "US",
-          "currency": "USD",
-          "transferMethodType": "BANK_CARD",
-          "value": "IMMEDIATE"
+          "code": "CA",
+          "name": "Canada",
+          "iso3": "CAN",
+          "currencies": {
+            "nodes": [
+              {
+                "code": "CAD",
+                "name": "CAD",
+                "transferMethodTypes": {
+                  "nodes": [
+                    {
+                      "code": "BANK_ACCOUNT",
+                      "name": "Bank Account",
+                      "processingTimes": {
+                        "nodes": [
+                          {
+                            "country": "US",
+                            "currency": "USD",
+                            "transferMethodType": "BANK_CARD",
+                            "value": "IMMEDIATE"
+                          }
+                        ]
+                      },
+                      "fees": {
+                        "nodes": [
+                          {
+                            "value": "1.75",
+                            "feeRateType": "FLAT",
+                            "country": "US",
+                            "currency": "USD"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
         }
       ]
     }

@@ -1,6 +1,12 @@
 Changelog
 =========
 
+[1.0.0-beta11](https://github.com/hyperwallet/hyperwallet-android-ui-sdk/releases/tag/1.0.0-beta11)
+-------------------
+* Fixed currency formatting issues
+* Enhanced add Transfer Method graphQL calls
+* Bug fixes
+
 [1.0.0-beta10](https://github.com/hyperwallet/hyperwallet-android-ui-sdk/releases/tag/1.0.0-beta10)
 -------------------
 * UI Enhancements

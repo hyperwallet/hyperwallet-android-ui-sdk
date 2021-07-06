@@ -51,7 +51,6 @@ public class ListUserReceiptActivity extends AppCompatActivity implements OnNetw
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
 
         setContentView(R.layout.activity_list_user_receipt);
 

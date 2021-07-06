@@ -76,19 +76,22 @@ public class ListReceiptsFragment extends Fragment {
     private View mEmptyTransactionPlaceholder;
     private TextView mEmptyTransactionTextView;
     private Boolean mShouldShowNoTransactionPlaceholder = Boolean.FALSE;
+    private Boolean mLockScreenToPortrait = false;
     private ListReceiptsFragmentCallback callback;
 
-    static ListReceiptsFragment newInstance() {
+    static ListReceiptsFragment newInstance(boolean lockScreenToPortrait) {
         ListReceiptsFragment listReceiptsFragment = new ListReceiptsFragment();
+        listReceiptsFragment.mLockScreenToPortrait = lockScreenToPortrait;
         return listReceiptsFragment;
     }
 
-    static ListReceiptsFragment newInstance(String prepaidCardToken) {
+    static ListReceiptsFragment newInstance(String prepaidCardToken, boolean lockScreenToPortrait) {
         ListReceiptsFragment fragment = new ListReceiptsFragment();
         Bundle internalState = new Bundle();
         internalState.putString(ARGUMENT_PREPAID_CARD_TOKEN, prepaidCardToken);
         fragment.setArguments(internalState);
         fragment.mPrepaidCardToken = prepaidCardToken;
+        fragment.mLockScreenToPortrait = lockScreenToPortrait;
         return fragment;
     }
 
@@ -214,9 +217,7 @@ public class ListReceiptsFragment extends Fragment {
             Intent intent = new Intent(getActivity(), ReceiptDetailActivity.class);
 
             intent.putExtra(ReceiptDetailActivity.EXTRA_RECEIPT, event.getContent());
-            intent.putExtra(ReceiptDetailActivity.EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT,
-                    getActivity().getIntent().getBooleanExtra(
-                            TabbedListReceiptsActivity.EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT, false));
+            intent.putExtra(ReceiptDetailActivity.EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT, mLockScreenToPortrait);
             startActivity(intent);
         }
     }
@@ -322,7 +323,7 @@ public class ListReceiptsFragment extends Fragment {
                     transactionAmount.setTextColor(transactionAmount.getContext()
                             .getResources().getColor(R.color.positiveColor));
                     transactionAmount.setText(
-                            CurrencyParser.getInstance(itemView.getContext()).formatCurrency(receipt.getCurrency(),
+                            CurrencyParser.getInstance(itemView.getContext()).formatCurrencyWithSymbol(receipt.getCurrency(),
                                     receipt.getAmount()));
                     transactionTypeIcon.setTextColor(transactionTypeIcon.getContext()
                             .getResources().getColor(R.color.positiveColor));
@@ -333,7 +334,7 @@ public class ListReceiptsFragment extends Fragment {
                     transactionTypeIcon.setTextColor(transactionTypeIcon.getContext()
                             .getResources().getColor(R.color.negativeColor));
                     transactionAmount.setText(transactionAmount.getContext().getString(R.string.debit_sign,
-                            CurrencyParser.getInstance(itemView.getContext()).formatCurrency(receipt.getCurrency(),
+                            CurrencyParser.getInstance(itemView.getContext()).formatCurrencyWithSymbol(receipt.getCurrency(),
                                     receipt.getAmount())));
                     transactionTypeIcon.setText(transactionTypeIcon.getContext().getText(R.string.debit));
                 }

@@ -25,8 +25,8 @@
     <string name="default_account_sub_label">Pilih kaedah pemindahan lalai</string>
     <string name="api_expiry_date_format">BB/TT</string>
 
-    <string name="feeAndProcessingTimeInformation">%s yuran \u2022 %s</string>
     <string name="feeInformation">%s yuran</string>
+    <string name="noFee">Tiada Yuran</string>
 
     <string name="emptyStateAddTransferMethod">Tambah kaedah pemindahan untuk memulakan.</string>
 

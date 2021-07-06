@@ -102,17 +102,11 @@ public class SelectTransferMethodPresenter implements SelectTransferMethodContra
                                     return;
                                 }
 
-                                mView.hideProgressBar();
-                                Set<TransferMethodType> transferMethodTypes =
-                                        key.getTransferMethodType(country.getCode(), currencyCodeString) != null
-                                                ? key.getTransferMethodType(country.getCode(), currencyCodeString) :
-                                                new HashSet<TransferMethodType>();
-
                                 mView.showTransferMethodCountry(country.getCode());
                                 mView.showTransferMethodCurrency(currencyCodeString);
-                                mView.showTransferMethodTypes(
-                                        getTransferMethodSelectionItems(country.getCode(), currencyCodeString,
-                                                user.getProfileType(), transferMethodTypes));
+
+                                loadFeeAndProcessingTimeAndShowTransferMethods(country.getCode(), currencyCodeString,
+                                        user);
                             }
 
                             @Override
@@ -139,6 +133,7 @@ public class SelectTransferMethodPresenter implements SelectTransferMethodContra
 
     @Override
     public void loadCurrency(final boolean forceUpdate, @NonNull final String countryCode) {
+        mView.showProgressBar();
 
         if (forceUpdate) {
             mTransferMethodConfigurationRepository.refreshKeys();
@@ -156,17 +151,12 @@ public class SelectTransferMethodPresenter implements SelectTransferMethodContra
                                 List<Currency> currencies = key.getCurrencies(countryCode) != null ?
                                         new ArrayList<>(key.getCurrencies(countryCode)) :
                                         new ArrayList<Currency>();
-                                String currencyCode = currencies.get(0).getCode();
-                                Set<TransferMethodType> transferMethodTypes =
-                                        key.getTransferMethodType(countryCode, currencyCode) != null ?
-                                                key.getTransferMethodType(countryCode, currencyCode) :
-                                                new HashSet<TransferMethodType>();
 
                                 mView.showTransferMethodCountry(countryCode);
                                 mView.showTransferMethodCurrency(currencies.get(0).getCode());
-                                mView.showTransferMethodTypes(getTransferMethodSelectionItems(countryCode,
-                                        currencies.get(0).getCode(),
-                                        user.getProfileType(), transferMethodTypes));
+
+                                loadFeeAndProcessingTimeAndShowTransferMethods(countryCode, currencies.get(0).getCode(),
+                                        user);
                             }
 
                             @Override
@@ -193,6 +183,8 @@ public class SelectTransferMethodPresenter implements SelectTransferMethodContra
     @Override
     public void loadTransferMethodTypes(final boolean forceUpdate,
             @NonNull final String countryCode, @NonNull final String currencyCode) {
+        mView.showProgressBar();
+
         if (forceUpdate) {
             mTransferMethodConfigurationRepository.refreshKeys();
         }
@@ -200,6 +192,7 @@ public class SelectTransferMethodPresenter implements SelectTransferMethodContra
         mUserRepository.loadUser(new UserRepository.LoadUserCallback() {
             @Override
             public void onUserLoaded(@NonNull final User user) {
+                mView.showProgressBar();
                 mTransferMethodConfigurationRepository.getKeys(
                         new TransferMethodConfigurationRepository.LoadKeysCallback() {
                             @Override
@@ -207,16 +200,10 @@ public class SelectTransferMethodPresenter implements SelectTransferMethodContra
                                 if (!mView.isActive()) {
                                     return;
                                 }
-
-                                Set<TransferMethodType> transferMethodTypes =
-                                        key.getTransferMethodType(countryCode, currencyCode) != null ?
-                                                key.getTransferMethodType(countryCode, currencyCode) :
-                                                new HashSet<TransferMethodType>();
                                 mView.showTransferMethodCountry(countryCode);
                                 mView.showTransferMethodCurrency(currencyCode);
-                                mView.showTransferMethodTypes(
-                                        getTransferMethodSelectionItems(countryCode, currencyCode,
-                                                user.getProfileType(), transferMethodTypes));
+
+                                loadFeeAndProcessingTimeAndShowTransferMethods(countryCode, currencyCode, user);
                             }
 
                             @Override
@@ -321,5 +308,29 @@ public class SelectTransferMethodPresenter implements SelectTransferMethodContra
             selectionItems.add(data);
         }
         return selectionItems;
+    }
+
+    private void loadFeeAndProcessingTimeAndShowTransferMethods(final String countryCode, final String currencyCode,
+            final User user) {
+        mTransferMethodConfigurationRepository.getTransferMethodTypesFeeAndProcessingTime(countryCode, currencyCode,
+                new TransferMethodConfigurationRepository.LoadKeysCallback() {
+                    @Override
+                    public void onKeysLoaded(
+                            @Nullable final HyperwalletTransferMethodConfigurationKey transferMethodConfigurationKey) {
+                        mView.hideProgressBar();
+                        Set<TransferMethodType> transferMethodTypes =
+                                transferMethodConfigurationKey.getTransferMethodType(
+                                        countryCode, currencyCode) != null
+                                        ? transferMethodConfigurationKey.getTransferMethodType(
+                                        countryCode, currencyCode) : new HashSet<TransferMethodType>();
+                        mView.showTransferMethodTypes(getTransferMethodSelectionItems(
+                                countryCode, currencyCode, user.getProfileType(), transferMethodTypes));
+                    }
+
+                    @Override
+                    public void onError(@NonNull Errors errors) {
+                        showErrorLoadTransferMethods(errors);
+                    }
+                });
     }
 }

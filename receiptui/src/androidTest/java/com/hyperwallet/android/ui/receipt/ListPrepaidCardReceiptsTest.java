@@ -77,7 +77,7 @@ public class ListPrepaidCardReceiptsTest {
     private TimeZone mDefaultTimeZone;
 
     private String usdCurrencySymbol = "$";
-    private String cadCurrencySymbol = "CA$";
+    private String cadCurrencySymbol = "$";
     private String wonCurrencySymbol = "₩";
     private String debitSymbol = "-";
     private String monthLabel1 = "June 2019";
@@ -317,7 +317,7 @@ public class ListPrepaidCardReceiptsTest {
                 matches(atPosition(0, hasDescendant(withText(R.string.adjustment)))));
 
         onView(withId(R.id.list_receipts)).check(
-                matches(atPosition(0, hasDescendant(withText(containsString(debitSymbol + "8,90"))))));
+                matches(atPosition(0, hasDescendant(withText(containsString(debitSymbol + usdCurrencySymbol +"8.90"))))));
         onView(withId(R.id.list_receipts)).check(
                 matches(atPosition(0, hasDescendant(withText("1. Juni 2019")))));
         onView(withId(R.id.list_receipts)).check(

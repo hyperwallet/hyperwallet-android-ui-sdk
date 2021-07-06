@@ -17,15 +17,14 @@
 package com.hyperwallet.android.ui.receipt.view;
 
 import static android.text.format.DateUtils.FORMAT_ABBREV_MONTH;
-import static android.text.format.DateUtils.FORMAT_ABBREV_WEEKDAY;
 import static android.text.format.DateUtils.FORMAT_SHOW_DATE;
 import static android.text.format.DateUtils.FORMAT_SHOW_TIME;
-import static android.text.format.DateUtils.FORMAT_SHOW_WEEKDAY;
 import static android.text.format.DateUtils.FORMAT_SHOW_YEAR;
 import static android.text.format.DateUtils.formatDateTime;
 
 import static com.hyperwallet.android.model.receipt.Receipt.Entries.CREDIT;
 import static com.hyperwallet.android.model.receipt.Receipt.Entries.DEBIT;
+import static com.hyperwallet.android.ui.common.util.CurrencyParser.getValueWithTruncateDecimals;
 
 import android.content.Context;
 import android.os.Build;
@@ -117,11 +116,27 @@ public class ReceiptDetailFragment extends Fragment {
         TextView transactionCurrency = view.findViewById(R.id.transaction_currency);
         String currencyString = Currency.getInstance(receipt.getCurrency()).getSymbol(Locale.getDefault());
 
+        transactionTitle.setTextIsSelectable(true);
+        transactionTitle.setLongClickable(true);
+        transactionTitle.setFocusable(true);
+
+        transactionDate.setTextIsSelectable(true);
+        transactionDate.setLongClickable(true);
+        transactionDate.setFocusable(true);
+
+        transactionAmount.setTextIsSelectable(true);
+        transactionAmount.setLongClickable(true);
+        transactionAmount.setFocusable(true);
+
+        transactionCurrency.setTextIsSelectable(true);
+        transactionCurrency.setLongClickable(true);
+        transactionCurrency.setFocusable(true);
+
         if (CREDIT.equals(receipt.getEntry())) {
             transactionAmount.setTextColor(transactionAmount.getContext()
                     .getResources().getColor(R.color.positiveColor));
             transactionAmount.setText(
-                    CurrencyParser.getInstance(view.getContext()).formatCurrency(receipt.getCurrency(),
+                    CurrencyParser.getInstance(view.getContext()).formatCurrencyWithSymbol(receipt.getCurrency(),
                             receipt.getAmount()));
             transactionTypeIcon.setTextColor(transactionTypeIcon.getContext()
                     .getResources().getColor(R.color.positiveColor));
@@ -130,7 +145,7 @@ public class ReceiptDetailFragment extends Fragment {
             transactionAmount.setTextColor(transactionAmount.getContext()
                     .getResources().getColor(R.color.negativeColor));
             transactionAmount.setText(transactionAmount.getContext().getString(R.string.debit_sign,
-                    CurrencyParser.getInstance(view.getContext()).formatCurrency(receipt.getCurrency(),
+                    CurrencyParser.getInstance(view.getContext()).formatCurrencyWithSymbol(receipt.getCurrency(),
                             receipt.getAmount())));
             transactionTypeIcon.setTextColor(transactionTypeIcon.getContext()
                     .getResources().getColor(R.color.negativeColor));
@@ -165,15 +180,15 @@ public class ReceiptDetailFragment extends Fragment {
             String currencySymbol = Currency.getInstance(receipt.getCurrency()).getSymbol(Locale.getDefault());
 
             TextView amountView = view.findViewById(R.id.details_amount_value);
-            amountView.setText(CurrencyParser.getInstance(view.getContext()).formatCurrency(receipt.getCurrency(),
+            amountView.setText(CurrencyParser.getInstance(view.getContext()).formatCurrencyWithSymbol(receipt.getCurrency(),
                     receipt.getAmount()) + " " + receipt.getCurrency());
 
             TextView fee = view.findViewById(R.id.details_fee_value);
-            fee.setText(CurrencyParser.getInstance(view.getContext()).formatCurrency(receipt.getCurrency(),
+            fee.setText(CurrencyParser.getInstance(view.getContext()).formatCurrencyWithSymbol(receipt.getCurrency(),
                     receipt.getFee()) + " " + receipt.getCurrency());
 
             TextView transfer = view.findViewById(R.id.details_transfer_amount_value);
-            transfer.setText(CurrencyParser.getInstance(view.getContext()).formatCurrency(receipt.getCurrency(),
+            transfer.setText(CurrencyParser.getInstance(view.getContext()).formatCurrencyWithSymbol(receipt.getCurrency(),
                     transferAmountTotal) + " " + receipt.getCurrency());
         }
     }
@@ -213,8 +228,14 @@ public class ReceiptDetailFragment extends Fragment {
             }
 
             if (!TextUtils.isEmpty(receiptDetails.getNotes())) {
-                setViewInformation(R.id.receipt_notes_information, R.id.notes_value,
-                        view, receiptDetails.getNotes());
+                if (receipt.getForeignExchangeRate() != null) {
+                    String fxRate = getValueWithTruncateDecimals(receipt.getForeignExchangeRate(),4);
+                    setViewInformation(R.id.receipt_notes_information, R.id.notes_value,
+                            view, receiptDetails.getNotes().replace(receipt.getForeignExchangeRate(), fxRate));
+                } else {
+                    setViewInformation(R.id.receipt_notes_information, R.id.notes_value,
+                            view, receiptDetails.getNotes());
+                }
             }
         }
     }

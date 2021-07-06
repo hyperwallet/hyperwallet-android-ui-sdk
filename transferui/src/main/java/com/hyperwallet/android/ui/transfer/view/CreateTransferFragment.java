@@ -60,8 +60,10 @@ import com.hyperwallet.android.model.transfer.Transfer;
 import com.hyperwallet.android.model.transfermethod.TransferMethod;
 import com.hyperwallet.android.ui.common.intent.HyperwalletIntent;
 import com.hyperwallet.android.ui.common.repository.Event;
+import com.hyperwallet.android.ui.common.util.CurrencyDetails;
+import com.hyperwallet.android.ui.common.util.CurrencyParser;
+import com.hyperwallet.android.ui.common.util.LocaleDetails;
 import com.hyperwallet.android.ui.common.view.OneClickListener;
-import com.hyperwallet.android.ui.transfer.CurrencyDetails;
 import com.hyperwallet.android.ui.transfer.R;
 import com.hyperwallet.android.ui.transfer.TransferSource;
 import com.hyperwallet.android.ui.transfer.viewmodel.CreateTransferViewModel;
@@ -76,6 +78,7 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.Currency;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -231,6 +234,8 @@ public class CreateTransferFragment extends Fragment {
                         sourceList);
                 intent.putExtra(ListTransferSourceActivity.EXTRA_SELECTED_SOURCE_TOKEN,
                         activeSource.getToken());
+                intent.putExtra(ListTransferSourceActivity.EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT,
+                        mCreateTransferViewModel.isPortraitMode());
                 startActivityForResult(intent, SELECT_TRANSFER_SOURCE_REQUEST_CODE);
             }
         });
@@ -542,9 +547,18 @@ public class CreateTransferFragment extends Fragment {
                             CurrencyDetails currencyDetails = getNumberOfFractionDigits(mCurrencyCode);
                             mNumberOfFractionDigits = currencyDetails == null ? 0 : currencyDetails.getDecimals();
                             mTransferCurrencyCode.setText(currencyDetails == null ? "" : currencyDetails.getSymbol());
-                            mTransferAmount.setText(
-                                    formattedAmount(stringToDouble(mTransferAmount.getText().toString()),
-                                            mCurrencyCode));
+                            if (mDecimalSeparator != null && mGroupSeparator != null) {
+                                mTransferAmount.setText(
+                                        formattedAmount(stringToDouble(
+                                                mTransferAmount.getText().toString().replace(mGroupSeparator,
+                                                        EMPTY_STRING).replace(mDecimalSeparator,
+                                                        CURRENCY_DOT_SEPARATOR)),
+                                                mCurrencyCode));
+                            } else {
+                                mTransferAmount.setText(
+                                        formattedAmount(stringToDouble(mTransferAmount.getText().toString()),
+                                                mCurrencyCode));
+                            }
                             showTransferDestination(transferMethod);
                             enableInputControls();
                         } else {
@@ -584,6 +598,8 @@ public class CreateTransferFragment extends Fragment {
                                             sourceList);
                                     intent.putExtra(ListTransferSourceActivity.EXTRA_SELECTED_SOURCE_TOKEN,
                                             activeSource.getToken());
+                                    intent.putExtra(ListTransferSourceActivity.EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT,
+                                            mCreateTransferViewModel.isPortraitMode());
                                     startActivityForResult(intent, SELECT_TRANSFER_SOURCE_REQUEST_CODE);
                                 }
                             });
@@ -730,7 +746,11 @@ public class CreateTransferFragment extends Fragment {
         transferIdentifier.setText(transferMethodIdentification);
         transferTitle.setText(getStringResourceByName(transferTitle.getContext(), type));
         transferIcon.setText(getStringFontIcon(transferIcon.getContext(), type));
-        transferCountry.setText(locale.getDisplayName());
+        if (type.equals(PREPAID_CARD)) {
+            transferCountry.setText(transferMethod.getField(TRANSFER_METHOD_CURRENCY));
+        } else {
+            transferCountry.setText(locale.getDisplayName());
+        }
 
         mTransferCurrency.setText(transferMethod.getField(TRANSFER_METHOD_CURRENCY));
         mTransferDestination.setVisibility(View.VISIBLE);
@@ -739,23 +759,38 @@ public class CreateTransferFragment extends Fragment {
     private void showTransferSource(@NonNull final TransferSource transferSource) {
         TextView transferSourceIcon = getView().findViewById(R.id.transfer_source_icon);
         TextView transferSourceTitle = getView().findViewById(R.id.transfer_source_title);
-        TextView transferSourceIdentifier = getView().findViewById(R.id.transfer_source_description_1);
+        TextView transferSourceCurrency = getView().findViewById(R.id.transfer_source_description_1);
+        TextView transferSourceIdentifier = getView().findViewById(R.id.transfer_source_description_2);
         if (transferSource.getType().equals(PREPAID_CARD)) {
+            transferSourceIdentifier.setVisibility(View.VISIBLE);
             transferSourceTitle.setText(
                     getTransferMethodName(transferSourceIdentifier.getContext(), transferSource.getType()));
             transferSourceIcon.setText(getStringFontIcon(transferSourceIcon.getContext(), transferSource.getType()));
+            transferSourceCurrency.setText(transferSource.getCurrencyCodes());
+            transferSourceIdentifier.setText(getTransferMethodDetail(transferSourceIdentifier.getContext(),
+                    transferSource.getIdentification(), transferSource.getType()));
         } else {
+            transferSourceIdentifier.setVisibility(View.GONE);
             transferSourceTitle.setText(transferSourceIdentifier.getContext().getString(R.string.availableFunds));
             transferSourceIcon.setText(transferSourceIcon.getContext().getString(R.string.available_funds_font_icon));
+            transferSourceCurrency.setText(transferSource.getCurrencyCodes());
         }
-        transferSourceIdentifier.setText(transferSource.getIdentification() == null ? transferSource.getCurrencyCodes()
-                : getTransferMethodDetail(transferSourceIdentifier.getContext(),
-                        transferSource.getIdentification(), transferSource.getType()));
     }
 
     private String formattedAmount(final double amount, final String currencyCode) {
-        DecimalFormat currencyFormatter = (DecimalFormat) DecimalFormat.getCurrencyInstance();
-        currencyFormatter.setMinimumFractionDigits(mNumberOfFractionDigits);
+        HashMap<String, LocaleDetails> localeList = CurrencyParser.getInstance(requireContext()).getLocaleList();
+        DecimalFormat currencyFormatter;
+        if(localeList.containsKey(currencyCode)) {
+            LocaleDetails locale = localeList.get(currencyCode);
+            currencyFormatter = (DecimalFormat) DecimalFormat.getCurrencyInstance((new Locale(locale.getLanguage(),locale.getCountryCode())));
+        }else {
+            currencyFormatter = (DecimalFormat) DecimalFormat.getCurrencyInstance();
+        }
+        if (mNumberOfFractionDigits < 3) {
+            currencyFormatter.setMaximumFractionDigits(mNumberOfFractionDigits);
+        } else {
+            currencyFormatter.setMinimumFractionDigits(mNumberOfFractionDigits);
+        }
         currencyFormatter.setCurrency(Currency.getInstance(currencyCode == null ? US_CURRENCY_CODE : currencyCode));
         DecimalFormatSymbols decimalFormatSymbols = currencyFormatter.getDecimalFormatSymbols();
         decimalFormatSymbols.setCurrencySymbol("");

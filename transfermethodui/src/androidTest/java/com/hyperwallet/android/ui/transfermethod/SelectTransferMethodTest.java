@@ -98,6 +98,9 @@ public class SelectTransferMethodTest {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("successful_tmc_keys_response.json")).mock();
 
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_keys_fee_processing_time_CA_response.json")).mock();
+
         mActivityTestRule.launchActivity(null);
 
         onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
@@ -119,6 +122,12 @@ public class SelectTransferMethodTest {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("successful_tmc_keys_response.json")).mock();
 
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_keys_fee_processing_time_CA_response.json")).mock();
+
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_keys_fee_processing_time_CA_response.json")).mock();
+
         mActivityTestRule.launchActivity(null);
 
         onView(withId(R.id.select_transfer_method_country_value)).perform(click());
@@ -126,7 +135,7 @@ public class SelectTransferMethodTest {
         onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.country_selection_toolbar)))).check(
                 matches(withText(R.string.mobileCountryRegion)));
         onView(withId(R.id.search_button)).check(doesNotExist());
-        onView(withId(R.id.country_selection_list)).check(new RecyclerViewCountAssertion(5));
+        onView(withId(R.id.country_selection_list)).check(new RecyclerViewCountAssertion(6));
         onView(allOf(withId(R.id.country_name), withText("Canada"))).check(matches(isDisplayed()));
         onView(allOf(withId(R.id.country_name), withText("Croatia"))).check(matches(isDisplayed()));
         onView(allOf(withId(R.id.country_name), withText("Mexico"))).check(matches(isDisplayed()));
@@ -146,6 +155,12 @@ public class SelectTransferMethodTest {
                 .getResourceContent("user_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("successful_tmc_keys_large_response.json")).mock();
+
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_keys_fee_processing_time_CA_response.json")).mock();
+
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_keys_fee_processing_time_CA_response.json")).mock();
 
         mActivityTestRule.launchActivity(null);
 
@@ -168,6 +183,16 @@ public class SelectTransferMethodTest {
                 .getResourceContent("user_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("successful_tmc_keys_response.json")).mock();
+
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_keys_fee_processing_time_US_response.json")).mock();
+
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_keys_fee_processing_time_US_response.json")).mock();
+
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_keys_fee_processing_time_US_response.json")).mock();
+
 
         mActivityTestRule.launchActivity(null);
 
@@ -195,6 +220,10 @@ public class SelectTransferMethodTest {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("successful_tmc_keys_response.json")).mock();
 
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_keys_fee_processing_time_US_response.json")).mock();
+
+
         mActivityTestRule.launchActivity(null);
 
         onView(withId(R.id.select_transfer_method_country_value)).check(matches(withText("United States")));
@@ -207,10 +236,12 @@ public class SelectTransferMethodTest {
                 matches(atPosition(0, hasDescendant(withText(R.string.bank_account)))));
 
         String bankCardFee = InstrumentationRegistry.getInstrumentation().getTargetContext()
-                .getString(R.string.feeAndProcessingTimeInformation, usdDollarSymbol + "2.00", "1-2 Business days");
+                .getString(R.string.feeInformation, usdDollarSymbol + "2.00");
+        String bankCardProcessingTime = InstrumentationRegistry.getInstrumentation().getTargetContext()
+                .getString(R.string.processingTimeInformation, "1-2 Business days");
 
         onView(withId(R.id.select_transfer_method_types_list)).check(
-                matches(atPosition(0, hasDescendant(withText(bankCardFee)))));
+                matches(atPosition(0, hasDescendant(withText(bankCardFee+bankCardProcessingTime)))));
 
         onView(withId(R.id.select_transfer_method_types_list)).check(
                 matches(atPosition(1, hasDescendant(withText(R.string.bank_card_font_icon)))));
@@ -218,10 +249,13 @@ public class SelectTransferMethodTest {
                 matches(atPosition(1, hasDescendant(withText(R.string.bank_card)))));
 
         String debitCardFee = InstrumentationRegistry.getInstrumentation().getTargetContext()
-                .getString(R.string.feeAndProcessingTimeInformation, usdDollarSymbol + "1.75", "IMMEDIATE");
+                .getString(R.string.feeInformation, usdDollarSymbol + "1.75");
+
+        String debitCardProcessingTime = InstrumentationRegistry.getInstrumentation().getTargetContext()
+                .getString(R.string.processingTimeInformation, "IMMEDIATE");
 
         onView(withId(R.id.select_transfer_method_types_list)).check(
-                matches(atPosition(1, hasDescendant(withText(debitCardFee)))));
+                matches(atPosition(1, hasDescendant(withText(debitCardFee+debitCardProcessingTime)))));
 
 
         onView(withId(R.id.select_transfer_method_types_list)).check(
@@ -233,10 +267,12 @@ public class SelectTransferMethodTest {
                 matches(atPosition(2, hasDescendant(wireAccountViewMatchers))));
 
         String wireTransferFee = InstrumentationRegistry.getInstrumentation().getTargetContext()
-                .getString(R.string.feeAndProcessingTimeInformation, usdDollarSymbol + "20.00", "1-3 Business days");
+                .getString(R.string.feeInformation, usdDollarSymbol + "20.00");
+        String wireTransferProcessingTime = InstrumentationRegistry.getInstrumentation().getTargetContext()
+                .getString(R.string.processingTimeInformation, "1-3 Business days");
 
         onView(withId(R.id.select_transfer_method_types_list)).check(
-                matches(atPosition(2, hasDescendant(withText(wireTransferFee)))));
+                matches(atPosition(2, hasDescendant(withText(wireTransferFee+wireTransferProcessingTime)))));
 
         onView(withId(R.id.select_transfer_method_types_list)).check(
                 matches(atPosition(3, hasDescendant(withText(R.string.paypal_account_font_icon)))));
@@ -244,10 +280,12 @@ public class SelectTransferMethodTest {
                 matches(atPosition(3, hasDescendant(withText("PayPal")))));
 
         String paypalFee = InstrumentationRegistry.getInstrumentation().getTargetContext()
-                .getString(R.string.feeAndProcessingTimeInformation, usdDollarSymbol + "0.25", "IMMEDIATE");
+                .getString(R.string.feeInformation, usdDollarSymbol + "0.25");
+        String paypalProcessingTime = InstrumentationRegistry.getInstrumentation().getTargetContext()
+                .getString(R.string.processingTimeInformation, "IMMEDIATE");
 
         onView(withId(R.id.select_transfer_method_types_list)).check(
-                matches(atPosition(3, hasDescendant(withText(paypalFee)))));
+                matches(atPosition(3, hasDescendant(withText(paypalFee+paypalProcessingTime)))));
     }
 
     @Test
@@ -256,6 +294,10 @@ public class SelectTransferMethodTest {
                 .getResourceContent("user_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("successful_tmc_keys_empty_fee_response.json")).mock();
+
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_keys_empty_fee_US_response.json")).mock();
+
 
         mActivityTestRule.launchActivity(null);
 
@@ -268,7 +310,7 @@ public class SelectTransferMethodTest {
         onView(withId(R.id.select_transfer_method_types_list)).check(
                 matches(atPosition(0, hasDescendant(withText(R.string.bank_account)))));
         onView(withId(R.id.select_transfer_method_types_list)).check(
-                matches(atPosition(0, hasDescendant(withText("1-2 Business days")))));
+                matches(atPosition(0, hasDescendant(withText("No fee \u2022 1-2 Business days")))));
     }
 
     @Test
@@ -277,6 +319,10 @@ public class SelectTransferMethodTest {
                 .getResourceContent("user_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("successful_tmc_keys_empty_processing_response.json")).mock();
+
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_keys_empty_processing_US_response.json")).mock();
+
 
         mActivityTestRule.launchActivity(null);
 
@@ -302,6 +348,14 @@ public class SelectTransferMethodTest {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("successful_tmc_keys_response.json")).mock();
 
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_keys_fee_processing_time_US_response.json")).mock();
+
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_keys_fee_processing_time_CA_response.json")).mock();
+
+
+
         mActivityTestRule.launchActivity(null);
 
         onView(withId(R.id.select_transfer_method_country_value)).check(matches(withText("United States")));
@@ -318,10 +372,12 @@ public class SelectTransferMethodTest {
                 matches(atPosition(0, hasDescendant(withText(R.string.bank_account)))));
 
         String bankAccountFee = InstrumentationRegistry.getInstrumentation().getTargetContext()
-                .getString(R.string.feeAndProcessingTimeInformation, cdnDollarSymbol + "2.20", "1-2 Business days");
+                .getString(R.string.feeInformation, cdnDollarSymbol + "2.20");
+        String bankCardProcessingTime = InstrumentationRegistry.getInstrumentation().getTargetContext()
+                .getString(R.string.processingTimeInformation, "1-2 Business days");
 
         onView(withId(R.id.select_transfer_method_types_list)).check(
-                matches(atPosition(0, hasDescendant(withText(bankAccountFee)))));
+                matches(atPosition(0, hasDescendant(withText(bankAccountFee+bankCardProcessingTime)))));
 
         onView(withId(R.id.select_transfer_method_types_list)).check(
                 matches(atPosition(1, hasDescendant(withText(R.string.paypal_account_font_icon)))));
@@ -329,10 +385,12 @@ public class SelectTransferMethodTest {
                 matches(atPosition(1, hasDescendant(withText("PayPal")))));
 
         String paypalFee = InstrumentationRegistry.getInstrumentation().getTargetContext()
-                .getString(R.string.feeAndProcessingTimeInformation, cdnDollarSymbol + "0.25", "IMMEDIATE");
+                .getString(R.string.feeInformation, cdnDollarSymbol + "0.25");
+        String paypalProcessingTime = InstrumentationRegistry.getInstrumentation().getTargetContext()
+                .getString(R.string.processingTimeInformation, "IMMEDIATE");
 
         onView(withId(R.id.select_transfer_method_types_list)).check(
-                matches(atPosition(1, hasDescendant(withText(paypalFee)))));
+                matches(atPosition(1, hasDescendant(withText(paypalFee+paypalProcessingTime)))));
     }
 
     @Test
@@ -341,6 +399,10 @@ public class SelectTransferMethodTest {
                 .getResourceContent("user_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("successful_tmc_keys_response.json")).mock();
+
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_keys_fee_processing_time_US_response.json")).mock();
+
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("successful_tmc_fields_bank_account_response.json")).mock();
 
@@ -360,6 +422,10 @@ public class SelectTransferMethodTest {
                 .getResourceContent("user_business_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("successful_tmc_keys_response.json")).mock();
+
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_keys_fee_processing_time_US_response.json")).mock();
+
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("successful_tmc_fields_bank_account_response.json")).mock();
 
@@ -379,6 +445,10 @@ public class SelectTransferMethodTest {
                 .getResourceContent("user_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("successful_tmc_keys_response.json")).mock();
+
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_keys_fee_processing_time_US_response.json")).mock();
+
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("successful_tmc_fields_bank_account_response.json")).mock();
 
@@ -396,6 +466,10 @@ public class SelectTransferMethodTest {
                 .getResourceContent("user_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("successful_tmc_keys_response.json")).mock();
+
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_keys_fee_processing_time_US_response.json")).mock();
+
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("successful_tmc_fields_bank_card_response.json")).mock();
 
@@ -414,6 +488,9 @@ public class SelectTransferMethodTest {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("successful_tmc_keys_response.json")).mock();
 
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_keys_fee_processing_time_CA_response.json")).mock();
+
         mActivityTestRule.launchActivity(null);
 
         onView(withId(R.id.select_transfer_method_country_value)).check(matches(withText("Canada")));
@@ -426,6 +503,10 @@ public class SelectTransferMethodTest {
                 .getResourceContent("user_not_configured_country_response.json")).mock();
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("successful_tmc_keys_response.json")).mock();
+
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_keys_fee_processing_time_US_response.json")).mock();
+
 
         mActivityTestRule.launchActivity(null);
 
@@ -440,9 +521,116 @@ public class SelectTransferMethodTest {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
                 .getResourceContent("successful_tmc_keys_response.json")).mock();
 
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_keys_fee_processing_time_US_response.json")).mock();
+
+
         mActivityTestRule.launchActivity(null);
 
         onView(withId(R.id.select_transfer_method_country_value)).check(matches(withText("United States")));
         onView(withId(R.id.select_transfer_method_currency_value)).check(matches(withText("USD")));
+    }
+
+    @Test
+    public void testSelectTransferMethod_verifyNoFeeLabelsDisplayed() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("user_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_keys_response.json")).mock();
+
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_keys_fee_processing_time_US_response.json")).mock();
+
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_keys_no_fee_response.json")).mock();
+
+        mActivityTestRule.launchActivity(null);
+
+        onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
+        onView(withText(R.string.mobileAddTransferMethodHeader)).check(matches(withParent(withId(R.id.toolbar))));
+
+        onView(withId(R.id.select_transfer_method_country_value)).check(matches(withText("United States")));
+        onView(withId(R.id.select_transfer_method_currency_value)).check(matches(withText("USD")));
+        onView(withId(R.id.select_transfer_method_types_list)).check(new RecyclerViewCountAssertion(4));
+
+        onView(withId(R.id.select_transfer_method_country_value)).perform(click());
+        onView(allOf(withId(R.id.country_name), withText("CHINA"))).perform(click());
+
+        String bankAccountFee = InstrumentationRegistry.getInstrumentation().getTargetContext()
+                .getString(R.string.noFee);
+        String bankAccountProcessingTime = InstrumentationRegistry.getInstrumentation().getTargetContext()
+                .getString(R.string.processingTimeInformation, "1-2 Business days");
+
+        onView(withId(R.id.select_transfer_method_types_list)).check(
+                matches(atPosition(0, hasDescendant(withText(bankAccountFee+bankAccountProcessingTime)))));
+
+
+        String bankCardFee = InstrumentationRegistry.getInstrumentation().getTargetContext()
+                .getString(R.string.noFee);
+        String bankCardProcessingTime = InstrumentationRegistry.getInstrumentation().getTargetContext()
+                .getString(R.string.processingTimeInformation, "IMMEDIATE");
+
+        onView(withId(R.id.select_transfer_method_types_list)).check(
+                matches(atPosition(1, hasDescendant(withText(bankCardFee+bankCardProcessingTime)))));
+
+
+
+        String wireTransferFee = InstrumentationRegistry.getInstrumentation().getTargetContext()
+                .getString(R.string.noFee);
+        String wireTransferProcessingTime = InstrumentationRegistry.getInstrumentation().getTargetContext()
+                .getString(R.string.processingTimeInformation, "1-3 Business days");
+
+        onView(withId(R.id.select_transfer_method_types_list)).check(
+                matches(atPosition(2, hasDescendant(withText(wireTransferFee+wireTransferProcessingTime)))));
+
+        String paypalTransferFee = InstrumentationRegistry.getInstrumentation().getTargetContext()
+                .getString(R.string.noFee);
+        String paypalTransferProcessingTime = InstrumentationRegistry.getInstrumentation().getTargetContext()
+                .getString(R.string.processingTimeInformation, "IMMEDIATE");
+
+        onView(withId(R.id.select_transfer_method_types_list)).check(
+                matches(atPosition(3, hasDescendant(withText(paypalTransferFee+paypalTransferProcessingTime)))));
+
+
+    }
+
+    @Test
+    public void testSelectTransferMethod_verifyMixedFeeIsDisplayed() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("user_response.json")).mock();
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_keys_mixedfee_response.json")).mock();
+
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_keys_fee_processing_time_US_response.json")).mock();
+
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_OK).withBody(sResourceManager
+                .getResourceContent("successful_tmc_keys_mixed_fee_CN_response.json")).mock();
+
+        mActivityTestRule.launchActivity(null);
+
+        onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
+        onView(withText(R.string.mobileAddTransferMethodHeader)).check(matches(withParent(withId(R.id.toolbar))));
+
+        onView(withId(R.id.select_transfer_method_country_value)).check(matches(withText("United States")));
+        onView(withId(R.id.select_transfer_method_currency_value)).check(matches(withText("USD")));
+        onView(withId(R.id.select_transfer_method_types_list)).check(new RecyclerViewCountAssertion(4));
+
+        onView(withId(R.id.select_transfer_method_country_value)).perform(click());
+        onView(allOf(withId(R.id.country_name), withText("CHINA"))).perform(click());
+
+        String mixedFee = InstrumentationRegistry.getInstrumentation().getTargetContext()
+                .getString(R.string.fee_mix_formatter,usdDollarSymbol,"5.00","4.50","4.00","10.00");
+
+        String venmoTransferFee = InstrumentationRegistry.getInstrumentation().getTargetContext()
+                .getString(R.string.feeInformation,mixedFee);
+
+        String venmoTransferProcessingTime = InstrumentationRegistry.getInstrumentation().getTargetContext()
+                .getString(R.string.processingTimeInformation, "1-2 Business days");
+
+        onView(withId(R.id.select_transfer_method_types_list)).check(
+                matches(atPosition(4, hasDescendant(withText(venmoTransferFee+venmoTransferProcessingTime)))));
+
+
     }
 }

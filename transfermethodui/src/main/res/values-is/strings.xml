@@ -25,8 +25,8 @@
     <string name="default_account_sub_label">Veldu sjálfvalda millifærsluaðferð</string>
     <string name="api_expiry_date_format">MM/ÁÁ</string>
 
-    <string name="feeAndProcessingTimeInformation">%s gjald \u2022 %s</string>
     <string name="feeInformation">%s gjald</string>
+    <string name="noFee">Ekkert gjald</string>
 
     <string name="emptyStateAddTransferMethod">Bæta við millifærsluaðferð til að byrja.</string>
 

@@ -51,7 +51,6 @@ public class TabbedListReceiptsActivity extends AppCompatActivity implements OnN
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
 
         setContentView(R.layout.activity_tabbed_list_receipt);
 
@@ -67,14 +66,15 @@ public class TabbedListReceiptsActivity extends AppCompatActivity implements OnN
             }
         });
 
-        if (getIntent().getBooleanExtra(EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT, false)) {
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        }
-
         mTabbedListReceiptsViewModel = ViewModelProviders.of(this,
                 new TabbedListReceiptsViewModel.TabbedListReceiptsViewModelFactory(new UserRepositoryImpl(),
                         new PrepaidCardRepositoryImpl()))
                 .get(TabbedListReceiptsViewModel.class);
+
+        if (getIntent().getBooleanExtra(EXTRA_LOCK_SCREEN_ORIENTATION_TO_PORTRAIT, false)) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+            mTabbedListReceiptsViewModel.setPortraitMode(true);
+        }
 
         registerObservers();
 

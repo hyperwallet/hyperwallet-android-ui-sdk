@@ -20,6 +20,7 @@ package com.hyperwallet.android.ui.transfermethod.view;
 
 import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.ADD_TRANSFER_METHOD_REQUEST_CODE;
 import static com.hyperwallet.android.ui.common.view.TransferMethodUtils.getStringFontIcon;
+import static com.hyperwallet.android.ui.transfermethod.view.FeeFormatter.getFormattedFeeAndProcessingTime;
 import static com.hyperwallet.android.ui.transfermethod.view.FeeFormatter.isFeeAvailable;
 import static com.hyperwallet.android.ui.transfermethod.view.FeeFormatter.isProcessingTimeAvailable;
 
@@ -496,25 +497,14 @@ public class SelectTransferMethodFragment extends Fragment implements SelectTran
             void bind(TransferMethodSelectionItem selectionItem) {
                 mTitle.setText(selectionItem.getTransferMethodName());
                 mIcon.setText(getStringFontIcon(mIcon.getContext(), selectionItem.getTransferMethodType()));
-                String formattedFee = FeeFormatter.getFormattedFee(mTitle.getContext(), selectionItem.getFees());
-
-                if (isFeeAvailable(selectionItem.getFees())
-                        && isProcessingTimeAvailable(selectionItem.getProcessingTime())) {
-                    mDescriptionFeesAndProcessingTime.setVisibility(View.VISIBLE);
-                    mDescriptionFeesAndProcessingTime.setText(mDescriptionFeesAndProcessingTime.getContext()
-                            .getString(R.string.feeAndProcessingTimeInformation, formattedFee,
-                                    selectionItem.getProcessingTime().getValue()));
-                } else if (isFeeAvailable(selectionItem.getFees())
+                if (!isFeeAvailable(selectionItem.getFees())
                         && !isProcessingTimeAvailable(selectionItem.getProcessingTime())) {
-                    mDescriptionFeesAndProcessingTime.setVisibility(View.VISIBLE);
-                    mDescriptionFeesAndProcessingTime.setText(mDescriptionFeesAndProcessingTime.getContext()
-                            .getString(R.string.feeInformation, formattedFee));
-                } else if (isProcessingTimeAvailable(selectionItem.getProcessingTime())
-                        && !isFeeAvailable(selectionItem.getFees())) {
-                    mDescriptionFeesAndProcessingTime.setVisibility(View.VISIBLE);
-                    mDescriptionFeesAndProcessingTime.setText(selectionItem.getProcessingTime().getValue());
-                } else {
                     mDescriptionFeesAndProcessingTime.setVisibility(View.INVISIBLE);
+                } else {
+                    mDescriptionFeesAndProcessingTime.setVisibility(View.VISIBLE);
+                    mDescriptionFeesAndProcessingTime.setText(
+                            getFormattedFeeAndProcessingTime(mDescriptionFeesAndProcessingTime.getContext(),
+                                    selectionItem.getFees(), selectionItem.getProcessingTime()));
                 }
 
                 itemView.setOnClickListener(new OneClickListener() {

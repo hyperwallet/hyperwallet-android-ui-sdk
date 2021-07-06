@@ -25,8 +25,8 @@
     <string name="default_account_sub_label">Valitse oletusarvoinen siirtomenetelmä</string>
     <string name="api_expiry_date_format">KK/VV</string>
 
-    <string name="feeAndProcessingTimeInformation">%s maksu \u2022 %s</string>
     <string name="feeInformation">%s maksu</string>
+    <string name="noFee">Ei maksu</string>
 
     <string name="emptyStateAddTransferMethod">Aloita lisäämällä siirtomenetelmä.</string>
 

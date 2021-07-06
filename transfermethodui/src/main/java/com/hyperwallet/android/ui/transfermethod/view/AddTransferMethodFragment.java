@@ -28,6 +28,7 @@ import static com.hyperwallet.android.model.transfermethod.TransferMethod.Transf
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.WIRE_ACCOUNT;
 import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.EXTRA_TRANSFER_METHOD_ADDED;
 import static com.hyperwallet.android.ui.transfermethod.TransferMethodLocalBroadcast.TransferMethodLocalBroadcastAction.ACTION_HYPERWALLET_TRANSFER_METHOD_ADDED;
+import static com.hyperwallet.android.ui.transfermethod.view.FeeFormatter.getFormattedFeeAndProcessingTime;
 import static com.hyperwallet.android.ui.transfermethod.view.FeeFormatter.isFeeAvailable;
 import static com.hyperwallet.android.ui.transfermethod.view.FeeFormatter.isProcessingTimeAvailable;
 
@@ -408,22 +409,12 @@ public class AddTransferMethodFragment extends Fragment implements WidgetEventLi
         View container = getView().findViewById(R.id.add_transfer_method_static_container);
         TextView feeAndProcessingTime = getView().findViewById(R.id.add_transfer_method_information);
 
-        if (isFeeAvailable(fees) && isProcessingTimeAvailable(processingTime)) {
-            String formattedFee = FeeFormatter.getFormattedFee(header.getContext(), fees);
-            feeAndProcessingTime.setVisibility(View.VISIBLE);
-            feeAndProcessingTime.setText(
-                    feeAndProcessingTime.getContext().getString(R.string.feeAndProcessingTimeInformation, formattedFee,
-                            processingTime.getValue()));
-        } else if (isFeeAvailable(fees) && !isProcessingTimeAvailable(processingTime)) {
-            String formattedFee = FeeFormatter.getFormattedFee(header.getContext(), fees);
-            feeAndProcessingTime.setVisibility(View.VISIBLE);
-            feeAndProcessingTime.setText(
-                    feeAndProcessingTime.getContext().getString(R.string.feeInformation, formattedFee));
-        } else if (isProcessingTimeAvailable(processingTime) && !isFeeAvailable(fees)) {
-            feeAndProcessingTime.setVisibility(View.VISIBLE);
-            feeAndProcessingTime.setText(processingTime.getValue());
-        } else {
+        if (!isFeeAvailable(fees) && !isProcessingTimeAvailable(processingTime)) {
             feeAndProcessingTime.setVisibility(View.GONE);
+        } else {
+            feeAndProcessingTime.setVisibility(View.VISIBLE);
+            feeAndProcessingTime.setText(
+                    getFormattedFeeAndProcessingTime(feeAndProcessingTime.getContext(), fees, processingTime));
         }
 
         if (feeAndProcessingTime.getVisibility() == View.VISIBLE) {

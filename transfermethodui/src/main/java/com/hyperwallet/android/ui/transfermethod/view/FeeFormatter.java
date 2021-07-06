@@ -35,7 +35,7 @@ import java.util.Locale;
 public class FeeFormatter {
 
     public static String getFormattedFee(@NonNull final Context context, @NonNull final List<Fee> fees) {
-        String formattedString = context.getResources().getString(R.string.unknown);
+        String formattedString = context.getResources().getString(R.string.noFee);
         if (fees.size() == 1) {
             formattedString = getSingleFormattedFee(context, fees, formattedString);
         } else {
@@ -48,10 +48,13 @@ public class FeeFormatter {
             String formattedString) {
         Fee fee = fees.get(0);
         if (Fee.FeeRate.FLAT.equals(fee.getFeeRateType())) {
+            if (!isValidFee(fee.getValue())) {
+                return formattedString;
+            }
             formattedString = context.getResources().getString(R.string.fee_flat_formatter,
                     Currency.getInstance(fee.getCurrency()).getSymbol(Locale.getDefault()), fee.getValue());
         } else if (Fee.FeeRate.PERCENT.equals(fee.getFeeRateType())) {
-            formattedString = getPercentFormattedFee(context, fee);
+            formattedString = getPercentFormattedFee(context, fee, formattedString);
         }
         return formattedString;
     }
@@ -72,18 +75,48 @@ public class FeeFormatter {
         if (flatFee != null && percentFee != null) {
             String minimumAmount = percentFee.getMin();
             String maximumAmount = percentFee.getMax();
-            if (maximumAmount.isEmpty() && minimumAmount.isEmpty()) {
+
+            if (!isValidFee(flatFee.getValue()) && !isValidFee(percentFee.getValue())) {
+                return formattedString;
+            } else if (maximumAmount.isEmpty() && minimumAmount.isEmpty() && !isValidFee(percentFee.getValue())) {
+                formattedString = context.getResources().getString(R.string.fee_flat_formatter,
+                        Currency.getInstance(flatFee.getCurrency()).getSymbol(Locale.getDefault()), flatFee.getValue());
+            } else if (maximumAmount.isEmpty() && minimumAmount.isEmpty() && !isValidFee(flatFee.getValue())) {
+                formattedString = context.getResources().getString(R.string.fee_percent_no_min_and_max_formatter,
+                        percentFee.getValue());
+            } else if (maximumAmount.isEmpty() && minimumAmount.isEmpty()) {
                 formattedString = context.getResources().getString(R.string.fee_mix_no_min_and_max_formatter,
                         Currency.getInstance(flatFee.getCurrency()).getSymbol(Locale.getDefault()),
                         flatFee.getValue(), percentFee.getValue());
+            } else if (maximumAmount.isEmpty() && !isValidFee(percentFee.getValue())) {
+                formattedString = context.getResources().getString(R.string.fee_flat_formatter,
+                        Currency.getInstance(flatFee.getCurrency()).getSymbol(Locale.getDefault()), flatFee.getValue());
+            } else if (maximumAmount.isEmpty() && !isValidFee(flatFee.getValue())) {
+                formattedString = context.getResources().getString(R.string.fee_percent_only_min_formatter,
+                        percentFee.getValue(),
+                        percentFee.getCurrency(), minimumAmount);
             } else if (maximumAmount.isEmpty()) {
                 formattedString = context.getResources().getString(R.string.fee_mix_only_min_formatter,
                         Currency.getInstance(flatFee.getCurrency()).getSymbol(Locale.getDefault()),
                         flatFee.getValue(), percentFee.getValue(), minimumAmount);
+            } else if (minimumAmount.isEmpty() && !isValidFee(percentFee.getValue())) {
+                formattedString = context.getResources().getString(R.string.fee_flat_formatter,
+                        Currency.getInstance(flatFee.getCurrency()).getSymbol(Locale.getDefault()), flatFee.getValue());
+            } else if (minimumAmount.isEmpty() && !isValidFee(flatFee.getValue())) {
+                formattedString = context.getResources().getString(R.string.fee_percent_only_max_formatter,
+                        percentFee.getValue(),
+                        percentFee.getCurrency(), maximumAmount);
             } else if (minimumAmount.isEmpty()) {
                 formattedString = context.getResources().getString(R.string.fee_mix_only_max_formatter,
                         Currency.getInstance(flatFee.getCurrency()).getSymbol(Locale.getDefault()),
                         flatFee.getValue(), percentFee.getValue(), maximumAmount);
+            } else if (isValidFee(percentFee.getValue()) && !isValidFee(flatFee.getValue())) {
+                formattedString = context.getResources().getString(R.string.fee_percent_formatter,
+                        percentFee.getValue(),
+                        percentFee.getCurrency(), minimumAmount, maximumAmount);
+            } else if (isValidFee(flatFee.getValue()) && !isValidFee(percentFee.getValue())) {
+                formattedString = context.getResources().getString(R.string.fee_flat_formatter,
+                        Currency.getInstance(flatFee.getCurrency()).getSymbol(Locale.getDefault()), flatFee.getValue());
             } else {
                 formattedString = context.getResources().getString(R.string.fee_mix_formatter,
                         Currency.getInstance(flatFee.getCurrency()).getSymbol(Locale.getDefault()),
@@ -94,10 +127,15 @@ public class FeeFormatter {
     }
 
 
-    private static String getPercentFormattedFee(@NonNull final Context context, @NonNull final Fee fee) {
+    private static String getPercentFormattedFee(@NonNull final Context context, @NonNull final Fee fee,
+            String formattedString) {
         String formattedFee;
         String minimumAmount = fee.getMin();
         String maximumAmount = fee.getMax();
+
+        if (!isValidFee(fee.getValue())) {
+            return formattedString;
+        }
         if (maximumAmount.isEmpty() && minimumAmount.isEmpty()) {
             formattedFee = context.getResources().getString(R.string.fee_percent_no_min_and_max_formatter,
                     fee.getValue());
@@ -121,5 +159,42 @@ public class FeeFormatter {
 
     protected static boolean isProcessingTimeAvailable(@Nullable final ProcessingTime processingTime) {
         return processingTime != null && !TextUtils.isEmpty(processingTime.getValue());
+    }
+
+    protected static boolean isNoFeeStringAvailable(@NonNull final Context context, String fee) {
+        return fee.contains(context.getResources().getString(R.string.noFee));
+    }
+
+    protected static boolean isValidFee(String fee) {
+        if (TextUtils.isEmpty(fee)) {
+            return false;
+        } else {
+            return Double.parseDouble(fee) != 0.0;
+        }
+    }
+
+    public static String getFormattedFeeAndProcessingTime(@NonNull Context context, @NonNull final List<Fee> fees,
+            @Nullable final ProcessingTime processingTime) {
+        if (isFeeAvailable(fees)) {
+            String formattedFee = getFormattedFee(context, fees);
+            if (isNoFeeStringAvailable(context, formattedFee) && isProcessingTimeAvailable(processingTime)) {
+                return String.format("%s%s", context.getResources().getString(R.string.noFee),
+                        context.getResources().getString(R.string.processingTimeInformation,
+                                processingTime.getValue()));
+            } else if (!isNoFeeStringAvailable(context, formattedFee) && !isProcessingTimeAvailable(processingTime)) {
+                return context.getResources().getString(R.string.feeInformation, formattedFee);
+            } else if (!isNoFeeStringAvailable(context, formattedFee) && isProcessingTimeAvailable(processingTime)) {
+                return String.format("%s%s", context.getResources().getString(R.string.feeInformation, formattedFee),
+                        context.getResources().getString(R.string.processingTimeInformation,
+                                processingTime.getValue()));
+            } else {
+                return context.getResources().getString(R.string.noFee);
+            }
+        } else if (isProcessingTimeAvailable(processingTime) && !isFeeAvailable(fees)) {
+            return String.format("%s%s", context.getResources().getString(R.string.noFee),
+                    context.getResources().getString(R.string.processingTimeInformation, processingTime.getValue()));
+        } else {
+            return context.getResources().getString(R.string.noFee);
+        }
     }
 }

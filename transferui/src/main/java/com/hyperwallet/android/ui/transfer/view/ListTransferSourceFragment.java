@@ -25,6 +25,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,6 +89,12 @@ public class ListTransferSourceFragment extends DialogFragment {
         super.onCreate(savedInstanceState);
         mListTransferSourceViewModel = ViewModelProviders.of(requireActivity()).get(
                 ListTransferSourceViewModel.class);
+
+        if (savedInstanceState != null) {
+            mActiveTransferSourceToken = savedInstanceState.getString(ARGUMENT_SELECTED_TRANSFER_SOURCE_TOKEN);
+            mTransferSourceList = savedInstanceState.getParcelableArrayList(ARGUMENT_TRANSFER_SOURCE_LIST);
+        }
+
     }
 
     @Override
@@ -199,6 +206,7 @@ public class ListTransferSourceFragment extends DialogFragment {
         private final TextView mTitle;
         private final TextView mIcon;
         private final TextView mTransferSourceIdentification;
+        private final TextView mTransferSourceCurrency;
         private final ImageView mSelectedIcon;
         private final ListTransferSourceViewModel mViewModel;
         private TransferSource mSource;
@@ -209,8 +217,8 @@ public class ListTransferSourceFragment extends DialogFragment {
 
             mIcon = itemView.findViewById(R.id.icon);
             mTitle = itemView.findViewById(R.id.title);
-            mTransferSourceIdentification = itemView.findViewById(R.id.description_1);
-            itemView.findViewById(R.id.description_2).setVisibility(View.GONE);
+            mTransferSourceIdentification = itemView.findViewById(R.id.description_2);
+            mTransferSourceCurrency = itemView.findViewById(R.id.description_1);
             mSelectedIcon = itemView.findViewById(R.id.item_selected_image);
             mViewModel = viewModel;
         }
@@ -225,14 +233,17 @@ public class ListTransferSourceFragment extends DialogFragment {
             if (source.getType().equals(PREPAID_CARD)) {
                 mTitle.setText(getTransferMethodName(mTitle.getContext(), source.getType()));
                 mIcon.setText(getStringFontIcon(mIcon.getContext(), source.getType()));
+                mTransferSourceIdentification.setText(
+                        getTransferMethodDetail(mTransferSourceIdentification.getContext(),
+                                source.getIdentification(), source.getType()));
+                mTransferSourceCurrency.setText(source.getCurrencyCodes());
+                mTransferSourceIdentification.setVisibility(View.VISIBLE);
             } else {
                 mTitle.setText(mTitle.getContext().getString(R.string.availableFunds));
                 mIcon.setText(mIcon.getContext().getString(R.string.available_funds_font_icon));
+                mTransferSourceCurrency.setText(source.getCurrencyCodes());
+                mTransferSourceIdentification.setVisibility(View.GONE);
             }
-            mTransferSourceIdentification.setText(source.getIdentification() == null ? source.getCurrencyCodes()
-                    : getTransferMethodDetail(mTransferSourceIdentification.getContext(),
-                            source.getIdentification(), source.getType()));
-
             if (selected) {
                 mSelectedIcon.setVisibility(View.VISIBLE);
             } else {
@@ -244,5 +255,13 @@ public class ListTransferSourceFragment extends DialogFragment {
         void recycle() {
             itemView.setOnClickListener(null);
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(ARGUMENT_SELECTED_TRANSFER_SOURCE_TOKEN,mActiveTransferSourceToken);
+        outState.putParcelableArrayList(ARGUMENT_TRANSFER_SOURCE_LIST,(ArrayList<? extends Parcelable>)mTransferSourceList);
+
     }
 }
