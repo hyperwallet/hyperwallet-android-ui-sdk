@@ -1,5 +1,20 @@
 package com.hyperwallet.android.ui.transfermethod;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.initMocks;
+
+import static com.hyperwallet.android.ExceptionMapper.EC_UNEXPECTED_EXCEPTION;
+
 import com.hyperwallet.android.model.Error;
 import com.hyperwallet.android.model.Errors;
 import com.hyperwallet.android.model.graphql.HyperwalletTransferMethodConfigurationKey;
@@ -33,20 +48,6 @@ import org.robolectric.RobolectricTestRunner;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
-
-import static com.hyperwallet.android.ExceptionMapper.EC_UNEXPECTED_EXCEPTION;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.atLeastOnce;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.mockito.MockitoAnnotations.initMocks;
 
 @RunWith(RobolectricTestRunner.class)
 public class SelectTransferMethodPresenterTest {

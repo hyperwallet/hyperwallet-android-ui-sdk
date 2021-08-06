@@ -17,6 +17,8 @@
  */
 package com.hyperwallet.android.ui.transfermethod.view;
 
+import static com.hyperwallet.android.ExceptionMapper.EC_UNEXPECTED_EXCEPTION;
+
 import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
@@ -38,8 +40,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeMap;
-
-import static com.hyperwallet.android.ExceptionMapper.EC_UNEXPECTED_EXCEPTION;
 
 public class SelectTransferMethodPresenter implements SelectTransferMethodContract.Presenter {
 
