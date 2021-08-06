@@ -17,8 +17,6 @@
  */
 package com.hyperwallet.android.ui.transfermethod.view;
 
-import static com.hyperwallet.android.ExceptionMapper.EC_UNEXPECTED_EXCEPTION;
-
 import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
@@ -41,9 +39,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeMap;
 
-public class SelectTransferMethodPresenter implements SelectTransferMethodContract.Presenter {
+import static com.hyperwallet.android.ExceptionMapper.EC_UNEXPECTED_EXCEPTION;
 
-    private static final String DEFAULT_COUNTRY_CODE = "US";
+public class SelectTransferMethodPresenter implements SelectTransferMethodContract.Presenter {
 
     private final TransferMethodConfigurationRepository mTransferMethodConfigurationRepository;
     private final UserRepository mUserRepository;
@@ -82,7 +80,7 @@ public class SelectTransferMethodPresenter implements SelectTransferMethodContra
                                         : key.getCountry(countryCode);
 
                                 if (country == null) { // param and user country is null
-                                    country = key.getCountry(DEFAULT_COUNTRY_CODE);
+                                    country = key.getCountries().iterator().next();
                                 }
 
                                 String currencyCodeString = currencyCode;
