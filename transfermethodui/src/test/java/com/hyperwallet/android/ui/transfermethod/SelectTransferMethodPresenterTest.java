@@ -31,6 +31,7 @@ import com.hyperwallet.android.ui.user.repository.UserRepository;
 import com.hyperwallet.android.ui.user.repository.UserRepositoryImpl;
 
 import org.hamcrest.Matchers;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Rule;
@@ -1072,5 +1073,59 @@ public class SelectTransferMethodPresenterTest {
 
         selectTransferMethodPresenter.loadTransferMethodTypes(false, "CA", "CAD");
         verify(view).showErrorLoadTransferMethodTypes(ArgumentMatchers.<Error>anyList());
+    }
+
+    @Test
+    public void loadTransferMethodConfigurationKeys_userWithCountryNotPresentInProgramCountries() throws JSONException {
+        // User's country is Albania which is not present in mResult successful_tmc_keys_response.json
+        String userResponseBody = externalResourceManager.getResourceContent("user_al_response.json");
+        final JSONObject userJsonObject = new JSONObject(userResponseBody);
+        final User user = new User(userJsonObject);
+
+        when(view.isActive()).thenReturn(true);
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                TransferMethodConfigurationRepository.LoadKeysCallback callback =
+                        (TransferMethodConfigurationRepository.LoadKeysCallback) invocation.getArguments()[0];
+                callback.onKeysLoaded(mResult);
+                return callback;
+            }
+        }).when(mTransferMethodConfigurationRepository).getKeys(any(
+                TransferMethodConfigurationRepository.LoadKeysCallback.class));
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                TransferMethodConfigurationRepository.LoadKeysCallback callback =
+                        (TransferMethodConfigurationRepository.LoadKeysCallback) invocation.getArguments()[2];
+                callback.onKeysLoaded(mFeeAndProcessingTimeResult);
+                return callback;
+            }
+        }).when(mTransferMethodConfigurationRepository).getTransferMethodTypesFeeAndProcessingTime(anyString(), anyString(), any(
+                TransferMethodConfigurationRepository.LoadKeysCallback.class));
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) {
+                UserRepository.LoadUserCallback userCallback =
+                        (UserRepository.LoadUserCallback) invocation.getArguments()[0];
+                userCallback.onUserLoaded(user);
+                return userCallback;
+            }
+        }).when(mUserRepository).loadUser(any(
+                UserRepository.LoadUserCallback.class));
+
+        selectTransferMethodPresenter.loadTransferMethodConfigurationKeys(true, null, null);
+
+        // Canada is first country in successful_tmc_keys_response.json
+        verify(view).showTransferMethodCountry("CA");
+        verify(view).showTransferMethodCurrency("CAD");
+        verify(view).showTransferMethodTypes(ArgumentMatchers.<TransferMethodSelectionItem>anyList());
+        verify(view, never()).showErrorLoadTransferMethodConfigurationKeys(
+                ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadCurrency(ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadTransferMethodTypes(ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadCountrySelection(ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showErrorLoadCurrencySelection(ArgumentMatchers.<Error>anyList());
+        verify(view, never()).showAddTransferMethod(anyString(), anyString(), anyString(), anyString());
     }
 }

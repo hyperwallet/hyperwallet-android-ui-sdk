@@ -43,8 +43,6 @@ import java.util.TreeMap;
 
 public class SelectTransferMethodPresenter implements SelectTransferMethodContract.Presenter {
 
-    private static final String DEFAULT_COUNTRY_CODE = "US";
-
     private final TransferMethodConfigurationRepository mTransferMethodConfigurationRepository;
     private final UserRepository mUserRepository;
     private final SelectTransferMethodContract.View mView;
@@ -82,7 +80,7 @@ public class SelectTransferMethodPresenter implements SelectTransferMethodContra
                                         : key.getCountry(countryCode);
 
                                 if (country == null) { // param and user country is null
-                                    country = key.getCountry(DEFAULT_COUNTRY_CODE);
+                                    country = key.getCountries().iterator().next();
                                 }
 
                                 String currencyCodeString = currencyCode;
