@@ -1,0 +1,26 @@
+{
+  "token": "usr-token-5",
+  "status": "PRE_ACTIVATED",
+  "createdOn": "2017-10-30T22:15:45",
+  "clientUserId": "123456",
+  "profileType": "INDIVIDUAL",
+  "firstName": "Person",
+  "lastName": "FromAlbania",
+  "dateOfBirth": "1991-01-01",
+  "email": "user+5satF1xV@hyperwallet.com",
+  "addressLine1": "950 Granville",
+  "city": "Gjirokaster",
+  "stateProvince": "Gjirokaster",
+  "country": "AL",
+  "postalCode": "443001",
+  "language": "en",
+  "programToken": "prg-token-2",
+  "links": [
+    {
+      "params": {
+        "rel": "self"
+      },
+      "href": "https://localhost/rest/v3/users/usr-token-5"
+    }
+  ]
+}
