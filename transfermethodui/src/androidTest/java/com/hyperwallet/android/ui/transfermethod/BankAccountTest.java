@@ -5,6 +5,7 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.RootMatchers.isDialog;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.isEnabled;
 import static androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
@@ -21,6 +22,7 @@ import static org.hamcrest.Matchers.not;
 import static java.net.HttpURLConnection.HTTP_BAD_REQUEST;
 import static java.net.HttpURLConnection.HTTP_CREATED;
 import static java.net.HttpURLConnection.HTTP_OK;
+import static java.net.HttpURLConnection.HTTP_UNAUTHORIZED;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 import static com.hyperwallet.android.model.transfermethod.BankAccount.Purpose.SAVINGS;
@@ -427,6 +429,25 @@ public class BankAccountTest {
                         "Routing Number [" + INVALID_ROUTING_NUMBER
                                 + "] is not valid. Please modify Routing Number to a valid ACH Routing Number of the "
                                 + "branch of your bank.")));
+    }
+
+    @Test
+    public void testAddTransferMethod_displaysErrorOnUnauthorizedOnRestRequest() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_UNAUTHORIZED).withBody(sResourceManager
+                .getResourceContent("error_jwt_token_revoked.json")).mock();
+
+        mActivityTestRule.launchActivity(null);
+
+        onView(withId(R.id.branchId)).perform(nestedScrollTo(), replaceText(INVALID_ROUTING_NUMBER));
+        onView(withId(R.id.bankAccountId)).perform(nestedScrollTo(), replaceText(ACCOUNT_NUMBER));
+        onView(withId(R.id.bankAccountPurpose)).perform(nestedScrollTo(), click());
+        onView(allOf(withId(R.id.select_name), withText("Checking"))).perform(click());
+
+        onView(withId(R.id.add_transfer_method_button)).perform(nestedScrollTo(), click());
+
+        onView(withText(R.string.authentication_error_header))
+                .inRoot(isDialog())
+                .check(matches(isDisplayed()));
     }
 
     @Test
