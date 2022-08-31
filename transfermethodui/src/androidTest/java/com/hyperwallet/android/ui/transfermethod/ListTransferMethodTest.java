@@ -2,8 +2,10 @@ package com.hyperwallet.android.ui.transfermethod;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.RootMatchers.isDialog;
 import static androidx.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static androidx.test.espresso.matcher.ViewMatchers.hasSibling;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -17,10 +19,12 @@ import static org.hamcrest.Matchers.is;
 
 import static java.net.HttpURLConnection.HTTP_NO_CONTENT;
 import static java.net.HttpURLConnection.HTTP_OK;
+import static java.net.HttpURLConnection.HTTP_UNAUTHORIZED;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 import static com.hyperwallet.android.model.StatusTransition.StatusDefinition.DE_ACTIVATED;
 import static com.hyperwallet.android.ui.testutils.util.EspressoUtils.atPosition;
+import static com.hyperwallet.android.ui.testutils.util.EspressoUtils.nestedScrollTo;
 import static com.hyperwallet.android.ui.testutils.util.EspressoUtils.withDrawable;
 
 import android.content.BroadcastReceiver;
@@ -196,6 +200,20 @@ public class ListTransferMethodTest {
     }
 
     @Test
+    public void testListTransferMethod_displaysErrorOnUnauthorizedOnGraphQLRequest() {
+        mMockWebServer.mockResponse().withHttpResponseCode(HTTP_UNAUTHORIZED).withBody(sResourceManager
+                .getResourceContent("error_jwt_token_revoked.json")).mock();
+
+        // run test
+        mActivityTestRule.launchActivity(null);
+
+        // assert
+        onView(withText(R.string.authentication_error_header))
+                .inRoot(isDialog())
+                .check(matches(isDisplayed()));
+    }
+
+    @Test
     public void testListTransferMethod_userHasNoTransferMethods() {
         mMockWebServer.mockResponse().withHttpResponseCode(HTTP_NO_CONTENT).withBody("").mock();
 
@@ -212,6 +230,7 @@ public class ListTransferMethodTest {
         onView(withText(R.string.emptyStateAddTransferMethod)).check(matches(isDisplayed()));
 
     }
+
 
     @Test
     public void testListTransferMethod_removeBankAccount() throws InterruptedException {

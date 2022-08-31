@@ -1,5 +1,8 @@
 Changelog
 =========
+[1.0.0-beta13](https://github.com/hyperwallet/hyperwallet-android-ui-sdk/releases/tag/1.0.0-beta13)
+-------------------
+* Handle HTTP 401
 
 [1.0.0-beta12](https://github.com/hyperwallet/hyperwallet-android-ui-sdk/releases/tag/1.0.0-beta12)
 -------------------
