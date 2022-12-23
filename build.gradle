@@ -24,7 +24,7 @@ allprojects {
 
     }
 
-    project.version = "1.0.0-beta13"
+    project.version = "1.0.0-beta14"
 
 }
 
