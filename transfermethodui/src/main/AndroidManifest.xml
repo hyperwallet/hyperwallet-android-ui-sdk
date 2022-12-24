@@ -18,6 +18,7 @@
             android:windowSoftInputMode="adjustResize"/>
 
         <activity
+            android:exported="false"
             android:name="com.hyperwallet.android.ui.transfermethod.view.SelectTransferMethodActivity"
             android:label="@string/mobileAddTransferMethodHeader"
             android:theme="@style/AppTheme.NoActionBar">
