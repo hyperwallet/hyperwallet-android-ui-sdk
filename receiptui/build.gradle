@@ -15,6 +15,7 @@ dependencies {
     implementation project(":receiptrepository")
     implementation project(path: ':userrepository')
     implementation project(":transfermethodrepository")
+    implementation "androidx.annotation:annotation:1.8.0"
 
     implementation "com.google.android.material:material:$androidMaterialVersion"
     implementation "androidx.constraintlayout:constraintlayout:$constraintlayoutVersion"
