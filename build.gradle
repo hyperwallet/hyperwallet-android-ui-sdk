@@ -8,7 +8,7 @@ buildscript {
 
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.2'
+        classpath 'com.android.tools.build:gradle:3.6.4'
         classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.7"
 
         // NOTE: Do not place your application dependencies here; they belong
@@ -33,9 +33,9 @@ subprojects {
     ext {
         hyperwalletGroupId = 'com.hyperwallet.android.ui'
 
-        compileVersion = 30
+        compileVersion = 34
         minVersion = 21
-        targetVersion = 30
+        targetVersion = 34
         codeVersion = 1
 
         hyperwalletCoreVersion = '1.0.0-beta12'
