@@ -8,7 +8,7 @@ apply from: "$rootProject.projectDir/publish.gradle"
 
 
 dependencies {
-
+    implementation "androidx.annotation:annotation:1.8.0"
     implementation "androidx.legacy:legacy-support-v4:$legacySupportV4Version"
     implementation "androidx.paging:paging-runtime:$pagingRuntimeVersion"
     api project(':commonrepository')

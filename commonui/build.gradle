@@ -12,6 +12,8 @@ apply from: "$rootProject.projectDir/android-library.gradle"
 apply from: "$rootProject.projectDir/publish.gradle"
 
 dependencies {
+    implementation "androidx.annotation:annotation:1.8.0"
+
     implementation "com.hyperwallet.android:insight-sdk:$hyperwalletInsightVersion"
     implementation project(':commonrepository')
 

@@ -17,6 +17,8 @@ apply from: "$rootProject.projectDir/publish.gradle"
 
 dependencies {
 
+    implementation "androidx.annotation:annotation:1.8.0"
+
     implementation "androidx.appcompat:appcompat:$appcompatVersion"
     implementation "androidx.constraintlayout:constraintlayout:$constraintlayoutVersion"
     implementation "androidx.legacy:legacy-support-v4:$legacySupportV4Version"
