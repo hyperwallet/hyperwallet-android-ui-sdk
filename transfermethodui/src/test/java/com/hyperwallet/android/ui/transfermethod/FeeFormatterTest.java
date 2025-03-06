@@ -64,12 +64,13 @@ public class FeeFormatterTest {
     @Test
     public void testGetFormattedFee_returnsFlatFormattedFee() {
         FeeFormatter.getFormattedFee(context, Arrays.asList(mFlatFee));
-
+        ArgumentCaptor<Integer> resourceIdCaptor = ArgumentCaptor.forClass(Integer.class);
+        ArgumentCaptor<Object[]> formatterArgumentCapture = ArgumentCaptor.forClass(Object[].class);
         verify(resources).getString(resourceIdCaptor.capture(), formatterArgumentCapture.capture());
-        int resourceIdCaptorValue = resourceIdCaptor.getValue();
-        List<Object> argumentList = formatterArgumentCapture.getAllValues();
+        Integer resourceIdCaptorValue = resourceIdCaptor.getValue();
         assertThat(resourceIdCaptorValue, is(R.string.fee_flat_formatter));
-        assertThat(argumentList.size(), is(2));
+        Object[] argumentList = formatterArgumentCapture.getValue();
+        assertThat(argumentList.length, is(2));
     }
 
     @Test
@@ -78,12 +79,14 @@ public class FeeFormatterTest {
                 .optJSONObject(0));
 
         FeeFormatter.getFormattedFee(context, Arrays.asList(fee));
+        ArgumentCaptor<Integer> resourceIdCaptor = ArgumentCaptor.forClass(Integer.class);
+        ArgumentCaptor<Object[]> formatterArgumentCapture = ArgumentCaptor.forClass(Object[].class);
 
         verify(resources).getString(resourceIdCaptor.capture(), formatterArgumentCapture.capture());
         int resourceIdCaptorValue = resourceIdCaptor.getValue();
-        List<Object> argumentList = formatterArgumentCapture.getAllValues();
+        Object[] argumentList = formatterArgumentCapture.getValue();
         assertThat(resourceIdCaptorValue, is(R.string.fee_percent_formatter));
-        assertThat(argumentList.size(), is(4));
+        assertThat(argumentList.length, is(4));
     }
 
     @Test
@@ -92,12 +95,13 @@ public class FeeFormatterTest {
                 .optJSONObject(0));
 
         FeeFormatter.getFormattedFee(context, Arrays.asList(fee));
-
+        ArgumentCaptor<Integer> resourceIdCaptor = ArgumentCaptor.forClass(Integer.class);
+        ArgumentCaptor<Object[]> formatterArgumentCapture = ArgumentCaptor.forClass(Object[].class);
         verify(resources).getString(resourceIdCaptor.capture(), formatterArgumentCapture.capture());
         int resourceIdCaptorValue = resourceIdCaptor.getValue();
-        List<Object> argumentList = formatterArgumentCapture.getAllValues();
+        Object[] argumentList = formatterArgumentCapture.getValue();
         assertThat(resourceIdCaptorValue, is(R.string.fee_percent_only_min_formatter));
-        assertThat(argumentList.size(), is(3));
+        assertThat(argumentList.length, is(3));
     }
 
     @Test
@@ -105,12 +109,13 @@ public class FeeFormatterTest {
         Fee fee = new Fee(mJSONObject.optJSONObject("FEE_FOUR").optJSONArray("nodes")
                 .optJSONObject(0));
         FeeFormatter.getFormattedFee(context, Arrays.asList(fee));
-
+        ArgumentCaptor<Integer> resourceIdCaptor = ArgumentCaptor.forClass(Integer.class);
+        ArgumentCaptor<Object[]> formatterArgumentCapture = ArgumentCaptor.forClass(Object[].class);
         verify(resources).getString(resourceIdCaptor.capture(), formatterArgumentCapture.capture());
         int resourceIdCaptorValue = resourceIdCaptor.getValue();
-        List<Object> argumentList = formatterArgumentCapture.getAllValues();
+        Object[] argumentList = formatterArgumentCapture.getValue();
         assertThat(resourceIdCaptorValue, is(R.string.fee_percent_only_max_formatter));
-        assertThat(argumentList.size(), is(3));
+        assertThat(argumentList.length, is(3));
     }
 
     @Test
@@ -119,12 +124,13 @@ public class FeeFormatterTest {
                 .optJSONObject(0));
 
         FeeFormatter.getFormattedFee(context, Arrays.asList(fee));
-
+        ArgumentCaptor<Integer> resourceIdCaptor = ArgumentCaptor.forClass(Integer.class);
+        ArgumentCaptor<Object[]> formatterArgumentCapture = ArgumentCaptor.forClass(Object[].class);
         verify(resources).getString(resourceIdCaptor.capture(), formatterArgumentCapture.capture());
         int resourceIdCaptorValue = resourceIdCaptor.getValue();
-        List<Object> argumentList = formatterArgumentCapture.getAllValues();
+        Object[] argumentList = formatterArgumentCapture.getValue();
         assertThat(resourceIdCaptorValue, is(R.string.fee_percent_no_min_and_max_formatter));
-        assertThat(argumentList.size(), is(1));
+        assertThat(argumentList.length, is(1));
     }
 
     @Test
@@ -133,12 +139,13 @@ public class FeeFormatterTest {
                 .optJSONObject(0));
 
         FeeFormatter.getFormattedFee(context, Arrays.asList(mFlatFee, percentFee));
-
+        ArgumentCaptor<Integer> resourceIdCaptor = ArgumentCaptor.forClass(Integer.class);
+        ArgumentCaptor<Object[]> formatterArgumentCapture = ArgumentCaptor.forClass(Object[].class);
         verify(resources).getString(resourceIdCaptor.capture(), formatterArgumentCapture.capture());
         int resourceIdCaptorValue = resourceIdCaptor.getValue();
-        List<Object> argumentList = formatterArgumentCapture.getAllValues();
+        Object[] argumentList = formatterArgumentCapture.getValue();
         assertThat(resourceIdCaptorValue, is(R.string.fee_mix_formatter));
-        assertThat(argumentList.size(), is(5));
+        assertThat(argumentList.length, is(5));
     }
 
     @Test
@@ -147,12 +154,13 @@ public class FeeFormatterTest {
                 .optJSONObject(0));
 
         FeeFormatter.getFormattedFee(context, Arrays.asList(mFlatFee, percentFee));
-
+        ArgumentCaptor<Integer> resourceIdCaptor = ArgumentCaptor.forClass(Integer.class);
+        ArgumentCaptor<Object[]> formatterArgumentCapture = ArgumentCaptor.forClass(Object[].class);
         verify(resources).getString(resourceIdCaptor.capture(), formatterArgumentCapture.capture());
         int resourceIdCaptorValue = resourceIdCaptor.getValue();
-        List<Object> argumentList = formatterArgumentCapture.getAllValues();
+        Object[] argumentList = formatterArgumentCapture.getValue();
         assertThat(resourceIdCaptorValue, is(R.string.fee_mix_only_min_formatter));
-        assertThat(argumentList.size(), is(4));
+        assertThat(argumentList.length, is(4));
     }
 
     @Test
@@ -188,48 +196,53 @@ public class FeeFormatterTest {
     public void testGetFormattedFee_returnsFlatFee() {
         Fee percentFee = new Fee(mJSONObject.optJSONObject("FEE_EIGHT").optJSONArray("nodes").optJSONObject(0));
         FeeFormatter.getFormattedFee(context, Arrays.asList(mFlatFee,percentFee));
-
+        ArgumentCaptor<Integer> resourceIdCaptor = ArgumentCaptor.forClass(Integer.class);
+        ArgumentCaptor<Object[]> formatterArgumentCapture = ArgumentCaptor.forClass(Object[].class);
         verify(resources).getString(resourceIdCaptor.capture(), formatterArgumentCapture.capture());
         int resourceIdCaptorValue = resourceIdCaptor.getValue();
-        List<Object> argumentList = formatterArgumentCapture.getAllValues();
+        Object[] argumentList = formatterArgumentCapture.getValue();
         assertThat(resourceIdCaptorValue, is(R.string.fee_flat_formatter));
-        assertThat(argumentList.size(), is(2));
+        assertThat(argumentList.length, is(2));
     }
 
     @Test
     public void testGetFormattedFee_returnsFlatFeeWithMinAndMax() {
         Fee percentFee = new Fee(mJSONObject.optJSONObject("FEE_TEN").optJSONArray("nodes").optJSONObject(0));
         FeeFormatter.getFormattedFee(context, Arrays.asList(mFlatFee,percentFee));
+        ArgumentCaptor<Integer> resourceIdCaptor = ArgumentCaptor.forClass(Integer.class);
+        ArgumentCaptor<Object[]> formatterArgumentCapture = ArgumentCaptor.forClass(Object[].class);
 
         verify(resources).getString(resourceIdCaptor.capture(), formatterArgumentCapture.capture());
         int resourceIdCaptorValue = resourceIdCaptor.getValue();
-        List<Object> argumentList = formatterArgumentCapture.getAllValues();
+        Object[] argumentList = formatterArgumentCapture.getValue();
         assertThat(resourceIdCaptorValue, is(R.string.fee_flat_formatter));
-        assertThat(argumentList.size(), is(2));
+        assertThat(argumentList.length, is(2));
     }
 
     @Test
     public void testGetFormattedFee_returnsFlatFeeWithMaxOnly() {
         Fee percentFee = new Fee(mJSONObject.optJSONObject("FEE_TWELVE").optJSONArray("nodes").optJSONObject(0));
         FeeFormatter.getFormattedFee(context, Arrays.asList(mFlatFee,percentFee));
-
+        ArgumentCaptor<Integer> resourceIdCaptor = ArgumentCaptor.forClass(Integer.class);
+        ArgumentCaptor<Object[]> formatterArgumentCapture = ArgumentCaptor.forClass(Object[].class);
         verify(resources).getString(resourceIdCaptor.capture(), formatterArgumentCapture.capture());
         int resourceIdCaptorValue = resourceIdCaptor.getValue();
-        List<Object> argumentList = formatterArgumentCapture.getAllValues();
+        Object[] argumentList = formatterArgumentCapture.getValue();
         assertThat(resourceIdCaptorValue, is(R.string.fee_flat_formatter));
-        assertThat(argumentList.size(), is(2));
+        assertThat(argumentList.length, is(2));
     }
 
     @Test
     public void testGetFormattedFee_returnsFlatFeeWithMinOnly() {
         Fee percentFee = new Fee(mJSONObject.optJSONObject("FEE_ELEVEN").optJSONArray("nodes").optJSONObject(0));
         FeeFormatter.getFormattedFee(context, Arrays.asList(mFlatFee,percentFee));
-
+        ArgumentCaptor<Integer> resourceIdCaptor = ArgumentCaptor.forClass(Integer.class);
+        ArgumentCaptor<Object[]> formatterArgumentCapture = ArgumentCaptor.forClass(Object[].class);
         verify(resources).getString(resourceIdCaptor.capture(), formatterArgumentCapture.capture());
         int resourceIdCaptorValue = resourceIdCaptor.getValue();
-        List<Object> argumentList = formatterArgumentCapture.getAllValues();
+        Object[] argumentList = formatterArgumentCapture.getValue();
         assertThat(resourceIdCaptorValue, is(R.string.fee_flat_formatter));
-        assertThat(argumentList.size(), is(2));
+        assertThat(argumentList.length, is(2));
     }
 
     @Test
@@ -237,12 +250,13 @@ public class FeeFormatterTest {
         Fee flatFee = new Fee(mJSONObject.optJSONObject("FEE_NINE").optJSONArray("nodes").optJSONObject(0));
         Fee percentFee = new Fee(mJSONObject.optJSONObject("FEE_TWO").optJSONArray("nodes").optJSONObject(0));
         FeeFormatter.getFormattedFee(context, Arrays.asList(flatFee,percentFee));
-
+        ArgumentCaptor<Integer> resourceIdCaptor = ArgumentCaptor.forClass(Integer.class);
+        ArgumentCaptor<Object[]> formatterArgumentCapture = ArgumentCaptor.forClass(Object[].class);
         verify(resources).getString(resourceIdCaptor.capture(), formatterArgumentCapture.capture());
         int resourceIdCaptorValue = resourceIdCaptor.getValue();
-        List<Object> argumentList = formatterArgumentCapture.getAllValues();
+        Object[] argumentList = formatterArgumentCapture.getValue();
         assertThat(resourceIdCaptorValue, is(R.string.fee_percent_formatter));
-        assertThat(argumentList.size(), is(4));
+        assertThat(argumentList.length, is(4));
     }
 
     @Test
@@ -250,12 +264,13 @@ public class FeeFormatterTest {
         Fee flatFee = new Fee(mJSONObject.optJSONObject("FEE_NINE").optJSONArray("nodes").optJSONObject(0));
         Fee percentFee = new Fee(mJSONObject.optJSONObject("FEE_THREE").optJSONArray("nodes").optJSONObject(0));
         FeeFormatter.getFormattedFee(context, Arrays.asList(flatFee,percentFee));
-
+        ArgumentCaptor<Integer> resourceIdCaptor = ArgumentCaptor.forClass(Integer.class);
+        ArgumentCaptor<Object[]> formatterArgumentCapture = ArgumentCaptor.forClass(Object[].class);
         verify(resources).getString(resourceIdCaptor.capture(), formatterArgumentCapture.capture());
         int resourceIdCaptorValue = resourceIdCaptor.getValue();
-        List<Object> argumentList = formatterArgumentCapture.getAllValues();
+        Object[] argumentList = formatterArgumentCapture.getValue();
         assertThat(resourceIdCaptorValue, is(R.string.fee_percent_only_min_formatter));
-        assertThat(argumentList.size(), is(3));
+        assertThat(argumentList.length, is(3));
     }
 
     @Test
@@ -263,12 +278,13 @@ public class FeeFormatterTest {
         Fee flatFee = new Fee(mJSONObject.optJSONObject("FEE_NINE").optJSONArray("nodes").optJSONObject(0));
         Fee percentFee = new Fee(mJSONObject.optJSONObject("FEE_FOUR").optJSONArray("nodes").optJSONObject(0));
         FeeFormatter.getFormattedFee(context, Arrays.asList(flatFee,percentFee));
-
+        ArgumentCaptor<Integer> resourceIdCaptor = ArgumentCaptor.forClass(Integer.class);
+        ArgumentCaptor<Object[]> formatterArgumentCapture = ArgumentCaptor.forClass(Object[].class);
         verify(resources).getString(resourceIdCaptor.capture(), formatterArgumentCapture.capture());
         int resourceIdCaptorValue = resourceIdCaptor.getValue();
-        List<Object> argumentList = formatterArgumentCapture.getAllValues();
+        Object[] argumentList = formatterArgumentCapture.getValue();
         assertThat(resourceIdCaptorValue, is(R.string.fee_percent_only_max_formatter));
-        assertThat(argumentList.size(), is(3));
+        assertThat(argumentList.length, is(3));
     }
 
     @Test

@@ -31,6 +31,7 @@ import static com.hyperwallet.android.model.transfermethod.TransferMethod.Transf
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.VENMO_ACCOUNT;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.WIRE_ACCOUNT;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.text.TextUtils;
@@ -88,6 +89,7 @@ public class TransferMethodUtils {
      * @param transferMethod {@link TransferMethod}
      * @return title or null if a TYPE doesn't match any defined string resources
      */
+    @SuppressLint("WrongConstant")
     @NonNull
     public static String getTransferMethodName(@NonNull final Context context,
             final TransferMethod transferMethod) {

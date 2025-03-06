@@ -1,8 +1,8 @@
 package com.hyperwallet.android.ui.receipt.viewmodel;
 
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.hamcrest.Matchers.nullValue;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 import static org.mockito.ArgumentMatchers.any;
@@ -13,6 +13,7 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 
 import androidx.annotation.NonNull;
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 
 import com.hyperwallet.android.Configuration;
 import com.hyperwallet.android.Hyperwallet;
@@ -59,6 +60,8 @@ public class TabbedListReceiptsViewModelTest {
 
     @Rule
     public HyperwalletExternalResourceManager mResourceManager = new HyperwalletExternalResourceManager();
+    @Rule
+    public InstantTaskExecutorRule mInstantTaskExecutor= new InstantTaskExecutorRule();
 
     @Before
     public void initializedViewModel() {

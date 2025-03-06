@@ -32,6 +32,7 @@ import com.hyperwallet.android.insight.Insight;
 import com.hyperwallet.android.insight.InsightEventTag;
 import com.hyperwallet.android.insight.collect.ErrorInfo;
 import com.hyperwallet.android.listener.HyperwalletListener;
+import com.hyperwallet.android.ui.common.BuildConfig;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,7 +43,7 @@ import java.util.concurrent.Executors;
  * Used for gathering the data necessary for the Insights analytics.
  */
 public class HyperwalletInsight {
-    private static final String SDK_VERSION = com.hyperwallet.android.ui.common.BuildConfig.VERSION_NAME;
+    private static final String SDK_VERSION = BuildConfig.VERSION_NAME;
     private static final String PRODUCT_VALUE = "hyperwallet-android-ui-sdk";
     private static final String PAGE_TECHNOLOGY_JAVA = "Java";
 

@@ -25,12 +25,16 @@ dependencies {
 
     testImplementation "org.robolectric:robolectric:$robolectricVersion"
     testImplementation project(':testutils')
+    testImplementation 'androidx.arch.core:core-testing:2.1.0'
 
     androidTestImplementation "androidx.test:rules:$testRulesVersion"
     androidTestImplementation "androidx.test.espresso:espresso-contrib:$espressoVersion"
     androidTestImplementation "androidx.test.espresso:espresso-intents:$espressoVersion"
     androidTestImplementation "com.squareup.okhttp3:mockwebserver:$mockServerVersion"
-    androidTestImplementation "com.squareup.leakcanary:leakcanary-android-instrumentation:$leakcanaryVersion"
-    androidTestImplementation "com.squareup.leakcanary:leakcanary-support-fragment:$leakcanaryVersion"
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakcanaryVersion"
     androidTestImplementation project(':testutils')
+}
+tasks.withType(Test) {
+    jacoco.includeNoLocationClasses = true
+    jacoco.excludes = ['jdk.internal.*']
 }

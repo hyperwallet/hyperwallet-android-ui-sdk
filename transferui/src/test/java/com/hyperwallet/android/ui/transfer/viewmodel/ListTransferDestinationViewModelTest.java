@@ -14,6 +14,7 @@ import static com.hyperwallet.android.model.transfermethod.TransferMethod.Transf
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TRANSFER_METHOD_COUNTRY;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TRANSFER_METHOD_CURRENCY;
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.ViewModel;
 
 import com.google.common.collect.Lists;
@@ -50,7 +51,8 @@ public class ListTransferDestinationViewModelTest {
 
     @Rule
     public final ExpectedException mThrown = ExpectedException.none();
-
+    @Rule
+    public InstantTaskExecutorRule mInstantTaskExecutor= new InstantTaskExecutorRule();
     private ListTransferDestinationViewModel mListTransferDestinationViewModel;
     private TransferMethodRepository mTransferMethodRepository;
 

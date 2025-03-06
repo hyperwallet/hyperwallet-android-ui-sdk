@@ -19,4 +19,25 @@ dependencies {
     testImplementation "androidx.test:core:$coreTest"
 
     testImplementation project(':testutils')
+    testImplementation 'org.hamcrest:hamcrest-library:3.0'
+    testImplementation 'junit:junit:4.13.2'
+}
+android {
+    defaultConfig {
+        versionName project.versionName// Use the version from the root project
+        buildConfigField 'String', 'VERSION_NAME', "\"${versionName}\""
+    }
+    buildTypes {
+        debug {
+            testCoverageEnabled true
+        }
+    }
+    lintOptions {
+        abortOnError false
+    }
+}
+
+tasks.withType(Test) {
+    jacoco.includeNoLocationClasses = true
+    jacoco.excludes = ['jdk.internal.*']
 }
