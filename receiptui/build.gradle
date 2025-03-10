@@ -32,6 +32,7 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-intents:$espressoVersion"
     androidTestImplementation "com.squareup.okhttp3:mockwebserver:$mockServerVersion"
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakcanaryVersion"
+    androidTestImplementation "com.squareup.leakcanary:leakcanary-android-instrumentation:$leakcanaryVersion"
     androidTestImplementation project(':testutils')
 }
 tasks.withType(Test) {

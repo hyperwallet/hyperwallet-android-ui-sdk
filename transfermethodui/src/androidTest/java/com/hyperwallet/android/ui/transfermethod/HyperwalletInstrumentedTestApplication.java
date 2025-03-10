@@ -3,8 +3,10 @@ package com.hyperwallet.android.ui.transfermethod;
 
 import android.app.Application;
 
-import com.squareup.leakcanary.InstrumentationLeakDetector;
-import com.squareup.leakcanary.LeakCanary;
+import java.util.Objects;
+
+import leakcanary.AppWatcher;
+import leakcanary.LeakCanary;
 
 public class HyperwalletInstrumentedTestApplication extends Application {
 
@@ -12,7 +14,7 @@ public class HyperwalletInstrumentedTestApplication extends Application {
     public void onCreate() {
 
         super.onCreate();
-        if (LeakCanary.isInAnalyzerProcess(this)) {
+        if (Objects.isNull(LeakCanary.getConfig())) {
             // This process is dedicated to LeakCanary for heap analysis.
             // You should not init your app in this process.
             return;
@@ -22,10 +24,7 @@ public class HyperwalletInstrumentedTestApplication extends Application {
 
 
     protected void installLeakCanary() {
-
-        InstrumentationLeakDetector.instrumentationRefWatcher(this)
-                .buildAndInstall();
-
+        AppWatcher.INSTANCE.manualInstall(this);
     }
 
 }
