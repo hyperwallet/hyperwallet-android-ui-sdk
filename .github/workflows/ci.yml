@@ -15,7 +15,6 @@ jobs:
     # Compile the project using the predefined JDK versions in the strategy section
     runs-on: ubuntu-latest
     name: Build - JDK ${{ matrix.java-version }}
-
     strategy:
       fail-fast: false
       matrix:
