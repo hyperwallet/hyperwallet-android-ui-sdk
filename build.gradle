@@ -54,7 +54,7 @@ allprojects {
 
     }
 
-    project.version = "1.0.0-beta14"
+    project.version = "1.0.1"
 
 }
 
