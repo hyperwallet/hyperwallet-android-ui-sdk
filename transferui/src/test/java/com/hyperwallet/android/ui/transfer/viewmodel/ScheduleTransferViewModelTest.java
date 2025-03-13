@@ -14,6 +14,7 @@ import static com.hyperwallet.android.model.transfermethod.TransferMethod.Transf
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TRANSFER_METHOD_CURRENCY;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.BANK_ACCOUNT;
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.ViewModel;
 
 import com.hyperwallet.android.model.Error;
@@ -53,7 +54,8 @@ public class ScheduleTransferViewModelTest {
     public HyperwalletExternalResourceManager mResourceManager = new HyperwalletExternalResourceManager();
     @Rule
     public ExpectedException mExpectedException = ExpectedException.none();
-
+    @Rule
+    public InstantTaskExecutorRule mInstantTaskExecutor= new InstantTaskExecutorRule();
     @Mock
     private TransferRepository mTransferRepository;
 

@@ -24,6 +24,7 @@ import static com.hyperwallet.android.ui.common.intent.HyperwalletIntent.ERROR_S
 
 import android.content.Intent;
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -90,6 +91,8 @@ public class CreateTransferViewModelTest {
     public HyperwalletMockWebServer mMockWebServer = new HyperwalletMockWebServer(8080);
     @Rule
     public ExpectedException mExpectedException = ExpectedException.none();
+    @Rule
+    public InstantTaskExecutorRule mInstantTaskExecutor= new InstantTaskExecutorRule();
     @Mock
     private TransferMethodRepository mTransferMethodRepository;
     @Mock

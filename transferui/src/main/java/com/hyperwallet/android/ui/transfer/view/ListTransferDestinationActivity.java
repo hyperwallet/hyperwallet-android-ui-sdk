@@ -24,6 +24,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
@@ -111,7 +112,7 @@ public class ListTransferDestinationActivity extends AppCompatActivity implement
 
         if (requestCode == ADD_TRANSFER_METHOD_REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
             Intent intent = new Intent();
-            intent.putExtra(EXTRA_SELECTED_DESTINATION, data.getParcelableExtra(EXTRA_TRANSFER_METHOD_ADDED));
+            intent.putExtra(EXTRA_SELECTED_DESTINATION, (Parcelable) data.getParcelableExtra(EXTRA_TRANSFER_METHOD_ADDED));
             setResult(Activity.RESULT_OK, intent);
             finish();
         }

@@ -17,6 +17,7 @@ import static com.hyperwallet.android.model.receipt.Receipt.Entries.CREDIT;
 import static com.hyperwallet.android.model.receipt.Receipt.ReceiptTypes.ADJUSTMENT;
 import static com.hyperwallet.android.model.receipt.Receipt.ReceiptTypes.DEPOSIT;
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.paging.PageKeyedDataSource;
 
 import com.hyperwallet.android.Hyperwallet;
@@ -50,6 +51,7 @@ import org.robolectric.RobolectricTestRunner;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @RunWith(RobolectricTestRunner.class)
 public class PrepaidCardReceiptDataSourceTest {
@@ -59,6 +61,9 @@ public class PrepaidCardReceiptDataSourceTest {
             new Date(), 10);
     @Rule
     public MockitoRule mMockito = MockitoJUnit.rule();
+
+    @Rule
+    public InstantTaskExecutorRule mInstantTaskExecutor= new InstantTaskExecutorRule();
     @Rule
     public HyperwalletExternalResourceManager mExternalResourceManager = new HyperwalletExternalResourceManager();
     @Mock

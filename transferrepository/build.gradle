@@ -12,4 +12,15 @@ dependencies {
 
     testImplementation "org.robolectric:robolectric:$robolectricVersion"
     testImplementation project(':testutils')
+    testImplementation 'org.hamcrest:hamcrest-library:3.0'
+    testImplementation 'junit:junit:4.13.2'
+}
+android {
+    lintOptions {
+        abortOnError false
+    }
+}
+tasks.withType(Test) {
+    jacoco.includeNoLocationClasses = true
+    jacoco.excludes = ['jdk.internal.*']
 }
