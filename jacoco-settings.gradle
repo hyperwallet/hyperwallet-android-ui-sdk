@@ -36,28 +36,29 @@ task jacocoTestReport(type: JacocoReport, dependsOn: 'testDebugUnitTest') {
         }
     }
 
-    classDirectories = fileTree(
+    classDirectories.setFrom(fileTree(
             dir: "${buildDir}",
             includes: debugClassPaths,
             excludes: project.ext.fileFilter
     )
+    )
 
-    additionalSourceDirs = files(coverageSourceDirs)
-    sourceDirectories = files(coverageSourceDirs)
-    executionData = files("${buildDir}/jacoco/testDebugUnitTest.exec")
+    additionalSourceDirs.setFrom(files(coverageSourceDirs))
+    sourceDirectories.setFrom(files(coverageSourceDirs))
+    executionData.setFrom(files("${buildDir}/jacoco/testDebugUnitTest.exec"))
 }
 
 task jacocoTestCoverageVerification(type: JacocoCoverageVerification, dependsOn: 'jacocoTestReport') {
 
     group = 'Verification'
-    classDirectories = fileTree(
+    classDirectories.setFrom(fileTree(
             dir: "${buildDir}",
             includes: debugClassPaths,
             excludes: fileFilter
-    )
-    additionalSourceDirs = files(coverageSourceDirs)
-    sourceDirectories = files(coverageSourceDirs)
-    executionData = files("${buildDir}/jacoco/testDebugUnitTest.exec")
+    ))
+    additionalSourceDirs.setFrom(files(coverageSourceDirs))
+    sourceDirectories.setFrom(files(coverageSourceDirs))
+    executionData.setFrom(files("${buildDir}/jacoco/testDebugUnitTest.exec"))
 
     violationRules {
         setFailOnViolation(true)

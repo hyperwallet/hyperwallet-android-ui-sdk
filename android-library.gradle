@@ -25,6 +25,13 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            // Rename the artifact to artifact_name-<version>.aar, required since gradle 7
+            libraryVariants.all { variant ->
+                variant.outputs.all { output ->
+                    outputFileName = "${archivesBaseName}-${version}.aar"
+                }
+            }
         }
         debug {
             testCoverageEnabled true

@@ -12,6 +12,7 @@ import static com.hyperwallet.android.model.transfermethod.TransferMethod.Transf
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodFields.TRANSFER_METHOD_CURRENCY;
 import static com.hyperwallet.android.model.transfermethod.TransferMethod.TransferMethodTypes.PREPAID_CARD;
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.ViewModel;
 
 import com.hyperwallet.android.Hyperwallet;
@@ -32,7 +33,8 @@ public class ListTransferSourceViewModelTest {
 
     @Rule
     public final ExpectedException mThrown = ExpectedException.none();
-
+    @Rule
+    public InstantTaskExecutorRule mInstantTaskExecutor= new InstantTaskExecutorRule();
     private ListTransferSourceViewModel mListTransferSourceViewModel;
 
     @Before

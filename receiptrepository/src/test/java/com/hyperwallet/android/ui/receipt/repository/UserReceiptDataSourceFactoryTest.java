@@ -2,7 +2,7 @@ package com.hyperwallet.android.ui.receipt.repository;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.CoreMatchers.notNullValue;
 
 import androidx.lifecycle.LiveData;
 import androidx.paging.DataSource;

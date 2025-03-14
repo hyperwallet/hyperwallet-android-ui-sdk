@@ -1,5 +1,9 @@
 Changelog
 =========
+[1.0.1](https://github.com/hyperwallet/hyperwallet-android-ui-sdk/releases/tag/1.0.1)
+-------------------
+* Support Gradle 7
+
 [1.0.0-beta14](https://github.com/hyperwallet/hyperwallet-android-ui-sdk/releases/tag/1.0.0-beta14)
 -------------------
 * Support Android 12
@@ -8,7 +12,7 @@ Changelog
 -------------------
 * Handle HTTP 401
 
-[1.0.0-beta12](https://github.com/hyperwallet/hyperwallet-android-ui-sdk/releases/tag/1.0.0-beta12)
+[1.0.0-beta12](https://github.com/hyperwallet/hyperwallet-android-ui-sdk/releases/tag/1.0.1)
 -------------------
 * Bug fix
 

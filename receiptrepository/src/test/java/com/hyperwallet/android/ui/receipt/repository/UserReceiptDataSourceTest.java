@@ -3,7 +3,7 @@ package com.hyperwallet.android.ui.receipt.repository;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.nullValue;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.doAnswer;
@@ -17,6 +17,7 @@ import static com.hyperwallet.android.model.receipt.Receipt.Entries.DEBIT;
 import static com.hyperwallet.android.model.receipt.Receipt.ReceiptTypes.PAYMENT;
 import static com.hyperwallet.android.model.receipt.Receipt.ReceiptTypes.TRANSFER_TO_BANK_ACCOUNT;
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.paging.PageKeyedDataSource;
 
 import com.hyperwallet.android.Hyperwallet;
@@ -57,6 +58,8 @@ public class UserReceiptDataSourceTest {
             new PageKeyedDataSource.LoadParams<>(10, 10);
     @Rule
     public MockitoRule mMockito = MockitoJUnit.rule();
+    @Rule
+    public InstantTaskExecutorRule mInstantTaskExecutor= new InstantTaskExecutorRule();
     @Rule
     public HyperwalletExternalResourceManager mExternalResourceManager = new HyperwalletExternalResourceManager();
     @Mock

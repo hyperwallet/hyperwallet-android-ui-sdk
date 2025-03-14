@@ -2,8 +2,8 @@ package com.hyperwallet.android.ui.receipt.repository;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertSame;
 
