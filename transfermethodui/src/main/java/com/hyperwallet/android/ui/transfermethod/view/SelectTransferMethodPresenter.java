@@ -146,30 +146,13 @@ public class SelectTransferMethodPresenter implements SelectTransferMethodContra
                                 if (!mView.isActive()) {
                                     return;
                                 }
-                                List<Currency> currencies = key.getCurrencies(countryCode) != null ?
-                                        new ArrayList<>(key.getCurrencies(countryCode)) :
-                                        new ArrayList<Currency>();
-
-                                Country selectedCountry = null;
-                                for (Country country : key.getCountries()) {
-                                    if (country.getCode().equals(countryCode)) {
-                                        selectedCountry = country;
-                                        break;
-                                    }
-                                }
-                                // Attempt to get the default currency code for the selected country
-                                String selectedCurrencyCode = getDefaultCurrencyCode(selectedCountry, key, countryCode);
+                                String selectedCurrencyCode = getDefaultCurrencyCode(key, countryCode);
 
                                 if (selectedCurrencyCode == null) {
-                                    // If no default currency code is found, use the first currency in the list
-                                    selectedCurrencyCode = currencies.get(0).getCode();
+                                    return;
                                 }
-
-                                // Show the selected country and currency in the UI
                                 mView.showTransferMethodCountry(countryCode);
                                 mView.showTransferMethodCurrency(selectedCurrencyCode);
-
-                                // Load fee, processing time, and other transfer methods
                                 loadFeeAndProcessingTimeAndShowTransferMethods(countryCode, selectedCurrencyCode, user);
                             }
 
@@ -284,24 +267,13 @@ public class SelectTransferMethodPresenter implements SelectTransferMethodContra
                 if (!mView.isActive()) {
                     return;
                 }
-                Set<Currency> currencyCodes = key.getCurrencies(countryCode) != null ?
-                        key.getCurrencies(countryCode) : new HashSet<Currency>();
-                // Find the country based on the country code
-                Country selectedCountry = null;
-                for (Country country : key.getCountries()) {
-                    if (country.getCode().equals(countryCode)) {
-                        selectedCountry = country;
-                        break;
-                    }
-                }
-                // Attempt to get the default currency code for the selected country
-                String selectedDefaultCurrencyCode = getDefaultCurrencyCode(selectedCountry, key, countryCode);
+                String selectedDefaultCurrencyCode = getDefaultCurrencyCode(key, countryCode);
 
                 if (selectedDefaultCurrencyCode == null) {
-                    // If no default currency code is found, use the first currency in the list
-                    selectedDefaultCurrencyCode = currencyCodes.iterator().next().getCode();  // Get the first currency code
+                    return;
                 }
-
+                Set<Currency> currencyCodes = key.getCurrencies(countryCode) != null ?
+                        key.getCurrencies(countryCode) : new HashSet<Currency>();
                 TreeMap<String, String> currencyNameCodeMap = new TreeMap<>();
                 String selectedCurrencyName = null;
                 for (Currency currency : currencyCodes) {
@@ -324,22 +296,28 @@ public class SelectTransferMethodPresenter implements SelectTransferMethodContra
     }
 
     // Helper method to get the  DefaultCurrencyCode
-    private String getDefaultCurrencyCode(@NonNull Country country, @Nullable HyperwalletTransferMethodConfigurationKey keys,
-                                          @NonNull String countryCode) {
-        //Get the default currency code from the selected country
-        String defaultCurrencyCode = country.getDefaultCurrency();
-        // If the country has a default currency code, check if it's in the list of available currencies
+    private String getDefaultCurrencyCode(@NonNull final HyperwalletTransferMethodConfigurationKey keys, @NonNull final String countryCode) {
+        Country selectedCountry = null;
+        for (Country country : keys.getCountries()) {
+            if (country.getCode().equals(countryCode)) {
+                selectedCountry = country;
+                break;
+            }
+        }
+        if (selectedCountry == null) {
+            return null;
+        }
+        Set<Currency> currencies = keys.getCurrencies(countryCode);
+        String defaultCurrencyCode = selectedCountry.getDefaultCurrency();
         if (defaultCurrencyCode != null) {
-            Set<Currency> currencies = keys.getCurrencies(countryCode);
             for (Currency currency : currencies) {
                 if (currency.getCode().equals(defaultCurrencyCode)) {
-                    return currency.getCode(); // Return the country's currency code, if it exists in the list
+                    return currency.getCode();
                 }
             }
         }
-        // If the default currency is not found, return the first currency from the list (if available)
         if (!keys.getCurrencies(countryCode).isEmpty()) {
-            return keys.getCurrencies(countryCode).iterator().next().getCode(); // Return the first currency code in the list
+            return keys.getCurrencies(countryCode).iterator().next().getCode();
         }
         return null;
     }
