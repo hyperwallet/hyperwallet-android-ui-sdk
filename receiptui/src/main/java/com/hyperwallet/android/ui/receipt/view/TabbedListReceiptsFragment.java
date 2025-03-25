@@ -108,7 +108,7 @@ public class TabbedListReceiptsFragment extends Fragment {
     }
 
     private void registerObservers() {
-        mTabbedListReceiptsViewModel.getPrepaidCards().observe(this, new Observer<List<PrepaidCard>>() {
+        mTabbedListReceiptsViewModel.getPrepaidCards().observe(getViewLifecycleOwner(), new Observer<List<PrepaidCard>>() {
             @Override
             public void onChanged(List<PrepaidCard> prepaidCards) {
                 if (!prepaidCards.isEmpty()) {
@@ -137,7 +137,7 @@ public class TabbedListReceiptsFragment extends Fragment {
             }
         });
 
-        mTabbedListReceiptsViewModel.getRetryListReceipts().observe(this, new Observer<Boolean>() {
+        mTabbedListReceiptsViewModel.getRetryListReceipts().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
                 retryCurrentListFragment();

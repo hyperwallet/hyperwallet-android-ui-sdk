@@ -195,7 +195,7 @@ public class ListReceiptsFragment extends Fragment {
             }
         });
 
-        mReceiptViewModel.errors().observe(this, new Observer<Event<Errors>>() {
+        mReceiptViewModel.errors().observe(getViewLifecycleOwner(), new Observer<Event<Errors>>() {
             @Override
             public void onChanged(Event<Errors> errorsEvent) {
                 if (errorsEvent != null && !errorsEvent.isContentConsumed()) {
@@ -204,7 +204,7 @@ public class ListReceiptsFragment extends Fragment {
             }
         });
 
-        mReceiptViewModel.getDetailNavigation().observe(this, new Observer<Event<Receipt>>() {
+        mReceiptViewModel.getDetailNavigation().observe(getViewLifecycleOwner(), new Observer<Event<Receipt>>() {
             @Override
             public void onChanged(@NonNull final Event<Receipt> event) {
                 navigate(event);
