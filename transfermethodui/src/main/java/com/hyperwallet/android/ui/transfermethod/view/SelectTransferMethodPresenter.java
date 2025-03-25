@@ -48,8 +48,8 @@ public class SelectTransferMethodPresenter implements SelectTransferMethodContra
     private final SelectTransferMethodContract.View mView;
 
     public SelectTransferMethodPresenter(SelectTransferMethodContract.View view,
-            @NonNull final TransferMethodConfigurationRepository transferMethodConfigurationRepository,
-            @NonNull final UserRepository userRepository) {
+                                         @NonNull final TransferMethodConfigurationRepository transferMethodConfigurationRepository,
+                                         @NonNull final UserRepository userRepository) {
         this.mView = view;
         this.mTransferMethodConfigurationRepository = transferMethodConfigurationRepository;
         this.mUserRepository = userRepository;
@@ -57,7 +57,7 @@ public class SelectTransferMethodPresenter implements SelectTransferMethodContra
 
     @Override
     public void loadTransferMethodConfigurationKeys(final boolean forceUpdate, @Nullable final String countryCode,
-            @Nullable final String currencyCode) {
+                                                    @Nullable final String currencyCode) {
 
         mView.showProgressBar();
 
@@ -146,15 +146,14 @@ public class SelectTransferMethodPresenter implements SelectTransferMethodContra
                                 if (!mView.isActive()) {
                                     return;
                                 }
-                                List<Currency> currencies = key.getCurrencies(countryCode) != null ?
-                                        new ArrayList<>(key.getCurrencies(countryCode)) :
-                                        new ArrayList<Currency>();
+                                String selectedCurrencyCode = getDefaultCurrencyCode(key, countryCode);
 
+                                if (selectedCurrencyCode == null) {
+                                    return;
+                                }
                                 mView.showTransferMethodCountry(countryCode);
-                                mView.showTransferMethodCurrency(currencies.get(0).getCode());
-
-                                loadFeeAndProcessingTimeAndShowTransferMethods(countryCode, currencies.get(0).getCode(),
-                                        user);
+                                mView.showTransferMethodCurrency(selectedCurrencyCode);
+                                loadFeeAndProcessingTimeAndShowTransferMethods(countryCode, selectedCurrencyCode, user);
                             }
 
                             @Override
@@ -180,7 +179,7 @@ public class SelectTransferMethodPresenter implements SelectTransferMethodContra
 
     @Override
     public void loadTransferMethodTypes(final boolean forceUpdate,
-            @NonNull final String countryCode, @NonNull final String currencyCode) {
+                                        @NonNull final String countryCode, @NonNull final String currencyCode) {
         mView.showProgressBar();
 
         if (forceUpdate) {
@@ -226,7 +225,7 @@ public class SelectTransferMethodPresenter implements SelectTransferMethodContra
 
     @Override
     public void openAddTransferMethod(@NonNull final String country, @NonNull final String currency,
-            @NonNull final String transferMethodType, @NonNull final String profileType) {
+                                      @NonNull final String transferMethodType, @NonNull final String profileType) {
         mView.showAddTransferMethod(country, currency, transferMethodType, profileType);
     }
 
@@ -293,6 +292,34 @@ public class SelectTransferMethodPresenter implements SelectTransferMethodContra
         });
     }
 
+    // Helper method to get the  DefaultCurrencyCode
+    private String getDefaultCurrencyCode(@NonNull final HyperwalletTransferMethodConfigurationKey keys, @NonNull final String countryCode) {
+        Country selectedCountry = null;
+        for (Country country : keys.getCountries()) {
+            if (country.getCode().equals(countryCode)) {
+                selectedCountry = country;
+                break;
+            }
+        }
+        if (selectedCountry == null) {
+            return null;
+        }
+        Set<Currency> currencies = keys.getCurrencies(countryCode);
+        String defaultCurrencyCode = selectedCountry.getDefaultCurrency();
+        if (defaultCurrencyCode != null) {
+            for (Currency currency : currencies) {
+                if (currency.getCode().equals(defaultCurrencyCode)) {
+                    return currency.getCode();
+                }
+            }
+        }
+        if (!keys.getCurrencies(countryCode).isEmpty()) {
+            return keys.getCurrencies(countryCode).iterator().next().getCode();
+        }
+        return null;
+    }
+
+
     private List<TransferMethodSelectionItem> getTransferMethodSelectionItems(
             @NonNull final String countryCode, @NonNull final String currencyCode,
             @NonNull final String userProfileType,
@@ -309,7 +336,7 @@ public class SelectTransferMethodPresenter implements SelectTransferMethodContra
     }
 
     private void loadFeeAndProcessingTimeAndShowTransferMethods(final String countryCode, final String currencyCode,
-            final User user) {
+                                                                final User user) {
         mTransferMethodConfigurationRepository.getTransferMethodTypesFeeAndProcessingTime(countryCode, currencyCode,
                 new TransferMethodConfigurationRepository.LoadKeysCallback() {
                     @Override
