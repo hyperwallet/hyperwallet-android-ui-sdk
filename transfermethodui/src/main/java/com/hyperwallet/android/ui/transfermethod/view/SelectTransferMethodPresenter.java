@@ -267,17 +267,14 @@ public class SelectTransferMethodPresenter implements SelectTransferMethodContra
                 if (!mView.isActive()) {
                     return;
                 }
-                String selectedDefaultCurrencyCode = getDefaultCurrencyCode(key, countryCode);
 
-                if (selectedDefaultCurrencyCode == null) {
-                    return;
-                }
                 Set<Currency> currencyCodes = key.getCurrencies(countryCode) != null ?
                         key.getCurrencies(countryCode) : new HashSet<Currency>();
+
                 TreeMap<String, String> currencyNameCodeMap = new TreeMap<>();
-                String selectedCurrencyName = null;
+                String selectedCurrencyName = "";
                 for (Currency currency : currencyCodes) {
-                    if (currency.getCode().equals(selectedDefaultCurrencyCode)) {
+                    if (currency.getCode().equals(currencyCode)) {
                         selectedCurrencyName = currency.getName();
                     }
                     currencyNameCodeMap.put(currency.getName(), currency.getCode());
